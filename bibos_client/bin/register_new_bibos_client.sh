@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+while true; do
+    fatal() {
+        echo "Kritisk fejl, stopper:" "$@"
+        while true; do
+            echo "[B]egynd forfra eller [S]top?"
+            stty -echo
+            read -n 1 VALUE
+            stty echo
+            case "$VALUE" in
+                b|B)
+                    return 0 ;;
+                s|S)
+                    return 1 ;;
+            esac
+        done
+    }
+
     # Get hold of config parameters, connect to admin system.
 
     # Attempt to get shared config file from gateway.
@@ -7,8 +24,7 @@
     # admin_url) manually.
     if [ "$(id -u)" != "0" ]
     then
-        echo "Dette program skal køres som root." 1>&2
-        exit 1
+        fatal "Dette program skal køres som root" && continue || exit 1
     fi
 
     echo "Indtast gateway, tryk <ENTER> for ingen gateway eller automatisk opsætning"
@@ -24,8 +40,7 @@
         ping -c 1 $GATEWAY_IP 2>1 > /dev/null
         if [[ $? -ne 0 ]]
         then
-            echo "Ugyldig gateway-adresse ($GATEWAY_IP) - prøv igen."
-            exit -1
+            fatal "Ugyldig gateway-adresse ($GATEWAY_IP)" && continue || exit 1
         else
             echo "OK"
         fi
@@ -77,9 +92,7 @@
     then
         set_bibos_config site $SITE
     else
-        echo ""
-        echo "Computeren kan ikke registreres uden site - prøv igen."
-        exit 1
+        fatal "Computeren kan ikke registreres uden site" && continue || exit 1
     fi
 
 
@@ -148,7 +161,9 @@
 
     # OK, we got the config.
     # Do the deed.
-    bibos_register_in_admin
+    if ! bibos_register_in_admin; then
+        fatal "Tilmelding mislykkedes" && continue || exit 1
+    fi
 
     # Now setup cron job
     if [[ -f $(which jobmanager) ]]
@@ -156,3 +171,6 @@
         echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/bibos-jobmanager
         echo "*/5 * * * * root $(which jobmanager)" >> /etc/cron.d/bibos-jobmanager
     fi
+
+    break
+done
