@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SHARED_CONFIG="/tmp/bibos.conf"
+
 while true; do
     fatal() {
         echo "Kritisk fejl, stopper:" "$@"
@@ -10,6 +12,7 @@ while true; do
             stty echo
             case "$VALUE" in
                 b|B)
+                    rm -f "$SHARED_CONFIG"
                     return 0 ;;
                 s|S)
                     return 1 ;;
@@ -30,7 +33,7 @@ while true; do
     echo "Indtast gateway, tryk <ENTER> for ingen gateway eller automatisk opsætning"
     read GATEWAY_IP
 
-    if [[ -z $GATEWAY_IP ]]
+    if [[ -z "$GATEWAY_IP" ]]
     then
         # No gateway entered by user
         GATEWAY_SITE="http://$(bibos_find_gateway 2> /dev/null)" 
@@ -49,9 +52,9 @@ while true; do
         set_bibos_config gateway "$GATEWAY_IP"
     fi
 
-    SHARED_CONFIG="/tmp/bibos.conf"
     curl -s "$GATEWAY_SITE/bibos.conf" -o "$SHARED_CONFIG"
 
+    unset HAS_GATEWAY
     if [[ -f "$SHARED_CONFIG" ]]
     then
         HAS_GATEWAY=1
@@ -65,21 +68,22 @@ while true; do
 
     if [[ -n "$NEWHOSTNAME" ]]
     then
-        echo $NEWHOSTNAME > /tmp/newhostname
+        echo "$NEWHOSTNAME" > /tmp/newhostname
         cp /tmp/newhostname /etc/hostname
-        set_bibos_config hostname $NEWHOSTNAME
-        hostname $NEWHOSTNAME
+        set_bibos_config hostname "$NEWHOSTNAME"
+        hostname "$NEWHOSTNAME"
         sed -i -e "s/$HOSTNAME/$NEWHOSTNAME/" /etc/hosts
     else
-        set_bibos_config hostname $HOSTNAME
+        set_bibos_config hostname "$HOSTNAME"
     fi
 
 
     # - site
     #   TODO: Get site from gateway, if none present prompt user
+    unset SITE
     if [[ -n "$HAS_GATEWAY" ]]
     then
-        SITE=$(get_bibos_config site "$SHARED_CONFIG")
+        SITE="$(get_bibos_config site "$SHARED_CONFIG")"
     fi
 
     if [[ -z "$SITE" ]]
@@ -99,7 +103,7 @@ while true; do
     # - distribution
     # Detect OS version and prompt user for verification
 
-    DISTRO=""
+    unset DISTRO
     if [[ -r /etc/os-release ]]; then
     	. /etc/os-release
         if [[ "$ID" = ubuntu ]]; then
@@ -125,15 +129,15 @@ while true; do
         read DISTRO
     fi
 
-    if [[ -z $DISTRO ]]
+    if [[ -z "$DISTRO" ]]
     then
         echo "Indtast ID for PC'ens distribution"
         read DISTRO
     fi
 
-    echo "Distributions ID: "$DISTRO
+    echo "Distributions ID: $DISTRO"
 
-    set_bibos_config distribution $DISTRO
+    set_bibos_config distribution "$DISTRO"
 
 
     # - mac
@@ -143,6 +147,7 @@ while true; do
 
     # - admin_url
     #   Get from gateway, otherwise prompt user.
+    unset ADMIN_URL
     if [[ -n "$HAS_GATEWAY" ]]
     then
         ADMIN_URL=$(get_bibos_config admin_url "$SHARED_CONFIG")
@@ -152,12 +157,12 @@ while true; do
         ADMIN_URL="https://bibos-admin.magenta-aps.dk"
         echo "Indtast admin-url hvis det ikke er $ADMIN_URL"
         read NEW_ADMIN_URL
-        if [[ -n $NEW_ADMIN_URL ]]
+        if [[ -n "$NEW_ADMIN_URL" ]]
         then
-            ADMIN_URL=$NEW_ADMIN_URL
+            ADMIN_URL="$NEW_ADMIN_URL"
         fi
     fi
-    set_bibos_config admin_url $ADMIN_URL
+    set_bibos_config admin_url "$ADMIN_URL"
 
     # OK, we got the config.
     # Do the deed.
