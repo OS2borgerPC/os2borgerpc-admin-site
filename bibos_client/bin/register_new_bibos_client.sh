@@ -10,7 +10,7 @@
         echo "Dette program skal køres som root." 1>&2
         exit 1
     fi
-    
+
     echo "Indtast gateway, tryk <ENTER> for ingen gateway eller automatisk opsætning"
     read GATEWAY_IP
 
@@ -51,12 +51,12 @@
     if [[ -n "$NEWHOSTNAME" ]]
     then
         echo $NEWHOSTNAME > /tmp/newhostname
-        sudo cp /tmp/newhostname /etc/hostname
-        sudo set_bibos_config hostname $NEWHOSTNAME
-        sudo hostname $NEWHOSTNAME
-        sudo sed -i -e "s/$HOSTNAME/$NEWHOSTNAME/" /etc/hosts
+        cp /tmp/newhostname /etc/hostname
+        set_bibos_config hostname $NEWHOSTNAME
+        hostname $NEWHOSTNAME
+        sed -i -e "s/$HOSTNAME/$NEWHOSTNAME/" /etc/hosts
     else
-        sudo set_bibos_config hostname $HOSTNAME
+        set_bibos_config hostname $HOSTNAME
     fi
 
 
@@ -66,16 +66,16 @@
     then
         SITE=$(get_bibos_config site "$SHARED_CONFIG")
     fi
-    
+
     if [[ -z "$SITE" ]]
-    then 
+    then
         echo "Indtast ID for det site, computeren skal tilmeldes:"
         read SITE
     fi
 
     if [[ -n "$SITE" ]]
     then
-        sudo set_bibos_config site $SITE
+        set_bibos_config site $SITE
     else
         echo ""
         echo "Computeren kan ikke registreres uden site - prøv igen."
@@ -84,7 +84,7 @@
 
 
     # - distribution
-    # Detect OS version and prompt user for verification	
+    # Detect OS version and prompt user for verification
 
     DISTRO=""
     if [[ -r /etc/os-release ]]; then
@@ -120,12 +120,12 @@
 
     echo "Distributions ID: "$DISTRO
 
-    sudo set_bibos_config distribution $DISTRO
+    set_bibos_config distribution $DISTRO
 
 
     # - mac
     #   Get the mac-address
-    sudo set_bibos_config mac `ip addr | grep link/ether | awk 'FNR==1{print $2}'`
+    set_bibos_config mac `ip addr | grep link/ether | awk 'FNR==1{print $2}'`
 
 
     # - admin_url
@@ -144,15 +144,15 @@
             ADMIN_URL=$NEW_ADMIN_URL
         fi
     fi
-    sudo set_bibos_config admin_url $ADMIN_URL
+    set_bibos_config admin_url $ADMIN_URL
 
-    # OK, we got the config. 
+    # OK, we got the config.
     # Do the deed.
-    sudo bibos_register_in_admin
+    bibos_register_in_admin
 
     # Now setup cron job
     if [[ -f $(which jobmanager) ]]
     then
-        sudo echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/bibos-jobmanager
-        sudo echo "*/5 * * * * root $(which jobmanager)" >> /etc/cron.d/bibos-jobmanager
+        echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/bibos-jobmanager
+        echo "*/5 * * * * root $(which jobmanager)" >> /etc/cron.d/bibos-jobmanager
     fi
