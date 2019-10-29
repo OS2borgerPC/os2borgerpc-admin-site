@@ -49,8 +49,8 @@ class BibOSConfig():
         does not exist."""
         try:
             stream = open(self.filename, "r")
-            self.yamldata = yaml.load(stream)
-            # Load returns None when the file is empty, but we need a dict
+            self.yamldata = yaml.safe_load(stream)
+            # safe_load returns None when the file is empty, but we need a dict
             if self.yamldata is None:
                 self.yamldata = {}
         except IOError as e:
