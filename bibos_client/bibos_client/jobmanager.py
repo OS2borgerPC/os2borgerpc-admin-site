@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import os
 import sys
@@ -264,7 +265,7 @@ class LocalJob(dict):
                 )
             log.close()
         else:
-            print >> os.sys.stderr, "Will not run job without aquired lock"
+            print("Will not run job without aquired lock", file=os.sys.stderr)
 
 
 def get_url_and_uid():
@@ -346,7 +347,7 @@ def get_instructions():
         if tmpfilename:
             subprocess.call(['mv', tmpfilename, PACKAGE_LIST_FILE])
     except Exception as e:
-        print >> os.sys.stderr, "Error while getting instructions:" + str(e)
+        print("Error while getting instructions:" + str(e), file=os.sys.stderr)
         if tmpfilename:
             subprocess.call(['rm', tmpfilename])
         # No instructions likely = no network. Do not continue.
@@ -401,7 +402,7 @@ def get_instructions():
                     # Send full package info to server.
                     upload_packages()
                 except Exception as e:
-                    print >> os.sys.stderr, "Package upload failed" + str(e)
+                    print("Package upload failed" + str(e), file=os.sys.stderr)
 
 
 def check_outstanding_packages():
@@ -414,7 +415,7 @@ def check_outstanding_packages():
         package_updates, security_updates = map(int, err.split(';'))
         return (package_updates, security_updates)
     except Exception as e:
-        print >> os.sys.stderr, "apt-check failed" + str(e)
+        print("apt-check failed" + str(e), file=os.sys.stderr)
         return None
 
 
@@ -467,7 +468,7 @@ def run_pending_jobs():
 
         report_job_results(results)
     else:
-        print >> os.sys.stderr, "Aquire the lock before running jobs"
+        print("Aquire the lock before running jobs", file=os.sys.stderr)
 
 
 def run_security_scripts():
@@ -561,7 +562,7 @@ def send_security_events(now):
 
         return result
     except Exception as e:
-        print >> os.sys.stderr, "Error while sending security events:" + str(e)
+        print("Error while sending security events:" + str(e), file=os.sys.stderr)
         return False
     finally:
         os.remove(SECURITY_DIR + "/security_check_" + now + ".csv")
@@ -593,14 +594,14 @@ def update_and_run():
             run_pending_jobs()
             handle_security_events()
         except IOError, socket.error:
-            print "Network error, exiting ..."
+            print("Network error, exiting ...")
             sys.exit()
         except Exception:
             raise
         finally:
             LOCK.release()
     except IOError:
-        print "Couldn't get lock"
+        print("Couldn't get lock")
 
 
 if __name__ == '__main__':

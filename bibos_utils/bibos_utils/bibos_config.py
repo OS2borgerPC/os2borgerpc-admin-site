@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import os
 import yaml
 import sys
@@ -90,7 +92,7 @@ class BibOSConfig():
                 yaml.dump(self.yamldata, stream, default_flow_style=False)
             os.rename(self.filename + ".new", self.filename)
         except IOError as e:
-            print "Error opening BibOSConfig file for writing: ", str(e)
+            print("Error opening BibOSConfig file for writing: ", str(e))
             raise
 
     def set_value(self, key, value):

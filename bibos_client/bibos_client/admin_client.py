@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import os
 import csv
 import xmlrpclib
@@ -113,8 +115,8 @@ if __name__ == '__main__':
     except:
         # Don't use mac address, generate random number instead
         uid = 'pop'
-    print admin.register_new_computer('pip', uid, 'BIBOS', 'AAKB',
-                                      bibos_config.get_data())
+    print(admin.register_new_computer('pip', uid, 'BIBOS', 'AAKB',
+                                      bibos_config.get_data()))
 
     # Find list of all packages for status.
     # os.system('get_package_data /tmp/packages.csv')
@@ -123,6 +125,6 @@ if __name__ == '__main__':
         package_reader = csv.reader(f, delimiter=';')
         package_data = [p for p in package_reader]
 
-    print admin.send_status_info(uid, package_data, None)
+    print(admin.send_status_info(uid, package_data, None))
 
-    print admin.get_instructions('pop')
+    print(admin.get_instructions('pop'))

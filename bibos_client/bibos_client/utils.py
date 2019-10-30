@@ -2,6 +2,8 @@
 """This file contains utilities for communicating with the BibOS admin
 system."""
 
+from __future__ import print_function
+
 import os
 import sys
 import csv
@@ -79,7 +81,7 @@ def upload_packages():
     try:
         admin.send_status_info(uid, package_data, None)
     except Exception as e:
-        print >> sys.stderr, 'Error:', str(e)
+        print('Error:', str(e), file=sys.stderr)
         sys.exit(1)
 
 
@@ -105,5 +107,5 @@ def upload_dist_packages():
     try:
         admin.upload_dist_packages(distribution, package_data)
     except Exception as e:
-        print >> sys.stderr, 'Error:', str(e)
+        print('Error:', str(e), file=sys.stderr)
         sys.exit(1)
