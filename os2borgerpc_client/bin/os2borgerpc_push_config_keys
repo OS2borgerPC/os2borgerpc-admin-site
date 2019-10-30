@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import sys
 
-from os2borgerpc_client.os2borgerpc_config import OS2borgerPCConfig
+from os2borgerpc_client.config import OS2borgerPCConfig
 from os2borgerpc_client.admin_client import get_default_admin
 try:
     config = OS2borgerPCConfig()

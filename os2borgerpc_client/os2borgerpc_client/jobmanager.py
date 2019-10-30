@@ -15,7 +15,7 @@ import tempfile
 
 from datetime import datetime
 
-from .os2borgerpc_config import OS2borgerPCConfig
+from .config import OS2borgerPCConfig
 
 from admin_client import OS2borgerPCAdmin
 from utils import upload_packages, filelock
@@ -351,23 +351,23 @@ def get_instructions():
 
     if 'configuration' in instructions:
         # Update configuration
-        os2borgerpc_config = OS2borgerPCConfig()
+        config = OS2borgerPCConfig()
         local_config = {}
-        for key, value in os2borgerpc_config.get_data().items():
+        for key, value in config.get_data().items():
             # We only care about string values
             if isinstance(value, basestring):
                 local_config[key] = value
 
         for key, value in instructions['configuration'].items():
-            os2borgerpc_config.set_value(key, value)
+            config.set_value(key, value)
             if key in local_config:
                 del local_config[key]
 
         # Anything left in local_config needs to be removed
         for key in local_config.keys():
-            os2borgerpc_config.remove_key(key)
+            config.remove_key(key)
 
-        os2borgerpc_config.save()
+        config.save()
 
     # Import jobs
     if 'jobs' in instructions:

@@ -1,5 +1,5 @@
 # This script is meant to be called with a simple
-# "import os2borgerpc_client.os2borgerpc_proxy_setup" and will automatically configure
+# "import os2borgerpc_client.proxy_setup" and will automatically configure
 # the neccessary proxy environment variables to use a OS2borgerPC gateway proxy.
 
 import os

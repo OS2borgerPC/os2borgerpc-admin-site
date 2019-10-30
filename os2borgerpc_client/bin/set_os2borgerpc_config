@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import sys
 
-from os2borgerpc_client.os2borgerpc_config import set_config
+from os2borgerpc_client.config import set_config
 
 DEBUG = True
 

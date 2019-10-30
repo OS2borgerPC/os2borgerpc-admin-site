@@ -6,7 +6,7 @@ import socket
 import netifaces
 from socket import AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST
 
-from os2borgerpc_client import os2borgerpc_config
+from os2borgerpc_client import config
 
 MESSAGE = "Hello"
 REPLY_MESSAGE = "OS2borgerPC-server:"
@@ -16,9 +16,9 @@ PORT = 42420
 def find_gateway(timeout=1):
     result = None
 
-    if os2borgerpc_config.has_config('gateway'):
+    if config.has_config('gateway'):
         # Done
-        ip = os2borgerpc_config.get_config('gateway')
+        ip = config.get_config('gateway')
         rc = os.system("ping -c 1 " + ip + " 2>&1 > /dev/null")
         if rc == 0:
             result = ip

@@ -12,7 +12,7 @@ import re
 import subprocess
 import fcntl
 
-from os2borgerpc_client.os2borgerpc_config import OS2borgerPCConfig
+from os2borgerpc_client.config import OS2borgerPCConfig
 from os2borgerpc_client.admin_client import OS2borgerPCAdmin
 
 

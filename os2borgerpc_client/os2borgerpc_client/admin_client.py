@@ -99,11 +99,11 @@ class OS2borgerPCAdmin(object):
 if __name__ == '__main__':
     """Simple test suite."""
     import netifaces
-    from os2borgerpc_client.os2borgerpc_config import OS2borgerPCConfig
+    from os2borgerpc_client.config import OS2borgerPCConfig
 
     admin_url = 'http://localhost:8080/admin-xml/'
-    os2borgerpc_config_file = '/etc/os2borgerpc/os2borgerpc.conf'
-    os2borgerpc_config = OS2borgerPCConfig(os2borgerpc_config_file)
+    config_file = '/etc/os2borgerpc/os2borgerpc.conf'
+    config = OS2borgerPCConfig(config_file)
 
     admin = OS2borgerPCAdmin(admin_url)
 
@@ -116,7 +116,7 @@ if __name__ == '__main__':
         # Don't use mac address, generate random number instead
         uid = 'pop'
     print(admin.register_new_computer('pip', uid, 'BIBOS', 'AAKB',
-                                      os2borgerpc_config.get_data()))
+                                      config.get_data()))
 
     # Find list of all packages for status.
     # os.system('get_package_data /tmp/packages.csv')
