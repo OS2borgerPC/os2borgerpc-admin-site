@@ -316,7 +316,7 @@ def get_local_package_diffs():
         else:
             updated_or_installed.append(value)
     # anything left over in org_packages must have been removed
-    removed = org_packages.keys()
+    removed = list(org_packages.keys())
 
     return (tmpfilename, updated_or_installed, removed)
 
