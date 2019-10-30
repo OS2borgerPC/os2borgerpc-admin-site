@@ -230,12 +230,8 @@ class LocalJob(dict):
         if LOCK.i_am_locking():
             self.read_property_from_file('status', self.status_path)
             if self['status'] != 'SUBMITTED':
-                os.sys.stderr.write(
-                    "Job %s: Will only run jobs with status %s\n" % (
-                        self.id,
-                        self['status']
-                    )
-                )
+                print("Job %s: Will only run jobs with status %s" %
+                        (self.id, self['status']), file=sys.stderr)
                 return
             log = open(self.log_path, 'a')
             self.load_local_parameters()
@@ -265,7 +261,7 @@ class LocalJob(dict):
                 )
             log.close()
         else:
-            print("Will not run job without aquired lock", file=os.sys.stderr)
+            print("Will not run job without aquired lock", file=sys.stderr)
 
 
 def get_url_and_uid():
@@ -347,7 +343,7 @@ def get_instructions():
         if tmpfilename:
             subprocess.call(['mv', tmpfilename, PACKAGE_LIST_FILE])
     except Exception as e:
-        print("Error while getting instructions:" + str(e), file=os.sys.stderr)
+        print("Error while getting instructions:" + str(e), file=sys.stderr)
         if tmpfilename:
             subprocess.call(['rm', tmpfilename])
         # No instructions likely = no network. Do not continue.
@@ -402,7 +398,7 @@ def get_instructions():
                     # Send full package info to server.
                     upload_packages()
                 except Exception as e:
-                    print("Package upload failed" + str(e), file=os.sys.stderr)
+                    print("Package upload failed" + str(e), file=sys.stderr)
 
 
 def check_outstanding_packages():
@@ -415,7 +411,7 @@ def check_outstanding_packages():
         package_updates, security_updates = map(int, err.split(';'))
         return (package_updates, security_updates)
     except Exception as e:
-        print("apt-check failed" + str(e), file=os.sys.stderr)
+        print("apt-check failed" + str(e), file=sys.stderr)
         return None
 
 
@@ -468,7 +464,7 @@ def run_pending_jobs():
 
         report_job_results(results)
     else:
-        print("Aquire the lock before running jobs", file=os.sys.stderr)
+        print("Aquire the lock before running jobs", file=sys.stderr)
 
 
 def run_security_scripts():
@@ -562,7 +558,7 @@ def send_security_events(now):
 
         return result
     except Exception as e:
-        print("Error while sending security events:" + str(e), file=os.sys.stderr)
+        print("Error while sending security events:" + str(e), file=sys.stderr)
         return False
     finally:
         os.remove(SECURITY_DIR + "/security_check_" + now + ".csv")
