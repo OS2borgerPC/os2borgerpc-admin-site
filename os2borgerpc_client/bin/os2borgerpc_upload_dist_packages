@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from bibos_client.utils import upload_dist_packages
+from os2borgerpc_client.utils import upload_dist_packages
 
 
 if __name__ == '__main__':

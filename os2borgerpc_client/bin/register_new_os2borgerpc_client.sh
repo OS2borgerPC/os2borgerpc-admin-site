@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SHARED_CONFIG="/tmp/bibos.conf"
+SHARED_CONFIG="/tmp/os2borgerpc.conf"
 
 while true; do
     fatal() {
@@ -36,7 +36,7 @@ while true; do
     if [[ -z "$GATEWAY_IP" ]]
     then
         # No gateway entered by user
-        GATEWAY_SITE="http://$(bibos_find_gateway 2> /dev/null)" 
+        GATEWAY_SITE="http://$(os2borgerpc_find_gateway 2> /dev/null)" 
     else
         # User entered IP address or hostname - test if reachable by ping
         echo "Checker forbindelsen til gateway ..."
@@ -49,10 +49,10 @@ while true; do
         fi
         # Gateway is pingable - we assume that means it's OK.
         GATEWAY_SITE="http://$GATEWAY_IP"
-        set_bibos_config gateway "$GATEWAY_IP"
+        set_os2borgerpc_config gateway "$GATEWAY_IP"
     fi
 
-    curl -s "$GATEWAY_SITE/bibos.conf" -o "$SHARED_CONFIG"
+    curl -s "$GATEWAY_SITE/os2borgerpc.conf" -o "$SHARED_CONFIG"
 
     unset HAS_GATEWAY
     if [[ -f "$SHARED_CONFIG" ]]
@@ -70,11 +70,11 @@ while true; do
     then
         echo "$NEWHOSTNAME" > /tmp/newhostname
         cp /tmp/newhostname /etc/hostname
-        set_bibos_config hostname "$NEWHOSTNAME"
+        set_os2borgerpc_config hostname "$NEWHOSTNAME"
         hostname "$NEWHOSTNAME"
         sed -i -e "s/$HOSTNAME/$NEWHOSTNAME/" /etc/hosts
     else
-        set_bibos_config hostname "$HOSTNAME"
+        set_os2borgerpc_config hostname "$HOSTNAME"
     fi
 
 
@@ -83,7 +83,7 @@ while true; do
     unset SITE
     if [[ -n "$HAS_GATEWAY" ]]
     then
-        SITE="$(get_bibos_config site "$SHARED_CONFIG")"
+        SITE="$(get_os2borgerpc_config site "$SHARED_CONFIG")"
     fi
 
     if [[ -z "$SITE" ]]
@@ -94,7 +94,7 @@ while true; do
 
     if [[ -n "$SITE" ]]
     then
-        set_bibos_config site $SITE
+        set_os2borgerpc_config site $SITE
     else
         fatal "Computeren kan ikke registreres uden site" && continue || exit 1
     fi
@@ -114,12 +114,12 @@ while true; do
 		elif [[ "$VERSION_ID" = "16.04" ]]; then
 			DISTRO="BIBOS16.04"
 		else
-			echo "Ubuntu versionen er ikke understøttet af BibOS systemet. Du kan alligevel godt forsøge at tilmelde PC'en til admin systemet."
+			echo "Ubuntu versionen er ikke understøttet af OS2borgerPC systemet. Du kan alligevel godt forsøge at tilmelde PC'en til admin systemet."
 			echo "Indtast ID for PC'ens distribution:"
 			read DISTRO
 		fi
         else
-		echo "Dette er ikke en Ubuntu maskine. BibOS systemet understøtter kun Ubuntu. Du kan alligevel godt forsøge at tilmelde PC'en til admin systemet."	
+		echo "Dette er ikke en Ubuntu maskine. OS2borgerPC systemet understøtter kun Ubuntu. Du kan alligevel godt forsøge at tilmelde PC'en til admin systemet."	
 		echo "Indtast ID for PC'ens distribution:"
 	        read DISTRO
 	fi
@@ -137,12 +137,12 @@ while true; do
 
     echo "Distributions ID: $DISTRO"
 
-    set_bibos_config distribution "$DISTRO"
+    set_os2borgerpc_config distribution "$DISTRO"
 
 
     # - mac
     #   Get the mac-address
-    set_bibos_config mac `ip addr | grep link/ether | awk 'FNR==1{print $2}'`
+    set_os2borgerpc_config mac `ip addr | grep link/ether | awk 'FNR==1{print $2}'`
 
 
     # - admin_url
@@ -150,10 +150,10 @@ while true; do
     unset ADMIN_URL
     if [[ -n "$HAS_GATEWAY" ]]
     then
-        ADMIN_URL=$(get_bibos_config admin_url "$SHARED_CONFIG")
+        ADMIN_URL=$(get_os2borgerpc_config admin_url "$SHARED_CONFIG")
     fi
     if [[ -z "$ADMIN_URL" ]]
-    then 
+    then
         ADMIN_URL="https://bibos-admin.magenta-aps.dk"
         echo "Indtast admin-url hvis det ikke er $ADMIN_URL"
         read NEW_ADMIN_URL
@@ -162,19 +162,19 @@ while true; do
             ADMIN_URL="$NEW_ADMIN_URL"
         fi
     fi
-    set_bibos_config admin_url "$ADMIN_URL"
+    set_os2borgerpc_config admin_url "$ADMIN_URL"
 
     # OK, we got the config.
     # Do the deed.
-    if ! bibos_register_in_admin; then
+    if ! os2borgerpc_register_in_admin; then
         fatal "Tilmelding mislykkedes" && continue || exit 1
     fi
 
     # Now setup cron job
     if [[ -f $(which jobmanager) ]]
     then
-        echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/bibos-jobmanager
-        echo "*/5 * * * * root $(which jobmanager)" >> /etc/cron.d/bibos-jobmanager
+        echo 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' > /etc/cron.d/os2borgerpc-jobmanager
+        echo "*/5 * * * * root $(which jobmanager)" >> /etc/cron.d/os2borgerpc-jobmanager
     fi
 
     break

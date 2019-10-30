@@ -6,19 +6,19 @@ import socket
 import netifaces
 from socket import AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST
 
-from bibos_client import bibos_config
+from os2borgerpc_client import os2borgerpc_config
 
 MESSAGE = "Hello"
-REPLY_MESSAGE = "BibOS-server:"
+REPLY_MESSAGE = "OS2borgerPC-server:"
 PORT = 42420
 
 
 def find_gateway(timeout=1):
     result = None
 
-    if bibos_config.has_config('gateway'):
+    if os2borgerpc_config.has_config('gateway'):
         # Done
-        ip = bibos_config.get_config('gateway')
+        ip = os2borgerpc_config.get_config('gateway')
         rc = os.system("ping -c 1 " + ip + " 2>&1 > /dev/null")
         if rc == 0:
             result = ip

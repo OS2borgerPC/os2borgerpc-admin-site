@@ -5,20 +5,20 @@ import yaml
 import sys
 import stat
 
-DEFAULT_CONFIG_FILE = "/etc/bibos/bibos.conf"
+DEFAULT_CONFIG_FILE = "/etc/os2borgerpc/os2borgerpc.conf"
 
 DEBUG = True  # TODO: Get from settings file.
 
 
 def get_config(key, filename=DEFAULT_CONFIG_FILE):
     """Get value of a known config key."""
-    conf = BibOSConfig(filename)
+    conf = OS2borgerPCConfig(filename)
     return conf.get_value(key)
 
 
 def has_config(key, filename=DEFAULT_CONFIG_FILE):
     """Return True if config key exists, False otherwise."""
-    conf = BibOSConfig(filename)
+    conf = OS2borgerPCConfig(filename)
     exists = False
     try:
         # TODO: It would be more elegant to determine this without computing
@@ -32,12 +32,12 @@ def has_config(key, filename=DEFAULT_CONFIG_FILE):
 
 def set_config(key, value, filename=DEFAULT_CONFIG_FILE):
     """Set value of a config key."""
-    conf = BibOSConfig(filename)
+    conf = OS2borgerPCConfig(filename)
     val = conf.set_value(key, value)
     conf.save()
 
 
-class BibOSConfig():
+class OS2borgerPCConfig():
     def __init__(self, filename=DEFAULT_CONFIG_FILE):
         """Create new configuration object. Each configuration object is
         defined by its ownership of exactly one configuration file."""
@@ -75,7 +75,7 @@ class BibOSConfig():
                 if not os.path.exists(d):
                     # Set the umask to make sure that every folder we create
                     # has an appropriately restrictive mode
-                    old_mask = os.umask(BibOSConfig.MASK)
+                    old_mask = os.umask(OS2borgerPCConfig.MASK)
                     try:
                         os.makedirs(d)
                     finally:
@@ -84,7 +84,7 @@ class BibOSConfig():
                     # Set the mode of the existing leaf directory with good
                     # old-fashioned C-style bit twiddling
                     s = os.stat(d)
-                    os.chmod(d, s.st_mode & ~BibOSConfig.MASK)
+                    os.chmod(d, s.st_mode & ~OS2borgerPCConfig.MASK)
 
             # Make sure we overwrite the settings file atomically -- a failed
             # write operation here would essentially unregister this client
@@ -92,7 +92,7 @@ class BibOSConfig():
                 yaml.dump(self.yamldata, stream, default_flow_style=False)
             os.rename(self.filename + ".new", self.filename)
         except IOError as e:
-            print("Error opening BibOSConfig file for writing: ", str(e))
+            print("Error opening OS2borgerPCConfig file for writing: ", str(e))
             raise
 
     def set_value(self, key, value):

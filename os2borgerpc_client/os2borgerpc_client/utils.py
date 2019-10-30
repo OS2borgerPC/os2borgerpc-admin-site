@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This file contains utilities for communicating with the BibOS admin
+"""This file contains utilities for communicating with the OS2borgerPC admin
 system."""
 
 from __future__ import print_function
@@ -12,8 +12,8 @@ import re
 import subprocess
 import fcntl
 
-from bibos_client.bibos_config import BibOSConfig
-from bibos_client.admin_client import BibOSAdmin
+from os2borgerpc_client.os2borgerpc_config import OS2borgerPCConfig
+from os2borgerpc_client.admin_client import OS2borgerPCAdmin
 
 
 class filelock(object):
@@ -53,14 +53,14 @@ def get_upgrade_packages():
 
 
 def upload_packages():
-    config = BibOSConfig()
+    config = OS2borgerPCConfig()
     data = config.get_data()
 
     admin_url = data['admin_url']
     xml_rpc_url = data.get('xml_rpc_url', '/admin-xml/')
     uid = data['uid']
 
-    admin = BibOSAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
+    admin = OS2borgerPCAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
 
     # TODO: Make option to turn off/avoid repeating this.
     os.system('get_package_data /tmp/packages.csv')
@@ -86,14 +86,14 @@ def upload_packages():
 
 
 def upload_dist_packages():
-    config = BibOSConfig()
+    config = OS2borgerPCConfig()
     data = config.get_data()
 
     admin_url = data['admin_url']
     xml_rpc_url = data.get('xml_rpc_url', '/admin-xml/')
     distribution = data['distribution']
 
-    admin = BibOSAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
+    admin = OS2borgerPCAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
 
     # TODO: Make option to turn off/avoid repeating this.
     os.system('get_package_data /tmp/packages.csv')

@@ -7,10 +7,10 @@ import urllib2
 
 
 def get_default_admin(verbose=False):
-    conf_data = BibOSConfig().get_data()
-    admin_url = conf_data.get('admin_url', 'http://bibos.magenta-aps.dk')
+    conf_data = OS2borgerPCConfig().get_data()
+    admin_url = conf_data.get('admin_url', 'http://os2borgerpc.magenta-aps.dk')
     xml_rpc_url = conf_data.get('xml_rpc_url', '/admin-xml/')
-    return BibOSAdmin(''.join([admin_url, xml_rpc_url]), verbose=verbose)
+    return OS2borgerPCAdmin(''.join([admin_url, xml_rpc_url]), verbose=verbose)
 
 
 # Thanks to A. Ellerton for this
@@ -52,7 +52,7 @@ class ProxyTransport(xmlrpclib.Transport):
         return(self.parse_response(f))
 
 
-class BibOSAdmin(object):
+class OS2borgerPCAdmin(object):
     """XML-RPC client class for communicating with admin system."""
 
     def __init__(self, url, verbose=False):
@@ -99,13 +99,13 @@ class BibOSAdmin(object):
 if __name__ == '__main__':
     """Simple test suite."""
     import netifaces
-    from bibos_client.bibos_config import BibOSConfig
+    from os2borgerpc_client.os2borgerpc_config import OS2borgerPCConfig
 
     admin_url = 'http://localhost:8080/admin-xml/'
-    bibos_config_file = '/etc/bibos/bibos.conf'
-    bibos_config = BibOSConfig(bibos_config_file)
+    os2borgerpc_config_file = '/etc/os2borgerpc/os2borgerpc.conf'
+    os2borgerpc_config = OS2borgerPCConfig(os2borgerpc_config_file)
 
-    admin = BibOSAdmin(admin_url)
+    admin = OS2borgerPCAdmin(admin_url)
 
     # Find HW address to use as UID
     try:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
         # Don't use mac address, generate random number instead
         uid = 'pop'
     print(admin.register_new_computer('pip', uid, 'BIBOS', 'AAKB',
-                                      bibos_config.get_data()))
+                                      os2borgerpc_config.get_data()))
 
     # Find list of all packages for status.
     # os.system('get_package_data /tmp/packages.csv')

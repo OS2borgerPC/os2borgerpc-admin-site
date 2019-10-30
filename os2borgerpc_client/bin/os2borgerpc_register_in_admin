@@ -5,22 +5,22 @@ from __future__ import print_function
 import sys
 import urlparse
 
-from bibos_client.bibos_config import BibOSConfig
-from bibos_client.admin_client import BibOSAdmin
+from os2borgerpc_client.os2borgerpc_config import OS2borgerPCConfig
+from os2borgerpc_client.admin_client import OS2borgerPCAdmin
 
 
-config = BibOSConfig()
+config = OS2borgerPCConfig()
 data = config.get_data()
 
 mac = data['mac']
 hostname = data['hostname']
 site = data['site']
 distribution = data['distribution']
-admin_url = data.get('admin_url', 'http://bibos.magenta-aps.dk/')
+admin_url = data.get('admin_url', 'http://os2borgerpc.magenta-aps.dk/')
 xml_rpc_url = data.get('xml_rpc_url', '/admin-xml/')
 urlparse.urljoin(admin_url, xml_rpc_url)
 
-admin = BibOSAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
+admin = OS2borgerPCAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
 
 # Data collected, now register computer.
 

@@ -15,37 +15,37 @@ import tempfile
 
 from datetime import datetime
 
-from .bibos_config import BibOSConfig
+from .os2borgerpc_config import OS2borgerPCConfig
 
-from admin_client import BibOSAdmin
+from admin_client import OS2borgerPCAdmin
 from utils import upload_packages, filelock
 
 # Keep this in sync with setup.py
-BIBOS_CLIENT_VERSION = "0.0.5.0"
+OS2BORGERPC_CLIENT_VERSION = "0.0.5.0"
 
 """
-Directory structure for storing BibOS jobs:
-/var/lib/bibos/jobs/<id> - Files related to job with id <id>
-/var/lib/bibos/jobs/<id>/attachments - files needed to execute the job
-/var/lib/bibos/jobs/<id>/executable - the program that executes the job
-/var/lib/bibos/jobs/<id>/parameters.json - json file containing parameters
-/var/lib/bibos/jobs/<id>/status - status file, created by the runtime system
-/var/lib/bibos/jobs/<id>/started - created when job is stated
-/var/lib/bibos/jobs/<id>/finished - created when job is finished/failed
-/var/lib/bibos/jobs/<id>/output.log - Logfile with output from the job
+Directory structure for storing OS2borgerPC jobs:
+/var/lib/os2borgerpc/jobs/<id> - Files related to job with id <id>
+/var/lib/os2borgerpc/jobs/<id>/attachments - files needed to execute the job
+/var/lib/os2borgerpc/jobs/<id>/executable - the program that executes the job
+/var/lib/os2borgerpc/jobs/<id>/parameters.json - json file containing parameters
+/var/lib/os2borgerpc/jobs/<id>/status - status file, created by the runtime system
+/var/lib/os2borgerpc/jobs/<id>/started - created when job is stated
+/var/lib/os2borgerpc/jobs/<id>/finished - created when job is finished/failed
+/var/lib/os2borgerpc/jobs/<id>/output.log - Logfile with output from the job
 """
 
 """
-Directory structure for BibOS security events:
-/etc/bibos/security/securityevent.csv - Security event log file.
-/etc/bibos/security/ - Scripts to be executed by the jobmanager.
-/etc/bibos/security/security_check_YYYYMMDDHHmm.csv -
+Directory structure for OS2borgerPC security events:
+/etc/os2borgerpc/security/securityevent.csv - Security event log file.
+/etc/os2borgerpc/security/ - Scripts to be executed by the jobmanager.
+/etc/os2borgerpc/security/security_check_YYYYMMDDHHmm.csv -
 files containing the events to be sent to the admin system.
 """
-SECURITY_DIR = '/etc/bibos/security'
-JOBS_DIR = '/var/lib/bibos/jobs'
+SECURITY_DIR = '/etc/os2borgerpc/security'
+JOBS_DIR = '/var/lib/os2borgerpc/jobs'
 LOCK = filelock(JOBS_DIR + '/running')
-PACKAGE_LIST_FILE = '/var/lib/bibos/current_packages.list'
+PACKAGE_LIST_FILE = '/var/lib/os2borgerpc/current_packages.list'
 PACKAGE_LINE_MATCHER = re.compile('ii\s+(\S+)\s+(\S+)\s+(.*)')
 
 
@@ -192,7 +192,7 @@ class LocalJob(dict):
         if 'parameters' not in self:
             return
 
-        config = BibOSConfig()
+        config = OS2borgerPCConfig()
         admin_url = config.get_value('admin_url')
 
         local_params = []
@@ -265,10 +265,10 @@ class LocalJob(dict):
 
 
 def get_url_and_uid():
-    config = BibOSConfig()
+    config = OS2borgerPCConfig()
     uid = config.get_value('uid')
     config_data = config.get_data()
-    admin_url = config_data.get('admin_url', 'http://bibos.magenta-aps.dk/')
+    admin_url = config_data.get('admin_url', 'http://os2borgerpc.magenta-aps.dk/')
     xml_rpc_url = config_data.get('xml_rpc_url', '/admin-xml/')
     rpc_url = urlparse.urljoin(admin_url, xml_rpc_url)
     return(rpc_url, uid)
@@ -330,7 +330,7 @@ def get_local_package_diffs():
 
 def get_instructions():
     (remote_url, uid) = get_url_and_uid()
-    remote = BibOSAdmin(remote_url)
+    remote = OS2borgerPCAdmin(remote_url)
 
     tmpfilename, updated_pkgs, removed_pkgs = get_local_package_diffs()
 
@@ -351,23 +351,23 @@ def get_instructions():
 
     if 'configuration' in instructions:
         # Update configuration
-        bibos_config = BibOSConfig()
+        os2borgerpc_config = OS2borgerPCConfig()
         local_config = {}
-        for key, value in bibos_config.get_data().items():
+        for key, value in os2borgerpc_config.get_data().items():
             # We only care about string values
             if isinstance(value, basestring):
                 local_config[key] = value
 
         for key, value in instructions['configuration'].items():
-            bibos_config.set_value(key, value)
+            os2borgerpc_config.set_value(key, value)
             if key in local_config:
                 del local_config[key]
 
         # Anything left in local_config needs to be removed
         for key in local_config.keys():
-            bibos_config.remove_key(key)
+            os2borgerpc_config.remove_key(key)
 
-        bibos_config.save()
+        os2borgerpc_config.save()
 
     # Import jobs
     if 'jobs' in instructions:
@@ -417,7 +417,7 @@ def check_outstanding_packages():
 
 def report_job_results(joblist):
     (remote_url, uid) = get_url_and_uid()
-    remote = BibOSAdmin(remote_url)
+    remote = OS2borgerPCAdmin(remote_url)
     remote.send_status_info(uid, None, joblist,
                             update_required=check_outstanding_packages())
 
@@ -535,7 +535,7 @@ def collect_security_events(now):
 
 def send_security_events(now):
     (remote_url, uid) = get_url_and_uid()
-    remote = BibOSAdmin(remote_url)
+    remote = OS2borgerPCAdmin(remote_url)
 
     try:
         securitycheck_file = open(SECURITY_DIR +
@@ -574,10 +574,10 @@ def handle_security_events():
 
 def send_special_data():
     (remote_url, uid) = get_url_and_uid()
-    remote = BibOSAdmin(remote_url)
+    remote = OS2borgerPCAdmin(remote_url)
 
     remote.push_config_keys(uid, {
-        "_os2borgerpc.client_version": BIBOS_CLIENT_VERSION
+        "_os2borgerpc.client_version": OS2BORGERPC_CLIENT_VERSION
     })
 
 

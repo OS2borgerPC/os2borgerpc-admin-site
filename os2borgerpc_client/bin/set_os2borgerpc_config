@@ -4,13 +4,13 @@ from __future__ import print_function
 
 import sys
 
-from bibos_client.bibos_config import set_config
+from os2borgerpc_client.os2borgerpc_config import set_config
 
 DEBUG = True
 
 def print_usage():
     print()
-    print("Usage: set_bibos_config <key> <value> [<config_file>]")
+    print("Usage: set_os2borgerpc_config <key> <value> [<config_file>]")
 
 args = len(sys.argv)
 val = None

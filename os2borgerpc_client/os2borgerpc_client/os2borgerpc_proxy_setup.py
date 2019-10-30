@@ -1,9 +1,9 @@
 # This script is meant to be called with a simple
-# "import bibos_client.bibos_proxy_setup" and will automatically configure
-# the neccessary proxy environment variables to use a BibOS gateway proxy.
+# "import os2borgerpc_client.os2borgerpc_proxy_setup" and will automatically configure
+# the neccessary proxy environment variables to use a OS2borgerPC gateway proxy.
 
 import os
-from bibos_client.gateway import find_gateway
+from os2borgerpc_client.gateway import find_gateway
 
 if 'http_proxy' not in os.environ:
     gw = find_gateway(timeout=1)

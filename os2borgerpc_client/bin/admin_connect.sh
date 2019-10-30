@@ -10,8 +10,8 @@ sudo apt-get install python-dev --assume-yes
 sudo apt-get install python-pip --assume-yes
 sudo pip uninstall netifaces -y
 sudo pip install lockfile
-sudo pip install --upgrade bibos-client
-sudo mkdir -p /var/lib/bibos/jobs/
-sudo mkdir -p /etc/bibos/security/
-sudo set_bibos_config admin_connect_version $VERSION
-sudo register_new_bibos_client.sh
+sudo pip install --upgrade os2borgerpc-client
+sudo mkdir -p /var/lib/os2borgerpc/jobs/
+sudo mkdir -p /etc/os2borgerpc/security/
+sudo set_os2borgerpc_config admin_connect_version $VERSION
+sudo register_new_os2borgerpc_client.sh

@@ -4,14 +4,14 @@ from __future__ import print_function
 
 import sys
 
-from bibos_client.bibos_config import get_config
+from os2borgerpc_client.os2borgerpc_config import get_config
 
 DEBUG = True  # TODO: Get from command line option
 
 
 def print_usage():
     print()
-    print("Usage: get_bibos_config <key> [<config_file>]")
+    print("Usage: get_os2borgerpc_config <key> [<config_file>]")
     print()
 
 
