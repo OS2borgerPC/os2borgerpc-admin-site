@@ -570,6 +570,9 @@ def send_special_data():
 
 
 def update_and_run():
+    for folder in (JOBS_DIR, SECURITY_DIR,):
+        os.makedirs(folder, mode=0o700, exist_ok=True)
+
     try:
         LOCK.acquire()
         try:
@@ -584,8 +587,9 @@ def update_and_run():
             raise
         finally:
             LOCK.release()
-    except IOError:
+    except IOError as e:
         print("Couldn't get lock")
+        raise e
 
 
 if __name__ == '__main__':
