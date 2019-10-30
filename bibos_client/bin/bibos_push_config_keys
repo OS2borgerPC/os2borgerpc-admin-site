@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import sys
 
-from bibos_utils.bibos_config import BibOSConfig
+from bibos_client.bibos_config import BibOSConfig
 from bibos_client.admin_client import get_default_admin
 try:
     config = BibOSConfig()

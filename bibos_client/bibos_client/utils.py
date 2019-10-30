@@ -12,7 +12,7 @@ import re
 import subprocess
 import fcntl
 
-from bibos_utils.bibos_config import BibOSConfig
+from bibos_client.bibos_config import BibOSConfig
 from bibos_client.admin_client import BibOSAdmin
 
 

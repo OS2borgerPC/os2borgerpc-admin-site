@@ -15,7 +15,7 @@ import tempfile
 
 from datetime import datetime
 
-from bibos_utils.bibos_config import BibOSConfig
+from .bibos_config import BibOSConfig
 
 from admin_client import BibOSAdmin
 from utils import upload_packages, filelock

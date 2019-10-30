@@ -99,7 +99,7 @@ class BibOSAdmin(object):
 if __name__ == '__main__':
     """Simple test suite."""
     import netifaces
-    from bibos_utils.bibos_config import BibOSConfig
+    from bibos_client.bibos_config import BibOSConfig
 
     admin_url = 'http://localhost:8080/admin-xml/'
     bibos_config_file = '/etc/bibos/bibos.conf'

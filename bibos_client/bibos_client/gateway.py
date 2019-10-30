@@ -6,7 +6,7 @@ import socket
 import netifaces
 from socket import AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST
 
-from bibos_utils import bibos_config
+from bibos_client import bibos_config
 
 MESSAGE = "Hello"
 REPLY_MESSAGE = "BibOS-server:"
