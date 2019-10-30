@@ -24,7 +24,7 @@ class filelock(object):
 
     def acquire(self):
         assert not self.file_descriptor
-        self.file_descriptor = file(self.file_name, 'w')
+        self.file_descriptor = open(self.file_name, 'w')
         fcntl.lockf(self.file_descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
     def release(self):
