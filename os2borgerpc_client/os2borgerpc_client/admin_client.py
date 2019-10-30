@@ -1,9 +1,7 @@
-from __future__ import print_function
-
 import os
 import csv
-import xmlrpclib
-import urllib2
+import xmlrpc.client
+import urllib.request
 
 
 def get_default_admin(verbose=False):
@@ -14,7 +12,7 @@ def get_default_admin(verbose=False):
 
 
 # Thanks to A. Ellerton for this
-class ProxyTransport(xmlrpclib.Transport):
+class ProxyTransport(xmlrpc.client.Transport):
     """Provides an XMl-RPC transport routing via a http proxy.
 
     This is done by using urllib2, which in turn uses the environment
@@ -31,7 +29,7 @@ class ProxyTransport(xmlrpclib.Transport):
     """
 
     def __init__(self, schema='http'):
-        xmlrpclib.Transport.__init__(self)
+        xmlrpc.client.Transport.__init__(self)
         self.schema = schema
 
     def request(self, host, handler, request_body, verbose):
@@ -39,15 +37,15 @@ class ProxyTransport(xmlrpclib.Transport):
         self.verbose = verbose
         url = self.schema + '://' + host + handler
 
-        request = urllib2.Request(url)
+        request = urllib.request.Request(url)
         request.add_data(request_body)
 
         # Note: 'Host' and 'Content-Length' are added automatically
         request.add_header("User-Agent", self.user_agent)
         request.add_header("Content-Type", "text/xml")  # Important
 
-        proxy_handler = urllib2.ProxyHandler()
-        opener = urllib2.build_opener(proxy_handler)
+        proxy_handler = urllib.request.ProxyHandler()
+        opener = urllib.request.build_opener(proxy_handler)
         f = opener.open(request)
         return(self.parse_response(f))
 
@@ -66,7 +64,7 @@ class OS2borgerPCAdmin(object):
                 schema=url[:url.index(':')]
             )
 
-        self._rpc_srv = xmlrpclib.ServerProxy(self._url, **rpc_args)
+        self._rpc_srv = xmlrpc.client.ServerProxy(self._url, **rpc_args)
 
     def register_new_computer(self, mac, name, distribution, site,
                               configuration):

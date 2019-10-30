@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import os
 import yaml
 import sys
@@ -149,8 +147,7 @@ class OS2borgerPCConfig():
             for k, v in node.items():
                 here = prefix + [k]
                 if isinstance(v, dict):
-                    for i in _get_at(v, here):
-                        yield i
+                    yield from _get_at(v, here)
                 else:
                     yield (".".join(here), v)
         return dict(_get_at(self.yamldata, []))

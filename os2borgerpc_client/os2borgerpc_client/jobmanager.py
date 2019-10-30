@@ -1,13 +1,11 @@
-from __future__ import print_function
-
 import os
 import sys
 import socket
 import os.path
 import stat
-import urllib2
+import urllib.parse
+import urllib.request
 import json
-import urlparse
 import glob
 import re
 import subprocess
@@ -17,8 +15,8 @@ from datetime import datetime
 
 from .config import OS2borgerPCConfig
 
-from admin_client import OS2borgerPCAdmin
-from utils import upload_packages, filelock
+from .admin_client import OS2borgerPCAdmin
+from .utils import upload_packages, filelock
 
 # Keep this in sync with setup.py
 OS2BORGERPC_CLIENT_VERSION = "0.0.5.1"
@@ -209,8 +207,8 @@ class LocalJob(dict):
                 basename = value[value.rindex('/') + 1:]
                 filename = self.attachments_path + '/' + basename
                 # TODO this is probably not the right URL
-                full_url = urlparse.urljoin(admin_url, value)
-                remote_file = urllib2.urlopen(full_url)
+                full_url = urllib.parse.urljoin(admin_url, value)
+                remote_file = urllib.request.urlopen(full_url)
                 attachment_fh = open(filename, 'w')
                 attachment_fh.write(remote_file.read())
                 attachment_fh.close()
@@ -270,7 +268,7 @@ def get_url_and_uid():
     config_data = config.get_data()
     admin_url = config_data.get('admin_url', 'http://os2borgerpc.magenta-aps.dk/')
     xml_rpc_url = config_data.get('xml_rpc_url', '/admin-xml/')
-    rpc_url = urlparse.urljoin(admin_url, xml_rpc_url)
+    rpc_url = urllib.parse.urljoin(admin_url, xml_rpc_url)
     return(rpc_url, uid)
 
 
@@ -355,7 +353,7 @@ def get_instructions():
         local_config = {}
         for key, value in config.get_data().items():
             # We only care about string values
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 local_config[key] = value
 
         for key, value in instructions['configuration'].items():
@@ -408,7 +406,7 @@ def check_outstanding_packages():
         proc = subprocess.Popen(["/usr/lib/update-notifier/apt-check"],
                                 stderr=subprocess.PIPE, shell=True)
         _, err = proc.communicate()
-        package_updates, security_updates = map(int, err.split(';'))
+        package_updates, security_updates = [int(x) for x in err.split(';')]
         return (package_updates, security_updates)
     except Exception as e:
         print("apt-check failed" + str(e), file=sys.stderr)
@@ -589,7 +587,7 @@ def update_and_run():
             get_instructions()
             run_pending_jobs()
             handle_security_events()
-        except IOError, socket.error:
+        except (IOError, socket.error):
             print("Network error, exiting ...")
             sys.exit()
         except Exception:

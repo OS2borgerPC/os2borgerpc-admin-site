@@ -1,9 +1,7 @@
-#!/usr/bin/env python
-
-from __future__ import print_function
+#!/usr/bin/env python3
 
 import sys
-import urlparse
+import urllib.parse
 
 from os2borgerpc_client.config import OS2borgerPCConfig
 from os2borgerpc_client.admin_client import OS2borgerPCAdmin
@@ -18,9 +16,9 @@ site = data['site']
 distribution = data['distribution']
 admin_url = data.get('admin_url', 'http://os2borgerpc.magenta-aps.dk/')
 xml_rpc_url = data.get('xml_rpc_url', '/admin-xml/')
-urlparse.urljoin(admin_url, xml_rpc_url)
+urllib.parse.urljoin(admin_url, xml_rpc_url)
 
-admin = OS2borgerPCAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
+admin = OS2borgerPCAdmin(urllib.parse.urljoin(admin_url, xml_rpc_url))
 
 # Data collected, now register computer.
 

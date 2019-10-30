@@ -2,12 +2,10 @@
 """This file contains utilities for communicating with the OS2borgerPC admin
 system."""
 
-from __future__ import print_function
-
 import os
 import sys
 import csv
-import urlparse
+import urllib.parse
 import re
 import subprocess
 import fcntl
@@ -60,7 +58,7 @@ def upload_packages():
     xml_rpc_url = data.get('xml_rpc_url', '/admin-xml/')
     uid = data['uid']
 
-    admin = OS2borgerPCAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
+    admin = OS2borgerPCAdmin(urllib.parse.urljoin(admin_url, xml_rpc_url))
 
     # TODO: Make option to turn off/avoid repeating this.
     os.system('get_package_data /tmp/packages.csv')
@@ -93,7 +91,7 @@ def upload_dist_packages():
     xml_rpc_url = data.get('xml_rpc_url', '/admin-xml/')
     distribution = data['distribution']
 
-    admin = OS2borgerPCAdmin(urlparse.urljoin(admin_url, xml_rpc_url))
+    admin = OS2borgerPCAdmin(urllib.parse.urljoin(admin_url, xml_rpc_url))
 
     # TODO: Make option to turn off/avoid repeating this.
     os.system('get_package_data /tmp/packages.csv')
