@@ -21,7 +21,7 @@ from admin_client import OS2borgerPCAdmin
 from utils import upload_packages, filelock
 
 # Keep this in sync with setup.py
-OS2BORGERPC_CLIENT_VERSION = "0.0.5.0"
+OS2BORGERPC_CLIENT_VERSION = "0.0.5.1"
 
 """
 Directory structure for storing OS2borgerPC jobs:

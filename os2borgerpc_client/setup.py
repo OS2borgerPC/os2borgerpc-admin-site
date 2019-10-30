@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='os2borgerpc_client',
     # Keep this in sync with os2borgerpc_client/jobmanager.py
-    version='0.0.5.0',
+    version='0.0.5.1',
     description='Clients for the OS2borgerPC system',
     url='https://github.com/magenta-aps/',
     author='Magenta ApS',
