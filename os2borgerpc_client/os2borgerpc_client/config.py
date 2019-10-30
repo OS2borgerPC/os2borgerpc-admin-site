@@ -1,22 +1,24 @@
 import os
+import os.path
 import yaml
 import sys
 import stat
 
-DEFAULT_CONFIG_FILE = "/etc/os2borgerpc/os2borgerpc.conf"
+DEFAULT_CONFIG_FILES = [
+        "/etc/os2borgerpc/os2borgerpc.conf", "/etc/bibos/bibos.conf"]
 
 DEBUG = True  # TODO: Get from settings file.
 
 
-def get_config(key, filename=DEFAULT_CONFIG_FILE):
+def get_config(key, filenames=DEFAULT_CONFIG_FILES):
     """Get value of a known config key."""
-    conf = OS2borgerPCConfig(filename)
+    conf = OS2borgerPCConfig(filenames)
     return conf.get_value(key)
 
 
-def has_config(key, filename=DEFAULT_CONFIG_FILE):
+def has_config(key, filenames=DEFAULT_CONFIG_FILES):
     """Return True if config key exists, False otherwise."""
-    conf = OS2borgerPCConfig(filename)
+    conf = OS2borgerPCConfig(filenames)
     exists = False
     try:
         # TODO: It would be more elegant to determine this without computing
@@ -28,7 +30,7 @@ def has_config(key, filename=DEFAULT_CONFIG_FILE):
     return exists
 
 
-def set_config(key, value, filename=DEFAULT_CONFIG_FILE):
+def set_config(key, value, filenames=DEFAULT_CONFIG_FILES):
     """Set value of a config key."""
     conf = OS2borgerPCConfig(filename)
     val = conf.set_value(key, value)
@@ -36,10 +38,19 @@ def set_config(key, value, filename=DEFAULT_CONFIG_FILE):
 
 
 class OS2borgerPCConfig():
-    def __init__(self, filename=DEFAULT_CONFIG_FILE):
+    def __init__(self, filenames=DEFAULT_CONFIG_FILES):
         """Create new configuration object. Each configuration object is
         defined by its ownership of exactly one configuration file."""
-        self.filename = filename
+
+        # Check if one of the candidate filenames exists. If one does, then
+        # use it; otherwise, use (and thus create) the first one
+        for f in filenames:
+            if os.path.isfile(f):
+                self.filename = f
+                break
+        else:
+            self.filename = filenames[0]
+
         self.yamldata = {}
         # Do not catch exceptions here, let them pass from load function
         self.load()
