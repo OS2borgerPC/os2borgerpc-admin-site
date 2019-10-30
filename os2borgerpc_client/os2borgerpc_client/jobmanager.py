@@ -154,17 +154,15 @@ class LocalJob(dict):
 
     def read_property_from_file(self, prop, file_path):
         try:
-            fh = open(file_path, 'r')
-            self[prop] = fh.read()
-            fh.close()
+            with open(file_path, "rt") as fh:
+                self[prop] = fh.read()
         except IOError:
             pass
 
     def save_property_to_file(self, prop, file_path):
-        if(prop in self):
-            fh = open(file_path, 'w')
-            fh.write(self[prop].encode("utf8"))
-            fh.close()
+        if prop in self:
+            with open(file_path, "wt") as fh:
+                fh.write(self[prop])
 
     def populate(self, data):
         for k in data.keys():
@@ -182,9 +180,8 @@ class LocalJob(dict):
 
         self.translate_parameters()
         if 'local_parameters' in self:
-            param_fh = open(self.parameters_path, 'w')
-            param_fh.write(json.dumps(self['local_parameters']))
-            param_fh.close()
+            with open(self.parameters_path, "wt") as param_fh:
+                param_fh.write(json.dumps(self['local_parameters']))
 
     def translate_parameters(self):
         if 'parameters' not in self:
@@ -209,17 +206,15 @@ class LocalJob(dict):
                 # TODO this is probably not the right URL
                 full_url = urllib.parse.urljoin(admin_url, value)
                 remote_file = urllib.request.urlopen(full_url)
-                attachment_fh = open(filename, 'w')
-                attachment_fh.write(remote_file.read())
-                attachment_fh.close()
+                with open(filename, "wb") as attachment_fh:
+                    attachment_fh.write(remote_file.read())
                 local_params.append(filename)
             else:
                 local_params.append(param['value'])
 
     def log(self, message):
-        fh = open(self.log_path, 'a')
-        fh.write(message)
-        fh.close()
+        with open(self.log_path, "at") as fh:
+            fh.write(message)
 
     def logline(self, message):
         self.log(message + "\n")
@@ -385,9 +380,8 @@ def get_instructions():
         if 'security_scripts' in instructions:
             for s in instructions['security_scripts']:
                 fpath = SECURITY_DIR + '/s_' + str(s['name']).replace(' ', '')
-                fh = open(fpath, 'w')
-                fh.write(s['executable_code'].encode("utf8"))
-                fh.close()
+                with open(fpath, "wt") as fh:
+                    fh.write(s['executable_code'])
                 os.chmod(fpath, stat.S_IRWXU)
 
     if ('do_send_package_info' in instructions and
@@ -404,7 +398,8 @@ def check_outstanding_packages():
     # This is really a wrapper for apt-check.
     try:
         proc = subprocess.Popen(["/usr/lib/update-notifier/apt-check"],
-                                stderr=subprocess.PIPE, shell=True)
+                                stderr=subprocess.PIPE,
+                                universal_newlines=True, shell=True)
         _, err = proc.communicate()
         package_updates, security_updates = [int(x) for x in err.split(';')]
         return (package_updates, security_updates)
@@ -523,10 +518,9 @@ def collect_security_events(now):
 
     # Check if any new events occured
     if data != "":
-        securitycheck_file = open(SECURITY_DIR +
-                                  "/security_check_" + now + ".csv", "w")
-        securitycheck_file.write(data)
-        securitycheck_file.close()
+        with open(SECURITY_DIR + "/security_check_" + now + ".csv", "wt") as (
+                check_file):
+            check_file.write(data)
 
     csv_file.close()
 
@@ -536,30 +530,26 @@ def send_security_events(now):
     remote = OS2borgerPCAdmin(remote_url)
 
     try:
-        securitycheck_file = open(SECURITY_DIR +
-                                  "/security_check_" + now + ".csv", "r")
+        with open(SECURITY_DIR + "/security_check_" + now + ".csv", "r") as fh:
+            csv_data = [line for line in fh]
+
+        try:
+            result = remote.push_security_events(uid, csv_data)
+            if result == 0:
+                with open(SECURITY_DIR + "/lastcheck.txt", "wt") as check_file:
+                    check_file.write(now)
+                os.remove(SECURITY_DIR + "/securityevent.csv")
+
+            return result
+        except Exception as e:
+            print("Error while sending security events:" + str(e),
+                    file=sys.stderr)
+            return False
+        finally:
+            os.remove(SECURITY_DIR + "/security_check_" + now + ".csv")
     except IOError:
         # File does not exist. No events occured, since last check.
         return False
-
-    csv_data = [line for line in securitycheck_file]
-
-    securitycheck_file.close()
-
-    try:
-        result = remote.push_security_events(uid, csv_data)
-        if result == 0:
-            check_file = open(SECURITY_DIR + "/lastcheck.txt", "w")
-            check_file.write(now)
-            check_file.close()
-            os.remove(SECURITY_DIR + "/securityevent.csv")
-
-        return result
-    except Exception as e:
-        print("Error while sending security events:" + str(e), file=sys.stderr)
-        return False
-    finally:
-        os.remove(SECURITY_DIR + "/security_check_" + now + ".csv")
 
 
 def handle_security_events():
