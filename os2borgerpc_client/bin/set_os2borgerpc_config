@@ -2,7 +2,7 @@
 
 import sys
 
-from os2borgerpc_client.config import set_config
+from os2borgerpc.client.config import set_config
 
 DEBUG = True
 

@@ -97,7 +97,7 @@ class OS2borgerPCAdmin(object):
 if __name__ == '__main__':
     """Simple test suite."""
     import netifaces
-    from os2borgerpc_client.config import OS2borgerPCConfig
+    from .config import OS2borgerPCConfig
 
     admin_url = 'http://localhost:8080/admin-xml/'
     config_file = '/etc/os2borgerpc/os2borgerpc.conf'

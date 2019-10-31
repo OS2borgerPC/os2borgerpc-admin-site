@@ -2,7 +2,7 @@
 
 import sys
 
-from os2borgerpc_client.gateway import find_gateway
+from os2borgerpc.client.gateway import find_gateway
 try:
     s = find_gateway()
     if s:

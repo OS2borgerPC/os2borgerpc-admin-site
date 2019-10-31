@@ -1,9 +1,9 @@
 # This script is meant to be called with a simple
-# "import os2borgerpc_client.proxy_setup" and will automatically configure
+# "import os2borgerpc.client.proxy_setup" and will automatically configure
 # the neccessary proxy environment variables to use a OS2borgerPC gateway proxy.
 
 import os
-from os2borgerpc_client.gateway import find_gateway
+from .gateway import find_gateway
 
 if 'http_proxy' not in os.environ:
     gw = find_gateway(timeout=1)

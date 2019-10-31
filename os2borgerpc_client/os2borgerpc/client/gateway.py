@@ -4,7 +4,7 @@ import socket
 import netifaces
 from socket import AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST
 
-from os2borgerpc_client import config
+from . import config
 
 MESSAGE = "Hello"
 REPLY_MESSAGE = "OS2borgerPC-server:"

@@ -10,8 +10,8 @@ import re
 import subprocess
 import fcntl
 
-from os2borgerpc_client.config import OS2borgerPCConfig
-from os2borgerpc_client.admin_client import OS2borgerPCAdmin
+from .config import OS2borgerPCConfig
+from .admin_client import OS2borgerPCAdmin
 
 
 class filelock(object):
