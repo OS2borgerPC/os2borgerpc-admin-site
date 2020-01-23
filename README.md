@@ -36,9 +36,9 @@ minutes or less. An Internet connection is required.
 
 ## PRE-REQUISITES
 
-Python 3.6
-SQLite 3
-python-virtualenv
+  - Python 3.6
+  - SQLite 3
+  - python-virtualenv
 
 Get them with apt install
 
