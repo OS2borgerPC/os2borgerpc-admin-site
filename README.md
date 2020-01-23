@@ -53,8 +53,7 @@ $ apt install <package_name>
 $ git clone https://github.com/magenta-aps/bibos_admin.git
 ```
 
-GET THE RIGHT BRANCH
-++++++++++++++++++++
+## GET THE RIGHT BRANCH
 
 ```sh
 $ cd </path/to>/admin_site
