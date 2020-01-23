@@ -22,7 +22,7 @@ from django.conf import settings
 
 from account.models import UserProfile
 
-from .models import Site, PC, PCGroup, ConfigurationEntry, Package
+from .models import Site, PC, PCGroup, ConfigurationEntry, Package, ImageVersion
 from .models import Job, Script, Input, SecurityProblem, SecurityEvent
 from .models import MandatoryParameterMissingError
 # PC Status codes
@@ -272,7 +272,7 @@ class SiteConfiguration(SiteView):
             _('Configuration for %s updated') % kwargs['slug']
         )
         return response
-
+    
 
 # Now follows all site-based views, i.e. subclasses
 # of SiteView.
@@ -1874,3 +1874,8 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
                 pc[pn] = pv
             pcs.append(pc)
         return pcs
+
+
+class ImageVersionsView(ListView):
+    template_name = 'system/image_versions.html'
+    model = ImageVersion

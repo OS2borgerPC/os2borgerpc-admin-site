@@ -1216,5 +1216,18 @@ class SecurityEvent(models.Model):
     def __unicode__(self):
         return "{0}: {1}".format(self.problem.name, self.id)
 
-class ImageVerison(models.Model):        
-    image_version = models.CharField(max_length=7)
+class ImageVersion(models.Model):        
+    img_vers = models.CharField(unique=True, max_length=7)
+    rel_date = models.DateField()
+    os = models.CharField(max_length=30)
+    rel_notes = models.TextField(max_length=350)
+    img_path = models.CharField(max_length=200)
+
+    def __str__(self):
+        return "| {0} | {1} | {2} | {3} | {4} |".format(
+            self.img_vers,
+            self.rel_date,
+            self.os,
+            self.rel_notes,
+            self.img_path
+            )
