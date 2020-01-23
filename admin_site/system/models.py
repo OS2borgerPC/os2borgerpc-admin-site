@@ -1215,3 +1215,6 @@ class SecurityEvent(models.Model):
 
     def __unicode__(self):
         return "{0}: {1}".format(self.problem.name, self.id)
+
+class ImageVerison(models.Model):        
+    image_version = models.CharField(max_length=7)
