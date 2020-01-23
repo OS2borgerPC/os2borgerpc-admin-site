@@ -58,7 +58,7 @@ $ git clone https://github.com/magenta-aps/bibos_admin.git
 ## GET THE RIGHT BRANCH
 
 ```sh
-$ cd </path/to>/admin_site
+$ cd </path/to>/bibos_admin
 ```
 
 ```sh
@@ -87,11 +87,11 @@ In order to run **post-install-dev.sh** you must activate the virtual environmen
 
 ```sh
 $ cd .. && source python-env/bin/activate
-(python-env) user@machine:~/path/to/admin-site/admin_site$
+(python-env) user@machine:~/path/to/bibos_admin/admin_site$
 ```
 
 If you choose another HOSTNAME below than 'localhost' then remember to modify the variable
-**ALLOWED_HOSTS** in the **.env** file located at 'admin-site/admin_site/bibos_admin/'.
+**ALLOWED_HOSTS** in the **.env** file located at 'bibos_admin/admin_site/bibos_admin'.
 By default Django does not allow access through IP., so don't bother trying to access 
 the site through an IP. See Django documentation for more information about this.
 
@@ -102,12 +102,14 @@ $ bash ./scripts/post-install-dev.sh <USERNAME> <EMAIL> <IP/HOSTNAME> <PORT>
 ```
 
 **post-install-dev.sh** sets up and runs the development version of the admin 
-system (using a local SQLite database). You'll be prompted for a password for the
-new administrative user `USERNAME`.
+system (using a local SQLite database). You'll be prompted for:
+
+  - A password for the new administrative user `USERNAME`.
+  - You'll be prompted again to re-enter the password.
 
 Now access the site through http://localhost:8080/
 
-In order to login your user needs a 'bibos_profile'.
+In order to login your user needs a **bibos_profile**.
 
 ## PATCH THE USER
 
@@ -116,7 +118,7 @@ Log on to the admin site's user section, at:
 http://localhost:8080/admin/auth/user/
 
 Edit the user you just created. Scroll to the bottom of the site in the section 
-*USER PROFILES*. Choose "Super Admin" as the user profile type. Click Save.
+**USER PROFILES**. Change the *TYPE* from **Sit User** to **Super Admin**. Click Save.
 
 ## ENJOY
 
