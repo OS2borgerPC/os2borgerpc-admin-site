@@ -149,7 +149,7 @@ urlpatterns = [
     url(r'^documentation/', DocView.as_view(), name='doc_root'),
 
     # Image Versions
-    url(r'^site/(?P<slug>[^/]+)/image-versions/$', ImageVersionsView.as_view(),
+    url(r'^site/(?P<site_uid>[^/]+)/image-versions/$', ImageVersionsView.as_view(),
         name='image-versions'),
 
 ]

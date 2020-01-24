@@ -1876,6 +1876,15 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
         return pcs
 
 
-class ImageVersionsView(ListView):
+##### ImageVersion - BEGIN #####
+
+class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     template_name = 'system/image_versions.html'
     model = ImageVersion
+    context_object_name = 'image_versions'
+
+    # TODO: 
+    # set() with major versions for left side list view
+    # with references to list of minor versions for main content area.
+
+##### ImageVersion - END #####

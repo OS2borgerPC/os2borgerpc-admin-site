@@ -11,18 +11,33 @@ class="active"
 {% block specific_content %}
 
 <ul class="sublevelnav">
-    <li class="listutils">
-      <a href="#addNewImageVersion" role="button" data-toggle="modal" title="tilføj ny version"><i class="icon-plus icon-white"></i> Tilføj ny version</a>
-    </li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
+  {% for iv in image_versions %}
+    <li><a>v{{ iv.img_vers }}</a></li>
+  {% endfor %}    
 </ul>
 
 <div class="container-fluid main sublevelmain">
 
-  <p>STUFF HERE PLS.</p>
+  <h2 class="divideheader"><em>Version: 3.7.4.2</em></h2>
+  
+  <p><b>VERSION:</b> v3.7.4.2</p>
+  <p><b>RELEASE DATE:</b> Nov. 27, 2020</p>
+  <p><b>OPERATING SYSTEM:</b> Ubuntu 18.04 LTS</p>
+  <p><b>RELEASE NOTES:</b> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec mollis. Quisque convallis libero in sapien pharetra tincidunt. Aliquam elit ante, malesuada id, tempor eu, gravida id, odio.</p>
+  <p><b>DOWNLOAD:</b> <a href="v3.7.4.2">v3.7.4.2</a></p>
+
+  <h2 class="divideheader"><em>Tidligere udgaver af version 3</em></h2>
+
+  <ul>
+    {% for iv in image_versions %}
+      <li><b>VERSION:</b> </li>
+      <li><b>RELEASE DATE:</b> {{ iv.rel_date }}</li>
+      <li><b>OPERATING SYSTEM:</b> {{ iv.os }}</li>
+      <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
+      <li><b>DOWNLOAD:</b> <a href="{{ iv.img_path }}">v{{iv.img_vers}}</a></li>
+      <br>
+    {% endfor %}    
+  </ul>
 
 </div>
 
