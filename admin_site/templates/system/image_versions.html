@@ -4,41 +4,44 @@
 Versioner
 {% endblock %}
 
-{% block image_versions_active %}
-class="active"
-{% endblock %}
-
 {% block specific_content %}
 
 <ul class="sublevelnav">
-  {% for iv in image_versions %}
-    <li><a>v{{ iv.img_vers }}</a></li>
+  <h4>Hovedversioner</h4>
+  {% for maj_v in major_versions %}
+  <li><a href="/site/{{ site.url }}/image_versions/{{ maj_v }}">v{{ maj_v }}</a></li>
   {% endfor %}    
 </ul>
-
+ 
 <div class="container-fluid main sublevelmain">
 
-  <h2 class="divideheader"><em>Version: 3.7.4.2</em></h2>
-  
-  <p><b>VERSION:</b> v3.7.4.2</p>
-  <p><b>RELEASE DATE:</b> Nov. 27, 2020</p>
-  <p><b>OPERATING SYSTEM:</b> Ubuntu 18.04 LTS</p>
-  <p><b>RELEASE NOTES:</b> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec mollis. Quisque convallis libero in sapien pharetra tincidunt. Aliquam elit ante, malesuada id, tempor eu, gravida id, odio.</p>
-  <p><b>DOWNLOAD:</b> <a href="v3.7.4.2">v3.7.4.2</a></p>
+  {% with image_versions.all|dictsortreversed:"img_vers"|first as first_obj %}
+    <h2 class="divideheader"><em>Nyeste underversion af v{{ first_obj.img_vers|slice:":1" }}</em></h2>
+    <p><b>VERSION:</b> {{ first_obj.img_vers }}</p>
+    <p><b>RELEASE DATE:</b> {{ first_obj.rel_date }}</p>
+    <p><b>OPERATING SYSTEM:</b> {{ first_obj.os }}</p>
+    <p><b>RELEASE NOTES:</b> {{ first_obj.rel_notes }}</p>
+    <p><b>DOWNLOAD:</b> <a href="downsload_link/{{ first_obj.img_vers }}">v{{ first_obj.img_vers }}</a></p>
 
-  <h2 class="divideheader"><em>Tidligere udgaver af version 3</em></h2>
-
-  <ul>
-    {% for iv in image_versions %}
-      <li><b>VERSION:</b> </li>
-      <li><b>RELEASE DATE:</b> {{ iv.rel_date }}</li>
-      <li><b>OPERATING SYSTEM:</b> {{ iv.os }}</li>
-      <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
-      <li><b>DOWNLOAD:</b> <a href="{{ iv.img_path }}">v{{iv.img_vers}}</a></li>
-      <br>
-    {% endfor %}    
-  </ul>
-
+    <h2 class="divideheader"><em><a href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      <em>Tidligere underversioner af v{{ first_obj.img_vers|slice:":1" }}</em>
+    </h2>
+    </a>
+  {% endwith %}
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+      <ul>
+        {% for iv in image_versions.all|dictsortreversed:"img_vers" %}
+          <li><b>VERSION:</b> {{iv.img_vers}}</li>
+          <li><b>RELEASE DATE:</b> {{ iv.rel_date }}</li>
+          <li><b>OPERATING SYSTEM:</b> {{ iv.os }}</li>
+          <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
+          <li><b>DOWNLOAD:</b> <a href="{{ iv.img_path }}">v{{iv.img_vers}}</a></li>
+          <br>
+        {% endfor %}    
+      </ul>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

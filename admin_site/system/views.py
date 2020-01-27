@@ -1884,7 +1884,20 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     context_object_name = 'image_versions'
 
     # TODO: 
-    # set() with major versions for left side list view
     # with references to list of minor versions for main content area.
+    def get_context_data(self, **kwargs):
+        context = super(ImageVersionsView, self).get_context_data(**kwargs)
+        
+        versions = ImageVersion.objects.all()
+
+        major_versions_set = set()      
+        for minor_version in versions:
+            major_versions_set.add(minor_version.img_vers[:1])        
+        major_versions_list = list(major_versions_set)
+        major_versions_list.sort(reverse=True)
+        
+        context["major_versions"] = major_versions_list
+
+        return context
 
 ##### ImageVersion - END #####
