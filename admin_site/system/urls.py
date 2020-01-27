@@ -151,5 +151,7 @@ urlpatterns = [
     # Image Versions
     url(r'^site/(?P<site_uid>[^/]+)/image-versions/$', ImageVersionsView.as_view(),
         name='image-versions'),
+    url(r'^site/(?P<site_uid>[^/]+)/image-versions/(?P<major_version>\d+)$', ImageVersionsView.as_view(),
+        name='image-version-major'),
 
 ]

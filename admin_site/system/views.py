@@ -1876,28 +1876,37 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
         return pcs
 
 
-##### ImageVersion - BEGIN #####
-
 class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
+    """Produce ImageVersion collection based on major version.
+    By default we use the newest major version.
+    """
+
     template_name = 'system/image_versions.html'
     model = ImageVersion
     context_object_name = 'image_versions'
 
-    # TODO: 
-    # with references to list of minor versions for main content area.
     def get_context_data(self, **kwargs):
         context = super(ImageVersionsView, self).get_context_data(**kwargs)
-        
-        versions = ImageVersion.objects.all()
 
+        versions = ImageVersion.objects.all()
+        
         major_versions_set = set()      
         for minor_version in versions:
-            major_versions_set.add(minor_version.img_vers[:1])        
+            major_versions_set.add(minor_version.img_vers[:1])    
+
         major_versions_list = list(major_versions_set)
         major_versions_list.sort(reverse=True)
-        
+
         context["major_versions"] = major_versions_list
 
-        return context
+        url_ref_vers = self.kwargs.get(
+            'major_version',
+            major_versions_list[0]
+            )          
+        minor_versions = versions.filter(
+            img_vers__startswith=url_ref_vers
+            )
 
-##### ImageVersion - END #####
+        context["minor_versions"] = minor_versions
+
+        return context

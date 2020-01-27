@@ -9,29 +9,29 @@ Versioner
 <ul class="sublevelnav">
   <h4>Hovedversioner</h4>
   {% for maj_v in major_versions %}
-  <li><a href="/site/{{ site.url }}/image_versions/{{ maj_v }}">v{{ maj_v }}</a></li>
+  <li><a href="/site/{{ site.url }}/image-versions/{{ maj_v }}">v{{ maj_v }}</a></li>
   {% endfor %}    
 </ul>
  
 <div class="container-fluid main sublevelmain">
 
-  {% with image_versions.all|dictsortreversed:"img_vers"|first as first_obj %}
+  {% with minor_versions.all|dictsortreversed:"img_vers"|first as first_obj %}
     <h2 class="divideheader"><em>Nyeste underversion af v{{ first_obj.img_vers|slice:":1" }}</em></h2>
     <p><b>VERSION:</b> {{ first_obj.img_vers }}</p>
     <p><b>RELEASE DATE:</b> {{ first_obj.rel_date }}</p>
     <p><b>OPERATING SYSTEM:</b> {{ first_obj.os }}</p>
     <p><b>RELEASE NOTES:</b> {{ first_obj.rel_notes }}</p>
     <p><b>DOWNLOAD:</b> <a href="downsload_link/{{ first_obj.img_vers }}">v{{ first_obj.img_vers }}</a></p>
-
+  {% endwith %}
     <h2 class="divideheader"><em><a href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-      <em>Tidligere underversioner af v{{ first_obj.img_vers|slice:":1" }}</em>
+      <em>Alle underversioner</em>
     </h2>
     </a>
-  {% endwith %}
+
   <div class="collapse" id="collapseExample">
     <div class="card card-body">
       <ul>
-        {% for iv in image_versions.all|dictsortreversed:"img_vers" %}
+        {% for iv in minor_versions.all|dictsortreversed:"img_vers" %}
           <li><b>VERSION:</b> {{iv.img_vers}}</li>
           <li><b>RELEASE DATE:</b> {{ iv.rel_date }}</li>
           <li><b>OPERATING SYSTEM:</b> {{ iv.os }}</li>
