@@ -308,6 +308,7 @@ class Site(models.Model):
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255, unique=True)
     configuration = models.ForeignKey(Configuration)
+    last_version = models.DateField(null=True, blank=True)
 
     security_alerts = models.ManyToManyField("SecurityProblem",
                                              related_name='alert_sites',

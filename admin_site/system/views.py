@@ -1888,12 +1888,19 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ImageVersionsView, self).get_context_data(**kwargs)
 
+        site_uid = self.kwargs.get('site_uid')
+        site_obj = Site.objects.get(uid=site_uid)
+        site_allowed = False
+        if site_obj.last_version:
+            site_allowed = True
+            
+        context["site_allowed"] = site_allowed
+
         versions = ImageVersion.objects.all()
         
         major_versions_set = set()      
         for minor_version in versions:
             major_versions_set.add(minor_version.img_vers[:1])    
-
         major_versions_list = list(major_versions_set)
         major_versions_list.sort(reverse=True)
 
