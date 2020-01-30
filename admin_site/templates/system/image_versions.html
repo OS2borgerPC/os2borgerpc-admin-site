@@ -39,39 +39,42 @@ class="active"
             </i>
         </li>
       </ul>
-
-      <a href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        <li class="icon-chevron-down"></li>Tidligere udgaver af v{{ first_obj.img_vers|slice:":1" }} 
-      </a>
     {% endwith %}
       
-    <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-        <ul class="unstyled">
-          {% for iv in minor_versions.all|dictsortreversed:"img_vers"|slice:"1:" %}
-            <li><b>VERSION:</b> {{iv.img_vers}}</li>
-            <li><b>RELEASE DATE:</b> {{ iv.rel_date }}</li>
-            <li><b>OPERATING SYSTEM:</b> {{ iv.os }}</li>
-            <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
-            <li>
-              <b>DOWNLOAD: </b>
-              <i>
-                <a class="btn-small btn-success" href="{{ iv.img_path }}">v{{iv.img_vers}}</a>
-              </i>
-            </li>
-            <br>
-          {% endfor %}    
-        </ul>
+    {% if minor_versions.all.count > 1 %}
+      <a href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <li class="icon-chevron-down"></li>Se underversioner 
+      </a>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">      
+          <ul class="unstyled">
+            {% for iv in minor_versions.all|dictsortreversed:"img_vers"|slice:"1:" %}
+              <li><b>VERSION:</b> {{iv.img_vers}}</li>
+              <li><b>RELEASE DATE:</b> {{ iv.rel_date }}</li>
+              <li><b>OPERATING SYSTEM:</b> {{ iv.os }}</li>
+              <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
+              <li>
+                <b>DOWNLOAD: </b>
+                <i>
+                  <a class="btn-small btn-success" href="{{ iv.img_path }}">v{{iv.img_vers}}</a>
+                </i>
+              </li>
+              <br>
+            {% endfor %}    
+          </ul>
+        </div>
       </div>
-    </div>
     {% else %}
-      <h2 class="text-error"><b>INGEN ADGANG</b></h2>
-      <p>
-        Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, og
-        derfor vises ingen versioner.
-      </p>
-      <p>Kontakt venligst OS2borgerpc leverandør, for at høre mere.</p>
+      <!-- Do nothing -->
     {% endif %} 
+  {% else %}
+    <h2 class="text-error"><b>INGEN ADGANG</b></h2>
+    <p>
+      Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, og
+      derfor vises ingen versioner.
+    </p>
+    <p>Kontakt venligst OS2borgerpc leverandør, for at høre mere.</p>
+  {% endif %} 
 </div>
 
 {% endblock %}
