@@ -4,10 +4,6 @@
 Versioner
 {% endblock %}
 
-{% block javascripts %}
-
-{% endblock %}
-
 {% block image_versions_active %}
 class="active"
 {% endblock %}
@@ -17,9 +13,11 @@ class="active"
 <ul class="sublevelnav">
   {% if site_allowed %}
     {% for maj_v in major_versions %}
-    <li {% if request.resolver_match.url_name == '/site/{{ site.url }}/image-versions/{{ maj_v }}' %}class="active"{% endif %}>
-      <a class="list-item" href="/site/{{ site.url }}/image-versions/{{ maj_v }}"><i class="icon-tag"></i> v{{ maj_v }}</a>
-    </li>
+      <li {% ifequal maj_v selected_image_version %}class="active"{% endifequal %}>
+        <a class="list-item" href="/site/{{ site.url }}/image-versions/{{ maj_v }}">
+          <i class="icon-tag"></i> v{{ maj_v }}
+        </a>
+      </li>
     {% endfor %}
   {% endif %}
 </ul>
@@ -36,11 +34,9 @@ class="active"
         <li><b>UDGIVELSESNOTER:</b> {{ first_obj.rel_notes }}</li>
         <li>
           <b>DOWNLOAD: </b>
-          <button class="btn">
-            <i class="fa fa-home">
-              <a href="downsload_link/{{ first_obj.img_vers }}">v{{ first_obj.img_vers }}.iso</a>
+            <i>
+              <a class="btn-small btn-success" href="{{ first_obj.img_path }}">v{{ first_obj.img_vers }}.iso</a>
             </i>
-          </button>
         </li>
       </ul>
 
@@ -59,11 +55,9 @@ class="active"
             <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
             <li>
               <b>DOWNLOAD: </b>
-              <button class="btn">
-                <i class="fa fa-home">
-                  <a href="{{ iv.img_path }}">v{{iv.img_vers}}</a>
-                </i>
-              </button>
+              <i>
+                <a class="btn-small btn-success" href="{{ iv.img_path }}">v{{iv.img_vers}}</a>
+              </i>
             </li>
             <br>
           {% endfor %}    

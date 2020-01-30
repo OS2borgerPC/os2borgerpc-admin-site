@@ -1649,7 +1649,7 @@ class PackageSearch(JSONResponseMixin, ListView):
 
         try:
             limit = int(params.get('limit', 20))
-        except e:
+        except ValueError:
             limit = 10
 
         if limit == 'all':
@@ -1906,6 +1906,8 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     template_name = 'system/image_versions.html'
     model = ImageVersion
     context_object_name = 'image_versions'
+    selection_class = ImageVersion
+    class_display_name = 'image_version'
 
     def get_context_data(self, **kwargs):
         context = super(ImageVersionsView, self).get_context_data(**kwargs)
@@ -1932,9 +1934,12 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             'major_version',
             major_versions_list[0]
             )
+
         minor_versions = versions.filter(
             img_vers__startswith=url_ref_vers
             )
+
+        context["selected_image_version"] = url_ref_vers
 
         context["minor_versions"] = minor_versions
 
