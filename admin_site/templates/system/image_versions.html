@@ -8,7 +8,7 @@ Versioner
 
 {% endblock %}
 
-{% block groups_active %}
+{% block image_versions_active %}
 class="active"
 {% endblock %}
 
@@ -17,7 +17,7 @@ class="active"
 <ul class="sublevelnav">
   {% if site_allowed %}
     {% for maj_v in major_versions %}
-    <li {% ifequal group selected_group %}class="active"{% endifequal %}>
+    <li {% if request.resolver_match.url_name == '/site/{{ site.url }}/image-versions/{{ maj_v }}' %}class="active"{% endif %}>
       <a class="list-item" href="/site/{{ site.url }}/image-versions/{{ maj_v }}"><i class="icon-tag"></i> v{{ maj_v }}</a>
     </li>
     {% endfor %}
@@ -52,7 +52,7 @@ class="active"
     <div class="collapse" id="collapseExample">
       <div class="card card-body">
         <ul class="unstyled">
-          {% for iv in minor_versions.all|dictsortreversed:"img_vers" %}
+          {% for iv in minor_versions.all|dictsortreversed:"img_vers"|slice:"1:" %}
             <li><b>VERSION:</b> {{iv.img_vers}}</li>
             <li><b>RELEASE DATE:</b> {{ iv.rel_date }}</li>
             <li><b>OPERATING SYSTEM:</b> {{ iv.os }}</li>
