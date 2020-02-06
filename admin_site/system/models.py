@@ -1241,4 +1241,4 @@ class ImageVersion(models.Model):
             self.os,
             self.rel_notes,
             self.img_path
-            )
+        )

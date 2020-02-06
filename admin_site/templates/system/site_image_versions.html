@@ -26,7 +26,7 @@ class="active"
 
   {% if site_allowed %}
     {% with minor_versions.all|dictsortreversed:"img_vers"|first as first_obj %}
-      <h2 class="divideheader"><em>Nyeste underversion af v{{ first_obj.img_vers|slice:":1" }}</em></h2>
+      <h2 class="divideheader"><em>Nyeste udgave af v{{ first_obj.img_vers|slice:":1" }}</em></h2>
       <ul class="unstyled">
         <li><b>VERSION:</b> {{ first_obj.img_vers }}</li>
         <li><b>RELEASE DATO:</b> {{ first_obj.rel_date }}</li>
@@ -41,7 +41,7 @@ class="active"
       
     {% if minor_versions.all.count > 1 %}
       <a href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        <li class="icon-chevron-down"></li>Se underversioner 
+        <li class="icon-chevron-down"></li>Vis tidligere underversioner 
       </a>
       <div class="collapse" id="collapseExample">
         <div class="card card-body">      

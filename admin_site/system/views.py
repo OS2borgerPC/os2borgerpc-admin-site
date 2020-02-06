@@ -596,9 +596,10 @@ class ScriptList(ScriptMixin, SiteView):
                         return -1
             # cmp deprecated: cmp converted to key function
             script = sorted(self.scripts, key=cmp_to_key(sort_by))[0]
-            return HttpResponseRedirect(script.get_absolute_url(
-                                        site_uid=self.site.uid)
-                                        )
+            return HttpResponseRedirect(
+                script.get_absolute_url(site_uid=self.site.uid)
+            )
+
         except IndexError:
             return HttpResponseRedirect(
                 "/site/%s/security/scripts/new/" % self.site.uid
@@ -916,8 +917,8 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         except OutdatedClientError as e:
             set_notification_cookie(
                 response,
-                _('Computer {0} must be upgraded in order to join a group with'
-                    'scripts attached').format(e),
+                _('Computer {0} must be upgraded in order to join a group '
+                    'with scripts attached').format(e),
                 error=True)
             return response
 
@@ -1823,7 +1824,7 @@ class TechDocView(TemplateView):
                 os.path.join(
                     settings.SOURCE_DIR,
                     'NEWS'
-                    ),
+                ),
             'create_bibos_image': os.path.join(
                 tech_path,
                 'HOWTOCreate_a_new_OS2borgerPC_image_from_scratch.txt'
@@ -1882,10 +1883,8 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
             for pn in JSONSiteSummary.interesting_properties:
                 pv = getattr(p, pn)
                 # Don't convert these types to string representations...
-                if pv is None \
-                        or isinstance(pv, bool) \
-                        or isinstance(pv, float) \
-                        or isinstance(pv, int):
+                if (pv is None or isinstance(pv, bool)
+                        or isinstance(pv, float) or isinstance(pv, int)):
                     pass
                 # ... use the right date format for datetimes...
                 elif isinstance(pv, datetime):
@@ -1899,11 +1898,10 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
 
 
 class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
-    """Produce ImageVersion collection based on major version.
-    By default we use the newest major version.
+    """Image Versions are are sorted by major versions in the view
     """
 
-    template_name = 'system/image_versions.html'
+    template_name = 'system/site_image_versions.html'
     model = ImageVersion
     context_object_name = 'image_versions'
     selection_class = ImageVersion
