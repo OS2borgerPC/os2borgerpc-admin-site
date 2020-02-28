@@ -34,7 +34,7 @@ class="active"
         <li><b>UDGIVELSESNOTER:</b> {{ first_obj.rel_notes }}</li>
         <li>
           <b>DOWNLOAD: </b>
-          <a class="btn-small btn-success" href="{{ first_obj.img_path }}" download>v{{ first_obj.img_vers }}.iso</a>
+          <a class="btn-small btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.img_vers }}.iso</a>
         </li>
       </ul>
     {% endwith %}
@@ -53,7 +53,7 @@ class="active"
               <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
               <li>
                 <b>DOWNLOAD: </b>
-                <a class="btn-small btn-success" href="{{ iv.img_path }}" download>v{{iv.img_vers}}</a>
+                <a class="btn-small btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.img_vers}}</a>
               </li>
               <br>
             {% endfor %}    

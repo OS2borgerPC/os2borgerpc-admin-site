@@ -11,6 +11,7 @@
 /bibos_client/bibos_client.egg-info/
 /bibos_client/build/
 /bibos_client/dist/
+/admin_site/site_media/images/
 
 *.pyc
 *.swp
