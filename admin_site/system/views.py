@@ -1898,7 +1898,8 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
 
 
 class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
-    """Image Versions are are sorted by major versions in the view
+    """Displays all of the image versions that this site has access to (i.e.,
+    all versions released before the site's last_version datestamp).
     """
 
     template_name = 'system/site_image_versions.html'
