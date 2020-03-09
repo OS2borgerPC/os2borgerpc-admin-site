@@ -37,6 +37,9 @@ def filelock(file_name, max_age=None):
                 lock_age = time.time() - os.stat(pid_file).st_mtime
                 if lock_age >= max_age:
                     try:
+                        print >> sys.stderr, (
+                                ("warning: forcibly acquiring"
+                                " lock file \"{0}\"").format(file_name))
                         with open(pid_file, "rt") as fp:
                             pid = int(fp.read().strip())
                         os.kill(pid, signal.SIGKILL)
