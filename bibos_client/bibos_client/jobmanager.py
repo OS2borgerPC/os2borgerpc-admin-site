@@ -43,7 +43,7 @@ files containing the events to be sent to the admin system.
 """
 SECURITY_DIR = '/etc/bibos/security'
 JOBS_DIR = '/var/lib/bibos/jobs'
-LOCK = filelock(JOBS_DIR + '/running')
+LOCK_FILE = JOBS_DIR + '/running'
 PACKAGE_LIST_FILE = '/var/lib/bibos/current_packages.list'
 PACKAGE_LINE_MATCHER = re.compile('ii\s+(\S+)\s+(\S+)\s+(.*)')
 
@@ -580,19 +580,14 @@ def send_special_data():
 
 def update_and_run():
     try:
-        LOCK.acquire()
-        try:
-            send_special_data()
-            get_instructions()
-            run_pending_jobs()
-            handle_security_events()
-        except IOError, socket.error:
-            print "Network error, exiting ..."
-            sys.exit()
-        except Exception:
-            raise
-        finally:
-            LOCK.release()
+        with filelock(LOCK_FILE, max_age=900):
+            try:
+                send_special_data()
+                get_instructions()
+                run_pending_jobs()
+                handle_security_events()
+            except (IOError, socket.error):
+                print "Network error, exiting ..."
     except IOError:
         print "Couldn't get lock"
 
