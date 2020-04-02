@@ -43,7 +43,7 @@ files containing the events to be sent to the admin system.
 """
 SECURITY_DIR = '/etc/bibos/security'
 JOBS_DIR = '/var/lib/bibos/jobs'
-LOCK = filelock(JOBS_DIR + '/running')
+LOCK_FILE = JOBS_DIR + '/running'
 PACKAGE_LIST_FILE = '/var/lib/bibos/current_packages.list'
 PACKAGE_LINE_MATCHER = re.compile('ii\s+(\S+)\s+(\S+)\s+(.*)')
 
@@ -226,45 +226,42 @@ class LocalJob(dict):
         self.log(message + "\n")
 
     def run(self):
-        if LOCK.i_am_locking():
-            self.read_property_from_file('status', self.status_path)
-            if self['status'] != 'SUBMITTED':
-                os.sys.stderr.write(
-                    "Job %s: Will only run jobs with status %s\n" % (
-                        self.id,
-                        self['status']
-                    )
-                )
-                return
-            log = open(self.log_path, 'a')
-            self.load_local_parameters()
-            self.set_status('RUNNING')
-            cmd = [self.executable_path]
-            cmd.extend(self['local_parameters'])
-            self.mark_started()
-            log.write(
-                ">>> Starting process '%s' with arguments [%s] at %s\n" % (
-                    self.executable_path,
-                    ', '.join(self['local_parameters']),
-                    self['started']
+        self.read_property_from_file('status', self.status_path)
+        if self['status'] != 'SUBMITTED':
+            os.sys.stderr.write(
+                "Job %s: Will only run jobs with status %s\n" % (
+                    self.id,
+                    self['status']
                 )
             )
-            log.flush()
-            ret_val = subprocess.call(cmd, stdout=log, stderr=log)
-            self.mark_finished()
-            log.flush()
-            if ret_val == 0:
-                self.set_status('DONE')
-                log.write(">>> Succeeded at %s\n" % self['finished'])
-            else:
-                self.set_status('FAILED')
-                log.write(">>> Failed with exit status %s at %s\n" % (
-                    ret_val,
-                    self['finished'])
-                )
-            log.close()
+            return
+        log = open(self.log_path, 'a')
+        self.load_local_parameters()
+        self.set_status('RUNNING')
+        cmd = [self.executable_path]
+        cmd.extend(self['local_parameters'])
+        self.mark_started()
+        log.write(
+            ">>> Starting process '%s' with arguments [%s] at %s\n" % (
+                self.executable_path,
+                ', '.join(self['local_parameters']),
+                self['started']
+            )
+        )
+        log.flush()
+        ret_val = subprocess.call(cmd, stdout=log, stderr=log)
+        self.mark_finished()
+        log.flush()
+        if ret_val == 0:
+            self.set_status('DONE')
+            log.write(">>> Succeeded at %s\n" % self['finished'])
         else:
-            print >> os.sys.stderr, "Will not run job without aquired lock"
+            self.set_status('FAILED')
+            log.write(">>> Failed with exit status %s at %s\n" % (
+                ret_val,
+                self['finished'])
+            )
+        log.close()
 
 
 def get_url_and_uid():
@@ -457,17 +454,14 @@ def get_pending_job_dirs():
 
 def run_pending_jobs():
     dirs = get_pending_job_dirs()
-    if LOCK.i_am_locking():
-        results = []
+    results = []
 
-        for d in dirs:
-            job = LocalJob(path=d)
-            job.run()
-            results.append(job.report_data)
+    for d in dirs:
+        job = LocalJob(path=d)
+        job.run()
+        results.append(job.report_data)
 
-        report_job_results(results)
-    else:
-        print >> os.sys.stderr, "Aquire the lock before running jobs"
+    report_job_results(results)
 
 
 def run_security_scripts():
@@ -586,19 +580,14 @@ def send_special_data():
 
 def update_and_run():
     try:
-        LOCK.acquire()
-        try:
-            send_special_data()
-            get_instructions()
-            run_pending_jobs()
-            handle_security_events()
-        except IOError, socket.error:
-            print "Network error, exiting ..."
-            sys.exit()
-        except Exception:
-            raise
-        finally:
-            LOCK.release()
+        with filelock(LOCK_FILE, max_age=900):
+            try:
+                send_special_data()
+                get_instructions()
+                run_pending_jobs()
+                handle_security_events()
+            except (IOError, socket.error):
+                print "Network error, exiting ..."
     except IOError:
         print "Couldn't get lock"
 
