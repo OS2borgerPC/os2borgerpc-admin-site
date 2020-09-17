@@ -35,12 +35,12 @@ Directory structure for storing OS2borgerPC jobs:
 
 """
 Directory structure for OS2borgerPC security events (for historical reasons):
-/etc/bibos/security/securityevent.csv - Security event log file.
-/etc/bibos/security/ - Scripts to be executed by the jobmanager.
-/etc/bibos/security/security_check_YYYYMMDDHHmm.csv -
+/etc/os2borgerpc/security/securityevent.csv - Security event log file.
+/etc/os2borgerpc/security/ - Scripts to be executed by the jobmanager.
+/etc/os2borgerpc/security/security_check_YYYYMMDDHHmm.csv -
 files containing the events to be sent to the admin system.
 """
-SECURITY_DIR = '/etc/bibos/security'
+SECURITY_DIR = '/etc/os2borgerpc/security'
 JOBS_DIR = '/var/lib/os2borgerpc/jobs'
 LOCK = filelock(JOBS_DIR + '/running')
 PACKAGE_LIST_FILE = '/var/lib/os2borgerpc/current_packages.list'

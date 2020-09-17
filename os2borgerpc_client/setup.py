@@ -23,16 +23,6 @@ setup(
         'bin/jobmanager',
         'bin/register_new_os2borgerpc_client.sh',
         'bin/admin_connect.sh',
-
-        # Compatiblity symlinks
-        'bin/get_bibos_config',
-        'bin/set_bibos_config',
-        'bin/bibos_find_gateway',
-        'bin/bibos_register_in_admin',
-        'bin/bibos_push_config_keys',
-        'bin/bibos_upload_dist_packages',
-        'bin/bibos_upload_packages',
-        'bin/register_new_bibos_client.sh',
     ],
     zip_safe=False
 )

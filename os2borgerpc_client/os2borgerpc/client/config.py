@@ -4,8 +4,7 @@ import yaml
 import sys
 import stat
 
-DEFAULT_CONFIG_FILES = [
-        "/etc/os2borgerpc/os2borgerpc.conf", "/etc/bibos/bibos.conf"]
+DEFAULT_CONFIG_FILES = ["/etc/os2borgerpc/os2borgerpc.conf"]
 
 DEBUG = True  # TODO: Get from settings file.
 

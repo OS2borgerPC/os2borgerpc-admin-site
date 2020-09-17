@@ -11,5 +11,5 @@ def write_data(data):
     for d in data:
         line += ',' + d.replace('\n', ' ').replace('\r', '').replace(',', '')
 
-    with open("/etc/bibos/security/securityevent.csv", "at") as csvfile:
+    with open("/etc/os2borgerpc/security/securityevent.csv", "at") as csvfile:
         csvfile.write(line + "\n")
