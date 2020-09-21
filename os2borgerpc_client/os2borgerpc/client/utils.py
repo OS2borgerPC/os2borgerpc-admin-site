@@ -44,7 +44,7 @@ def get_upgrade_packages():
     )
     result = []
     for line in prg.stdout.readlines():
-        m = matcher.match(line)
+        m = matcher.match(line.decode("utf-8"))
         if m:
             result.append(m.group(1))
     return result
