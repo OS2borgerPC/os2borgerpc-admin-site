@@ -12,11 +12,11 @@
     {% include 'system/pcgrouplist/item.html' with pk=group.pk name=group.name selected='yes' %}
   {% endfor %}
 </ul>
-<script type="text/javascript"><!--
+<script type="text/javascript">
 $(function() {
   BibOS.PCGroupList.setupList('#id_{{ submit_name }}')
 });
-//--></script>
+</script>
 {% else %}
 <p>You must specify a <em>submit_name</em> when including a pcgroup list.</p>
 {% endif %}

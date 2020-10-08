@@ -308,6 +308,7 @@ class Site(models.Model):
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255, unique=True)
     configuration = models.ForeignKey(Configuration)
+    last_version = models.DateField(null=True, blank=True)
 
     security_alerts = models.ManyToManyField("SecurityProblem",
                                              related_name='alert_sites',
@@ -853,7 +854,10 @@ class AssociatedScript(models.Model):
     def make_batch(self):
         now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         return Batch(site=self.group.site, script=self.script,
-                     name=', '.join([self.group.name, self.script.name, now_str]))
+                     name=', '.join([self.group.name,
+                                    self.script.name,
+                                    now_str]
+                                    ))
 
     def make_parameters(self, batch):
         params = []
@@ -887,11 +891,13 @@ Runs this script on several PCs, returning a batch representing this task."""
 
     def __str__(self):
         return "{0}, {1}: {2}".format(self.group, self.position, self.script)
+
     def __unicode__(self):
         return __str__(self)
 
     class Meta:
         unique_together = ('position', 'group')
+
 
 class Job(models.Model):
     """A Job or task to be performed on a single computer."""
@@ -986,7 +992,8 @@ class Job(models.Model):
             'id': self.pk,
             'status': self.status,
             'parameters': parameters,
-            'executable_code': self.batch.script.executable_code.read().decode('utf8')
+            'executable_code':
+                self.batch.script.executable_code.read().decode('utf8')
         }
 
     def resolve(self):
@@ -1090,12 +1097,14 @@ class Parameter(models.Model):
     class Meta:
         abstract = True
 
+
 class BatchParameter(Parameter):
     # Which batch is this parameter associated with?
     batch = models.ForeignKey(Batch, related_name='parameters')
 
     def __str__(self):
         return "{0}: {1}".format(self.input, self.transfer_value)
+
     def __unicode__(self):
         return self.__str__()
 
@@ -1115,6 +1124,7 @@ class AssociatedScriptParameter(Parameter):
     def __str__(self):
         return "{0} - {1}: {2}".format(
             self.script, self.input, self.transfer_value)
+
     def __unicode__(self):
         return self.__str__()
 
@@ -1215,3 +1225,20 @@ class SecurityEvent(models.Model):
 
     def __unicode__(self):
         return "{0}: {1}".format(self.problem.name, self.id)
+
+
+class ImageVersion(models.Model):
+    img_vers = models.CharField(unique=True, max_length=7)
+    rel_date = models.DateField()
+    os = models.CharField(max_length=30)
+    rel_notes = models.TextField(max_length=350)
+    img_path = models.CharField(max_length=200)
+
+    def __str__(self):
+        return "| {0} | {1} | {2} | {3} | {4} |".format(
+            self.img_vers,
+            self.rel_date,
+            self.os,
+            self.rel_notes,
+            self.img_path
+        )

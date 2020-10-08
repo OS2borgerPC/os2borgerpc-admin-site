@@ -10,6 +10,7 @@ from .views import ScriptRun, PCUpdate, JobRestarter, MarkPackageUpgrade
 from .views import ConfigurationEntryCreate, ConfigurationEntryUpdate
 from .views import ConfigurationEntryDelete, JobInfo, TechDocView, DocView
 from .views import PackageSearch, PCDelete, JSONSiteSummary
+from .views import ImageVersionsView
 # SecurityProblem and SecurityEvent related views
 from .views import SecurityProblemsView, SecurityProblemCreate
 from .views import SecurityProblemUpdate, SecurityProblemDelete
@@ -146,4 +147,11 @@ urlpatterns = [
         name='tech_doc'),
     url(r'^documentation/(?P<name>[\d\w\/]+)/', DocView.as_view(), name='doc'),
     url(r'^documentation/', DocView.as_view(), name='doc_root'),
+
+    # Image Versions
+    url(r'^site/(?P<site_uid>[^/]+)/image-versions/$', ImageVersionsView.as_view(),
+        name='image-versions'),
+    url(r'^site/(?P<site_uid>[^/]+)/image-versions/(?P<major_version>\d+)$', ImageVersionsView.as_view(),
+        name='image-version-major'),
+
 ]

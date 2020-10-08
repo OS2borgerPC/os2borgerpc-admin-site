@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 from .models import Configuration, ConfigurationEntry, PackageList, Package
-from .models import Site, Distribution, PCGroup, PC, CustomPackages
+from .models import Site, Distribution, PCGroup, PC, CustomPackages, ImageVersion
 from .models import PackageInstallInfo, PackageStatus
 from .models import SecurityEvent, SecurityProblem
 # Job-related stuff
@@ -86,6 +86,7 @@ ar(Distribution)
 ar(PCGroup, PCGroupAdmin)
 ar(PC)
 ar(Package)
+ar(ImageVersion)
 # Job related stuff
 ar(Script, ScriptAdmin)
 ar(Batch, BatchAdmin)
