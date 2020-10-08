@@ -1232,7 +1232,8 @@ class ImageVersion(models.Model):
     rel_date = models.DateField()
     os = models.CharField(max_length=30)
     rel_notes = models.TextField(max_length=350)
-    img_path = models.CharField(max_length=200)
+    image_upload = models.FileField(upload_to="images", default='#')
+
 
     def __str__(self):
         return "| {0} | {1} | {2} | {3} | {4} |".format(
@@ -1240,5 +1241,5 @@ class ImageVersion(models.Model):
             self.rel_date,
             self.os,
             self.rel_notes,
-            self.img_path
+            self.image_upload
         )

@@ -1898,7 +1898,8 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
 
 
 class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
-    """Image Versions are are sorted by major versions in the view
+    """Displays all of the image versions that this site has access to (i.e.,
+    all versions released before the site's last_version datestamp).
     """
 
     template_name = 'system/site_image_versions.html'
@@ -1912,33 +1913,41 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         site_uid = self.kwargs.get('site_uid')
         site_obj = Site.objects.get(uid=site_uid)
-        site_allowed = False
-        if site_obj.last_version:
-            site_allowed = True
+        last_pay_date = site_obj.last_version
 
-        context["site_allowed"] = site_allowed
+        if not last_pay_date:
 
-        versions = ImageVersion.objects.all()
+            context["site_allowed"] = False
 
-        major_versions_set = set()
-        for minor_version in versions:
-            major_versions_set.add(minor_version.img_vers[:1])
-        major_versions_list = list(major_versions_set)
-        major_versions_list.sort(reverse=True)
+        else:
 
-        context["major_versions"] = major_versions_list
+            context["site_allowed"] = True
 
-        url_ref_vers = self.kwargs.get(
-            'major_version',
-            major_versions_list[0]
-            )
+            # excluding versions where image release date > client's last pay date.
+            versions = ImageVersion.objects.exclude(rel_date__gt=last_pay_date)
 
-        minor_versions = versions.filter(
-            img_vers__startswith=url_ref_vers
-            )
+            major_versions_set = set()
+            for minor_version in versions:
+                major_versions_set.add(minor_version.img_vers[:1])
 
-        context["selected_image_version"] = url_ref_vers
+            major_versions_list = list(major_versions_set)
+            major_versions_list.sort(reverse=True)
 
-        context["minor_versions"] = minor_versions
+            if len(major_versions_list) > 0:
+
+                context["major_versions"] = major_versions_list
+
+                url_ref_vers = self.kwargs.get(
+                    'major_version',
+                    major_versions_list[0]
+                    )
+
+                context["selected_image_version"] = url_ref_vers
+
+                minor_versions = versions.filter(
+                    img_vers__startswith=url_ref_vers
+                    )
+
+                context["minor_versions"] = minor_versions
 
         return context

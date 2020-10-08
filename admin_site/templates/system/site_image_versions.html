@@ -18,6 +18,8 @@ class="active"
           <i class="icon-tag"></i> v{{ maj_v }}
         </a>
       </li>
+    {% empty %}
+      <p class="text-error">No image versions available.</p>
     {% endfor %}
   {% endif %}
 </ul>
@@ -25,21 +27,26 @@ class="active"
 <div class="container-fluid main sublevelmain">
 
   {% if site_allowed %}
-    {% with minor_versions.all|dictsortreversed:"img_vers"|first as first_obj %}
-      <h2 class="divideheader"><em>Nyeste udgave af v{{ first_obj.img_vers|slice:":1" }}</em></h2>
-      <ul class="unstyled">
-        <li><b>VERSION:</b> {{ first_obj.img_vers }}</li>
-        <li><b>RELEASE DATO:</b> {{ first_obj.rel_date }}</li>
-        <li><b>OPERATIVSYSTEM:</b> {{ first_obj.os }}</li>
-        <li><b>UDGIVELSESNOTER:</b> {{ first_obj.rel_notes }}</li>
-        <li>
-          <b>DOWNLOAD: </b>
-          <a class="btn-small btn-success" href="{{ first_obj.img_path }}" download>v{{ first_obj.img_vers }}.iso</a>
-        </li>
-      </ul>
-    {% endwith %}
+
+    {% if minor_versions.all.count > 0 %}
+
+      <!-- First index of 'minor_versions' is the newest version -->
+      {% with minor_versions.all|dictsortreversed:"img_vers"|first as first_obj %}
+        <h2 class="divideheader"><em>Nyeste udgave af v{{ first_obj.img_vers|slice:":1" }}</em></h2>
+        <ul class="unstyled">
+          <li><b>VERSION:</b> {{ first_obj.img_vers }}</li>
+          <li><b>RELEASE DATO:</b> {{ first_obj.rel_date }}</li>
+          <li><b>OPERATIVSYSTEM:</b> {{ first_obj.os }}</li>
+          <li><b>UDGIVELSESNOTER:</b> {{ first_obj.rel_notes }}</li>
+          <li>
+            <b>DOWNLOAD: </b>
+            <a class="btn-small btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.img_vers }}.iso</a>
+          </li>
+        </ul>
+      {% endwith %}
       
-    {% if minor_versions.all.count > 1 %}
+      {% if minor_versions.all.count > 1 %}
+      <!-- Proceede to load remainding 'minor_versions' -->
       <a href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         <li class="icon-chevron-down"></li>Vis tidligere underversioner 
       </a>
@@ -53,13 +60,14 @@ class="active"
               <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
               <li>
                 <b>DOWNLOAD: </b>
-                <a class="btn-small btn-success" href="{{ iv.img_path }}" download>v{{iv.img_vers}}</a>
+                <a class="btn-small btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.img_vers}}</a>
               </li>
               <br>
             {% endfor %}    
           </ul>
         </div>
       </div>
+      {% endif %}
     {% else %}
       <!-- Do nothing -->
     {% endif %} 
