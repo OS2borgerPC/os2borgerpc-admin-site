@@ -117,7 +117,8 @@ class ConfigurationEntry(models.Model):
     owner_configuration = models.ForeignKey(
         Configuration,
         related_name='entries',
-        verbose_name=_('owner configuration')
+        verbose_name=_('owner configuration'),
+        on_delete=models.CASCADE,
     )
 
 
@@ -209,9 +210,10 @@ class CustomPackages(models.Model):
 
 class PackageInstallInfo(models.Model):
     do_add = models.BooleanField(default=True)
-    package = models.ForeignKey(Package)
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
     custom_packages = models.ForeignKey(CustomPackages,
-                                        related_name='install_infos')
+                                        related_name='install_infos',
+                                        on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -292,9 +294,10 @@ class PackageStatus(models.Model):
     # 'install'
 
     status = models.CharField(max_length=255)
-    package = models.ForeignKey(Package)
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
     package_list = models.ForeignKey(PackageList,
-                                     related_name='statuses')
+                                     related_name='statuses',
+                                     on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -307,8 +310,7 @@ class Site(models.Model):
     """A site which we wish to admin"""
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255, unique=True)
-    configuration = models.ForeignKey(Configuration)
-
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     security_alerts = models.ManyToManyField("SecurityProblem",
                                              related_name='alert_sites',
                                              blank=True)
@@ -390,10 +392,10 @@ class Distribution(models.Model):
     """This represents a GNU/Linux distribution managed by us."""
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255)
-    configuration = models.ForeignKey(Configuration)
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     # CustomPackages is preferrable here.
     # Maybe we'd like one distribution to inherit from another.
-    package_list = models.ForeignKey(PackageList)
+    package_list = models.ForeignKey(PackageList, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -416,9 +418,9 @@ class PCGroup(models.Model):
     uid = models.CharField(_('id'), max_length=255, unique=True)
     description = models.TextField(_('description'), max_length=1024,
                                    null=True, blank=True)
-    site = models.ForeignKey(Site, related_name='groups')
-    configuration = models.ForeignKey(Configuration)
-    custom_packages = models.ForeignKey(CustomPackages)
+    site = models.ForeignKey(Site, related_name='groups', on_delete=models.CASCADE)
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
+    custom_packages = models.ForeignKey(CustomPackages, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -552,12 +554,12 @@ class PC(models.Model):
     uid = models.CharField(_('uid'), max_length=255)
     description = models.CharField(_('description'), max_length=1024,
                                    blank=True)
-    distribution = models.ForeignKey(Distribution)
-    configuration = models.ForeignKey(Configuration)
+    distribution = models.ForeignKey(Distribution, on_delete=models.PROTECT)
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
-    package_list = models.ForeignKey(PackageList, null=True, blank=True)
-    custom_packages = models.ForeignKey(CustomPackages, null=True, blank=True)
-    site = models.ForeignKey(Site, related_name='pcs')
+    package_list = models.ForeignKey(PackageList, null=True, blank=True, on_delete=models.PROTECT)
+    custom_packages = models.ForeignKey(CustomPackages, null=True, blank=True, on_delete=models.PROTECT)
+    site = models.ForeignKey(Site, related_name='pcs', on_delete=models.CASCADE)
     is_active = models.BooleanField(_('active'), default=False)
     is_update_required = models.BooleanField(_('update required'),
                                              default=False)
@@ -712,7 +714,7 @@ class Script(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('description'), max_length=4096)
     site = models.ForeignKey(Site, related_name='scripts',
-                             null=True, blank=True)
+                             null=True, blank=True, on_delete=models.CASCADE)
     # The executable_code field should contain a single executable (e.g. a Bash
     # script OR a single extractable .zip or .tar.gz file with all necessary
     # data.
@@ -831,7 +833,7 @@ class Batch(models.Model):
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc.
     name = models.CharField(_('name'), max_length=255)
-    script = models.ForeignKey(Script)
+    script = models.ForeignKey(Script, on_delete=models.CASCADE)
     site = models.ForeignKey(Site, related_name='batches')
 
     def __str__(self):
@@ -846,8 +848,8 @@ class AssociatedScript(models.Model):
     to be run on all computers in the group; adding a computer to a group with
     scripts will cause all of those scripts to be run on the new member."""
 
-    group = models.ForeignKey(PCGroup, related_name='policy')
-    script = models.ForeignKey(Script, related_name='associations')
+    group = models.ForeignKey(PCGroup, related_name='policy', on_delete=models.CASCADE)
+    script = models.ForeignKey(Script, related_name='associations', on_delete=models.PROTECT)
     position = models.IntegerField(_('position'))
 
     def make_batch(self):
@@ -940,9 +942,9 @@ class Job(models.Model):
                                   blank=True)
     started = models.DateTimeField(_('started'), null=True)
     finished = models.DateTimeField(_('finished'), null=True)
-    user = models.ForeignKey(User)
-    batch = models.ForeignKey(Batch, related_name='jobs')
-    pc = models.ForeignKey(PC, related_name='jobs')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    batch = models.ForeignKey(Batch, related_name='jobs', on_delete=models.CASCADE)
+    pc = models.ForeignKey(PC, related_name='jobs', on_delete=models.CASCADE)
 
     def __str__(self):
         return '_'.join(map(str, [self.batch, self.id]))
