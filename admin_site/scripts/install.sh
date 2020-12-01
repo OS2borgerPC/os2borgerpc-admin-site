@@ -26,7 +26,7 @@ then
 fi
 
 rm -rf $BIBOS_VIRTUAL_ENV
-virtualenv -p python3 $BIBOS_VIRTUAL_ENV
+python3 -m venv $BIBOS_VIRTUAL_ENV
 source $BIBOS_VIRTUAL_ENV/bin/activate
 
 DIR=$(dirname ${BASH_SOURCE[0]})

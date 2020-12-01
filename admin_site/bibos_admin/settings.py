@@ -9,7 +9,6 @@ install_dir = os.path.abspath(
 
 
 DEBUG = env('DEBUG')
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = env('ADMINS')
 
@@ -121,12 +120,6 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = env('SECRET_KEY')
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
