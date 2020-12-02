@@ -1049,7 +1049,7 @@ class Input(models.Model):
                                   max_length=10)
     position = models.IntegerField(_('position'))
     mandatory = models.BooleanField(_('mandatory'), default=True)
-    script = models.ForeignKey(Script, related_name='inputs')
+    script = models.ForeignKey(Script, related_name='inputs', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.script.name + "/" + self.name
@@ -1079,7 +1079,7 @@ class Parameter(models.Model):
                                   null=True,
                                   blank=True)
     # which input does this belong to?
-    input = models.ForeignKey(Input)
+    input = models.ForeignKey(Input, on_delete=models.CASCADE)
 
     @property
     def transfer_value(self):
@@ -1094,7 +1094,7 @@ class Parameter(models.Model):
 
 class BatchParameter(Parameter):
     # Which batch is this parameter associated with?
-    batch = models.ForeignKey(Batch, related_name='parameters')
+    batch = models.ForeignKey(Batch, related_name='parameters', on_delete=models.CASCADE)
 
     def __str__(self):
         return "{0}: {1}".format(self.input, self.transfer_value)
@@ -1104,7 +1104,7 @@ class BatchParameter(Parameter):
 
 class AssociatedScriptParameter(Parameter):
     # Which associated script is this parameter, er, associated with?
-    script = models.ForeignKey(AssociatedScript, related_name='parameters')
+    script = models.ForeignKey(AssociatedScript, related_name='parameters', on_delete=models.CASCADE)
 
     def make_batch_parameter(self, batch):
         if self.input.value_type == Input.FILE:
@@ -1153,8 +1153,8 @@ class SecurityProblem(models.Model):
     description = models.TextField(_('description'), blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES,
                              default=HIGH)
-    site = models.ForeignKey(Site, related_name='security_problems')
-    script = models.ForeignKey(Script, related_name='security_problems')
+    site = models.ForeignKey(Site, related_name='security_problems', on_delete=models.CASCADE)
+    script = models.ForeignKey(Script, related_name='security_problems', on_delete=models.PROTECT)
     alert_groups = models.ManyToManyField(PCGroup,
                                           related_name='security_problems',
                                           blank=True)
@@ -1199,17 +1199,17 @@ class SecurityEvent(models.Model):
         ASSIGNED: 'label-warning',
         RESOLVED: 'label-success'
     }
-    problem = models.ForeignKey(SecurityProblem, null=False)
+    problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
     # The time the problem was reported in the log file
     ocurred_time = models.DateTimeField(_('occurred'))
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(_('reported'))
-    pc = models.ForeignKey(PC)
+    pc = models.ForeignKey(PC, on_delete=models.CASCADE)
     summary = models.CharField(max_length=4096, null=False, blank=False)
     complete_log = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
-    assigned_user = models.ForeignKey(User, null=True, blank=True)
+    assigned_user = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):

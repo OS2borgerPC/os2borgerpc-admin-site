@@ -27,7 +27,7 @@ class UserProfile(models.Model):
     )
 
     type = models.IntegerField(choices=type_choices, default=SITE_USER)
-    site = models.ForeignKey(Site, null=True, blank=True)
+    site = models.ForeignKey(Site, null=True, blank=True, on_delete=models.CASCADE)
     # TODO: Add more fields/user options as needed.
     # TODO: Make before_save integrity check that SITE_USER and
     # SITE_ADMIN users MUST be associated with a site.
