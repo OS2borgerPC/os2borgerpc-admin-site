@@ -9,7 +9,8 @@ class UserProfile(models.Model):
     """BibOS Admin specific user profile."""
     # This is the user to which the profile belongs
     user = models.OneToOneField(User, unique=True,
-                                related_name='bibos_profile')
+                                related_name='bibos_profile',
+                                on_delete=models.CASCADE)
 
     SUPER_ADMIN = 0
     SITE_USER = 1

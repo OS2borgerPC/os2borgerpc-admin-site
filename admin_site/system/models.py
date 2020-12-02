@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 
 import datetime
@@ -834,7 +834,7 @@ class Batch(models.Model):
     # script and date, etc.
     name = models.CharField(_('name'), max_length=255)
     script = models.ForeignKey(Script, on_delete=models.CASCADE)
-    site = models.ForeignKey(Site, related_name='batches')
+    site = models.ForeignKey(Site, related_name='batches', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
