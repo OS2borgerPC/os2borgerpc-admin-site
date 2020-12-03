@@ -33,7 +33,7 @@ class UserProfile(models.Model):
     # TODO: Make before_save integrity check that SITE_USER and
     # SITE_ADMIN users MUST be associated with a site.
 
-    def __unicode__(self):
+    def __str__(self):
         return self.user.username
 
     def clean(self):

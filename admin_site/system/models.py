@@ -105,9 +105,6 @@ class Configuration(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
 
 class ConfigurationEntry(models.Model):
     """A single configuration entry - always part of an entire
@@ -131,8 +128,6 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return ' '.join([self.name, self.version])
 
     class Meta:
         unique_together = ('name', 'version')
@@ -204,9 +199,6 @@ class CustomPackages(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
 
 class PackageInstallInfo(models.Model):
     do_add = models.BooleanField(default=True)
@@ -217,9 +209,6 @@ class PackageInstallInfo(models.Model):
 
     def __str__(self):
         return self.name
-
-    def __unicode__(self):
-        return self.package.name
 
 
 class PackageList(models.Model):
@@ -267,9 +256,6 @@ class PackageList(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
     def flag_needs_upgrade(self, package_names):
         if len(package_names):
             qs = self.statuses.filter(
@@ -301,9 +287,6 @@ class PackageStatus(models.Model):
 
     def __str__(self):
         return self.name
-
-    def __unicode__(self):
-        return self.package.name + ': ' + self.status
 
 
 class Site(models.Model):
@@ -352,9 +335,6 @@ class Site(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
     def save(self, *args, **kwargs):
         """Customize behaviour when saving a site object."""
         # Before actual save
@@ -400,9 +380,6 @@ class Distribution(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
 
 class Error(Exception):
     pass
@@ -434,9 +411,6 @@ class PCGroup(models.Model):
         """This should always be checked by the user interface to avoid
         validation errors from the pre_delete signal."""
         return self.pcs.count() == 0
-
-    def __unicode__(self):
-        return self.name
 
     def save(self, *args, **kwargs):
         """Customize behaviour when saving a group object."""
@@ -702,9 +676,6 @@ class PC(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
     class Meta:
         ordering = ['name']
 
@@ -726,9 +697,6 @@ class Script(models.Model):
     @property
     def is_global(self):
         return self.site is None
-
-    def __unicode__(self):
-        return self.name
 
     def __str__(self):
         return self.name
@@ -839,9 +807,6 @@ class Batch(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
 
 class AssociatedScript(models.Model):
     """A script associated with a group. Adding a script to a group causes it
@@ -889,9 +854,7 @@ Runs this script on several PCs, returning a batch representing this task."""
 
     def __str__(self):
         return "{0}, {1}: {2}".format(self.group, self.position, self.script)
-    def __unicode__(self):
-        return __str__(self)
-
+    
     class Meta:
         unique_together = ('position', 'group')
 
@@ -947,9 +910,6 @@ class Job(models.Model):
     pc = models.ForeignKey(PC, related_name='jobs', on_delete=models.CASCADE)
 
     def __str__(self):
-        return '_'.join(map(str, [self.batch, self.id]))
-
-    def __unicode__(self):
         return '_'.join(map(str, [self.batch, self.id]))
 
     @property
@@ -1054,9 +1014,6 @@ class Input(models.Model):
     def __str__(self):
         return self.script.name + "/" + self.name
 
-    def __unicode__(self):
-        return self.__str__()
-
     class Meta:
         unique_together = ('position', 'script')
 
@@ -1098,8 +1055,6 @@ class BatchParameter(Parameter):
 
     def __str__(self):
         return "{0}: {1}".format(self.input, self.transfer_value)
-    def __unicode__(self):
-        return self.__str__()
 
 
 class AssociatedScriptParameter(Parameter):
@@ -1117,8 +1072,6 @@ class AssociatedScriptParameter(Parameter):
     def __str__(self):
         return "{0} - {1}: {2}".format(
             self.script, self.input, self.transfer_value)
-    def __unicode__(self):
-        return self.__str__()
 
 
 class SecurityProblem(models.Model):
@@ -1163,9 +1116,6 @@ class SecurityProblem(models.Model):
                                          blank=True)
 
     def __str__(self):
-        return self.name
-
-    def __unicode__(self):
         return self.name
 
     class Meta:
@@ -1215,5 +1165,3 @@ class SecurityEvent(models.Model):
     def __str__(self):
         return "{0}: {1}".format(self.problem.name, self.id)
 
-    def __unicode__(self):
-        return "{0}: {1}".format(self.problem.name, self.id)
