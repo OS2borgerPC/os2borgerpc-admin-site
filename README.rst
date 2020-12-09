@@ -1,13 +1,18 @@
-This directory contains the BibOS Admin system, which is a remote
+This directory contains the OS2borgerPC Admin system, which is a remote
 administration system for Debian-based GNU/Linux-systems, especially
 Ubuntu systems.
 
-The system is developed for a number of public libraries in Denmark and
-was specifically designed to manage their BibOS systems for audience PC.
-Its functionality aims to be similar to that of Canonical's Landscape
-product, but less ambitious.
+The system was originally developed for public libraries in Denmark and
+is specifically designed to manage their OS2borgerPC audience audience
+desktop PCs.
 
-The system was prepared by Magenta Aps: See http://www.magenta-aps.dk
+By design, its functionality aims to be similar to that of Canonical's
+Landscape product, but less ambitious. A special feature is security
+alerts that may be triggered e.g. if a user changes a USB keyboard (some
+libraries have experienced problems with people trying to insert key
+loggers between keyboard and computer).
+
+The system was prepared by Magenta: See http://www.magenta.dk
 
 All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
@@ -15,29 +20,33 @@ License - see the LICENSE file for details.
 
 
 HOWTO SETUP DEVELOPMENT SERVER
-=============================+
+==============================
 
 This guide describes how to get the admin site up and running for
 development purposes, i.e. with no Apache or proxy setup. If you wish to
 set up a production environment, please follow the instructions in
 doc/HOWTO_INSTALL_SERVER.txt. If you wish to learn to use the system,
-please install server and use the on-site documentation.
+please install the server and use the on-site documentation (at present
+only available in Danish).
 
-Also check the guide to installing the client and preparing the server farther
-below.
+Also check the guide to installing the client and preparing the server
+further below.
 
 
 You should normally be able to  install the development server in  10
 minutes or less. An Internet connection is required.
+
+The following instructions should work fine with any modern
+GNU/Linux-based operating systems, but they were made with and are at
+present only tested under Ubuntu 20.04 LTS Server Edition.
 
 
 
 PRE-REQUISITES
 ++++++++++++++
 
-Python 2.7
-SQLite 3
-python-virtualenv
+Python >= 3.6
+python3-venv
 
 Get them with apt-get install or by whatever means necessary for your
 platform.
@@ -48,15 +57,16 @@ GRAB THE CODE
 
     git clone https://github.com/magenta-aps/bibos_admin.git
 
+
 GET THE RIGHT BRANCH
 ++++++++++++++++++++
 
     cd bibos_admin
 
-    git checkout <development>
+    git checkout <desired branch>
 
 This only applies if you're not working directly on the master branch
-(which you probably shouldn't). For <development> substitute the branch
+(which you probably shouldn't). For <desired branch> substitute the branch
 you want to work on.
 
 
@@ -127,14 +137,19 @@ corresponding clients, e.g. "ubuntu12.04".
 Create Site 
 +++++++++++
 
-You need to create a "site" to which you can attach your client. The
-name of the site should describe your location, and the ID should be a
-simple, lowercase string with no spaces or special characters, e.g.
-"aarhus".
+You need to create at least one "site" to which you can attach your
+clients. The name of the site should describe your location, and the ID
+should be a simple, lowercase string with no spaces or special
+characters, e.g.  "aarhus".
 
 
 Finalize the distribution
 +++++++++++++++++++++++++
+
+# TODO: This part of the functionality is being phased out and will be 
+#       removed in a future version of the system. PCs will no longer
+#       upload their package lists to the server, nor will we keep
+#       complete listings of packages in the distribution.
 
 This step is to be performed *after* you have registred a computer in the
 admin system as described below. To finalize the distribution:
@@ -147,7 +162,7 @@ admin system as described below. To finalize the distribution:
 
 * When the registration is done, execute the command 
 
-    bibos_upload_dist_packages
+    os2borgerpc_upload_dist_packages
 
   in a command shell. This will upload the list of installed packages
   and register them as definition of this distribution.
@@ -170,22 +185,21 @@ control from the admin system.
 
 We recommend that you install this from PyPI using pip.
 
-Enter the following commands in a bash shell:
+Enter the following commands in a bash shell::
 
     # If not installed already
-    sudo apt-get install python-pip
-    sudo apt-get install build-essential
-    sudo apt-get install curl
-    sudo apt-get install python-dev
+    sudo apt-get install python3-pip
 
     # This is what we want:
-    sudo pip install bibos-client
+    sudo pip install http://bibos-admin.magenta-aps.dk/archive/client_packages/os2borgerpc_client-0.0.5.1.tar.gz
+
+    # TODO: This will be changed when the new client package is on PyPI.
 
 
 After succesfully installing bibos-client, run the registration script
-in order to connect with the admin system.
+in order to connect with the admin system. ::
 
-    sudo register_new_bibos_client.sh
+    sudo register_new_os2borgerpc_client.sh
 
 
 Guide to the steps:
@@ -207,7 +221,3 @@ manually approve it's registration by "activating" it in the admin
 system. View the details on the new computer and check the box marked
 "Aktiv" or "Active". The PC will now start uploading its package info
 and is under the control of the admin system.
-
-
-
-

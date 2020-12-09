@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 
 import datetime
@@ -105,9 +105,6 @@ class Configuration(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
 
 class ConfigurationEntry(models.Model):
     """A single configuration entry - always part of an entire
@@ -117,7 +114,8 @@ class ConfigurationEntry(models.Model):
     owner_configuration = models.ForeignKey(
         Configuration,
         related_name='entries',
-        verbose_name=_('owner configuration')
+        verbose_name=_('owner configuration'),
+        on_delete=models.CASCADE,
     )
 
 
@@ -130,8 +128,6 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return ' '.join([self.name, self.version])
 
     class Meta:
         unique_together = ('name', 'version')
@@ -203,21 +199,16 @@ class CustomPackages(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
 
 class PackageInstallInfo(models.Model):
     do_add = models.BooleanField(default=True)
-    package = models.ForeignKey(Package)
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
     custom_packages = models.ForeignKey(CustomPackages,
-                                        related_name='install_infos')
+                                        related_name='install_infos',
+                                        on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
-
-    def __unicode__(self):
-        return self.package.name
 
 
 class PackageList(models.Model):
@@ -265,9 +256,6 @@ class PackageList(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
     def flag_needs_upgrade(self, package_names):
         if len(package_names):
             qs = self.statuses.filter(
@@ -292,23 +280,20 @@ class PackageStatus(models.Model):
     # 'install'
 
     status = models.CharField(max_length=255)
-    package = models.ForeignKey(Package)
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
     package_list = models.ForeignKey(PackageList,
-                                     related_name='statuses')
+                                     related_name='statuses',
+                                     on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
-
-    def __unicode__(self):
-        return self.package.name + ': ' + self.status
 
 
 class Site(models.Model):
     """A site which we wish to admin"""
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255, unique=True)
-    configuration = models.ForeignKey(Configuration)
-
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     security_alerts = models.ManyToManyField("SecurityProblem",
                                              related_name='alert_sites',
                                              blank=True)
@@ -330,7 +315,9 @@ class Site(models.Model):
     @property
     def users(self):
         profiles = [
-            u.bibos_profile for u in User.objects.all().extra(
+            u.bibos_profile for u in User.objects.exclude(
+                bibos_profile__isnull=True
+            ).extra(
                 select={'lower_name': 'lower(username)'}
             ).order_by('lower_name')
             if u.bibos_profile.site == self and u.bibos_profile.type != 0
@@ -348,9 +335,6 @@ class Site(models.Model):
         return self.pcs.count() == 0
 
     def __str__(self):
-        return self.name
-
-    def __unicode__(self):
         return self.name
 
     def save(self, *args, **kwargs):
@@ -390,15 +374,12 @@ class Distribution(models.Model):
     """This represents a GNU/Linux distribution managed by us."""
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255)
-    configuration = models.ForeignKey(Configuration)
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     # CustomPackages is preferrable here.
     # Maybe we'd like one distribution to inherit from another.
-    package_list = models.ForeignKey(PackageList)
+    package_list = models.ForeignKey(PackageList, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.name
-
-    def __unicode__(self):
         return self.name
 
 
@@ -416,9 +397,9 @@ class PCGroup(models.Model):
     uid = models.CharField(_('id'), max_length=255, unique=True)
     description = models.TextField(_('description'), max_length=1024,
                                    null=True, blank=True)
-    site = models.ForeignKey(Site, related_name='groups')
-    configuration = models.ForeignKey(Configuration)
-    custom_packages = models.ForeignKey(CustomPackages)
+    site = models.ForeignKey(Site, related_name='groups', on_delete=models.CASCADE)
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
+    custom_packages = models.ForeignKey(CustomPackages, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -432,9 +413,6 @@ class PCGroup(models.Model):
         """This should always be checked by the user interface to avoid
         validation errors from the pre_delete signal."""
         return self.pcs.count() == 0
-
-    def __unicode__(self):
-        return self.name
 
     def save(self, *args, **kwargs):
         """Customize behaviour when saving a group object."""
@@ -552,12 +530,12 @@ class PC(models.Model):
     uid = models.CharField(_('uid'), max_length=255)
     description = models.CharField(_('description'), max_length=1024,
                                    blank=True)
-    distribution = models.ForeignKey(Distribution)
-    configuration = models.ForeignKey(Configuration)
+    distribution = models.ForeignKey(Distribution, on_delete=models.PROTECT)
+    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
-    package_list = models.ForeignKey(PackageList, null=True, blank=True)
-    custom_packages = models.ForeignKey(CustomPackages, null=True, blank=True)
-    site = models.ForeignKey(Site, related_name='pcs')
+    package_list = models.ForeignKey(PackageList, null=True, blank=True, on_delete=models.PROTECT)
+    custom_packages = models.ForeignKey(CustomPackages, null=True, blank=True, on_delete=models.PROTECT)
+    site = models.ForeignKey(Site, related_name='pcs', on_delete=models.CASCADE)
     is_active = models.BooleanField(_('active'), default=False)
     is_update_required = models.BooleanField(_('update required'),
                                              default=False)
@@ -700,9 +678,6 @@ class PC(models.Model):
     def __str__(self):
         return self.name
 
-    def __unicode__(self):
-        return self.name
-
     class Meta:
         ordering = ['name']
 
@@ -712,7 +687,7 @@ class Script(models.Model):
     name = models.CharField(_('name'), max_length=255)
     description = models.TextField(_('description'), max_length=4096)
     site = models.ForeignKey(Site, related_name='scripts',
-                             null=True, blank=True)
+                             null=True, blank=True, on_delete=models.CASCADE)
     # The executable_code field should contain a single executable (e.g. a Bash
     # script OR a single extractable .zip or .tar.gz file with all necessary
     # data.
@@ -724,9 +699,6 @@ class Script(models.Model):
     @property
     def is_global(self):
         return self.site is None
-
-    def __unicode__(self):
-        return self.name
 
     def __str__(self):
         return self.name
@@ -831,13 +803,10 @@ class Batch(models.Model):
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc.
     name = models.CharField(_('name'), max_length=255)
-    script = models.ForeignKey(Script)
-    site = models.ForeignKey(Site, related_name='batches')
+    script = models.ForeignKey(Script, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, related_name='batches', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
-
-    def __unicode__(self):
         return self.name
 
 
@@ -846,8 +815,8 @@ class AssociatedScript(models.Model):
     to be run on all computers in the group; adding a computer to a group with
     scripts will cause all of those scripts to be run on the new member."""
 
-    group = models.ForeignKey(PCGroup, related_name='policy')
-    script = models.ForeignKey(Script, related_name='associations')
+    group = models.ForeignKey(PCGroup, related_name='policy', on_delete=models.CASCADE)
+    script = models.ForeignKey(Script, related_name='associations', on_delete=models.PROTECT)
     position = models.IntegerField(_('position'))
 
     def make_batch(self):
@@ -887,9 +856,7 @@ Runs this script on several PCs, returning a batch representing this task."""
 
     def __str__(self):
         return "{0}, {1}: {2}".format(self.group, self.position, self.script)
-    def __unicode__(self):
-        return __str__(self)
-
+    
     class Meta:
         unique_together = ('position', 'group')
 
@@ -940,14 +907,11 @@ class Job(models.Model):
                                   blank=True)
     started = models.DateTimeField(_('started'), null=True)
     finished = models.DateTimeField(_('finished'), null=True)
-    user = models.ForeignKey(User)
-    batch = models.ForeignKey(Batch, related_name='jobs')
-    pc = models.ForeignKey(PC, related_name='jobs')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    batch = models.ForeignKey(Batch, related_name='jobs', on_delete=models.CASCADE)
+    pc = models.ForeignKey(PC, related_name='jobs', on_delete=models.CASCADE)
 
     def __str__(self):
-        return '_'.join(map(str, [self.batch, self.id]))
-
-    def __unicode__(self):
         return '_'.join(map(str, [self.batch, self.id]))
 
     @property
@@ -1047,13 +1011,10 @@ class Input(models.Model):
                                   max_length=10)
     position = models.IntegerField(_('position'))
     mandatory = models.BooleanField(_('mandatory'), default=True)
-    script = models.ForeignKey(Script, related_name='inputs')
+    script = models.ForeignKey(Script, related_name='inputs', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.script.name + "/" + self.name
-
-    def __unicode__(self):
-        return self.__str__()
 
     class Meta:
         unique_together = ('position', 'script')
@@ -1077,7 +1038,7 @@ class Parameter(models.Model):
                                   null=True,
                                   blank=True)
     # which input does this belong to?
-    input = models.ForeignKey(Input)
+    input = models.ForeignKey(Input, on_delete=models.CASCADE)
 
     @property
     def transfer_value(self):
@@ -1092,17 +1053,15 @@ class Parameter(models.Model):
 
 class BatchParameter(Parameter):
     # Which batch is this parameter associated with?
-    batch = models.ForeignKey(Batch, related_name='parameters')
+    batch = models.ForeignKey(Batch, related_name='parameters', on_delete=models.CASCADE)
 
     def __str__(self):
         return "{0}: {1}".format(self.input, self.transfer_value)
-    def __unicode__(self):
-        return self.__str__()
 
 
 class AssociatedScriptParameter(Parameter):
     # Which associated script is this parameter, er, associated with?
-    script = models.ForeignKey(AssociatedScript, related_name='parameters')
+    script = models.ForeignKey(AssociatedScript, related_name='parameters', on_delete=models.CASCADE)
 
     def make_batch_parameter(self, batch):
         if self.input.value_type == Input.FILE:
@@ -1115,8 +1074,6 @@ class AssociatedScriptParameter(Parameter):
     def __str__(self):
         return "{0} - {1}: {2}".format(
             self.script, self.input, self.transfer_value)
-    def __unicode__(self):
-        return self.__str__()
 
 
 class SecurityProblem(models.Model):
@@ -1151,8 +1108,8 @@ class SecurityProblem(models.Model):
     description = models.TextField(_('description'), blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES,
                              default=HIGH)
-    site = models.ForeignKey(Site, related_name='security_problems')
-    script = models.ForeignKey(Script, related_name='security_problems')
+    site = models.ForeignKey(Site, related_name='security_problems', on_delete=models.CASCADE)
+    script = models.ForeignKey(Script, related_name='security_problems', on_delete=models.PROTECT)
     alert_groups = models.ManyToManyField(PCGroup,
                                           related_name='security_problems',
                                           blank=True)
@@ -1161,9 +1118,6 @@ class SecurityProblem(models.Model):
                                          blank=True)
 
     def __str__(self):
-        return self.name
-
-    def __unicode__(self):
         return self.name
 
     class Meta:
@@ -1197,21 +1151,19 @@ class SecurityEvent(models.Model):
         ASSIGNED: 'label-warning',
         RESOLVED: 'label-success'
     }
-    problem = models.ForeignKey(SecurityProblem, null=False)
+    problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
     # The time the problem was reported in the log file
     ocurred_time = models.DateTimeField(_('occurred'))
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(_('reported'))
-    pc = models.ForeignKey(PC)
+    pc = models.ForeignKey(PC, on_delete=models.CASCADE)
     summary = models.CharField(max_length=4096, null=False, blank=False)
     complete_log = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
-    assigned_user = models.ForeignKey(User, null=True, blank=True)
+    assigned_user = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return "{0}: {1}".format(self.problem.name, self.id)
 
-    def __unicode__(self):
-        return "{0}: {1}".format(self.problem.name, self.id)

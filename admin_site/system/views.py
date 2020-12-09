@@ -504,13 +504,15 @@ class ScriptMixin(object):
             context['selected_script'] = self.script
             if self.script.site is None:
                 context['global_selected'] = True
-            if context['script_inputs'] is '':
-                context['script_inputs'] = [{
-                    'pk': input.pk,
-                    'name': input.name,
-                    'value_type': input.value_type
-                } for input in self.script.ordered_inputs]
-        elif context['script_inputs'] is '':
+            if not context['script_inputs']:
+                context['script_inputs'] = [
+                    {
+                        'pk': input.pk,
+                        'name': input.name,
+                        'value_type': input.value_type
+                    } for input in self.script.ordered_inputs
+                ]
+        elif not context['script_inputs']:
             context['script_inputs'] = []
 
         context['script_inputs_json'] = json.dumps(context['script_inputs'])
@@ -651,7 +653,13 @@ class ScriptUpdate(ScriptMixin, UpdateView, LoginRequiredMixin):
         # Get context from super class
         context = super(ScriptUpdate, self).get_context_data(**kwargs)
         if self.script is not None and self.script.executable_code is not None:
-            context['script_preview'] = self.script.executable_code.read(4096)
+            try:
+                display_code = self.script.executable_code.read().decode("utf-8")
+            except UnicodeDecodeError:
+                display_code = "<Kan ikke vise koden - binære data.>"
+            context[
+                'script_preview'
+            ] = display_code
         context['type_choices'] = Input.VALUE_CHOICES
         self.create_form = ScriptForm()
         self.create_form.prefix = 'create'
