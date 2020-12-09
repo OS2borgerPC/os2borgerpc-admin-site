@@ -146,6 +146,11 @@ characters, e.g.  "aarhus".
 Finalize the distribution
 +++++++++++++++++++++++++
 
+# TODO: This part of the functionality is being phased out and will be 
+#       removed in a future version of the system. PCs will no longer
+#       upload their package lists to the server, nor will we keep
+#       complete listings of packages in the distribution.
+
 This step is to be performed *after* you have registred a computer in the
 admin system as described below. To finalize the distribution:
 

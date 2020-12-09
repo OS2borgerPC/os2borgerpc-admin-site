@@ -34,7 +34,7 @@ Check out source code, run install scripts, install PostgreSQL DB
 driver:
 
     cd /home/os2
-    clone https://github.com/os2borgerpc/admin_site.git
+    git clone https://github.com/os2borgerpc/admin_site.git
     cd bibos_admin/admin_site
     scripts/install.sh
     source bin/activate

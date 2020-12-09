@@ -654,9 +654,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, LoginRequiredMixin):
         context = super(ScriptUpdate, self).get_context_data(**kwargs)
         if self.script is not None and self.script.executable_code is not None:
             try:
-                display_code = self.script.executable_code.read(4096).decode("utf-8")
+                display_code = self.script.executable_code.read().decode("utf-8")
             except UnicodeDecodeError:
-                display_code = self.script.executable_code.read(4096)
+                display_code = "<Kan ikke vise koden - binære data.>"
             context[
                 'script_preview'
             ] = display_code

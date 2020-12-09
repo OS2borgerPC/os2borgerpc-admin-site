@@ -63,11 +63,11 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
 # Timezone/Language
-TIME_ZONE = 'CET'
+TIME_ZONE = env('TIME_ZONE')
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'da'
+LANGUAGE_CODE = env('LANGUAGE_CODE')
 
 LOCALE_PATHS = [
     os.path.join(install_dir, 'locale')

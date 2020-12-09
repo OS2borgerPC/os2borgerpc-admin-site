@@ -36,7 +36,7 @@ pip install -r ${DIR}/requirements.txt
 RETVAL=$?
 if [ $RETVAL -ne 0 ]; then
     echo "" 1>&2
-    echo "ERROR: Unable to install Python package <$package>." 1>&2
+    echo "ERROR: Problem installing Python packages." 1>&2
     echo -n "Please check your network connection. " 1>&2
     echo "A remote server may be down - please retry later. " 1>&2
     echo "" 1>&2
