@@ -315,7 +315,9 @@ class Site(models.Model):
     @property
     def users(self):
         profiles = [
-            u.bibos_profile for u in User.objects.all().extra(
+            u.bibos_profile for u in User.objects.exclude(
+                bibos_profile__isnull=True
+            ).extra(
                 select={'lower_name': 'lower(username)'}
             ).order_by('lower_name')
             if u.bibos_profile.site == self and u.bibos_profile.type != 0
