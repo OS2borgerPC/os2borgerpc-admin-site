@@ -20,7 +20,7 @@ License - see the LICENSE file for details.
 
 
 HOW TO SETUP DEVELOPMENT SERVER
-=============================+
+===============================
 
 This guide describes how to get the admin site up and running for
 development purposes, i.e. with no Apache or proxy setup. If you wish to
