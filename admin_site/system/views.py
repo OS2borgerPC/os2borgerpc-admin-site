@@ -24,7 +24,7 @@ from account.models import UserProfile
 
 from .models import Site, PC, PCGroup, ConfigurationEntry, Package
 from .models import Job, Script, Input, SecurityProblem, SecurityEvent
-from .models import MandatoryParameterMissingError
+from .models import MandatoryParameterMissingError, ImageVersion
 # PC Status codes
 from .models import NEW, UPDATE
 from .forms import SiteForm, GroupForm, ConfigurationEntryForm, ScriptForm
@@ -38,8 +38,10 @@ def set_notification_cookie(response, message, error=False):
         "message": message,
         "type": "success" if not error else "error"
     }
+
     response.set_cookie('bibos-notification',
-            quote(json.dumps(descriptor), safe=''))
+                        quote(json.dumps(descriptor), safe='')
+                        )
 
 
 def get_no_of_sec_events(site):
@@ -583,8 +585,12 @@ class ScriptList(ScriptMixin, SiteView):
             # Sort by -site followed by lowercased name
             def sort_by(a, b):
                 if a.site == b.site:
-                    # cmp deprecated: cmp(a, b) has been changed to the ((a > b) - (a < b)) format
-                    return ((a.name.lower() > b.name.lower()) - (a.name.lower() < b.name.lower()))
+                    # cmp deprecated: cmp(a, b) has been changed to
+                    # the ((a > b) - (a < b)) formats
+                    return (
+                            (a.name.lower() > b.name.lower())
+                            - (a.name.lower() < b.name.lower())
+                            )
                 else:
                     if b.site is not None:
                         return 1
@@ -592,9 +598,10 @@ class ScriptList(ScriptMixin, SiteView):
                         return -1
             # cmp deprecated: cmp converted to key function
             script = sorted(self.scripts, key=cmp_to_key(sort_by))[0]
-            return HttpResponseRedirect(script.get_absolute_url(
-            site_uid=self.site.uid
-            ))
+            return HttpResponseRedirect(
+                script.get_absolute_url(site_uid=self.site.uid)
+            )
+
         except IndexError:
             return HttpResponseRedirect(
                 "/site/%s/security/scripts/new/" % self.site.uid
@@ -918,7 +925,8 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         except OutdatedClientError as e:
             set_notification_cookie(
                 response,
-                _('Computer {0} must be upgraded in order to join a group with scripts attached').format(e),
+                _('Computer {0} must be upgraded in order to join a group '
+                    'with scripts attached').format(e),
                 error=True)
             return response
 
@@ -1318,7 +1326,8 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         except OutdatedClientError as e:
             set_notification_cookie(
                 response,
-                _('Computer {0} must be upgraded in order to join a group with scripts attached').format(e),
+                _('Computer {0} must be upgraded in order to join a group'
+                    ' with scripts attached').format(e),
                 error=True)
             return response
         except MandatoryParameterMissingError as e:
@@ -1328,7 +1337,8 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             parameter = e.args[0]
             set_notification_cookie(
                 response,
-                _('No value was specified for the mandatory input "{0}" of script "{1}"').format(
+                _('No value was specified for the mandatory input "{0}"'
+                    ' of script "{1}"').format(
                         parameter.name, parameter.script.name),
                 error=True)
             return response
@@ -1648,7 +1658,7 @@ class PackageSearch(JSONResponseMixin, ListView):
 
         try:
             limit = int(params.get('limit', 20))
-        except:
+        except ValueError:
             limit = 10
 
         if limit == 'all':
@@ -1781,7 +1791,10 @@ class TechDocView(TemplateView):
 
         context = super(TechDocView, self).get_context_data(**kwargs)
         context['docmenuitems'] = documentation_menu_items
-        overview_urls = {'os2borgerpc': 'OS2borgerPC Desktop', 'admin': 'OS2borgerPC Admin'}
+        overview_urls = {
+            'os2borgerpc': 'OS2borgerPC Desktop',
+            'admin': 'OS2borgerPC Admin'
+            }
 
         overview_items = {
             'admin': [
@@ -1793,7 +1806,8 @@ class TechDocView(TemplateView):
                 ('tech/create_bibos_image', 'Lav nyt OS2borgerPC-image'),
                 ('tech/save_harddisk_image',
                  'Gem harddisk-image med Clonezilla'),
-                ('tech/build_bibos_cd', 'Byg OS2borgerPC-CD fra Clonezilla-image'),
+                ('tech/build_bibos_cd',
+                    'Byg OS2borgerPC-CD fra Clonezilla-image'),
                 ('tech/image_release_notes', 'Release notes'),
             ]
         }
@@ -1814,18 +1828,25 @@ class TechDocView(TemplateView):
                                           'doc/HOWTO_INSTALL_SERVER.txt'),
             'developer_guide': os.path.join(settings.SOURCE_DIR,
                                             'doc/DEVELOPMENT_HOWTO.txt'),
-            'release_notes': os.path.join(settings.SOURCE_DIR,
-                                          'NEWS'),
-            'create_bibos_image':os.path.join(tech_path,
-                             'HOWTOCreate_a_new_OS2borgerPC_image_from_scratch.txt')
-            ,
-            'save_harddisk_image':os.path.join(tech_path,
-                              'HOWTO_save_a_OS2borgerPC_harddisk_image.txt')
-            ,
-            'build_bibos_cd': os.path.join(tech_path,
-                'HOWTOBuild_OS2borgerPC_CD_from_clonezilla_image.md'
-            )
-            ,
+            'release_notes':
+                os.path.join(
+                    settings.SOURCE_DIR,
+                    'NEWS'
+                ),
+            'create_bibos_image': os.path.join(
+                tech_path,
+                'HOWTOCreate_a_new_OS2borgerPC_image_from_scratch.txt'
+                ),
+            'save_harddisk_image':
+                os.path.join(
+                    tech_path,
+                    'HOWTO_save_a_OS2borgerPC_harddisk_image.txt'
+                ),
+            'build_bibos_cd':
+                os.path.join(
+                    tech_path,
+                    'HOWTOBuild_OS2borgerPC_CD_from_clonezilla_image.md'
+                ),
             'image_release_notes': os.path.join(tech_path,
                                                 'OS2borgerPC_image_NEWS')
         }
@@ -1851,9 +1872,11 @@ class TechDocView(TemplateView):
 
         return context
 
+
 class JSONSiteSummary(JSONResponseMixin, SiteView):
     """Produce a JSON document summarising the state of all of the computers in
-    a site."""
+    a site.
+    """
 
     interesting_properties = [
         'id', 'name', 'description', 'distribution_id', 'configuration_id',
@@ -1868,10 +1891,8 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
             for pn in JSONSiteSummary.interesting_properties:
                 pv = getattr(p, pn)
                 # Don't convert these types to string representations...
-                if pv == None \
-                        or isinstance(pv, bool) \
-                        or isinstance(pv, float) \
-                        or isinstance(pv, int):
+                if (pv is None or isinstance(pv, bool)
+                        or isinstance(pv, float) or isinstance(pv, int)):
                     pass
                 # ... use the right date format for datetimes...
                 elif isinstance(pv, datetime):
@@ -1882,3 +1903,59 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
                 pc[pn] = pv
             pcs.append(pc)
         return pcs
+
+
+class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
+    """Displays all of the image versions that this site has access to (i.e.,
+    all versions released before the site's last_version datestamp).
+    """
+
+    template_name = 'system/site_image_versions.html'
+    model = ImageVersion
+    context_object_name = 'image_versions'
+    selection_class = ImageVersion
+    class_display_name = 'image_version'
+
+    def get_context_data(self, **kwargs):
+        context = super(ImageVersionsView, self).get_context_data(**kwargs)
+
+        site_uid = self.kwargs.get('site_uid')
+        site_obj = Site.objects.get(uid=site_uid)
+        last_pay_date = site_obj.last_version
+
+        if not last_pay_date:
+
+            context["site_allowed"] = False
+
+        else:
+
+            context["site_allowed"] = True
+
+            # excluding versions where image release date > client's last pay date.
+            versions = ImageVersion.objects.exclude(rel_date__gt=last_pay_date)
+
+            major_versions_set = set()
+            for minor_version in versions:
+                major_versions_set.add(minor_version.img_vers[:1])
+
+            major_versions_list = list(major_versions_set)
+            major_versions_list.sort(reverse=True)
+
+            if len(major_versions_list) > 0:
+
+                context["major_versions"] = major_versions_list
+
+                url_ref_vers = self.kwargs.get(
+                    'major_version',
+                    major_versions_list[0]
+                    )
+
+                context["selected_image_version"] = url_ref_vers
+
+                minor_versions = versions.filter(
+                    img_vers__startswith=url_ref_vers
+                    )
+
+                context["minor_versions"] = minor_versions
+
+        return context

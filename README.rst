@@ -19,8 +19,8 @@ License - see the LICENSE file for details.
 
 
 
-HOWTO SETUP DEVELOPMENT SERVER
-==============================
+HOW TO SETUP DEVELOPMENT SERVER
+=============================+
 
 This guide describes how to get the admin site up and running for
 development purposes, i.e. with no Apache or proxy setup. If you wish to
@@ -48,20 +48,29 @@ PRE-REQUISITES
 Python >= 3.6
 python3-venv
 
-Get them with apt-get install or by whatever means necessary for your
-platform.
+Get them with apt install
+
+
+    $ apt install <package_name>
+
+
+... or by whatever means necessary for your OS.
 
 
 GRAB THE CODE
 +++++++++++++
 
-    git clone https://github.com/magenta-aps/bibos_admin.git
+
+    $ git clone https://github.com/magenta-aps/bibos_admin.git
 
 
 GET THE RIGHT BRANCH
 ++++++++++++++++++++
 
-    cd bibos_admin
+
+    $ cd </path/to>/admin_site
+
+
 
     git checkout <desired branch>
 
@@ -74,9 +83,9 @@ INSTALL DJANGO AND OTHER COMPONENTS
 +++++++++++++++++++++++++++++++++++
 
 
-    cd admin_site
 
-    scripts/install.sh
+    $ cd admin_site/scripts && bash install.sh
+
 
 This requires an Internet connection. It should run its course with a
 number of warnings but no errors.
@@ -85,24 +94,40 @@ number of warnings but no errors.
 SET UP AND RUN THE DEVELOPMENT SERVER
 +++++++++++++++++++++++++++++++++++++
 
-    scripts/post-install-dev.sh USERNAME EMAIL HOSTNAME/IP PORT
+In order to run **post-install-dev.sh** you must activate the virtual environment. 
 
-This sets up and runs the development version of the admin system (using a
-local SQLite database). You'll be prompted for a password for the
+
+    $ cd .. && source python-env/bin/activate
+    (python-env) user@machine:~/path/to/admin-site/admin_site$
+
+If you choose another HOSTNAME below than 'localhost' then remember to modify the variable
+**ALLOWED_HOSTS** in the **.env** file located at 'admin-site/admin_site/bibos_admin/'.
+By default Django does not allow access through IP., so don't bother trying to access 
+the site through an IP. See Django documentation for more information about this.
+
+In this guide we will assume you're using localhost as HOSTNAME.
+
+
+    $ bash ./scripts/post-install-dev.sh <USERNAME> <EMAIL> <IP/HOSTNAME> <PORT>
+
+
+**post-install-dev.sh** sets up and runs the development version of the admin 
+system (using a local SQLite database). You'll be prompted for a password for the
 new administrative user `USERNAME`.
+
+Now access the site through http://localhost:8080/
+
+In order to login your user needs a 'bibos_profile'.
 
 PATCH THE USER
 ++++++++++++++
 
-Log on to the admin site's user section, using the hostname, port, username and
-password you specified:
+Log on to the admin site's user section, at:
 
 http://localhost:8080/admin/auth/user/
 
-Edit the user you just created. Scroll to the bottom of the screen and choose
-"Super admin" as the user profile type. Click Save.
-
-
+Edit the user you just created. Scroll to the bottom of the site in the section 
+*USER PROFILES*. Choose "Super Admin" as the user profile type. Click Save.
 
 ENJOY
 +++++
