@@ -1,3 +1,12 @@
+* Version 4.0.0, December 10, 2020
+
+New in this version:
+
+- Support for image versions in admin system.
+- Upgraded to Python 3.8 and Django 3.1.4.
+- Client: Replaced the lock file logic to better support failure
+  recovery.
+
 * Version 3.1.3, October 18, 2019
 
 Bugfix release. Fixed in this version:
