@@ -7,16 +7,14 @@ Required system packages
 
 To be installed with apt-get install or similar devices. These
 instructions will more or less work on all Debian-like systems, but they
-have only been tested on Ubuntu 12.04 LTS. Your mileage may vary.
+have only been tested on Ubuntu. This version is valid for Ubuntu  20.04 LTS.
+Your mileage may vary.
 
     git
-    python-pip
-    python-virtualenv
+    python3-pip
+    python3-venv
+    python3-dev
     build-essential
-    python-dev
-    apache2
-    libapache2-mod-wsgi
-
 
 For production purposes, we recommend that you use a PostgreSQL
 database. This requires you to install the following packages:
@@ -29,14 +27,14 @@ Installation procedure
 ++++++++++++++++++++++
 
 We recommend that you install this in the home directory of a dedicated
-user, e.g. /home/bibos. In that way, everything can be set up and tested
+user, e.g. /home/os2. In that way, everything can be set up and tested
 without root privileges.
 
 Check out source code, run install scripts, install PostgreSQL DB
 driver:
 
-    cd /home/bibos
-    clone https://github.com/magenta-aps/bibos_admin.git
+    cd /home/os2
+    git clone https://github.com/os2borgerpc/admin_site.git
     cd bibos_admin/admin_site
     scripts/install.sh
     source bin/activate

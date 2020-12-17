@@ -9,8 +9,8 @@ else
     email=$2
     domain=$3
     port=$4
-    timezone=`cat /etc/timezone`
-    language=`echo "${LANG%%.*}"`
+    timezone=CET
+    language=da
     secret_key=`openssl rand -base64 34 | head -c 50`
 
     project_dir=$(dirname "$0")/..

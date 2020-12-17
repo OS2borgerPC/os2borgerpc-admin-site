@@ -9,7 +9,6 @@ install_dir = os.path.abspath(
 
 
 DEBUG = env('DEBUG')
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = env('ADMINS')
 
@@ -63,6 +62,7 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
+# Timezone/Language
 TIME_ZONE = env('TIME_ZONE')
 
 # Language code for this installation. All choices can be found here:
@@ -122,13 +122,7 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = env('SECRET_KEY')
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

@@ -9,7 +9,8 @@ class UserProfile(models.Model):
     """BibOS Admin specific user profile."""
     # This is the user to which the profile belongs
     user = models.OneToOneField(User, unique=True,
-                                related_name='bibos_profile')
+                                related_name='bibos_profile',
+                                on_delete=models.CASCADE)
 
     SUPER_ADMIN = 0
     SITE_USER = 1
@@ -27,12 +28,12 @@ class UserProfile(models.Model):
     )
 
     type = models.IntegerField(choices=type_choices, default=SITE_USER)
-    site = models.ForeignKey(Site, null=True, blank=True)
+    site = models.ForeignKey(Site, null=True, blank=True, on_delete=models.CASCADE)
     # TODO: Add more fields/user options as needed.
     # TODO: Make before_save integrity check that SITE_USER and
     # SITE_ADMIN users MUST be associated with a site.
 
-    def __unicode__(self):
+    def __str__(self):
         return self.user.username
 
     def clean(self):

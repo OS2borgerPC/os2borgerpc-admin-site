@@ -1,3 +1,5 @@
+# Introduction
+
 This directory contains the BibOS Admin system, which is a remote
 administration system for Debian-based GNU/Linux-systems, especially
 Ubuntu systems.
@@ -14,8 +16,8 @@ License - see the LICENSE file for details.
 
 
 
-HOWTO SETUP DEVELOPMENT SERVER
-=============================+
+# HOW TO SETUP DEVELOPMENT SERVER
+
 
 This guide describes how to get the admin site up and running for
 development purposes, i.e. with no Apache or proxy setup. If you wish to
@@ -32,70 +34,93 @@ minutes or less. An Internet connection is required.
 
 
 
-PRE-REQUISITES
-++++++++++++++
+## PRE-REQUISITES
 
-Python 2.7
-SQLite 3
-python-virtualenv
+  - Python 3.6
+  - SQLite 3
+  - python-virtualenv
 
-Get them with apt-get install or by whatever means necessary for your
-platform.
+Get them with apt install
+
+```sh
+$ apt install <package_name>
+```
+
+... or by whatever means necessary for your OS.
 
 
-GRAB THE CODE
-+++++++++++++
+## GRAB THE CODE
 
-    git clone https://github.com/magenta-aps/bibos_admin.git
+```sh
+$ git clone https://github.com/magenta-aps/bibos_admin.git
+```
 
-GET THE RIGHT BRANCH
-++++++++++++++++++++
+## GET THE RIGHT BRANCH
 
-    cd bibos_admin
+```sh
+$ cd </path/to>/bibos_admin
+```
 
-    git checkout <development>
+```sh
+$ git checkout development
+```
 
 This only applies if you're not working directly on the master branch
 (which you probably shouldn't). For <development> substitute the branch
 you want to work on.
 
 
-INSTALL DJANGO AND OTHER COMPONENTS
-+++++++++++++++++++++++++++++++++++
+## INSTALL DJANGO AND OTHER COMPONENTS
 
 
-    cd admin_site
-
-    scripts/install.sh
+```sh
+$ cd admin_site/scripts && bash install.sh
+```
 
 This requires an Internet connection. It should run its course with a
 number of warnings but no errors.
 
 
-SET UP AND RUN THE DEVELOPMENT SERVER
-+++++++++++++++++++++++++++++++++++++
+## SET UP AND RUN THE DEVELOPMENT SERVER
 
-    scripts/post-install-dev.sh USERNAME EMAIL HOSTNAME/IP PORT
+In order to run **post-install-dev.sh** you must activate the virtual environment. 
 
-This sets up and runs the development version of the admin system (using a
-local SQLite database). You'll be prompted for a password for the
-new administrative user `USERNAME`.
+```sh
+$ cd .. && source python-env/bin/activate
+(python-env) user@machine:~/path/to/bibos_admin/admin_site$
+```
 
-PATCH THE USER
-++++++++++++++
+If you choose another HOSTNAME below than 'localhost' then remember to modify the variable
+**ALLOWED_HOSTS** in the **.env** file located at 'bibos_admin/admin_site/bibos_admin'.
+By default Django does not allow access through IP., so don't bother trying to access 
+the site through an IP. See Django documentation for more information about this.
 
-Log on to the admin site's user section, using the hostname, port, username and
-password you specified:
+In this guide we will assume you're using localhost as HOSTNAME.
+
+```sh
+$ bash ./scripts/post-install-dev.sh <USERNAME> <EMAIL> <IP/HOSTNAME> <PORT>
+```
+
+**post-install-dev.sh** sets up and runs the development version of the admin 
+system (using a local SQLite database). You'll be prompted for:
+
+  - A password for the new administrative user `USERNAME`.
+  - You'll be prompted again to re-enter the password.
+
+Now access the site through http://localhost:8080/
+
+In order to login your user needs a **bibos_profile**.
+
+## PATCH THE USER
+
+Log on to the admin site's user section, at:
 
 http://localhost:8080/admin/auth/user/
 
-Edit the user you just created. Scroll to the bottom of the screen and choose
-"Super admin" as the user profile type. Click Save.
+Edit the user you just created. Scroll to the bottom of the site in the section 
+**USER PROFILES**. Change the *TYPE* from **Sit User** to **Super Admin**. Click Save.
 
-
-
-ENJOY
-+++++
+## ENJOY
 
 Go to http://localhost:8080 to start using the system - create sites,
 create groups, etc. See further explanation below.
@@ -109,12 +134,10 @@ object structure.
 
 
 
-PREPARE THE ADMIN SYSTEM
-========================
+# PREPARE THE ADMIN SYSTEM
 
 
-Create distribution
-+++++++++++++++++++
+## Create distribution
 
 You need to create a "distribution" in the BibOS Admin system.  This is
 done in django-admin.  
@@ -124,8 +147,7 @@ no special characters. It should reflect the operating system on the
 corresponding clients, e.g. "ubuntu12.04".
 
 
-Create Site 
-+++++++++++
+## Create Site
 
 You need to create a "site" to which you can attach your client. The
 name of the site should describe your location, and the ID should be a
@@ -133,8 +155,7 @@ simple, lowercase string with no spaces or special characters, e.g.
 "aarhus".
 
 
-Finalize the distribution
-+++++++++++++++++++++++++
+## Finalize the distribution
 
 This step is to be performed *after* you have registred a computer in the
 admin system as described below. To finalize the distribution:
@@ -158,12 +179,9 @@ admin system as described below. To finalize the distribution:
   CLOSED_DISTRIBUTIONS. 
 
 
-REGISTER A CLIENT COMPUTER
-==========================
+## REGISTER A CLIENT COMPUTER
 
-
-Install bibos-client package
-++++++++++++++++++++++++++++
+### Install bibos-client package
 
 First, you need to install the BibOS Admin client on the PC you wish to
 control from the admin system.
@@ -172,13 +190,13 @@ We recommend that you install this from PyPI using pip.
 
 Enter the following commands in a bash shell:
 
-    # If not installed already
+    *If not installed already*
     sudo apt-get install python-pip
     sudo apt-get install build-essential
     sudo apt-get install curl
     sudo apt-get install python-dev
 
-    # This is what we want:
+    *This is what we want:*
     sudo pip install bibos-client
 
 
@@ -188,16 +206,16 @@ in order to connect with the admin system.
     sudo register_new_bibos_client.sh
 
 
-Guide to the steps:
+## Guide to the steps:
 
-# Do not enter a gateway IP unless you *know* you will be using a gateway.
-# Enter a new host name for your computer if you want. If not, your PC
-  will be registered with its current name.
-# Enter the ID for the site you wish to register the PC on (e.g.
-  "aarhus").
-# Enter the ID for the distribution (e.g. "ubuntu12.04").
-# Enter the URL of your admin system (e.g. "http://localhost:8000" if
-  you're a developer or "http://yourdomain.com/your_admin_dir".
+    - Do not enter a gateway IP unless you *know* you will be using a gateway.
+    - Enter a new host name for your computer if you want. If not, your PC
+    will be registered with its current name.
+    - Enter the ID for the site you wish to register the PC on (e.g.
+    "aarhus").
+    - Enter the ID for the distribution (e.g. "ubuntu12.04").
+    - Enter the URL of your admin system (e.g. "http://localhost:8000" if
+    you're a developer or "http://yourdomain.com/your_admin_dir".
 
 The registration will now proceed, and your new PC will show up in the
 admin system as "New" in the corresponding site's status list.

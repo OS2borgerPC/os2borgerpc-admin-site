@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('key', models.CharField(max_length=32)),
                 ('value', models.CharField(max_length=4096)),
-                ('owner_configuration', models.ForeignKey(related_name='entries', verbose_name='owner configuration', to='system.Configuration')),
+                ('owner_configuration', models.ForeignKey(related_name='entries', verbose_name='owner configuration', to='system.Configuration', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255, verbose_name='name')),
                 ('uid', models.CharField(max_length=255, verbose_name='uid')),
-                ('configuration', models.ForeignKey(to='system.Configuration')),
+                ('configuration', models.ForeignKey(to='system.Configuration', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
                 ('log_output', models.CharField(max_length=128000, verbose_name='log output', blank=True)),
                 ('started', models.DateTimeField(null=True, verbose_name='started')),
                 ('finished', models.DateTimeField(null=True, verbose_name='finished')),
-                ('batch', models.ForeignKey(related_name='jobs', to='system.Batch')),
+                ('batch', models.ForeignKey(related_name='jobs', to='system.Batch', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -87,8 +87,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('do_add', models.BooleanField(default=True)),
-                ('custom_packages', models.ForeignKey(related_name='install_infos', to='system.CustomPackages')),
-                ('package', models.ForeignKey(to='system.Package')),
+                ('custom_packages', models.ForeignKey(related_name='install_infos', to='system.CustomPackages', on_delete=models.CASCADE)),
+                ('package', models.ForeignKey(to='system.Package', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -103,8 +103,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('status', models.CharField(max_length=255)),
-                ('package', models.ForeignKey(to='system.Package')),
-                ('package_list', models.ForeignKey(related_name='statuses', to='system.PackageList')),
+                ('package', models.ForeignKey(to='system.Package', on_delete=models.CASCADE)),
+                ('package_list', models.ForeignKey(related_name='statuses', to='system.PackageList', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -113,8 +113,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('string_value', models.CharField(max_length=4096, null=True, blank=True)),
                 ('file_value', models.FileField(null=True, upload_to=system.models.upload_file_name, blank=True)),
-                ('batch', models.ForeignKey(related_name='parameters', to='system.Batch')),
-                ('input', models.ForeignKey(to='system.Input')),
+                ('batch', models.ForeignKey(related_name='parameters', to='system.Batch', on_delete=models.CASCADE)),
+                ('input', models.ForeignKey(to='system.Input', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -129,10 +129,10 @@ class Migration(migrations.Migration):
                 ('do_send_package_info', models.BooleanField(default=True, verbose_name='send package info')),
                 ('creation_time', models.DateTimeField(auto_now_add=True, verbose_name='creation time')),
                 ('last_seen', models.DateTimeField(null=True, verbose_name='last seen', blank=True)),
-                ('configuration', models.ForeignKey(to='system.Configuration')),
-                ('custom_packages', models.ForeignKey(blank=True, to='system.CustomPackages', null=True)),
-                ('distribution', models.ForeignKey(to='system.Distribution')),
-                ('package_list', models.ForeignKey(blank=True, to='system.PackageList', null=True)),
+                ('configuration', models.ForeignKey(to='system.Configuration', on_delete=models.CASCADE)),
+                ('custom_packages', models.ForeignKey(blank=True, to='system.CustomPackages', on_delete=models.CASCADE, null=True)),
+                ('distribution', models.ForeignKey(to='system.Distribution', on_delete=models.CASCADE)),
+                ('package_list', models.ForeignKey(blank=True, to='system.PackageList', on_delete=models.CASCADE, null=True)),
             ],
             options={
                 'ordering': ['name'],
@@ -145,8 +145,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='name')),
                 ('uid', models.CharField(unique=True, max_length=255, verbose_name='id')),
                 ('description', models.TextField(max_length=1024, null=True, verbose_name='description', blank=True)),
-                ('configuration', models.ForeignKey(to='system.Configuration')),
-                ('custom_packages', models.ForeignKey(to='system.CustomPackages')),
+                ('configuration', models.ForeignKey(to='system.Configuration', on_delete=models.CASCADE)),
+                ('custom_packages', models.ForeignKey(to='system.CustomPackages', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['name'],
@@ -172,8 +172,8 @@ class Migration(migrations.Migration):
                 ('complete_log', models.TextField(null=True, blank=True)),
                 ('status', models.CharField(default=b'NEW', max_length=10, choices=[(b'NEW', 'eventstatus:New'), (b'ASSIGNED', 'eventstatus:Assigned'), (b'RESOLVED', 'eventstatus:Resolved')])),
                 ('note', models.TextField(null=True, blank=True)),
-                ('assigned_user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
-                ('pc', models.ForeignKey(to='system.PC')),
+                ('assigned_user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)),
+                ('pc', models.ForeignKey(to='system.PC', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -186,7 +186,7 @@ class Migration(migrations.Migration):
                 ('level', models.CharField(default=b'High', max_length=10, choices=[(b'Critical', 'securitylevel:Critical'), (b'High', 'securitylevel:High'), (b'Normal', 'securitylevel:Normal')])),
                 ('alert_groups', models.ManyToManyField(related_name='security_problems', to='system.PCGroup', blank=True)),
                 ('alert_users', models.ManyToManyField(related_name='security_problems', to=settings.AUTH_USER_MODEL, blank=True)),
-                ('script', models.ForeignKey(related_name='security_problems', to='system.Script')),
+                ('script', models.ForeignKey(related_name='security_problems', to='system.Script', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['name'],
@@ -198,29 +198,29 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255, verbose_name='name')),
                 ('uid', models.CharField(unique=True, max_length=255, verbose_name='uid')),
-                ('configuration', models.ForeignKey(to='system.Configuration')),
+                ('configuration', models.ForeignKey(to='system.Configuration', on_delete=models.CASCADE)),
                 ('security_alerts', models.ManyToManyField(related_name='alert_sites', to='system.SecurityProblem', blank=True)),
             ],
         ),
         migrations.AddField(
             model_name='securityproblem',
             name='site',
-            field=models.ForeignKey(related_name='security_problems', to='system.Site'),
+            field=models.ForeignKey(related_name='security_problems', to='system.Site', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='securityevent',
             name='problem',
-            field=models.ForeignKey(to='system.SecurityProblem'),
+            field=models.ForeignKey(to='system.SecurityProblem', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='script',
             name='site',
-            field=models.ForeignKey(related_name='scripts', blank=True, to='system.Site', null=True),
+            field=models.ForeignKey(related_name='scripts', blank=True, to='system.Site', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='pcgroup',
             name='site',
-            field=models.ForeignKey(related_name='groups', to='system.Site'),
+            field=models.ForeignKey(related_name='groups', to='system.Site', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='pc',
@@ -230,7 +230,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pc',
             name='site',
-            field=models.ForeignKey(related_name='pcs', to='system.Site'),
+            field=models.ForeignKey(related_name='pcs', to='system.Site', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='packagelist',
@@ -244,17 +244,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='job',
             name='pc',
-            field=models.ForeignKey(related_name='jobs', to='system.PC'),
+            field=models.ForeignKey(related_name='jobs', to='system.PC', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='input',
             name='script',
-            field=models.ForeignKey(related_name='inputs', to='system.Script'),
+            field=models.ForeignKey(related_name='inputs', to='system.Script', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='distribution',
             name='package_list',
-            field=models.ForeignKey(to='system.PackageList'),
+            field=models.ForeignKey(to='system.PackageList', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='custompackages',
@@ -264,12 +264,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='batch',
             name='script',
-            field=models.ForeignKey(to='system.Script'),
+            field=models.ForeignKey(to='system.Script', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='batch',
             name='site',
-            field=models.ForeignKey(related_name='batches', to='system.Site'),
+            field=models.ForeignKey(related_name='batches', to='system.Site', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='securityproblem',

@@ -10,30 +10,60 @@ import re
 import subprocess
 import fcntl
 
-from .config import OS2borgerPCConfig
-from .admin_client import OS2borgerPCAdmin
+import contextlib
+import time
+import signal
+import errno
+
+from bibos_utils.bibos_config import BibOSConfig
+from bibos_client.admin_client import BibOSAdmin
 
 
-class filelock(object):
-    """Utility class to implement locks with Unix system calls. This is to
-    avoid the problem with stale locks not detected by the filelock module.
-    """
-    def __init__(self, file_name):
-        self.file_name = file_name
-        self.file_descriptor = None
+@contextlib.contextmanager
+def filelock(file_name, max_age=None):
+    """Acquires the named lock for the lifetime of the context. If the named
+    lock was acquired with this function by another process more than max_age
+    seconds ago, then that process will be forcibly terminated."""
+    pid_file = file_name + ".pid"
+    with open(file_name, "w") as fd:
+        try:
+            # Try to take the lock in the usual way
+            fcntl.lockf(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except IOError as lock_ex:
+            # If this lock has a maximum age, then check if it's been exceeded.
+            # If it has, then forcibly terminate the locking process and take
+            # the lock
+            if lock_ex.errno == errno.EAGAIN and max_age is not None:
+                lock_age = time.time() - os.stat(pid_file).st_mtime
+                if lock_age >= max_age:
+                    try:
+                        print >> sys.stderr, (
+                                ("warning: forcibly acquiring"
+                                " lock file \"{0}\"").format(file_name))
+                        with open(pid_file, "rt") as fp:
+                            pid = int(fp.read().strip())
+                        os.kill(pid, signal.SIGKILL)
+                        fcntl.lockf(fd, fcntl.LOCK_EX)
+                    except ValueError:
+                        raise lock_ex
+                else:
+                    raise lock_ex
+            else:
+                raise lock_ex
 
-    def acquire(self):
-        assert not self.file_descriptor
-        self.file_descriptor = open(self.file_name, 'w')
-        fcntl.lockf(self.file_descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        # XXX RACE BEGINS: we have the lock but haven't written our PID to the
+        # corresponding pidfile yet
+        with open(pid_file, "wt") as fp:
+            fp.write(str(os.getpid()))
+        # XXX RACE ENDS: other processes started after this point will behave
+        # as expected
 
-    def release(self):
-        assert self.file_descriptor
-        fcntl.lockf(self.file_descriptor, fcntl.LOCK_UN)
-        self.file_descriptor = None
-
-    def i_am_locking(self):
-        return self.file_descriptor is not None
+        try:
+            yield
+        finally:
+            os.unlink(pid_file)
+            fcntl.lockf(fd, fcntl.LOCK_UN)
+            os.unlink(file_name)
 
 
 def get_upgrade_packages():
