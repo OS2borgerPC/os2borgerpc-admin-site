@@ -156,7 +156,7 @@ while true; do
     fi
     if [[ -z "$ADMIN_URL" ]]
     then
-        ADMIN_URL="https://bibos-admin.magenta-aps.dk"
+        ADMIN_URL="https://os2borgerpc-admin.magenta.dk"
         echo "Indtast admin-url hvis det ikke er $ADMIN_URL"
         read NEW_ADMIN_URL
         if [[ -n "$NEW_ADMIN_URL" ]]

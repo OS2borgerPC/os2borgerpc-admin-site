@@ -1,11 +1,12 @@
-# Copyright (C) 2013  Magenta Aps, http://www.magenta-aps.dk
+# Copyright (C) 2013-21  Magenta Aps, http://www.magenta-aps.dk
 #
-# Authors: Carsten Agger (carstena@magenta-aps.dk), Jørgen Ulrik B. Krag
-# (jubk@magenta-aps.dk), and others.
+# Authors: Carsten Agger (carstena@magenta.dk), Jørgen Ulrik B. Krag
+# (jubk@magenta.dk), Danni Als (danni@magenta.dk), Alexander Faithfull
+# (af@magenta.dk), Heini Leander Ovason (heini@magenta.dk), and others.
 #
-# This directory contains the OS2borgerPC Admin system.
+# This directory contains the OS2borgerPC Admin client.
 #
-# The OS2borgerPC Admin system  is free software: you can redistribute it
+# The OS2borgerPC Admin client  is free software: you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
 # published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.

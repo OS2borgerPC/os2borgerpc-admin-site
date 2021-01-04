@@ -1,11 +1,15 @@
 from setuptools import setup
 
+with open("README", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='os2borgerpc_client',
     # Keep this in sync with os2borgerpc_client/jobmanager.py
-    version='0.0.5.1',
-    description='Clients for the OS2borgerPC system',
-    url='https://github.com/magenta-aps/',
+    version='1.0.1',
+    description='Client for the OS2borgerPC system',
+    long_description=long_description,
+    url='https://github.com/OS2borgerPC/',
     author='Magenta ApS',
     author_email='info@magenta-aps.dk',
     license='GPLv3',
@@ -24,5 +28,11 @@ setup(
         'bin/register_new_os2borgerpc_client.sh',
         'bin/admin_connect.sh',
     ],
-    zip_safe=False
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Operating System :: POSIX :: Linux",
+    ],
+    zip_safe=False,
+    python_requires='>=3.6',
 )
