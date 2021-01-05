@@ -14,7 +14,7 @@ else
     secret_key=`openssl rand -base64 34 | head -c 50`
 
     project_dir=$(dirname "$0")/..
-    admin_dir=$project_dir/bibos_admin
+    admin_dir=$project_dir/os2borgerpc_admin
     managepy="python manage.py"
 
 cat <<ENV > $admin_dir/.env

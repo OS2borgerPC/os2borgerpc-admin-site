@@ -1,7 +1,4 @@
 import sys
-#import ipdb
-#from bibos_admin import views
-#from system import views
 
 from django_xmlrpc.views import handle_xmlrpc
 from django.views.static import serve
@@ -18,7 +15,6 @@ admin.autodiscover()
 
 urlpatterns = [
     # Examples:
-    # url(r'^$', 'bibos_admin.views.home', name='home'),
     url('accounts/login/', auth_views.LoginView.as_view(template_name='login.html')),
     url(r'^xmlrpc/$', handle_xmlrpc, name='xmlrpc'),
     url('accounts/logout/', auth_views.LogoutView.as_view(template_name='logout.html')),

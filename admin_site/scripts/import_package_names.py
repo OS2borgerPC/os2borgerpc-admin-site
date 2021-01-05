@@ -9,7 +9,7 @@ import re
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/../'))
 
-from bibos_admin import settings
+from os2borgerpc_admin import settings
 from system.models import Package
 
 def import_packages(url):

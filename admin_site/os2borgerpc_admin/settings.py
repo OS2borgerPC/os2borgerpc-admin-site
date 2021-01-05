@@ -1,4 +1,4 @@
-# Django settings for bibos_admin project.
+# Django settings for OS2borgerPC admin project.
 
 import os
 from getenv import env
@@ -140,10 +140,10 @@ EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-ROOT_URLCONF = 'bibos_admin.urls'
+ROOT_URLCONF = 'os2borgerpc_admin.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'bibos_admin.wsgi.application'
+WSGI_APPLICATION = 'os2borgerc_admin.wsgi.application'
 
 # Don't forget to use absolute paths, not relative paths.
 DOCUMENTATION_DIR =  os.path.join(install_dir, 'templates')

@@ -1,6 +1,6 @@
 from django.template import Context, loader as template_loader
 from random import choice
-from bibos_admin import settings
+from os2borgerpc_admin import settings
 from .models import PC, ConfigurationEntry
 
 import string

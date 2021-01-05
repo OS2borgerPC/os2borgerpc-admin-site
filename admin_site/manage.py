@@ -9,9 +9,9 @@ if __name__ == "__main__":
         os.path.join(os.path.dirname(__file__))
     )
 
-    dotenv.load_dotenv(install_dir + '/bibos_admin/.env')
+    dotenv.load_dotenv(install_dir + '/os2borgerpc_admin/.env')
 
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bibos_admin.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "os2borgerpc_admin.settings")
 
     from django.core.management import execute_from_command_line
 
