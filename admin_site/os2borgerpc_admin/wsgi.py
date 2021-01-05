@@ -15,7 +15,6 @@ framework.
 """
 import os
 import sys
-import dotenv
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -29,9 +28,8 @@ install_dir = os.path.abspath(
 
 lib_dir = ''
 var_dir = install_dir + '/var'
-env = dotenv.load_dotenv(install_dir + '/os2borgerpc_admin/.env')
 
-sys.path[0:0] = [install_dir, lib_dir, var_dir, env]
+sys.path[0:0] = [install_dir, lib_dir, var_dir]
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION

@@ -1,22 +1,57 @@
 # Django settings for OS2borgerPC admin project.
 
 import os
-from getenv import env
+import configparser
 
 install_dir = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')
 )
 
+# Our customized user profile.
+AUTH_PROFILE_MODULE = 'account.UserProfile'
 
-DEBUG = env('DEBUG')
+config = configparser.ConfigParser()
+config["settings"] = {}
 
-ADMINS = env('ADMINS')
+# We support loading settings from two files. The fallback values in this
+# `settings.py` is first overwritten by the values defined in the file where
+# the env var `BPC_SYSTEM_CONFIG_PATH` points to. Finally the values are
+# overwritten by the values the env var `BPC_USER_CONFIG_PATH` points to.
+#
+# The `BPC_SYSTEM_CONFIG_PATH` file is for an alternative set of default
+# values. It is useful in a specific envionment such as Docker. An example is
+# the setting for STATIC_ROOT. The default in `settings.py` is relative to the
+# current directory. In Docker it should be an absolute path that is easy to
+# mount a volume to.
+#
+
+# The `BPC_USER_CONFIG_PATH` file is for normal settings and should generally be
+# unique to a instance deployment.
+
+for env in ["BPC_SYSTEM_CONFIG_PATH", "BPC_USER_CONFIG_PATH"]:
+    path = os.getenv(env, None)
+    if path:
+        try:
+            with open(path) as fp:
+                config.read_file(fp)
+            logger.info("Loaded setting %s from %s" % (env, path))
+        except OSError as e:
+            logger.error(
+                "Loading setting %s from %s failed with %s." % (env, path, e)
+            )
+
+# use settings section as default
+settings = config["settings"]
+
+
+DEBUG = settings.getboolean('DEBUG', fallback=False)
+
+ADMINS = settings.get('ADMINS')
 
 MANAGERS = ADMINS
 
 
 # Template settings
-# Added because "TemplateDoesNotExist" error in Django 1.11
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -42,32 +77,32 @@ SOURCE_DIR = os.path.abspath(os.path.join(install_dir, '..'))
 
 DATABASES = {
     'default': {
-        'ENGINE': env('DB_ENGINE'),
+        'ENGINE': settings.get('DB_ENGINE'),
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': env('DB_NAME'),
+        'NAME': settings.get('DB_NAME'),
         # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': '',
-        'PORT': '',                      # Set to empty string for default.
+        'USER': settings.get('DB_USER', fallback=''),
+        'PASSWORD': settings.get('DB_PASSWORD', fallback=''),
+        'HOST': settings.get('DB_HOST', fallback=''),
+        'PORT': settings.get('DB_PORT', fallback=''),
     }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+ALLOWED_HOSTS = settings.get('ALLOWED_HOSTS')
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
 # Timezone/Language
-TIME_ZONE = env('TIME_ZONE')
+TIME_ZONE = settings.get('TIME_ZONE')
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = env('LANGUAGE_CODE')
+LANGUAGE_CODE = settings.get('LANGUAGE_CODE')
 
 LOCALE_PATHS = [
     os.path.join(install_dir, 'locale')
@@ -99,7 +134,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = settings.get('STATIC_ROOT', fallback='')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -120,7 +155,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = settings.get('SECRET_KEY')
 
 MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
@@ -134,10 +169,10 @@ MIDDLEWARE = (
 
 # Email settings
 
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-ADMIN_EMAIL = env('ADMIN_EMAIL')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
+DEFAULT_FROM_EMAIL = settings.get('DEFAULT_FROM_EMAIL')
+ADMIN_EMAIL = settings.get('ADMIN_EMAIL')
+EMAIL_HOST = settings.get('EMAIL_HOST')
+EMAIL_PORT = settings.get('EMAIL_PORT')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ROOT_URLCONF = 'os2borgerpc_admin.urls'
@@ -212,16 +247,15 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'account.UserProfile'
-
 ETC_DIR = os.path.join(install_dir, 'etc')
 PROXY_HTPASSWD_FILE = os.path.join(ETC_DIR, 'bibos-proxy.htpasswd')
 
 # List of hosts that should be allowed through BibOS gateway proxies
-DEFAULT_ALLOWED_PROXY_HOSTS = env('DEFAULT_ALLOWED_PROXY_HOSTS')
+DEFAULT_ALLOWED_PROXY_HOSTS = settings.get('DEFAULT_ALLOWED_PROXY_HOSTS')
 
 # List of hosts that should be proxied directly from the gateway and
 # not through the central server
-DEFAULT_DIRECT_PROXY_HOSTS = env('DEFAULT_DIRECT_PROXY_HOSTS')
+DEFAULT_DIRECT_PROXY_HOSTS = settings.get('DEFAULT_DIRECT_PROXY_HOSTS')
 
-CLOSED_DISTRIBUTIONS = env('CLOSED_DISTRIBUTIONS')
+# TODO: This is deprecated and should be removed.
+CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS')

@@ -16,6 +16,11 @@ LABEL org.opencontainers.image.title="OS2borgerPC" \
       org.opencontainers.image.url="https://os2.eu/produkt/os2borgerpc"\
       org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site"
 
+ENV PYTHONUNBUFFERED=1 \
+  BEV_SYSTEM_CONFIG_PATH=/code/docker/docker-settings.ini \
+  BEV_USER_CONFIG_PATH=/user-settings.ini
+
+
 WORKDIR /code/
 COPY admin_site/scripts/sys-requirements.txt sys-requirements.txt
 

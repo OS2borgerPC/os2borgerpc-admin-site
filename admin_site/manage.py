@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 import os
 import sys
-import dotenv
 
 if __name__ == "__main__":
 
     install_dir = os.path.abspath(
         os.path.join(os.path.dirname(__file__))
     )
-
-    dotenv.load_dotenv(install_dir + '/os2borgerpc_admin/.env')
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "os2borgerpc_admin.settings")
 
