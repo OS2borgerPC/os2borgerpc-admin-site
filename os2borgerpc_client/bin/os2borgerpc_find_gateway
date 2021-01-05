@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+import sys
+
+from os2borgerpc.client.gateway import find_gateway
+try:
+    s = find_gateway()
+    if s:
+        print(s)
+except Exception as e:
+    print("Error finding gateway: ", str(e))
+    sys.exit(1)

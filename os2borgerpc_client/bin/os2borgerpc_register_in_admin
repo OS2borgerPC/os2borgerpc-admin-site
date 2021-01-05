@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+
+import sys
+import urllib.parse
+
+from os2borgerpc.client.config import OS2borgerPCConfig
+from os2borgerpc.client.admin_client import OS2borgerPCAdmin
+
+
+config = OS2borgerPCConfig()
+data = config.get_data()
+
+mac = data['mac']
+hostname = data['hostname']
+site = data['site']
+distribution = data['distribution']
+admin_url = data.get('admin_url', 'http://os2borgerpc-admin.magenta.dk/')
+xml_rpc_url = data.get('xml_rpc_url', '/admin-xml/')
+urllib.parse.urljoin(admin_url, xml_rpc_url)
+
+admin = OS2borgerPCAdmin(urllib.parse.urljoin(admin_url, xml_rpc_url))
+
+# Data collected, now register computer.
+
+try:
+    uid = admin.register_new_computer(mac, hostname, distribution, site, data)
+    config.set_value('uid', uid)
+    config.save()
+
+except Exception as e:
+    print('Error:', str(e), file=sys.stderr)
+    sys.exit(1)
+
+# Computer created, now upload package data.
+
+# TODO: Do NOT do this. Factor to new program.
+"""
+os.system('get_package_data /tmp/packages.csv')
+
+with open('/tmp/packages.csv') as f:
+    package_reader = csv.reader(f, delimiter=';')
+    package_data = [p for p in package_reader]
+
+try:
+    admin.send_status_info(uid, package_data, None)
+except Exception as e:
+    print('Error:', str(e), file=sys.stderr)
+    sys.exit(1)
+"""
