@@ -1,1 +1,0 @@
-register_new_os2borgerpc_client.sh
