@@ -161,13 +161,13 @@ STATICFILES_FINDERS = (
 SECRET_KEY = settings.get('SECRET_KEY')
 
 MIDDLEWARE = (
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 # Email settings
@@ -266,3 +266,7 @@ DEFAULT_DIRECT_PROXY_HOSTS = settings.get(
 
 # TODO: This is deprecated and should be removed.
 CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS', fallback=[])
+
+INITIALIZE_DATABASE = settings.getboolean(
+    "INITIALIZE_DATABASE", fallback=False
+)

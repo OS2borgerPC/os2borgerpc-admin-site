@@ -5,6 +5,7 @@ from django.views.static import serve
 
 import django.contrib.auth.views
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.conf import settings
 
 
@@ -27,10 +28,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
 
-# Static media when running manually
-if 'runserver' in sys.argv or 'runserver_plus':
-    urlpatterns += [
-        url(
-            r'^media/(.*)$', serve,
-            kwargs={'document_root': settings.MEDIA_ROOT}), 
-]
+# Static files are served by WhiteNoise in both development and production.
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
