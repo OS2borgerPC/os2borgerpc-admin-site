@@ -2,6 +2,9 @@
 
 import os
 import configparser
+import logging
+
+logger = logging.getLogger(__name__)
 
 install_dir = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..')
@@ -251,11 +254,15 @@ ETC_DIR = os.path.join(install_dir, 'etc')
 PROXY_HTPASSWD_FILE = os.path.join(ETC_DIR, 'bibos-proxy.htpasswd')
 
 # List of hosts that should be allowed through BibOS gateway proxies
-DEFAULT_ALLOWED_PROXY_HOSTS = settings.get('DEFAULT_ALLOWED_PROXY_HOSTS')
+DEFAULT_ALLOWED_PROXY_HOSTS = settings.get(
+    'DEFAULT_ALLOWED_PROXY_HOSTS', fallback=[]
+)
 
 # List of hosts that should be proxied directly from the gateway and
 # not through the central server
-DEFAULT_DIRECT_PROXY_HOSTS = settings.get('DEFAULT_DIRECT_PROXY_HOSTS')
+DEFAULT_DIRECT_PROXY_HOSTS = settings.get(
+    'DEFAULT_DIRECT_PROXY_HOSTS', fallback=[]
+)
 
 # TODO: This is deprecated and should be removed.
-CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS')
+CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS', fallback=[])

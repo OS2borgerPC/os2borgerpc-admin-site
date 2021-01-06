@@ -1,0 +1,40 @@
+version: "3.4"
+
+services:
+    os2borgerpc-admin:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+            target: os2borgerpc
+        command:
+            sh -c "gunicorn -b 0.0.0.0:9999 --reload --access-logfile - os2borgerpc_admin.wsgi"
+        volumes:
+            - .:/code/
+            - ./dev-environment/dev-settings.ini:/user-settings.ini
+            - ./log:/log
+            - ./static:/static
+        depends_on:
+            - db
+            - postfix
+        ports:
+            - 9999:9999
+
+    db:
+        image: magentaaps/postgres-os2bos:1-10.14-test
+        env_file:
+            - dev-environment/db.env
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+    postfix:
+        image: catatnight/postfix
+        hostname: postfix
+        domainname: os2borgerpctest.magenta.dk
+        environment:
+          - maildomain=magenta.dk
+          - smtp_user=bpc:bpc
+
+volumes:
+    postgres-data:
+
+
+

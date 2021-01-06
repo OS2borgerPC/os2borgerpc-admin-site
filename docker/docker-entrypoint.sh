@@ -9,6 +9,8 @@
 
 set -ex
 
+./manage.py ensure_db_connection --wait 30
+
 if [ "$SKIP_MIGRATIONS" != "yes" ];
 then
   # Run Migrate
