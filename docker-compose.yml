@@ -15,6 +15,7 @@ services:
             - ./log:/log
             - ./static:/static
             - ./script-uploads:/code/admin_site/site_media/script_uploads
+            - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
         depends_on:
             - db
             - postfix
