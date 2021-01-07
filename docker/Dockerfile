@@ -30,8 +30,6 @@ RUN set -ex \
   # automatic ranges of UID_MAX/GID_MAX used by useradd/groupadd. See
   # `/etc/login.defs`. Hopefully there will be no conflicts with users of the
   # host system or users of other docker containers.
-  #
-  # See `doc/user/installation.rst` for instructions on how to overwrite this.
   && groupadd -g 75030 -r bpc\
   && useradd -u 75030 --no-log-init -r -g bpc bpc \
   # Install system dependencies from file.
@@ -40,7 +38,17 @@ RUN set -ex \
   # clean up after apt-get and man-pages
   && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/?? /usr/share/man/??_* \
  # create folders at easily mountable paths for output from django
- && install -o bpc -g bpc -d /log
+ && install -o bpc -g bpc -d /log \
+ && install -o bpc -g bpc -d /static \
+ && install -o bpc -g bpc -d /code/admin_site/site_media/script_uploads \
+ && install -o bpc -g bpc -d /code/admin_site/site_media/parameter_uploads \
+ && install -o bpc -g bpc -d /code/admin_site/site_media/images
+
+VOLUME /log
+VOLUME /static
+VOLUME /code/admin_site/site_media/script_uploads
+VOLUME /code/admin_site/site_media/parameter_uploads
+VOLUME /code/admin_site/site_media/images
 
 
 # Install requirements.
