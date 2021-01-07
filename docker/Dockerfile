@@ -24,6 +24,7 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /code/
 COPY admin_site/scripts/sys-requirements.txt sys-requirements.txt
 
+# hadolint ignore=DL3008
 RUN set -ex \
   # Add a bpc group and user. Note: this is a system user/group, but have
   # UID/GID above the normal SYS_UID_MAX/SYS_GID_MAX of 999, but also above the
@@ -34,9 +35,10 @@ RUN set -ex \
   && useradd -u 75030 --no-log-init -r -g bpc bpc \
   # Install system dependencies from file.
   && apt-get -y update \
-  && apt-get -y install --no-install-recommends $(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt) \
+  && apt-get -y install --no-install-recommends "$(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt)" \
   # clean up after apt-get and man-pages
-  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/?? /usr/share/man/??_* \
+  && apt-get clean \
+  && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
  # create folders at easily mountable paths for output from django
  && install -o bpc -g bpc -d /log \
  && install -o bpc -g bpc -d /static \
