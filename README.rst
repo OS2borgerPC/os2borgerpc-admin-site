@@ -79,6 +79,8 @@ the background, give the ``-d`` option:
 
     $ docker-compose up --build -d
 
+The OS2borgerPC Admin system will now be available on
+http://localhost:9999.
 
 Out of the box, the development server will contain one user called
 ``magenta``, with password ``magenta``.
