@@ -80,14 +80,12 @@ SOURCE_DIR = os.path.abspath(os.path.join(install_dir, '..'))
 
 DATABASES = {
     'default': {
-        'ENGINE': settings.get('DB_ENGINE'),
+        'ENGINE': 'django.db.backends.postgresql',
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': settings.get('DB_NAME'),
-        # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': settings.get('DB_USER', fallback=''),
-        'PASSWORD': settings.get('DB_PASSWORD', fallback=''),
-        'HOST': settings.get('DB_HOST', fallback=''),
+        'USER': settings.get('DB_USER'),
+        'PASSWORD': settings.get('DB_PASSWORD'),
+        'HOST': settings.get('DB_HOST'),
         'PORT': settings.get('DB_PORT', fallback=''),
     }
 }
