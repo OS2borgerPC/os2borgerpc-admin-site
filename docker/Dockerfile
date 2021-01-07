@@ -32,8 +32,8 @@ RUN set -ex \
   # host system or users of other docker containers.
   #
   # See `doc/user/installation.rst` for instructions on how to overwrite this.
-  && groupadd -g 72050 -r bpc\
-  && useradd -u 72050 --no-log-init -r -g bpc bpc \
+  && groupadd -g 75030 -r bpc\
+  && useradd -u 75030 --no-log-init -r -g bpc bpc \
   # Install system dependencies from file.
   && apt-get -y update \
   && apt-get -y install --no-install-recommends $(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt) \
