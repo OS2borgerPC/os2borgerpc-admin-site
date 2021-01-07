@@ -6,14 +6,10 @@ import os
 
 from django.core.management import call_command
 
-from django.contrib.auth.models import User
-
-from account.models import UserProfile
-from system.models import Site, Configuration
-
 from os2borgerpc_admin.settings import install_dir
 
 fixtures_dir = os.path.join(install_dir, "system/fixtures")
+
 
 def initialize():
     """Initialize all the basic data we want at start.
@@ -29,8 +25,8 @@ def initialize():
 def initialize_users():
     """Prime the system with some users to get started.
 
-    Data should be the output of 
-    "manage.py dumpdata django.contrib.auth.models.User" and 
+    Data should be the output of
+    "manage.py dumpdata django.contrib.auth.models.User" and
     "manage.py dumpdata account.UserProfile".
 
     """
@@ -46,5 +42,7 @@ def initialize_sites():
     and "manage.py dumpdata system.Configuration".
     """
     if os.path.exists(os.path.join(fixtures_dir, "sites.json")):
-        call_command("loaddata", "site_configurations.json", app_label="system")
+        call_command(
+            "loaddata", "site_configurations.json", app_label="system"
+        )
         call_command("loaddata", "sites.json", app_label="system")

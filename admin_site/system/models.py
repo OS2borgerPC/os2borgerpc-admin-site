@@ -128,7 +128,6 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
-
     class Meta:
         unique_together = ('name', 'version')
 
@@ -399,9 +398,13 @@ class PCGroup(models.Model):
     uid = models.CharField(_('id'), max_length=255, unique=True)
     description = models.TextField(_('description'), max_length=1024,
                                    null=True, blank=True)
-    site = models.ForeignKey(Site, related_name='groups', on_delete=models.CASCADE)
+    site = models.ForeignKey(
+        Site, related_name='groups', on_delete=models.CASCADE
+    )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    custom_packages = models.ForeignKey(CustomPackages, on_delete=models.PROTECT)
+    custom_packages = models.ForeignKey(
+        CustomPackages, on_delete=models.PROTECT
+    )
 
     def __str__(self):
         return self.name
@@ -535,9 +538,15 @@ class PC(models.Model):
     distribution = models.ForeignKey(Distribution, on_delete=models.PROTECT)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
-    package_list = models.ForeignKey(PackageList, null=True, blank=True, on_delete=models.PROTECT)
-    custom_packages = models.ForeignKey(CustomPackages, null=True, blank=True, on_delete=models.PROTECT)
-    site = models.ForeignKey(Site, related_name='pcs', on_delete=models.CASCADE)
+    package_list = models.ForeignKey(
+        PackageList, null=True, blank=True, on_delete=models.PROTECT
+    )
+    custom_packages = models.ForeignKey(
+        CustomPackages, null=True, blank=True, on_delete=models.PROTECT
+    )
+    site = models.ForeignKey(
+        Site, related_name='pcs', on_delete=models.CASCADE
+    )
     is_active = models.BooleanField(_('active'), default=False)
     is_update_required = models.BooleanField(_('update required'),
                                              default=False)
@@ -721,7 +730,7 @@ class Script(models.Model):
             if(os.path.isfile(full_script_path)):
                 args = []
                 title = name
-                title_matcher = re.compile('BIBOS_SCRIPT_TITLE:\s*([^\n]+)')
+                title_matcher = re.compile(r'BIBOS_SCRIPT_TITLE:\s*([^\n]+)')
                 arg_matcher = re.compile(
                     'BIBOS_SCRIPT_ARG:(' +
                     '|'.join([v for v, n in Input.VALUE_CHOICES]) +
@@ -806,7 +815,9 @@ class Batch(models.Model):
     # script and date, etc.
     name = models.CharField(_('name'), max_length=255)
     script = models.ForeignKey(Script, on_delete=models.CASCADE)
-    site = models.ForeignKey(Site, related_name='batches', on_delete=models.CASCADE)
+    site = models.ForeignKey(
+        Site, related_name='batches', on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name
@@ -817,8 +828,12 @@ class AssociatedScript(models.Model):
     to be run on all computers in the group; adding a computer to a group with
     scripts will cause all of those scripts to be run on the new member."""
 
-    group = models.ForeignKey(PCGroup, related_name='policy', on_delete=models.CASCADE)
-    script = models.ForeignKey(Script, related_name='associations', on_delete=models.PROTECT)
+    group = models.ForeignKey(
+        PCGroup, related_name='policy', on_delete=models.CASCADE
+    )
+    script = models.ForeignKey(
+        Script, related_name='associations', on_delete=models.PROTECT
+    )
     position = models.IntegerField(_('position'))
 
     def make_batch(self):
@@ -914,7 +929,9 @@ class Job(models.Model):
     started = models.DateTimeField(_('started'), null=True)
     finished = models.DateTimeField(_('finished'), null=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    batch = models.ForeignKey(Batch, related_name='jobs', on_delete=models.CASCADE)
+    batch = models.ForeignKey(
+        Batch, related_name='jobs', on_delete=models.CASCADE
+    )
     pc = models.ForeignKey(PC, related_name='jobs', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -1018,7 +1035,9 @@ class Input(models.Model):
                                   max_length=10)
     position = models.IntegerField(_('position'))
     mandatory = models.BooleanField(_('mandatory'), default=True)
-    script = models.ForeignKey(Script, related_name='inputs', on_delete=models.CASCADE)
+    script = models.ForeignKey(
+        Script, related_name='inputs', on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.script.name + "/" + self.name
@@ -1061,7 +1080,9 @@ class Parameter(models.Model):
 
 class BatchParameter(Parameter):
     # Which batch is this parameter associated with?
-    batch = models.ForeignKey(Batch, related_name='parameters', on_delete=models.CASCADE)
+    batch = models.ForeignKey(
+        Batch, related_name='parameters', on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return "{0}: {1}".format(self.input, self.transfer_value)
@@ -1069,7 +1090,9 @@ class BatchParameter(Parameter):
 
 class AssociatedScriptParameter(Parameter):
     # Which associated script is this parameter, er, associated with?
-    script = models.ForeignKey(AssociatedScript, related_name='parameters', on_delete=models.CASCADE)
+    script = models.ForeignKey(
+        AssociatedScript, related_name='parameters', on_delete=models.CASCADE
+    )
 
     def make_batch_parameter(self, batch):
         if self.input.value_type == Input.FILE:
@@ -1116,8 +1139,12 @@ class SecurityProblem(models.Model):
     description = models.TextField(_('description'), blank=True)
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES,
                              default=HIGH)
-    site = models.ForeignKey(Site, related_name='security_problems', on_delete=models.CASCADE)
-    script = models.ForeignKey(Script, related_name='security_problems', on_delete=models.PROTECT)
+    site = models.ForeignKey(
+        Site, related_name='security_problems', on_delete=models.CASCADE
+    )
+    script = models.ForeignKey(
+        Script, related_name='security_problems', on_delete=models.PROTECT
+    )
     alert_groups = models.ManyToManyField(PCGroup,
                                           related_name='security_problems',
                                           blank=True)
@@ -1159,7 +1186,9 @@ class SecurityEvent(models.Model):
         ASSIGNED: 'label-warning',
         RESOLVED: 'label-success'
     }
-    problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
+    problem = models.ForeignKey(
+        SecurityProblem, null=False, on_delete=models.CASCADE
+    )
     # The time the problem was reported in the log file
     ocurred_time = models.DateTimeField(_('occurred'))
     # The time the problem was submitted to the system
@@ -1169,7 +1198,9 @@ class SecurityEvent(models.Model):
     complete_log = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
-    assigned_user = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
+    assigned_user = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.PROTECT
+    )
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -1182,7 +1213,6 @@ class ImageVersion(models.Model):
     os = models.CharField(max_length=30)
     rel_notes = models.TextField(max_length=350)
     image_upload = models.FileField(upload_to="images", default='#')
-
 
     def __str__(self):
         return "| {0} | {1} | {2} | {3} | {4} |".format(

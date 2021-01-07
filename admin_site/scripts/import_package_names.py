@@ -9,16 +9,17 @@ import re
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/../'))
 
-from os2borgerpc_admin import settings
-from system.models import Package
+from os2borgerpc_admin import settings  # noqa
+from system.models import Package  # noqa
+
 
 def import_packages(url):
     f = urllib2.urlopen(url)
-    fh = open('/tmp/bibos_import_packages.gz', 'w+');
+    fh = open('/tmp/bibos_import_packages.gz', 'w+')
     fh.write(f.read())
     fh.close()
     fh = gzip.open('/tmp/bibos_import_packages.gz')
-    matcher = re.compile('(\S+)\s+\(([^\)]+)\)\s+(\[[^\]]+\]\s+)?([^\n]+)')
+    matcher = re.compile(r'(\S+)\s+\(([^\)]+)\)\s+(\[[^\]]+\]\s+)?([^\n]+)')
     for line in fh:
         m = matcher.match(line)
         if m is not None:
@@ -30,9 +31,9 @@ def import_packages(url):
                     version=m.group(2),
                     description=m.group(4)
                 )
-                print "Creating %s (%s)" % (m.group(1), m.group(2))
+                print("Creating %s (%s)" % (m.group(1), m.group(2)))
                 p.save()
-    
+
 
 def usage():
     usage = """
@@ -43,7 +44,8 @@ Usage:
   http://packages.ubuntu.com/precise/allpackages?format=txt.gz
 
 """
-    print >>os.sys.stderr, usage % __file__
+    print(usage % __file__)
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:

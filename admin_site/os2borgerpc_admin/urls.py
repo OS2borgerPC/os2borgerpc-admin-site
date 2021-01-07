@@ -1,9 +1,5 @@
-import sys
-
 from django_xmlrpc.views import handle_xmlrpc
-from django.views.static import serve
 
-import django.contrib.auth.views
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
@@ -16,9 +12,15 @@ admin.autodiscover()
 
 urlpatterns = [
     # Examples:
-    url('accounts/login/', auth_views.LoginView.as_view(template_name='login.html')),
+    url(
+        'accounts/login/',
+        auth_views.LoginView.as_view(template_name='login.html')
+    ),
     url(r'^xmlrpc/$', handle_xmlrpc, name='xmlrpc'),
-    url('accounts/logout/', auth_views.LogoutView.as_view(template_name='logout.html')),
+    url(
+        'accounts/logout/',
+        auth_views.LogoutView.as_view(template_name='logout.html')
+    ),
     url(r'^', include('system.urls')),
     url(r'^admin-xml/$', handle_xmlrpc),
     # Uncomment the admin/doc line below to enable admin documentation:

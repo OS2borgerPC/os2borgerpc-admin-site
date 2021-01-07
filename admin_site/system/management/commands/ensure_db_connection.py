@@ -37,4 +37,3 @@ class Command(BaseCommand):
                     time.sleep(1)
         self.stdout.write("%s Giving up." % attempt)
         sys.exit(1)
-

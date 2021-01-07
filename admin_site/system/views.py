@@ -26,7 +26,6 @@ from .models import Site, PC, PCGroup, ConfigurationEntry, Package
 from .models import Job, Script, Input, SecurityProblem, SecurityEvent
 from .models import MandatoryParameterMissingError, ImageVersion
 # PC Status codes
-from .models import NEW, UPDATE
 from .forms import SiteForm, GroupForm, ConfigurationEntryForm, ScriptForm
 from .forms import UserForm, ParameterForm, PCForm, SecurityProblemForm
 
@@ -661,7 +660,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, LoginRequiredMixin):
         context = super(ScriptUpdate, self).get_context_data(**kwargs)
         if self.script is not None and self.script.executable_code is not None:
             try:
-                display_code = self.script.executable_code.read().decode("utf-8")
+                display_code = self.script.executable_code.read().decode(
+                    "utf-8"
+                )
             except UnicodeDecodeError:
                 display_code = "<Kan ikke vise koden - binære data.>"
             context[
@@ -1931,7 +1932,8 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
             context["site_allowed"] = True
 
-            # excluding versions where image release date > client's last pay date.
+            # excluding versions where
+            # image release date > client's last pay date.
             versions = ImageVersion.objects.exclude(rel_date__gt=last_pay_date)
 
             major_versions_set = set()

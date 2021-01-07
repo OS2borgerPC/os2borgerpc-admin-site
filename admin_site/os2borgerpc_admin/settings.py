@@ -28,8 +28,8 @@ config["settings"] = {}
 # mount a volume to.
 #
 
-# The `BPC_USER_CONFIG_PATH` file is for normal settings and should generally be
-# unique to a instance deployment.
+# The `BPC_USER_CONFIG_PATH` file is for normal settings and should generally
+# be unique to an instance deployment.
 
 for env in ["BPC_SYSTEM_CONFIG_PATH", "BPC_USER_CONFIG_PATH"]:
     path = os.getenv(env, None)
@@ -182,7 +182,7 @@ ROOT_URLCONF = 'os2borgerpc_admin.urls'
 WSGI_APPLICATION = 'os2borgerc_admin.wsgi.application'
 
 # Don't forget to use absolute paths, not relative paths.
-DOCUMENTATION_DIR =  os.path.join(install_dir, 'templates')
+DOCUMENTATION_DIR = os.path.join(install_dir, 'templates')
 
 
 LOCAL_APPS = (
