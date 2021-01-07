@@ -31,9 +31,9 @@ services:
     postfix:
         image: catatnight/postfix
         hostname: postfix
-        domainname: os2borgerpctest.magenta.dk
+        domainname: os2borgerpctest.magenta.example
         environment:
-          - maildomain=magenta.dk
+          - maildomain=magenta.example
           - smtp_user=bpc:bpc
 
 volumes:
