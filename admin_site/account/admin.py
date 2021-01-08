@@ -37,7 +37,9 @@ def _restrict_site(request, kwargs):
 def _restrict_users(request, kwargs):
     if not _check_privilege(request.user):
         kwargs['queryset'] = \
-            User.objects.filter(bibos_profile__site=request.user.bibos_profile.site)
+            User.objects.filter(
+                bibos_profile__site=request.user.bibos_profile.site
+            )
     return kwargs
 
 

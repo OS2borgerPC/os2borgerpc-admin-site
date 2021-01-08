@@ -18,154 +18,112 @@ All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
 
 
+TECHNICAL DETAILS
+=================
 
-HOW TO SETUP DEVELOPMENT SERVER
-===============================
+The admin site itself is a Django application located in the
+``admin_site`` folder. It is served using the Gunicorn WSGI server.
+
+The ``docker-compose.yml`` file will start three processes: Gunicorn
+serving the admin site, a PostgreSQL database and a Postfix mail server.
+
+All settings related to the development environment are in the
+``dev-environment`` folder. The variable values in the Django
+application's ``settings.py`` file are controlled by the environment
+variables ``BPC_SYSTEM_CONFIG_PATH`` and ``BPC_USER_CONFIG_PATH``, which
+are set in ``docker/Dockerfile``. All the settings you'd normally want
+to modify are located in ``dev-environment/dev-settings.ini``.
+
+The setup with ``docker-compose.yml`` is not intended for production.
+For that, you'd probably want to modify the settings to point at your
+existing database and mail server and run the Docker image by it self,
+exposing it to the world with a reverse proxy like nginx or Traefik.
+
+
+HOW TO SETUP A DEVELOPMENT SERVER
+=================================
 
 This guide describes how to get the admin site up and running for
-development purposes, i.e. with no Apache or proxy setup. If you wish to
-set up a production environment, please follow the instructions in
-doc/HOWTO_INSTALL_SERVER.txt. If you wish to learn to use the system,
-please install the server and use the on-site documentation (at present
-only available in Danish).
+development purposes. The development site is set up with Docker.
 
-Also check the guide to installing the client and preparing the server
-further below.
 
+If you wish to learn to use the system, please install the system as
+described below and use the on-site documentation (at present only
+available in Danish).
 
 You should normally be able to  install the development server in  10
 minutes or less. An Internet connection is required.
-
-The following instructions should work fine with any modern
-GNU/Linux-based operating systems, but they were made with and are at
-present only tested under Ubuntu 20.04 LTS Server Edition.
-
 
 
 PRE-REQUISITES
 ++++++++++++++
 
-Python >= 3.6
-python3-venv
+Recent versions of Docker and docker-compose.
 
-Get them with apt install
+The current best practice is to install them from the official site
+and follow the instructions for your platform: 
 
-
-    $ apt install <package_name>
-
-
-... or by whatever means necessary for your OS.
+    https://docs.docker.com/engine/install/
+    https://docs.docker.com/compose/install/
 
 
 GRAB THE CODE
 +++++++++++++
 
 
-    $ git clone https://github.com/magenta-aps/bibos_admin.git
+    $ git clone https://github.com/OS2borgerPC/admin-site.git
 
 
 GET THE RIGHT BRANCH
 ++++++++++++++++++++
 
 
-    $ cd </path/to>/admin_site
+    $ cd </path/to>/admin-site
 
-
-
-    git checkout <desired branch>
+    $ git checkout <desired branch>
 
 This only applies if you're not working directly on the master branch
 (which you probably shouldn't). For <desired branch> substitute the branch
 you want to work on.
 
 
-INSTALL DJANGO AND OTHER COMPONENTS
-+++++++++++++++++++++++++++++++++++
-
-
-
-    $ cd admin_site/scripts && bash install.sh
-
-
-This requires an Internet connection. It should run its course with a
-number of warnings but no errors.
-
-
 SET UP AND RUN THE DEVELOPMENT SERVER
 +++++++++++++++++++++++++++++++++++++
 
-In order to run **post-install-dev.sh** you must activate the virtual environment. 
+As above, go to the root of the repository:
 
+    $ cd cd </path/to>/admin-site
+    $ docker-compose up --build
 
-    $ cd .. && source python-env/bin/activate
-    (python-env) user@machine:~/path/to/admin-site/admin_site$
+This will run the site in the foreground. If you wish to run the site in
+the background, give the ``-d`` option:
 
-If you choose another HOSTNAME below than 'localhost' then remember to modify the variable
-**ALLOWED_HOSTS** in the **.env** file located at 'admin-site/admin_site/bibos_admin/'.
-By default Django does not allow access through IP., so don't bother trying to access 
-the site through an IP. See Django documentation for more information about this.
+    $ docker-compose up --build -d
 
-In this guide we will assume you're using localhost as HOSTNAME.
+The OS2borgerPC Admin system will now be available on
+http://localhost:9999.
 
+Out of the box, the development server will contain one user called
+``magenta``, with password ``magenta``.
 
-    $ bash ./scripts/post-install-dev.sh <USERNAME> <EMAIL> <IP/HOSTNAME> <PORT>
-
-
-**post-install-dev.sh** sets up and runs the development version of the admin 
-system (using a local SQLite database). You'll be prompted for a password for the
-new administrative user `USERNAME`.
-
-Now access the site through http://localhost:8080/
-
-In order to login your user needs a 'bibos_profile'.
-
-PATCH THE USER
-++++++++++++++
-
-Log on to the admin site's user section, at:
-
-http://localhost:8080/admin/auth/user/
-
-Edit the user you just created. Scroll to the bottom of the site in the section 
-*USER PROFILES*. Choose "Super Admin" as the user profile type. Click Save.
-
-ENJOY
-+++++
-
-Go to http://localhost:8080 to start using the system - create sites,
-create groups, etc. See further explanation below.
-
-NOTE: The system was written in Django and consists of a Django site
-with three apps: "account", "system" and "job". Most of the actual
-functionality is concentrated in the "system"  app. Some knowledge of
-Django is required to understand how the system is designed. Refer to
-the graphical object model (BibOS.dia) for an explanation of the site's
-object structure.
-
-
-
-PREPARE THE ADMIN SYSTEM
-========================
+Likewise, the will be one "site", also called "Magenta".
 
 
 Create distribution
 +++++++++++++++++++
 
-You need to create a "distribution" in the BibOS Admin system.  This is
+# TODO: This part of the functionality is being phased out and will be 
+#       removed in a future version of the system. PCs will no longer
+#       upload their package lists to the server, nor will we keep
+#       complete listings of packages in the distribution.
+
+You need to create a "distribution" in the  Admin system.  This is
 done in django-admin.  
 
 The distribution ID needs to be a string with no spaces and preferrably
 no special characters. It should reflect the operating system on the
-corresponding clients, e.g. "ubuntu12.04".
+corresponding clients, e.g. "ubuntu22.04".
 
-
-Create Site 
-+++++++++++
-
-You need to create at least one "site" to which you can attach your
-clients. The name of the site should describe your location, and the ID
-should be a simple, lowercase string with no spaces or special
-characters, e.g.  "aarhus".
 
 
 Finalize the distribution
@@ -202,10 +160,10 @@ REGISTER A CLIENT COMPUTER
 ==========================
 
 
-Install bibos-client package
+Install os2borgerpc-client package
 ++++++++++++++++++++++++++++
 
-First, you need to install the BibOS Admin client on the PC you wish to
+First, you need to install the OS2borgerPC Admin client on the PC you wish to
 control from the admin system.
 
 We recommend that you install this from PyPI using pip.
@@ -216,12 +174,10 @@ Enter the following commands in a bash shell::
     sudo apt-get install python3-pip
 
     # This is what we want:
-    sudo pip install http://bibos-admin.magenta-aps.dk/archive/client_packages/os2borgerpc_client-0.0.5.1.tar.gz
-
-    # TODO: This will be changed when the new client package is on PyPI.
+    sudo pip3 install os2borgerpc-admin
 
 
-After succesfully installing bibos-client, run the registration script
+After succesfully installing os2borgerpc-client, run the registration script
 in order to connect with the admin system. ::
 
     sudo register_new_os2borgerpc_client.sh
@@ -244,5 +200,6 @@ admin system as "New" in the corresponding site's status list.
 In order to start running scripts etc. on the computer, you need to
 manually approve it's registration by "activating" it in the admin
 system. View the details on the new computer and check the box marked
-"Aktiv" or "Active". The PC will now start uploading its package info
-and is under the control of the admin system.
+"Aktiv" or "Active". Next time the OS2borgerPC ``jobmanager`` is run on
+the PC, normally within five minutes, the PC will be under the control of
+the admin system and you will be able to execute scripts on it.
