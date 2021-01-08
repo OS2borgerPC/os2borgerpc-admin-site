@@ -18,9 +18,30 @@ All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
 
 
+TECHNICAL DETAILS
+=================
 
-HOW TO SETUP DEVELOPMENT SERVER
-===============================
+The admin site itself is a Django application located in the
+``admin_site`` folder. It is served using the Gunicorn WSGI server.
+
+The ``docker-compose.yml`` file will start three processes: Gunicorn
+serving the admin site, a PostgreSQL database and a Postfix mail server.
+
+All settings related to the development environment are in the
+``dev-environment`` folder. The variable values in the Django
+application's ``settings.py`` file are controlled by the environment
+variables ``BPC_SYSTEM_CONFIG_PATH`` and ``BPC_USER_CONFIG_PATH``, which
+are set in ``docker/Dockerfile``. All the settings you'd normally want
+to modify are located in ``dev-environment/dev-settings.ini``.
+
+The setup with ``docker-compose.yml`` is not intended for production.
+For that, you'd probably want to modify the settings to point at your
+existing database and mail server and run the Docker image by it self,
+exposing it to the world with a reverse proxy like nginx or Traefik.
+
+
+HOW TO SETUP A DEVELOPMENT SERVER
+=================================
 
 This guide describes how to get the admin site up and running for
 development purposes. The development site is set up with Docker.

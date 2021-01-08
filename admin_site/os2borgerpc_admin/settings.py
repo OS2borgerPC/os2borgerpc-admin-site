@@ -22,7 +22,7 @@ config["settings"] = {}
 # overwritten by the values the env var `BPC_USER_CONFIG_PATH` points to.
 #
 # The `BPC_SYSTEM_CONFIG_PATH` file is for an alternative set of default
-# values. It is useful in a specific envionment such as Docker. An example is
+# values. It is useful in a specific environment such as Docker. An example is
 # the setting for STATIC_ROOT. The default in `settings.py` is relative to the
 # current directory. In Docker it should be an absolute path that is easy to
 # mount a volume to.
