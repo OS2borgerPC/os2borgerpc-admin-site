@@ -18,7 +18,9 @@ LABEL org.opencontainers.image.title="OS2borgerPC" \
 
 ENV PYTHONUNBUFFERED=1 \
   BPC_SYSTEM_CONFIG_PATH=/code/docker/docker-settings.ini \
-  BPC_USER_CONFIG_PATH=/user-settings.ini
+  BPC_USER_CONFIG_PATH=/user-settings.ini \
+  PYTHONPATH=/code/admin_site/:$PYTHONPATH\
+  DJANGO_SETTINGS_MODULE=os2borgerpc_admin.settings
 
 
 WORKDIR /code/
