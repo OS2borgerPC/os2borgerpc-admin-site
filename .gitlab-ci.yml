@@ -18,8 +18,8 @@ stages:
 
 variables:
     # Project variables
-    RELEASE_REGISTRY: docker.io
-    RELEASE_REGISTRY_IMAGE: index.docker.io/magentaaps/os2borgerpc_admin
+    # RELEASE_REGISTRY: docker.io
+    # RELEASE_REGISTRY_IMAGE: index.docker.io/magentaaps/os2borgerpc_admin
 
     IMAGE_SHA: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
     IMAGE_DEV: ${CI_REGISTRY_IMAGE}:dev
