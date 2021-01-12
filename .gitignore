@@ -12,7 +12,9 @@
 /bibos_client/build/
 /bibos_client/dist/
 /admin_site/site_media/images/
-
+static/
+log/
+script-uploads/
 *.pyc
 *.swp
 .bash_history

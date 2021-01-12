@@ -1,0 +1,137 @@
+# Copyright (C) 2021 Magenta ApS, http://magenta.dk.
+# Contact: info@magenta.dk.
+
+###############################################################################
+## Changes to this file requires approval from Labs. Please add a person from #
+## Labs as required approval to your MR if you have any changes.              #
+###############################################################################
+
+# For `docker push` to work, the following envionment variables have to be set
+# in the Gitlab UI.
+# RELEASE_REGISTRY_USER
+# RELEASE_REGISTRY_PASSWORD
+
+stages:
+    - lint
+    - build
+    - release
+
+variables:
+    # Project variables
+    IMAGE_SHA: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+    IMAGE_DEV: ${CI_REGISTRY_IMAGE}:dev
+
+    RELEASE_IMAGE: magentaaps/os2borgerpc-admin
+    RELEASE_IMAGE_TAG: ${IMAGE}:${CI_COMMIT_TAG}
+    RELEASE_IMAGE_LATEST: ${IMAGE}:latest
+
+
+
+# Lint stage
+############
+
+.lint-default: &lint-default
+  stage: lint
+  needs: []
+  image: python:3.8
+  tags:
+      - docker
+
+Lint Python:
+    <<: *lint-default
+    before_script:
+        - pip3 install -r admin_site/scripts/requirements.txt
+    script:
+        - cd admin_site
+        - flake8 . --exclude=migrations
+
+Lint Dockerfiles:
+      <<: *lint-default
+      image: hadolint/hadolint:latest-debian
+      before_script:
+          - apt-get -y update
+          - apt-get -y install --no-install-recommends git
+      script:
+          - git ls-files --exclude='Dockerfile*' --ignored | xargs --max-lines=1 hadolint
+
+
+# Build stage
+#############
+
+Build app image:
+  stage: build
+  needs: []
+  dependencies: []
+  image:
+    name: gcr.io/kaniko-project/executor:debug-v0.16.0
+    entrypoint: [""]
+  tags:
+    - docker
+  script:
+    # Login to GitLab registry
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+      --cache
+      --context=$CI_PROJECT_DIR
+      --dockerfile=$CI_PROJECT_DIR/docker/Dockerfile
+      --destination=${IMAGE_SHA}
+
+
+# Release stage
+###############
+
+.release-default: &release-default
+  stage: release
+  needs: ["Lint Python"]
+  image: alpine
+  variables:
+    GIT_STRATEGY: none # We do not need the source code
+  dependencies: []
+  tags:
+    - docker
+  before_script:
+    # install skopeo
+    - apk add skopeo
+
+Release dev:
+  <<: *release-default
+  only:
+    refs:
+      - develop
+  script:
+    - skopeo copy
+      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --dest-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      "docker://${IMAGE_SHA}"
+      "docker://${IMAGE_DEV}"
+
+Release rc:
+  <<: *release-default
+  only:
+    variables:
+      # Matches all of SemVer 2.0.0
+      - $CI_COMMIT_TAG =~ /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+  script:
+    - skopeo copy
+      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
+      "docker://${IMAGE_SHA}"
+      "docker://${RELEASE_IMAGE_TAG}"
+
+Release master:
+  <<: *release-default
+  only:
+    variables:
+      # Matches <version core> from SemVer 2.0.0 BNF grammar. Ex. 2.3.4, but not 2.3.4-rc
+      - $CI_COMMIT_TAG =~ /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
+  script:
+    - skopeo copy
+      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
+      "docker://${IMAGE_SHA}"
+      "docker://${RELEASE_IMAGE_TAG}"
+    - skopeo copy
+      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
+      "docker://${IMAGE_SHA}"
+      "docker://${RELEASE_IMAGE_LATEST}"

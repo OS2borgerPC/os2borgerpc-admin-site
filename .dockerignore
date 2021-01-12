@@ -1,0 +1,11 @@
+.git
+doc/
+.dockerignore
+Dockerfile
+
+# Environments
+.env
+.venv
+env/
+venv/
+python-env/
