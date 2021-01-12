@@ -1,3 +1,14 @@
+* Version 4.1.0, January 12, 2021
+
+New in this version:
+
+- Server now to be deployed with Docker.
+- Gitlab CI added, including automatic build and push of new Docker images.
+- Development environment with docker-compose.
+- Documentation updated accordingly.
+- Deprecated installation methods removed.
+
+
 * Version 4.0.0, December 10, 2020
 
 New in this version:
