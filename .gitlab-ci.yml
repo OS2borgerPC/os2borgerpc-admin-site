@@ -18,15 +18,12 @@ stages:
 
 variables:
     # Project variables
-    # RELEASE_REGISTRY: docker.io
-    # RELEASE_REGISTRY_IMAGE: index.docker.io/magentaaps/os2borgerpc_admin
-
     IMAGE_SHA: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
     IMAGE_DEV: ${CI_REGISTRY_IMAGE}:dev
 
-    IMAGE: magentaaps/os2borgerpc_admin
-    IMAGE_TAG: ${IMAGE}:${CI_COMMIT_TAG}
-    IMAGE_LATEST: ${IMAGE}:latest
+    RELEASE_IMAGE: magentaaps/os2borgerpc-admin
+    RELEASE_IMAGE_TAG: ${IMAGE}:${CI_COMMIT_TAG}
+    RELEASE_IMAGE_LATEST: ${IMAGE}:latest
 
 
 
@@ -119,7 +116,7 @@ Release rc:
       --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
       --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
-      "docker://${IMAGE_TAG}"
+      "docker://${RELEASE_IMAGE_TAG}"
 
 Release master:
   <<: *release-default
@@ -132,12 +129,9 @@ Release master:
       --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
       --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
-      "docker://${IMAGE_TAG}"
+      "docker://${RELEASE_IMAGE_TAG}"
     - skopeo copy
       --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
       --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
-      "docker://${IMAGE_LATEST}"
-
-
-
+      "docker://${RELEASE_IMAGE_LATEST}"
