@@ -9,7 +9,7 @@
 
 set -ex
 
-./manage.py ensure_db_connection --wait 30
+./manage.py ensure_db_connection --wait 30 || exit 1 # exit if failed.
 
 if [ "$SKIP_MIGRATIONS" != "yes" ];
 then
