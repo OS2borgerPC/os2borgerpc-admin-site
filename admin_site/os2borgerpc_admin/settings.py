@@ -87,6 +87,9 @@ DATABASES = {
         'PASSWORD': settings.get('DB_PASSWORD'),
         'HOST': settings.get('DB_HOST'),
         'PORT': settings.get('DB_PORT', fallback=''),
+        'OPTIONS': {
+            'connect_timeout': 2,  # Minimum in 2
+        }
     }
 }
 
