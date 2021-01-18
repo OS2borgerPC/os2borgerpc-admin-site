@@ -22,10 +22,23 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        connection = connections["default"]
+        required_params = ["database", "password", "host", "user"]
+        available_params = connection.get_connection_params()
+        missing_params = [
+            p for p in required_params if p not in available_params
+        ]
+        if missing_params:
+            self.stdout.write(
+                "Missing database parameters: {}".format(
+                    ", ".join(missing_params)
+                )
+            )
+            sys.exit(1)
         for i in range(0, options["wait"]):
             attempt = "%02d/%02d " % (i + 1, options["wait"])
             try:
-                connections["default"].ensure_connection()
+                connections.ensure_connection()
                 self.stdout.write("%s Connected to database." % attempt)
                 sys.exit(0)
             except OperationalError as e:
