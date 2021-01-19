@@ -1,8 +1,6 @@
 from django_xmlrpc.views import handle_xmlrpc
 
 from django.conf.urls import include, url
-from django.conf.urls.static import static
-from django.conf import settings
 
 
 # Uncomment the next two lines to enable the admin:
@@ -29,8 +27,3 @@ urlpatterns = [
     # Uncomment the next line to enable the admin:
     url(r'^admin/', admin.site.urls),
 ]
-
-# Static files are served by WhiteNoise in both development and production.
-
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
