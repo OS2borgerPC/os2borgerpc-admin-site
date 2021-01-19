@@ -38,7 +38,7 @@ class Command(BaseCommand):
         for i in range(0, options["wait"]):
             attempt = "%02d/%02d " % (i + 1, options["wait"])
             try:
-                connections.ensure_connection()
+                connection.ensure_connection()
                 self.stdout.write("%s Connected to database." % attempt)
                 sys.exit(0)
             except OperationalError as e:
