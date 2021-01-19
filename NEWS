@@ -4,9 +4,9 @@ New in this version:
 
 - Application crashes if DB not correctly configured or mandatory
   settings are absent.
-- Support for Google Clound Storage.
+- Support for Google Cloud Storage.
 - Ensure that ALLOWED_HOSTS is a list.
-- Set 2s timeout for databse connections.
+- Set 2s timeout for database connections.
 
 
 * Version 4.1.1, January 12, 2021
