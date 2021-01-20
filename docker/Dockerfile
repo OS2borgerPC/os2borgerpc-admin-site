@@ -44,15 +44,11 @@ RUN set -ex \
  # create folders at easily mountable paths for output from django
  && install -o bpc -g bpc -d /log \
  && install -o bpc -g bpc -d /static \
- && install -o bpc -g bpc -d /media/script_uploads \
- && install -o bpc -g bpc -d /media/parameter_uploads \
- && install -o bpc -g bpc -d /media/images
+ && install -o bpc -g bpc -d /media
 
 VOLUME /log
 VOLUME /static
-VOLUME /media/script_uploads
-VOLUME /media/parameter_uploads
-VOLUME /media/images
+VOLUME /media
 
 
 # Install requirements.
