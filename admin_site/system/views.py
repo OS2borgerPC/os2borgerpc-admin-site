@@ -665,6 +665,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, LoginRequiredMixin):
                 )
             except UnicodeDecodeError:
                 display_code = "<Kan ikke vise koden - binære data.>"
+            except FileNotFoundError:
+                display_code = "<Kan ikke vise koden - upload venligst igen.>"
             context[
                 'script_preview'
             ] = display_code
