@@ -1,3 +1,12 @@
+* Version 4.1.3, January 21, 2021
+
+New in this version:
+
+- Don't crash (HTTP 500) if script code is not found - allow user to reupload.
+- Fix handling of paths to MEDIA_ROOT in Docker image.
+- Standardize handling of static media (CSS, Javascript, etc.).
+
+
 * Version 4.1.2, January 19, 2021
 
 New in this version:
