@@ -43,11 +43,9 @@ RUN set -ex \
   && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
  # create folders at easily mountable paths for output from django
  && install -o bpc -g bpc -d /log \
- && install -o bpc -g bpc -d /static \
  && install -o bpc -g bpc -d /media
 
 VOLUME /log
-VOLUME /static
 VOLUME /media
 
 
@@ -61,9 +59,19 @@ COPY LICENSE .
 COPY docker ./docker
 COPY admin_site ./admin_site
 
-# Run the server as the bpc user on port 9999
 
 WORKDIR /code/admin_site
+
+# Unfortunately, `collectstatic` requires all settings to be set. We include a
+# set of insecure setting here for only this purpose. We make sure to delete it
+# afterward. If `insecure-settings.ini` is found in any production image,
+# consider it a bug. See `insecure-settings.ini` for a detailed explatnation.
+RUN set -ex \
+  && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
+  && rm /code/docker/insecure-settings.ini
+
+
+# Run the server as the bpc user on port 9999
 USER bpc:bpc
 EXPOSE 9999
 ENTRYPOINT ["/code/docker/docker-entrypoint.sh"]
