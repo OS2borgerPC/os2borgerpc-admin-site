@@ -17,7 +17,4 @@ then
   python ./manage.py migrate
 fi
 
-# Generate static content
-python ./manage.py collectstatic --no-input --clear
-
 exec "$@"
