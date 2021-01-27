@@ -3,6 +3,7 @@
 import os
 import configparser
 import logging
+from google.oauth2 import service_account
 
 logger = logging.getLogger(__name__)
 
@@ -170,6 +171,9 @@ if settings.get('GS_BUCKET_NAME'):
     # If it is set, we save all files to Google Cloud.
     DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
     GS_BUCKET_NAME = settings.get('GS_BUCKET_NAME')
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+        settings.get('GS_CREDENTIALS_FILE')
+    )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = settings['SECRET_KEY']
