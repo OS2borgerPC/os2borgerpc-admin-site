@@ -50,7 +50,9 @@ settings = config["settings"]
 
 DEBUG = settings.getboolean('DEBUG', False)
 
-ADMINS = [(settings['ADMIN_NAME'], settings['ADMIN_EMAIL']), ]
+ADMINS = [
+    (settings.get('ADMIN_NAME'), settings['ADMIN_EMAIL']),
+] if settings.get('ADMIN_EMAIL') else None
 
 MANAGERS = ADMINS
 
