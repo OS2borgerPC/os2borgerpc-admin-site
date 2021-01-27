@@ -829,7 +829,12 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         VALID_ORDER_BY.append('-' + i)
 
     def get_object(self, queryset=None):
-        return PC.objects.get(uid=self.kwargs['pc_uid'])
+        try:
+            return PC.objects.get(uid=self.kwargs['pc_uid'])
+        except PC.DoesNotExist:
+            raise Http404(
+                f"der findes ingen computer med id {self.kwargs['pc_uid']}"
+            )
 
     def get_context_data(self, **kwargs):
         context = super(PCUpdate, self).get_context_data(**kwargs)
@@ -1072,7 +1077,14 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     template_name = 'system/users/update.html'
 
     def get_object(self, queryset=None):
-        self.selected_user = User.objects.get(username=self.kwargs['username'])
+        try:
+            self.selected_user = User.objects.get(
+                username=self.kwargs['username']
+            )
+        except User.DoesNotExist:
+            raise Http404(
+                f"der findes ingen bruger med id {self.kwargs['username']}"
+            )
         return self.selected_user
 
     def get_context_data(self, **kwargs):
@@ -1232,7 +1244,12 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        return PCGroup.objects.get(uid=self.kwargs['group_uid'])
+        try:
+            return PCGroup.objects.get(uid=self.kwargs['group_uid'])
+        except PCGroup.DoesNotExist:
+            raise Http404(
+                f"der findes ingen gruppe med id {self.kwargs['group_uid']}"
+            )
 
     def get_context_data(self, **kwargs):
         context = super(GroupUpdate, self).get_context_data(**kwargs)
@@ -1426,8 +1443,14 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     form_class = SecurityProblemForm
 
     def get_object(self, queryset=None):
-        return SecurityProblem.objects.get(uid=self.kwargs['uid'],
-                                           site__uid=self.kwargs['site_uid'])
+        try:
+            return SecurityProblem.objects.get(
+                    uid=self.kwargs['uid'], site__uid=self.kwargs['site_uid']
+            )
+        except SecurityProblem.DoesNotExist:
+            raise Http404(
+                f"der findes ingen sikkerhedsregel med id {self.kwargs['uid']}"
+            )
 
     def get_context_data(self, **kwargs):
 
