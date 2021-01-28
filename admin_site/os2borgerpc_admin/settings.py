@@ -50,7 +50,9 @@ settings = config["settings"]
 
 DEBUG = settings.getboolean('DEBUG', False)
 
-ADMINS = settings.get('ADMINS')
+ADMINS = [
+    (settings.get('ADMIN_NAME'), settings['ADMIN_EMAIL']),
+] if settings.get('ADMIN_EMAIL') else None
 
 MANAGERS = ADMINS
 
@@ -247,6 +249,12 @@ XMLRPC_METHODS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
+         }
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
@@ -257,15 +265,17 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
         },
-    }
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+         },
+    },
+    'root': {
+        'handlers': ['console', 'mail_admins'],
+        'level': settings.get('LOG_LEVEL', fallback='ERROR'),
+    },
+
 }
 
 ETC_DIR = os.path.join(install_dir, 'etc')
