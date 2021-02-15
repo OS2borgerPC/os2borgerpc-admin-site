@@ -1,6 +1,6 @@
 
-Security events - new functionality in BibOS Admin
-==================================================
+Security events - new functionality in OS2borgerPC Admin
+========================================================
 
 Aarhus has a desire to register and be able to receive an alert whenever
 a keyboard is disconnected and connected, because some people have done
@@ -8,7 +8,7 @@ this in order to attach keyloggers to the devices. The purpose of that,
 of course, could be to sniff credit card numbers and sensitive
 passwords.
 
-We wish to implement this in BibOS. As it is easy to imagine many other
+We wish to implement this in OS2borgerPC. As it is easy to imagine many other
 kinds of security related threats, we will implement the general concept
 of a Security Event.
 
@@ -72,10 +72,10 @@ On each computer, a check is performed for the security problems listed
 on the site and on any of its groups.
 
 
-Changes in the BibOS Admin GUI
-++++++++++++++++++++++++++++++
+Changes in the OS2borgerPC Admin GUI
+++++++++++++++++++++++++++++++++++++
 
-Under the menu item "Maskiner" to the left of the current BibOS Admin
+Under the menu item "Maskiner" to the left of the current OS2borgerPC Admin
 layout, a new point will be introduced, called "Sikkerhedsadvarsler".
 
 This will contain a list of SecurityEvents which have not yet been taken

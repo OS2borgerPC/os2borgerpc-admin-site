@@ -2,18 +2,18 @@
 
 {% block install_network_active %}class="active"{% endblock %}
 
-{% block doc_subtitle %}Installation af BibOS{% endblock %}
+{% block doc_subtitle %}Installation af OS2borgerPC{% endblock %}
 
 {% block specific_content %}
-  <h1>Installation af BibOS via netværk</h1>
+  <h1>Installation af OS2borgerPC via netværk</h1>
   <p>
-    Installation af BibOS via netværk kan startes enten via
+    Installation af OS2borgerPC via netværk kan startes enten via
     <a href="{% url 'doc' 'install_dvd' %}">DVD</a>
     eller
     <a href="{% url 'doc' 'install_usb' %}">USB</a>. Man skal blot vælge
-    "Installation via BibOS installations-server (Internet)" når maskinen booter
+    "Installation via OS2borgerPC installations-server (Internet)" når maskinen booter
     på installationsmediet. Bemærk at direkte internet-adgang ikke er
-    nødvendigt hvis man har en BibOS-gateway på sit netværk: Maskinen vil
+    nødvendigt hvis man har en OS2borgerPC-gateway på sit netværk: Maskinen vil
     automatisk finde gateway'en og bruge den som installationskilde.
   </p>
   <p>
@@ -27,7 +27,7 @@
       </li>
       <li>
         Man bliver bedt om at vælge hvilket image man ønsker at installere
-        blandt de BibOS-images der er til stede på den maskine man installerer
+        blandt de OS2borgerPC-images der er til stede på den maskine man installerer
         fra. Hvis man ikke foretager noget valg inden for 30 sekunder
         installeres det nuværende image der passer til
         processor-arkitekturen på maskinen.
@@ -35,10 +35,10 @@
     </ul>
   </p>
   <p>
-    Hvis man har en lokal BibOS-gateway har man mulighed for at ligge
+    Hvis man har en lokal OS2borgerPC-gateway har man mulighed for at ligge
     special-tilpassede harddisk-images i mappen
     <em>/bibos-archive/archive/hd/</em> på gateway'en. Dette vil gøre det
-    muligt at vælge disse specielle images under en BibOS
+    muligt at vælge disse specielle images under en OS2borgerPC
     netværksinstallation.
   </p>
 {% endblock %}
