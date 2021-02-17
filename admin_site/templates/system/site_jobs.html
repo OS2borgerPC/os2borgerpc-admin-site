@@ -11,7 +11,7 @@ Jobs
   <script type="text/javascript" src="/static/js/jobs_list.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('.collapsing').click(function() {
+      $('.collapsing').on("click", function() {
         $(this).find('i').toggleClass('icon-chevron-up icon-chevron-down');
       });
     });

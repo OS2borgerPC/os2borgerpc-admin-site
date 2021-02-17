@@ -49,7 +49,7 @@
 
     // Hide and readonly the shadow fields
     form.find('input.hiddenpasswordfield').hide().attr('readonly', 'readonly');
-    form.find('input.passwordinput').blur(function() {
+    form.find('input.passwordinput').on("blur", function() {
       var t = $(this);
       $('#' + t.attr('id') + '_pwshadow').val(t.val())
     })

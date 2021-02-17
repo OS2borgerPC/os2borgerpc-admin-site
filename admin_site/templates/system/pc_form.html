@@ -32,7 +32,7 @@ class="active"
         $('ul.nav a[href="' + hash + '"]').tab('show');
         console.log($('#computer_jobs_table').scrollTop());
       };
-      $('.nav-tabs a').click(function (e) {
+      $('.nav-tabs a').on("click", function (e) {
         $(this).tab('show');
         var scrollmem = $('.main').scrollTop();
         window.location.hash = this.hash;

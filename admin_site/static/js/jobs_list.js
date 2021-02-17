@@ -9,10 +9,10 @@ $(function(){
     $.extend(JobList.prototype, {
         init: function() {
             var jobsearch = this
-            $('#jobsearch-status-selectors input:checkbox').change(function() {
+            $('#jobsearch-status-selectors input:checkbox').on("change", function() {
                 jobsearch.search();
             })
-            $('#jobsearch-length-limitation input:radio').change(function() {
+            $('#jobsearch-length-limitation input:radio').on("change", function() {
                 jobsearch.search();
             })
             jobsearch.search();
@@ -35,7 +35,7 @@ $(function(){
                         'jobinfobutton': info_button
                     })
                 ));
-                item.find('input:checkbox').click(function() {
+                item.find('input:checkbox').on("click", function() {
                     $(this).parents('tr').toggleClass('marked');
                 });
                 item.appendTo(container)
@@ -81,7 +81,7 @@ $(function(){
                 $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down');
               };
             });
-            
+
             var input = $('#jobsearch-filterform input[name=orderby]');
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()

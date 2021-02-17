@@ -48,7 +48,7 @@
             );
             $('#editpolicyscriptdialog input').attr('disabled', 'disabled');
             $('#editpolicyscriptdialog').on('shown', function() {
-                $(".editpolicyscript-field").first().focus();
+                $(".editpolicyscript-field").first().trigger("focus");
             })
         },
         addToPolicy: function(id, scriptId, scriptName, scriptPk, scriptInputs) {

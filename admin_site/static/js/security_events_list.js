@@ -8,13 +8,13 @@ $(function(){
     $.extend(SecurityEventList.prototype, {
         init: function() {
             var securityeventsearch = this;
-            $('#securityeventsearch-status-selectors input:checkbox').change(function() {
+            $('#securityeventsearch-status-selectors input:checkbox').on("change", function() {
                 securityeventsearch.search();
             })
-            $('#securityeventsearch-level-selectors input:checkbox').change(function() {
+            $('#securityeventsearch-level-selectors input:checkbox').on("change", function() {
                 securityeventsearch.search();
             })
-            $('#securityeventsearch-length-limitation input:radio').change(function() {
+            $('#securityeventsearch-length-limitation input:radio').on("change", function() {
                 securityeventsearch.search();
             })
             securityeventsearch.search();
@@ -49,7 +49,7 @@ $(function(){
             $('#securityeventsearch-filterform input[name=' + field + ']').val(val)
             this.search()
         },
- 
+
         selectPC: function(elem, val) {
             this.selectFilter('pc', elem, val)
         },
@@ -62,7 +62,7 @@ $(function(){
                 $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down');
               };
             });
-            
+
             var input = $('#securityeventsearch-filterform input[name=orderby]');
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search();

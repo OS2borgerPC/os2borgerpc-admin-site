@@ -121,7 +121,7 @@ class="active"
           $('#txthdnPassword').val($(this).val());
       });
   
-      $('#chkShow').change(function() {
+      $('#chkShow').on("change", function() {
         var isChecked = $(this).prop('checked');
         if (isChecked) {
           $('#id_txtPassword').hide();

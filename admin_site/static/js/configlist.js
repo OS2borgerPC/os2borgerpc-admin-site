@@ -24,9 +24,9 @@
             $('#editconfigdialog input').attr('disabled', 'disabled');
             $('#editconfigdialog').on('shown', function() {
                 if($('#editconfig_pk').val() == 'new') {
-                    $('#editconfig_name').focus();
+                    $('#editconfig_name').trigger("focus");
                 } else {
-                    $('#editconfig_value').focus().select()
+                    $('#editconfig_value').trigger("focus").trigger("select")
                 }
             })
         },
@@ -108,7 +108,7 @@
                 );
                 if (existing.length) {
                     alert(tr("Config-navnet %s findes allerede", name))
-                    $('#editconfig_name').focus().select();
+                    $('#editconfig_name').trigger("focus").trigger("select");
                     return false;
                 }
                 this.addConfig(id, name, value);

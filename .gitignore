@@ -12,7 +12,8 @@
 /bibos_client/build/
 /bibos_client/dist/
 /admin_site/site_media/images/
-static/
+# Uncomment for now while testing so my tools don't ignore files and changes in this dir
+#static/
 log/
 script-uploads/
 *.pyc

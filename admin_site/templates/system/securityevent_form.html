@@ -50,7 +50,7 @@
 
     <script>
 $(document).ready(function() {
-	$( "#security_update_form" ).submit(function( event ) {
+	$( "#security_update_form" ).on("submit", function( event ) {
 		var input = $("<input>").attr("type", "hidden").attr("name", $('*:disabled').attr("name")).val($('*:disabled').val());							
 		$('#security_update_form').append($(input));
 	});
@@ -73,7 +73,7 @@ $(document).ready(function() {
         $("#id_assigned_user").attr('disabled', false);
     }
 
-    $("#id_assigned_user").change(function() {
+    $("#id_assigned_user").on("change", function() {
         $('#id_errorlist').remove();
         var status = $("#id_status").val();
         var auser = $("#id_assigned_user").val();
@@ -105,7 +105,7 @@ $(document).ready(function() {
         }
     });
 
-   $("#id_status").change(function() {
+   $("#id_status").on("change" ,function() {
         $('#id_errorlist').remove();
         var status = $("#id_status").val();
 
