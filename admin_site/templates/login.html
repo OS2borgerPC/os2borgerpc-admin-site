@@ -8,10 +8,11 @@
 <div class="container">
       <form method="post" action="">
           {% csrf_token %}
-          <label>Brugernavn:</label>
-          {{ form.username }}
-          <label>Password:</label>
-          {{ form.password }}
+          {% comment %} Ideally one shouldn't have to add this form-text class manually everywhere. {% endcomment %}
+          <label class="form-text">Brugernavn:</label>
+          {{ form.username|add_class:"form-control" }}
+          <label class="form-text">Password:</label>
+          {{ form.password|add_class:"form-control" }}
       <br>
       <input class="btn btn-primary" type="submit" value="Log ind">
       <input type="hidden" name="next" value="{{ next }}" />

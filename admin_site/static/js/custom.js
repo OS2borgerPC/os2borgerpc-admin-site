@@ -10,7 +10,7 @@ var BibOS;
     this.shownJobInfo = -1;
   }
 
-  var documentaion_match = /^(https?:\/\/[^\/]+)?\/documentation\//;
+  var documentation_match = /^(https?:\/\/[^\/]+)?\/documentation\//;
   var back_match = /[\?\&]back=([^\&]+)/;
 
   $.extend(BibOS.prototype, {
@@ -54,7 +54,7 @@ var BibOS;
         document.cookie = 'bibos-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
       }
 
-      if(location.href.match(documentaion_match))
+      if(location.href.match(documentation_match))
         this.setupDocumentationBackLinks();
       $('body').on('click', function(e) {
         return t.onBodyClick(e);
@@ -67,7 +67,7 @@ var BibOS;
       var m = ref.match(back_match) || location.href.match(back_match);
       if(m) {
         back = unescape(m[1]);
-      } else if(!ref.match(documentaion_match)) {
+      } else if(!ref.match(documentation_match)) {
         back = ref
       }
 
@@ -79,7 +79,7 @@ var BibOS;
         var href = $(this).attr('href') || '';
         if(href == '#' || href.match(/^javascript:/))
           return true;
-        if(href.match(documentaion_match)) {
+        if(href.match(documentation_match)) {
           var url_parts = href.split(/[\?#]/);
           var qstring_parts = (url_parts[1] || '').split('&');
           var args = []

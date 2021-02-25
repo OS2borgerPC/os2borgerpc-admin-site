@@ -29,6 +29,10 @@ div.runscriptdialogheader {display: none;}
 
 /* Navigation */
 
+ul.nav li {
+    flex-basis: 100%;
+}
+
 .nav.utils>li>a {color: #fff; text-shadow: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: #666; border-radius: 5px;}
 .nav-list.utils .nav-header {text-shadow: none; color: #ccc;}
@@ -128,6 +132,9 @@ textarea {
 
 input.phantom { display: none; }
 
+form-error {
+   color: red;
+}
 /* Lists */
 
 .itemlist .btn-group {margin: 0 10px 10px 0;}

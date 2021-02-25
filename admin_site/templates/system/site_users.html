@@ -33,9 +33,9 @@ class="active"
         <button class="btn">Annuller</button>
         <hr>      
         {% if form.errors %}
-        <font color="red">
+        <span class="form-error">
             {{ form.errors }}
-        </font>
+        </span>
         {% endif %}
   
         <fieldset>
@@ -83,9 +83,9 @@ class="active"
       <form action="" method="post">
         {% csrf_token %}
         {% if form.errors %}
-        <font color="red">
+        <span class="form-error">
             {{ form.errors }}
-        </font>
+        </span>
         {% endif %}
         <fieldset>        
           <p><label for="id_username">Brugernavn:</label> <input id="id_username" maxlength="30" name="username" type="text" value="Brugernavn" /></p>

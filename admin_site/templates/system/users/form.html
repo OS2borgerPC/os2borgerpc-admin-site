@@ -1,33 +1,33 @@
   {% if form.non_field_errors %}
-  <font color="red">
+  <span class="form-error">
       {{ form.non_field_errors }}
-  </font>
+  </span>
   {% endif %}
 
   <fieldset>
     <div class="row-fluid">
       <p>
-        <label for="{{ form.username.id_for_label }}">Brugernavn:</label>
+        <label class="formtext" for="{{ form.username.id_for_label }}">Brugernavn:</label>
         {{ form.username.errors }}
         <div class="muted">{{ form.username.help_text }}</div>
         {{ form.username }}
       </p>
       <p>
-        <label for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
+        <label class="formtext" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
         {{ form.new_password.errors }}
         {{ form.new_password }}
         <input class="hiddenpasswordfield" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
 
-        <label style="display: inline; margin-left: 10px;" for="{{ form_id|default:'user_form' }}_show_password">
+        <label class="formtext" style="display: inline; margin-left: 10px;" for="{{ form_id|default:'user_form' }}_show_password">
         <input style="vertical-align: baseline;" id="{{ form_id|default:'user_form' }}_show_password" type="checkbox" class="showpasswordcheckbox" tabindex="100"/> Vis Password</label>
 
-        <label for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
+        <label class="formtext" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
         {{ form.password_confirm.errors }}
         {{ form.password_confirm }}
         <input class="hiddenpasswordfield" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text" />
       </p>
       <p>
-        <label for="{{ form.email.id_for_label }}">E-mail adresse:</label>
+        <label class="formtext" for="{{ form.email.id_for_label }}">E-mail adresse:</label>
         {{ form.email.errors }}
         {{ form.email }}
       </p>
@@ -36,7 +36,7 @@
     <fieldset>
       <div class="row-fluid">
         <div class="span6">
-          <label for="{{ form.usertype.id_for_label }}">Brugertype:</label>
+          <label class="formtext" for="{{ form.usertype.id_for_label }}">Brugertype:</label>
           {{ form.usertype.errors }}
           {{ form.usertype }}
         </div>

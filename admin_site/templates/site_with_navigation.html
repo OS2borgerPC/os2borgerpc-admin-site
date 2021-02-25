@@ -10,40 +10,79 @@ class="detailpage"
 
 {% block content %}
 
-  <ul class="nav nav-list utils utils-global">
-      {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
-      <li><a href="/sites/"><i class="icon-arrow-left icon-white"></i> Sites</a></li>
-      <li class="divider"></li>
+  <ul class="nav utils utils-global">
+    {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
+    <li class="nav-item">
+      <a href="/sites/"><i class="icon-arrow-left icon-white"></i> Sites</a>
+    </li>
+    <li class="divider"></li>
     {% endif %}
-    <li {% block site_active %}{% endblock %}><a href="/site/{{ site.url }}"><i class="icon-eye-open icon-white"></i> Status</a></li>
+    <li class="nav-item" {% block site_active %}{% endblock %}>
+      <a href="/site/{{ site.url }}"><i class="icon-eye-open icon-white"></i> Status</a>
+    </li>
     <li class="divider"></li>
     <li class="nav-header">Sikkerhed</li>
-    <li {% block security_active %}{% endblock %}><a href="/site/{{ site.url }}/security/"><i class="icon-fire icon-white"></i>Advarsler
-            {% if sec_events > 0 %}
-            <span class="pull-right badge badge-important
-            sec-warn-blink">{{ sec_events }}{% endif %}</span></a></li>
-    <li {% block security_problems_active %}{% endblock %}><a
-            href="/site/{{ site.url }}/security_problems/"><i
-                class="icon-exclamation-sign icon-white"></i>Regler</a></li>
-    <li {% block security_scripts_active %}{% endblock %}><a
-                href="/site/{{ site.url }}/security/scripts/"><i
-                class="icon-list icon-white"></i>Sikkerhedsscripts</a></li>
+    <li {% block security_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/security/">
+        <i class="icon-fire icon-white"></i>
+        Advarsler {% if sec_events > 0 %}
+        <span class="pull-right badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
+      </a>
+    </li>
+    <li class="nav-item" {% block security_problems_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/security_problems/">
+        <i class="icon-exclamation-sign icon-white"></i>Regler</a>
+      </li>
+    <li class="nav-item" {% block security_scripts_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/security/scripts/">
+        <i class="icon-list icon-white"></i>Sikkerhedsscripts
+      </a>
+    </li>
     <li class="nav-header">Maskiner</li>
-    <li {% block configuration_active %}{% endblock %}><a href="/site/{{ site.url }}/configuration/"><i class="icon-cog icon-white"></i> Site-konfiguration</a></li>
-    <li {% block computers_active %}{% endblock %}><a href="/site/{{ site.url }}/computers/" onclick="spin();"><i class="icon-hdd icon-white"></i> Computere</a></li>
-    <li {% block groups_active %}{% endblock %}><a href="/site/{{ site.url }}/groups/"><i class="icon-tags icon-white"></i> Grupper</a></li>
-    <li {% block image_versions_active %}{% endblock %}><a href="/site/{{ site.url }}/image-versions/"><i class="icon-tags icon-white"></i> Versioner</a></li>
+    <li {% block configuration_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/configuration/">
+        <i class="icon-cog icon-white"></i> Site-konfiguration
+      </a>
+    </li>
+    <li class="nav-item" {% block computers_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/computers/" onclick="spin();">
+        <i class="icon-hdd icon-white"></i> Computere</a>
+    </li>
+    <li class="nav-item" {% block groups_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/groups/">
+        <i class="icon-tags icon-white"></i> Grupper
+      </a>
+    </li>
+    <li class="nav-item" {% block image_versions_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/image-versions/">
+        <i class="icon-tags icon-white"></i> Versioner
+      </a>
+    </li>
     <li class="divider"></li>
     <li class="nav-header">Scripting</li>
-    <li {% block jobs_active %}{% endblock %}><a href="/site/{{ site.url }}/jobs/"><i class="icon-list-alt icon-white"></i> Jobs</a></li>
-    <li {% block scripts_active %}{% endblock %}><a href="/site/{{ site.url }}/scripts/"><i class="icon-list icon-white"></i> Scripts</a></li>
+    <li class="nav-item" {% block jobs_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/jobs/">
+        <i class="icon-list-alt icon-white"></i> Jobs
+      </a>
+    </li>
+    <li class="nav-item" {% block scripts_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{ site.url }}/scripts/">
+        <i class="icon-list icon-white"></i> Scripts
+      </a>
+    </li>
     <li class="divider"></li>
-    <li {% block users_active %}{% endblock %}><a href="/site/{{site.url}}/users/"><i class="icon-user icon-white"></i> Brugere</a></li>
+    <li class="nav-item" {% block users_active %}{% endblock %}>
+      <a class="nav-link" href="/site/{{site.url}}/users/">
+        <i class="icon-user icon-white"></i> Brugere
+      </a>
+    </li>
     <li class="divider"></li>
     <li class="nav-header">Dokumentation</li>
     {% block specific_documentation_links %}
     {% endblock %}
-    <li><a href="{% url 'doc_root' %}">Læs dokumentation ...</a></li>
+    <li>
+      <a class="nav-link" href="{% url 'doc_root' %}">Læs dokumentation ...</a>
+    </li>
   </ul>
 
   {% block specific_content %}
