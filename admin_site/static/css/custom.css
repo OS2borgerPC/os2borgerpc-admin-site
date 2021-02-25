@@ -137,15 +137,6 @@ input.phantom { display: none; }
 .actionlist .btn-group {display: block;}
 .actionlist a:hover {background: #08c; color: #fff; text-decoration: none; border-radius: 5px;}
 .actionlist .profile {margin-right: 0;}
-.packagelist > li {display: inline-block;}
-.packagelist > li > .btn-group {margin: 0;}
-.packagelist > li > .btn-group > a {border: none; padding: 5px;}
-li.addpackagecontrol {display: block;}
-li.addpackagecontrol label,
-li.addpackagecontrol a {display: inline}
-.addpackagecontrol {margin: 10px 0;}
-.addpackagecontrol > * {vertical-align: bottom;}
-.addpackagecontrol input {margin-bottom: 0;}
 ul.addlist {min-width: 80%; box-shadow: 0 10px 10px #999; padding: 0; z-index: 100;}
 ul.addgrouplist {display: none; max-height: 300px; overflow-y: auto; position: absolute; background-color: #fff;}
 ul.addgrouplist li {cursor: pointer;}
