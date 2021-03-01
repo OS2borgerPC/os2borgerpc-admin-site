@@ -30,8 +30,8 @@
         {% else %}
           <script>
             $(function(){
-              BibOS.PolicyList.renderScriptFields('{{ name }}', '{{ ps_pk }}', '{{ submit_name|default:'policy' }}');
-            });
+              BibOS.PolicyList.renderScriptFields('{{ name }}', '{{ ps_pk }}', '{{ submit_name|default:'policy' }}')
+            })
           </script>
         {% endif %}
       </div>

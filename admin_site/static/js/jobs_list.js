@@ -4,24 +4,24 @@ $(function(){
         this.searchConditions = {}
         this.searchUrl = window.bibos_job_search_url || './search/'
         this.statusSelectors = []
-        BibOS.addTemplate('job-entry', template_container_id);
+        BibOS.addTemplate('job-entry', template_container_id)
     }
     $.extend(JobList.prototype, {
         init: function() {
             var jobsearch = this
             $('#jobsearch-status-selectors input:checkbox').on("change", function() {
-                jobsearch.search();
+                jobsearch.search()
             })
             $('#jobsearch-length-limitation input:radio').on("change", function() {
-                jobsearch.search();
+                jobsearch.search()
             })
-            jobsearch.search();
+            jobsearch.search()
         },
 
         appendEntries: function(dataList) {
             var container = this.elem
             $.each(dataList, function() {
-                var info_button = '';
+                var info_button = ''
                 if(this.has_info) {
                     info_button = '<button ' +
                         'class="btn jobinfobutton" ' +
@@ -34,13 +34,13 @@ $(function(){
                     $.extend(this, {
                         'jobinfobutton': info_button
                     })
-                ));
+                ))
                 item.find('input:checkbox').on("click", function() {
-                    $(this).parents('tr').toggleClass('marked');
-                });
+                    $(this).parents('tr').toggleClass('marked')
+                })
                 item.appendTo(container)
-            });
-            BibOS.setupJobInfoButtons(container);
+            })
+            BibOS.setupJobInfoButtons(container)
         },
 
         replaceEntries: function(dataList) {
@@ -51,11 +51,11 @@ $(function(){
         selectFilter: function(field, elem, val) {
             var e = $(elem)
             if(e.hasClass('selected')) {
-                e.removeClass('selected');
+                e.removeClass('selected')
                 val = ''
             } else {
-                e.parent().find('li').removeClass('selected');
-                e.addClass('selected');
+                e.parent().find('li').removeClass('selected')
+                e.addClass('selected')
             }
             $('#jobsearch-filterform input[name=' + field + ']').val(val)
             this.search()
@@ -76,19 +76,19 @@ $(function(){
         orderby: function(order) {
             $('.orderby').each(function() {
               if ($(this).hasClass('order-' + order)) {
-                $(this).addClass('active').find('i').toggleClass('icon-chevron-down icon-chevron-up').addClass('icon-white');
+                $(this).addClass('active').find('i').toggleClass('icon-chevron-down icon-chevron-up').addClass('icon-white')
               } else {
-                $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down');
-              };
-            });
+                $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down')
+              }
+            })
 
-            var input = $('#jobsearch-filterform input[name=orderby]');
+            var input = $('#jobsearch-filterform input[name=orderby]')
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()
         },
 
         search: function() {
-            var js = this;
+            var js = this
             js.searchConditions = $('#jobsearch-filterform').serialize()
             $.ajax({
                 type: "POST",
@@ -98,7 +98,7 @@ $(function(){
                     js.replaceEntries(data)
                 },
                 dataType: "json"
-            });
+            })
         },
 
         reset: function() {
@@ -109,7 +109,7 @@ $(function(){
             $('#jobsearch-filterform input[name=group]').val('')
             this.search()
         }
-    });
-    BibOS.JobList = new JobList('#job-list', '#jobitem-template');
+    })
+    BibOS.JobList = new JobList('#job-list', '#jobitem-template')
     $(function() { BibOS.JobList.init() })
 })

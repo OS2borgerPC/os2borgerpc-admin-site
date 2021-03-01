@@ -1,23 +1,23 @@
 $(function(){
     var SecurityEventList = function(container_elem, template_container_id) {
-        this.elem = $(container_elem);
-        this.searchUrl = window.bibos_security_event_search_url;
-        this.statusSelectors = [];
-        BibOS.addTemplate('securityevent-entry', template_container_id);
+        this.elem = $(container_elem)
+        this.searchUrl = window.bibos_security_event_search_url
+        this.statusSelectors = []
+        BibOS.addTemplate('securityevent-entry', template_container_id)
     }
     $.extend(SecurityEventList.prototype, {
         init: function() {
-            var securityeventsearch = this;
+            var securityeventsearch = this
             $('#securityeventsearch-status-selectors input:checkbox').on("change", function() {
-                securityeventsearch.search();
+                securityeventsearch.search()
             })
             $('#securityeventsearch-level-selectors input:checkbox').on("change", function() {
-                securityeventsearch.search();
+                securityeventsearch.search()
             })
             $('#securityeventsearch-length-limitation input:radio').on("change", function() {
-                securityeventsearch.search();
+                securityeventsearch.search()
             })
-            securityeventsearch.search();
+            securityeventsearch.search()
         },
 
         appendEntries: function(dataList) {
@@ -26,10 +26,10 @@ $(function(){
                 var item = $(BibOS.expandTemplate(
                     'securityevent-entry',
                     $.extend(this, {})
-                ));
-                item.attr('onclick', "location.href = '/site/" + this.site_uid + "/security/" + this.pk + "/'");
+                ))
+                item.attr('onclick', "location.href = '/site/" + this.site_uid + "/security/" + this.pk + "/'")
                 item.appendTo(container)
-            });
+            })
         },
 
         replaceEntries: function(dataList) {
@@ -40,11 +40,11 @@ $(function(){
         selectFilter: function(field, elem, val) {
             var e = $(elem)
             if(e.hasClass('selected')) {
-                e.removeClass('selected');
+                e.removeClass('selected')
                 val = ''
             } else {
-                e.parent().find('li').removeClass('selected');
-                e.addClass('selected');
+                e.parent().find('li').removeClass('selected')
+                e.addClass('selected')
             }
             $('#securityeventsearch-filterform input[name=' + field + ']').val(val)
             this.search()
@@ -57,20 +57,20 @@ $(function(){
         orderby: function(order) {
             $('.orderby').each(function() {
               if ($(this).hasClass('order-' + order)) {
-                $(this).addClass('active').find('i').toggleClass('icon-chevron-down icon-chevron-up').addClass('icon-white');
+                $(this).addClass('active').find('i').toggleClass('icon-chevron-down icon-chevron-up').addClass('icon-white')
               } else {
-                $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down');
-              };
-            });
+                $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down')
+              }
+            })
 
-            var input = $('#securityeventsearch-filterform input[name=orderby]');
+            var input = $('#securityeventsearch-filterform input[name=orderby]')
             input.val(BibOS.getOrderBy(input.val(), order))
-            this.search();
+            this.search()
         },
 
         search: function() {
-            var js = this;
-            js.searchConditions = $('#securityeventsearch-filterform').serialize();
+            var js = this
+            js.searchConditions = $('#securityeventsearch-filterform').serialize()
 
             $.ajax({
                 type: "POST",
@@ -83,7 +83,7 @@ $(function(){
                     console.log(err)
                 },
                 dataType: "json"
-            });
+            })
         },
 
         reset: function() {
@@ -92,7 +92,7 @@ $(function(){
             $('#jobsearch-filterform input[name=pc]').val('')
             this.search()
         }
-    });
-    BibOS.SecurityEventList = new SecurityEventList('#securityevent-list', '#securityeventitem-template');
+    })
+    BibOS.SecurityEventList = new SecurityEventList('#securityevent-list', '#securityeventitem-template')
     $(function() { BibOS.SecurityEventList.init() })
 })
