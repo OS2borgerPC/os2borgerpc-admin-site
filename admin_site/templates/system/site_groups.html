@@ -9,7 +9,6 @@ Grupper
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="/static/js/package_lists.js"></script>
 <script type="text/javascript" src="/static/js/configlist.js"></script>
 <script type="text/javascript" src="/static/js/pclist.js"></script>
 <script type="text/javascript" src="/static/js/policy_list.js"></script>
@@ -56,9 +55,6 @@ class="active"
           <a href="#group-configs" data-toggle="tab">Konfigurationer</a>
         </li>
         <li>
-          <a href="#group-packages" data-toggle="tab">Pakker</a>
-        </li>
-        <li>
           <a href="#group-policies" data-toggle="tab">Scripts</a>
       </ul>
 
@@ -90,10 +86,6 @@ class="active"
         {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
       </div>
 
-      <div id="group-packages" class="tabcontent">
-        {% include 'system/package_lists/list.html' with packages=package_infos pl_id='group_packages' %}
-      </div>
-
       <div id="group-policies" class="tabcontent">
         {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
       </div>
@@ -117,7 +109,6 @@ class="active"
       </form>
     </div>
 
-    {% include 'system/package_lists/templates.html' %}
     {% include 'system/configlist/templates.html' %}
     {% include 'system/policy_list/templates.html' with policy_id='group_policies' %}
 
