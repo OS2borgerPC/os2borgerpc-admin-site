@@ -2,9 +2,10 @@ from django import template
 register = template.Library()
 
 # Don't think it's being used currently, so uncommenting for now
-#@register.filter
-#def sort_by(queryset, order):
+# @register.filter
+# def sort_by(queryset, order):
 #    return queryset.order_by(order)
+
 
 # Add CSS classes to tags, e.g. django generated forms.
 @register.filter

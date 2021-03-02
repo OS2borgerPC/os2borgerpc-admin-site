@@ -1,7 +1,15 @@
+/* Variables / Custom properties */
+
+:root {
+  --first-color: #16f;
+  --second-color: #ff7;
+  --navigation-width: 250px;
+}
+
 /* Containers*/
 
 body {background: #ddd;}
-.main {position: absolute; top: 64px; bottom: 0; left: 250px; right: 0; overflow-x: hidden; overflow-y: auto;}
+.main {position: absolute; top: 64px; bottom: 0; left: var(--navigation-width); right: 0; overflow-x: hidden; overflow-y: auto; width: auto;}
 .sublevelmain {left: 500px;}
 .main > * {margin-top: 20px;}
 .template-container {display: none;}
@@ -10,7 +18,7 @@ body {background: #ddd;}
 /* Headers */
 
 header {padding: 20px; margin: 0 0 20px; background: #444; color: #ccc;}
-header.detailpage {padding: 20px 0; margin-left: 250px;}
+header.detailpage {padding: 20px 0; margin-left: var(--navigation-width);}
 header.detailpage h1 {font-size: 24px; line-height: 24px; margin: 0;}
 header h1 em {color: #fff; font-style: normal;}
 .nav-header {
@@ -29,22 +37,24 @@ div.runscriptdialogheader {display: none;}
 
 /* Navigation */
 
-ul.nav li {
-    flex-basis: 100%;
-}
+#left-menu.nav li, .tab-content li { flex-basis: 100%; }
+/* If we don't want that flexbox spacing on the menu*/
+/*#left-menu { display: block; }
+#left-menu .nav-link { padding: 0 1rem; }*/
 
 .nav.utils>li>a {color: #fff; text-shadow: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: #666; border-radius: 5px;}
-.nav-list.utils .nav-header {text-shadow: none; color: #ccc;}
-.sublevelnav {position: absolute; top: 64px; left: 250px; bottom: 0; width: 250px; background: #fff; overflow-x: hidden; overflow-y: auto; margin: 0;}
+.nav.utils .nav-header {text-shadow: none; color: #ccc;}
+.sublevelnav {position: absolute; top: 64px; left: var(--navigation-width); bottom: 0; width: 250px; background: #fff; overflow-x: hidden; overflow-y: auto; margin: 0;}
 .sublevelnav li a {border-top: solid 1px #ddd; display: block; padding: 10px;}
 .sublevelnav li:first-child a {border: none;}
 .sublevelnav li a.list-item:hover {background: #08c; color: #fff; text-decoration: none;}
 .sublevelnav a.remove:hover, .sublevelnav a.remove:active, .sublevelnav a.remove:focus {background: #c44; border: none;}
+.sublevelnav {list-style-type: none; padding-left: 0;}
 .inertnav {background: #ccc; border-radius: 5px; padding: 15px 20px;}
 .inertnav li {padding: 2px 0; color: #666;}
 .inertnav li:hover {background: #ddd;}
-.scripttabs {margin: 0 !important; background: #444; padding: 10px 10px 0 !important; border: none;}
+.scripttabs {margin: 0 !important; background: #444; padding: 10px 10px 0 !important; border: none; font-size: 0.90rem;}
 .scripttabs>li {margin: 0;}
 .scripttabs>li>a, .scripttabs>.active>a, .scripttabs>.active>a:hover, .scripttabs>.active>a:focus {border: none; margin: 0;}
 .scripttabs>li>a {color: #fff;}
@@ -64,9 +74,9 @@ ul.nav li {
 ul.nav li ul { color: #fff; list-style: none; padding: 0; margin: 0 0 0 1em; }
 ul.nav li ul a, ul.nav li ul a:hover, ul.nav li ul a:focus { color: #fff; text-decoration: none; }
 ul.nav li ul li.active { font-style: italic; }
-.nav-tabs {margin: 1em 0 0; padding: 0 20px;}
-.tabcontent {display: none; background: #fff; padding: 20px; border-radius: 0.25em;}
-.tabcontent.active {display: block;}
+.nav-tabs {margin: 1em 0 0; }
+.tabcontent {/*display: none; */ background: #fff; padding: 20px; border-radius: 0.25em;}
+/*.tabcontent.active {display: block;}*/
 
 
 /* Misc */
@@ -77,7 +87,7 @@ ul.nav li ul li.active { font-style: italic; }
 .profile a.dropdown-toggle {color: #fff;}
 .dark a.dropdown-toggle {color: #000;}
 .nav-list.utils .divider {border: none; background: #666;}
-.utils-global {position: absolute; top: 0; bottom: 0; left: 0; width: 210px; margin: 0; border-radius: 0; box-shadow: -5px -5px 20px #111 inset; overflow-x: hidden; overflow-y: auto;}
+.utils-global {position: absolute; top: 0; bottom: 0; left: 0; width: var(--navigation-width); margin: 0; border-radius: 0; box-shadow: -5px -5px 20px #111 inset; overflow-x: hidden; overflow-y: auto;}
 .accordion {margin-top: 20px;}
 .accordion-group {border: none; padding: 0;}
 .accordion-toggle {text-align: left;}
@@ -89,7 +99,7 @@ ul.nav li ul li.active { font-style: italic; }
 .popover.top .arrow {left: auto; right: 30px;}
 .popover.top {margin: 0 20px 5px 0;}
 #localscripts,
-#globalscripts {position: absolute; bottom: 0; top: 90px; left: 0px; width: 250px; overflw-X: hidden; overflow-y: auto;}
+#globalscripts {position: absolute; bottom: 0; top: 90px; left: 0px; width: 250px; overflow-X: hidden; overflow-y: auto;}
 .orderby:hover {background: #08c; color: #fff;}
 #jobinfo-popover {position: absolute; display: none; z-index: 10000; width: auto; min-width: 20em; max-width: 60em;}
 .scriptDescription textarea {width: 95%; min-height: 20em;}
@@ -134,6 +144,10 @@ input.phantom { display: none; }
 
 form-error {
    color: red;
+}
+
+.form-control {
+    max-width: 500px;
 }
 /* Lists */
 

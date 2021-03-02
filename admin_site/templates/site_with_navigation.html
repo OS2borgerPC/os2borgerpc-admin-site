@@ -10,7 +10,7 @@ class="detailpage"
 
 {% block content %}
 
-  <ul class="nav utils utils-global">
+  <ul id="left-menu" class="nav utils utils-global">
     {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
     <li class="nav-item">
       <a href="/sites/"><i class="icon-arrow-left icon-white"></i> Sites</a>
@@ -26,7 +26,7 @@ class="detailpage"
       <a class="nav-link" href="/site/{{ site.url }}/security/">
         <i class="icon-fire icon-white"></i>
         Advarsler {% if sec_events > 0 %}
-        <span class="pull-right badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
+        <span class="float-end badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
       </a>
     </li>
     <li class="nav-item" {% block security_problems_active %}{% endblock %}>

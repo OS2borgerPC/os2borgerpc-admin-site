@@ -1,14 +1,14 @@
 {% if disable_inputs != "yes" %}
   <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#script-details" data-toggle="tab">Detaljer</a>
+    <li class="nav-item">
+      <a class="nav-link active" href="#script-details" data-toggle="tab">Detaljer</a>
     </li>
-    <li>
-      <a href="#script-preview" data-toggle="tab">Kode</a>
+    <li class="nav-item">
+      <a class="nav-link" href="#script-preview" data-toggle="tab">Kode</a>
     </li>
     {% if not is_security %}
-    <li>
-      <a href="#script-parameters" data-toggle="tab">Inputparametre</a>
+    <li class="nav-item">
+      <a class="nav-link" href="#script-parameters" data-toggle="tab">Inputparametre</a>
     </li>
     {% endif %}
   </ul>

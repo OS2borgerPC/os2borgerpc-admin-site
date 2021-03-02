@@ -48,7 +48,7 @@ class="active"
     {% for pc in pc_list %}
     <li {% ifequal pc selected_pc %}class="active" %}{% endifequal %}>
         {% ifequal pc selected_pc %}
-          <a class="remove pull-right" href="/site/{{ site.url }}/computers/{{ selected_pc.uid }}/delete/" title="Slet computer"><i class="icon-remove icon-white"></i></a>
+          <a class="remove float-end" href="/site/{{ site.url }}/computers/{{ selected_pc.uid }}/delete/" title="Slet computer"><i class="icon-remove icon-white"></i></a>
         {% endifequal %}
         <div id="{{pc.uid}}"> <a class="list-item" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();"><i class="icon-hdd"></i> {{ pc.name }}</a>
         </div>
@@ -83,14 +83,14 @@ class="active"
       <button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Annuller</button>
 
       <ul class="nav nav-tabs">
-        <li class="active">
-          <a href="#pc-details" data-toggle="tab">Detaljer</a>
+        <li class="nav-item">
+          <a class="active nav-link" href="#pc-details" data-toggle="tab">Detaljer</a>
         </li>
-        <li>
-          <a href="#pc-configs" data-toggle="tab">Konfigurationer</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#pc-configs" data-toggle="tab">Konfigurationer</a>
         </li>
-        <li>
-          <a href="#pc-jobs" data-toggle="tab">Jobhistorik</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#pc-jobs" data-toggle="tab">Jobhistorik</a>
         </li>
       </ul>
 

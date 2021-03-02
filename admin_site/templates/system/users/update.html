@@ -21,7 +21,7 @@ class="active"
     {% for user in user_list %}
       <li {% ifequal user selected_user %}class="active"{% endifequal %}>
         {% ifequal user selected_user %}
-          <a class="remove pull-right" href="{% url 'delete_user' site.uid selected_user.username %}" title="Slet bruger"><i class="icon icon-remove icon-white"></i></a>
+          <a class="remove float-end" href="{% url 'delete_user' site.uid selected_user.username %}" title="Slet bruger"><i class="icon icon-remove icon-white"></i></a>
         {% endifequal %}
         <a class="list-item" href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a>
       </li>

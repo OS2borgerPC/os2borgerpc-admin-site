@@ -45,8 +45,12 @@ class GroupForm(forms.ModelForm):
             initial = kwargs.setdefault('initial', {})
             initial['pcs'] = [pc.pk for pc in
                               kwargs['instance'].pcs.all()]
+
+        forms.ModelForm.__init__(self, *args, **kwargs)
+
         # Add form-control bootstrap CSS class to all Forms
         helper(self)
+
 
     def save(self, commit=True):
         instance = forms.ModelForm.save(self, False)
