@@ -26,9 +26,7 @@ class="active"
     {% endif %}
     {% for pc in pc_list %}
     <li {% ifequal pc selected_pc %}class="active" %}{% endifequal %}>
-        {% ifequal pc selected_pc %}
-          <a class="remove float-end" href="/site/{{ site.url }}/computers/{{ selected_pc.uid }}/delete/" title="Slet computer"><i class="icon-remove icon-white"></i></a>
-        {% endifequal %}
+          <a class="float-end btn btn-close" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>
         <div id="{{pc.uid}}"> <a class="list-item" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();"><i class="icon-hdd"></i> {{ pc.name }}</a>
         </div>
       </li>
@@ -40,8 +38,7 @@ class="active"
     <h2 class="divideheader">Detaljer om <em>{{ selected_pc.name }}</em>
       {% if selected_pc.securityevent_set.count > 0 %}
       <a href="/site/{{ site.url }}/security/pc/{{ pc.uid }}" title=" Se advarsler for denne PC"><span class="badge badge-important">
-              <icon
-                                                                                                                          class="{% if has_security_warnings %}icon-fire{% else %}icon-ok{% endif %} icon-white">
+              <icon class="{% if has_security_warnings %}icon-fire{% else %}icon-ok{% endif %} icon-white">
               </icon></span></a>
 {% endif %}
     </h2>

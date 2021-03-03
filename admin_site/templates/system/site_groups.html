@@ -28,8 +28,8 @@ class="active"
       {% for group in site.groups.all %}
         <li {% ifequal group selected_group %}class="active"{% endifequal %}>
           {% ifequal group selected_group %}
+            <a class="float-end btn btn-close" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"></a>
             {% if selected_group.is_delete_allowed %}
-              <a class="remove float-end" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"><i class="icon-remove icon-white"></i></a>
             {% endif %}
           {% endifequal %}
           <a class="list-item" href="/site/{{ site.url }}/groups/{{ group.url }}/"><i class="icon-tags"></i> {{ group.name }}</a>

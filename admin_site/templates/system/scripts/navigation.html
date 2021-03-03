@@ -14,8 +14,12 @@
     <div class="tab-pane fade show active" id="localscripts" role="tabpanel" aria-labelledby="localscripts-tab">
       <ul class="unstyled nav" >
       {% for script in local_scripts %}
+        {% ifequal script selected_script %}
+        <li class="nav-item active">
+        {% else %}
         <li class="nav-item">
-          <a class="nav-link list-item" {% ifequal script selected_script %}class="active"{% endifequal %} href="{% url script_url site.uid script.pk %}">
+        {% endifequal %}
+          <a class="nav-link list-item" href="{% url script_url site.uid script.pk %}">
             <i class="icon-list"></i> {{ script.name }}
           </a>
         </li>
@@ -27,14 +31,14 @@
       <ul class="unstyled nav">
       {% for script in global_scripts %}
         {% ifequal script selected_script %}
-        <li class="nav-item">
-          <a class="nav-link list-item active" href="{% url script_url site.uid script.pk %}"><i class="icon-list"></i> {{ script.name }}</a>
-        </li>
+        <li class="nav-item active">
         {% else %}
         <li class="nav-item">
-          <a class="nav-link list-item" href="{% url script_url site.uid script.pk %}"><i class="icon-list"></i> {{ script.name }}</a>
-        </li>
         {% endifequal %}
+          <a class="nav-link list-item" href="{% url script_url site.uid script.pk %}">
+            <i class="icon-list"></i> {{ script.name }}
+          </a>
+        </li>
       {% endfor %}
       </ul>
     </div>
