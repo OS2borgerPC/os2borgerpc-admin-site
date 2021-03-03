@@ -1,69 +1,73 @@
 {% if disable_inputs != "yes" %}
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="#script-details" data-toggle="tab">Detaljer</a>
+  <!-- The three tabs on the page: -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#script-preview" data-toggle="tab">Kode</a>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="preview-tab" href="#preview" data-bs-toggle="tab" role="tab" aria-controls="preview" aria-selected="false">Kode</a>
     </li>
     {% if not is_security %}
-    <li class="nav-item">
-      <a class="nav-link" href="#script-parameters" data-toggle="tab">Inputparametre</a>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="parameters-tab" role="tab" href="#parameters" data-bs-toggle="tab" role="tab" aria-controls="parameters" aria-selected="false">Indstillinger (Inputparametre)</a>
     </li>
     {% endif %}
   </ul>
-  <div id="script-details" class="tabcontent active">
+
+  <!-- The content for the three tabs you can choose from above, one after one: -->
+  <div class="tab-content">
+    <div id="details" class="tabcontent active tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
 {% endif %}
-  
-    <fieldset>
-      <div class="row-fluid">
-        <div class="span6">
-          {{ form.name.errors }}
-          <label for="{{ form.name.id_for_label }}">Navn:</label>
-          {{ form.name }}        
-          {{ form.description.errors }}
-        </div>
-        <div class="span6" style="margin-top: 2em;">
-          <label class="checkbox" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
-            <input
-              type="checkbox"
-              id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
-              name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
-              value="{{ site.id }}"
-              {% if not global_script %}checked="checked"{% endif %}
-            >
-            Lokalt script for {{ site.uid }}
-          </label>
-         <input id="id_is_security_script" name="is_security_script"
-         value="{{ is_security }}" type="hidden" /> 
-        </div>
-        <div class="span12" style="margin-left: 0;">
-          <label for="{{ form.description.id_for_label }}">Beskrivelse:</label>
-          <div class="scriptDescription">
-            {{ form.description }}
+
+      <fieldset>
+        <div class="row-fluid">
+          <div class="span6">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}">Navn:</label>
+            {{ form.name }}
+            {{ form.description.errors }}
+          </div>
+          <div class="span6" style="margin-top: 2em;">
+            <label class="checkbox" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
+              <input
+                type="checkbox"
+                id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+                name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+                value="{{ site.id }}"
+                {% if not global_script %}checked="checked"{% endif %}
+              >
+              Lokalt script for {{ site.uid }}
+            </label>
+           <input id="id_is_security_script" name="is_security_script"
+           value="{{ is_security }}" type="hidden" />
+          </div>
+          <div class="span12" style="margin-left: 0;">
+            <label for="{{ form.description.id_for_label }}">Beskrivelse:</label>
+            <div class="scriptDescription">
+              {{ form.description }}
+            </div>
           </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
         
 {% if disable_inputs != "yes" %}
-  </div>
-  <div id="script-preview" class="tabcontent">
+    </div>
+    <div id="preview" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="preview-tab">
 {% endif %}
   
-    <fieldset>
-      {{ form.executable_code.errors }}
-      <label for="{{ form.executable_code.id_for_label }}">Upload scriptkode:</label>
-      {{ form.executable_code }}
-      {% if show_code_preview %}
-      <label style="padding-top: 10px;">Kode:</label>
-      <pre>{{script_preview |escape}}</pre>
-      {% endif %}
-    </fieldset>
+      <fieldset>
+        {{ form.executable_code.errors }}
+        <label for="{{ form.executable_code.id_for_label }}">Upload scriptkode:</label>
+        {{ form.executable_code }}
+        {% if show_code_preview %}
+        <label style="padding-top: 10px;">Kode:</label>
+        <pre>{{script_preview |escape}}</pre>
+        {% endif %}
+      </fieldset>
         
 {% if disable_inputs != "yes" %}
-  </div>
-  <div id="script-parameters" class="tabcontent">
+    </div>
+    <div id="parameters" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="parameters-tab">
 {% endif %}
   
     {% if disable_inputs or is_security %}
@@ -95,3 +99,4 @@
 {% if disable_inputs != "yes" %}
   </div>
 {% endif %}
+</div>

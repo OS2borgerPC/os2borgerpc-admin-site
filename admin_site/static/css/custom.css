@@ -41,6 +41,7 @@ div.runscriptdialogheader {display: none;}
 /* If we don't want that flexbox spacing on the menu*/
 /*#left-menu { display: block; }
 #left-menu .nav-link { padding: 0 1rem; }*/
+#left-menu hr {width: 100%;}
 
 .nav.utils>li>a {color: #fff; text-shadow: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: #666; border-radius: 5px;}

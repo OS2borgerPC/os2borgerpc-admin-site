@@ -21,7 +21,9 @@ class="active"
 {% block specific_content %}
 <ul class="sublevelnav">
     <li class="listutils">
-        <a href="#addNewSecProblem" role="button" data-toggle="modal" title="Definér nyt sikkerhedsproblem"><i class="icon-plus icon-white"></i> definér nyt sikkerhedsproblem</a>
+        <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
+          <i class="icon-plus icon-white"></i>Definér nyt sikkerhedsproblem
+        </button>
     </li>
     {% for sp in site.security_problems.all %}
     <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>
@@ -102,7 +104,7 @@ class="active"
               name="new_security_problem_form"
               id="new_security_problem_form" method="post">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
+                <button type="button" class="close" data-bs-dismiss="modal">×</button>
                 <h3>Definér nyt sikkerhedsproblem</h3>
             </div>
             <div class="modal-body">
@@ -150,7 +152,7 @@ class="active"
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" value="Gem" />
-                <input type="reset" class="btn" data-dismiss="modal" value="Annuller" />
+                <input type="reset" class="btn" data-bs-dismiss="modal" value="Annuller" />
             </div>
         </form>
     </div>

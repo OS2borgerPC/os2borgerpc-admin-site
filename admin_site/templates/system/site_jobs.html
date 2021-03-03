@@ -81,7 +81,7 @@ class="active"
       </label>
   </div>
       <hr>
-      <a href="javascript:void(0)" class="btn collapsing" data-toggle="collapse" data-target="#demo1"><i class="icon-chevron-down"></i> Batches</a>
+      <a href="javascript:void(0)" class="btn collapsing" data-bs-toggle="collapse" data-target="#demo1"><i class="icon-chevron-down"></i> Batches</a>
       <div id="demo1" class="collapse out{% if selected_batch %} in{% endif %}">
         <ul class="unstyled">
           {% for batch in batches %}
@@ -91,7 +91,7 @@ class="active"
           {% endfor %}
         </ul>
       </div>
-      <a href="javascript:void(0)" class="btn collapsing" data-toggle="collapse" data-target="#demo2"><i class="icon-chevron-down"></i> Computere</a>
+      <a href="javascript:void(0)" class="btn collapsing" data-bs-toggle="collapse" data-target="#demo2"><i class="icon-chevron-down"></i> Computere</a>
       <div id="demo2" class="collapse out{% if selected_pc %} in{% endif %}">
         <ul class="unstyled">
           {% for pc in pcs %}
@@ -101,7 +101,7 @@ class="active"
           {% endfor %}
         </ul>
       </div>
-      <a href="javascript:void(0)" class="btn collapsing" data-toggle="collapse" data-target="#demo3"><i class="icon-chevron-down"></i> Grupper</a>
+      <a href="javascript:void(0)" class="btn collapsing" data-bs-toggle="collapse" data-target="#demo3"><i class="icon-chevron-down"></i> Grupper</a>
       <div id="demo3" class="collapse out{% if selected_group %} in{% endif %}">
         <ul class="unstyled">
           {% for group in groups %}

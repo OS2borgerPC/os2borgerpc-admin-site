@@ -1,41 +1,42 @@
-  <ul class="nav nav-tabs scripttabs">
-    {% if global_selected %}
-    <li class="nav-item"><a class='nav-link' href="#localscripts" data-toggle="tab">Lokale scripts</a></li>
-    <li class="active nav-item"><a class='nav-link' href="#globalscripts" data-toggle="tab">Globale scripts</a></li>
-    {% else %}
-    <li class="active nav-item"><a class='nav-link' href="#localscripts" data-toggle="tab">Lokale scripts</a></li>
-    <li class="nav-item"><a class='nav-link' href="#globalscripts" data-toggle="tab">Globale scripts</a></li>
-    {% endif %}
+  <!-- The two tabs in the submenu: -->
+  <ul class="nav nav-tabs scripttabs" role="tab-list">
+    <li class="nav-item" role="presentation">
+      <a id="localscripts-tab" class='nav-link active' href="#localscripts" data-bs-toggle="tab" role="tab" aria-controls="localscripts" aria-selected="true">Lokale scripts</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a id="globalscripts-tab" class='nav-link' href="#globalscripts" data-bs-toggle="tab" role="tab" aria-controls="globalscripts" aria-selected="false">Globale scripts</a>
+    </li>
   </ul>
+
+  <!-- The content for the two tabs you can choose from above, one after one: -->
   <div class="tab-content">
-    {% if global_selected %}
-    <div class="tab-pane" id="localscripts">
-    {% else %}
-    <div class="tab-pane active" id="localscripts">
-    {% endif %}
+
+    <div class="tab-pane fade show active" id="localscripts" role="tabpanel" aria-labelledby="localscripts-tab">
       <ul class="unstyled nav" >
       {% for script in local_scripts %}
-        {% ifequal script selected_script %}
-        <li class="nav-item"><a class='nav-link list-item active' href="{% url script_url site.uid script.pk %}"><i class="icon-list"></i> {{ script.name }}</a></li>
-        {% else %}
-        <li class="nav-item"><a class='nav-link list-item' href="{% url script_url site.uid script.pk %}"><i class="icon-list"></i> {{ script.name }}</a></li>
-        {% endifequal %}
+        <li class="nav-item">
+          <a class="nav-link list-item" {% ifequal script selected_script %}class="active"{% endifequal %} href="{% url script_url site.uid script.pk %}">
+            <i class="icon-list"></i> {{ script.name }}
+          </a>
+        </li>
       {% endfor %}
       </ul>
     </div>
-    {% if global_selected %}
-    <div class="active" id="globalscripts">
-    {% else %}
-    <div class="tab-pane" id="globalscripts">
-    {% endif %}
+
+    <div class="tab-pane fade" id="globalscripts" role="tabpanel" aria-labelledby="globalscripts-tab">
       <ul class="unstyled nav">
       {% for script in global_scripts %}
         {% ifequal script selected_script %}
-        <li class="active nav-item"><a href="{% url script_url site.uid script.pk %}" class="list-item nav-link"><i class="icon-list"></i> {{ script.name }}</a></li>
+        <li class="nav-item">
+          <a class="nav-link list-item active" href="{% url script_url site.uid script.pk %}"><i class="icon-list"></i> {{ script.name }}</a>
+        </li>
         {% else %}
-        <li class="nav-item"><a href="{% url script_url site.uid script.pk %}" class="list-item nav-link"><i class="icon-list"></i> {{ script.name }}</a></li>
+        <li class="nav-item">
+          <a class="nav-link list-item" href="{% url script_url site.uid script.pk %}"><i class="icon-list"></i> {{ script.name }}</a>
+        </li>
         {% endifequal %}
       {% endfor %}
       </ul>
     </div>
+
   </div>

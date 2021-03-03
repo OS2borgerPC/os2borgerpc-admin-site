@@ -51,7 +51,6 @@ class GroupForm(forms.ModelForm):
         # Add form-control bootstrap CSS class to all Forms
         helper(self)
 
-
     def save(self, commit=True):
         instance = forms.ModelForm.save(self, False)
 
