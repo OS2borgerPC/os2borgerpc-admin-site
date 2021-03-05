@@ -87,7 +87,7 @@ div.runscriptdialogheader {display: none;}
 .nav-list>.active>a,
 .nav-list>.active>a:hover,
 .nav-list>.active>a:focus,
-.sublevelnav li.active a,
+.sublevelnav li a.active,
 .sublevelnav-inverted .collapse .selected a,
 .orderby.active {background-color: var(--2-accent-color); color: var(--5-gray);}
 ul.nav li ul { color: var(--5-gray); list-style: none; padding: 0; margin: 0 0 0 1em; }

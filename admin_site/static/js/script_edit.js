@@ -1,6 +1,6 @@
 (function(BibOS, $) {
     BibOS.addTemplate('script-input', '#script-input-template')
-    
+
     ScriptEdit = function() {
         this.reload = false
         this.iframeCount = 0

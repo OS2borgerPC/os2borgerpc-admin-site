@@ -19,12 +19,12 @@
         <input class="hiddenpasswordfield" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
 
         <label class="formtext" style="display: inline; margin-left: 10px;" for="{{ form_id|default:'user_form' }}_show_password">
-        <input style="vertical-align: baseline;" id="{{ form_id|default:'user_form' }}_show_password" type="checkbox" class="showpasswordcheckbox" tabindex="100"/> Vis Password</label>
-
         <label class="formtext" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
         {{ form.password_confirm.errors }}
         {{ form.password_confirm }}
         <input class="hiddenpasswordfield" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text" />
+        <input style="vertical-align: baseline;" id="{{ form_id|default:'user_form' }}_show_password" type="checkbox" class="showpasswordcheckbox" tabindex="100"/> Vis Password</label>
+        <br/>
       </p>
       <p>
         <label class="formtext" for="{{ form.email.id_for_label }}">E-mail adresse:</label>
