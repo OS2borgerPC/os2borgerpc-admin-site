@@ -110,3 +110,7 @@
     BibOS.ScriptEdit = new ScriptEdit()
     $(function() { BibOS.ScriptEdit.init() })
 })(BibOS, $)
+
+/* Syntax highlighting */
+const code = document.getElementById("script-code")
+hljs.highlightBlock(code)

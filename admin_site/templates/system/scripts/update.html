@@ -68,7 +68,7 @@ $.each(inputs, function() {BibOS.ScriptEdit.addInput('#update-script-inputs', th
     <input type="submit" class="btn btn-primary" value="Gem ændringer" />
     {% endif %}
 
-      <button class="btn" onclick="location.href='{% url script_url site.uid selected_script.pk %}'; return false;">Annuller</button>
+<!--      <button class="btn" onclick="location.href='{% url script_url site.uid selected_script.pk %}'; return false;">Fortryd ændringer</button>-->
 
       {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
     </form>

@@ -61,7 +61,7 @@
         {{ form.executable_code }}
         {% if show_code_preview %}
         <label style="padding-top: 10px;">Kode:</label>
-        <pre>{{script_preview |escape}}</pre>
+        <pre><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
         {% endif %}
       </fieldset>
         
