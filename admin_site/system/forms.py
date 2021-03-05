@@ -10,11 +10,13 @@ from account.models import SiteMembership
 from django.utils.translation import ugettext as _
 
 
-def helper(someform):
+# Currently adds the form-control class to all CharFields (input type=text)
+def add_classes_to_form(someform):
     for field_name, field in someform.fields.items():
-        if 'class' not in field.widget.attrs:
-            field.widget.attrs['class'] = ' '
-        field.widget.attrs['class'] += ' form-control'
+        if type(field) in [forms.CharField]:
+            if 'class' not in field.widget.attrs:
+                field.widget.attrs['class'] = ''
+            field.widget.attrs['class'] += ' form-control'
 
 
 class SiteForm(forms.ModelForm):
@@ -25,7 +27,7 @@ class SiteForm(forms.ModelForm):
             self.fields['uid'].widget.attrs['readonly'] = True
 
         # Add form-control bootstrap CSS class to all Forms
-        helper(self)
+        add_classes_to_form(self)
 
     class Meta:
         model = Site
@@ -49,7 +51,7 @@ class GroupForm(forms.ModelForm):
         forms.ModelForm.__init__(self, *args, **kwargs)
 
         # Add form-control bootstrap CSS class to all Forms
-        helper(self)
+        add_classes_to_form(self)
 
     def save(self, commit=True):
         instance = forms.ModelForm.save(self, False)
@@ -126,7 +128,7 @@ class UserForm(forms.ModelForm):
         self.initial_type = initial['usertype']
         super(UserForm, self).__init__(*args, **kwargs)
         # Add form-control bootstrap CSS class to all Forms
-        helper(self)
+        add_classes_to_form(self)
 
     class Meta:
         model = User
@@ -175,7 +177,7 @@ class ParameterForm(forms.Form):
         super(ParameterForm, self).__init__(*args, **kwargs)
 
         # Add form-control bootstrap CSS class to all Forms
-        helper(self)
+        add_classes_to_form(self)
 
         for i, inp in enumerate(script.ordered_inputs):
             name = 'parameter_%s' % i
@@ -200,7 +202,7 @@ class PCForm(forms.ModelForm):
         super(PCForm, self).__init__(*args, **kwargs)
 
         # Add form-control bootstrap CSS class to all Forms
-        helper(self)
+        add_classes_to_form(self)
 
     class Meta:
         model = PC
@@ -214,7 +216,7 @@ class SecurityProblemForm(forms.ModelForm):
         super(SecurityProblemForm, self).__init__(*args, **kwargs)
 
         # Add form-control bootstrap CSS class to all Forms
-        helper(self)
+        add_classes_to_form(self)
 
     class Meta:
         model = SecurityProblem

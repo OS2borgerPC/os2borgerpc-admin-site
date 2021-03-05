@@ -100,61 +100,65 @@ class="active"
     {% endif %}
 
     <div id="addNewSecProblem" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <form action="{% url 'security_problem_new' site.uid %}" 
-              name="new_security_problem_form"
-              id="new_security_problem_form" method="post">
-            <div class="modal-header">
-                <button type="button" class="close" data-bs-dismiss="modal">×</button>
-                <h3>Definér nyt sikkerhedsproblem</h3>
-            </div>
-            <div class="modal-body">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="{% url 'security_problem_new' site.uid %}" 
+                name="new_security_problem_form"
+                id="new_security_problem_form" method="post">
+              <div class="modal-header">
+                  <h3 class="modal-title">Definér nyt sikkerhedsproblem</h3>
+                  <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
 
-                <div class="row-fluid">
-                    <fieldset class="span6">
-                        {% csrf_token %}
+                  <div class="row-fluid">
+                      <fieldset class="span6">
+                          {% csrf_token %}
 
-                        <!-- Site field -->
-                        <input type="hidden" id="id_site" name="site" value="{{ site.id }}" />
+                          <!-- Site field -->
+                          <input type="hidden" id="id_site" name="site" value="{{ site.id }}" />
 
-                        <!-- And now the rest -->
-                        <label>Navn:</label>
-                        {{ newform.name.errors }}
-                        {{ newform.name }}
-                        <label>Id:</label>
-                        {{ newform.uid.errors }}
-                        {{ newform.uid }}
-                        <label>Problemmeddelelse:</label>
-                        {{ newform.description.errors }}
-                        {{ newform.description }}
+                          <!-- And now the rest -->
+                          <label>Navn:</label>
+                          {{ newform.name.errors }}
+                          {{ newform.name }}
+                          <label>Id:</label>
+                          {{ newform.uid.errors }}
+                          {{ newform.uid }}
+                          <label>Problemmeddelelse:</label>
+                          {{ newform.description.errors }}
+                          {{ newform.description }}
 
-                        <label>Alvorsgrad:</label>
-                        {{ newform.level.errors }}
-                        {{ newform.level }}
+                          <label>Alvorsgrad:</label>
+                          {{ newform.level.errors }}
+                          {{ newform.level }}
 
-                        <label>Script:</label>
-                        {{ newform.script.errors }}
-                        {{ newform.script }}
+                          <label>Script:</label>
+                          {{ newform.script.errors }}
+                          {{ newform.script }}
 
-                        <label>Overvåg følgende grupper:</label>
-                        {{ newform.alert_groups.errors }}
-                        {{ newform.alert_groups }}
+                          <label>Overvåg følgende grupper:</label>
+                          {{ newform.alert_groups.errors }}
+                          {{ newform.alert_groups }}
 
-                    </fieldset>
-                    <fieldset class="span6">
+                      </fieldset>
+                      <fieldset class="span6">
 
-                        <label>Modtager(e) af email-advarsel</label>
-                        {{ newform.alert_users.errors }}
-                        {{ newform.alert_users }}
+                          <label>Modtager(e) af email-advarsel</label>
+                          {{ newform.alert_users.errors }}
+                          {{ newform.alert_users }}
 
-                    </fieldset>
-                </div>
+                      </fieldset>
+                  </div>
 
-            </div>
-            <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Gem" />
-                <input type="reset" class="btn" data-bs-dismiss="modal" value="Annuller" />
-            </div>
-        </form>
+              </div>
+              <div class="modal-footer">
+                  <input type="submit" class="btn btn-primary" value="Gem" />
+                  <input type="reset" class="btn" data-bs-dismiss="modal" value="Annuller" />
+              </div>
+          </form>
+        </div>
+      </div>
     </div>
 
 </div>

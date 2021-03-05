@@ -40,7 +40,7 @@ class="active"
           <li><b>UDGIVELSESNOTER:</b> {{ first_obj.rel_notes }}</li>
           <li>
             <b>DOWNLOAD: </b>
-            <a class="btn-small btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.img_vers }}.iso</a>
+            <a class="btn btn-sm btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.img_vers }}.iso</a>
           </li>
         </ul>
       {% endwith %}
@@ -60,7 +60,7 @@ class="active"
               <li><b>RELEASE NOTES:</b> {{ iv.rel_notes }}</li>
               <li>
                 <b>DOWNLOAD: </b>
-                <a class="btn-small btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.img_vers}}</a>
+                <a class="btn btn-sm btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.img_vers}}</a>
               </li>
               <br>
             {% endfor %}    
@@ -72,7 +72,7 @@ class="active"
       <!-- Do nothing -->
     {% endif %} 
   {% else %}
-    <h2 class="text-error"><b>INGEN ADGANG</b></h2>
+    <h2 class="text-error"><strong>INGEN ADGANG</strong></h2>
     <p>
       Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, og
       derfor vises ingen versioner.

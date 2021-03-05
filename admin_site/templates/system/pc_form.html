@@ -26,7 +26,10 @@ class="active"
     {% endif %}
     {% for pc in pc_list %}
     <li {% ifequal pc selected_pc %}class="active" %}{% endifequal %}>
-          <a class="float-end btn btn-close" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>
+        {% comment %} Add deletion to every row: <a class="float-end btn btn-close" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
+        {% ifequal pc selected_pc %}
+        <a class="float-end btn btn-close" href="/site/{{ site.url }}/computers/{{ selected_pc.uid }}/delete/" title="Slet computer"></a>
+        {% endifequal %}
         <div id="{{pc.uid}}"> <a class="list-item" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();"><i class="icon-hdd"></i> {{ pc.name }}</a>
         </div>
       </li>

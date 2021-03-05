@@ -7,37 +7,45 @@
 </div>
 
 <div id="editpolicyscriptdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-bs-dismiss="modal">×</button>
-    <h3>Redigér script</h3>
-  </div>
-  <div class="modal-body">
-  </div>
-  <div class="modal-footer">
-    <button onclick="BibOS.PolicyList.submitEditDialog('{{ policy_id }}')" class="btn btn-primary">Gem</button>
-    <button class="btn" data-bs-dismiss="modal">Annuller</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Redigér script</h3>
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button onclick="BibOS.PolicyList.submitEditDialog('{{ policy_id }}')" class="btn btn-primary">Gem</button>
+        <button class="btn" data-bs-dismiss="modal">Annuller</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <div id="addpolicyscriptdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-label="Tilføj script til gruppe" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-bs-dismiss="modal">×</button>
-    <h3>Tilføj script</h3>
-  </div>
-  <div class="modal-body">
-    <ul class="script-list">
-    {% for script in all_scripts %}
-      <li onclick="BibOS.PolicyList.addToPolicy('{{ policy_id }}', '{{ script.id }}', '{{ script.name }}', '{{ script.pk }}', [{% for input in script.ordered_inputs %}
-        {
-          name: '{{ input.name }}',
-          type: '{{ input.value_type }}',
-          position: '{{ input.position }}',
-          required: '{{ input.mandatory }}'
-        },
-      {% endfor %}])">
-        <strong>{{ script.name }}</strong> ({% for input in script.ordered_inputs %}<span>{% if forloop.counter0 != 0 %}, {% endif %}{{ input.name }}</span>{% endfor %})
-      </li>
-    {% endfor %}
-    </ul>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-bs-dismiss="modal">×</button>
+        <h3>Tilføj script</h3>
+      </div>
+      <div class="modal-body">
+        <ul class="script-list">
+        {% for script in all_scripts %}
+          <li onclick="BibOS.PolicyList.addToPolicy('{{ policy_id }}', '{{ script.id }}', '{{ script.name }}', '{{ script.pk }}', [{% for input in script.ordered_inputs %}
+            {
+              name: '{{ input.name }}',
+              type: '{{ input.value_type }}',
+              position: '{{ input.position }}',
+              required: '{{ input.mandatory }}'
+            },
+          {% endfor %}])">
+            <strong>{{ script.name }}</strong> ({% for input in script.ordered_inputs %}<span>{% if forloop.counter0 != 0 %}, {% endif %}{{ input.name }}</span>{% endfor %})
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

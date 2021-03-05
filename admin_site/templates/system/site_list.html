@@ -11,11 +11,11 @@
     {% endif %}
     <div class="itemlist">
       {% for site in site_list %}
-        <div class="btn-group">
-          <a href="/site/{{site.url}}" class="btn btn-large">
+        <div class="btn-group btn-group-lg">
+          <a href="/site/{{site.url}}" class="btn btn-light">
             <i class="icon-home"></i> {{site.name}}
           </a>
-          <button class="btn btn-large dropdown-toggle" data-bs-toggle="dropdown">
+          <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu float-end">

@@ -28,8 +28,8 @@ class="active"
       {% for group in site.groups.all %}
         <li {% ifequal group selected_group %}class="active"{% endifequal %}>
           {% ifequal group selected_group %}
-            <a class="float-end btn btn-close" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"></a>
             {% if selected_group.is_delete_allowed %}
+            <a class="float-end btn btn-close btn-danger" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"></a>
             {% endif %}
           {% endifequal %}
           <a class="list-item" href="/site/{{ site.url }}/groups/{{ group.url }}/"><i class="icon-tags"></i> {{ group.name }}</a>
@@ -100,20 +100,24 @@ class="active"
     </form>
 
     <div id="addNewGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <form action="{% url 'new_group' site.uid %}" name="new_group_form" id="new_group_form" method="post">
-        <div class="modal-header">
-          <button type="button" class="close" data-bs-dismiss="modal">×</button>
-          <h3>Tilføj ny gruppe</h3>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="{% url 'new_group' site.uid %}" name="new_group_form" id="new_group_form" method="post">
+            <div class="modal-header">
+              <h3 class="modal-title">Tilføj ny gruppe</h3>
+              <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                {{ newform.as_p }}
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value="Gem" />
+              <input type="reset" class="btn" data-bs-dismiss="modal" value="Annuller" />
+            </div>
+          </form>
         </div>
-        <div class="modal-body">
-            {% csrf_token %}
-            {{ newform.as_p }}
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-primary" value="Gem" />
-          <input type="reset" class="btn" data-bs-dismiss="modal" value="Annuller" />
-        </div>
-      </form>
+      </div>
     </div>
 
     {% include 'system/configlist/templates.html' %}

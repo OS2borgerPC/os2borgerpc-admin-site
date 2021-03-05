@@ -7,22 +7,26 @@
 </div>
 
 <div id="editconfigdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button class="btn btn-link" type="button" class="close" data-bs-dismiss="modal">×</button>
-    <h3>Tilføj ny konfiguration</h3>
-  </div>
-  <div class="modal-body">
-    <form name="addnewconfigdialog" id="addnewconfigdialog" action="" method="post">
-      <input type="hidden" name="editconfig_pk" id="editconfig_pk" value="new" />
-      <input type="hidden" name="editconfig_id" id="editconfig_id" value="" />
-      <fieldset>
-        <p><label for="editconfig_name">Navn:</label> <input id="editconfig_name" maxlength="30" name="editconfig_name" type="text" value="" /></p>
-        <p><label for="editconfig_value">Værdi:</label> <input id="editconfig_value" maxlength="255" name="editconfig_value" type="text" value="" /></p>
-      </fieldset>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button onclick="BibOS.ConfigList.submitEditDialog()" class="btn btn-primary" />Gem</button>
-    <button class="btn" data-bs-dismiss="modal">Annuller</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Tilføj ny konfiguration</h3>
+        <button class="btn btn-link" type="button" class="btn btn-close" data-bs-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <form name="addnewconfigdialog" id="addnewconfigdialog" action="" method="post">
+          <input type="hidden" name="editconfig_pk" id="editconfig_pk" value="new" />
+          <input type="hidden" name="editconfig_id" id="editconfig_id" value="" />
+          <fieldset>
+            <p><label for="editconfig_name">Navn:</label> <input id="editconfig_name" maxlength="30" name="editconfig_name" type="text" value="" /></p>
+            <p><label for="editconfig_value">Værdi:</label> <input id="editconfig_value" maxlength="255" name="editconfig_value" type="text" value="" /></p>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button onclick="BibOS.ConfigList.submitEditDialog()" class="btn btn-primary" />Gem</button>
+        <button class="btn" data-bs-dismiss="modal">Annuller</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -79,41 +79,45 @@ class="active"
   <!-- MODAL WINDOW FOR NEW USER REGISTRATION: -->
   
   <div id="addNewUser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-bs-dismiss="modal">×</button>
-      <h3>Tilføj ny bruger</h3>
-    </div>
-    <div class="modal-body">
-      <form action="" method="post">
-        {% csrf_token %}
-        {% if form.errors %}
-        <span class="form-error">
-            {{ form.errors }}
-        </span>
-        {% endif %}
-        <fieldset>        
-          <p><label for="id_username">Brugernavn:</label> <input id="id_username" maxlength="30" name="username" type="text" value="Brugernavn" /></p>
-          <p>
-            <label for="id_txtPassword">Password:</label> <input id="id_txtPassword" maxlength="128" name="password" type="password" value="" />
-            <input type="text" id="txthdnPassword" />
-            <label style="display: inline; margin-left: 10px;"><input style="vertical-align: baseline;" type="checkbox" id="chkShow"/> Vis Password</label>
-          </p>
-          <p><label for="id_email">Email-addresse:</label> <input id="id_email" maxlength="75" name="email" type="text" value="ex: email@email.dk" /></p>
-        </fieldset>
-        <hr>
-        <fieldset>
-          <label>Rettighedsgruppe:</label>
-          <select name="type">
-            {% for c in choices %}
-              <option value="{{ c.id }}" {% ifequal c.id 1 %} selected{% endifequal %}>{{ c.val }}</option>
-            {% endfor %}
-          </select>
-        </fieldset>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Gem" />
-      <button class="btn" data-bs-dismiss="modal">Annuller</button>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Tilføj ny bruger</h3>
+          <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+            <span class="form-error">
+                {{ form.errors }}
+            </span>
+            {% endif %}
+            <fieldset>        
+              <p><label for="id_username">Brugernavn:</label> <input id="id_username" maxlength="30" name="username" type="text" value="Brugernavn" /></p>
+              <p>
+                <label for="id_txtPassword">Password:</label> <input id="id_txtPassword" maxlength="128" name="password" type="password" value="" />
+                <input type="text" id="txthdnPassword" />
+                <label style="display: inline; margin-left: 10px;"><input style="vertical-align: baseline;" type="checkbox" id="chkShow"/> Vis Password</label>
+              </p>
+              <p><label for="id_email">Email-addresse:</label> <input id="id_email" maxlength="75" name="email" type="text" value="ex: email@email.dk" /></p>
+            </fieldset>
+            <hr>
+            <fieldset>
+              <label>Rettighedsgruppe:</label>
+              <select name="type">
+                {% for c in choices %}
+                  <option value="{{ c.id }}" {% ifequal c.id 1 %} selected{% endifequal %}>{{ c.val }}</option>
+                {% endfor %}
+              </select>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Gem" />
+          <button class="btn" data-bs-dismiss="modal">Annuller</button>
+        </div>
+      </div>
     </div>
   </div>
   
