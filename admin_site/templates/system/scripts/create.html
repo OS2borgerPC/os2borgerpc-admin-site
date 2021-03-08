@@ -36,7 +36,7 @@ $.each(inputs, function() {BibOS.ScriptEdit.addInput('#create-script-inputs', th
         {% else %}
             href="{% url 'new_script' site.uid %}" 
         {% endif %}
-            title="Tilføj nyt script"><i class="icon-plus icon-white"></i> tilføj nyt script</a></div>
+            title="Tilføj nyt script"><i class="icon-plus icon-white"></i> Tilføj nyt script</a></div>
     {% include 'system/scripts/navigation.html' %}
   </div>
 
@@ -62,9 +62,9 @@ $.each(inputs, function() {BibOS.ScriptEdit.addInput('#create-script-inputs', th
       </div>
       <input type="submit" class="btn btn-primary" value="Opret script" />
         {% if is_security %}
-      <button class="btn" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
+      <button class="btn" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annullér</button>
         {% else %}
-      <button class="btn" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
+      <button class="btn" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annullér</button>
       {% endif %}
 
       <hr>

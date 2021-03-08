@@ -44,7 +44,7 @@ class="active"
     </tbody>
    </table>
   </div>
-  <div id="jobsearchnav" class="sublevelnav sublevelnav-inverted">
+  <div id="jobsearchnav" class="sublevelnav">
     <form id="jobsearch-filterform" name="filterform" action="./" method="post">
       <input type="hidden" name="batch" value="{{ selected_batch }}">
       <input type="hidden" name="pc" value="{{ selected_pc }}">
@@ -57,7 +57,7 @@ class="active"
       {% for s in status_choices%}
       <label>
         <input type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
-        <span class="label {{ s.label }}">{{ s.name }}</span>
+        <span class="badge {{ s.label }}">{{ s.name }}</span>
       </label>
       {% endfor %}
   </div>
@@ -65,23 +65,23 @@ class="active"
       <hr>
       <label>
         <input type="radio" value="20"  checked="checked" name="do_limit">
-        <span class="label">Første 20</span>
+        <span class="badge bg-secondary">Første 20</span>
       </label>
       <label>
         <input type="radio" value="50"  name="do_limit">
-        <span class="label">Første 50</span>
+        <span class="badge bg-secondary">Første 50</span>
       </label>
       <label>
         <input type="radio" value="100"  name="do_limit">
-        <span class="label">Første 100</span>
+        <span class="badge bg-secondary">Første 100</span>
       </label>
       <label>
         <input type="radio" value="0"  name="do_limit">
-        <span class="label">Alle</span>
+        <span class="badge bg-secondary">Alle</span>
       </label>
   </div>
       <hr>
-      <a href="javascript:void(0)" class="btn collapsing" data-bs-toggle="collapse" data-target="#demo1"><i class="icon-chevron-down"></i> Batches</a>
+      <a href="javascript:void(0)" class="btn btn-secondary collapsing" data-bs-toggle="collapse" data-target="#demo1"><i class="icon-chevron-down"></i> Batches</a>
       <div id="demo1" class="collapse out{% if selected_batch %} in{% endif %}">
         <ul class="unstyled">
           {% for batch in batches %}
@@ -91,7 +91,7 @@ class="active"
           {% endfor %}
         </ul>
       </div>
-      <a href="javascript:void(0)" class="btn collapsing" data-bs-toggle="collapse" data-target="#demo2"><i class="icon-chevron-down"></i> Computere</a>
+      <a href="javascript:void(0)" class="btn btn-secondary collapsing" data-bs-toggle="collapse" data-target="#demo2"><i class="icon-chevron-down"></i> Computere</a>
       <div id="demo2" class="collapse out{% if selected_pc %} in{% endif %}">
         <ul class="unstyled">
           {% for pc in pcs %}
@@ -101,7 +101,7 @@ class="active"
           {% endfor %}
         </ul>
       </div>
-      <a href="javascript:void(0)" class="btn collapsing" data-bs-toggle="collapse" data-target="#demo3"><i class="icon-chevron-down"></i> Grupper</a>
+      <a href="javascript:void(0)" class="btn btn-secondary collapsing" data-bs-toggle="collapse" data-target="#demo3"><i class="icon-chevron-down"></i> Grupper</a>
       <div id="demo3" class="collapse out{% if selected_group %} in{% endif %}">
         <ul class="unstyled">
           {% for group in groups %}

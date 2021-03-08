@@ -915,13 +915,14 @@ class Job(models.Model):
         (RESOLVED, STATUS_TRANSLATIONS[RESOLVED])
     )
 
+    # Is is ideal to hardcode CSS class names in here?
     STATUS_TO_LABEL = {
-        NEW: '',
-        SUBMITTED: 'label-info',
-        RUNNING: 'label-warning',
-        DONE: 'label-success',
-        FAILED: 'label-important',
-        RESOLVED: 'label-success'
+        NEW: 'bg-secondary',
+        SUBMITTED: 'bg-info',
+        RUNNING: 'bg-warning',
+        DONE: 'bg-success',
+        FAILED: 'bg-danger',
+        RESOLVED: 'bg-success'
     }
 
     # Fields

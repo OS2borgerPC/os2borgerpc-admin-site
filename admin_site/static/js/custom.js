@@ -321,3 +321,21 @@ var BibOS
 function spin() {
     $('body').append('<div class="overlay"><div class="windows8"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"><div class="wInnerBall"></div></div></div></div>')
 }
+
+/* Search form for scripts */
+function search_script() {
+    if (window.location.toString().includes("scripts")) {
+      let search_term = document.getElementById('search_form').value
+      search_term=search_term.toLowerCase();
+      let x = document.getElementsByClassName('animals');
+
+      for (i = 0; i < x.length; i++) {
+          if (!x[i].innerHTML.toLowerCase().includes(input)) {
+              x[i].style.display="none";
+          }
+          else {
+              x[i].style.display="list-item";
+          }
+      }
+    }
+}
