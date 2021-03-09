@@ -75,7 +75,7 @@ msgstr "Opdatering"
 
 #: system/models.py:117
 msgid "owner configuration"
-msgstr "ejer-konfiguration"
+msgstr "Ejer-konfiguration"
 
 #: system/models.py:124 system/models.py:142 system/models.py:220
 #: system/models.py:297 system/models.py:378 system/models.py:399
@@ -86,7 +86,7 @@ msgstr "Navn"
 
 #: system/models.py:125
 msgid "version"
-msgstr "version"
+msgstr "Version"
 
 #: system/models.py:126 system/models.py:401 system/models.py:538
 #: system/models.py:701 system/models.py:1144
@@ -96,11 +96,11 @@ msgstr "Beskrivelse"
 #: system/models.py:298 system/models.py:379 system/models.py:537
 #: system/models.py:1143
 msgid "uid"
-msgstr "uid"
+msgstr "UID"
 
 #: system/models.py:400
 msgid "id"
-msgstr "id"
+msgstr "ID"
 
 #: system/models.py:535
 msgid "mac"
@@ -108,29 +108,29 @@ msgstr ""
 
 #: system/models.py:552
 msgid "active"
-msgstr "aktiv"
+msgstr "Aktiv"
 
 #: system/models.py:553
 msgid "update required"
-msgstr "opdatering påkrævet"
+msgstr "Opdatering påkrævet"
 
 #: system/models.py:557
 msgid "send package info"
-msgstr "send pakke-informationer"
+msgstr "Send pakke-informationer"
 
 #: system/models.py:559
 msgid "creation time"
-msgstr "oprettelsestidspunkt"
+msgstr "Oprettelsestidspunkt"
 
 #: system/models.py:561
 msgid "last seen"
-msgstr "senest set"
+msgstr "Senest set"
 
 #: system/models.py:562
 #, fuzzy
 #| msgid "position"
 msgid "location"
-msgstr "placering"
+msgstr "Placering"
 
 #: system/models.py:707
 msgid "executable code"
@@ -142,7 +142,7 @@ msgstr "sikkerhedsscript"
 
 #: system/models.py:842 system/models.py:1041
 msgid "position"
-msgstr "placering"
+msgstr "Placering"
 
 #: system/models.py:901
 msgid "jobstatus:New"
@@ -166,7 +166,7 @@ msgstr "Udført"
 
 #: system/models.py:906
 msgid "jobstatus:Resolved"
-msgstr "Løst"
+msgstr "Genstartet"
 
 #: system/models.py:931
 msgid "log output"
@@ -208,11 +208,11 @@ msgstr "Fil"
 
 #: system/models.py:1039
 msgid "value type"
-msgstr "værdi-type"
+msgstr "Værdi-type"
 
 #: system/models.py:1042
 msgid "mandatory"
-msgstr "påkrævet"
+msgstr "Påkrævet"
 
 # SecurityProblem class
 #: system/models.py:1125

@@ -915,14 +915,14 @@ class Job(models.Model):
         (RESOLVED, STATUS_TRANSLATIONS[RESOLVED])
     )
 
-    # Is is ideal to hardcode CSS class names in here?
+    # Is it ideal to hardcode CSS class names in here? Better in template tag?
     STATUS_TO_LABEL = {
         NEW: 'bg-secondary',
         SUBMITTED: 'bg-info',
         RUNNING: 'bg-warning',
         DONE: 'bg-success',
         FAILED: 'bg-danger',
-        RESOLVED: 'bg-success'
+        RESOLVED: 'bg-primary'
     }
 
     # Fields
@@ -1188,9 +1188,9 @@ class SecurityEvent(models.Model):
     )
 
     STATUS_TO_LABEL = {
-        NEW: 'label-important',
-        ASSIGNED: 'label-warning',
-        RESOLVED: 'label-success'
+        NEW: 'bg-danger',
+        ASSIGNED: 'bg-warning',
+        RESOLVED: 'bg-success'
     }
     problem = models.ForeignKey(
         SecurityProblem, null=False, on_delete=models.CASCADE
