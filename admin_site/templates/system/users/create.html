@@ -15,7 +15,7 @@ class="active"
 {% block specific_content %}
 
   <ul class="sublevelnav">
-    <li class="listutils"><a href="{% url 'new_user' site.uid %}" title="Tilføj ny bruger"><i class="icon-plus icon-white"></i> tilføj ny bruger</a></li>
+    <li class="listutils"><a href="{% url 'new_user' site.uid %}" title="Tilføj ny bruger"><i class="icon-plus icon-white"></i> Tilføj ny bruger</a></li>
 
     {% for user in user_list %}
     <li {% ifequal user selected_user %}class="active"{% endifequal %}><a

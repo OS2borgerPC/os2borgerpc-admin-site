@@ -30,7 +30,7 @@ $.each(inputs, function() {BibOS.ScriptEdit.addInput('#create-script-inputs', th
 
 {% block specific_content %}
   <div class="sublevelnav">
-    <div class="listutils"><a 
+    <div class="listutils"><a class="btn btn-secondary"
         {% if is_security %}
             href="{% url 'new_security_script' site.uid %}" 
         {% else %}
@@ -62,9 +62,9 @@ $.each(inputs, function() {BibOS.ScriptEdit.addInput('#create-script-inputs', th
       </div>
       <input type="submit" class="btn btn-primary" value="Opret script" />
         {% if is_security %}
-      <button class="btn" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annullér</button>
+      <button class="btn" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
         {% else %}
-      <button class="btn" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annullér</button>
+      <button class="btn" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
       {% endif %}
 
       <hr>

@@ -27,13 +27,13 @@ class="active"
         <td class="severity-#LEVEL#"><strong>#PROBLEM_NAME#</strong></td>
         <td>#PC_NAME#</td>
         <td>#OCCURRED#</td>
-        <td><span class="label #STATUS_LABEL#">#STATUS#</span></td>
+        <td><span class="badge #STATUS_LABEL#">#STATUS#</span></td>
         <td>#ASSIGNED_USER#</td>
       </tr>
     </tbody>
    </table>
   </div>
-  <div id="securityeventsearchnav" class="sublevelnav sublevelnav-inverted">
+  <div id="securityeventsearchnav" class="sublevelnav sublevelnav">
     <form id="securityeventsearch-filterform" name="filterform" action="./" method="post">
         <input type="hidden" name="orderby" value="-pk">
         <input class="btn btn-primary float-end" type="button" onclick="BibOS.SecurityEventList.reset()" value="Nulstil filtre">
@@ -54,7 +54,7 @@ class="active"
           {% for s in status_choices %}
           <label class="checkbox">
               <input type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
-              <span class="label {{ s.label }}">{{ s.name }}</span>
+              <span class="badge {{ s.label }}">{{ s.name }}</span>
         </label>
         {% endfor %}
       </div>

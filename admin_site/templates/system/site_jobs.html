@@ -11,7 +11,7 @@ Jobs
   <script type="text/javascript" src="/static/js/jobs_list.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('.collapsing').on("click", function() {
+      $('[data-bs-toggle="collapse"]').on("click", function() {
         $(this).find('i').toggleClass('icon-chevron-up icon-chevron-down');
       });
     });
@@ -36,7 +36,7 @@ class="active"
         <td><strong>#SCRIPT_NAME#</strong></td>
         <td>#STARTED#</td>
         <td>#FINISHED#</td>
-        <td><span class="label #LABEL#">#STATUS#</span></td>
+        <td><span class="badge #LABEL#">#STATUS#</span></td>
         <td>#PC_NAME#</td>
         <td>#BATCH_NAME#</td>
         <td>#JOBINFOBUTTON#</td>
@@ -81,32 +81,32 @@ class="active"
       </label>
   </div>
       <hr>
-      <a href="javascript:void(0)" class="btn btn-secondary collapsing" data-bs-toggle="collapse" data-target="#demo1"><i class="icon-chevron-down"></i> Batches</a>
-      <div id="demo1" class="collapse out{% if selected_batch %} in{% endif %}">
+      <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#batches"><i class="icon-chevron-down"></i> Batches</button>
+      <div id="batches" class="collapse {% if selected_batch %} in{% endif %}">
         <ul class="unstyled">
           {% for batch in batches %}
           <li onclick="BibOS.JobList.selectBatch(this, '{{ batch.pk }}')" {% ifequal batch.pk selected_batch %}class="selected"{% endifequal %}>
-            <a href="javascript:void(0)"><i class="icon-list-alt icon-white"></i> {{ batch.name }}</a>
+            <i class="icon-list-alt icon-white"></i> {{ batch.name }}
           </li>
           {% endfor %}
         </ul>
       </div>
-      <a href="javascript:void(0)" class="btn btn-secondary collapsing" data-bs-toggle="collapse" data-target="#demo2"><i class="icon-chevron-down"></i> Computere</a>
-      <div id="demo2" class="collapse out{% if selected_pc %} in{% endif %}">
+      <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#computers"><i class="icon-chevron-down"></i> Computere</button>
+      <div id="computers" class="collapse {% if selected_pc %} in{% endif %}">
         <ul class="unstyled">
           {% for pc in pcs %}
           <li onclick="BibOS.JobList.selectPC(this, '{{ pc.pk }}')" {% ifequal pc.pk selected_pc %}class="selected"{% endifequal %}>
-            <a href="javascript:void(0)"><i class="icon-hdd icon-white"></i> {{ pc.name }}</a>
+            <i class="icon-hdd icon-white"></i> {{ pc.name }}
           </li>
           {% endfor %}
         </ul>
       </div>
-      <a href="javascript:void(0)" class="btn btn-secondary collapsing" data-bs-toggle="collapse" data-target="#demo3"><i class="icon-chevron-down"></i> Grupper</a>
-      <div id="demo3" class="collapse out{% if selected_group %} in{% endif %}">
+      <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#groups"><i class="icon-chevron-down"></i> Grupper</button>
+      <div id="groups" class="collapse {% if selected_group %} in{% endif %}">
         <ul class="unstyled">
           {% for group in groups %}
           <li onclick="BibOS.JobList.selectGroup(this, '{{ group.pk }}')" {% ifequal group.pk selected_group %}class="selected"{% endifequal %}>
-            <a  href="javascript:void(0)"><i class="icon-tags icon-white"></i> {{ group.name }}</a>
+            <i class="icon-tags icon-white"></i> {{ group.name }}
           </li>
           {% endfor %}
         </ul>

@@ -30,7 +30,7 @@ class="active"
           {% csrf_token %}
           <p>Er du sikker på at du vil slette brugeren {{ selected_user.username }}{% if selected_user.email %} &lt;{{ selected_user.email }}&gt;{% endif %}?</p>
           <input class="btn btn-danger" type="submit" value="Bekræft sletning" />
-          <input class="btn btn-primary" type="button" onclick="location.href='{% url 'user' site.uid selected_user.username %}'" value="Annullér" />
+          <input class="btn btn-primary" type="button" onclick="location.href='{% url 'user' site.uid selected_user.username %}'" value="Annuller" />
         </form>
       </div>
     </div>
@@ -53,7 +53,7 @@ class="active"
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-primary" value="Gem" />
-            <button class="btn" data-bs-dismiss="modal">Annullér</button>
+            <button class="btn" data-bs-dismiss="modal">Annuller</button>
           </div>
         </form>
       </div>

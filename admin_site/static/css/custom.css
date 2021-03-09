@@ -19,34 +19,21 @@
 
 /* Global */
 
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 95%;
-}
+body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 95%; }
 
-a, .btn-link {
-  color: var(--0-gray);
-}
+a, .btn-link { color: var(--0-gray); }
 
-hr {
-  background: var(--5-gray);
-}
+hr { background: var(--5-gray); }
 
-.btn-primary {
-  background-color: var(--1-accent-color);
-  border-color: var(--1-accent-color);
-}
+.btn-primary { background-color: var(--1-accent-color); border-color: var(--1-accent-color); }
 
-.btn-gentle-warning {
-  background-color: var(--2-accent-color);
-  border-color: var(--2-accent-color);
-}
-
+.btn-gentle-warning { background-color: var(--2-accent-color); border-color: var(--2-accent-color); }
 
 /* TODO! This doesn't work yet! */
-input[class="btn"]:hover {
-  border: #8a53be 2px solid;
-}
+input[class="btn"]:hover { border: #8a53be 2px solid; }
+
+.badge { width: 75px; }
+#left-menu .badge { width: auto; }
 
 
 /* Containers*/
@@ -77,11 +64,12 @@ div.runscriptdialogheader {display: none;}
 
 /* Navigation */
 
-#left-menu.nav li, .tab-content li { flex-basis: 100%; }
-/* If we don't want that flexbox spacing on the menu*/
-/*#left-menu { display: block; }
-#left-menu .nav-link { padding: 0 1rem; }*/
+#left-menu.nav li, .tab-content li { flex-basis: 100%; padding: 4px 0;}
 #left-menu hr {width: 100%;}
+
+/* If we don't want that flexbox spacing on the menu*/
+#left-menu { display: block; }
+#left-menu .nav-link { padding: 0 1rem; }
 
 .nav.utils>li>a {color: var(--3-gray); text-shadow: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: var(--2-gray); border-radius: 5px;}
@@ -103,15 +91,9 @@ div.runscriptdialogheader {display: none;}
 .scripttabs>li>a {color: var(--5-gray);}
 .scripttabs>li>a:hover, .scripttabs>li>a:focus {background: var(--2-accent-color);}
 .scripttabs>.active>a {background: var(--5-gray) !important; color: var(--1-accent-color) !important;}
-.sublevelnav-inverted {background: var(--1-accent-color); color: var(--3-gray);}
-.sublevelnav-inverted .nav-header {text-shadow: none; color: var(--3-gray)}
-.sublevelnav-inverted .collapsing {margin-bottom: 10px;}
-.sublevelnav-inverted hr {border: solid 1px var(--2-gray); border-width: 1px 0 0;}
-.sublevelnav-inverted .collapse a {color: var(--5-gray); border: none;}
+[data-bs-toggle="collapse"] {margin-bottom: 10px; display: block; text-align: left; height: auto}
 
-#jobsearchnav {
-  padding: 15px;
-}
+#jobsearchnav, #securityeventsearchnav { padding: 15px; }
 
 .sublevelnav input { vertical-align: middle; }
 .sublevelnav label { display: block; }
@@ -120,7 +102,6 @@ div.runscriptdialogheader {display: none;}
 .nav-list>.active>a:hover,
 .nav-list>.active>a:focus,
 .sublevelnav li a.active,
-.sublevelnav-inverted .collapse .selected a,
 .orderby.active {background-color: var(--2-accent-color); color: var(--5-gray);}
 
 ul.nav li ul { color: var(--5-gray); list-style: none; padding: 0; margin: 0 0 0 1em; }
@@ -134,8 +115,8 @@ ul.nav li ul li.active { font-style: italic; }
 /* Misc */
 
 .utils {background: var(--1-accent-color); box-shadow: none; border-radius: 0 0 10px 10px; padding: 10px 20px; margin: -30px 0 0;}
-.listutils {background: var(--1-accent-color); }
-.listutils button {color: var(--5-gray); }
+.listutils {background: var(--1-accent-color);}
+.listutils button, .listutils a {color: var(--5-gray); }
 .profile {font-size: 14px; margin-right: 20px;}
 .profile a.dropdown-toggle {color: var(--5-gray);}
 .dark a.dropdown-toggle {color: var(--0-gray);}
@@ -145,7 +126,6 @@ ul.nav li ul li.active { font-style: italic; }
 .accordion-group {border: none; padding: 0;}
 .accordion-toggle {text-align: left;}
 .searchfilter .btn {display: block; text-align: left;}
-.collapsing {display: block; text-align: left;}
 .popover {max-width: 40em;}
 .popover.bottom .arrow {left: auto; right: 30px;}
 .popover.bottom {margin: 5px 20px 0 0;}
@@ -182,7 +162,6 @@ ul.nav li ul li.active { font-style: italic; }
 /* Forms */
 
 textarea { max-width: 100%; }
-.sublevelnav-inverted > form {padding: 20px;}
 
 input.phantom { display: none; }
 
@@ -252,9 +231,7 @@ div.docscontainer .nav-list>li>a:hover {background: var(--2-gray); text-decorati
   50% { background-color: transparent; }
   100% { background-color: var(--danger); }
 }
-.label-warning,
-.badge-warning {color: var(--1-accent-color);}
-.label-gentle-warning,
+.bg-warning {color: var(--1-accent-color);}
 .badge-gentle-warning {background-color: var(--gentle-warning); color: var(--1-accent-color);}
 .seclevel-danger {color: var(--5-gray); background-color: var(--danger);}
 .seclevel-warning {color: var(--1-accent-color); background-color: var(--warning);}
@@ -268,11 +245,6 @@ div.docscontainer .nav-list>li>a:hover {background: var(--2-gray); text-decorati
 .severity-label-important { border-color: var(--danger); }
 .severity-label-warning { border-color: var(--warning); }
 .severity-checkbox { padding-left: 0.5em; border-width: 0.5em; }
-
-/* Jobs */
-.collapsing {
-  height: auto;
-}
 
 /* Popup page */
 
