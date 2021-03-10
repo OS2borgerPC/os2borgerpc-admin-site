@@ -1,0 +1,13 @@
+{% extends "site_with_navigation.html" %}
+
+{% block specific_title %}
+{% if is_security %} Sikkerhedsscripts {% else %} Scripts {% endif %}
+{% endblock %}
+
+{% block scripts_active %}
+{% if not is_security %}active{% endif %}
+{% endblock %}
+
+{% block security_scripts_active %}
+{% if is_security %}active{% endif %}
+{% endblock %}

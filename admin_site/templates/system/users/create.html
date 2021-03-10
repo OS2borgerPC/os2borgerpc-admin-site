@@ -5,7 +5,7 @@ Brugere
 {% endblock %}
 
 {% block users_active %}
-class="active"
+active
 {% endblock %}
 
 {% block specific_documentation_links %}
@@ -18,8 +18,9 @@ class="active"
     <li class="listutils"><a href="{% url 'new_user' site.uid %}" title="Tilføj ny bruger"><i class="icon-plus icon-white"></i> Tilføj ny bruger</a></li>
 
     {% for user in user_list %}
-    <li {% ifequal user selected_user %}class="active"{% endifequal %}><a
-        href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a></li>
+    <li>
+      <a href="/site/{{ site.url }}/users/{{ user.username }}" class="{% ifequal user selected_user %}active{% endifequal %}"><i class="icon-user"></i> {{ user.username }}</a>
+    </li>
     {% endfor %}
   </ul>
   

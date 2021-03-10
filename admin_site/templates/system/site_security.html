@@ -12,7 +12,7 @@ Sikkerhedsadvarsler
 {% endblock %}
 
 {% block security_active %}
-class="active"
+active
 {% endblock %}
 
 {% block specific_documentation_links %}
@@ -21,7 +21,7 @@ class="active"
 
 {% block specific_content %}
   <div class="template-container">
-   <table>
+   <table class="table">
     <tbody id="securityeventitem-template">
       <tr class="click-list--item">
         <td class="severity-#LEVEL#"><strong>#PROBLEM_NAME#</strong></td>
@@ -34,13 +34,14 @@ class="active"
    </table>
   </div>
   <div id="securityeventsearchnav" class="sublevelnav sublevelnav">
+          <h3 class="nav-header">Filtrer</h3>
+          <button class="btn btn-link float-end" type="button" onclick="BibOS.SecurityEventList.reset()">Nulstil filtre</button>
+    <hr>
     <form id="securityeventsearch-filterform" name="filterform" action="./" method="post">
-        <input type="hidden" name="orderby" value="-pk">
-        <input class="btn btn-primary float-end" type="button" onclick="BibOS.SecurityEventList.reset()" value="Nulstil filtre">
-      <h3 class="nav-header">Filtrér:</h3>
-      <hr>
+      <input type="hidden" name="orderby" value="-pk">
+
       <div id="securityeventsearch-level-selectors">
-          <h4 class="nav-header">Alvorsgrad</h4>
+          <h4 class="nav-header">Alvorlighedsgrad</h4>
           {% for l in level_choices %}
           <label class="checkbox">
               <input type="checkbox" value="{{ l.value }}" name="level" {{ l.checked }}>
@@ -84,7 +85,7 @@ class="active"
   </div>
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     {% include 'notification.html' %}
-    <table class="table table-hover warn-table" id="#site_securityevents_table">
+    <table class="table table-hover warn-table" id="site_securityevents_table">
       <thead>
         <tr>
           <th class="orderby order-problem__name desc" onclick="BibOS.SecurityEventList.orderby('problem__name')">Advarsel <i class="icon icon-chevron-down"></i></th>

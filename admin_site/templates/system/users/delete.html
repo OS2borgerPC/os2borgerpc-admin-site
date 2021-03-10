@@ -5,7 +5,7 @@ Brugere
 {% endblock %}
 
 {% block users_active %}
-class="active"
+active
 {% endblock %}
 
 {% block specific_content %}
@@ -18,8 +18,9 @@ class="active"
     </li>
 
     {% for user in user_list %}
-    <li {% ifequal user selected_user %}class="active"{% endifequal %}><a
-        href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a></li>
+    <li>
+      <a href="/site/{{ site.url }}/users/{{ user.username }}" class="{% ifequal user selected_user %}active{% endifequal %}"><i class="icon-user"></i> {{ user.username }}</a>
+    </li>
     {% endfor %}
   </ul>
   

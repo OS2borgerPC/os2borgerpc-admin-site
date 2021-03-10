@@ -5,7 +5,7 @@ Brugere
 {% endblock %}
 
 {% block users_active %}
-class="active"
+active
 {% endblock %}
 
 {% block specific_content %}
@@ -19,11 +19,11 @@ class="active"
     <!-- <li class="listutils"><a href="/site/{{ site.uid }}/users/new/" title="Tilføj ny bruger"><i class="icon-plus icon-white"></i> Tilføj ny bruger</a></li> -->
 
     {% for user in user_list %}
-      <li {% ifequal user selected_user %}class="active"{% endifequal %}>
+      <li>
         {% ifequal user selected_user %}
           <a class="remove" href="#" title="Slet bruger"><i class="icon-remove icon-white"></i></a>
         {% endifequal %}
-        <a class="list-item" href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a>
+        <a class="list-item {% ifequal user selected_user %}active{% endifequal %}" href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a>
       </li>
     {% endfor %}
   </ul>

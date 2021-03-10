@@ -1,16 +1,4 @@
-{% extends "site_with_navigation.html" %}
-
-{% block specific_title %}
-Scripts
-{% endblock %}
-
-{% block scripts_active %}
-{% if not is_security %}class="active"{% endif %}
-{% endblock %}
-
-{% block security_scripts_active %}
-{% if is_security %}class="active"{% endif %}
-{% endblock %}
+{% extends "system/scripts/header.html" %}
 
 {% block javascripts %}
 <script type="text/javascript" src="/static/js/script_edit.js"></script>
