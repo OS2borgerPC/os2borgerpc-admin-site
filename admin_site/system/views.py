@@ -612,7 +612,6 @@ class ScriptMixin(object):
 
 
 class ScriptList(ScriptMixin, SiteView):
-    template_name = 'system/scripts/list.html'
 
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
