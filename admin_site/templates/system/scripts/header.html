@@ -11,3 +11,21 @@
 {% block security_scripts_active %}
 {% if is_security %}active{% endif %}
 {% endblock %}
+
+{% comment %} 
+TODO: create.html Used to have #create-script-inputs and 
+update.html #update-script-inputs, instead of the current #script-inputs,
+which they referred to in forms.py. 
+From my testing using just script-inputs seems to work just as well, but 
+we should test it further before release.
+{% endcomment %}
+
+{% block javascripts %}
+<script type="text/javascript" src="/static/js/script_edit.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var inputs = {{ script_inputs_json|safe }}
+        $.each(inputs, function() {BibOS.ScriptEdit.addInput('#script-inputs', this)})
+    })
+</script>
+{% endblock %}

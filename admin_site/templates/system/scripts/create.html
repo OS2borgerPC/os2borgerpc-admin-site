@@ -1,14 +1,5 @@
 {% extends "system/scripts/header.html" %}
-
-{% block javascripts %}
-<script type="text/javascript" src="/static/js/script_edit.js"></script>
-<script type="text/javascript">
-$(function() {
-var inputs = {{ script_inputs_json|safe }}
-$.each(inputs, function() {BibOS.ScriptEdit.addInput('#create-script-inputs', this)})
-})
-</script>
-{% endblock %}
+<!-- Note: This isn't the modal for creating a script, this is only seen, when you have zero scripts in the list. -->
 
 {% block specific_documentation_links %}
   <li><a href="{% url 'doc' 'scripts' %}"><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>

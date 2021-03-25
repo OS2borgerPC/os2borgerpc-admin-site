@@ -73,7 +73,7 @@
     {% if disable_inputs or is_security %}
       <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0" />
     {% else %}
-      <fieldset id="{{ form.prefix|default:'update' }}-script-inputs">
+      <fieldset id="script-inputs">
         <label>Input-parametre:</label>
         <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0" />
         <div class="well">
@@ -82,12 +82,13 @@
               <tr>
                 <th>Navn</th>
                 <th>Type</th>
+                <th>Slet</th>
               </tr>
             </thead>
             <tbody id="script-input-container">
               <tr class="script-input-add">
                 <td colspan="3">
-                  <a href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#{{ form.prefix|default:'update' }}-script-inputs', {})" title="Tilføj ny konfiguration"><i class="icon-plus"></i> tilføj parameter</a>
+                  <a href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="Tilføj ny konfiguration"><i class="icon-plus"></i> Tilføj parameter</a>
                 </td>
               </tr>
             </tbody>

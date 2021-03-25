@@ -1,15 +1,5 @@
 {% extends "system/scripts/header.html" %}
 
-{% block javascripts %}
-<script type="text/javascript" src="/static/js/script_edit.js"></script>
-<script type="text/javascript">
-$(function() {
-var inputs = {{ script_inputs_json|safe }}
-$.each(inputs, function() {BibOS.ScriptEdit.addInput('#update-script-inputs', this)})
-})
-</script>
-{% endblock %}
-
 {% block specific_documentation_links %}
 {% if is_security %}
   <li><a href="{% url 'doc' 'scripts/securitywarnings' %}"><i class="icon-question-sign icon-white"></i>Hjælp til sikkerhed</a></li>
