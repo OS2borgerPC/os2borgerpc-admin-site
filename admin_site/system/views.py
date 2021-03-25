@@ -945,7 +945,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         return response
 
 
-class PCDelete(DeleteView, SuperAdminOrThisSiteMixin):
+class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PC
 
     def get_object(self, queryset=None):
