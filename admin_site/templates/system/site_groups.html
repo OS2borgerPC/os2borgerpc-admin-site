@@ -29,7 +29,7 @@ active
         <li>
           {% ifequal group selected_group %}
             {% if selected_group.is_delete_allowed %}
-            <a class="float-end btn btn-close btn-danger" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"></a>
+            <a class="float-end btn btn-close" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"></a>
             {% endif %}
           {% endifequal %}
           <a class="list-item {% ifequal group selected_group %}active{% endifequal %}" href="/site/{{ site.url }}/groups/{{ group.url }}/"><i class="icon-tags"></i> {{ group.name }}</a>

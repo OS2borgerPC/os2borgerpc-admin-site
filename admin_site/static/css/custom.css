@@ -11,11 +11,19 @@
   --4-gray: #ddd;
   --5-gray: #f1f1f1;
   --6-gray: #fbfbfb;
-  --danger: #b94a48;
-  --warning: #f89406;
-  --gentle-warning: #f8f006;
+  --danger: #ed5854; 
+  --warning: #f5914d;
+  --gentle-warning: #f0d764;
+  --info: #77c7d9;
   --navigation-width: 250px;
 }
+
+.btn-success, .bg-success { background: #5ba66e!important; }
+.btn-primary, .bg-primary { background: #173B42!important; }
+.btn-info, .bg-info { background: var(--info)!important; }
+.btn-danger, .bg-danger { background: var(--danger)!important; }
+.btn-warning, .bg-warning { background: var(--warning)!important; }
+.btn { border: none; }
 
 
 /* Global */
@@ -67,6 +75,7 @@ div.runscriptdialogheader {display: none;}
 
 #left-menu.nav li, .tab-content li { flex-basis: 100%; padding: 4px 0;}
 #left-menu hr {width: 100%;}
+[class^="icon-"], [class*=" icon-"] {margin-right: 3px;}
 
 /* If we don't want that flexbox spacing on the menu*/
 #left-menu { display: block; }
@@ -76,9 +85,11 @@ div.runscriptdialogheader {display: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: var(--2-gray); border-radius: 5px;}
 .nav.utils .nav-header {text-shadow: none; color: var(--6-gray); text-transform: uppercase; font-weight: bold;}
 .sublevelnav {position: absolute; top: 64px; left: var(--navigation-width); bottom: 0; width: 250px; background: var(--4-gray); overflow-x: hidden; overflow-y: auto; margin: 0;}
-.sublevelnav li a {border-top: solid 1px var(--6-gray); display: block; padding: 10px;}
+/* Delete button on lists */
+.sublevelnav li a {display: block; padding: 10px; text-decoration: none;}
+.sublevelnav li div a {border-top: solid 1px var(--6-gray); }
 .sublevelnav li:first-child a {border: none;}
-.sublevelnav li a.list-item {text-decoration: none;}
+.sublevelnav li a.list-item, .sublevelnav button {text-decoration: none;}
 .sublevelnav li a.list-item:hover {background: var(--2-accent-color); color: var(--6-gray)}
 .sublevelnav a.remove:hover, .sublevelnav a.remove:active, .sublevelnav a.remove:focus {background: var(--danger); border: none;}
 .sublevelnav {list-style-type: none; padding-left: 0;}
@@ -239,7 +250,6 @@ div.docscontainer .nav-list>li>a:hover {background: var(--2-gray); text-decorati
   50% { background-color: transparent; }
   100% { background-color: var(--danger); }
 }
-.bg-warning {color: var(--1-accent-color);}
 .badge-gentle-warning {background-color: var(--gentle-warning); color: var(--1-accent-color);}
 .seclevel-danger {color: var(--6-gray); background-color: var(--danger);}
 .seclevel-warning {color: var(--1-accent-color); background-color: var(--warning);}

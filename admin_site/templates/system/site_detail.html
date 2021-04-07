@@ -17,8 +17,7 @@ active
 <ul class="sublevelnav">
     {% for pc in pcs %}
     <li><a class="list-item" href="computers/{{ pc.uid }}"><i
-            class="icon-hdd"></i>{% if pc.status.state %} <span
-            class="label label-{{ pc.status.priority }}">{{ pc.status.state }}</span>{% endif %} {{ pc.name }}
+            class="icon-hdd"></i> {{ pc.name }}
     </a></li>
     {% endfor %}
 </ul>

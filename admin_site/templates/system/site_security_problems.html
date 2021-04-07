@@ -32,7 +32,7 @@ active
         <a class="remove float-end" href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/" title="Slet sikkerhedsproblem" ><i class="icon-remove icon-white"></i></a>
         {% endif %}
         {% endifequal %}
-        <a class="list-item" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/"><i class="icon-exclamation-sign"></i>{{ sp.name }}</a>
+        <a class="list-item" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/"><i class="icon-exclamation-sign"></i> {{ sp.name }}</a>
     </li>
     {% endfor %}
 </ul>

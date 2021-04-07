@@ -13,12 +13,12 @@ class="detailpage"
   <ul id="left-menu" class="nav utils utils-global">
     {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
     <li class="nav-item">
-      <a href="/sites/"><i class="icon-arrow-left icon-white"></i> Sites</a>
+      <a href="/sites/" class="nav-link"><i class="icon-arrow-left icon-white"></i> Sites</a>
     </li>
     <hr>
     {% endif %}
     <li class="nav-item">
-      <a href="/site/{{ site.url }}" class="{% block site_active %}{% endblock %}"><i class="icon-eye-open icon-white"></i> Status</a>
+      <a href="/site/{{ site.url }}" class="nav-link {% block site_active %}{% endblock %}"><i class="icon-eye-open icon-white"></i> Status</a>
     </li>
     <hr>
     <li class="nav-header">Sikkerhed</li>
@@ -31,11 +31,11 @@ class="detailpage"
     </li>
     <li class="nav-item">
       <a class="nav-link {% block security_problems_active %}{% endblock %}" href="/site/{{ site.url }}/security_problems/">
-        <i class="icon-exclamation-sign icon-white"></i>Regler</a>
+        <i class="icon-exclamation-sign icon-white"></i> Regler</a>
       </li>
     <li class="nav-item">
       <a class="nav-link {% block security_scripts_active %}{% endblock %}" href="/site/{{ site.url }}/security/scripts/">
-        <i class="icon-list icon-white"></i>Sikkerhedsscripts
+        <i class="icon-list icon-white"></i> Sikkerhedsscripts
       </a>
     </li>
     <li class="nav-header">Maskiner</li>
@@ -55,7 +55,7 @@ class="detailpage"
     </li>
     <li class="nav-item">
       <a class="nav-link {% block image_versions_active %}{% endblock %}" href="/site/{{ site.url }}/image-versions/">
-        <i class="icon-tags icon-white"></i> Versioner
+        <i class="icon-download-alt icon-white"></i> Versioner
       </a>
     </li>
     <hr>
@@ -77,9 +77,11 @@ class="detailpage"
       </a>
     </li>
     <hr>
+
     <li class="nav-header">Dokumentation</li>
     {% block specific_documentation_links %}
     {% endblock %}
+
     <li>
       <a class="nav-link" href="{% url 'doc_root' %}">Læs dokumentation ...</a>
     </li>

@@ -13,8 +13,8 @@ active
 <ul class="sublevelnav">
   {% if site_allowed %}
     {% for maj_v in major_versions %}
-      <li {% ifequal maj_v selected_image_version %}class="active"{% endifequal %}>
-        <a class="list-item" href="/site/{{ site.url }}/image-versions/{{ maj_v }}">
+      <li>
+        <a class="list-item {% ifequal maj_v selected_image_version %}active{% endifequal %}" href="/site/{{ site.url }}/image-versions/{{ maj_v }}">
           <i class="icon-tag"></i> v{{ maj_v }}
         </a>
       </li>
