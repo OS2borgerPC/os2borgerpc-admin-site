@@ -214,6 +214,7 @@ LOCAL_APPS = (
 
 THIRD_PARTY_APPS = (
     'django_xmlrpc',
+    'django_extensions',
 )
 
 DJANGO_APPS = (
