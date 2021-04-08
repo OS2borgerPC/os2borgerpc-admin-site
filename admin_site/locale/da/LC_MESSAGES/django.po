@@ -170,15 +170,15 @@ msgstr "Genstartet"
 
 #: system/models.py:931
 msgid "log output"
-msgstr "Log output"
+msgstr "log output"
 
 #: system/models.py:934
 msgid "started"
-msgstr "Påbegyndt"
+msgstr "påbegyndt"
 
 #: system/models.py:935
 msgid "finished"
-msgstr "Afsluttet"
+msgstr "afsluttet"
 
 #: system/models.py:990
 #, python-brace-format
