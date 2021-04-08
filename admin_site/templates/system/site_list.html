@@ -12,14 +12,14 @@
     <div class="itemlist">
       {% for site in site_list %}
         <div class="btn-group btn-group-lg">
-          <a href="/site/{{site.url}}" class="btn btn-light">
+          <a href="/site/{{site.url}}/status/" class="btn btn-light">
             <i class="icon-home"></i> {{site.name}}
           </a>
           <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu float-end">
-              <li><a href="/site/{{site.url}}/"><i class="icon-home"></i> Gå til</a></li>
+              <li><a href="/site/{{site.url}}/status/"><i class="icon-home"></i> Gå til</a></li>
               <li><a href="/sites/{{ site.url }}/edit/"><i class="icon-edit"></i> Redigér</a></li>
               {% if site.is_delete_allowed %}
               <li><a href="/sites/{{ site.url }}/delete/" title="Slet bibliotek"><i class="icon-remove"></i> Slet</a></li>

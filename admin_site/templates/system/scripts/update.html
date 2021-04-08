@@ -1,14 +1,5 @@
 {% extends "system/scripts/header.html" %}
 
-{% block specific_documentation_links %}
-{% if is_security %}
-  <li><a href="{% url 'doc' 'scripts/securitywarnings' %}"><i class="icon-question-sign icon-white"></i>Hjælp til sikkerhed</a></li>
-{% else %}
-  <li><a href="{% url 'doc' 'scripts' %}"><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>
-  <li><a href="{% url 'doc' 'scripts/running' %}"><i class="icon-question-sign icon-white"></i> Afvikling af scripts</a></li>
-  {% endif %}
-{% endblock %}
-
 {% block specific_content %}
   <div class="sublevelnav">
     <div class="listutils">

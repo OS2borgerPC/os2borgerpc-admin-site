@@ -4,14 +4,6 @@
 {% if is_security %} Sikkerhedsscripts {% else %} Scripts {% endif %}
 {% endblock %}
 
-{% block scripts_active %}
-{% if not is_security %}active{% endif %}
-{% endblock %}
-
-{% block security_scripts_active %}
-{% if is_security %}active{% endif %}
-{% endblock %}
-
 {% comment %} 
 TODO: create.html Used to have #create-script-inputs and 
 update.html #update-script-inputs, instead of the current #script-inputs,

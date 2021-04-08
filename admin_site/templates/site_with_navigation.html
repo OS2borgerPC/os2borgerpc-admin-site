@@ -18,71 +18,109 @@ class="detailpage"
     <hr>
     {% endif %}
     <li class="nav-item">
-      <a href="/site/{{ site.url }}" class="nav-link {% block site_active %}{% endblock %}"><i class="icon-eye-open icon-white"></i> Status</a>
+      {% css_class_current request.path "status" as current_url_status %}
+      <a href="/site/{{ site.url }}/status/" class="nav-link {{ current_url_status }}"><i class="icon-eye-open icon-white"></i> Status</a>
     </li>
     <hr>
     <li class="nav-header">Sikkerhed</li>
     <li class="nav-item">
-      <a class="nav-link {% block security_active %}{% endblock %}" href="/site/{{ site.url }}/security/">
+      {% css_class_current request.path "/security/" as current_url_security %}
+      <a class="nav-link {{ current_url_security  }}" href="/site/{{ site.url }}/security/">
         <i class="icon-fire icon-white"></i>
         Advarsler {% if sec_events > 0 %}
         <span class="float-end badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% block security_problems_active %}{% endblock %}" href="/site/{{ site.url }}/security_problems/">
+      {% css_class_current request.path "security_problems" as current_url_security_problems %}
+      <a class="nav-link {{ current_url_security_problems }}" href="/site/{{ site.url }}/security_problems/">
         <i class="icon-exclamation-sign icon-white"></i> Regler</a>
       </li>
     <li class="nav-item">
-      <a class="nav-link {% block security_scripts_active %}{% endblock %}" href="/site/{{ site.url }}/security/scripts/">
+      {% css_class_current request.path "security/scripts" as current_url_security_scripts %}
+      <a class="nav-link {{ current_url_security_scripts  }}" href="/site/{{ site.url }}/security/scripts/">
         <i class="icon-list icon-white"></i> Sikkerhedsscripts
       </a>
     </li>
     <li class="nav-header">Maskiner</li>
     <li>
-      <a class="nav-link {% block configuration_active %}{% endblock %}" href="/site/{{ site.url }}/configuration/">
+      {% css_class_current request.path "configuration" as current_url_site_configuration %}
+      <a class="nav-link {{ current_url_site_configuration  }}" href="/site/{{ site.url }}/configuration/">
         <i class="icon-cog icon-white"></i> Site-konfiguration
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% block computers_active %}{% endblock %}" href="/site/{{ site.url }}/computers/" onclick="spin();">
+      {% css_class_current request.path "computers" as current_url_computers %}
+      <a class="nav-link {{ current_url_computers  }}" href="/site/{{ site.url }}/computers/" onclick="spin();">
         <i class="icon-hdd icon-white"></i> Computere</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% block groups_active %}{% endblock %}" href="/site/{{ site.url }}/groups/">
+      {% css_class_current request.path "groups" as current_url_groups %}
+      <a class="nav-link {{current_url_groups}}" href="/site/{{ site.url }}/groups/">
         <i class="icon-tags icon-white"></i> Grupper
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% block image_versions_active %}{% endblock %}" href="/site/{{ site.url }}/image-versions/">
+      {% css_class_current request.path "image-versions" as current_url_image_versions %}
+      <a class="nav-link {{ current_url_image_versions }}" href="/site/{{ site.url }}/image-versions/">
         <i class="icon-download-alt icon-white"></i> Versioner
       </a>
     </li>
     <hr>
     <li class="nav-header">Scripting</li>
     <li class="nav-item">
-      <a class="nav-link {% block jobs_active %}{% endblock %}" href="/site/{{ site.url }}/jobs/">
+      {% css_class_current request.path "jobs" as current_url_jobs %}
+      <a class="nav-link {{ current_url_jobs }}" href="/site/{{ site.url }}/jobs/">
         <i class="icon-list-alt icon-white"></i> Jobs
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {% block scripts_active %}{% endblock %}" href="/site/{{ site.url }}/scripts/">
+      {% css_class_current request.path "scripts" as current_url_scripts %}
+      <a class="nav-link {{ current_url_scripts }}" href="/site/{{ site.url }}/scripts/">
         <i class="icon-list icon-white"></i> Scripts
       </a>
     </li>
     <hr>
     <li class="nav-item">
-      <a class="nav-link {% block users_active %}{% endblock %}" href="/site/{{site.url}}/users/">
+      {% css_class_current request.path "users" as current_url_users %}
+      <a class="nav-link {{ current_url_users }}" href="/site/{{site.url}}/users/">
         <i class="icon-user icon-white"></i> Brugere
       </a>
     </li>
     <hr>
 
     <li class="nav-header">Dokumentation</li>
-    {% block specific_documentation_links %}
-    {% endblock %}
 
-    <li>
+    {% if current_url_status %}
+      {% comment %} Status currently has no documentation! {% endcomment %}
+    {% elif current_url_security %}
+      <li class='nav-item'><a href="{% url 'doc' 'scripts/running' %}" class='nav-link'><i class="icon-question-sign icon-white"></i>Hjælp til sikkerhed</a></li>
+    {% elif current_url_security_problems %}
+      <li class='nav-item'><a href="{% url 'doc' 'groups' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Definition af sikkerhedsproblemer</a></li>
+    {% elif current_url_security_scripts %}
+      <li class='nav-item'><a href="{% url 'doc' 'scripts/securitywarnings' %}" class='nav-link'><i class="icon-question-sign icon-white"></i>Hjælp til sikkerhed</a></li>
+      <li class='nav-item'><a href="{% url 'doc' 'scripts' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>
+      <li class='nav-item'><a href="{% url 'doc' 'scripts/running' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Afvikling af scripts</a></li>
+    {% elif current_url_site_configuration %}
+      <li class='nav-item'><a href="{% url 'doc' 'site_configuration' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Site-konfiguration</a></li>
+    {% elif current_url_computers %}
+      <li class='nav-item'><a href="{% url 'doc' 'computers' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Administration af computere</a></li>
+    {% elif current_url_groups %}
+      <li class='nav-item'><a href="{% url 'doc' 'groups' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Administration af grupper</a></li>
+    {% elif current_url_image_versions %}
+      {% comment %} Versions currently has no documentation! {% endcomment %}
+    {% elif current_url_jobs %}
+      <li class='nav-item'><a href="{% url 'doc' 'jobs' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Hjælp til joblisten</a></li>
+      <li class='nav-item'><a href="{% url 'doc' 'scripts' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>
+      <li class='nav-item'><a href="{% url 'doc' 'scripts/running' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Afvikling af scripts</a></li>
+    {% elif current_url_scripts %}
+      <li class='nav-item'><a href="{% url 'doc' 'scripts' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>
+      <li class='nav-item'><a href="{% url 'doc' 'scripts/running' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Afvikling af scripts</a></li>
+    {% elif current_url_users %}
+    <li class='nav-item'><a href="{% url 'doc' 'users' %}" class='nav-link'><i class="icon-question-sign icon-white"></i> Administration af brugere</a></li>
+    {% endif %}
+
+    <li class='nav-item'>
       <a class="nav-link" href="{% url 'doc_root' %}">Læs dokumentation ...</a>
     </li>
   </ul>

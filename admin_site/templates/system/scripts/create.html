@@ -1,12 +1,6 @@
 {% extends "system/scripts/header.html" %}
 <!-- Note: This isn't the modal for creating a script, this is only seen, when you have zero scripts in the list. -->
 
-{% block specific_documentation_links %}
-  <li class='nav-item'><a class='nav-link' href="{% url 'doc' 'scripts' %}"><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>
-  <li class='nav-item'><a class='nav-link' href="{% url 'doc' 'scripts/running' %}"><i class="icon-question-sign icon-white"></i> Afvikling af scripts</a></li>
-{% endblock %}
-
-
 {% block specific_content %}
   <div class="sublevelnav">
     <div class="listutils"><a class="btn btn-secondary"

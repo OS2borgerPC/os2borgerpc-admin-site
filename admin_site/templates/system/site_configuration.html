@@ -4,22 +4,14 @@
 Site-konfiguration
 {% endblock %}
 
-{% block configuration_active %}
-active
-{% endblock %}
-
 {% block javascripts %}
 <script type="text/javascript" src="/static/js/configlist.js"></script>
-{% endblock %}
-
-{% block specific_documentation_links %}
-  <li><a href="{% url 'doc' 'site_configuration' %}"><i class="icon-question-sign icon-white"></i> Site-konfiguration</a></li>
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
 
-    <form action="{% url 'configuration' site.uid%}" method="post"
+    <form action="{% url 'configuration' site.uid %}" method="post"
       name="site_configuration_form" id="site_configuration_form">
 
       {% include 'notification.html' %}

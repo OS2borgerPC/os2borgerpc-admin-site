@@ -18,16 +18,6 @@ Jobs
   </script>
 {% endblock %}
 
-{% block jobs_active %}
-active
-{% endblock %}
-
-{% block specific_documentation_links %}
-  <li><a href="{% url 'doc' 'jobs' %}"><i class="icon-question-sign icon-white"></i> Hjælp til joblisten</a></li>
-  <li><a href="{% url 'doc' 'scripts' %}"><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>
-  <li><a href="{% url 'doc' 'scripts/running' %}"><i class="icon-question-sign icon-white"></i> Afvikling af scripts</a></li>
-{% endblock %}
-
 {% block specific_content %}
   <div class="template-container">
    <table class="table">
