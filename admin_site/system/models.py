@@ -709,6 +709,12 @@ class Script(models.Model):
     is_security_script = models.BooleanField(_('security script'),
                                              default=False, null=False)
 
+    maintained_by_magenta = models.BooleanField(
+        verbose_name=_("maintained by magenta"),
+        default=False,
+        null=False
+    )
+
     @property
     def is_global(self):
         return self.site is None
