@@ -1,3 +1,15 @@
+* Version 4.2.0, April 9, 2021
+
+New in this version:
+
+- "BibOS" renamed to "OS2borgerPC" everywhere.
+- Packages functionality removed from front end.
+- Navigation error when deleting PC fixed.
+- django-extensions added for shell-plus capabilities.
+- Avoid file clashes in Google Cloud Storage.
+- Security fix: Django upgraded to version 3.1.8.
+
+
 * Version 4.1.6, January 28, 2021
 
 New in this version:
