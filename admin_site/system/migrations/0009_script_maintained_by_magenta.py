@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='script',
             name='maintained_by_magenta',
-            field=models.BooleanField(default=False, verbose_name='maintained by magenta'),
+            field=models.BooleanField(default=False, verbose_name='maintained by Magenta'),
         ),
     ]
