@@ -176,6 +176,7 @@ if settings.get('GS_BUCKET_NAME'):
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         settings.get('GS_CREDENTIALS_FILE')
     )
+    GS_FILE_OVERWRITE = False
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = settings['SECRET_KEY']
