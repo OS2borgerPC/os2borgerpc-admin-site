@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 from .models import Site, PCGroup, ConfigurationEntry, PC
 from .models import Script, Input, SecurityProblem
-from account.models import UserProfile
+from account.models import SiteMembership
 
 from django.utils.translation import ugettext as _
 
@@ -84,7 +84,7 @@ class ConfigurationEntryForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     usertype = forms.ChoiceField(
         required=True,
-        choices=UserProfile.type_choices
+        choices=SiteMembership.type_choices
     )
 
     new_password = forms.CharField(
@@ -101,16 +101,17 @@ class UserForm(forms.ModelForm):
         required=False
     )
 
-    initial_type = None
-
     def __init__(self, *args, **kwargs):
         initial = kwargs.setdefault('initial', {})
         if 'instance' in kwargs and kwargs['instance'] is not None:
-            initial['usertype'] = kwargs['instance'].bibos_profile.type
+            user_profile = kwargs['instance'].bibos_profile
+            site = kwargs.pop("site")
+            site_membership = user_profile.sitemembership_set.get(site=site)
+            initial['usertype'] = site_membership.site_user_type
         else:
-            initial['usertype'] = UserProfile.SITE_USER
+            initial['usertype'] = SiteMembership.SITE_USER
         self.initial_type = initial['usertype']
-        forms.ModelForm.__init__(self, *args, **kwargs)
+        super(UserForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = User
@@ -120,25 +121,27 @@ class UserForm(forms.ModelForm):
 
     def set_usertype_single_choice(self, choice_type):
         self.fields['usertype'].choices = [
-            (c, l) for c, l in UserProfile.type_choices if c == choice_type
+            (c, l) for c, l in SiteMembership.type_choices if c == choice_type
         ]
         self.fields['usertype'].widget.attrs['readonly'] = True
 
     # Sets the choices in the usertype widget depending on the usertype
     # of the user currently filling out the form
-    def setup_usertype_choices(self, loginuser_type):
+    def setup_usertype_choices(self, loginuser_type, is_superuser):
         print("Usertype: ", loginuser_type)
-        if loginuser_type == UserProfile.SUPER_ADMIN:
+        if is_superuser:
             # Superadmins can edit everything
-            self.fields['usertype'].choices = UserProfile.type_choices
-        elif loginuser_type == UserProfile.SITE_ADMIN:
+            self.fields['usertype'].choices = SiteMembership.type_choices
+        elif loginuser_type == SiteMembership.SITE_ADMIN:
             # If initial type is super_admin, hardcode to that single choice
-            if self.initial_type == UserProfile.SUPER_ADMIN:
-                self.set_usertype_single_choice(UserProfile.SITE_ADMIN)
+            if self.initial_type == SiteMembership.SUPER_ADMIN:
+                self.set_usertype_single_choice(SiteMembership.SITE_ADMIN)
                 self.fields['usertype'].widget.attrs['readonly']
             else:
                 # Only select between site-admins and site users
-                self.fields['usertype'].choices = UserProfile.NON_ADMIN_CHOICES
+                self.fields['usertype'].choices = (
+                    SiteMembership.NON_ADMIN_CHOICES
+                )
         else:
             # Set to read-only single choice
             self.set_usertype_single_choice(self.initial_type)
