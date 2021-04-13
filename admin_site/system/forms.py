@@ -133,15 +133,10 @@ class UserForm(forms.ModelForm):
             # Superadmins can edit everything
             self.fields['usertype'].choices = SiteMembership.type_choices
         elif loginuser_type == SiteMembership.SITE_ADMIN:
-            # If initial type is super_admin, hardcode to that single choice
-            if self.initial_type == SiteMembership.SUPER_ADMIN:
-                self.set_usertype_single_choice(SiteMembership.SITE_ADMIN)
-                self.fields['usertype'].widget.attrs['readonly']
-            else:
-                # Only select between site-admins and site users
-                self.fields['usertype'].choices = (
-                    SiteMembership.NON_ADMIN_CHOICES
-                )
+            # Only select between site-admins and site users
+            self.fields['usertype'].choices = (
+                SiteMembership.NON_ADMIN_CHOICES
+            )
         else:
             # Set to read-only single choice
             self.set_usertype_single_choice(self.initial_type)
