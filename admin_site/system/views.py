@@ -1109,7 +1109,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
         user_profile = self.object.bibos_profile
 
-        site_membership = user_profile.sites.get(
+        site_membership = user_profile.sitemembership_set.get(
             site=site,
             user_profile=user_profile
         )
