@@ -123,24 +123,19 @@ class UserForm(forms.ModelForm):
         self.fields['usertype'].choices = [
             (c, l) for c, l in SiteMembership.type_choices if c == choice_type
         ]
-        self.fields['usertype'].widget.attrs['readonly'] = True
+        self.fields['usertype'].widget.attrs['disabled'] = True
 
     # Sets the choices in the usertype widget depending on the usertype
     # of the user currently filling out the form
     def setup_usertype_choices(self, loginuser_type, is_superuser):
         print("Usertype: ", loginuser_type)
-        if is_superuser:
-            # Superadmins can edit everything
+        if is_superuser or loginuser_type == SiteMembership.SITE_ADMIN:
+            # superusers and site admins can both
+            # choose site admin or site user.
             self.fields['usertype'].choices = SiteMembership.type_choices
-        elif loginuser_type == SiteMembership.SITE_ADMIN:
-            # Only select between site-admins and site users
-            self.fields['usertype'].choices = (
-                SiteMembership.NON_ADMIN_CHOICES
-            )
         else:
             # Set to read-only single choice
             self.set_usertype_single_choice(self.initial_type)
-            self.fields['usertype'].widget.attrs['readonly']
 
     def clean(self):
         cleaned_data = self.cleaned_data

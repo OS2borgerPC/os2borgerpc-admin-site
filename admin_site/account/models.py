@@ -39,12 +39,6 @@ class SiteMembership(models.Model):
         (SITE_ADMIN, _("Site Admin"))
     )
 
-    # The choices that can be used on the non-admin part of the website
-    NON_ADMIN_CHOICES = (
-        (SITE_USER, _("Site User")),
-        (SITE_ADMIN, _("Site Admin"))
-    )
-
     site_user_type = models.IntegerField(
         choices=type_choices, default=SITE_USER
     )
