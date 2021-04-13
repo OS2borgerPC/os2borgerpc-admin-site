@@ -123,7 +123,7 @@ class UserForm(forms.ModelForm):
         self.fields['usertype'].choices = [
             (c, l) for c, l in SiteMembership.type_choices if c == choice_type
         ]
-        self.fields['usertype'].widget.attrs['disabled'] = True
+        self.fields['usertype'].widget.attrs['readonly'] = True
 
     # Sets the choices in the usertype widget depending on the usertype
     # of the user currently filling out the form
