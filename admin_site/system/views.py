@@ -124,9 +124,7 @@ class SuperAdminOrThisSiteMixin(View):
         check_function = user_passes_test(
             lambda u:
             (u.is_superuser) or
-            (site and u.bibos_profile.sites.filter(
-                site=site
-            ).exists()), login_url='/'
+            (site and site in u.bibos_profile.sites.all()), login_url='/'
         )
         wrapped_super = check_function(
             super(SuperAdminOrThisSiteMixin, self).dispatch
@@ -217,10 +215,23 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
 
 
 # Site overview list to be displayed for super user
-class SiteList(ListView, SuperAdminOnlyMixin):
+class SiteList(ListView):
     """Displays list of sites."""
     model = Site
     context_object_name = 'site_list'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            qs = Site.objects.all()
+        else:
+            qs = user.bibos_profile.sites.all()
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteList, self).get_context_data(**kwargs)
+        context["user"] = self.request.user
+        return context
 
 
 # Base class for Site-based passive (non-form) views
