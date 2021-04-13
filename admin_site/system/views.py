@@ -207,16 +207,19 @@ class SiteMixin(View):
 
 # Main index/site root view
 class AdminIndex(RedirectView, LoginRequiredMixin):
-    """Redirects to admin overview (sites list) or site main page."""
+    """Redirects to sites list."""
     def get_redirect_url(self, **kwargs):
-        """Redirect based on user. This view will use the RequireLogin mixin,
+        """This view will use the RequireLogin mixin,
         so we'll always have a logged-in user."""
         return reverse("sites")
 
 
-# Site overview list to be displayed for super user
 class SiteList(ListView):
-    """Displays list of sites."""
+    """
+    Site overview.
+
+    Provides a list of sites a user has access to.
+    """
     model = Site
     context_object_name = 'site_list'
 
