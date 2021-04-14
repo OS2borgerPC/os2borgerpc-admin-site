@@ -16,6 +16,8 @@ def migrate_from_single_site_to_multiple_sites(apps, schema_editor):
 			user.save()
 
 		else:
+			if not user_profile.site:
+				continue
 			SiteMembership.objects.create(
 				user_profile=user_profile,
 				site=user_profile.site,
