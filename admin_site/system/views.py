@@ -217,7 +217,7 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
         # If user only has one site, redirect to that.
         if profile.sites.count() == 1:
             site = profile.sites.first()
-            return reverse("site", kwargs={"slug":site.url})
+            return reverse("site", kwargs={"slug": site.url})
         # In all other cases we can redirect to list of sites.
         return reverse("sites")
 
