@@ -207,10 +207,18 @@ class SiteMixin(View):
 
 # Main index/site root view
 class AdminIndex(RedirectView, LoginRequiredMixin):
-    """Redirects to sites list."""
+    """Redirects to admin overview (sites list) or site main page."""
     def get_redirect_url(self, **kwargs):
-        """This view will use the RequireLogin mixin,
+        """Redirect based on user. This view will use the RequireLogin mixin,
         so we'll always have a logged-in user."""
+        user = self.request.user
+        profile = user.bibos_profile
+
+        # If user only has one site, redirect to that.
+        if profile.sites.count() == 1:
+            site = profile.sites.first()
+            return reverse("site", kwargs={"slug":site.url})
+        # In all other cases we can redirect to list of sites.
         return reverse("sites")
 
 
