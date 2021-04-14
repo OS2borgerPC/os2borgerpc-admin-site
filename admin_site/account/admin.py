@@ -10,6 +10,7 @@ admin.site.unregister(User)
 
 class UserProfileInline(admin.TabularInline):
     model = UserProfile
+    show_change_link = True
     extra = 1
 
 
