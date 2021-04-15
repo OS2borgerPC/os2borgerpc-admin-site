@@ -1488,7 +1488,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             pk__in=selected_group_ids
         )
 
-        user_set = User.objects.filter(bibos_profile__site=site)
+        user_set = User.objects.filter(bibos_profile__sites=site)
         selected_user_ids = form['alert_users'].value()
         context['available_users'] = user_set.exclude(
             pk__in=selected_user_ids
@@ -1660,8 +1660,8 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
         qs = context["form"].fields["assigned_user"].queryset
         qs = qs.filter(
-                Q(bibos_profile__site=self.get_object().pc.site) |
-                Q(bibos_profile__type=UserProfile.SUPER_ADMIN))
+                Q(bibos_profile__sites=self.get_object().pc.site) |
+                Q(is_superuser=True))
         context["form"].fields["assigned_user"].queryset = qs
 
         # Set fields to read-only
