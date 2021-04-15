@@ -319,9 +319,8 @@ class SiteConfiguration(SiteView):
 
 # Now follows all site-based views, i.e. subclasses
 # of SiteView.
-class JobsView(SiteMixin, ListView):
+class JobsView(SiteMixin):
     template_name = 'system/site_jobs.html'
-    model = Job
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass

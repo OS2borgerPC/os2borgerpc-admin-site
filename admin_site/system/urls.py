@@ -105,7 +105,7 @@ urlpatterns = [
         JobInfo.as_view(),
         name='job_info'
         ),
-    url(r'^site/(?P<site_uid>[^/]+)/jobs/', JobsView.as_view(), name='jobs'),
+    url(r'^site/(?P<slug>[^/]+)/jobs/', JobsView.as_view(), name='jobs'),
 
     # Scripts
     url(r'^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/delete/',
