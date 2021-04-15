@@ -5,7 +5,7 @@ from datetime import datetime
 from functools import cmp_to_key
 from urllib.parse import quote
 
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -21,6 +21,8 @@ from django.views.generic import (
     RedirectView,
     TemplateView
 )
+from django.views.generic.list import BaseListView
+
 from django.db import transaction
 from django.db.models import Q
 from django.conf import settings
@@ -167,24 +169,28 @@ class SelectionMixin(View):
         return context
 
 
-class JSONResponseMixin(object):
-    def render_to_response(self, context):
-        """Returns a JSON response containing 'context' as payload"""
-        return self.get_json_response(self.convert_context_to_json(context))
+class JSONResponseMixin:
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
 
-    def get_json_response(self, content, **httpresponse_kwargs):
-        """Construct an `HttpResponse` object."""
-        return HttpResponse(content,
-                            content_type='application/json',
-                            **httpresponse_kwargs)
-
-    def convert_context_to_json(self, context):
-        """Convert the context dictionary into a JSON object"""
+    def get_data(self, context):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
         # Note: This is *EXTREMELY* naive; in reality, you'll need
         # to do much more complex handling to ensure that arbitrary
         # objects -- such as Django model instances or querysets
         # -- can be serialized as JSON.
-        return json.dumps(context)
+        return context
 
 
 # Mixin class for CRUD views that use site_uid in URL
@@ -313,15 +319,17 @@ class SiteConfiguration(SiteView):
 
 # Now follows all site-based views, i.e. subclasses
 # of SiteView.
-class JobsView(SiteView):
+class JobsView(SiteMixin, ListView):
     template_name = 'system/site_jobs.html'
+    model = Job
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
         context = super(JobsView, self).get_context_data(**kwargs)
-        context['batches'] = self.object.batches.all()[:100]
-        context['pcs'] = self.object.pcs.all()
-        context['groups'] = self.object.groups.all()
+        site = context["site"]
+        context['batches'] = site.batches.all()[:100]
+        context['pcs'] = site.pcs.all()
+        context['groups'] = site.groups.all()
         preselected = set([
             Job.NEW,
             Job.SUBMITTED,
@@ -348,46 +356,26 @@ class JobsView(SiteView):
         return context
 
 
-class JobSearch(JSONResponseMixin, SiteView):
-    http_method_names = ['get', 'post']
+class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
+    paginate_by = 5
+    http_method_names = ['get']
     VALID_ORDER_BY = []
     for i in ['pk', 'batch__script__name', 'started', 'finished', 'status',
               'pc__name', 'batch__name']:
         VALID_ORDER_BY.append(i)
         VALID_ORDER_BY.append('-' + i)
 
-    @staticmethod
-    def get_jobs_display_data(joblist, site=None):
-        if len(joblist) == 0:
-            return []
+    context_object_name = "jobs_list"
 
-        if site is None:
-            site = joblist[0].batch.site
-        return [{
-            'pk': job.pk,
-            'script_name': job.batch.script.name,
-            'started': job.started.strftime("%Y-%m-%d %H:%M:%S") if
-            job.started else None,
-            'finished': job.finished.strftime("%Y-%m-%d %H:%M:%S") if
-            job.finished else None,
-            'status': job.status_translated + '',
-            'label': job.status_label,
-            'pc_name': job.pc.name,
-            'batch_name': job.batch.name,
-            # Yep, it's meant to be double-escaped - it's HTML-escaped
-            # content that will be stored in an HTML attribute
-            'has_info': job.has_info,
-            'restart_url': '/site/%s/jobs/%s/restart/' % (site.uid, job.pk)
-        } for job in joblist]
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
+    def get_queryset(self):
+        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        queryset = Job.objects.all()
+        params = self.request.GET
 
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super(JobSearch, self).get_context_data(**kwargs)
-        params = self.request.GET or self.request.POST
-        query = {'batch__site': context['site']}
+        query = {"batch__site": site}
 
         if 'status' in params:
             query['status__in'] = params.getlist('status')
@@ -404,27 +392,41 @@ class JobSearch(JSONResponseMixin, SiteView):
         orderby = params.get('orderby', '-pk')
         if orderby not in JobSearch.VALID_ORDER_BY:
             orderby = '-pk'
-        limit = int(params.get('do_limit', '0'))
 
-        if limit:
-            context['job_list'] = Job.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )[:limit]
-        else:
-            context['job_list'] = Job.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )
-
-        return context
-
-    def convert_context_to_json(self, context):
-        result = JobSearch.get_jobs_display_data(
-            context['job_list'],
-            site=context['site']
+        queryset = queryset.filter(**query).order_by(
+            orderby,
+            'pk'
         )
-        return json.dumps(result)
+
+        return queryset
+
+    def get_data(self, context):
+        site = context["site"]
+        page_obj = context["page_obj"]
+        paginator = context["paginator"]
+
+        result = {
+            "count": paginator.count,
+            "num_pages": paginator.num_pages,
+            "results": [{
+                'pk': job.pk,
+                'script_name': job.batch.script.name,
+                'started': job.started.strftime("%Y-%m-%d %H:%M:%S") if
+                job.started else None,
+                'finished': job.finished.strftime("%Y-%m-%d %H:%M:%S") if
+                job.finished else None,
+                'status': job.status_translated + '',
+                'label': job.status_label,
+                'pc_name': job.pc.name,
+                'batch_name': job.batch.name,
+                # Yep, it's meant to be double-escaped - it's HTML-escaped
+                # content that will be stored in an HTML attribute
+                'has_info': job.has_info,
+                'restart_url': '/site/%s/jobs/%s/restart/' % (site.uid, job.pk)
+            } for job in page_obj]
+        }
+
+        return result
 
 
 class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
@@ -1601,8 +1603,9 @@ class SecurityEventsView(SiteView):
         return context
 
 
-class SecurityEventSearch(JSONResponseMixin, SiteView):
-    http_method_names = ['get', 'post']
+class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
+    paginate_by = 5
+    http_method_names = ['get']
     VALID_ORDER_BY = []
     for i in [
         'pk', 'problem__name', 'occurred_time', 'assigned_user__username'
@@ -1610,36 +1613,15 @@ class SecurityEventSearch(JSONResponseMixin, SiteView):
         VALID_ORDER_BY.append(i)
         VALID_ORDER_BY.append('-' + i)
 
-    @staticmethod
-    def get_event_display_data(eventlist, site=None):
-        if len(eventlist) == 0:
-            return []
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
 
-        if site is None:
-            site = eventlist[0].batch.site
+    def get_queryset(self):
+        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        queryset = SecurityEvent.objects.all()
+        params = self.request.GET
 
-        return [{
-            'pk': event.pk,
-            'site_uid': site.uid,
-            'problem_name': event.problem.name,
-            'pc_id': event.pc.id,
-            'occurred': event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
-            'status': event.get_status_display(),
-            'status_label': event.STATUS_TO_LABEL[event.status],
-            'level': SecurityProblem.LEVEL_TO_LABEL[event.problem.level] + '',
-            'pc_name': event.pc.name,
-            'assigned_user': (event.assigned_user.username if
-                              event.assigned_user else '')
-        } for event in eventlist]
-
-    def post(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super(SecurityEventSearch, self).get_context_data(**kwargs)
-        params = self.request.GET or self.request.POST
-        query = {'problem__site': context['site']}
+        query = {'problem__site': site}
         if params.get('pc', None):
             query['pc__uid'] = params['pc']
 
@@ -1652,31 +1634,40 @@ class SecurityEventSearch(JSONResponseMixin, SiteView):
         orderby = params.get('orderby', '-pk')
         if orderby not in SecurityEventSearch.VALID_ORDER_BY:
             orderby = '-pk'
-        limit = int(params.get('do_limit', '0'))
 
-        if limit:
-            context[
-                'securityevent_list'
-            ] = SecurityEvent.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )[:limit]
-        else:
-            context[
-                'securityevent_list'
-            ] = SecurityEvent.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )
-        return context
-
-    def convert_context_to_json(self, context):
-        result = SecurityEventSearch.get_event_display_data(
-            context['securityevent_list'],
-            site=context['site']
+        queryset = queryset.filter(**query).order_by(
+            orderby,
+            'pk'
         )
-        # print json.dumps(result)
-        return json.dumps(result)
+
+        return queryset
+
+    def get_data(self, context):
+        site = context["site"]
+        page_obj = context["page_obj"]
+        paginator = context["paginator"]
+
+        result = {
+            "count": paginator.count,
+            "num_pages": paginator.num_pages,
+            "results": [{
+                'pk': event.pk,
+                'site_uid': site.uid,
+                'problem_name': event.problem.name,
+                'pc_id': event.pc.id,
+                'occurred': event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
+                'status': event.get_status_display(),
+                'status_label': event.STATUS_TO_LABEL[event.status],
+                'level': SecurityProblem.LEVEL_TO_LABEL[
+                    event.problem.level
+                ] + '',
+                'pc_name': event.pc.name,
+                'assigned_user': (event.assigned_user.username if
+                                  event.assigned_user else '')
+                } for event in page_obj]
+        }
+
+        return result
 
 
 class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):

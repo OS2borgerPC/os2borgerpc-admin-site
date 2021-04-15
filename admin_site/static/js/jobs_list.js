@@ -91,11 +91,11 @@ $(function(){
             var js = this
             js.searchConditions = $('#jobsearch-filterform').serialize()
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: js.searchUrl,
                 data: js.searchConditions,
                 success: function(data) {
-                    js.replaceEntries(data)
+                    js.replaceEntries(data.results)
                 },
                 dataType: "json"
             })

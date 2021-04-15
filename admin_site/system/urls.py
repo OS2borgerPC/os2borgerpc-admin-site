@@ -22,7 +22,7 @@ urlpatterns = [
     # Security events UI
     url(r'^site/(?P<site_uid>[^/]+)/security/(?P<pk>\d+)/$',
         SecurityEventUpdate.as_view(), name='security_event_update'),
-    url(r'^site/(?P<slug>[^/]+)/security/search/$',
+    url(r'^site/(?P<site_uid>[^/]+)/security/search/$',
         SecurityEventSearch.as_view(),
         name='securityeventsearch'),
     url(r'^site/(?P<slug>[^/]+)/security/pc/(?P<pc_uid>[^/]+)/$',
@@ -94,7 +94,7 @@ urlpatterns = [
         GroupUpdate.as_view(), name='group'),
     url(r'^site/(?P<site_uid>[^/]+)/groups/(?P<group_uid>[^/]+)/delete/$',
         GroupDelete.as_view(), name='group_delete'),
-    url(r'^site/(?P<slug>[^/]+)/jobs/search/',
+    url(r'^site/(?P<site_uid>[^/]+)/jobs/search/',
         JobSearch.as_view(),
         name='jobsearch'),
     url(r'^site/(?P<site_uid>[^/]+)/jobs/(?P<pk>\d+)/restart/',
@@ -105,7 +105,7 @@ urlpatterns = [
         JobInfo.as_view(),
         name='job_info'
         ),
-    url(r'^site/(?P<slug>[^/]+)/jobs/', JobsView.as_view(), name='jobs'),
+    url(r'^site/(?P<site_uid>[^/]+)/jobs/', JobsView.as_view(), name='jobs'),
 
     # Scripts
     url(r'^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/delete/',

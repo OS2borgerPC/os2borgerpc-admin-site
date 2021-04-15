@@ -73,11 +73,11 @@ $(function(){
             js.searchConditions = $('#securityeventsearch-filterform').serialize()
 
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: js.searchUrl,
                 data: js.searchConditions,
                 success: function(data) {
-                    js.replaceEntries(data)
+                    js.replaceEntries(data.results)
                 },
                 error: function(err) {
                     console.log(err)
