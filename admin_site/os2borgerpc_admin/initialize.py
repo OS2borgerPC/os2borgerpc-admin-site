@@ -48,6 +48,7 @@ def initialize_sites():
         )
         call_command("loaddata", "sites.json", app_label="system")
 
+
 def initialize_distributions():
     """Prime the system with some distributions to get started.
 
