@@ -56,9 +56,9 @@ $.each(inputs, function() {BibOS.ScriptEdit.addInput('#update-script-inputs', th
       <a href="#runscriptmodal" role="button" class="btn btn-success" data-toggle="modal">Kør script</a>
       {% endif %}
     {% if selected_script.is_global %}
-    {% ifequal user.bibos_profile.type 0 %}
+    {% if user.is_superuser %}
     <input type="submit" class="btn btn-primary" value="Gem ændringer" />
-    {% endifequal %}
+    {% endif %}
     {% else %}
     <input type="submit" class="btn btn-primary" value="Gem ændringer" />
     {% endif %}
