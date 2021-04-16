@@ -6,10 +6,10 @@ from .views import AdminIndex, PCsView, GroupsView, UsersView, JobsView
 from .views import GroupCreate, GroupUpdate, GroupDelete, JobSearch, UserDelete
 from .views import SiteDetailView, UserCreate, UserUpdate, SiteConfiguration
 from .views import ScriptList, ScriptUpdate, ScriptCreate, ScriptDelete
-from .views import ScriptRun, PCUpdate, JobRestarter, MarkPackageUpgrade
+from .views import ScriptRun, PCUpdate, JobRestarter
 from .views import ConfigurationEntryCreate, ConfigurationEntryUpdate
 from .views import ConfigurationEntryDelete, JobInfo, TechDocView, DocView
-from .views import PackageSearch, PCDelete, JSONSiteSummary
+from .views import PCDelete, JSONSiteSummary
 from .views import ImageVersionsView
 # SecurityProblem and SecurityEvent related views
 from .views import SecurityProblemsView, SecurityProblemCreate
@@ -79,10 +79,6 @@ urlpatterns = [
         ConfigurationEntryDelete.as_view(), name='delete_config_entry'),
     url(r'^site/(?P<slug>[^/]+)/computers/$', PCsView.as_view(),
         name='computers'),
-    url(
-        (r'^site/(?P<site_uid>[^/]+)/' +
-         r'computers/(?P<uid>\w+)/upgrade_packages/$'),
-        MarkPackageUpgrade.as_view(), name='mark_upgrade_packages'),
     url(r'^site/(?P<slug>[^/]+)/computers/json/$',
         JSONSiteSummary.as_view(), name='json_site_summary'),
     url(r'^site/(?P<site_uid>[^/]+)/computers/(?P<pc_uid>[^/]+)/$',
@@ -136,9 +132,6 @@ urlpatterns = [
     url((r'^site/(?P<site_uid>[^/]+)/users/' +
          r'(?P<username>[_\w\@\.\+\-]+)/delete/$'),
         UserDelete.as_view(), name='delete_user'),
-
-    # Packages
-    url(r'^packages/', PackageSearch.as_view(), name='packages'),
 
     # Documentation
     url(r'^documentation/pdf_guide/',
