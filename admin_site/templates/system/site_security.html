@@ -30,8 +30,11 @@ Sikkerhedsadvarsler
           <button class="btn btn-link float-end" type="button" onclick="BibOS.SecurityEventList.reset()">Nulstil filtre</button>
     <hr>
     <form id="securityeventsearch-filterform" name="filterform" action="./" method="post">
-      <input type="hidden" name="orderby" value="-pk">
-
+        <input type="hidden" name="orderby" value="-pk">
+        <input type="hidden" name="page" value="1">
+        <input class="btn btn-primary float-end" type="button" onclick="BibOS.SecurityEventList.reset()" value="Nulstil filtre">
+      <h3 class="nav-header">Filtrér:</h3>
+      <hr>
       <div id="securityeventsearch-level-selectors">
           <h4 class="nav-header">Alvorlighedsgrad</h4>
           {% for l in level_choices %}
@@ -52,27 +55,6 @@ Sikkerhedsadvarsler
         {% endfor %}
       </div>
       <hr>
-      <div id="securityeventsearch-length-limitation">
-          <label>
-            <input type="radio" value="20"  checked="checked" name="do_limit">
-            <span class="label">Første 20</span>
-          </label>
-          <label>
-            <input type="radio" value="50"  name="do_limit">
-            <span class="label">Første 50</span>
-          </label>
-          <label>
-            <input type="radio" value="100"  name="do_limit">
-            <span class="label">Første 100</span>
-          </label>
-          <label>
-            <input type="radio" value="0"  name="do_limit">
-            <span class="label">Alle</span>
-          </label>
-            {% if pc_uid %}
-          <input type="hidden" value="{{ pc_uid }}" name="pc" />
-          {% endif %}
-      </div>
     </form>
   </div>
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
@@ -92,6 +74,11 @@ Sikkerhedsadvarsler
           <td colspan="5">Loading data...</td>
         </tr>
       </tbody>
-    </table> 
+    </table>
+    <nav aria-label="Security event list page">
+      <div id="pagination-count" class="muted"></div>
+      <ul class="pagination">
+      </ul>
+    </nav>
   </div>
 {% endblock %}

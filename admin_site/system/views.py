@@ -407,6 +407,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
         result = {
             "count": paginator.count,
             "num_pages": paginator.num_pages,
+            "page": page_obj.number,
             "results": [{
                 'pk': job.pk,
                 'script_name': job.batch.script.name,
@@ -1649,6 +1650,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         result = {
             "count": paginator.count,
             "num_pages": paginator.num_pages,
+            "page": page_obj.number,
             "results": [{
                 'pk': event.pk,
                 'site_uid': site.uid,

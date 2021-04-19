@@ -12,15 +12,12 @@ $(function(){
             $('#jobsearch-status-selectors input:checkbox').on("change", function() {
                 jobsearch.search()
             })
-            $('#jobsearch-length-limitation input:radio').on("change", function() {
-                jobsearch.search()
-            })
             jobsearch.search()
         },
 
         appendEntries: function(dataList) {
             var container = this.elem
-            $.each(dataList, function() {
+            $.each(dataList.results, function() {
                 var info_button = ''
                 if(this.has_info) {
                     info_button = '<button ' +
@@ -86,7 +83,26 @@ $(function(){
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()
         },
+        setUpPaginationCount: function(data) {
+            $("div#pagination-count").text(data.results.length + " - " + data.count)
+        },
+        setUpPaginationLinks: function(data) {
+            var pagination = $("ul.pagination")
+            pagination.empty()
 
+            var jobsearch = this
+            for (i = 1; i < data.num_pages + 1; i++) {
+                let j = i
+                var item = $('<li class="page-item"><a class="page-link">' + j + '</a></li>')
+                item.find('a').on("click", function() {
+                    var input = $('#jobsearch-filterform input[name=page]')
+                    input.val(j)
+                    jobsearch.search()
+                })
+                item.appendTo(pagination)
+            }
+
+        },
         search: function() {
             var js = this
             js.searchConditions = $('#jobsearch-filterform').serialize()
@@ -95,7 +111,9 @@ $(function(){
                 url: js.searchUrl,
                 data: js.searchConditions,
                 success: function(data) {
-                    js.replaceEntries(data.results)
+                    js.replaceEntries(data)
+                    js.setUpPaginationCount(data)
+                    js.setUpPaginationLinks(data)
                 },
                 dataType: "json"
             })
@@ -107,6 +125,7 @@ $(function(){
             $('#jobsearch-filterform input[name=batch]').val('')
             $('#jobsearch-filterform input[name=pc]').val('')
             $('#jobsearch-filterform input[name=group]').val('')
+            $('#jobsearch-filterform input[name=page]').val('1')
             this.search()
         }
     })

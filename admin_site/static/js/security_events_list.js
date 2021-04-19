@@ -14,15 +14,12 @@ $(function(){
             $('#securityeventsearch-level-selectors input:checkbox').on("change", function() {
                 securityeventsearch.search()
             })
-            $('#securityeventsearch-length-limitation input:radio').on("change", function() {
-                securityeventsearch.search()
-            })
             securityeventsearch.search()
         },
 
         appendEntries: function(dataList) {
             var container = this.elem
-            $.each(dataList, function() {
+            $.each(dataList.results, function() {
                 var item = $(BibOS.expandTemplate(
                     'securityevent-entry',
                     $.extend(this, {})
@@ -67,7 +64,25 @@ $(function(){
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()
         },
+        setUpPaginationCount: function(data) {
+            $("div#pagination-count").text(data.results.length + " - " + data.count)
+        },
+        setUpPaginationLinks: function(data) {
+            var pagination = $("ul.pagination")
+            pagination.empty()
 
+            var eventsearch = this
+            for (i = 1; i < data.num_pages + 1; i++) {
+                let j = i
+                var item = $('<li class="page-item"><a class="page-link">' + j + '</a></li>')
+                item.find('a').on("click", function() {
+                    var input = $('#securityeventsearch-filterform input[name=page]')
+                    input.val(j)
+                    eventsearch.search()
+                })
+                item.appendTo(pagination)
+            }
+        },
         search: function() {
             var js = this
             js.searchConditions = $('#securityeventsearch-filterform').serialize()
@@ -77,7 +92,9 @@ $(function(){
                 url: js.searchUrl,
                 data: js.searchConditions,
                 success: function(data) {
-                    js.replaceEntries(data.results)
+                    js.replaceEntries(data)
+                    js.setUpPaginationCount(data)
+                    js.setUpPaginationLinks(data)
                 },
                 error: function(err) {
                     console.log(err)
@@ -90,6 +107,7 @@ $(function(){
             $('#securityeventsearch-filterform')[0].reset()
             $('#securityeventsearch-filterform li.selected').removeClass('selected')
             $('#jobsearch-filterform input[name=pc]').val('')
+            $('#jobsearch-filterform input[name=page]').val('1')
             this.search()
         }
     })
