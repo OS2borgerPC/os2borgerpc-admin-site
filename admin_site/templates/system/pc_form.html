@@ -11,7 +11,6 @@ Computere
 {% block javascripts %}
 <script type="text/javascript" src="/static/js/pcgrouplist.js"></script>
 <script type="text/javascript" src="/static/js/configlist.js"></script>
-<script type="text/javascript" src="/static/js/package_lists.js"></script>
 {% endblock %}
 
 
@@ -60,11 +59,8 @@ class="active"
   <div class="container-fluid main sublevelmain">
 
     <h2 class="divideheader">Detaljer om <em>{{ selected_pc.name }}</em>
-      {% if selected_pc.is_update_required %}
-        <span class="label label-warning">Opdateringer tilgængelige</span>
-      {% endif %}
       {% if selected_pc.securityevent_set.count > 0 %}
-      <a class="pull-right" href="/site/{{ site.url }}/security/pc/{{ pc.uid }}" title=" Se advarsler for denne PC"><span class="badge badge-important">
+      <a href="/site/{{ site.url }}/security/pc/{{ pc.uid }}" title=" Se advarsler for denne PC"><span class="badge badge-important">
               <icon
                                                                                                                           class="{% if has_security_warnings %}icon-fire{% else %}icon-ok{% endif %} icon-white">
               </icon></span></a>
@@ -94,9 +90,6 @@ class="active"
           <a href="#pc-configs" data-toggle="tab">Konfigurationer</a>
         </li>
         <li>
-          <a href="#pc-packages" data-toggle="tab">Pakker</a>
-        </li>
-        <li>
           <a href="#pc-jobs" data-toggle="tab">Jobhistorik</a>
         </li>
       </ul>
@@ -116,10 +109,6 @@ class="active"
             {{ form.location.errors }}
             {{ form.location }}
 
-            <label for="id_distribution">Distribution:</label>
-            {{ form.distribution.errors }}
-            {{ form.distribution }}
-
             <label class="checkbox" for="id_is_active">
               {{ form.is_active.errors }}
               {{ form.is_active }} Aktiv
@@ -127,18 +116,9 @@ class="active"
 
           </fieldset>
           <fieldset class="span6">
-            {% if waiting_for_package_list %}
-              <p>
-                Det er ikke muligt at redigere grupper for denne
-                computer, da den ikke har uploadet sin pakkeliste endnu.
-                </p><p>
-                Klik på fanebladet "Pakker" for yderligere information.
-              </p>
-            {% else %}
             {{ form.pc_groups.errors }}
             <label>Grupper:</label>
             {% include 'system/pcgrouplist/list.html' with submit_name='pc_groups' %}
-            {% endif %}
           </fieldset>
         </div>
       </div>
@@ -147,73 +127,6 @@ class="active"
         <fieldset>
           {% include 'system/configlist/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
         </fieldset>
-      </div>
-
-      <div id="pc-packages" class="tabcontent">
-        {% if waiting_for_package_list %}
-          <p id="package_wait_explanation">
-            Det vil først være muligt at tilpasse pakker på denne computer
-            når OS2borgerPC administrations-systemet har modtaget en liste over
-            installerede pakker fra computeren. Dette kræver at computeren
-            er tændt, at den er blevet
-            <a href="{%url 'doc' 'computers/activating' %}">aktiveret</a>
-            og at den har adgang til OS2borgerPC-admin, enten via direkte
-            internetforbindelse eller gennem en OS2borgerPC gateway.
-          </p>
-          <p>
-            Der kan gå op til fem minutter fra ovenstående betingelser er
-            opfyldt indtil admin-systemet modtager pakke-listen.
-          </p>
-        {% else %}
-          <div>
-            <strong>Tilpasning af pakker kun på denne maskine</strong>
-            <br />
-            <i><span class="icon-info-sign"></span>OBS: Denne funktion udgår til fordel for tilsvarende scripts</i>
-          </div>
-          {% include 'system/package_lists/list.html' with packages=package_infos pl_id='pc_packages'%}
-          {% if pending_packages_add %}
-          <div><strong>Pakker der venter på at blive installeret på maskinen</strong></div>
-          <ul class="unstyled well actionlist packagelist">
-            {% for name in pending_packages_add %}
-              <li><span class="label">{{ name }}</span></li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-          {% if pending_packages_remove %}
-          <div><strong>Pakker der venter på at blive fjernet fra maskinen</strong></div>
-          <ul class="unstyled well actionlist packagelist">
-            {% for name in pending_packages_remove %}
-              <li><span class="label">{{ name }}</span></li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-          {% if selected_pc.package_list.needs_upgrade_packages %}
-          <div><strong>Pakker der kan opgraderes på maskinen</strong></div>
-          <ul id="needs_upgrade_packages">
-               <input type="checkbox" onClick="toggle_package_selection(this)" />
-               <strong>Markér alle</strong></br>
-
-            {% for package in selected_pc.package_list.needs_upgrade_packages %}
-              <li>
-                <label for="upgrade_package-{{ package.pk }}">
-                  <input type="checkbox" id="upgrade_package-{{ package.pk }}" name="upgrade_package" value="{{ package.name }}" />
-                  {{ package.name }}
-                </label>
-              </li>
-            {% endfor %}
-          </ul>
-          <input type="button" value="Opgrader de valgte pakker"
-                 onclick="BibOS.PackageList.markUpgradePackages('#needs_upgrade_packages', '#upgrade_packages_form')" />
-          {% endif %}
-          {% if selected_pc.package_list.pending_upgrade_packages %}
-          <div><strong>Pakker der venter på at blive opgraderet</strong></div>
-          <ul>
-            {% for package in selected_pc.package_list.pending_upgrade_packages %}
-              <li>{{ package.name }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        {% endif %}
       </div>
 
       <div id="pc-jobs" class="tabcontent">
@@ -252,12 +165,6 @@ class="active"
 
     </form>
 
-    <form name="upgrade_packages_form" id="upgrade_packages_form"
-      action="{% url 'mark_upgrade_packages' site.uid pc.uid %}" method="post"
-      style="display: none;">
-      {% csrf_token %}
-    </form>
-    {% include 'system/package_lists/templates.html' %}
     {% include 'system/configlist/templates.html' %}
   </p>
 {% endblock %}

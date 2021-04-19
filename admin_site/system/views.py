@@ -17,12 +17,11 @@ from django.views.generic import TemplateView
 
 from django.db import transaction
 from django.db.models import Q
-from django.db.models import Count
 from django.conf import settings
 
 from account.models import UserProfile
 
-from .models import Site, PC, PCGroup, ConfigurationEntry, Package
+from .models import Site, PC, PCGroup, ConfigurationEntry
 from .models import Job, Script, Input, SecurityProblem, SecurityEvent
 from .models import MandatoryParameterMissingError, ImageVersion
 # PC Status codes
@@ -231,8 +230,7 @@ class SiteDetailView(SiteView):
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         # Top level list of new PCs etc.
-        context['pcs'] = self.object.pcs.filter(Q(is_active=False) |
-                                                Q(is_update_required=True))
+        context['pcs'] = self.object.pcs.filter(Q(is_active=False))
         context['pcs'] = sorted(context['pcs'], key=lambda s: s.name.lower())
 
         site = context['site']
@@ -848,29 +846,15 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
             select={'lower_name': 'lower(name)'}
         ).order_by('lower_name')
 
-        waiting_for_packages = False
-        pkg_list_count = pc.package_list.packages.count()
-        if (not pc.is_active) or (pkg_list_count == 0):
-            waiting_for_packages = True
+        group_set = site.groups.all()
 
-        context['waiting_for_package_list'] = waiting_for_packages
-        if not waiting_for_packages:
-            group_set = site.groups.all()
-
-            selected_group_ids = form['pc_groups'].value()
-            context['available_groups'] = group_set.exclude(
-                pk__in=selected_group_ids
-            )
-            context['selected_groups'] = group_set.filter(
-                pk__in=selected_group_ids
-            )
-
-            ii = self.object.custom_packages.install_infos
-            context['package_infos'] = ii.order_by('-do_add', 'package__name')
-
-            a, r = pc.pending_package_updates
-            context['pending_packages_add'] = sorted(a)
-            context['pending_packages_remove'] = sorted(r)
+        selected_group_ids = form['pc_groups'].value()
+        context['available_groups'] = group_set.exclude(
+            pk__in=selected_group_ids
+        )
+        context['selected_groups'] = group_set.filter(
+            pk__in=selected_group_ids
+        )
 
         orderby = params.get('orderby', '-pk')
         if orderby not in JobSearch.VALID_ORDER_BY:
@@ -905,10 +889,6 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         groups_pre = set(pc.pc_groups.all())
         try:
             with transaction.atomic():
-                pc.custom_packages.update_by_package_names(
-                    self.request.POST.getlist('pc_packages_add'),
-                    self.request.POST.getlist('pc_packages_remove')
-                )
                 pc.configuration.update_from_request(
                     self.request.POST, 'pc_config'
                 )
@@ -945,7 +925,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         return response
 
 
-class PCDelete(DeleteView, SuperAdminOrThisSiteMixin):
+class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PC
 
     def get_object(self, queryset=None):
@@ -953,26 +933,6 @@ class PCDelete(DeleteView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         return '/site/{0}/computers/'.format(self.kwargs['site_uid'])
-
-
-class MarkPackageUpgrade(SiteMixin, View):
-    def post(self, request, *args, **kwargs):
-        site = get_object_or_404(Site, uid=kwargs['site_uid'])
-        pc = get_object_or_404(PC, uid=kwargs['uid'])
-        num = pc.package_list.flag_for_upgrade(
-            request.POST.getlist('packages', [])
-        )
-        response = HttpResponseRedirect(
-            '/site/%s/computers/%s/#pc-packages' % (
-                site.uid,
-                pc.uid
-            )
-        )
-        set_notification_cookie(
-            response,
-            _('Marked %s packages for upgrade') % num
-        )
-        return response
 
 
 class GroupsView(SelectionMixin, SiteView):
@@ -1258,12 +1218,7 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context['form']
         site = context['site']
 
-        ii = group.custom_packages.install_infos
-        context['package_infos'] = ii.order_by('-do_add', 'package__name')
-
-        pc_queryset = site.pcs.filter(is_active=True).annotate(
-            pkg_count=Count('package_list__statuses')
-        ).filter(pkg_count__gt=0)
+        pc_queryset = site.pcs.filter(is_active=True)
         form.fields['pcs'].queryset = pc_queryset
 
         selected_pc_ids = form['pcs'].value()
@@ -1297,10 +1252,6 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
 
         try:
             with transaction.atomic():
-                self.object.custom_packages.update_by_package_names(
-                    self.request.POST.getlist('group_packages_add'),
-                    self.request.POST.getlist('group_packages_remove')
-                )
                 self.object.configuration.update_from_request(
                     self.request.POST, 'group_configuration'
                 )
@@ -1655,55 +1606,6 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return '/site/{0}/security/'.format(self.kwargs['site_uid'])
 
 
-class PackageSearch(JSONResponseMixin, ListView):
-    raw_result = False
-
-    def get_queryset(self):
-        params = self.request.GET or self.request.POST
-
-        by_name = params.get('get_by_name', None)
-        if by_name:
-            return Package.objects.filter(name=by_name)[:1]
-
-        q = params.get('q', None)
-        conditions = []
-        if q is not None:
-            conditions.append(
-                Q(name__icontains=q) |
-                Q(description__icontains=q)
-            )
-
-        qs = Package.objects.filter(*conditions)
-
-        if params.get('distinct_by_name', None):
-            self.raw_result = True
-            qs = qs.values('name', 'description').annotate()
-            qs = qs.order_by('name', 'description')
-        else:
-            qs = qs.order_by('name', 'version')
-
-        try:
-            limit = int(params.get('limit', 20))
-        except ValueError:
-            limit = 10
-
-        if limit == 'all':
-            return qs
-        else:
-            return qs[:limit]
-
-    def convert_context_to_json(self, context):
-        if(self.raw_result):
-            return json.dumps([i for i in self.object_list])
-        else:
-            return json.dumps([{
-                'pk': p.pk,
-                'name': p.name,
-                'description': p.description,
-                'version': p.version
-            } for p in self.object_list])
-
-
 documentation_menu_items = [
     ('', 'OS2borgerPC Administration'),
     ('status', 'Status'),
@@ -1905,10 +1807,8 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
     """
 
     interesting_properties = [
-        'id', 'name', 'description', 'distribution_id', 'configuration_id',
-        'package_list_id', 'custom_packages_id', 'site_id', 'is_active',
-        'is_update_required', 'do_send_package_info', 'creation_time',
-        'last_seen', 'location']
+        'id', 'name', 'description', 'configuration_id', 'site_id',
+        'is_active', 'creation_time', 'last_seen', 'location']
 
     def get_context_data(self, **kwargs):
         pcs = []
