@@ -6,7 +6,7 @@ from functools import cmp_to_key
 from urllib.parse import quote
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -504,7 +504,8 @@ class ScriptMixin(object):
         # Add the global and local script lists
         self.scripts = Script.objects.filter(
             Q(site=self.site) | Q(site=None),
-            is_security_script=self.is_security
+            is_security_script=self.is_security,
+            deleted=False
         ).exclude(
             site__name='system'
         )
@@ -828,9 +829,34 @@ class ScriptRun(SiteView):
         return context
 
 
-class ScriptDelete(ScriptMixin, DeleteView):
-    pass
+class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
+    template_name = 'system/scripts/confirm_delete.html'
+    model = Script
 
+    def get_object(self, queryset=None):
+        return Script.objects.get(
+            pk=self.kwargs['script_pk'],
+            site__uid=self.kwargs['slug']
+        )
+
+    def get_success_url(self):
+        if self.is_security:
+            return reverse(
+                "security_scripts",
+                kwargs={"slug": self.kwargs["slug"]}
+            )
+        else:
+            return reverse(
+                "scripts",
+                kwargs={"slug": self.kwargs["slug"]}
+            )
+
+    def delete(self, request, *args, **kwargs):
+        script = self.get_object()
+        script.deleted = True
+        script.save()
+
+        return redirect(self.get_success_url())
 
 class PCsView(SelectionMixin, SiteView):
 

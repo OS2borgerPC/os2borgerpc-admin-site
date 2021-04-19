@@ -708,6 +708,7 @@ class Script(models.Model):
                                        upload_to='script_uploads')
     is_security_script = models.BooleanField(_('security script'),
                                              default=False, null=False)
+    deleted = models.BooleanField(_("deleted"), default=False)
 
     maintained_by_magenta = models.BooleanField(
         verbose_name=_("maintained by Magenta"),

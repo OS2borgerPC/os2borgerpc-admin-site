@@ -15,6 +15,7 @@
       <ul class="unstyled nav" >
       {% for script in local_scripts %}
         <li class="nav-item">
+        <a class="float-end btn btn-close" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script"></a>
           <a class="nav-link list-item {% ifequal script selected_script %} show active {% endifequal %}" href="{% url script_url site.uid script.pk %}">
             <i class="icon-list"></i> {{ script.name }}
           </a>
