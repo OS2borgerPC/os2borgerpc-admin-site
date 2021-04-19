@@ -858,6 +858,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
         return redirect(self.get_success_url())
 
+
 class PCsView(SelectionMixin, SiteView):
 
     template_name = 'system/site_pcs.html'
