@@ -32,10 +32,7 @@ Sikkerhedsadvarsler
     <form id="securityeventsearch-filterform" name="filterform" action="./" method="post">
         <input type="hidden" name="orderby" value="-pk">
         <input type="hidden" name="page" value="1">
-        <input class="btn btn-primary float-end" type="button" onclick="BibOS.SecurityEventList.reset()" value="Nulstil filtre">
-      <h3 class="nav-header">Filtrér:</h3>
-      <hr>
-      <div id="securityeventsearch-level-selectors">
+     <div id="securityeventsearch-level-selectors">
           <h4 class="nav-header">Alvorlighedsgrad</h4>
           {% for l in level_choices %}
           <label class="checkbox">
