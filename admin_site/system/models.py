@@ -712,7 +712,7 @@ class Script(models.Model):
     maintained_by_magenta = models.BooleanField(
         verbose_name=_("maintained by Magenta"),
         default=False,
-        null=False
+        null=False,
     )
 
     @property
