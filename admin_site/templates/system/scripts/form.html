@@ -41,6 +41,12 @@
            <input id="id_is_security_script" name="is_security_script"
            value="{{ is_security }}" type="hidden" />
           </div>
+          <div class="span6">
+            <label class="checkbox">
+            {{ form.maintained_by_magenta }}
+              Vedligeholdt af Magenta
+            </label>
+          </div>
           <div class="span12" style="margin-left: 0;">
             <label for="{{ form.description.id_for_label }}">Beskrivelse:</label>
             <div class="scriptDescription">
