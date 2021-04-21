@@ -697,18 +697,18 @@ class PC(models.Model):
 
 class Script(models.Model):
     """A script to be performed on a registered client computer."""
-    name = models.CharField(_('name'), max_length=255)
-    description = models.TextField(_('description'), max_length=4096)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    description = models.TextField(verbose_name=_('description'), max_length=4096)
     site = models.ForeignKey(Site, related_name='scripts',
                              null=True, blank=True, on_delete=models.CASCADE)
     # The executable_code field should contain a single executable (e.g. a Bash
     # script OR a single extractable .zip or .tar.gz file with all necessary
     # data.
-    executable_code = models.FileField(_('executable code'),
+    executable_code = models.FileField(verbose_name=_('executable code'),
                                        upload_to='script_uploads')
-    is_security_script = models.BooleanField(_('security script'),
+    is_security_script = models.BooleanField(verbose_name=_('security script'),
                                              default=False, null=False)
-    deleted = models.BooleanField(_("deleted"), default=False)
+    deleted = models.BooleanField(verbose_name=_("deleted"), default=False)
 
     maintained_by_magenta = models.BooleanField(
         verbose_name=_("maintained by Magenta"),
