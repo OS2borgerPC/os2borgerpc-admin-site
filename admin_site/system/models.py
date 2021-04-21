@@ -13,6 +13,8 @@ import re
 import os.path
 from distutils.version import LooseVersion
 
+from system.mixins import AuditModelMixin
+
 """The following variables define states of objects like jobs or PCs. It is
 used for labeling in the GUI."""
 
@@ -695,7 +697,7 @@ class PC(models.Model):
         ordering = ['name']
 
 
-class Script(models.Model):
+class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
     name = models.CharField(verbose_name=_('name'), max_length=255)
     description = models.TextField(verbose_name=_('description'),

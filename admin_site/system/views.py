@@ -663,6 +663,7 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         if self.validate_script_inputs():
+            form.instance.user_created = self.request.user.username
             self.object = form.save()
             self.script = self.object
             if self.is_security:
@@ -717,6 +718,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         if self.validate_script_inputs():
+            form.instance.user_modified = self.request.user.username
             self.save_script_inputs()
             response = super(ScriptUpdate, self).form_valid(form)
             set_notification_cookie(
