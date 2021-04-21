@@ -408,6 +408,18 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
             "count": paginator.count,
             "num_pages": paginator.num_pages,
             "page": page_obj.number,
+            "has_next": page_obj.has_next(),
+            "next_page_number": (
+                page_obj.next_page_number()
+                if page_obj.has_next()
+                else None
+            ),
+            "has_previous": page_obj.has_previous(),
+            "previous_page_number": (
+                page_obj.previous_page_number()
+                if page_obj.has_previous()
+                else None
+            ),
             "results": [{
                 'pk': job.pk,
                 'script_name': job.batch.script.name,
@@ -1651,6 +1663,18 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
             "count": paginator.count,
             "num_pages": paginator.num_pages,
             "page": page_obj.number,
+            "has_next": page_obj.has_next(),
+            "next_page_number": (
+                page_obj.next_page_number()
+                if page_obj.has_next()
+                else None
+            ),
+            "has_previous": page_obj.has_previous(),
+            "previous_page_number": (
+                page_obj.previous_page_number()
+                if page_obj.has_previous()
+                else None
+            ),
             "results": [{
                 'pk': event.pk,
                 'site_uid': site.uid,

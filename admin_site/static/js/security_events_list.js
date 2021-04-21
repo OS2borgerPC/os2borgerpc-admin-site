@@ -72,16 +72,36 @@ $(function(){
             pagination.empty()
 
             var eventsearch = this
-            for (i = 1; i < data.num_pages + 1; i++) {
-                let j = i
-                var item = $('<li class="page-item"><a class="page-link">' + j + '</a></li>')
-                item.find('a').on("click", function() {
+
+            var previous_item = $('<li class="page-item disabled"><a class="page-link">Forrige</a></li>')
+            if (data.has_previous) {
+                previous_item.removeClass("disabled")
+                previous_item.find('a').on("click", function() {
                     var input = $('#securityeventsearch-filterform input[name=page]')
-                    input.val(j)
-                    eventsearch.search()
+                    input.val(data.previous_page_number)
+                    jobsearch.search()
                 })
-                item.appendTo(pagination)
             }
+            previous_item.appendTo(pagination)
+
+            var current_item = $('<li class="page-item active"><a class="page-link">' + data.page + '</a></li>')
+            current_item.find('a').on("click", function() {
+                var input = $('#securityeventsearch-filterform input[name=page]')
+                input.val(data.page)
+                jobsearch.search()
+            })
+            current_item.appendTo(pagination)
+
+            var next_item = $('<li class="page-item disabled"><a class="page-link">Næste</a></li>')
+            if (data.has_next) {
+                next_item.removeClass("disabled")
+                next_item.find('a').on("click", function() {
+                    var input = $('#securityeventsearch-filterform input[name=page]')
+                    input.val(data.next_page_number)
+                    jobsearch.search()
+                })
+            }
+            next_item.appendTo(pagination)
         },
         search: function() {
             var js = this
