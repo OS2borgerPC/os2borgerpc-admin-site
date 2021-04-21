@@ -86,8 +86,10 @@ class ScriptAdmin(admin.ModelAdmin):
         "is_security_script",
         "site",
         "jobs_per_site",
-        "jobs_per_site_for_the_last_year"
+        "jobs_per_site_for_the_last_year",
+        "deleted",
     )
+    list_filter = ("deleted",)
     search_fields = ("name",)
     inlines = [InputInline]
 

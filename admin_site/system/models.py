@@ -698,7 +698,8 @@ class PC(models.Model):
 class Script(models.Model):
     """A script to be performed on a registered client computer."""
     name = models.CharField(verbose_name=_('name'), max_length=255)
-    description = models.TextField(verbose_name=_('description'), max_length=4096)
+    description = models.TextField(verbose_name=_('description'),
+                                   max_length=4096)
     site = models.ForeignKey(Site, related_name='scripts',
                              null=True, blank=True, on_delete=models.CASCADE)
     # The executable_code field should contain a single executable (e.g. a Bash
