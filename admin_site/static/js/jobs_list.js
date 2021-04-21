@@ -102,13 +102,20 @@ $(function(){
             }
             previous_item.appendTo(pagination)
 
-            var current_item = $('<li class="page-item active"><a class="page-link">' + data.page + '</a></li>')
-            current_item.find('a').on("click", function() {
-                var input = $('#jobsearch-filterform input[name=page]')
-                input.val(data.page)
-                jobsearch.search()
+            data.page_numbers.forEach(function(page) {
+                if (data.page == page) {
+                    item = $('<li class="page-item active"><a class="page-link">' + page + '</a></li>')
+                }
+                else {
+                    item = $('<li class="page-item"><a class="page-link">' + page + '</a></li>')
+                }
+                item.find('a').on("click", function() {
+                    var input = $('#jobsearch-filterform input[name=page]')
+                    input.val(page)
+                    jobsearch.search()
+                })
+                item.appendTo(pagination)
             })
-            current_item.appendTo(pagination)
 
             var next_item = $('<li class="page-item disabled"><a class="page-link">Næste</a></li>')
             if (data.has_next) {

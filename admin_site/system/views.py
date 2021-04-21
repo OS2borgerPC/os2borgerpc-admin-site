@@ -403,11 +403,19 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
         site = context["site"]
         page_obj = context["page_obj"]
         paginator = context["paginator"]
+        adjacent_pages = 2
+        page_numbers = [
+            n for n in range(
+                page_obj.number - adjacent_pages,
+                page_obj.number + adjacent_pages + 1
+            ) if n > 0 and n <= paginator.num_pages
+        ]
 
         result = {
             "count": paginator.count,
             "num_pages": paginator.num_pages,
             "page": page_obj.number,
+            "page_numbers": page_numbers,
             "has_next": page_obj.has_next(),
             "next_page_number": (
                 page_obj.next_page_number()
@@ -1658,11 +1666,19 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         site = context["site"]
         page_obj = context["page_obj"]
         paginator = context["paginator"]
+        adjacent_pages = 2
+        page_numbers = [
+            n for n in range(
+                page_obj.number - adjacent_pages,
+                page_obj.number + adjacent_pages + 1
+            ) if n > 0 and n <= page_obj.page_range
+        ]
 
         result = {
             "count": paginator.count,
             "num_pages": paginator.num_pages,
             "page": page_obj.number,
+            "page_numbers": page_numbers,
             "has_next": page_obj.has_next(),
             "next_page_number": (
                 page_obj.next_page_number()
