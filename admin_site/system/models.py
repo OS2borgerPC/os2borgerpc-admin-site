@@ -716,6 +716,8 @@ class Script(models.Model):
         default=False,
         null=False,
     )
+    author = models.CharField(verbose_name=_("author"), max_length=255,
+                                 null=False, blank=True)
 
     @property
     def is_global(self):
