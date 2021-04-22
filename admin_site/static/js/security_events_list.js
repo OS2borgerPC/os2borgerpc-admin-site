@@ -78,7 +78,7 @@ $(function(){
                 previous_item.find('a').on("click", function() {
                     var input = $('#securityeventsearch-filterform input[name=page]')
                     input.val(data.previous_page_number)
-                    jobsearch.search()
+                    eventsearch.search()
                 })
             }
             previous_item.appendTo(pagination)
@@ -93,7 +93,7 @@ $(function(){
                 item.find('a').on("click", function() {
                     var input = $('#securityeventsearch-filterform input[name=page]')
                     input.val(page)
-                    jobsearch.search()
+                    eventsearch.search()
                 })
                 item.appendTo(pagination)
             })
@@ -104,7 +104,7 @@ $(function(){
                 next_item.find('a').on("click", function() {
                     var input = $('#securityeventsearch-filterform input[name=page]')
                     input.val(data.next_page_number)
-                    jobsearch.search()
+                    eventsearch.search()
                 })
             }
             next_item.appendTo(pagination)

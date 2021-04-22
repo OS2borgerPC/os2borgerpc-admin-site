@@ -356,7 +356,7 @@ class JobsView(SiteView):
 
 
 class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
-    paginate_by = 5
+    paginate_by = 20
     http_method_names = ['get']
     VALID_ORDER_BY = []
     for i in ['pk', 'batch__script__name', 'started', 'finished', 'status',
@@ -1624,7 +1624,7 @@ class SecurityEventsView(SiteView):
 
 
 class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
-    paginate_by = 5
+    paginate_by = 20
     http_method_names = ['get']
     VALID_ORDER_BY = []
     for i in [
@@ -1671,7 +1671,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
             n for n in range(
                 page_obj.number - adjacent_pages,
                 page_obj.number + adjacent_pages + 1
-            ) if n > 0 and n <= page_obj.page_range
+            ) if n > 0 and n <= paginator.num_pages
         ]
 
         result = {
