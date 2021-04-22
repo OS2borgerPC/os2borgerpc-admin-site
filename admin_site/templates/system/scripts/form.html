@@ -36,7 +36,7 @@
                 value="{{ site.id }}"
                 {% if not global_script %}checked="checked"{% endif %}
               >
-              Lokalt script for {{ site.uid }}
+              Lokalt script for {{ site.uid|capfirst }}
             </label>
            <input id="id_is_security_script" name="is_security_script"
            value="{{ is_security }}" type="hidden" />
