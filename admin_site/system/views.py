@@ -1692,6 +1692,7 @@ documentation_menu_items = [
     ('install_usb', 'Installation via USB'),
     ('install_network', 'Installation via netværk'),
     ('pdf_guide', 'Brugervenlig installationsguide (PDF)'),
+    ('creating_security_problems', 'Oprettelse af Sikkerhedsovervågning (PDF)'),
 
     ('', 'OS2borgerPC-gateway'),
     ('gateway_install', 'Installation af OS2borgerPC-gateway'),
