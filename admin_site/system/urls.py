@@ -135,7 +135,9 @@ urlpatterns = [
 
     # Documentation
     url(r'^documentation/pdf_guide/',
-        RedirectView.as_view(url='/static/docs/OS2BorgerPC-20-04-installationsguide.pdf')),
+        RedirectView.as_view(
+            url='/static/docs/OS2BorgerPC-20-04-installationsguide.pdf'
+        )),
     url(r'^documentation/tech/(?P<name>[\d\w\/]+)/', TechDocView.as_view(),
         name='tech_doc'),
     url(r'^documentation/(?P<name>[\d\w\/]+)/', DocView.as_view(), name='doc'),
