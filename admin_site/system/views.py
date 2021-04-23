@@ -1137,6 +1137,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         )
 
         site_membership.site_user_type = form.cleaned_data["usertype"]
+        site_membership.save()
         response = super(UserUpdate, self).form_valid(form)
         set_notification_cookie(
             response,
