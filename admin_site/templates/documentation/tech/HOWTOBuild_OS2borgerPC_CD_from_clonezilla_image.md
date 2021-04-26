@@ -1,54 +1,46 @@
-# HOWTO Build OS2borgerPC CD from a CloneZilla image
-
-
-You need to install these Debian packages:
-
-* squashfs-tools
-* aufs-tools
-* e2fslibs-dev
-* genisomage
-
-This will not work on top of an eCryptFS system (i.e., don't work in your
-encrypted Ubuntu home dir).
+# How to build an OS2borgerPC installation image from an existing
+Clonezilla image
 
 ## Check out the code
 
 ```sh
-git clone https://github.com/magenta-aps/bibos_image.git
-cd bibos_image
+git clone https://github.com/OS2borgerPC/image.git
+cd image
 ```
 
 ## Download a stable Clonezilla live archive
 
-The download link is https://clonezilla.org/downloads/download.php?branch=stable. (These instructions have worked with versions 2.5.6-22 and 2.6.0-37.)
+The download link is
+https://clonezilla.org/downloads/download.php?branch=stable. (These
+instructions have worked with versions 2.5.6-22 and 2.6.0-37.)
 
-# Mount this ISO as a file system
-
-```sh
-cd ..
-sudo ./mount_clonezilla.sh images/clonezilla-live.iso
-```
-
-# Copy overwrite files to the image (the exact path is output by the 
-# mount_clonezilla script)
+## Unzip this archive to a new folder with the name of the image you
+want to create
 
 ```sh
-sudo ../scripts/do_overwrite_clonezilla.sh bibos-clonezilla.asIlGOYXbC/cd-unified
+unzip path/to/clonezilla-live.zip -d OS2borgerPC_2019-02-13_M/
 ```
 
-# Copy a OS2borgerPC hard disk image to the CloneZilla CD
+## Overwrite parts of Clonezilla with OS2borgerPC-specific configuration
+files
 
 ```sh
-sudo cp -r /sti/til/bibos/image/* bibos-clonezilla.asIlGOYXbC/cd-unified/bibos-images/bibos_default/
+./image/scripts/do_overwrite_clonezilla.sh OS2borgerPC_2019-02-13_M/
 ```
 
-# Build a new ISO
+## Copy the OS2borgerPC hard disk image files to the `bibos-images/bibos_default/` directory
+
 ```sh
-sudo ./build_clonezilla_image.sh bibos-clonezilla.asIlGOYXbC/
+cp -r /path/to/image/* OS2borgerPC_2019-02-13_M/bibos-images/bibos_default/
 ```
 
-The generated image is a new OS2borgerPC CD which will install the hard disk image you
-copied. The changes to clonezilla are independent of architecture and should work
-for 64 bit CloneZilla and Ubuntu alike.
+## Create an ISO image from it
 
+```sh
+./image/scripts/make_bootable_iso.sh OS2borgerPC_2019-02-13_M
+```
 
+The resulting ISO image is a working boot disk, supporting both modern
+EFI and traditional `isohybrid`-based boot processes, and can be written
+directly to a USB stick or used as a CD-ROM image to set up a virtual
+machine.

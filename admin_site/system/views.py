@@ -1692,6 +1692,8 @@ documentation_menu_items = [
     ('install_usb', 'Installation via USB'),
     ('install_network', 'Installation via netværk'),
     ('pdf_guide', 'Brugervenlig installationsguide (PDF)'),
+    ('creating_security_problems',
+     'Oprettelse af Sikkerhedsovervågning (PDF)'),
 
     ('', 'OS2borgerPC-gateway'),
     ('gateway_install', 'Installation af OS2borgerPC-gateway'),
@@ -1797,8 +1799,8 @@ class TechDocView(TemplateView):
 
         overview_items = {
             'admin': [
-                ('tech/install_guide', 'Installationsvejledning'),
-                ('tech/developer_guide', 'Udviklerdokumentation'),
+                ('tech/github',
+                 'Installationsvejledning og Teknisk Dokumentation (Github)'),
                 ('tech/release_notes', 'Release notes'),
             ],
             'os2borgerpc': [
@@ -1825,8 +1827,6 @@ class TechDocView(TemplateView):
         url_mapping = {
             'install_guide': os.path.join(settings.SOURCE_DIR,
                                           'doc/HOWTO_INSTALL_SERVER.txt'),
-            'developer_guide': os.path.join(settings.SOURCE_DIR,
-                                            'doc/DEVELOPMENT_HOWTO.txt'),
             'release_notes':
                 os.path.join(
                     settings.SOURCE_DIR,
