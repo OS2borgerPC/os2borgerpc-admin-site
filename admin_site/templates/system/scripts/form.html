@@ -21,13 +21,16 @@
 
       <fieldset>
         <div class="row-fluid">
+          {% if form.instance.created %}
           <div class="span6">
             Oprettet: {{ form.instance.created }} ({{ form.instance.user_created }})
           </div>
+          {% endif %}
+          {% if form.instance.modified %}
            <div class="span6">
             Ændret: {{ form.instance.modified }} ({{ form.instance.user_modified }})
           </div>
-          <br>
+          {% endif %}
           <div class="span6">
             {{ form.name.errors }}
             <label for="{{ form.name.id_for_label }}">Navn:</label>
