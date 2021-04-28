@@ -1,3 +1,13 @@
+/*
+ * Legacy custom styles for OS2BorgerPC
+ *
+ * REFER TO /nodejs/CSS_CUSTOMIZATION.md FOR CSS CUSTOMIZATION GUIDELINES
+ */
+
+
+/* TODO: The contents of this file should be merged to the custom Bootstrap build 
+ or their related templates */
+
 /* Variables / Custom properties */
 
 :root {
