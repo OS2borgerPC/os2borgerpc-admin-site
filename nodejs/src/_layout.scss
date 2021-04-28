@@ -1,0 +1,13 @@
+body {
+    min-width: 60rem;
+    overflow: auto;
+}
+
+.main {
+    padding: 2rem 1.5rem 2rem 2rem;
+
+    & > table {
+        margin: 0;
+        border-radius: .33rem .33rem 0 0;
+    }
+}

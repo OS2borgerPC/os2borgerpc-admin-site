@@ -317,7 +317,14 @@ var BibOS
 
 
 /* Function to show a spinner while we wait for a new page or content to load */
-
 function spin() {
     $('body').append('<div class="overlay"><div class="windows8"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"><div class="wInnerBall"></div></div></div></div>')
+}
+
+/* Utility function to calculate some pagination numbers */
+function calcPaginationRange(pag_data) {
+  const first = ((pag_data.page - 1) * 20 ) + 1
+  const last = ((pag_data.page - 1) * 20 ) + pag_data.results.length
+  const range = first + "-" + last + " af " + pag_data.count
+  return range
 }

@@ -16,6 +16,7 @@
 #static/
 log/
 script-uploads/
+node_modules/
 *.pyc
 *.swp
 .bash_history

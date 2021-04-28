@@ -1,0 +1,38 @@
+table {
+ 
+    th {
+        background-color: $gray-200 !important;
+
+        &:first-child {
+            border-radius: .33rem 0 0 0;
+        }
+
+        &:last-child {
+            border-radius: 0 .33rem 0 0;
+        }
+
+        &.orderby:hover, 
+        &.orderby.active {
+            background-color: $primary !important; 
+            color: $white;
+        }
+
+        /*
+        This implies a lot of work being done with the sorting feature
+        &.orderby::after {
+            display: inline-block;
+            margin-left: .255em;
+            vertical-align: .255em;
+            content: "";
+            border-top: .3em solid;
+            border-right: .3em solid transparent;
+            border-bottom: 0;
+            border-left: .3em solid transparent;
+        }
+        */
+    }
+
+    tbody tr {
+        border-bottom: solid 1px $gray-200;
+    }
+}

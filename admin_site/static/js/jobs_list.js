@@ -84,7 +84,7 @@ $(function(){
             this.search()
         },
         setUpPaginationCount: function(data) {
-            $("div#pagination-count").text(data.results.length + " - " + data.count)
+            $("div#pagination-count").text(calcPaginationRange(data))
         },
         setUpPaginationLinks: function(data) {
             var pagination = $("ul.pagination")
