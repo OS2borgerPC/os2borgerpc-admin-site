@@ -49,11 +49,11 @@ Jobs
       <div id="jobsearch-status-selectors">
         <h3>Status</h3>
         {% for s in status_choices%}
-      <label>
-        <input type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
-        <span class="badge {{ s.label }}">{{ s.name }}</span>
-      </label>
-      {% endfor %}
+          <label>
+            <input type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
+            <span class="badge {{ s.label }}">{{ s.name }}</span>
+          </label>
+        {% endfor %}
   </div>
       <hr>
       <button 

@@ -1,16 +1,13 @@
 /* Variables / Custom properties */
 
 :root {
-  --danger: #ed5854;
-  --warning: #f5914d;
   --gentle-warning: #f0d764;
-  --info: #77c7d9;
 }
 
-.btn-success, .bg-success { background: #5ba66e!important; }
-.btn-info, .bg-info { background: var(--info)!important; }
-.btn-danger, .bg-danger { background: var(--danger)!important; }
-.btn-warning, .bg-warning { background: var(--warning)!important; }
+.btn-success { background: #5ba66e!important; }
+.btn-info, .bg-info { background: var(--bs-info)!important; }
+.btn-danger, .bg-danger { background: var(--bs-danger)!important; }
+.btn-warning, .bg-warning { background: var(--bs-warning)!important; }
 
 
 /* Global */
@@ -52,7 +49,7 @@ div.runscriptdialogheader {display: none;}
 .sublevelnav li:first-child a {border: none;}
 .sublevelnav li a.list-item {text-decoration: none;}
 .sublevelnav li a.list-item:hover {background: var(--bs-primary); color: var(--bs-white)}
-.sublevelnav a.remove:hover, .sublevelnav a.remove:active, .sublevelnav a.remove:focus {background: var(--danger); border: none;}
+.sublevelnav a.remove:hover, .sublevelnav a.remove:active, .sublevelnav a.remove:focus {background: var(--bs-danger); border: none;}
 .sublevelnav {list-style-type: none; padding-left: 0;}
 .sublevelnav .btn-close { font-size: 10px; position: relative; top: 9px;}
 .inertnav {background: var(--bs-gray-dark); border-radius: 5px; padding: 15px 20px;}
@@ -67,7 +64,7 @@ div.runscriptdialogheader {display: none;}
 [data-bs-toggle="collapse"] {margin-bottom: 10px; display: block; text-align: left; height: auto}
 
 #jobsearchnav, #securityeventsearchnav { padding: 15px; }
-#jobsearchnav h3, #jobsearchnav h4, #securityeventsearchnav h3, #securityeventsearchnav h4 { font-size: .8rem; text-transform: uppercase; display: inline; letter-spacing: -.0075rem;}
+#jobsearchnav h3, #jobsearchnav h4, #securityeventsearchnav h3, #securityeventsearchnav h4 { font-size: .8rem; text-transform: uppercase; display: inline; letter-spacing: -.0075rem; font-weight: normal;}
 #jobsearchnav .btn-link, #securityeventsearchnav .btn-link {padding: 0;}
 .sublevelnav span.badge, #securityeventsearch-level-selectors label.checkbox { margin: 8px 0; }
 
@@ -132,11 +129,11 @@ textarea { max-width: 100%; }
 
 input.phantom { display: none; }
 
-form-error { color: var(--danger); }
+form-error { color: var(--bs-danger); }
 
 .form-control { max-width: 500px; }
 
-input.invalid { border: 1px solid var(--danger); }
+input.invalid { border: 1px solid var(--bs-danger); }
 
 /* Lists */
 
@@ -167,7 +164,7 @@ li.selected {background-color: var(--bs-gray);}
 /* Notifications and errors */
 
 .bibos-notification, .errorlist { display: none; background-color: var(--bs-primary); box-shadow: 2px 5px 10px var(--bs-gray-dark); padding: 0.25em 0.5em 0.25em 0.5em; color: var(--bs-white); margin: 0 0 10px; border: solid 1px rgba(0, 0, 0, 0.1)}
-.errorlist {background-color: var(--danger); display: block; list-style: none;}
+.errorlist {background-color: var(--bs-danger); display: block; list-style: none;}
 
 
 /* Documentation */
@@ -189,18 +186,18 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 
 .sec-warn-blink {-webkit-animation: blinking 2s infinite; animation: blinking 2s infinite;}
 @-webkit-keyframes blinking {
-  0% { background-color: var(--danger); }
+  0% { background-color: var(--bs-danger); }
   50% { background-color: transparent; }
-  100% { background-color: var(--danger); }
+  100% { background-color: var(--bs-danger); }
 }
 @keyframes blinking {
-  0% { background-color: var(--danger); }
+  0% { background-color: var(--bs-danger); }
   50% { background-color: transparent; }
-  100% { background-color: var(--danger); }
+  100% { background-color: var(--bs-danger); }
 }
 .badge-gentle-warning {background-color: var(--gentle-warning); color: var(--bs-gray-dark);}
-.seclevel-danger {color: var(--bs-white); background-color: var(--danger);}
-.seclevel-warning {color: var(--bs-gray-dark); background-color: var(--warning);}
+.seclevel-danger {color: var(--bs-white); background-color: var(--bs-danger);}
+.seclevel-warning {color: var(--bs-gray-dark); background-color: var(--bs-warning);}
 .seclevel-gentle-warning {color: var(--bs-gray-dark); background-color: var(--gentle-warning);}
 .severity-label-important,
 .severity-label-warning,
@@ -208,8 +205,8 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
     border-left: solid 10px var(--gentle-warning);
     box-sizing: border-box;
 }
-.severity-label-important { border-color: var(--danger); }
-.severity-label-warning { border-color: var(--warning); }
+.severity-label-important { border-color: var(--bs-danger); }
+.severity-label-warning { border-color: var(--bs-warning); }
 .severity-checkbox { padding-left: 0.5em; border-width: 0.5em; }
 
 /* Popup page */
