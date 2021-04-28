@@ -3,11 +3,60 @@ body {
     overflow: auto;
 }
 
+
+// Header
+
+header {
+    padding: 20px; margin: 0 0 20px;
+
+    &.detailpage {
+        padding: 20px 0; 
+        margin-left: $navigation-width;
+
+        h1 {
+            font-size: 24px; 
+            line-height: 24px; 
+            margin: 0;
+        }
+    }
+
+    h1 em {
+        font-style: normal;
+    }
+}
+
+
+// Containers
+
 .main {
+    position: absolute; 
+    top: 64px; 
+    bottom: 0;
     padding: 2rem 1.5rem 2rem 2rem;
+    left: $navigation-width;
+    right: 0; 
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    width: auto;
+    background-color: $white;
+
+    & > * {
+        margin-top: 1.25rem; 
+        margin-left: .75rem; 
+    }
 
     & > table {
         margin: 0;
         border-radius: .33rem .33rem 0 0;
     }
 }
+
+.sublevelmain {
+    left: $navigation-width * 2;
+}
+
+.template-container {
+    display: none;
+}
+
+

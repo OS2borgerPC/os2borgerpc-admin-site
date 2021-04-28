@@ -1,0 +1,56 @@
+// Global navigation
+#left-menu {
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    left: 0; 
+    width: $navigation-width; 
+    margin: 0; 
+    border-radius: 0; 
+    box-shadow: -5px -5px 20px $gray-900 inset;
+    overflow-x: hidden; 
+    overflow-y: auto;
+    background-color: $gray-800;
+    display: block;
+    padding: 1.25rem .5rem 2rem .5rem;
+
+    h2 {
+        padding: 0 1rem;
+        font-size: .9rem;
+        text-transform: uppercase;
+        font-weight: normal;
+    }
+
+    hr {
+        margin: 1rem;
+    }
+
+    .nav-link {
+        color: $gray-400;
+        font-size: 1rem;
+
+        &.active,
+        &:hover,
+        &:focus {
+            background-color: $primary;
+            color: $white;
+        }
+    }
+
+    .badge { 
+        width: auto; 
+    }
+}
+
+// Sublevel navigation
+.sublevelnav {
+    position: absolute; 
+    top: 64px; 
+    left: $navigation-width;
+    bottom: 0; 
+    width: $navigation-width; 
+    background: $gray-200; 
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    margin: 0;
+}

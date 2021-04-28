@@ -5,7 +5,6 @@
   --warning: #f5914d;
   --gentle-warning: #f0d764;
   --info: #77c7d9;
-  --navigation-width: 250px;
 }
 
 .btn-success, .bg-success { background: #5ba66e!important; }
@@ -26,23 +25,9 @@ hr { background: var(--bs-white); }
 /* TODO! This doesn't work yet! */
 input[class="btn"]:hover { border: #8a53be 2px solid; }
 
-#left-menu .badge { width: auto; }
-
-
-/* Containers*/
-
-.main {position: absolute; top: 64px; bottom: 0; left: var(--navigation-width); right: 0; overflow-x: hidden; overflow-y: auto; width: auto; background: var(--bs-white);}
-.sublevelmain {left: 497px;}
-.main > * {margin-top: 19px; margin-left: 10px; }
-.template-container {display: none;}
-
 
 /* Headers */
 
-header {padding: 20px; margin: 0 0 20px;}
-header.detailpage {padding: 20px 0; margin-left: var(--navigation-width);}
-header.detailpage h1 {font-size: 24px; line-height: 24px; margin: 0;}
-header h1 em {font-style: normal;}
 .nav-header { letter-spacing: 0.05em; font-weight: normal; }
 .divideheader {background: var(--bs-gray-dark); color: var(--bs-gray); padding: 10px; margin-top: 40px; font-size: 21px;}
 .divideheader em {color: var(--bs-white); font-style: normal;}
@@ -56,23 +41,17 @@ div.runscriptdialogheader {display: none;}
 
 /* Navigation */
 
-#left-menu.nav li, .tab-content li { flex-basis: 100%; padding: 4px 0;}
-#left-menu hr {width: 100%;}
+.tab-content li { flex-basis: 100%; padding: 4px 0;}
 [class^="icon-"], [class*=" icon-"] {margin-right: 3px;}
 
-/* If we don't want that flexbox spacing on the menu*/
-#left-menu { display: block; }
-#left-menu .nav-link { padding: 0 1rem; }
-
-.nav.utils>li>a {color: var(--bs-gray-dark); text-shadow: none;}
+.nav.utils>li>a {text-shadow: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: var(--bs-gray-dark); border-radius: 5px;}
 .nav.utils .nav-header {text-shadow: none; color: var(--bs-white); text-transform: uppercase; font-weight: bold;}
-.sublevelnav {position: absolute; top: 64px; left: var(--navigation-width); bottom: 0; width: 250px; background: var(--bs-gray); overflow-x: hidden; overflow-y: auto; margin: 0;}
 /* Delete button on lists */
 .sublevelnav li a {display: block; padding: 10px; text-decoration: none;}
 .sublevelnav li div a {border-top: solid 1px var(--bs-white); }
 .sublevelnav li:first-child a {border: none;}
-.sublevelnav li a.list-item, .sublevelnav button {text-decoration: none;}
+.sublevelnav li a.list-item {text-decoration: none;}
 .sublevelnav li a.list-item:hover {background: var(--bs-primary); color: var(--bs-white)}
 .sublevelnav a.remove:hover, .sublevelnav a.remove:active, .sublevelnav a.remove:focus {background: var(--danger); border: none;}
 .sublevelnav {list-style-type: none; padding-left: 0;}
@@ -89,17 +68,13 @@ div.runscriptdialogheader {display: none;}
 [data-bs-toggle="collapse"] {margin-bottom: 10px; display: block; text-align: left; height: auto}
 
 #jobsearchnav, #securityeventsearchnav { padding: 15px; }
-#jobsearchnav h3, #jobsearchnav h4, #securityeventsearchnav h3, #securityeventsearchnav h4 { font-size: 14px; text-transform: uppercase; display: inline;}
-#jobsearchnav .btn-link, #securityeventsearchnav .btn-link {padding: 0; color: var(--bs-gray-dark);}
+#jobsearchnav h3, #jobsearchnav h4, #securityeventsearchnav h3, #securityeventsearchnav h4 { font-size: .8rem; text-transform: uppercase; display: inline; letter-spacing: -.0075rem;}
+#jobsearchnav .btn-link, #securityeventsearchnav .btn-link {padding: 0;}
 .sublevelnav span.badge, #securityeventsearch-level-selectors label.checkbox { margin: 8px 0; }
 
-.sublevelnav input { vertical-align: middle; }
 .sublevelnav label { display: block; }
 
-.sublevelnav li a.active,
-
-#left-menu.nav a.active {color: var(--bs-primary); font-weight: bold;}
-#left-menu.nav a:hover {background-color: var(--bs-primary); color: var(--bs-white);}
+.sublevelnav li a.active {color: var(--bs-primary); font-weight: bold;}
 
 ul.nav li ul { color: var(--bs-white); list-style: none; padding: 0; margin: 0 0 0 1em; }
 ul.nav li ul a, ul.nav li ul a:hover, ul.nav li ul a:focus { color: var(--bs-white); text-decoration: none; }
@@ -111,13 +86,11 @@ ul.nav li ul li.active { font-style: italic; }
 
 /* Misc */
 
-.utils {box-shadow: none; border-radius: 0 0 10px 10px; padding: 10px 20px; margin: -30px 0 0;}
 .listutils {background: var(--bs-gray-dark);}
 .listutils button, .listutils a {color: var(--bs-white); }
 .profile {font-size: 14px; margin-right: 20px;}
 .profile a.dropdown-toggle {color: var(--bs-white);}
 .dark a.dropdown-toggle {color: var(--bs-dark);}
-.utils-global {position: absolute; top: 0; bottom: 0; left: 0; width: var(--navigation-width); margin: 0; border-radius: 0; box-shadow: -5px -5px 20px var(--bs-dark) inset; overflow-x: hidden; overflow-y: auto;}
 .accordion {margin-top: 20px;}
 .accordion-group {border: none; padding: 0;}
 .accordion-toggle {text-align: left;}

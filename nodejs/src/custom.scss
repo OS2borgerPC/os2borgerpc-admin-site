@@ -8,6 +8,7 @@
 // Then add additional custom code here
 
 @import "layout";
+@import "navigation";
 @import "table";
 @import "pagination";
 
@@ -22,8 +23,4 @@ header {
     h1 em {
         color: $white;
     }
-}
-
-.utils {
-    background-color: $gray-800;
 }

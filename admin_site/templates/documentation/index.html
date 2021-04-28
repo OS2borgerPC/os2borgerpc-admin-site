@@ -13,23 +13,29 @@ class="detailpage"
 {% endblock %}
 
 {% block content %}
-<h3>Dokumentation</h3>
-<ul id="left-menu" class="nav nav-list utils utils-global">
-  <li><a href="/"><i class="icon-arrow-left icon-white"></i> Tilbage til admin</a></li>
+
+<nav id="left-menu" class="nav nav-pills utils-global">
+  <h2 class="text-light">Dokumentation</h2>
+  <a href="/" class="nav-link link-light">
+    <i class="icon-arrow-left icon-white"></i> 
+    Tilbage til admin
+  </a>
   {% for link, name in docmenuitems %}
   {% if link %}
-  <li class="nav-item">
-    <a class="nav-link {% ifequal menu_active link %}active{% endifequal %}" href="{% url 'doc' link %}"><i class="icon-file icon-white"></i> {{ name }}</a>
+  
+    <a class="nav-link link-light {% ifequal menu_active link %}active{% endifequal %}" href="{% url 'doc' link %}">
+      {{ name }}
+    </a>
     {% if menu_active == link and submenu_template %}
       {% include submenu_template %}
     {% endif %}
-  </li>
+  
   {% else %}
-  <li class="divider"></li>
-  <li class="nav-header">{{ name }}</li>
+  <hr>
+  <h2 class="text-light" style="text-transform: inherit;">{{ name }}</h2>
   {% endif %}
   {% endfor %}
-</ul>
+</nav>
 
 <div class="container-fluid main">
   <div class="docscontainer">
