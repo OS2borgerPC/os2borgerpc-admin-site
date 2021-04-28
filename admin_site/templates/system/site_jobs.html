@@ -56,9 +56,18 @@ Jobs
       {% endfor %}
   </div>
       <hr>
-      <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#batches"><i class="icon-chevron-down"></i> Batches</button>
+      <button 
+        class="btn btn-light" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#batches" 
+        aria-expanded="false" 
+        aria-controls="batches">
+        <i class="icon-chevron-down"></i> 
+        Batches
+      </button>
       <div id="batches" class="collapse {% if selected_batch %} in{% endif %}">
-        <ul class="unstyled">
+        <ul class="list-unstyled">
           {% for batch in batches %}
           <li onclick="BibOS.JobList.selectBatch(this, '{{ batch.pk }}')" {% ifequal batch.pk selected_batch %}class="selected"{% endifequal %}>
             <i class="icon-list-alt icon-white"></i> {{ batch.name }}
@@ -66,9 +75,19 @@ Jobs
           {% endfor %}
         </ul>
       </div>
-      <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#computers"><i class="icon-chevron-down"></i> Computere</button>
+
+      <button 
+        class="btn btn-light" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#computers" 
+        aria-expanded="false" 
+        aria-controls="computers">
+        <i class="icon-chevron-down"></i> 
+        Computere
+      </button>
       <div id="computers" class="collapse {% if selected_pc %} in{% endif %}">
-        <ul class="unstyled">
+        <ul class="list-unstyled">
           {% for pc in pcs %}
           <li onclick="BibOS.JobList.selectPC(this, '{{ pc.pk }}')" {% ifequal pc.pk selected_pc %}class="selected"{% endifequal %}>
             <i class="icon-hdd icon-white"></i> {{ pc.name }}
@@ -76,9 +95,19 @@ Jobs
           {% endfor %}
         </ul>
       </div>
-      <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#groups"><i class="icon-chevron-down"></i> Grupper</button>
+
+      <button 
+        class="btn btn-light" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#groups" 
+        aria-expanded="false" 
+        aria-controls="groups">
+        <i class="icon-chevron-down"></i> 
+        Grupper
+      </button>
       <div id="groups" class="collapse {% if selected_group %} in{% endif %}">
-        <ul class="unstyled">
+        <ul class="list-unstyled">
           {% for group in groups %}
           <li onclick="BibOS.JobList.selectGroup(this, '{{ group.pk }}')" {% ifequal group.pk selected_group %}class="selected"{% endifequal %}>
             <i class="icon-tags icon-white"></i> {{ group.name }}
