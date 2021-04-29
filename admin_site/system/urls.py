@@ -142,10 +142,6 @@ urlpatterns = [
         RedirectView.as_view(
             url='/static/docs/OS2BorgerPC-sikkerhedsovervågning.pdf'
         )),
-    url(r'^documentation/tech/github',
-        RedirectView.as_view(
-            url='https://github.com/OS2borgerPC/admin-site'
-        )),
     url(r'^documentation/tech/(?P<name>[\d\w\/]+)/', TechDocView.as_view(),
         name='tech_doc'),
     url(r'^documentation/(?P<name>[\d\w\/]+)/', DocView.as_view(), name='doc'),

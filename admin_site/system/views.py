@@ -1703,8 +1703,10 @@ documentation_menu_items = [
     ('om_os2borgerpc_admin', 'Om OS2borgerPC-Admin'),
 
     ('', 'Teknisk dokumentation'),
-    ('tech/os2borgerpc', 'OS2borgerPC teknisk dokumentation'),
-    ('tech/admin', 'OS2borgerPC Admin teknisk dokumentation'),
+    ('tech/os2borgerpc-image', 'OS2borgerPC Desktop Image'),
+    ('tech/os2borgerpc-admin', 'OS2borgerPC Admin Site'),
+    ('tech/os2borgerpc-server-image', 'OS2borgerPC Server Image'),
+    ('tech/os2borgerpc-client', 'OS2borgerPC Client'),
 
 ]
 
@@ -1793,24 +1795,25 @@ class TechDocView(TemplateView):
         context = super(TechDocView, self).get_context_data(**kwargs)
         context['docmenuitems'] = documentation_menu_items
         overview_urls = {
-            'os2borgerpc': 'OS2borgerPC Desktop',
-            'admin': 'OS2borgerPC Admin'
-            }
+            'os2borgerpc-image': 'OS2borgerPC Desktop Image',
+            'os2borgerpc-admin': 'OS2borgerPC Admin Site',
+            'os2borgerpc-server-image': 'OS2borgerPC Server Image',
+            'os2borgerpc-client': 'OS2borgerPC Client',
+        }
 
         overview_items = {
-            'admin': [
-                ('tech/github',
-                 'Installationsvejledning og Teknisk Dokumentation (Github)'),
-                ('tech/release_notes', 'Release notes'),
+            'os2borgerpc-admin': [
+                ('tech/os2borgerpc-admin-docs', 'OS2borgerPC Admin Site'),
             ],
-            'os2borgerpc': [
-                ('tech/create_bibos_image', 'Lav nyt OS2borgerPC-image'),
-                ('tech/save_harddisk_image',
-                 'Gem harddisk-image med Clonezilla'),
-                ('tech/build_bibos_cd',
-                    'Byg OS2borgerPC-CD fra Clonezilla-image'),
-                ('tech/image_release_notes', 'Release notes'),
-            ]
+            'os2borgerpc-image': [
+                ('tech/os2borgerpc-image-docs', 'OS2borgerPC Image'),
+            ],
+            'os2borgerpc-server-image': [
+                ('tech/os2borgerpc-server-image-docs', "OS2borgerPC Server Image")
+            ],
+            'os2borgerpc-client': [
+                ('tech/os2borgerpc-client-docs', "OS2borgerPC Client")
+            ],
         }
 
         def get_category(name):
@@ -1821,33 +1824,11 @@ class TechDocView(TemplateView):
                     break
             return c
 
-        tech_path = os.path.join(os.path.join(settings.DOCUMENTATION_DIR,
-                                              'documentation/tech'))
-
         url_mapping = {
-            'install_guide': os.path.join(settings.SOURCE_DIR,
-                                          'doc/HOWTO_INSTALL_SERVER.txt'),
-            'release_notes':
-                os.path.join(
-                    settings.SOURCE_DIR,
-                    'NEWS'
-                ),
-            'create_bibos_image': os.path.join(
-                tech_path,
-                'HOWTOCreate_a_new_OS2borgerPC_image_from_scratch.txt'
-                ),
-            'save_harddisk_image':
-                os.path.join(
-                    tech_path,
-                    'HOWTO_save_a_OS2borgerPC_harddisk_image.txt'
-                ),
-            'build_bibos_cd':
-                os.path.join(
-                    tech_path,
-                    'HOWTOBuild_OS2borgerPC_CD_from_clonezilla_image.md'
-                ),
-            'image_release_notes': os.path.join(tech_path,
-                                                'OS2borgerPC_image_NEWS')
+            'os2borgerpc-admin-docs': "https://blank.com",
+            'os2borgerpc-image-docs': "https://os2borgerpc-image.readthedocs.io/en/latest/",
+            'os2borgerpc-server-image-docs': "https://os2borgerpc-server-image.readthedocs.io/en/latest/",
+            'os2borgerpc-client-docs': "https://blank.com",
         }
 
         if name in overview_urls:
@@ -1858,9 +1839,8 @@ class TechDocView(TemplateView):
             # Mark document as active
             context['doc_active'] = 'tech/' + name
             # Now supply file contents
-            filename = url_mapping[name]
-            with open(filename, "r") as f:
-                context['tech_content'] = f.read()
+            url = url_mapping[name]
+            context['tech_content'] = url
         else:
             raise Http404
 
