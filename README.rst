@@ -125,7 +125,7 @@ Create distribution
        upload their package lists to the server, nor will we keep
        complete listings of packages in the distribution.
 
-A default distribution of ``os2borgerpc20.04`` is created on start up.
+A default distribution of "os2borgerpc20.04" is created on start up.
 
 Under other circumstances you would need to create a "distribution" in the Admin system.
 This is done in django-admin.
