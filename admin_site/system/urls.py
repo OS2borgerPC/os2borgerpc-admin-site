@@ -144,19 +144,19 @@ urlpatterns = [
         )),
     url(r'^documentation/tech/os2borgerpc-image',
         RedirectView.as_view(
-            url='https://os2borgerpc-image.readthedocs.io/en/latest/'
+            url='https://os2borgerpc-image.readthedocs.io'
         )),
     url(r'^documentation/tech/os2borgerpc-admin',
         RedirectView.as_view(
-            url='https://github.com/OS2borgerPC/admin-site'
+            url='https://os2borgerpc-admin.readthedocs.io'
         )),
     url(r'^documentation/tech/os2borgerpc-server-image',
         RedirectView.as_view(
-            url='https://os2borgerpc-server-image.readthedocs.io/en/latest/'
+            url='https://os2borgerpc-server-image.readthedocs.io'
         )),
     url(r'^documentation/tech/os2borgerpc-client',
         RedirectView.as_view(
-            url='https://os2borgerpc-client.readthedocs.io/en/latest/'
+            url='https://os2borgerpc-client.readthedocs.io'
         )),
 
     url(r'^documentation/(?P<name>[\d\w\/]+)/', DocView.as_view(), name='doc'),
