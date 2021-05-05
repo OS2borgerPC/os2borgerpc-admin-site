@@ -6,9 +6,17 @@
 ========================
 OS2BorgerPC - Admin Site
 ========================
+
+Introduktion
+============
 This directory contains the OS2borgerPC Admin system, which is a remote
 administration system for Debian-based GNU/Linux-systems, especially
 Ubuntu systems.
+
+The below figure shows a typical example of the user interface of the system:
+
+.. image:: graphics/admin_site_example.png
+   :width: 100%
 
 .. toctree::
    :maxdepth: 2
