@@ -80,7 +80,14 @@ class InputInline(admin.TabularInline):
 
 
 class ScriptAdmin(admin.ModelAdmin):
-    list_display = ("name", "is_global", "is_security_script", "site", "jobs_per_site", "jobs_per_site_for_the_last_year")
+    list_display = (
+        "name",
+        "is_global",
+        "is_security_script",
+        "site",
+        "jobs_per_site",
+        "jobs_per_site_for_the_last_year"
+    )
     search_fields = ("name",)
     inlines = [InputInline]
 
@@ -94,7 +101,8 @@ class ScriptAdmin(admin.ModelAdmin):
             batches__script=obj
         ).annotate(num_jobs=Count("batches__jobs"))
 
-        return format_html_join("\n",
+        return format_html_join(
+            "\n",
             "<p>{} - {}</p>",
             ([(site.name, site.num_jobs) for site in sites])
         )
@@ -110,17 +118,22 @@ class ScriptAdmin(admin.ModelAdmin):
             batches__jobs__started__gte=a_year_ago
         ).annotate(num_jobs=Count("batches__jobs"))
 
-        return format_html_join("\n",
+        return format_html_join(
+            "\n",
             "<p>{} - {}</p>",
             ([(site.name, site.num_jobs) for site in sites])
         )
 
-    jobs_per_site_for_the_last_year.short_description = _("Jobs per Site for the last year")
+    jobs_per_site_for_the_last_year.short_description = _(
+        "Jobs per Site for the last year"
+    )
+
 
 class PCInlineForSiteAdmin(admin.TabularInline):
     model = PC
     fields = ("name",)
     extra = 0
+
 
 class SiteAdmin(admin.ModelAdmin):
     list_display = ("name", "number_of_computers")
@@ -131,15 +144,19 @@ class SiteAdmin(admin.ModelAdmin):
         return obj.pcs.count()
     number_of_computers.short_description = _('Number of computers')
 
+
 class PCAdmin(admin.ModelAdmin):
     list_display = ("name", "uid", "site_link", "is_active", "last_seen")
 
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
-        return mark_safe(f'<a href="{link}">{escape(obj.site.__str__())}</a>')
-    
+        return mark_safe(
+            f'<a href="{link}">{escape(obj.site.__str__())}</a>'
+        )
+
     site_link.short_description = _('Site')
     site_link.admin_order_field = 'site'
+
 
 class JobAdmin(admin.ModelAdmin):
     list_display = ("status", "user", "pc")
