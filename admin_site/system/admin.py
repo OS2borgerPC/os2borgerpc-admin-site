@@ -131,8 +131,15 @@ class ScriptAdmin(admin.ModelAdmin):
 
 class PCInlineForSiteAdmin(admin.TabularInline):
     model = PC
-    fields = ("name",)
+    fields = ("name", "uid")
+    readonly_fields = ("name", "uid")
     extra = 0
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
 
 
 class SiteAdmin(admin.ModelAdmin):
@@ -159,7 +166,7 @@ class PCAdmin(admin.ModelAdmin):
 
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ("status", "user", "pc")
+    list_display = ("__str__", "status", "user", "pc")
 
 
 ar(Configuration, ConfigurationAdmin)
