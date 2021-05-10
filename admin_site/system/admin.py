@@ -6,13 +6,31 @@ from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 
-from .models import Configuration, ConfigurationEntry, PackageList, Package
-from .models import Site, Distribution, PCGroup, PC, CustomPackages
-from .models import PackageInstallInfo, PackageStatus, ImageVersion
-from .models import SecurityEvent, SecurityProblem
-# Job-related stuff
-from .models import Script, Batch, Job, Input, BatchParameter
-from .models import AssociatedScript, AssociatedScriptParameter
+from system.models import (
+    Configuration,
+    ConfigurationEntry,
+    PackageList,
+    Package,
+    Site,
+    Distribution,
+    PCGroup,
+    PC,
+    CustomPackages,
+    PackageInstallInfo,
+    PackageStatus,
+    ImageVersion,
+    SecurityEvent,
+    SecurityProblem,
+    Script,
+    Batch,
+    Job,
+    Input,
+    BatchParameter,
+    AssociatedScript,
+    AssociatedScriptParameter,
+    ScriptTag,
+)
+
 ar = admin.site.register
 
 
@@ -172,6 +190,10 @@ class JobAdmin(admin.ModelAdmin):
     list_display = ("__str__", "status", "user", "pc")
 
 
+class ScriptTagAdmin(admin.ModelAdmin):
+    pass
+
+
 ar(Configuration, ConfigurationAdmin)
 ar(PackageList)
 ar(CustomPackages, CustomPackagesAdmin)
@@ -183,6 +205,7 @@ ar(Package)
 ar(ImageVersion)
 # Job related stuff
 ar(Script, ScriptAdmin)
+ar(ScriptTag, ScriptTagAdmin)
 ar(Batch, BatchAdmin)
 ar(Job, JobAdmin)
 ar(BatchParameter)

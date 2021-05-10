@@ -697,6 +697,17 @@ class PC(models.Model):
         ordering = ['name']
 
 
+class ScriptTag(models.Model):
+    """A tag model for scripts."""
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
 class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
     name = models.CharField(verbose_name=_('name'), max_length=255)
@@ -722,6 +733,8 @@ class Script(AuditModelMixin):
                               null=False, blank=False, default="")
     author_email = models.EmailField(verbose_name=_("author email"),
                                      null=False, blank=False, default="")
+    tags = models.ManyToManyField(ScriptTag,
+                                  related_name='scripts', blank=True)
 
     @property
     def is_global(self):
