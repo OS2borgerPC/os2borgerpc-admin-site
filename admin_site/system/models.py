@@ -135,6 +135,10 @@ class Package(models.Model):
 class CustomPackages(models.Model):
     """A list of packages to be installed on a PC or to be included in a
     distribution."""
+
+    class Meta:
+        verbose_name_plural = "Custom packages"
+
     name = models.CharField(_('name'), max_length=255)
     packages = models.ManyToManyField(Package,
                                       through='PackageInstallInfo',
@@ -808,6 +812,9 @@ class Script(models.Model):
 
 class Batch(models.Model):
     """A batch of jobs to be performed on a number of computers."""
+
+    class Meta:
+        verbose_name_plural = "Batches"
 
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc.
