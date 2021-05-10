@@ -5,10 +5,11 @@
   "main": "src/custom.scss",
   "type": "module",
   "scripts": {
-    "build": "npm run build-sass && npm run postcss && npm run clean",
+    "build": "npm run build-sass && npm run postcss && npm run clean && npm run copy-bootstrap-js",
     "build-sass": "node_modules/.bin/node-sass --include-path node_modules --output-style compressed --source-map true --source-map-contents true --precision 6 src -o dist/css/",
     "postcss": "node src/postcss.js",
     "clean": "rm dist/css/custom.* && cp dist/css/bootstrap.* ../admin_site/static/css",
+    "copy-bootstrap-js": "cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* ../admin_site/static/js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Magenta ApS",
