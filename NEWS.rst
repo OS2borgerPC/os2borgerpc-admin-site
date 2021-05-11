@@ -1,3 +1,14 @@
+Version 4.3.0, May 11, 2021
+---------------------------
+
+New in this version:
+
+- Fixed bug so that user type can now be changed in GUI.
+- Fix failing documentation links.
+- Update technical documentation and move it to Read The Docs.
+- Improved site information in admin site.
+
+
 Version 4.2.0, April 9, 2021
 ----------------------------
 
