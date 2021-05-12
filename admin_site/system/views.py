@@ -687,7 +687,7 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
             return '/site/%s/scripts/%s/' % (self.site.uid, self.script.pk)
 
 
-class ScriptUpdate(ScriptMixin, UpdateView, LoginRequiredMixin):
+class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = 'system/scripts/update.html'
     form_class = ScriptForm
 
