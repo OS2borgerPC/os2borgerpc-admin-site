@@ -135,6 +135,10 @@ class Package(models.Model):
 class CustomPackages(models.Model):
     """A list of packages to be installed on a PC or to be included in a
     distribution."""
+
+    class Meta:
+        verbose_name_plural = "Custom packages"
+
     name = models.CharField(_('name'), max_length=255)
     packages = models.ManyToManyField(Package,
                                       through='PackageInstallInfo',
@@ -315,15 +319,13 @@ class Site(models.Model):
 
     @property
     def users(self):
-        profiles = [
-            u.bibos_profile for u in User.objects.exclude(
-                bibos_profile__isnull=True
-            ).extra(
-                select={'lower_name': 'lower(username)'}
-            ).order_by('lower_name')
-            if u.bibos_profile.site == self and u.bibos_profile.type != 0
-        ]
-        return [p.user for p in profiles]
+        users = User.objects.filter(
+            bibos_profile__sites=self
+        ).extra(
+            select={'lower_name': 'lower(username)'}
+        ).order_by('lower_name')
+
+        return users
 
     @property
     def url(self):
@@ -810,6 +812,9 @@ class Script(models.Model):
 
 class Batch(models.Model):
     """A batch of jobs to be performed on a number of computers."""
+
+    class Meta:
+        verbose_name_plural = "Batches"
 
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc.

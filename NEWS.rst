@@ -1,4 +1,18 @@
-* Version 4.2.0, April 9, 2021
+Version 4.3.0, May 11, 2021
+---------------------------
+
+New in this version:
+
+- Allow users to be on multiple sites so they don't need to have more
+  than one login.
+- Fixed bug so that user type can now be changed in GUI.
+- Fix failing documentation links.
+- Update technical documentation and move it to Read The Docs.
+- Improved site information in admin site.
+
+
+Version 4.2.0, April 9, 2021
+----------------------------
 
 New in this version:
 
@@ -10,7 +24,8 @@ New in this version:
 - Security fix: Django upgraded to version 3.1.8.
 
 
-* Version 4.1.6, January 28, 2021
+Version 4.1.6, January 28, 2021
+-------------------------------
 
 New in this version:
 
@@ -19,7 +34,8 @@ New in this version:
 - A number of crashes (HTTP 500) on missing resources fixed (return 404 instead).
 
 
-* Version 4.1.5, January 27, 2021
+Version 4.1.5, January 27, 2021
+-------------------------------
 
 New in this version:
 
@@ -27,14 +43,16 @@ New in this version:
   signed-urls.
 
 
-* Version 4.1.4, January 25, 2021
+Version 4.1.4, January 25, 2021
+-------------------------------
 
 New in this version:
 
 - Collectstatic is run at build time, not at startup.
 
 
-* Version 4.1.3, January 21, 2021
+Version 4.1.3, January 21, 2021
+-------------------------------
 
 New in this version:
 
@@ -43,7 +61,8 @@ New in this version:
 - Standardize handling of static media (CSS, Javascript, etc.).
 
 
-* Version 4.1.2, January 19, 2021
+Version 4.1.2, January 19, 2021
+-------------------------------
 
 New in this version:
 
@@ -54,14 +73,16 @@ New in this version:
 - Set 2s timeout for database connections.
 
 
-* Version 4.1.1, January 12, 2021
+Version 4.1.1, January 12, 2021
+-------------------------------
 
 New in this version:
 
 - Fixed bug in CI script.
 
 
-* Version 4.1.0, January 12, 2021
+Version 4.1.0, January 12, 2021
+-------------------------------
 
 New in this version:
 
@@ -72,7 +93,8 @@ New in this version:
 - Deprecated installation methods removed.
 
 
-* Version 4.0.0, December 10, 2020
+Version 4.0.0, December 10, 2020
+--------------------------------
 
 New in this version:
 
@@ -81,7 +103,9 @@ New in this version:
 - Client: Replaced the lock file logic to better support failure
   recovery.
 
-* Version 3.1.3, October 18, 2019
+
+Version 3.1.3, October 18, 2019
+-------------------------------
 
 Bugfix release. Fixed in this version:
 
@@ -90,13 +114,17 @@ Bugfix release. Fixed in this version:
 - #30520: All documentation pages are accessible again.
 - #31066: Forward slashes in group names are now supported. 
 
-* Version 3.1.2.1, June 27, 2019
+
+Version 3.1.2.1, June 27, 2019
+------------------------------
 
 Infrastructural release. Fixed in this version:
 
 - #27325: Deploying new versions should no longer result in migration conflicts
 
-* Version 3.1.1, March 25, 2019
+
+Version 3.1.1, March 25, 2019
+-----------------------------
 
 Minor bugfix release. Fixed in this version:
 
@@ -104,7 +132,9 @@ Minor bugfix release. Fixed in this version:
 - #27408: The script list used when constructing a group policy is now in alphabetical order
 - #27432: Policy script file parameter validation no longer demands that files be re-uploaded
 
-* Version 3.1.0, February 25, 2019
+
+Version 3.1.0, February 25, 2019
+--------------------------------
 
 - Support for associating scripts with groups (policies)
 - Logging out of the admin system now works more reliably
@@ -115,23 +145,31 @@ Minor bugfix release. Fixed in this version:
 - Bumped the bibos_utils version to 0.0.3.1:
   - A bug that could occasionally clear client configuration files has been fixed
 
-* Version 3.0.1, January 16, 2019
+
+Version 3.0.1, January 16, 2019
+-------------------------------
 
 - json data exposing existing computers on a given site can now be reached from %domain%/%site_id%/computers/json/ 
 
-* Version 3.0.0.3, Juli 02, 2018
+
+Version 3.0.0.3, Juli 02, 2018
+------------------------------
 
 Hotfix. New in this version:
 
  - Empty strings should only be used when checking input-fields
 
-* Version 3.0.0.2, Juni 28, 2018
+
+Version 3.0.0.2, Juni 28, 2018
+------------------------------
 
 Hotfix. New in this version:
 
  - Make the input-fields work again in script parameters
 
-* Version 3.0.0.1, Juni 13, 2018
+
+Version 3.0.0.1, Juni 13, 2018
+------------------------------
 
 Hotfix. New in this version:
 
@@ -139,7 +177,9 @@ Hotfix. New in this version:
  - Correct the var path
  - Make bibos_client upgrade and remove netifaces requirement
 
-* Version 3.0.0, Juni 5, 2018
+
+Version 3.0.0, Juni 5, 2018
+---------------------------
 
 - Python 3 and Django 1.11 compatible code (admin-site)
 - “Removal” of the upgrade management
@@ -148,17 +188,22 @@ Hotfix. New in this version:
 - settings.py uses an environment-file to differentiate dev/prod
 - Post install script added for development
 
-* Version 2.3.3.1, February 23, 2017
+Version 2.3.3.1, February 23, 2017
+----------------------------------
 
 Hotfix. New in this version:
 
 - Bumped bibos_client number to 0.3.2
 
-* Version 2.3.3, February 23, 2017
+
+Version 2.3.3, February 23, 2017
+--------------------------------
 
 - Ubuntu 16.04 is added as a closed distribution.
 
-* Version 2.3.2, October 24, 2016
+
+Version 2.3.2, October 24, 2016
+-------------------------------
 
 - If no network connection, lock for jobmanager is released.
 - Documentation has been added, describing that the system is not 
@@ -167,7 +212,9 @@ Hotfix. New in this version:
 - Lokationsfeldt er blevet tilføjet til computerne, og dato format 
   ændret til dansk.
 
-* Version 2.3.1, September 22, 2016
+
+Version 2.3.1, September 22, 2016
+---------------------------------
 
 - Backwards compatibility: If security dir is missing, security is ignored.
 - Migrations committed, WSGI script is fixed.
@@ -177,7 +224,8 @@ Hotfix. New in this version:
 - The version number for the bibos_client is bumped to 0.0.3.1.
 
 
-* Version 2.3.0, June 30, 2016
+Version 2.3.0, June 30, 2016
+----------------------------
 
 - Security warnings are added - a whole new subsystem which can generate
   warnings about suspicious activity on the client computers. It is
@@ -191,27 +239,34 @@ Hotfix. New in this version:
 - The version number for the bibos_client is bumped to 0.0.3.0. It now 
   supports the security warning subsystem.
 
-* Version 2.2.5.1,  April 6, 2016
+
+Version 2.2.5.1,  April 6, 2016
+-------------------------------
 
 Hotfix. New in this version:
 
 - Add LoginRequired mixin to the PC Update view.
 
 
-* Version 2.2.5.1,  March 21, 2016
+Version 2.2.5.1,  March 21, 2016
+--------------------------------
 
 Hotfix. New in this version:
 
 - The version number for the bibos_client is bumped to 0.0.2.6.
 
-* Version 2.2.5,  March 21, 2016
+
+Version 2.2.5,  March 21, 2016
+------------------------------
 
 New in this version:
 
 - Upon registration to the admin system, the bibos client tries to auto
   detect the operating system so the correct distribution will be chosen.
 
-* Version 2.2.4,  June 13, 2014
+
+Version 2.2.4,  June 13, 2014
+-----------------------------
 
 Rollback of model changes in hotfix 2.2.3.2, retain failed upgrade management.
 
@@ -225,7 +280,8 @@ This version should be considered stable. At the time of writing, we're not
 aware of any serious issues.
 
 
-* Version 2.2.3.1,  June 3, 2014
+Version 2.2.3.1,  June 3, 2014
+------------------------------
 
 Hotfix. New in this version:
 
@@ -235,7 +291,8 @@ Hotfix. New in this version:
   recalculation of these lists against all installed packages.
 
 
-* Version 2.2.3,  May 28, 2014
+Version 2.2.3,  May 28, 2014
+----------------------------
 
 New in this version:
 
@@ -244,7 +301,8 @@ New in this version:
   up next time the job manager runs.
 
 
-* Version 2.2.2, February 4, 2014
+Version 2.2.2, February 4, 2014
+-------------------------------
 
 New in this version:
 
@@ -252,8 +310,8 @@ New in this version:
   performance issue to regress (ticket #9611).
 
 
-* Version 2.2.1, February 3, 2014
-
+Version 2.2.1, February 3, 2014
+-------------------------------
 New in this version:
 
 - Package lists are only synchronized between client and server if number of
@@ -263,8 +321,8 @@ New in this version:
 - Developer documentation updated and improved.
 
 
-* Version 2.2.0, December 27, 2013
-
+Version 2.2.0, December 27, 2013
+--------------------------------
 New in this version:
 
 - Stale locks are avoided by introducing Unix-style file locking instead.
@@ -281,7 +339,8 @@ This is the first "final release" following the critical bug fixes in the 2.1.*
 series, and this version concludes the first phase of the BibOS Admin project.
 
 
-* Version 2.1.2, December 23, 2013
+Version 2.1.2, December 23, 2013
+--------------------------------
 
 New in this version:
 
@@ -292,7 +351,8 @@ New in this version:
   computers (ticket #9342).
 
 
-* Version 2.1.1.3, December 17, 2013 (hotfix)
+Version 2.1.1.3, December 17, 2013 (hotfix)
+-------------------------------------------
 
 New in this version:
 
@@ -302,7 +362,8 @@ New in this version:
   even if we ask the client to upgrade its package info - also cf. #9634.
 
 
-* Version 2.1.1.1, December 4, 2013
+Version 2.1.1.1, December 4, 2013
+---------------------------------
 
 New in this version:
 
@@ -329,7 +390,8 @@ New in this version:
   any group. This is a task for a future version of the system.
 
 
-* Version 2.1.1, November 25, 2013
+Version 2.1.1, November 25, 2013
+--------------------------------
 
 New in this version: 
 
@@ -340,7 +402,8 @@ New in this version:
 - Update synchronization improved (not fixed).
 
 
-* Version 2.1.0, October 11, 2013
+Version 2.1.0, October 11, 2013
+-------------------------------
 
 New in this version:
 
@@ -372,7 +435,8 @@ Executive summary:
 - Status moves from "beta" to "production".
 
 
-* Version 2.0.2, July 12, 2013
+Version 2.0.2, July 12, 2013
+----------------------------
 
 New in this version:
 

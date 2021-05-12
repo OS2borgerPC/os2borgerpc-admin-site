@@ -1,3 +1,6 @@
+Introduction
+------------
+
 This directory contains the OS2borgerPC Admin system, which is a remote
 administration system for Debian-based GNU/Linux-systems, especially
 Ubuntu systems.
@@ -18,8 +21,8 @@ All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
 
 
-TECHNICAL DETAILS
-=================
+Technical Details
+-----------------
 
 The admin site itself is a Django application located in the
 ``admin_site`` folder. It is served using the Gunicorn WSGI server.
@@ -40,8 +43,8 @@ existing database and mail server and run the Docker image by it self,
 exposing it to the world with a reverse proxy like nginx or Traefik.
 
 
-HOW TO SETUP A DEVELOPMENT SERVER
-=================================
+How to set up a development server
+----------------------------------
 
 This guide describes how to get the admin site up and running for
 development purposes. The development site is set up with Docker.
@@ -55,8 +58,8 @@ You should normally be able to  install the development server in  10
 minutes or less. An Internet connection is required.
 
 
-PRE-REQUISITES
-++++++++++++++
+Prerequisites
+^^^^^^^^^^^^^
 
 Recent versions of Docker and docker-compose.
 
@@ -67,72 +70,78 @@ and follow the instructions for your platform:
     https://docs.docker.com/compose/install/
 
 
-GRAB THE CODE
-+++++++++++++
+Grab the code
+^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+    git clone https://github.com/OS2borgerPC/admin-site.git
 
 
-    $ git clone https://github.com/OS2borgerPC/admin-site.git
+Get the right branch
+^^^^^^^^^^^^^^^^^^^^
 
+.. code-block:: bash
 
-GET THE RIGHT BRANCH
-++++++++++++++++++++
+    cd </path/to>/admin-site
 
-
-    $ cd </path/to>/admin-site
-
-    $ git checkout <desired branch>
+    git checkout <desired branch>
 
 This only applies if you're not working directly on the master branch
 (which you probably shouldn't). For <desired branch> substitute the branch
 you want to work on.
 
 
-SET UP AND RUN THE DEVELOPMENT SERVER
-+++++++++++++++++++++++++++++++++++++
+Set up and run the development server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As above, go to the root of the repository:
+As above, go to the root of the repository
 
-    $ cd cd </path/to>/admin-site
-    $ docker-compose up --build
+.. code-block:: bash
+
+    cd </path/to>/admin-site
+
+    docker-compose up --build
 
 This will run the site in the foreground. If you wish to run the site in
-the background, give the ``-d`` option:
+the background, give the ``-d`` option
 
-    $ docker-compose up --build -d
+.. code-block:: bash
+
+    docker-compose up --build -d
 
 The OS2borgerPC Admin system will now be available on
 http://localhost:9999.
 
 Out of the box, the development server will contain one user called
-``magenta``, with password ``magenta``.
-
-Likewise, the will be one "site", also called "Magenta".
+``magenta``, with password ``magenta`` and a site ``Magenta``.
 
 
 Create distribution
-+++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^
 
-# TODO: This part of the functionality is being phased out and will be 
-#       removed in a future version of the system. PCs will no longer
-#       upload their package lists to the server, nor will we keep
-#       complete listings of packages in the distribution.
+.. note:: This part of the functionality is being phased out and will be 
+       removed in a future version of the system. PCs will no longer
+       upload their package lists to the server, nor will we keep
+       complete listings of packages in the distribution.
 
-You need to create a "distribution" in the  Admin system.  This is
-done in django-admin.  
+A default distribution of "os2borgerpc20.04" is created on start up.
+
+Under other circumstances you would need to create a "distribution" in the Admin system.
+This is done in django-admin.
 
 The distribution ID needs to be a string with no spaces and preferrably
 no special characters. It should reflect the operating system on the
 corresponding clients, e.g. "ubuntu22.04".
 
 
-
 Finalize the distribution
-+++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-# TODO: This part of the functionality is being phased out and will be 
-#       removed in a future version of the system. PCs will no longer
-#       upload their package lists to the server, nor will we keep
-#       complete listings of packages in the distribution.
+.. note:: This part of the functionality is being phased out and will be 
+       removed in a future version of the system. PCs will no longer
+       upload their package lists to the server, nor will we keep
+       complete listings of packages in the distribution.
 
 This step is to be performed *after* you have registred a computer in the
 admin system as described below. To finalize the distribution:
@@ -143,32 +152,31 @@ admin system as described below. To finalize the distribution:
 
 * Register the computer in the admin system as described below.
 
-* When the registration is done, execute the command 
-
-    os2borgerpc_upload_dist_packages
-
+* When the registration is done, execute the command ``os2borgerpc_upload_dist_packages``
   in a command shell. This will upload the list of installed packages
   and register them as definition of this distribution.
 
 * IMPORTANT: In the admin system's Django settings file, (e.g. in
-  admin_system/bibos_admin/settings.py in the installed source code)
+  ``admin_system/os2borgerpc_admin/settings.py`` in the installed source code)
   close your distribution by adding its ID to the list
   CLOSED_DISTRIBUTIONS. 
 
 
-REGISTER A CLIENT COMPUTER
-==========================
+Register a client computer
+--------------------------
 
 
 Install os2borgerpc-client package
-++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First, you need to install the OS2borgerPC Admin client on the PC you wish to
 control from the admin system.
 
 We recommend that you install this from PyPI using pip.
 
-Enter the following commands in a bash shell::
+Enter the following commands in a bash shell
+
+.. code-block:: bash
 
     # If not installed already
     sudo apt-get install python3-pip
@@ -178,21 +186,20 @@ Enter the following commands in a bash shell::
 
 
 After succesfully installing os2borgerpc-client, run the registration script
-in order to connect with the admin system. ::
+in order to connect with the admin system.
+
+.. code-block:: bash
 
     sudo register_new_os2borgerpc_client.sh
 
 
 Guide to the steps:
 
-# Do not enter a gateway IP unless you *know* you will be using a gateway.
-# Enter a new host name for your computer if you want. If not, your PC
-  will be registered with its current name.
-# Enter the ID for the site you wish to register the PC on (e.g.
-  "aarhus").
-# Enter the ID for the distribution (e.g. "ubuntu12.04").
-# Enter the URL of your admin system (e.g. "http://localhost:8000" if
-  you're a developer or "http://yourdomain.com/your_admin_dir".
+* Do not enter a gateway IP unless you *know* you will be using a gateway.
+* Enter a new host name for your computer if you want. If not, your PC will be registered with its current name.
+* Enter the ID for the site you wish to register the PC on (e.g. "aarhus").
+* Enter the ID for the distribution (e.g. "ubuntu12.04").
+* Enter the URL of your admin system (e.g. "http://localhost:8000" if you're a developer or "http://yourdomain.com/your_admin_dir".
 
 The registration will now proceed, and your new PC will show up in the
 admin system as "New" in the corresponding site's status list.

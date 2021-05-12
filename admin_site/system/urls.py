@@ -8,7 +8,7 @@ from .views import SiteDetailView, UserCreate, UserUpdate, SiteConfiguration
 from .views import ScriptList, ScriptUpdate, ScriptCreate, ScriptDelete
 from .views import ScriptRun, PCUpdate, JobRestarter
 from .views import ConfigurationEntryCreate, ConfigurationEntryUpdate
-from .views import ConfigurationEntryDelete, JobInfo, TechDocView, DocView
+from .views import ConfigurationEntryDelete, JobInfo, DocView
 from .views import PCDelete, JSONSiteSummary
 from .views import ImageVersionsView
 # SecurityProblem and SecurityEvent related views
@@ -135,9 +135,30 @@ urlpatterns = [
 
     # Documentation
     url(r'^documentation/pdf_guide/',
-        RedirectView.as_view(url='/media/docs/bibOS_installationsguide.pdf')),
-    url(r'^documentation/tech/(?P<name>[\d\w\/]+)/', TechDocView.as_view(),
-        name='tech_doc'),
+        RedirectView.as_view(
+            url='/static/docs/OS2BorgerPC-20-04-installationsguide.pdf'
+        )),
+    url(r'^documentation/creating_security_problems/',
+        RedirectView.as_view(
+            url='/static/docs/OS2BorgerPC-sikkerhedsovervågning.pdf'
+        )),
+    url(r'^documentation/tech/os2borgerpc-image',
+        RedirectView.as_view(
+            url='https://os2borgerpc-image.readthedocs.io'
+        )),
+    url(r'^documentation/tech/os2borgerpc-admin',
+        RedirectView.as_view(
+            url='https://os2borgerpc-admin.readthedocs.io'
+        )),
+    url(r'^documentation/tech/os2borgerpc-server-image',
+        RedirectView.as_view(
+            url='https://os2borgerpc-server-image.readthedocs.io'
+        )),
+    url(r'^documentation/tech/os2borgerpc-client',
+        RedirectView.as_view(
+            url='https://os2borgerpc-client.readthedocs.io'
+        )),
+
     url(r'^documentation/(?P<name>[\d\w\/]+)/', DocView.as_view(), name='doc'),
     url(r'^documentation/', DocView.as_view(), name='doc_root'),
 
