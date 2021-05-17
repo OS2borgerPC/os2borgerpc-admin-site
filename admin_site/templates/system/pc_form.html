@@ -32,7 +32,7 @@ Computere
 
     <h2 class="divideheader">Detaljer om <em>{{ selected_pc.name }}</em>
       {% if selected_pc.securityevent_set.count > 0 %}
-      <a href="/site/{{ site.url }}/security/pc/{{ pc.uid }}" title=" Se advarsler for denne PC"><span class="badge badge-important">
+      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se advarsler for denne PC"><span class="badge badge-important">
               <icon class="{% if has_security_warnings %}icon-fire{% else %}icon-ok{% endif %} icon-white">
               </icon></span></a>
 {% endif %}

@@ -661,9 +661,9 @@ class ScriptList(ScriptMixin, SiteView):
 
         except IndexError:
             return HttpResponseRedirect(
-                "/site/%s/security/scripts/new/" % self.site.uid
+                reverse("new_security_script", args=[self.site.uid])
                 if self.is_security else
-                "/site/%s/scripts/new/" % self.site.uid
+                reverse("new_script", args=[self.site.uid])
             )
 
 
@@ -705,10 +705,12 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         if self.is_security:
-            return '/site/%s/security/scripts/%s/' % (self.site.uid,
-                                                      self.script.pk)
+            return reverse(
+                "security_script",
+                args=[self.site.uid, self.script.pk]
+            )
         else:
-            return '/site/%s/scripts/%s/' % (self.site.uid, self.script.pk)
+            return reverse("script", args=[self.site.uid, self.script.pk])
 
 
 class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -761,10 +763,12 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         if self.is_security:
-            return '/site/%s/security/scripts/%s/' % (self.site.uid,
-                                                      self.script.pk)
+            return reverse(
+                "security_script",
+                args=[self.site.uid, self.script.pk]
+            )
         else:
-            return '/site/%s/scripts/%s/' % (self.site.uid, self.script.pk)
+            return reverse("script", args=[self.site.uid, self.script.pk])
 
 
 class ScriptRun(SiteView):
@@ -1736,7 +1740,7 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return result
 
     def get_success_url(self):
-        return '/site/{0}/security/'.format(self.kwargs['site_uid'])
+        return reverse("security_events", args=[self.kwargs['site_uid']])
 
 
 documentation_menu_items = [

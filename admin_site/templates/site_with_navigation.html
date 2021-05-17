@@ -20,28 +20,28 @@ class="detailpage"
     {% endif %}
 
     {% css_class_current request.path "status" as current_url_status %}
-    <a href="/site/{{ site.url }}/status/" class="nav-link link-light {{ current_url_status }}">
+    <a href="{% url 'site' slug=site.url %}" class="nav-link link-light {{ current_url_status }}">
       <i class="icon-eye-open icon-white"></i> Status
     </a>
 
     <hr>
     <h2 class="text-light">Sikkerhed</h3>
     
-    {% css_class_current request.path "/security/" as current_url_security %}
-    <a class="nav-link link-light {{ current_url_security  }}" href="/site/{{ site.url }}/security/">
+    {% css_class_current request.path "/security_events/" as current_url_security_events %}
+    <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
       <i class="icon-fire icon-white"></i>
       Advarsler {% if sec_events > 0 %}
       <span class="float-end badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
     </a>
   
     {% css_class_current request.path "security_problems" as current_url_security_problems %}
-    <a class="nav-link link-light {{ current_url_security_problems }}" href="/site/{{ site.url }}/security_problems/">
+    <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
       <i class="icon-exclamation-sign icon-white"></i>
       Regler
     </a>
     
-    {% css_class_current request.path "security/scripts" as current_url_security_scripts %}
-    <a class="nav-link link-light {{ current_url_security_scripts  }}" href="/site/{{ site.url }}/security/scripts/">
+    {% css_class_current request.path "security_scripts" as current_url_security_scripts %}
+    <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
       <i class="icon-list icon-white"></i> 
       Sikkerhedsscripts
     </a>

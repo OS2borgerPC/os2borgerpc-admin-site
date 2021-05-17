@@ -21,10 +21,10 @@ Sikkerhedsregler
     <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>
         {% ifequal sp selected_security_problem %}
         {% if selected_security_problem.is_delete_allowed %}
-        <a class="remove float-end" href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/" title="Slet sikkerhedsproblem" ><i class="icon-remove icon-white"></i></a>
+        <a class="remove float-end" href="{% url 'security_problem_delete' site_uid=site.url uid=selected_security_problem.uid %}" title="Slet sikkerhedsproblem" ><i class="icon-remove icon-white"></i></a>
         {% endif %}
         {% endifequal %}
-        <a class="list-item" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/"><i class="icon-exclamation-sign"></i> {{ sp.name }}</a>
+        <a class="list-item" href="{% url 'security_problem' site_uid=site.url uid=sp.uid %}"><i class="icon-exclamation-sign"></i> {{ sp.name }}</a>
     </li>
     {% endfor %}
 </ul>
@@ -36,7 +36,7 @@ Sikkerhedsregler
         Detaljer om <em>{{ selected_security_problem.name }}</em>
         {% comment %}
         TODO later?
-        <a class="float-end" href="/site/{{ site.url }}/security/problem/{{ selected_security_problem.id }}" title="Se alle advarsler for dette sikkerhedsproblem"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
+        <a class="float-end" href="{% url 'security_problem' site_uid=site.url uid=selected_security_problem.id %}" title="Se alle advarsler for dette sikkerhedsproblem"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
         {% endcomment %}
     </h2>
     {% include 'notification.html' %}

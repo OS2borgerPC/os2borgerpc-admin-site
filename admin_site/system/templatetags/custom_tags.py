@@ -23,9 +23,9 @@ def css_class_current(current_url, match):
         # Don't highlight Advarsler when on security/scripts
         if (
             match == "scripts"
-            and current_url.find("security/scripts") != -1
-            or match == "/security/"
-            and current_url.find("security/scripts") != -1
+            and current_url.find("security_scripts") != -1
+            or match == "/security_events/"
+            and current_url.find("security_scripts") != -1
         ):
             return
         return "active"

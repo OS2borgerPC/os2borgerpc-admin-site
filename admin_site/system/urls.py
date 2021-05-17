@@ -20,15 +20,16 @@ from .views import SecurityEventSearch
 
 urlpatterns = [
     # Security events UI
-    url(r'^site/(?P<site_uid>[^/]+)/security/(?P<pk>\d+)/$',
+    url(r'^site/(?P<site_uid>[^/]+)/security_events/(?P<pk>\d+)/$',
         SecurityEventUpdate.as_view(), name='security_event_update'),
-    url(r'^site/(?P<site_uid>[^/]+)/security/search/$',
+    url(r'^site/(?P<site_uid>[^/]+)/security_events/search/$',
         SecurityEventSearch.as_view(),
         name='securityeventsearch'),
-    url(r'^site/(?P<slug>[^/]+)/security/pc/(?P<pc_uid>[^/]+)/$',
+    url(r'^site/(?P<slug>[^/]+)/security_events/pc/(?P<pc_uid>[^/]+)/$',
         SecurityEventsView.as_view(),
-        name='securityeventsearch'),
-    url(r'^site/(?P<slug>[^/]+)/security/$', SecurityEventsView.as_view(),
+        name='security_event_pc'),
+    url(r'^site/(?P<slug>[^/]+)/security_events/$',
+        SecurityEventsView.as_view(),
         name='security_events'),
 
     # Security problems UI
@@ -45,16 +46,16 @@ urlpatterns = [
         SecurityProblemsView.as_view(), name='security_problems'),
 
     # Security scripts
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/(?P<script_pk>\d+)/delete/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/delete/',
         ScriptDelete.as_view(is_security=True),
         name='delete_security_script'),
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/(?P<script_pk>\d+)/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/',
         ScriptUpdate.as_view(is_security=True),
         name='security_script'),
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/new/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/new/',
         ScriptCreate.as_view(is_security=True),
         name='new_security_script'),
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/',
         ScriptList.as_view(is_security=True),
         name='security_scripts'),
 
@@ -67,7 +68,7 @@ urlpatterns = [
     url(r'^sites/(?P<slug>[^/]+)/delete/$',
         SiteDelete.as_view(),
         name='delete_site'),
-    url(r'^site/(?P<slug>[^/]+)/status/$', SiteDetailView.as_view(),
+    url(r'^site/(?P<slug>[^/]+)/$', SiteDetailView.as_view(),
         name='site'),
     url(r'^site/(?P<slug>[^/]+)/configuration/$',
         SiteConfiguration.as_view(),
