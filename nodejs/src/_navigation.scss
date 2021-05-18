@@ -74,15 +74,6 @@
     display: flex;
     flex-flow: column nowrap;
 
-    &.bg-dark {
-        border-top: solid 1px $gray-700;
-        background-color: $gray-800;
-    }
-
-    &.bg-light {
-        background-color: $gray-100;
-    }
-
     li div a {
         border-top: solid 1px $white; 
     }
@@ -104,24 +95,36 @@
     }
 
     .listutils {
+        border-top: solid 1px $gray-700;
+        background-color: $gray-800;
+
         button.btn-link,
         a.btn-link,
         a.btn-link:visited {
             color: $white;
             text-decoration: none;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+
+            .material-icons {
+                margin-right: $spacer*.25;
+            }
         }
         button.btn-link:hover,
         button.btn-link:focus,
         a.btn-link:hover,
         a.btn-link:focus {
             color: $gray-400;
-            text-decoration: underline;
         }
     }
 
     .nav-tabs {
         flex-wrap: nowrap;
         border: none;
+        background-color: $gray-800;
+        margin-top: 0;
+        padding-top: $spacer;
 
         & > .nav-item {
             overflow: hidden;
@@ -145,49 +148,8 @@
     }
 
     .tab-content {
-        background-color: $gray-200;
         padding: 0;
         flex-grow: 1;
-    }
-}
-
-.collapsed-list {
-    
-    .nav-item {
-        border-bottom: solid 1px $gray-200;
-        padding: 0;
-    }
-
-    [data-bs-toggle="collapse"] {
-        margin: 0;
-        border-bottom: solid 1px $gray-100;
-        text-decoration: none;
-        padding: 1rem;
-    }
-}
-
-.collapsed-list-btn  {
-
-    &:hover {
-        background-color: $primary;
-        color: $white;
-    }
-
-    &::after {
-        color: $black;
-        display: block;
-        float: right;
-        content: '';
-        margin-top: $spacer*.25;
-        border-top: .4em solid;
-        border-right: .4em solid transparent;
-        border-bottom: 0;
-        border-left: .4em solid transparent;
-        transition: transform .3s;
-        transform: rotate(-90deg);
-    }
-
-    &[aria-expanded="true"]::after {
-        transform: rotate(0deg);
+        background-color: $gray-200;
     }
 }

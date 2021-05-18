@@ -6,11 +6,38 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 // Then add additional custom code here
-
 @import "layout";
+@import "collapsible";
 @import "navigation";
 @import "table";
 @import "pagination";
+@import "icons";
+
+
+/*
+    UI elements    
+
+    - main nav
+    - main header
+    - itemlist (subnav) 
+    -- itemlist btn (+)
+    -- itemlist tabs
+    -- itemlist collapsible
+    - filters (subnav)
+    - content header
+    - table
+    - form
+    - tabs
+    - button, primary (save)
+    - button, secondary (cancel)
+    - button, highlighted (kør script)
+    - modal dialog
+    - code view (pre)
+    - contentlist (dark table)
+    - giant popover
+    - pagination
+    - collapsible list group / _collapsible.scss
+*/
 
 body {
     background-color: $white;
@@ -19,9 +46,9 @@ body {
 header {
     background-color: $gray-800; 
     color: $gray-400;
-
+    color: $white;
     h1 em {
-        color: $white;
+        color: $gray-400;
     }
 }
 

@@ -2,7 +2,7 @@
 <!-- Note: This isn't the modal for creating a script, this is only seen, when you have zero scripts in the list. -->
 
 {% block specific_content %}
-  <div class="sublevelnav bg-dark">
+  <div class="sublevelnav">
     <div class="listutils">
       <a class="btn btn-link"
         {% if is_security %}
@@ -11,7 +11,7 @@
             href="{% url 'new_script' site.uid %}" 
         {% endif %}
             title="Tilføj nyt script">
-        <i class="icon-plus icon-white"></i>
+        <span class="material-icons">add</span>
         Tilføj nyt script
       </a>
     </div>

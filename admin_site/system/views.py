@@ -548,11 +548,37 @@ class ScriptMixin(object):
         # Get context from super class
         context = super(ScriptMixin, self).get_context_data(**kwargs)
         context['site'] = self.site
-        context['local_scripts'] = sorted(self.scripts.filter(site=self.site),
-                                          key=lambda s: s.name.lower())
-        context['global_scripts'] = sorted(self.scripts.filter(site=None),
-                                           key=lambda s: s.name.lower())
         context['script_tags'] = ScriptTag.objects.all()
+
+        def list_scripts_by_tag(scriptlist):
+            # create a dict to store scripts by tag
+            scriptdict = { 'untagged': [] }
+            # create a dict key for every tag
+            for tag in ScriptTag.objects.all():
+                scriptdict[tag] = []
+            # make a list of scripts for each tag key in dict
+            for script in scriptlist:
+                # check is script has no tags
+                if script.tags.count() <= 0: 
+                    # add untagged script to 'untagged' list
+                    scriptdict['untagged'].append(script)
+                else: 
+                    for tag in script.tags.all():
+                        scriptdict[tag].append(script)
+            # return the populated dict
+            return scriptdict
+        
+        local_scripts = sorted(self.scripts.filter(site=self.site),
+                               key=lambda s: s.name.lower())
+
+        context['local_scripts'] = local_scripts
+        context['local_scripts_by_tag'] = list_scripts_by_tag(local_scripts)
+
+        global_scripts = sorted(self.scripts.filter(site=None),
+                                key=lambda s: s.name.lower())
+
+        context['global_scripts'] = global_scripts
+        context['global_scripts_by_tag'] = list_scripts_by_tag(global_scripts)
 
         context['script_inputs'] = self.script_inputs
         context['is_security'] = self.is_security

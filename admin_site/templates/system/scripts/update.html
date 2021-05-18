@@ -1,7 +1,7 @@
 {% extends "system/scripts/header.html" %}
 
 {% block specific_content %}
-  <div class="sublevelnav bg-dark">
+  <div class="sublevelnav">
     <div class="listutils">
       <button 
         class="btn btn-link" 
@@ -9,7 +9,8 @@
         type="button" 
         data-bs-toggle="modal" 
         title="Tilføj nyt script">
-        <i class="icon-plus icon-white"></i> Tilføj nyt script
+        <span class="material-icons">add</span>
+        Tilføj nyt script
       </button>
       <!-- Search box -->
       <div class="input-group">
@@ -31,31 +32,30 @@
       Redigér script: <em>{{ selected_script.name }}</em>
     </h2>
 
-    <form method="post" name="scriptform" id="scriptform"
-        action="{% url script_url site.uid selected_script.pk %}"
-        enctype="multipart/form-data">
+    <form method="post" 
+          name="scriptform" 
+          id="scriptform"
+          action="{% url script_url site.uid selected_script.pk %}"
+          enctype="multipart/form-data">
       {% csrf_token %}
 
       <div>
-      {% include 'notification.html' %}
+        {% include 'notification.html' %}
       </div>
       {% if not is_security %}
-      <button type="button" class="btn btn-gentle-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">Kør script</button>
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">Kør script</button>
       {% endif %}
-    {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
-    {% if selected_script.is_global %}
-    {% if user.is_superuser %}
-    <input type="submit" class="btn btn-primary" value="Gem ændringer" />
-    {% endif %}
-    {% else %}
-    <input type="submit" class="btn btn-primary" value="Gem ændringer" />
-    {% endif %}
+
+      {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
+      {% if selected_script.is_global is False or user.is_superuser %}
+        <input type="submit" class="btn btn-dark" value="Gem ændringer">
+      {% endif %}
 
 <!--      <button class="btn" onclick="location.href='{% url script_url site.uid selected_script.pk %}'; return false;">Fortryd ændringer</button>-->
 
       {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
     </form>
-     {% if not is_security %}
+    {% if not is_security %}
     <div id="runscriptmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -64,10 +64,10 @@
             <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-                    <iframe id="runscriptmodaliframe" src="{% url 'run_script' site.uid script.pk %}" style="border: 0; width: 100%; height: 250px;"></iframe>
+            <iframe id="runscriptmodaliframe" src="{% url 'run_script' site.uid script.pk %}" style="border: 0; width: 100%; height: 250px;"></iframe>
           </div>
           <div id="runscriptmodalfooter" class="modal-footer">
-                    <button class="btn" data-bs-dismiss="modal">OK</button>
+            <button class="btn" data-bs-dismiss="modal">OK</button>
           </div>
         </div>
       </div>
