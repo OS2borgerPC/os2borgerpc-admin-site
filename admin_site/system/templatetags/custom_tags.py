@@ -2,30 +2,25 @@ from django import template
 
 register = template.Library()
 
-# Don't think it's being used currently, so uncommenting for now
-# @register.filter
-# def sort_by(queryset, order):
-#    return queryset.order_by(order)
 
-
-# Add CSS classes to tags, e.g. django generated forms.
 @register.filter
 def add_class(field, class_name):
+    """ Add CSS classes to tags, e.g. django generated forms."""
     return field.as_widget(
         attrs={"class": " ".join((field.css_classes(), class_name))}
     )
 
 
 @register.simple_tag
-def css_class_current(current_url, match):
-    if current_url.find(match) != -1:
-        # Don't highlight Scripts when on security/scripts
-        # Don't highlight Advarsler when on security/scripts
-        if (
-            match == "scripts"
-            and current_url.find("security_scripts") != -1
-            or match == "/security_events/"
-            and current_url.find("security_scripts") != -1
-        ):
+def set_css_class_active(url_name, match):
+    """
+    Set css class active depending on url_name and match.
+
+    url_name is the 'name' of an entry in urls.py
+    match is a string to be matched in url_name
+    """
+    if match in url_name:
+        # Don't highlight Scripts when on Security Scripts page.
+        if match == "script" and "security_script" in url_name:
             return
         return "active"

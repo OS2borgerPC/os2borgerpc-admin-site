@@ -19,28 +19,28 @@ class="detailpage"
       <hr>
     {% endif %}
 
-    {% css_class_current request.path "status" as current_url_status %}
-    <a href="{% url 'site' slug=site.url %}" class="nav-link link-light {{ current_url_status }}">
+    {% set_css_class_active request.resolver_match.url_name "site" as current_url_site %}
+    <a href="{% url 'site' slug=site.url %}" class="nav-link link-light {{ current_url_site }}">
       <i class="icon-eye-open icon-white"></i> Status
     </a>
 
     <hr>
     <h2 class="text-light">Sikkerhed</h3>
     
-    {% css_class_current request.path "/security_events/" as current_url_security_events %}
+    {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
       <i class="icon-fire icon-white"></i>
       Advarsler {% if sec_events > 0 %}
       <span class="float-end badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
     </a>
   
-    {% css_class_current request.path "security_problems" as current_url_security_problems %}
+    {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
     <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
       <i class="icon-exclamation-sign icon-white"></i>
       Regler
     </a>
     
-    {% css_class_current request.path "security_scripts" as current_url_security_scripts %}
+    {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
     <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
       <i class="icon-list icon-white"></i> 
       Sikkerhedsscripts
@@ -49,43 +49,43 @@ class="detailpage"
     <hr>
     <h2 class="text-light">Maskiner</h3>
     
-    {% css_class_current request.path "configuration" as current_url_site_configuration %}
-    <a class="nav-link link-light {{ current_url_site_configuration  }}" href="/site/{{ site.url }}/configuration/">
+    {% set_css_class_active request.resolver_match.url_name "configuration" as current_url_site_configuration %}
+    <a class="nav-link link-light {{ current_url_site_configuration  }}" href="{% url 'configuration' slug=site.url %}">
       <i class="icon-cog icon-white"></i> Site-konfiguration
     </a>
   
-    {% css_class_current request.path "computers" as current_url_computers %}
-    <a class="nav-link link-light {{ current_url_computers  }}" href="/site/{{ site.url }}/computers/" onclick="spin();">
+    {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
+    <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}" onclick="spin();">
       <i class="icon-hdd icon-white"></i> Computere
     </a>
   
-    {% css_class_current request.path "groups" as current_url_groups %}
-    <a class="nav-link link-light {{current_url_groups}}" href="/site/{{ site.url }}/groups/">
+    {% set_css_class_active request.resolver_match.url_name "group" as current_url_groups %}
+    <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">
       <i class="icon-tags icon-white"></i> Grupper
     </a>
   
-    {% css_class_current request.path "image-versions" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="/site/{{ site.url }}/image-versions/">
+    {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
+    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
       <i class="icon-download-alt icon-white"></i> Versioner
     </a>
     
     <hr>
     <h2 class="text-light">Scripting</h3>
     
-    {% css_class_current request.path "jobs" as current_url_jobs %}
-    <a class="nav-link link-light {{ current_url_jobs }}" href="/site/{{ site.url }}/jobs/">
+    {% set_css_class_active request.resolver_match.url_name "job" as current_url_jobs %}
+    <a class="nav-link link-light {{ current_url_jobs }}" href="{% url 'jobs' slug=site.url %}">
       <i class="icon-list-alt icon-white"></i> Jobs
     </a>
   
-    {% css_class_current request.path "scripts" as current_url_scripts %}
-    <a class="nav-link link-light {{ current_url_scripts }}" href="/site/{{ site.url }}/scripts/">
+    {% set_css_class_active request.resolver_match.url_name "script" as current_url_scripts %}
+    <a class="nav-link link-light {{ current_url_scripts }}" href="{% url 'scripts' slug=site.url %}">
       <i class="icon-list icon-white"></i> Scripts
     </a>
   
     <hr>
     
-    {% css_class_current request.path "users" as current_url_users %}
-    <a class="nav-link link-light {{ current_url_users }}" href="/site/{{site.url}}/users/">
+    {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
+    <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
       <i class="icon-user icon-white"></i> Brugere
     </a>
   
@@ -93,7 +93,7 @@ class="detailpage"
 
     <h2 class="text-light">Dokumentation</h3>
 
-    {% if current_url_status %}
+    {% if current_url_site %}
       {% comment %} Status currently has no documentation! {% endcomment %}
     {% elif current_url_security %}
       <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">Hjælp til sikkerhed</a>
