@@ -44,6 +44,7 @@ from system.models import (
     SecurityEvent,
     MandatoryParameterMissingError,
     ImageVersion,
+    ScriptTag,
 )
 # PC Status codes
 from system.forms import (
@@ -551,6 +552,7 @@ class ScriptMixin(object):
                                           key=lambda s: s.name.lower())
         context['global_scripts'] = sorted(self.scripts.filter(site=None),
                                            key=lambda s: s.name.lower())
+        context['script_tags'] = ScriptTag.objects.all()
 
         context['script_inputs'] = self.script_inputs
         context['is_security'] = self.is_security
