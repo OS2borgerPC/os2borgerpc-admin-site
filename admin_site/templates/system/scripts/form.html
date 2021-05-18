@@ -16,7 +16,7 @@
 
   <!-- The content for the three tabs you can choose from above, one after one: -->
   <div class="tab-content">
-    <div id="details" class="tabcontent active tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
+    <div id="details" class="active tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
 {% endif %}
 
       <fieldset>
@@ -74,7 +74,7 @@
         
 {% if disable_inputs != "yes" %}
     </div>
-    <div id="preview" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="preview-tab">
+    <div id="preview" class="tab-pane fade" role="tabpanel" aria-labelledby="preview-tab">
 {% endif %}
   
       <fieldset>
@@ -89,7 +89,7 @@
         
 {% if disable_inputs != "yes" %}
     </div>
-    <div id="parameters" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="parameters-tab">
+    <div id="parameters" class="tab-pane fade" role="tabpanel" aria-labelledby="parameters-tab">
 {% endif %}
   
     {% if disable_inputs or is_security %}

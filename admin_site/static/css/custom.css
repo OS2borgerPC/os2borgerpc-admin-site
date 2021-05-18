@@ -24,8 +24,6 @@
 
 a, .btn-link { color: var(--bs-dark); }
 
-hr { background: var(--bs-white); }
-
 .btn-gentle-warning { background-color: var(--bs-primary); border-color: var(--bs-primary); }
 
 /* TODO! This doesn't work yet! */
@@ -54,46 +52,23 @@ div.runscriptdialogheader {display: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: var(--bs-gray-dark); border-radius: 5px;}
 .nav.utils .nav-header {text-shadow: none; color: var(--bs-white); text-transform: uppercase; font-weight: bold;}
 /* Delete button on lists */
-.sublevelnav li a {display: block; padding: 10px; text-decoration: none;}
-.sublevelnav li div a {border-top: solid 1px var(--bs-white); }
-.sublevelnav li:first-child a {border: none;}
-.sublevelnav li a.list-item {text-decoration: none;}
-.sublevelnav li a.list-item:hover {background: var(--bs-primary); color: var(--bs-white)}
-.sublevelnav a.remove:hover, .sublevelnav a.remove:active, .sublevelnav a.remove:focus {background: var(--bs-danger); border: none;}
-.sublevelnav {list-style-type: none; padding-left: 0;}
-.sublevelnav .btn-close { font-size: 10px; position: relative; top: 9px;}
 .inertnav {background: var(--bs-gray-dark); border-radius: 5px; padding: 15px 20px;}
 .inertnav li {padding: 2px 0; color: var(--bs-gray-dark);}
 .inertnav li:hover {background: var(--bs-gray);}
-.scripttabs {margin: 0 !important; background: var(--bs-gray-dark); padding: 10px 10px 0 !important; border: none; font-size: 0.90rem;}
-.scripttabs>li {margin: 0;}
-.scripttabs>li>a, .scripttabs>.active>a, .scripttabs>.active>a:hover, .scripttabs>.active>a:focus {border: none; margin: 0;}
-.scripttabs>li>a {color: var(--bs-white);}
-.scripttabs>li>a:hover, .scripttabs>li>a:focus {background: var(--bs-primary);}
-.scripttabs>.active>a {background: var(--bs-white) !important; color: var(--bs-gray-dark) !important;}
 [data-bs-toggle="collapse"] {margin-bottom: 10px; display: block; text-align: left; height: auto}
 
 #jobsearchnav, #securityeventsearchnav { padding: 15px; }
 #jobsearchnav h3, #jobsearchnav h4, #securityeventsearchnav h3, #securityeventsearchnav h4 { font-size: .8rem; text-transform: uppercase; display: inline; letter-spacing: -.0075rem; font-weight: normal;}
 #jobsearchnav .btn-link, #securityeventsearchnav .btn-link {padding: 0;}
-.sublevelnav span.badge, #securityeventsearch-level-selectors label.checkbox { margin: 8px 0; }
-
-.sublevelnav label { display: block; }
-
-.sublevelnav li a.active {color: var(--bs-primary); font-weight: bold;}
+#securityeventsearch-level-selectors label.checkbox { margin: 8px 0; }
 
 ul.nav li ul { color: var(--bs-white); list-style: none; padding: 0; margin: 0 0 0 1em; }
 ul.nav li ul a, ul.nav li ul a:hover, ul.nav li ul a:focus { color: var(--bs-white); text-decoration: none; }
 ul.nav li ul li.active { font-style: italic; }
-.nav-tabs {margin: 1em 0 0; }
-.tabcontent {/*display: none; */ background: var(--bs-white); padding: 20px; border-radius: 0.25em;}
-/*.tabcontent.active {display: block;}*/
 
 
 /* Misc */
 
-.listutils {background: var(--bs-gray-dark);}
-.listutils button, .listutils a {color: var(--bs-white); }
 .profile {font-size: 14px; margin-right: 20px;}
 .profile a.dropdown-toggle {color: var(--bs-white);}
 .dark a.dropdown-toggle {color: var(--bs-dark);}
@@ -106,8 +81,6 @@ ul.nav li ul li.active { font-style: italic; }
 .popover.bottom {margin: 5px 20px 0 0;}
 .popover.top .arrow {left: auto; right: 30px;}
 .popover.top {margin: 0 20px 5px 0;}
-
-#localscripts, #globalscripts {position: absolute; bottom: 0; top: 143px; left: 0px; width: 250px; overflow-X: hidden; overflow-y: auto;}
 
 #jobinfo-popover {position: absolute; display: none; z-index: 10000; width: auto; min-width: 20em; max-width: 60em;}
 .scriptDescription textarea {width: 95%; min-height: 20em;}

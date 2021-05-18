@@ -25,19 +25,19 @@ Sikkerhedshændelser
     </tbody>
    </table>
   </div>
-  <div id="securityeventsearchnav" class="sublevelnav sublevelnav">
-          <h3 class="nav-header">Filtrer</h3>
-          <button class="btn btn-link float-end" type="button" onclick="BibOS.SecurityEventList.reset()">Nulstil filtre</button>
+  <div id="securityeventsearchnav" class="sublevelnav bg-light">
+    <h3 class="nav-header">Filtrér</h3>
+    <button class="btn btn-link float-end" type="button" onclick="BibOS.SecurityEventList.reset()">Nulstil filtre</button>
     <hr>
     <form id="securityeventsearch-filterform" name="filterform" action="./" method="post">
-        <input type="hidden" name="orderby" value="-pk">
-        <input type="hidden" name="page" value="1">
-     <div id="securityeventsearch-level-selectors">
-          <h4 class="nav-header">Alvorlighedsgrad</h4>
-          {% for l in level_choices %}
-          <label class="checkbox">
-              <input type="checkbox" value="{{ l.value }}" name="level" {{ l.checked }}>
-              <span class="severity-checkbox severity-{{ l.label }}">{{ l.name }}</span>
+      <input type="hidden" name="orderby" value="-pk">
+      <input type="hidden" name="page" value="1">
+      <div id="securityeventsearch-level-selectors">
+        <h4 class="nav-header">Alvorlighedsgrad</h4>
+        {% for l in level_choices %}
+        <label class="checkbox">
+          <input type="checkbox" value="{{ l.value }}" name="level" {{ l.checked }}>
+          <span class="severity-checkbox severity-{{ l.label }}">{{ l.name }}</span>
         </label>
         {% endfor %}
       </div>

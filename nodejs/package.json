@@ -17,7 +17,7 @@
   "dependencies": {
     "autoprefixer": "^10.2.5",
     "bootstrap": "^5.0.0-beta3",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "postcss": "^8.2.13"
   }
 }

@@ -1,3 +1,19 @@
+// Nav tab customizations
+.nav-tabs {
+    margin-top: $spacer*1.125;
+}
+
+.nav-item > .nav-link:not(.active):hover,
+.nav-item > .nav-link:not(.active):focus {
+    background-color: $primary;
+    color: $white;
+}
+
+.tab-content {
+    background-color: $gray-100;
+    padding: $spacer*2.5 $spacer*2.25;
+}
+
 // Global navigation
 #left-menu {
     position: absolute; 
@@ -49,8 +65,129 @@
     left: $navigation-width;
     bottom: 0; 
     width: $navigation-width; 
-    background: $gray-200; 
+    background-color: $gray-200;
     overflow-x: hidden; 
     overflow-y: auto; 
     margin: 0;
+    list-style-type: none; 
+    padding-left: 0;
+    display: flex;
+    flex-flow: column nowrap;
+
+    &.bg-dark {
+        border-top: solid 1px $gray-700;
+        background-color: $gray-800;
+    }
+
+    &.bg-light {
+        background-color: $gray-100;
+    }
+
+    li div a {
+        border-top: solid 1px $white; 
+    }
+    li a.list-item {
+        text-decoration: none;
+    }
+    li a.list-item:hover {
+        background: $primary; 
+        color: $white;
+    }
+    a.remove:hover, 
+    a.remove:active, 
+    a.remove:focus {
+        background: $danger; 
+        border: none;
+    }
+    .btn-close { 
+        font-size: 10px;
+    }
+
+    .listutils {
+        button.btn-link,
+        a.btn-link,
+        a.btn-link:visited {
+            color: $white;
+            text-decoration: none;
+        }
+        button.btn-link:hover,
+        button.btn-link:focus,
+        a.btn-link:hover,
+        a.btn-link:focus {
+            color: $gray-400;
+            text-decoration: underline;
+        }
+    }
+
+    .nav-tabs {
+        flex-wrap: nowrap;
+        border: none;
+
+        & > .nav-item {
+            overflow: hidden;
+            min-width: $spacer*7;
+
+            .nav-link {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .nav-link:not(.active),
+            .nav-link:not(.active):link,
+            .nav-link:not(.active):visited {
+                color: $white;
+            }
+            .nav-link.active {
+                background-color: $gray-200;
+                border-color: $gray-200;
+            }
+        }
+    }
+
+    .tab-content {
+        background-color: $gray-200;
+        padding: 0;
+        flex-grow: 1;
+    }
+}
+
+.collapsed-list {
+    
+    .nav-item {
+        border-bottom: solid 1px $gray-200;
+        padding: 0;
+    }
+
+    [data-bs-toggle="collapse"] {
+        margin: 0;
+        border-bottom: solid 1px $gray-100;
+        text-decoration: none;
+        padding: 1rem;
+    }
+}
+
+.collapsed-list-btn  {
+
+    &:hover {
+        background-color: $primary;
+        color: $white;
+    }
+
+    &::after {
+        color: $black;
+        display: block;
+        float: right;
+        content: '';
+        margin-top: $spacer*.25;
+        border-top: .4em solid;
+        border-right: .4em solid transparent;
+        border-bottom: 0;
+        border-left: .4em solid transparent;
+        transition: transform .3s;
+        transform: rotate(-90deg);
+    }
+
+    &[aria-expanded="true"]::after {
+        transform: rotate(0deg);
+    }
 }
