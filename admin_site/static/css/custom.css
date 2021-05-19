@@ -33,13 +33,8 @@ input[class="btn"]:hover { border: #8a53be 2px solid; }
 /* Headers */
 
 .nav-header { letter-spacing: 0.05em; font-weight: normal; }
-.divideheader {background: var(--bs-gray-dark); color: var(--bs-gray); padding: 10px; margin-top: 40px; font-size: 21px;}
-.divideheader em {color: var(--bs-white); font-style: normal;}
-h2.divideheader {margin-top: 20px;}
-.divideheader .label {margin-left: 20px; position: relative; bottom: 2px;}
 h3.nav-header,
 h4.nav-header {margin: 0; padding: 0;}
-header.detailpage h1.siteheader {margin-left: 20px;}
 div.runscriptdialogheader {display: none;}
 
 

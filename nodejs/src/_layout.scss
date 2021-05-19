@@ -4,24 +4,45 @@ body {
 }
 
 
-// Header
+// Headers
 
 header {
-    padding: 20px; margin: 0 0 20px;
+    background: $gray-800; 
+    padding: $spacer;
+    color: $gray-400;
 
     &.detailpage {
-        padding: 20px 0; 
         margin-left: $navigation-width;
+    }
 
-        h1 {
-            font-size: 24px; 
-            line-height: 24px; 
-            margin: 0;
+    h1 {
+        margin: 0;
+        padding: 0;
+        font-size: 1.25rem;
+        em {
+            color: $white;
+            font-style: normal; 
         }
     }
 
-    h1 em {
-        font-style: normal;
+}
+
+.divideheader {
+    background: $gray-800; 
+    padding: $spacer*.5 $spacer;
+    margin: 0 0 $spacer;
+    font-size: 1.25rem;
+    color: $gray-400;
+
+    em {
+        color: $white;
+        font-style: normal; 
+    }
+
+    label {
+        margin-left: 20px; 
+        position: relative; 
+        bottom: 2px;
     }
 }
 
@@ -30,20 +51,15 @@ header {
 
 .main {
     position: absolute; 
-    top: 64px; 
+    top: $spacer*3.5;
     bottom: 0;
-    padding: 2rem 1.5rem 2rem 2rem;
+    padding: $spacer*2;
     left: $navigation-width;
     right: 0; 
     overflow-x: hidden; 
     overflow-y: auto; 
     width: auto;
     background-color: $white;
-
-    & > * {
-        margin-top: 1.25rem; 
-        margin-left: .75rem; 
-    }
 
     & > table {
         margin: 0;
@@ -58,5 +74,3 @@ header {
 .template-container {
     display: none;
 }
-
-

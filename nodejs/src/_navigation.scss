@@ -61,7 +61,7 @@
 // Sublevel navigation
 .sublevelnav {
     position: absolute; 
-    top: 64px; 
+    top: $spacer*3.5; 
     left: $navigation-width;
     bottom: 0; 
     width: $navigation-width; 

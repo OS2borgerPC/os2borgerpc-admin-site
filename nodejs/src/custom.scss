@@ -18,14 +18,14 @@
 /*
     UI elements    
 
-    - main nav
-    - main header
+    - main nav / _navigation.scss
+    - main header / _layout.scss
     - itemlist (subnav) 
     -- itemlist btn (+)
     -- itemlist tabs
     -- itemlist collapsible
     - filters (subnav)
-    - content header
+    - content header / _layout.scss
     - table
     - form
     - tabs
@@ -43,15 +43,6 @@
 
 body {
     background-color: $white;
-}
-
-header {
-    background-color: $gray-800; 
-    color: $gray-400;
-    color: $white;
-    h1 em {
-        color: $gray-400;
-    }
 }
 
 hr {
