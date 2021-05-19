@@ -26,67 +26,64 @@ class="detailpage"
 
     <hr>
     <h2 class="text-light">Sikkerhed</h3>
-    
+
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
-      <i class="icon-fire icon-white"></i>
       Sikkerhedshændelser {% if sec_events > 0 %}
       <span class="float-end badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
     </a>
   
     {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
     <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
-      <i class="icon-exclamation-sign icon-white"></i>
       Regler
     </a>
     
     {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
     <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
-      <i class="icon-list icon-white"></i> 
       Sikkerhedsscripts
     </a>
-    
+
     <hr>
     <h2 class="text-light">Maskiner</h3>
-    
+
     {% set_css_class_active request.resolver_match.url_name "configuration" as current_url_site_configuration %}
     <a class="nav-link link-light {{ current_url_site_configuration  }}" href="{% url 'configuration' slug=site.url %}">
-      <i class="icon-cog icon-white"></i> Site-konfiguration
+    Site-konfiguration
     </a>
-  
+
     {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
     <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}" onclick="spin();">
-      <i class="icon-hdd icon-white"></i> Computere
+    Computere
     </a>
-  
+
     {% set_css_class_active request.resolver_match.url_name "group" as current_url_groups %}
     <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">
-      <i class="icon-tags icon-white"></i> Grupper
+    Grupper
     </a>
-  
+
     {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
     <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
-      <i class="icon-download-alt icon-white"></i> Versioner
+    Versioner
     </a>
-    
+
     <hr>
     <h2 class="text-light">Scripting</h3>
-    
+
     {% set_css_class_active request.resolver_match.url_name "job" as current_url_jobs %}
     <a class="nav-link link-light {{ current_url_jobs }}" href="{% url 'jobs' slug=site.url %}">
-      <i class="icon-list-alt icon-white"></i> Jobs
+    Jobs
     </a>
   
     {% set_css_class_active request.resolver_match.url_name "script" as current_url_scripts %}
     <a class="nav-link link-light {{ current_url_scripts }}" href="{% url 'scripts' slug=site.url %}">
-      <i class="icon-list icon-white"></i> Scripts
+    Scripts
     </a>
   
     <hr>
-    
+
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
     <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
-      <i class="icon-user icon-white"></i> Brugere
+    Brugere
     </a>
   
     <hr>
