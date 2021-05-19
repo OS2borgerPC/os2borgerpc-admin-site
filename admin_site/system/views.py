@@ -25,6 +25,7 @@ from django.views.generic.list import BaseListView
 
 from django.db import transaction
 from django.db.models import Q
+from django.db.models.functions import Lower
 from django.conf import settings
 
 from account.models import (
