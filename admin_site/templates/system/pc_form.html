@@ -32,7 +32,7 @@ Computere
 
     <h2 class="divideheader">Detaljer om <em>{{ selected_pc.name }}</em>
       {% if selected_pc.securityevent_set.count > 0 %}
-      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se advarsler for denne PC"><span class="badge badge-important">
+      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se hændelser for denne PC"><span class="badge badge-important">
               <icon class="{% if has_security_events %}icon-fire{% else %}icon-ok{% endif %} icon-white">
               </icon></span></a>
 {% endif %}
@@ -43,7 +43,7 @@ Computere
       <p class="" style="float:right;"><span class="muted">
         &nbsp;Senest set:</span> <strong>{{ selected_pc.last_seen|date:'Y-m-d H:i:s' }} </strong></p>
     {% endif %}
-    {% if security_event != "Ingen advarsler"%}
+    {% if security_event != "Ingen hændelser"%}
       <p style="float:right; clear:right;"><span class="muted"> &nbsp;Seneste advarsel set:</span> <strong>{{ security_event.reported_time|date }} </strong> {{ security_event.reported_time|time }}</p>
     {% endif %}
 

@@ -85,7 +85,7 @@ def get_latest_security_event(pc):
     try:
         sc = SecurityEvent.objects.filter(pc_id=pc.id).latest('reported_time')
     except SecurityEvent.DoesNotExist:
-        sc = "Ingen advarsler"
+        sc = "Ingen hændelser"
     return sc
 
 
