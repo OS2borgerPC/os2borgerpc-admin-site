@@ -573,17 +573,32 @@ class ScriptMixin(object):
             # return the populated dict
             return scriptdict
         
-        local_scripts = sorted(self.scripts.filter(site=self.site),
-                               key=lambda s: s.name.lower())
-
+        local_scripts = self.scripts.filter(site=self.site).order_by(Lower("name"))
         context['local_scripts'] = local_scripts
-        context['local_scripts_by_tag'] = list_scripts_by_tag(local_scripts)
-
-        global_scripts = sorted(self.scripts.filter(site=None),
-                                key=lambda s: s.name.lower())
-
+        global_scripts = self.scripts.filter(site=None).order_by(Lower("name"))
         context['global_scripts'] = global_scripts
-        context['global_scripts_by_tag'] = list_scripts_by_tag(global_scripts)
+
+        # Create a tag->scripts dict for tags that has local scripts.
+        local_tag_scripts_dict = {
+            tag: tag.scripts.all() for tag in ScriptTag.objects.all()
+            if tag.scripts.filter(site=self.site).exists()
+        }
+        # Add scripts with no tags as untagged.
+        if local_scripts.filter(tags=None).exists():
+            local_tag_scripts_dict["untagged"] = local_scripts.filter(tags=None)
+
+        context['local_scripts_by_tag'] = local_tag_scripts_dict
+
+        # Create a tag->scripts dict for tags that has global scripts.
+        global_tag_scripts_dict = {
+            tag: tag.scripts.all() for tag in ScriptTag.objects.all()
+            if tag.scripts.filter(site=None).exists()
+        }
+        # Add scripts with no tags as untagged.
+        if global_scripts.filter(tags=None).exists():
+            global_tag_scripts_dict["untagged"] = global_scripts.filter(tags=None)
+
+        context['global_scripts_by_tag'] = global_tag_scripts_dict
 
         context['script_inputs'] = self.script_inputs
         context['is_security'] = self.is_security
