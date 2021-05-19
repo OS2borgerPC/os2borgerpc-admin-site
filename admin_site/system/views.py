@@ -970,7 +970,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         context['selected_pc'] = pc
 
         context['security_event'] = get_latest_security_event(pc)
-        context['has_security_warnings'] = pc.securityevent_set.exclude(
+        context['has_security_events'] = pc.securityevent_set.exclude(
             status=SecurityEvent.RESOLVED
         ).exclude(
             problem__level=SecurityProblem.NORMAL

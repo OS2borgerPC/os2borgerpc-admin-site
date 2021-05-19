@@ -76,7 +76,7 @@ Changes in the OS2borgerPC Admin GUI
 ++++++++++++++++++++++++++++++++++++
 
 Under the menu item "Maskiner" to the left of the current OS2borgerPC Admin
-layout, a new point will be introduced, called "Sikkerhedsadvarsler".
+layout, a new point will be introduced, called "Sikkerhedshændelser".
 
 This will contain a list of SecurityEvents which have not yet been taken
 care of. It will be possible to indicate that an event will be taken

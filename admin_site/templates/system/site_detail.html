@@ -1,11 +1,7 @@
 {% extends "site_with_navigation.html" %}
 
 {% block specific_title %}
-{% if site %}<span class="muted">({{ site.uid }})</span>{% endif %} 
-Aktive computere
-{% if active_pcs > 0 %}
-        ({{ active_pcs }})
-{% endif %}
+Status
 {% endblock %}
 
 {% block specific_content %}
@@ -19,7 +15,12 @@ Aktive computere
 </ul>
 
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
-
+    <h2 class="divideheader">
+    Aktive computere
+    {% if active_pcs > 0 %}
+    ({{ active_pcs }})
+    {% endif %}
+    </h2>
     <table class="table table-hover warn-table"
     id="#site_activepcs_table">
       <thead>
