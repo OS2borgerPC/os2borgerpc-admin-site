@@ -551,32 +551,13 @@ class ScriptMixin(object):
         context['site'] = self.site
         context['script_tags'] = ScriptTag.objects.all()
 
-        def list_scripts_by_tag(scriptlist):
-            # create a dict to store scripts by tag
-            scriptdict = { 'untagged': [] }
-            # create a dict key for every tag
-            for tag in ScriptTag.objects.all():
-                scriptdict[tag] = []
-            # make a list of scripts for each tag key in dict
-            for script in scriptlist:
-                # check is script has no tags
-                if script.tags.count() <= 0: 
-                    # add untagged script to 'untagged' list
-                    scriptdict['untagged'].append(script)
-                else: 
-                    for tag in script.tags.all():
-                        scriptdict[tag].append(script)
-            # run through the tags again to check for empty lists
-            for tag in ScriptTag.objects.all():
-                if len(scriptdict[tag]) <= 0:
-                    # remove key if value is a list with zero length
-                    scriptdict.pop(tag)
-            # return the populated dict
-            return scriptdict
-        
-        local_scripts = self.scripts.filter(site=self.site).order_by(Lower("name"))
+        local_scripts = self.scripts.filter(
+            site=self.site
+        ).order_by(Lower("name"))
         context['local_scripts'] = local_scripts
-        global_scripts = self.scripts.filter(site=None).order_by(Lower("name"))
+        global_scripts = self.scripts.filter(
+            site=None
+        ).order_by(Lower("name"))
         context['global_scripts'] = global_scripts
 
         # Create a tag->scripts dict for tags that has local scripts.
@@ -586,7 +567,9 @@ class ScriptMixin(object):
         }
         # Add scripts with no tags as untagged.
         if local_scripts.filter(tags=None).exists():
-            local_tag_scripts_dict["untagged"] = local_scripts.filter(tags=None)
+            local_tag_scripts_dict["untagged"] = local_scripts.filter(
+                tags=None
+            )
 
         context['local_scripts_by_tag'] = local_tag_scripts_dict
 
@@ -597,7 +580,9 @@ class ScriptMixin(object):
         }
         # Add scripts with no tags as untagged.
         if global_scripts.filter(tags=None).exists():
-            global_tag_scripts_dict["untagged"] = global_scripts.filter(tags=None)
+            global_tag_scripts_dict["untagged"] = global_scripts.filter(
+                tags=None
+            )
 
         context['global_scripts_by_tag'] = global_tag_scripts_dict
 
