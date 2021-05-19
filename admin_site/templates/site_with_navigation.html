@@ -13,8 +13,9 @@ class="detailpage"
   <nav id="left-menu" class="nav nav-pills utils-global">
     
     {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
-      <a href="/sites/" class="nav-link link-light">
-        <i class="icon-arrow-left icon-white"></i> Sites
+      <a href="/sites/" class="nav-link link-light" style="display: flex; flex-flow: row nowrap; align-items: center;">
+        <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
+          Sites
       </a>
       <hr>
     {% endif %}

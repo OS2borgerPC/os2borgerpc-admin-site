@@ -12,6 +12,7 @@
 @import "table";
 @import "pagination";
 @import "icons";
+@import "deletable";
 
 
 /*
@@ -37,6 +38,7 @@
     - giant popover
     - pagination
     - collapsible list group / _collapsible.scss
+    - deletable list element / _deletable.scss
 */
 
 body {

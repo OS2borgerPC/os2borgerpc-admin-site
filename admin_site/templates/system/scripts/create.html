@@ -36,15 +36,14 @@
       {% csrf_token %}
 
       <div>
-      {% include 'notification.html' %}
+        {% include 'notification.html' %}
       </div>
-      <input type="submit" class="btn btn-primary" value="Opret script" />
-        {% if is_security %}
-      <button class="btn" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
-        {% else %}
-      <button class="btn" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
+      <input type="submit" class="btn btn-primary" value="Opret script">
+      {% if is_security %}
+        <button class="btn btn-secondary" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
+      {% else %}
+        <button class="btn btn-secondary" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
       {% endif %}
-
       <hr>
       {% include 'system/scripts/form.html' %}
     </form>

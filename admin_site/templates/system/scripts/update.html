@@ -13,13 +13,11 @@
         Tilføj nyt script
       </button>
       <!-- Search box -->
-      <div class="input-group">
-        <button type="button" class="btn btn-primary">
-          <i class="fas fa-search"></i>
+      <div class="input-group" style="padding: .5rem 1rem;">
+        <input id="search_form" type="search" id="form1" class="form-control" placeholder="Søg...">
+        <button type="button" class="btn btn-primary" style="display: flex; flex-flow: row nowrap; align-items: center;">
+          <span class="material-icons">search</span>
         </button>
-        <div class="form-outline">
-        <input id="search_form" type="search" id="form1" class="form-control" placeholder="Søg..."/>
-        </div>
       </div>
     </div>
     {% include 'system/scripts/navigation.html' %}

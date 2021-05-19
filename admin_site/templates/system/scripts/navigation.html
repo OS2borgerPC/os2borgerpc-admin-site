@@ -22,11 +22,13 @@
         </a>
         <ul class="nav collapse collapse-content" id="collapse{{ ltag.name }}local">
           {% for script in ltag.scripts.all %}
-              <li class="nav-item" style="display: flex; flex-flow: row nowrap; justify-content: space-between; align-items: center;">
-                <a class="nav-link list-item {% ifequal script selected_script %} show active {% endifequal %}" href="{% url script_url site.uid script.pk %}" style="flex-grow: 1;">
+              <li class="nav-item deletable">
+                <a class="nav-link list-item {% ifequal script selected_script %} show active {% endifequal %}" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
-                <a class="btn btn-close" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script" style="padding: 0 1rem;"></a>
+                <a href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                  <span class="material-icons">clear</span>
+                </a>
               </li>
           {% endfor %}
         </ul>
@@ -36,11 +38,13 @@
     {% if local_scripts_by_tag.untagged %}
       <ul class="nav list-script-remainders">
         {% for script in local_scripts_by_tag.untagged %}
-            <li class="nav-item" style="display: flex; flex-flow: row nowrap; justify-content: space-between; align-items: center;">
-              <a class="nav-link list-item {% ifequal script selected_script %} show active {% endifequal %}" href="{% url script_url site.uid script.pk %}" style="flex-grow: 1;">
+            <li class="nav-item deletable">
+              <a class="nav-link list-item {% ifequal script selected_script %} show active {% endifequal %}" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
               </a>
-              <a class="btn btn-close" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script" style="padding: 0 1rem;"></a>
+              <a href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                <span class="material-icons">clear</span>
+              </a>
             </li>
         {% endfor %}
       </ul>
