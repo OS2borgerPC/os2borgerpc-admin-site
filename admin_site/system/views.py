@@ -565,6 +565,11 @@ class ScriptMixin(object):
                 else: 
                     for tag in script.tags.all():
                         scriptdict[tag].append(script)
+            # run through the tags again to check for empty lists
+            for tag in ScriptTag.objects.all():
+                if len(scriptdict[tag]) <= 0:
+                    # remove key if value is a list with zero length
+                    scriptdict.pop(tag)
             # return the populated dict
             return scriptdict
         

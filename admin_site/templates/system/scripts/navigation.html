@@ -51,14 +51,14 @@
   <div class="tab-pane fade list-collapsible {% if global_selected %}show active{% endif %}" id="globalscripts" role="tabpanel" aria-labelledby="globalscripts-tab">
     
     {% for gtag in global_scripts_by_tag %}
-      {% if gtag != 'untagged' and gtag|length >= 1 %}
+      {% if gtag != 'untagged' %}
         <a data-bs-toggle="collapse" href="#collapse{{ gtag.name }}global" role="button" aria-expanded="false" aria-controls="collapse{{ gtag.name }}global">
           <span class="material-icons">folder</span>
           <span class="collapse-label">{{ gtag.name }}</span>
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
         <ul class="nav collapse collapse-content" id="collapse{{ gtag.name }}global">
-          {% for script in gtag.all %}
+          {% for script in gtag.scripts.all %}
             <li class="nav-item">
               <a class="nav-link list-item {% ifequal script selected_script %}active{% endifequal %}" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
