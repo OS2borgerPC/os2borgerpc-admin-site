@@ -6,16 +6,19 @@
 
 {% block content %}
 <div class="container">
-      <form method="post" action="">
-          {% csrf_token %}
-          {% comment %} Ideally one shouldn't have to add this form-text class manually everywhere. {% endcomment %}
-          <label class="form-text">Brugernavn:</label>
-          {{ form.username|add_class:"form-control" }}
-          <label class="form-text">Password:</label>
-          {{ form.password|add_class:"form-control" }}
-      <br>
-      <input class="btn btn-primary" type="submit" value="Log ind">
-      <input type="hidden" name="next" value="{{ next }}" />
+    <form method="post" action="">
+        {% csrf_token %}
+        {% comment %} Ideally one shouldn't have to add this form-text class manually everywhere. {% endcomment %}
+        <p>
+            <label for="{{ form.username.id_for_label }}" class="form-label">Brugernavn:</label>
+            {{ form.username }}
+        </p>
+        <p>
+            <label for="{{ form.password.id_for_label }}" class="form-label">Password:</label>
+            {{ form.password }}
+        </p>
+        <input class="btn btn-primary" type="submit" value="Log ind">
+        <input type="hidden" name="next" value="{{ next }}">
     </form>
 </div>
 {% endblock %}

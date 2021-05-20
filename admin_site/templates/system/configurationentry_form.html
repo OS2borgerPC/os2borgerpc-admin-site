@@ -6,10 +6,11 @@ Rediger parameter
 
 {% block specific_content %}
   <div class="container-fluid main">
-    <form action="" method="post">{% csrf_token %}
+    <form action="" method="post">
+      {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-primary" type="submit" value="Gem" />
-      <a class="btn" href="javascript:history.go(-1)">Annuller</a> 
+      <input class="btn btn-primary" type="submit" value="Gem">
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annuller</a> 
     </form>
   </div>
 {% endblock %}

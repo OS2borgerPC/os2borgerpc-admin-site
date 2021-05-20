@@ -34,9 +34,6 @@ class SiteForm(forms.ModelForm):
         if instance and instance.pk:
             self.fields['uid'].widget.attrs['readonly'] = True
 
-        # Add form-control bootstrap CSS class to all Forms
-        add_classes_to_form(self, 'form-control')
-
     class Meta:
         model = Site
         exclude = ['configuration']
@@ -57,9 +54,6 @@ class GroupForm(forms.ModelForm):
                               kwargs['instance'].pcs.all()]
 
         forms.ModelForm.__init__(self, *args, **kwargs)
-
-        # Add form-control bootstrap CSS class to all Forms
-        add_classes_to_form(self, 'form-control')
 
     def save(self, commit=True):
         instance = forms.ModelForm.save(self, False)
@@ -139,8 +133,6 @@ class UserForm(forms.ModelForm):
             initial['usertype'] = SiteMembership.SITE_USER
         self.initial_type = initial['usertype']
         super(UserForm, self).__init__(*args, **kwargs)
-        # Add form-control bootstrap CSS class to all Forms
-        add_classes_to_form(self, 'form-control')
 
     class Meta:
         model = User
@@ -188,9 +180,6 @@ class ParameterForm(forms.Form):
         script = kwargs.pop('script')
         super(ParameterForm, self).__init__(*args, **kwargs)
 
-        # Add form-control bootstrap CSS class to all Forms
-        add_classes_to_form(self, 'form-control')
-
         for i, inp in enumerate(script.ordered_inputs):
             name = 'parameter_%s' % i
             field_data = {
@@ -213,9 +202,6 @@ class PCForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PCForm, self).__init__(*args, **kwargs)
 
-        # Add form-control bootstrap CSS class to all Forms
-        add_classes_to_form(self, 'form-control')
-
     class Meta:
         model = PC
         exclude = ('uid', 'configuration', 'package_list', 'site',
@@ -226,9 +212,6 @@ class PCForm(forms.ModelForm):
 class SecurityProblemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SecurityProblemForm, self).__init__(*args, **kwargs)
-
-        # Add form-control bootstrap CSS class to all Forms
-        add_classes_to_form(self, 'form-control')
 
     class Meta:
         model = SecurityProblem

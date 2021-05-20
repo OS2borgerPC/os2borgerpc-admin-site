@@ -5,42 +5,55 @@
   {% endif %}
 
   <fieldset>
-    <div class="row-fluid">
-      <p>
-        <label class="formtext" for="{{ form.username.id_for_label }}">Brugernavn:</label>
-        {{ form.username.errors }}
-        <div class="muted">{{ form.username.help_text }}</div>
-        {{ form.username }}
-      </p>
-      <p>
-        <label class="formtext" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
-        {{ form.new_password.errors }}
-        {{ form.new_password }}
-        <input class="hiddenpasswordfield" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
+    
+    <p>
+      {{ form.username.errors }}
+      <label class="form-label" for="{{ form.username.id_for_label }}">Brugernavn:</label>
+      {{ form.username }}
+      <span class="form-text">{{ form.username.help_text }}</span>
+    </p>
 
-        <label class="formtext" style="display: inline; margin-left: 10px;" for="{{ form_id|default:'user_form' }}_show_password">
-        <label class="formtext" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
-        {{ form.password_confirm.errors }}
-        {{ form.password_confirm }}
-        <input class="hiddenpasswordfield" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text" />
-        <input style="vertical-align: baseline;" id="{{ form_id|default:'user_form' }}_show_password" type="checkbox" class="showpasswordcheckbox" tabindex="100"/> Vis Password</label>
-        <br/>
-      </p>
-      <p>
-        <label class="formtext" for="{{ form.email.id_for_label }}">E-mail adresse:</label>
-        {{ form.email.errors }}
-        {{ form.email }}
-      </p>
+    <p>
+      {{ form.new_password.errors }}
+      <label class="form-label" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
+      {{ form.new_password }}
+    </p>
+    
+    <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text">
+    
+    <p>
+      {{ form.password_confirm.errors }}
+      <label class="form-label" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
+      {{ form.password_confirm }}
+    </p>
+    
+    <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text">
+
+    <div class="form-check" style="margin-bottom: 1rem;">
+      <input 
+        id="{{ form_id|default:'user_form' }}_show_password" 
+        type="checkbox" 
+        class="showpasswordcheckbox form-check-input" 
+        tabindex="100">
+      <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">Vis Password</label> 
     </div>
-    </fieldset>
-    <fieldset>
-      <div class="row-fluid">
-        <div class="span6">
-          <label class="formtext" for="{{ form.usertype.id_for_label }}">Brugertype:</label>
-          {{ form.usertype.errors }}
-          {{ form.usertype }}
-        </div>
-      </div>
+
+    <p>
+      {{ form.email.errors }}
+      <label class="form-label" for="{{ form.email.id_for_label }}">E-mail adresse:</label>
+      {{ form.email }}
+    </p>
+    
+  </fieldset>
+
+  <fieldset>
+
+    <p>
+      {{ form.usertype.errors }}
+      <label class="form-label" for="{{ form.usertype.id_for_label }}">Brugertype:</label>
+      {{ form.usertype }}
+    </p>
+
   </fieldset>
 
 <script type="text/javascript">

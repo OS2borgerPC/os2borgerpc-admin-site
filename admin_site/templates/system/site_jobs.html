@@ -36,25 +36,35 @@ Jobs
   </div>
   <div id="jobsearchnav" class="sublevelnav">
 
-    <h3 class="nav-header">Filtrer</h3>
+    <h3 class="nav-header">Filtre</h3>
     <button class="btn btn-link float-end" type="button" onclick="BibOS.JobList.reset()">Nulstil filtre</button>
     <hr>
 
     <form id="jobsearch-filterform" name="filterform" action="./" method="post">
+
       <input type="hidden" name="batch" value="{{ selected_batch }}">
       <input type="hidden" name="pc" value="{{ selected_pc }}">
       <input type="hidden" name="group" value="{{ selected_group }}">
       <input type="hidden" name="orderby" value="-pk">
       <input type="hidden" name="page" value="1">
+
       <div id="jobsearch-status-selectors">
         <h3>Status</h3>
         {% for s in status_choices%}
-          <label>
-            <input type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
-            <span class="badge {{ s.label }}">{{ s.name }}</span>
-          </label>
+          <div class="form-check">
+          
+            <input class="form-check-input" 
+              id="id_{{ s.value }}_chkbx"
+              type="checkbox" 
+              value="{{ s.value }}" 
+              name="status" 
+              {{ s.checked }}>
+            <label for="id_{{ s.value }}_chkbx" class="form-check-label">
+              <span class="badge {{ s.label }}">{{ s.name }}</span>
+            </label>
+          </div>
         {% endfor %}
-  </div>
+      </div>
       <hr>
       <button 
         class="btn btn-light" 

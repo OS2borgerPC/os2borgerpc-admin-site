@@ -11,7 +11,8 @@ Slet computer: {{pc.uid}}
       <strong style="font-size: 1.25em;">{{ pc.uid }}</strong>
     </p>
     <p>Hele computerens jobhistorik vil også blive slettet.</p>
-    <form action="" method="post">{% csrf_token %}
+    <form action="" method="post">
+      {% csrf_token %}
       {{ form.as_p }}
       <input class="btn btn-danger" type="submit" value="Bekræft sletning">
       <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">Annuller</button>

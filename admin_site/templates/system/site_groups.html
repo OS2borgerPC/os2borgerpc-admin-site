@@ -38,12 +38,15 @@ active
     <h2 class="divideheader">Detaljer om <em>{{ selected_group.name }}</em></h2>
     {% include 'notification.html' %}
 
-    <form name="updategroupform" id="updategroupform"
+    <form name="updategroupform" 
+      id="updategroupform"
       action="{% url 'group' site.uid selected_group.url %}"
-      method="post" enctype="multipart/form-data" class="row-fluid">
+      method="post" 
+      enctype="multipart/form-data" 
+      class="row-fluid">
 
-      <button class="btn btn-primary">Gem ændringer</button>
-      <!--<button class="btn" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
+      <button class="btn btn-primary" type="submit">Gem ændringer</button>
+      <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
 
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
@@ -62,24 +65,36 @@ active
 
         <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
           <div class="row-fluid">
-            <fieldset class="span6">
+            <fieldset>
+              
               {% csrf_token %}
-              <label for="id_name">Navn:</label>
-              {{ form.name.errors }}
-              {{ form.name }}
 
-              <label for="id_uid">Id:</label>
-              {{ form.uid.errors }}
-              {{ form.uid }}
+              <p>
+                {{ form.name.errors }}
+                <label for="{{ form.name.id_for_label }}" class="form-label">Navn:</label>
+                {{ form.name }}
+              </p>
 
-              <label for="id_description">Beskrivelse:</label>
-              {{ form.description.errors }}
-              {{ form.description }}
+              <p>
+                {{ form.uid.errors }}
+                <label for="{{ form.uid.id_for_label }}" class="form-label">Id:</label>
+                {{ form.uid }}
+              </p>
+
+              <p>
+                {{ form.description.errors }}
+                <label for="{{ form.description.id_for_label }}" class="form-label">Beskrivelse:</label>
+                {{ form.description }}
+              </p>
+
             </fieldset>
-            <fieldset class="span6">
-              <label for="id_pcs">Computere i denne gruppe:</label>
+
+            <fieldset>
+
               {{ form.pcs.errors }}
+              <p>Computere i denne gruppe:</p>
               {% include 'system/pclist/list.html' with submit_name='pcs' %}
+
             </fieldset>
           </div>
         </div>
@@ -108,8 +123,8 @@ active
                 {{ newform.as_p }}
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="Gem" />
-              <input type="reset" class="btn" data-bs-dismiss="modal" value="Annuller" />
+              <input type="submit" class="btn btn-primary" value="Gem">
+              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="Annuller">
             </div>
           </form>
         </div>

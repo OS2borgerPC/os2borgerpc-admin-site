@@ -3,6 +3,7 @@
 import os
 import configparser
 import logging
+import django
 from google.oauth2 import service_account
 
 logger = logging.getLogger(__name__)
@@ -63,7 +64,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS':
         [
-            os.path.join(install_dir, 'templates/')
+            os.path.join(install_dir, 'templates/'),
+            django.__path__[0] + '/forms/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -305,3 +307,5 @@ CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS', [])
 INITIALIZE_DATABASE = settings.getboolean(
     "INITIALIZE_DATABASE", False
 )
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
