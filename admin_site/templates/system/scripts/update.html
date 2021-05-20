@@ -15,7 +15,7 @@
       <!-- Search box -->
       <div class="input-group" style="padding: .5rem 1rem;">
         <input id="search_form" type="search" id="form1" class="form-control" placeholder="Søg...">
-        <button type="button" class="btn btn-primary" style="display: flex; flex-flow: row nowrap; align-items: center;">
+        <button type="button" class="btn btn-primary" style="display: flex; flex-flow: row nowrap; align-items: center;" title="Søg">
           <span class="material-icons">search</span>
         </button>
       </div>
@@ -40,13 +40,14 @@
       <div>
         {% include 'notification.html' %}
       </div>
+
       {% if not is_security %}
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">Kør script</button>
       {% endif %}
 
       {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
       {% if selected_script.is_global is False or user.is_superuser %}
-        <input type="submit" class="btn btn-dark" value="Gem ændringer">
+        <input type="submit" class="btn btn-primary" value="Gem ændringer">
       {% endif %}
 
 <!--      <button class="btn" onclick="location.href='{% url script_url site.uid selected_script.pk %}'; return false;">Fortryd ændringer</button>-->
@@ -65,7 +66,7 @@
             <iframe id="runscriptmodaliframe" src="{% url 'run_script' site.uid script.pk %}" style="border: 0; width: 100%; height: 250px;"></iframe>
           </div>
           <div id="runscriptmodalfooter" class="modal-footer">
-            <button class="btn" data-bs-dismiss="modal">OK</button>
+            <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
           </div>
         </div>
       </div>
@@ -84,19 +85,19 @@
           {% else %}
           action="{% url 'new_script' site.uid %}"
           {% endif %}
-                                                                                                                name="create_script_form"
+          name="create_script_form"
           id="create_script_form" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="modal-header">
-            <button type="button" class="close" data-bs-dismiss="modal">×</button>
             <h3>Tilføj nyt script</h3>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
             {% include 'system/scripts/form.html' with form=create_form disable_inputs="yes" %}
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Gem" />
-            <button class="btn" data-bs-dismiss="modal">Annuller</button>
+            <input type="submit" class="btn btn-primary" value="Gem" >
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuller</button>
           </div>
         </form>
       </div>

@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% block body %}
 
-    <form id="security_update_form" action="" method="post" class="popup-page">{% csrf_token %}
+    <form id="security_update_form" action="" method="post" class="popup-page">
+        {% csrf_token %}
         <p>
             <input class="btn btn-primary" type="submit" value="Gem">
-            <a class="btn" href="javascript:history.go(-1)">Luk</a>
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Luk</a>
         </p>
+
         <div class="alert alert-error">
-                    <p><strong>{{ securityevent.problem.name }}: {{ securityevent.summary }}</strong></p>
-                </div>
+            <p><strong>{{ securityevent.problem.name }}: {{ securityevent.summary }}</strong></p>
+        </div>
+
         <div class="row-fluid">
             <div class="span6">
                 
@@ -17,21 +20,33 @@
                     <dd>{{ securityevent.ocurred_time }}</dd>
                     <dt>Maskine</dt>
                     <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</dd>
-                    <dt>Note</dt>
+                    <dt>
+                        <label class="form-label" for="{{ form.note.id_for_label }}">
+                            Note
+                        </label>
+                    </dt>
                     <dd>
-                    {{ form.note.errors }}
-                    {{ form.note }}
+                        {{ form.note.errors }}
+                        {{ form.note }}
                     </dd>
             
-                    <dt>Håndteres af</dt>
+                    <dt>
+                        <label class="form-label" for="{{ form.assigned_user.id_for_label }}">
+                            Håndteres af
+                        </label>
+                    </dt>
                     <dd>
-                    {{ form.assigned_user.errors }}
-                    {{ form.assigned_user }}
+                        {{ form.assigned_user.errors }}
+                        {{ form.assigned_user }}
                     </dd>
-                    <dt><strong>Status</strong></dt>
+                    <dt>
+                        <label class="form-label" for="{{ form.status.id_for_label }}">
+                            <strong>Status</strong>
+                        </label>
+                    </dt>
                     <dd>
-                      {{ form.status.errors }}
-                      {{ form.status }}
+                        {{ form.status.errors }}
+                        {{ form.status }}
                     </dd>
                 </dl>
             </div>

@@ -10,8 +10,11 @@
   {% endfor %}
     <tr>
       <td colspan="2">
-        <input type="hidden" name="{{ cnf_id }}_new_entries" id="{{ cnf_id }}_new_entries" value="0" />
-        <a href="javascript:void(0)" onclick="BibOS.ConfigList.startAdd('{{ cnf_id }}')" title="Tilføj ny konfiguration"><i class="icon-plus"></i> tilføj konfiguration</a>
+        <input type="hidden" name="{{ cnf_id }}_new_entries" id="{{ cnf_id }}_new_entries" value="0">
+        <a href="javascript:void(0)" onclick="BibOS.ConfigList.startAdd('{{ cnf_id }}')" title="Tilføj ny konfiguration">
+          <span class="material-icons">add</span>
+          Tilføj konfiguration
+        </a>
       </td>
     </tr>
   </table>

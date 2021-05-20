@@ -33,27 +33,40 @@ Computere
 
   <div class="container-fluid main sublevelmain">
 
-    <h2 class="divideheader">Detaljer om <em>{{ selected_pc.name }}</em>
+    <h2 class="divideheader">
+      Detaljer om <em>{{ selected_pc.name }}</em>
       {% if selected_pc.securityevent_set.count > 0 %}
-      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se hændelser for denne PC"><span class="badge badge-important">
-              <icon class="{% if has_security_events %}icon-fire{% else %}icon-ok{% endif %} icon-white">
-              </icon></span></a>
-{% endif %}
+      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se hændelser for denne PC">
+        <span class="badge badge-important">
+          <icon class="{% if has_security_events %}icon-fire{% else %}icon-ok{% endif %} icon-white"></icon>
+        </span>
+      </a>
+      {% endif %}
     </h2>
     {% include 'notification.html' %}
 
     {% if selected_pc.last_seen %}
-      <p class="" style="float:right;"><span class="muted">
-        &nbsp;Senest set:</span> <strong>{{ selected_pc.last_seen|date:'Y-m-d H:i:s' }} </strong></p>
+      <p class="" style="float:right;">
+        <span class="muted">
+          &nbsp;Senest set:
+        </span> 
+        <strong>{{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}</strong>
+      </p>
     {% endif %}
     {% if security_event != "Ingen hændelser"%}
-      <p style="float:right; clear:right;"><span class="muted"> &nbsp;Seneste advarsel set:</span> <strong>{{ security_event.reported_time|date }} </strong> {{ security_event.reported_time|time }}</p>
+      <p style="float:right; clear:right;">
+        <span class="muted">
+          &nbsp;Seneste advarsel set:
+        </span>
+        <strong>{{ security_event.reported_time|date }}</strong> 
+        {{ security_event.reported_time|time }}
+      </p>
     {% endif %}
 
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       {% csrf_token %}
 
-      <button class="btn btn-primary">Gem ændringer</button>
+      <button class="btn btn-primary" type="submit">Gem ændringer</button>
       <!--<button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Nulstil ændringer</button>-->
 
       <!-- The three tabs on the page: -->
@@ -73,32 +86,45 @@ Computere
       <div class="tab-content">
 
         <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
-          <div class="row-fluid">
-            <fieldset class="span6">
-              <label for="id_name">Navn:</label>
+        
+          <fieldset>
+
+            <p>
               {{ form.name.errors }}
+              <label class="form-label" for="{{ form.name.id_for_label }}">Navn:</label>
               {{ form.name }}
+            </p>
 
-              <label for="id_description">Beskrivelse:</label>
+            <p>  
               {{ form.description.errors }}
+              <label class="form-label" for="{{ form.description.id_for_label }}">Beskrivelse:</label>
               {{ form.description }}
+            </p>
 
-              <label for="id_location">Placering:</label>
+            <p>
               {{ form.location.errors }}
+              <label class="form-label" for="{{ form.location.id_for_label }}">Placering:</label>  
               {{ form.location }}
+            </p>
 
-              <label class="checkbox" for="id_is_active">
-                {{ form.is_active.errors }}
-                {{ form.is_active }} Aktiv
-              </label>
+            <div style="margin-bottom: 1rem;">
+              {{ form.is_active.errors }}
+              <div class="form-check form-switch">
+                {{ form.is_active }}
+                <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Aktiv</label>
+              </div>
+            </div>
 
-            </fieldset>
-            <fieldset class="span6">
-              {{ form.pc_groups.errors }}
-              <label>Grupper:</label>
-              {% include 'system/pcgrouplist/list.html' with submit_name='pc_groups' %}
-            </fieldset>
-          </div>
+          </fieldset>
+
+          <fieldset>
+
+            {{ form.pc_groups.errors }}
+            <p>Grupper:</p>
+            {% include 'system/pcgrouplist/list.html' with submit_name='pc_groups' %}
+
+          </fieldset>
+        
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
@@ -126,7 +152,7 @@ Computere
               <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>
                 {% if job.has_info %}
-                <button class="btn jobinfobutton" data-pk="{{ job.pk }}"><i class="icon-info-sign"></i></button>
+                  <button type="button" class="btn btn-info jobinfobutton" data-pk="{{ job.pk }}"><i class="icon-info-sign"></i></button>
                 {% endif %}
               </td>
             </tr>

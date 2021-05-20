@@ -1,64 +1,64 @@
-  {% if form.non_field_errors %}
+{% if form.non_field_errors %}
   <span class="form-error">
       {{ form.non_field_errors }}
   </span>
-  {% endif %}
+{% endif %}
 
-  <fieldset>
-    
-    <p>
-      {{ form.username.errors }}
-      <label class="form-label" for="{{ form.username.id_for_label }}">Brugernavn:</label>
-      {{ form.username }}
-      <span class="form-text">{{ form.username.help_text }}</span>
-    </p>
+<fieldset>
+  
+  <p>
+    {{ form.username.errors }}
+    <label class="form-label" for="{{ form.username.id_for_label }}">Brugernavn:</label>
+    {{ form.username }}
+    <span class="form-text">{{ form.username.help_text }}</span>
+  </p>
 
-    <p>
-      {{ form.new_password.errors }}
-      <label class="form-label" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
-      {{ form.new_password }}
-    </p>
-    
-    <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text">
-    
-    <p>
-      {{ form.password_confirm.errors }}
-      <label class="form-label" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
-      {{ form.password_confirm }}
-    </p>
-    
-    <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text">
+  <p>
+    {{ form.new_password.errors }}
+    <label class="form-label" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
+    {{ form.new_password }}
+  </p>
+  
+  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text">
+  
+  <p>
+    {{ form.password_confirm.errors }}
+    <label class="form-label" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
+    {{ form.password_confirm }}
+  </p>
+  
+  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text">
 
-    <div class="form-check" style="margin-bottom: 1rem;">
-      <input 
-        id="{{ form_id|default:'user_form' }}_show_password" 
-        type="checkbox" 
-        class="showpasswordcheckbox form-check-input" 
-        tabindex="100">
-      <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">Vis Password</label> 
-    </div>
+  <div class="form-check" style="margin-bottom: 1rem;">
+    <input 
+      id="{{ form_id|default:'user_form' }}_show_password" 
+      type="checkbox" 
+      class="showpasswordcheckbox form-check-input" 
+      tabindex="100">
+    <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">Vis Password</label> 
+  </div>
 
-    <p>
-      {{ form.email.errors }}
-      <label class="form-label" for="{{ form.email.id_for_label }}">E-mail adresse:</label>
-      {{ form.email }}
-    </p>
-    
-  </fieldset>
+  <p>
+    {{ form.email.errors }}
+    <label class="form-label" for="{{ form.email.id_for_label }}">E-mail adresse:</label>
+    {{ form.email }}
+  </p>
+  
+</fieldset>
 
-  <fieldset>
+<fieldset>
 
-    <p>
-      {{ form.usertype.errors }}
-      <label class="form-label" for="{{ form.usertype.id_for_label }}">Brugertype:</label>
-      {{ form.usertype }}
-    </p>
+  <p>
+    {{ form.usertype.errors }}
+    <label class="form-label" for="{{ form.usertype.id_for_label }}">Brugertype:</label>
+    {{ form.usertype }}
+  </p>
 
-  </fieldset>
+</fieldset>
 
 <script type="text/javascript">
   $(function() {
-    var form = $('#{{ form_id|default:'user_form' }}');
+    var form = $("#{{ form_id|default:'user_form' }}");
 
     // Hide and readonly the shadow fields
     form.find('input.hiddenpasswordfield').hide().attr('readonly', 'readonly');

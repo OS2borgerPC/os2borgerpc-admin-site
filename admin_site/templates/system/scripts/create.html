@@ -6,11 +6,11 @@
     <div class="listutils">
       <a class="btn btn-link"
         {% if is_security %}
-            href="{% url 'new_security_script' site.uid %}" 
+          href="{% url 'new_security_script' site.uid %}" 
         {% else %}
-            href="{% url 'new_script' site.uid %}" 
+          href="{% url 'new_script' site.uid %}" 
         {% endif %}
-            title="Tilføj nyt script">
+          title="Tilføj nyt script">
         <span class="material-icons">add</span>
         Tilføj nyt script
       </a>
@@ -26,25 +26,26 @@
     </h2>
 
     <form method="post"
-          name="scriptform" id="scriptform"
-        {% if is_security %}
-        action="{% url 'new_security_script' site.uid %}"
-        {% else %}
-        action="{% url 'new_script' site.uid %}"
-        {% endif %}
-        enctype="multipart/form-data">
+      name="scriptform" id="scriptform"
+      {% if is_security %}
+      action="{% url 'new_security_script' site.uid %}"
+      {% else %}
+      action="{% url 'new_script' site.uid %}"
+      {% endif %}
+      enctype="multipart/form-data">
       {% csrf_token %}
 
       <div>
         {% include 'notification.html' %}
       </div>
+
       <input type="submit" class="btn btn-primary" value="Opret script">
       {% if is_security %}
-        <button class="btn btn-secondary" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
+        <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
       {% else %}
-        <button class="btn btn-secondary" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
+        <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
       {% endif %}
-      <hr>
+      
       {% include 'system/scripts/form.html' %}
     </form>
   </div>  
