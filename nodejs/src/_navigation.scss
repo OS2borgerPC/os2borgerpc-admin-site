@@ -5,7 +5,7 @@
 
 .nav-item > .nav-link:not(.active):hover,
 .nav-item > .nav-link:not(.active):focus {
-    background-color: $primary;
+    background-color: $warning;
     color: $white;
 }
 
@@ -48,7 +48,7 @@
         &.active,
         &:hover,
         &:focus {
-            background-color: $primary;
+            background-color: $warning;
             color: $white;
         }
     }
