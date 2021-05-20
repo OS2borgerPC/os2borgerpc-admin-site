@@ -74,20 +74,10 @@
     display: flex;
     flex-flow: column nowrap;
 
-    li div a {
-        border-top: solid 1px $white; 
-    }
-    li a.list-item {
-        text-decoration: none;
-    }
-    li a.list-item:hover {
-        background: $primary; 
-        color: $white;
-    }
     a.remove:hover, 
     a.remove:active, 
     a.remove:focus {
-        background: $danger; 
+        background: $danger;
         border: none;
     }
     .btn-close { 

@@ -20,15 +20,17 @@
           <span class="collapse-label">{{ ltag.name }}</span>
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
-        <ul class="nav collapse collapse-content" id="collapse{{ ltag.name }}local">
+        <ul class="item-list collapse collapse-content" id="collapse{{ ltag.name }}local">
           {% for script in ltag.scripts.all %}
-              <li class="nav-item deletable">
-                <a class="nav-link list-item {% ifequal script selected_script %} show active {% endifequal %}" href="{% url script_url site.uid script.pk %}">
-                  {{ script.name }}
+            <li class="{% ifequal script selected_script %}active{% endifequal %}">
+              <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                {{ script.name }}
+              </a>
+              {% ifequal script selected_script %}
+                <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                  clear
                 </a>
-                <a href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
-                  <span class="material-icons">clear</span>
-                </a>
+              {% endifequal %}
               </li>
           {% endfor %}
         </ul>
@@ -36,15 +38,17 @@
     {% endfor %}
 
     {% if local_scripts_by_tag.untagged %}
-      <ul class="nav list-script-remainders">
+      <ul class="item-list">
         {% for script in local_scripts_by_tag.untagged %}
-            <li class="nav-item deletable">
-              <a class="nav-link list-item {% ifequal script selected_script %} show active {% endifequal %}" href="{% url script_url site.uid script.pk %}">
+            <li class="{% ifequal script selected_script %}active{% endifequal %}">
+              <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
               </a>
-              <a href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
-                <span class="material-icons">clear</span>
-              </a>
+              {% ifequal script selected_script %}
+                <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                  clear
+                </a>
+              {% endifequal %}
             </li>
         {% endfor %}
       </ul>
@@ -61,10 +65,10 @@
           <span class="collapse-label">{{ gtag.name }}</span>
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
-        <ul class="nav collapse collapse-content" id="collapse{{ gtag.name }}global">
+        <ul class="item-list collapse collapse-content" id="collapse{{ gtag.name }}global">
           {% for script in gtag.scripts.all %}
-            <li class="nav-item">
-              <a class="nav-link list-item {% ifequal script selected_script %}active{% endifequal %}" href="{% url script_url site.uid script.pk %}">
+            <li class="{% ifequal script selected_script %}active{% endifequal %}">
+              <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
               </a>
             </li>
@@ -74,10 +78,10 @@
     {% endfor %}
 
     {% if global_scripts_by_tag.untagged %}
-      <ul class="nav list-script-remainders">
+      <ul class="item-list">
         {% for script in global_scripts_by_tag.untagged %}
-          <li class="nav-item">
-            <a class="nav-link list-item {% ifequal script selected_script %}active{% endifequal %}" href="{% url script_url site.uid script.pk %}">
+          <li class="{% ifequal script selected_script %}active{% endifequal %}">
+            <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
               {{ script.name }}
             </a>
           </li>

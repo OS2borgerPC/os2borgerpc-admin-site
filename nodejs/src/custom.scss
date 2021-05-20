@@ -7,43 +7,13 @@
 
 // Then add additional custom code here
 @import "layout";
+@import "itemlist";
 @import "collapsible";
 @import "navigation";
 @import "table";
 @import "pagination";
 @import "icons";
-@import "deletable";
 
-
-/*
-    UI elements    
-
-    - main nav / _navigation.scss
-    - main header / _layout.scss
-    - itemlist (subnav) 
-    -- itemlist btn (+)
-    -- itemlist tabs
-    -- itemlist collapsible
-    - filters (subnav)
-    - content header / _layout.scss
-    - table
-    - form
-    - tabs
-    - button, primary (save)
-    - button, secondary (cancel)
-    - button, highlighted (kør script)
-    - modal dialog
-    - code view (pre)
-    - contentlist (dark table)
-    - giant popover
-    - pagination
-    - collapsible list group / _collapsible.scss
-    - deletable list element / _deletable.scss
-*/
-
-body {
-    background-color: $white;
-}
 
 hr {
     border-top: 1px solid $gray-700;

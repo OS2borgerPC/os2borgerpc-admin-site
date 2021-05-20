@@ -11,23 +11,29 @@ Sikkerhedsregler
 {% endblock %}
 
 {% block specific_content %}
-<ul id="security-problems-nav" class="sublevelnav">
-    <li class="listutils">
+<div id="security-problems-nav" class="sublevelnav">
+    <div class="listutils">
         <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
-          <i class="icon-plus icon-white"></i>Definér nyt sikkerhedsproblem
+            <span class="material-icons">add</span>
+            Definér nyt sikkerhedsproblem
         </button>
-    </li>
-    {% for sp in site.security_problems.all %}
-    <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>
-        {% ifequal sp selected_security_problem %}
-        {% if selected_security_problem.is_delete_allowed %}
-        <a class="remove float-end" href="{% url 'security_problem_delete' site_uid=site.url uid=selected_security_problem.uid %}" title="Slet sikkerhedsproblem" ><i class="icon-remove icon-white"></i></a>
-        {% endif %}
-        {% endifequal %}
-        <a class="list-item" href="{% url 'security_problem' site_uid=site.url uid=sp.uid %}"><i class="icon-exclamation-sign"></i> {{ sp.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
+    </div>
+    <ul class="item-list">
+        {% for sp in site.security_problems.all %}
+            <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>                
+                <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/"><i class="icon-exclamation-sign"></i> {{ sp.name }}</a>
+                {% ifequal sp selected_security_problem %}
+                    {% if selected_security_problem.is_delete_allowed %}
+                        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/" title="Slet sikkerhedsproblem">
+                            clear
+                        </a>
+                    {% endif %}
+                {% endifequal %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
 
 <div class="container-fluid main sublevelmain">
 

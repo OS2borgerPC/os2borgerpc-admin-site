@@ -22,13 +22,7 @@
 
 /* Global */
 
-a, .btn-link { color: var(--bs-dark); }
-
 .btn-gentle-warning { background-color: var(--bs-primary); border-color: var(--bs-primary); }
-
-/* TODO! This doesn't work yet! */
-input[class="btn"]:hover { border: #8a53be 2px solid; }
-
 
 /* Headers */
 
@@ -39,9 +33,6 @@ div.runscriptdialogheader {display: none;}
 
 
 /* Navigation */
-
-.tab-content li { flex-basis: 100%; padding: 4px 0;}
-[class^="icon-"], [class*=" icon-"] {margin-right: 3px;}
 
 .nav.utils>li>a {text-shadow: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: var(--bs-gray-dark); border-radius: 5px;}

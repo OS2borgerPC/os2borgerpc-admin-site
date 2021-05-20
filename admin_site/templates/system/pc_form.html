@@ -12,18 +12,21 @@ Computere
 
 {% block specific_content %}
 
-  <ul class="sublevelnav">
+  <ul class="sublevelnav item-list">
     {% if not pc_list.all%}
-      <li>Der er ingen computere</li>
+      <li class="disabled">Der er ingen computere</li>
     {% endif %}
     {% for pc in pc_list %}
-    <li >
-        {% comment %} Add deletion to every row: <a class="float-end btn btn-close" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
+      <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
+        {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
+        <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
+          {{ pc.name }}
+        </a>
         {% ifequal pc selected_pc %}
-        <a class="float-end btn btn-close" href="/site/{{ site.url }}/computers/{{ selected_pc.uid }}/delete/" title="Slet computer"></a>
+          <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
+            clear
+          </a>
         {% endifequal %}
-        <div id="{{pc.uid}}"> <a class="list-item {% ifequal pc selected_pc %}active %}{% endifequal %}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();"><i class="icon-hdd"></i> {{ pc.name }}</a>
-        </div>
       </li>
     {% endfor %}
   </ul>

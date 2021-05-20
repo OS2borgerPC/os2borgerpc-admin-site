@@ -1,30 +1,11 @@
-/*
-    Example collapsible implementation:
-
-    <a data-bs-toggle="collapse" href="#collapseId" role="button" aria-expanded="false" aria-controls="collapseId">
-        <span class="material-icons">folder</span>
-        <span class="collapse-label">
-            ... collapse button label ...
-        </span>
-        <span class="material-icons collapse-arrow">arrow_drop_down</span>
-    </a>
-    <div class="collapse collapse-content" id="collapseId">
-        ... collapsed content ...
-    </div>
-*/
-
 .list-collapsible {
-    
-    .nav-item {
-        border-bottom: solid 1px $gray-200;
-        padding: 0;
-    }
 
     [data-bs-toggle="collapse"] {
+        color: $gray-900;
         margin: 0;
         border-bottom: solid 1px $gray-100;
         text-decoration: none;
-        padding: 1rem;
+        padding: $spacer*.75 $spacer*.75 $spacer*.75 $spacer;
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
@@ -33,6 +14,7 @@
         &:hover {
             background-color: $primary;
             color: $white;
+            background-color: $gray-400;
         }
 
         .material-icons:first-child {
@@ -57,4 +39,9 @@
     .collapse-content {
         background-color: $gray-100;
     }
+
+    .item-list > li {
+        border-bottom: solid 1px $gray-200;
+    }
+
 }

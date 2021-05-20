@@ -1,6 +1,7 @@
 body {
     min-width: 60rem;
     overflow: auto;
+    background-color: $white;
 }
 
 
@@ -38,12 +39,6 @@ header {
         color: $white;
         font-style: normal; 
     }
-
-    label {
-        margin-left: 20px; 
-        position: relative; 
-        bottom: 2px;
-    }
 }
 
 
@@ -53,7 +48,7 @@ header {
     position: absolute; 
     top: $spacer*3.5;
     bottom: 0;
-    padding: $spacer*2;
+    padding: $spacer*1.75 $spacer*2;
     left: $navigation-width;
     right: 0; 
     overflow-x: hidden; 

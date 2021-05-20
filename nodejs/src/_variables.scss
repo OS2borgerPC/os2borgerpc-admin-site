@@ -27,7 +27,8 @@ $primary: $orange;
 $warning: $orange;
 
 // Sizes
-$navigation-width: 16rem;
+$spacer: 1rem;
+$navigation-width: $spacer*16;
 
 // Font
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -62,3 +63,10 @@ $nav-tabs-link-active-bg: $gray-100;
 $nav-tabs-link-active-color: $black;
 $nav-tabs-link-hover-border-color: $primary;
 $nav-tabs-link-active-border-color: $gray-100;
+
+// List group
+$list-group-bg: $gray-200;
+$list-group-border-color: $white;
+$list-group-border-radius: 0;
+$list-group-border-width: 1px;
+$list-group-item-padding-y: $spacer*.75;

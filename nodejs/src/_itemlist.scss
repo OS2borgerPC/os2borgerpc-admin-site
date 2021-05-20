@@ -1,0 +1,56 @@
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    & > li {
+        border-bottom: solid 1px $white;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+    }
+
+    .disabled {
+        color: $gray-500;
+    }
+
+    .active,
+    .active a {
+        color: $white !important;
+        background-color: $primary !important;
+    }
+
+    .item-list-link {
+        display: block;
+        padding: $spacer*.75 $spacer;
+        flex-grow: 1;
+
+        &,
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $gray-900;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: $gray-400;
+        }
+    }
+
+    .item-list-deletable {
+        border-radius: .33rem;
+        display: block;
+        text-decoration: none;
+        padding: $spacer*.5;
+        margin: 0 $spacer*.25;
+        font-size: 1.25rem;
+
+        &:hover,
+        &:focus {
+            background-color: $danger !important;
+        }
+    }
+}
