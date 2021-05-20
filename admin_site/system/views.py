@@ -562,8 +562,9 @@ class ScriptMixin(object):
 
         # Create a tag->scripts dict for tags that has local scripts.
         local_tag_scripts_dict = {
-            tag: tag.scripts.all() for tag in ScriptTag.objects.all()
-            if tag.scripts.filter(site=self.site).exists()
+            tag: local_scripts.filter(tags=tag)
+            for tag in ScriptTag.objects.all()
+            if local_scripts.filter(tags=tag).exists()
         }
         # Add scripts with no tags as untagged.
         if local_scripts.filter(tags=None).exists():
@@ -575,8 +576,9 @@ class ScriptMixin(object):
 
         # Create a tag->scripts dict for tags that has global scripts.
         global_tag_scripts_dict = {
-            tag: tag.scripts.all() for tag in ScriptTag.objects.all()
-            if tag.scripts.filter(site=None).exists()
+            tag: global_scripts.filter(tags=tag)
+            for tag in ScriptTag.objects.all()
+            if global_scripts.filter(tags=tag).exists()
         }
         # Add scripts with no tags as untagged.
         if global_scripts.filter(tags=None).exists():
