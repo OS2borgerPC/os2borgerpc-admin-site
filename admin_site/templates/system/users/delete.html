@@ -29,8 +29,11 @@ Brugere
       <div>
         <form action="{% url 'delete_user' site.uid selected_user.username %}" name="update_user_form" id="update_user_form" method="post">
           {% csrf_token %}
-          <p>Er du sikker på at du vil slette brugeren {{ selected_user.username }}{% if selected_user.email %} &lt;{{ selected_user.email }}&gt;{% endif %}?</p>
-          <input class="btn btn-danger" type="submit" value="Bekræft sletning">
+          <p>
+            Er du sikker på at du vil slette brugeren<br> 
+            <strong>{{ selected_user.username }}{% if selected_user.email %} &lt;{{ selected_user.email }}&gt;{% endif %}</strong>?
+          </p>
+          <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
           <input class="btn btn-secondary" type="button" onclick="location.href='{% url 'user' site.uid selected_user.username %}'" value="Annuller">
         </form>
       </div>

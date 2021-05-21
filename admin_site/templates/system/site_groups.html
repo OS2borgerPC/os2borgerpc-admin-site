@@ -52,9 +52,6 @@ active
       enctype="multipart/form-data" 
       class="row-fluid">
 
-      <button class="btn btn-primary" type="submit">Gem ændringer</button>
-      <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
-
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" role="presentation">
@@ -68,38 +65,38 @@ active
       </ul>
 
       <!-- The content for the three tabs you can choose from above, one after one: -->
-      <div class="tab-content">
+      <div class="tab-content pb-4" style="border-radius: .33rem .33rem 0 0;">
 
         <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
-          <div class="row-fluid">
-            <fieldset>
+          <div class="row gx-5">
+            <fieldset class="col-12 col-lg-6">
               
               {% csrf_token %}
 
               <p>
                 {{ form.name.errors }}
-                <label for="{{ form.name.id_for_label }}" class="form-label">Navn:</label>
+                <label for="{{ form.name.id_for_label }}" class="form-label">Navn</label>
                 {{ form.name }}
               </p>
 
               <p>
                 {{ form.uid.errors }}
-                <label for="{{ form.uid.id_for_label }}" class="form-label">Id:</label>
+                <label for="{{ form.uid.id_for_label }}" class="form-label">Id</label>
                 {{ form.uid }}
               </p>
 
               <p>
                 {{ form.description.errors }}
-                <label for="{{ form.description.id_for_label }}" class="form-label">Beskrivelse:</label>
+                <label for="{{ form.description.id_for_label }}" class="form-label">Beskrivelse</label>
                 {{ form.description }}
               </p>
 
             </fieldset>
 
-            <fieldset>
+            <fieldset class="col-12 col-lg-6">
 
               {{ form.pcs.errors }}
-              <p>Computere i denne gruppe:</p>
+              <p>Computere i denne gruppe</p>
               {% include 'system/pclist/list.html' with submit_name='pcs' %}
 
             </fieldset>
@@ -114,6 +111,13 @@ active
           {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
       </div>
+
+      <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
+        <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+        <button class="btn btn-secondary" type="reset">Annuller</button>
+        <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
+      </div>
+      
 
     </form>
 

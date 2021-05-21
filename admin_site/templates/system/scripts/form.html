@@ -1,26 +1,26 @@
-<p class="d-flex justify-content-end mb-0">
+<div class="d-flex justify-content-end">
   {% if form.instance.created %}
-    <span>
+    <p class="mb-3 mt-3">
       Oprettet: {{ form.instance.created }}
       {% if form.instance.user_created %}
         <span class="text-muted">({{ form.instance.user_created }})</span>
       {% endif %}
-    </span>
+    </p>
   {% endif %}
 
   {% if form.instance.modified %}
-    <span class="ms-3">
+    <p class="mb-3 ms-3 mt-3">
       Ændret: {{ form.instance.modified }} 
       {% if form.instance.user_modified %}
         <span class="text-muted">({{ form.instance.user_modified }})</span>
       {% endif %}
-    </span>
+    </p>
   {% endif %}
-</p>
+</div>
 
 {% if disable_inputs != "yes" %}
   <!-- The three tabs on the page: -->
-  <ul class="nav nav-tabs mt-0" role="tablist">
+  <ul class="nav nav-tabs mt-2" role="tablist">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
     </li>
@@ -35,7 +35,7 @@
   </ul>
 
   <!-- The content for the three tabs you can choose from above, one after one: -->
-  <div class="tab-content">
+  <div class="tab-content" style="border-radius: .33rem .33rem 0 0;">
     <div id="details" class="tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
 {% endif %}
 
@@ -105,7 +105,7 @@
 
         {% if show_code_preview %}
           <p>Kode:</p>
-          <pre><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
+          <pre class="mb-0"><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
         {% endif %}
 
       </fieldset>
@@ -115,33 +115,34 @@
     <div id="parameters" class="tab-pane fade" role="tabpanel" aria-labelledby="parameters-tab">
 {% endif %}
   
-    {% if disable_inputs or is_security %}
-      <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
-    {% else %}
-      <fieldset id="script-inputs">
+      {% if disable_inputs or is_security %}
         <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
-        <p>Input-parametre:</p>
-        <div class="well">
-          <table class="table table-condensed">
-            <thead>
-              <tr>
-                <th>Navn</th>
-                <th>Type</th>
-                <th>Slet</th>
-              </tr>
-            </thead>
-            <tbody id="script-input-container">
-              <tr class="script-input-add">
-                <td colspan="3">
-                  <a href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="Tilføj ny konfiguration"><i class="icon-plus"></i> Tilføj parameter</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </fieldset>
-    {% endif %}
+      {% else %}
+        <fieldset id="script-inputs">
+          <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
+          <p>Input-parametre</p>
+          <div class="gray-box-border">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Navn</th>
+                  <th>Type</th>
+                  <th>Slet</th>
+                </tr>
+              </thead>
+              <tbody id="script-input-container">
+                <tr class="script-input-add">
+                  <td colspan="3">
+                    <a href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="Tilføj ny konfiguration"><i class="icon-plus"></i> Tilføj parameter</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </fieldset>
+      {% endif %}
   
 {% if disable_inputs != "yes" %}
+    </div>
   </div>
 {% endif %}

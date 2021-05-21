@@ -1,0 +1,12 @@
+.form-control,
+.form-select {
+    max-width: $spacer*27;
+}
+
+.modal-body {
+
+    .form-control,
+    .form-select {
+        max-width: 100%;
+    }
+}

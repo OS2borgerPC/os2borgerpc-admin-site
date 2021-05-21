@@ -25,19 +25,27 @@ Sikkerhedshændelser
     </tbody>
    </table>
   </div>
+
   <div id="securityeventsearchnav" class="sublevelnav">
-    <h3 class="nav-header">Filtre</h3>
-    <button class="btn btn-link" type="button" onclick="BibOS.SecurityEventList.reset()">
-      Nulstil filtre
-    </button>
-    <hr>
+
+    <div class="d-flex justify-content-between align-items-center px-3 py-1">
+      <h3 class="nav-header">Filtre</h3>
+      <button class="btn btn-link" type="button" onclick="BibOS.SecurityEventList.reset()">
+        Nulstil filtre
+      </button>
+    </div>
+
+    <hr class="mt-0">
+
     <form id="securityeventsearch-filterform" name="filterform" action="./" method="post">
+
       <input type="hidden" name="orderby" value="-pk">
       <input type="hidden" name="page" value="1">
-      <div id="securityeventsearch-level-selectors">
-        <h4 class="nav-header">Alvorlighedsgrad</h4>
+
+      <div id="securityeventsearch-level-selectors" class="px-3 pt-2">
+        <h4 class="mb-3">Alvorlighedsgrad</h4>
         {% for l in level_choices %}
-          <div class="form-check">
+          <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" id="chkbx-{{ l.value }}" value="{{ l.value }}" name="level" {{ l.checked }}>
             <label class="form-check-label" for="chkbx-{{ l.value }}">
               <span class="severity-checkbox severity-{{ l.label }}">{{ l.name }}</span>
@@ -45,11 +53,13 @@ Sikkerhedshændelser
           </div>
         {% endfor %}
       </div>
+
       <hr>
-      <div id="securityeventsearch-status-selectors">
-          <h4 class="nav-header">Status</h4>
+
+      <div id="securityeventsearch-status-selectors" class="px-3 pt-2">
+        <h4 class="mb-3">Status</h4>
           {% for s in status_choices %}
-          <div class="form-check">
+          <div class="form-check mb-3">
             <input class="form-check-input" id="chkbx-{{ s.value }}" type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
             <label class="form-check-label" for="chkbx-{{ s.value }}">
               <span class="badge {{ s.label }}">{{ s.name }}</span>
@@ -57,9 +67,12 @@ Sikkerhedshændelser
           </div>
         {% endfor %}
       </div>
+
       <hr>
+
     </form>
   </div>
+  
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     {% include 'notification.html' %}
     <table class="table table-hover warn-table" id="site_securityevents_table">

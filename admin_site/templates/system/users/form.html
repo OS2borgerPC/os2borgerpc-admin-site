@@ -8,14 +8,14 @@
   
   <p>
     {{ form.username.errors }}
-    <label class="form-label" for="{{ form.username.id_for_label }}">Brugernavn:</label>
+    <label class="form-label" for="{{ form.username.id_for_label }}">Brugernavn</label>
     {{ form.username }}
     <span class="form-text">{{ form.username.help_text }}</span>
   </p>
 
   <p>
     {{ form.new_password.errors }}
-    <label class="form-label" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
+    <label class="form-label" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte)</label>
     {{ form.new_password }}
   </p>
   
@@ -23,7 +23,7 @@
   
   <p>
     {{ form.password_confirm.errors }}
-    <label class="form-label" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
+    <label class="form-label" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen)</label>
     {{ form.password_confirm }}
   </p>
   
@@ -40,17 +40,13 @@
 
   <p>
     {{ form.email.errors }}
-    <label class="form-label" for="{{ form.email.id_for_label }}">E-mail adresse:</label>
+    <label class="form-label" for="{{ form.email.id_for_label }}">E-mail adresse</label>
     {{ form.email }}
   </p>
   
-</fieldset>
-
-<fieldset>
-
   <p>
     {{ form.usertype.errors }}
-    <label class="form-label" for="{{ form.usertype.id_for_label }}">Brugertype:</label>
+    <label class="form-label" for="{{ form.usertype.id_for_label }}">Brugertype</label>
     {{ form.usertype }}
   </p>
 

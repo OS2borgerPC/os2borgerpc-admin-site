@@ -125,14 +125,7 @@ For configuration tables, etc
 ```
 
 
-
-
-- filters (subnav)
 - table
-- button, primary (save)
-- button, secondary (cancel)
-- button, highlighted (kør script)
-- modal dialog
 - contentlist (dark table)
 - giant popover
 - pagination
