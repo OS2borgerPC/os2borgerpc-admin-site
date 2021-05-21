@@ -14,7 +14,7 @@ Slet computer: {{pc.uid}}
     <form action="" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-danger" type="submit" value="Bekræft sletning">
+      <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
       <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">Annuller</button>
     </form>
   </div>

@@ -10,7 +10,7 @@ body {
 header {
     background: $gray-800; 
     padding: $spacer;
-    color: $gray-400;
+    color: $gray-300;
 
     &.detailpage {
         margin-left: $navigation-width;
@@ -33,7 +33,7 @@ header {
     padding: $spacer*.5 $spacer;
     margin: 0 0 $spacer;
     font-size: 1.25rem;
-    color: $gray-400;
+    color: $gray-300;
 
     em {
         color: $white;
@@ -68,4 +68,18 @@ header {
 
 .template-container {
     display: none;
+}
+
+.gray-box {
+    background-color: $gray-100;
+    border-radius: .33rem;
+    padding: $spacer*2;
+    margin-top: $spacer*2;
+}
+
+.gray-box-border {
+    background-color: $gray-200;
+    border-radius: .33rem;
+    padding: $spacer;
+    border: solid 1px $gray-400;
 }

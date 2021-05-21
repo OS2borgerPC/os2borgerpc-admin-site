@@ -43,31 +43,22 @@ Computere
       </a>
       {% endif %}
     </h2>
+
     {% include 'notification.html' %}
 
-    {% if selected_pc.last_seen %}
-      <p class="" style="float:right;">
-        <span class="muted">
-          &nbsp;Senest set:
-        </span> 
-        <strong>{{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}</strong>
-      </p>
-    {% endif %}
-    {% if security_event != "Ingen hændelser"%}
-      <p style="float:right; clear:right;">
-        <span class="muted">
-          &nbsp;Seneste advarsel set:
+    <p class="d-flex justify-content-end mb-0">
+      {% if selected_pc.last_seen %}
+        Senest set: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
+      {% endif %}
+      {% if security_event != "Ingen hændelser"%}
+        <span class="ms-3">
+          Seneste advarsel set: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
         </span>
-        <strong>{{ security_event.reported_time|date }}</strong> 
-        {{ security_event.reported_time|time }}
-      </p>
-    {% endif %}
+      {% endif %}
+    </p>
 
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       {% csrf_token %}
-
-      <button class="btn btn-primary" type="submit">Gem ændringer</button>
-      <!--<button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Nulstil ændringer</button>-->
 
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
@@ -86,45 +77,48 @@ Computere
       <div class="tab-content">
 
         <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
-        
-          <fieldset>
+      
+          <div class="row gx-5">
 
-            <p>
-              {{ form.name.errors }}
-              <label class="form-label" for="{{ form.name.id_for_label }}">Navn:</label>
-              {{ form.name }}
-            </p>
+            <fieldset class="col-12 col-lg-6">
 
-            <p>  
-              {{ form.description.errors }}
-              <label class="form-label" for="{{ form.description.id_for_label }}">Beskrivelse:</label>
-              {{ form.description }}
-            </p>
+              <p>
+                {{ form.name.errors }}
+                <label class="form-label" for="{{ form.name.id_for_label }}">Navn</label>
+                {{ form.name }}
+              </p>
 
-            <p>
-              {{ form.location.errors }}
-              <label class="form-label" for="{{ form.location.id_for_label }}">Placering:</label>  
-              {{ form.location }}
-            </p>
+              <p>  
+                {{ form.description.errors }}
+                <label class="form-label" for="{{ form.description.id_for_label }}">Beskrivelse</label>
+                {{ form.description }}
+              </p>
 
-            <div style="margin-bottom: 1rem;">
-              {{ form.is_active.errors }}
-              <div class="form-check form-switch">
-                {{ form.is_active }}
-                <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Aktiv</label>
+              <p>
+                {{ form.location.errors }}
+                <label class="form-label" for="{{ form.location.id_for_label }}">Placering</label>  
+                {{ form.location }}
+              </p>
+
+              <div mb-5>
+                {{ form.is_active.errors }}
+                <div class="form-check form-switch">
+                  {{ form.is_active }}
+                  <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Aktiv</label>
+                </div>
               </div>
-            </div>
 
-          </fieldset>
+            </fieldset>
 
-          <fieldset>
+            <fieldset class="col-12 col-lg-6">
 
-            {{ form.pc_groups.errors }}
-            <p>Grupper:</p>
-            {% include 'system/pcgrouplist/list.html' with submit_name='pc_groups' %}
+              {{ form.pc_groups.errors }}
+              <p>Grupper</p>
+              {% include 'system/pcgrouplist/list.html' with submit_name='pc_groups' %}
 
-          </fieldset>
-        
+            </fieldset>
+          
+          </div>
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
@@ -160,6 +154,13 @@ Computere
           </table>
 
         </div>
+
+        <fieldset class="mt-5">
+          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+          <button class="btn btn-secondary" type="reset">Annuller</button>
+          <!--<button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Nulstil ændringer</button>-->
+        </fieldset>
+
       </div>
     </form>
 

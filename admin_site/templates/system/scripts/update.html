@@ -37,22 +37,24 @@
           enctype="multipart/form-data">
       {% csrf_token %}
 
-      <div>
-        {% include 'notification.html' %}
-      </div>
+      {% include 'notification.html' %}
 
       {% if not is_security %}
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">Kør script</button>
       {% endif %}
 
+      {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
+
       {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
       {% if selected_script.is_global is False or user.is_superuser %}
-        <input type="submit" class="btn btn-primary" value="Gem ændringer">
+        <fieldset class="mt-4">
+          <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
+          <button type="reset" class="btn btn-secondary">Annuller</button>
+        </fieldset>
       {% endif %}
 
 <!--      <button class="btn" onclick="location.href='{% url script_url site.uid selected_script.pk %}'; return false;">Fortryd ændringer</button>-->
 
-      {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
     </form>
     {% if not is_security %}
     <div id="runscriptmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -96,7 +98,7 @@
             {% include 'system/scripts/form.html' with form=create_form disable_inputs="yes" %}
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Gem" >
+            <input type="submit" class="btn btn-primary" value="Gem">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuller</button>
           </div>
         </form>

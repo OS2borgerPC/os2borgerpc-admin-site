@@ -1,6 +1,26 @@
+<p class="d-flex justify-content-end mb-0">
+  {% if form.instance.created %}
+    <span>
+      Oprettet: {{ form.instance.created }}
+      {% if form.instance.user_created %}
+        <span class="text-muted">({{ form.instance.user_created }})</span>
+      {% endif %}
+    </span>
+  {% endif %}
+
+  {% if form.instance.modified %}
+    <span class="ms-3">
+      Ændret: {{ form.instance.modified }} 
+      {% if form.instance.user_modified %}
+        <span class="text-muted">({{ form.instance.user_modified }})</span>
+      {% endif %}
+    </span>
+  {% endif %}
+</p>
+
 {% if disable_inputs != "yes" %}
   <!-- The three tabs on the page: -->
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs mt-0" role="tablist">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
     </li>
@@ -20,21 +40,27 @@
 {% endif %}
 
       <fieldset>
-      
-        {% if form.instance.created %}
-          <p>
-            Oprettet: {{ form.instance.created }} ({{ form.instance.user_created }})
-          </p>
-        {% endif %}
-        {% if form.instance.modified %}
-          <p>
-            Ændret: {{ form.instance.modified }} ({{ form.instance.user_modified }})
-          </p>
-        {% endif %}
+        
         <p>
           {{ form.name.errors }}
-          <label class="form-label" for="{{ form.name.id_for_label }}">Navn:</label>
+          <label class="form-label" for="{{ form.name.id_for_label }}">Navn</label>
           {{ form.name }}
+        </p>
+        
+        <p class="scriptDescription">
+          {{ form.description.errors }}
+          <label class="form-label" for="{{ form.description.id_for_label }}">Beskrivelse</label>
+          {{ form.description }}
+        </p>
+
+        <p>
+          <label class="form-label" for="{{ form.author.id_for_label }}">{{ form.author.label }}</label>
+          {{ form.author }}
+        </p>
+
+        <p>
+          <label class="form-label" for="{{ form.author_email.id_for_label }}">{{ form.author_email.label }}</label>
+          {{ form.author_email }}
         </p>
 
         <div class="form-check form-switch">
@@ -61,22 +87,6 @@
             {{ form.maintained_by_magenta.label }}
           </label>
         </div>
-        
-        <p class="scriptDescription">
-          {{ form.description.errors }}
-          <label class="form-label" for="{{ form.description.id_for_label }}">Beskrivelse:</label>
-          {{ form.description }}
-        </p>
-
-        <p>
-          <label class="form-label" for="{{ form.author.id_for_label }}">{{ form.author.label }}:</label>
-          {{ form.author }}
-        </p>
-
-        <p>
-          <label class="form-label" for="{{ form.author_email.id_for_label }}">{{ form.author_email.label }}:</label>
-          {{ form.author_email }}
-        </p>
 
       </fieldset>
         

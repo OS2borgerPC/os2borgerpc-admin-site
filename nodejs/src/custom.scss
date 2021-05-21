@@ -13,9 +13,10 @@
 @import "table";
 @import "pagination";
 @import "icons";
-
+@import "code";
 
 hr {
     border-top: 1px solid $gray-700;
+    background-color: transparent;
     opacity: 1;
 }

@@ -25,15 +25,10 @@
 .btn-gentle-warning { background-color: var(--bs-primary); border-color: var(--bs-primary); }
 
 /* Headers */
-
-.nav-header { letter-spacing: 0.05em; font-weight: normal; }
-h3.nav-header,
-h4.nav-header {margin: 0; padding: 0;}
 div.runscriptdialogheader {display: none;}
 
 
 /* Navigation */
-
 .nav.utils>li>a {text-shadow: none;}
 .nav.utils>li>a:hover, .nav.utils>li>a:focus {background: var(--bs-gray-dark); border-radius: 5px;}
 .nav.utils .nav-header {text-shadow: none; color: var(--bs-white); text-transform: uppercase; font-weight: bold;}
@@ -42,11 +37,6 @@ div.runscriptdialogheader {display: none;}
 .inertnav li {padding: 2px 0; color: var(--bs-gray-dark);}
 .inertnav li:hover {background: var(--bs-gray);}
 [data-bs-toggle="collapse"] {margin-bottom: 10px; display: block; text-align: left; height: auto}
-
-#jobsearchnav, #securityeventsearchnav { padding: 15px; }
-#jobsearchnav h3, #jobsearchnav h4, #securityeventsearchnav h3, #securityeventsearchnav h4 { font-size: .8rem; text-transform: uppercase; display: inline; letter-spacing: -.0075rem; font-weight: normal;}
-#jobsearchnav .btn-link, #securityeventsearchnav .btn-link {padding: 0;}
-#securityeventsearch-level-selectors label.checkbox { margin: 8px 0; }
 
 ul.nav li ul { color: var(--bs-white); list-style: none; padding: 0; margin: 0 0 0 1em; }
 ul.nav li ul a, ul.nav li ul a:hover, ul.nav li ul a:focus { color: var(--bs-white); text-decoration: none; }

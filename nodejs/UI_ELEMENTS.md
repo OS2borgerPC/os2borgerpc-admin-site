@@ -1,11 +1,19 @@
 # Admin Site UI elements
 
 TODO
+* errors
 
-* lists
-* form buttons
-* form elements
 * icons
+
+* picker device ? 
+  group selector http://localhost:9999/site/magenta/computers/computer4/
+  batch/computer filter http://localhost:9999/site/magenta/jobs/
+
+* tables
+  configuration table http://localhost:9999/site/magenta/computers/computer3/
+  item list http://localhost:9999/site/magenta/jobs/
+
+
     
 ## Itemlist (sublevelnav)
 Styles in nodejs/src/_itemlist.scss
@@ -78,22 +86,53 @@ Styles in nodejs/src/_collapsible.scss
 </div>
 ```
 
+## Layout
 
-- main nav / _navigation.scss
-- main header / _layout.scss
+### Gray box
+Styles in nodejs/src/_layout.scss
+Turns a containing element into a nice box with gray background.
 
--- itemlist tabs
--- itemlist collapsible
+**Example**
+```
+<form class="gray-box"
+    ...
+</form>
+```
+
+
+## Content
+
+### Code view
+Styles in nodejs/src/_code.scss
+Styling for HighlightJS (lhjs) code blocks.
+
+**Example**
+```
+<code class="hljs>
+    ...
+</code>
+```
+
+### Bordered gray box
+Styles in nodejs/src/_layout.scss
+For configuration tables, etc
+
+**Example**
+```
+<div class="gray-box-border">
+    ...
+</div>
+```
+
+
+
+
 - filters (subnav)
-- content header / _layout.scss
 - table
-- form
-- tabs
 - button, primary (save)
 - button, secondary (cancel)
 - button, highlighted (kør script)
 - modal dialog
-- code view (pre)
 - contentlist (dark table)
 - giant popover
 - pagination

@@ -15,23 +15,30 @@ active
 {% endblock %}
 
 {% block specific_content %}
-  <ul class="sublevelnav">
-      <li class="listutils">
-        <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
-          <i class="icon-plus icon-white"></i> Tilføj ny gruppe
-        </button>
-      </li>
+  <div class="sublevelnav">
+    <div class="listutils">
+      <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
+        <span class="material-icons">add</span>
+        Tilføj ny gruppe
+      </button>
+    </div>
+    <ul class="item-list">
       {% for group in site.groups.all %}
-        <li>
+        <li class="{% ifequal group selected_group %}active{% endifequal %}">
+          <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
+            {{ group.name }}
+          </a>
           {% ifequal group selected_group %}
             {% if selected_group.is_delete_allowed %}
-            <a class="float-end btn btn-close" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"></a>
+              <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe">
+                clear
+              </a>
             {% endif %}
           {% endifequal %}
-          <a class="list-item {% ifequal group selected_group %}active{% endifequal %}" href="/site/{{ site.url }}/groups/{{ group.url }}/"><i class="icon-tags"></i> {{ group.name }}</a>
         </li>
       {% endfor %}
-  </ul>
+    </ul>
+  </div>
 
   <div class="container-fluid main sublevelmain">
 
