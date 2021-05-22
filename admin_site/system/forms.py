@@ -92,6 +92,7 @@ class ScriptForm(forms.ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['site'].widget.attrs['readonly'] = True
+            self.fields['tags'].disabled = True
             self.fields[
                 'maintained_by_magenta'
             ].widget.attrs['disabled'] = True
