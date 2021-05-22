@@ -13,7 +13,7 @@
 
   <div class="tab-pane fade list-collapsible {% if not global_selected %}show active{% endif %}" id="localscripts" role="tabpanel" aria-labelledby="localscripts-tab">
     
-    {% for ltag in local_scripts_by_tag %}
+    {% for ltag, scripts in local_scripts_by_tag.items %}
       {% if ltag != 'untagged' %}
         <a data-bs-toggle="collapse" href="#collapse{{ ltag.name }}local" role="button" aria-expanded="false" aria-controls="collapse{{ ltag.name }}local">
           <span class="material-icons">folder</span>
@@ -21,7 +21,7 @@
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
         <ul class="item-list collapse collapse-content" id="collapse{{ ltag.name }}local">
-          {% for script in ltag.scripts.all %}
+          {% for script in scripts %}
             <li class="{% ifequal script selected_script %}active{% endifequal %}">
               <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
@@ -58,7 +58,7 @@
 
   <div class="tab-pane fade list-collapsible {% if global_selected %}show active{% endif %}" id="globalscripts" role="tabpanel" aria-labelledby="globalscripts-tab">
     
-    {% for gtag in global_scripts_by_tag %}
+    {% for gtag, scripts in global_scripts_by_tag.items %}
       {% if gtag != 'untagged' %}
         <a data-bs-toggle="collapse" href="#collapse{{ gtag.name }}global" role="button" aria-expanded="false" aria-controls="collapse{{ gtag.name }}global">
           <span class="material-icons">folder</span>
@@ -66,7 +66,7 @@
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
         <ul class="item-list collapse collapse-content" id="collapse{{ gtag.name }}global">
-          {% for script in gtag.scripts.all %}
+          {% for script in scripts %}
             <li class="{% ifequal script selected_script %}active{% endifequal %}">
               <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
