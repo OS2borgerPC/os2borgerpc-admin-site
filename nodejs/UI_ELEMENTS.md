@@ -5,16 +5,48 @@ TODO
 
 * icons
 
-* picker device ? 
-  group selector http://localhost:9999/site/magenta/computers/computer4/
-  batch/computer filter http://localhost:9999/site/magenta/jobs/
-
 * tables
   configuration table http://localhost:9999/site/magenta/computers/computer3/
   item list http://localhost:9999/site/magenta/jobs/
 
+- giant popover
+- pagination
 
-    
+## Pick list
+Styles in nodejs/src/_picklist.scss
+
+group selector http://localhost:9999/site/magenta/computers/computer4/
+batch/computer filter http://localhost:9999/site/magenta/jobs/
+
+**Example**
+```
+<div class="pick-list">
+    <ul class="pick-list-selected list-group">
+        <li class="list-group-item list-group-item-action">
+            <button 
+                class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" 
+                type="button" 
+                id="pick-list-dropdown" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+                <span class="material-icons">add</span>
+                Tilføj xxxx
+            </button>
+            <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-dropdown">
+                <li class="dropdown-item">
+                    Item to pick
+                </li>
+                ...
+            </ul>
+        </li>
+        <li class="list-group-item pick-list-item">
+            Picked item
+        </li>
+        ...
+    </ul>
+</div>
+```
+
 ## Itemlist (sublevelnav)
 Styles in nodejs/src/_itemlist.scss
 
@@ -123,10 +155,3 @@ For configuration tables, etc
     ...
 </div>
 ```
-
-
-- table
-- contentlist (dark table)
-- giant popover
-- pagination
-- collapsible list group / _collapsible.scss

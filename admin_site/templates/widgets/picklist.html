@@ -1,0 +1,146 @@
+{% if submit_name and identifier %}
+
+    <div id="pick-list-{{ submit_name }}" class="pick-list">
+
+        <ul class="pick-list-selected list-group">
+            <li class="list-group-item list-group-item-action">
+                <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="material-icons">add</span>
+                    Tilføj ny
+                </button>
+                <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
+            </li>
+        </ul>
+
+    </div>
+
+    <script type="text/javascript">
+
+        (function() {
+
+            var identifier = '{{ submit_name }}'
+            var readable_identifier = '{{ identifier }}'
+            var list_el = document.getElementById('pick-list-' + identifier)
+            var options = []
+
+            {% for item in selected_list %}
+                options.push({
+                    id: '{{ item.pk }}', 
+                    name: '{{ item.name }}',
+                    selected: true
+                })
+            {% endfor %}
+            {% for item in available_list %}
+                options.push({
+                    id: '{{ item.pk }}', 
+                    name: '{{ item.name }}',
+                    selected: false
+                })
+            {% endfor %}
+
+            function updateListHandler(id, selected_value) {
+                var item = options.find(function(o) {
+                    return o.id === id
+                })
+                if (item) {
+                    console.log('got item', item, selected_value)
+                    item.selected = selected_value
+                }
+                renderPickList()
+            }
+
+            function renderHiddenInput(input_value) {
+                var input = '<input type="hidden" name="' + identifier + '" value="' + input_value + '">'
+                return input
+            }
+
+            function renderSelectedListItem(name, id) {
+                var item = document.createElement('span')
+                var button = document.createElement('button')
+                button.type = 'button'
+                button.title = 'Fjern ' + readable_identifier
+                button.className = 'btn btn-close'
+                button.addEventListener('click', function() {
+                    updateListHandler(id, false)
+                })
+                item.innerHTML = name
+                item.innerHTML += renderHiddenInput(id)
+                item.appendChild(button)
+                return item
+            }
+
+            function renderListItem(item) {
+                var list_item = document.createElement('li')
+                list_item.className = 'list-group-item pick-list-item'
+                if (item.selected) {
+                    list_item.appendChild( renderSelectedListItem(item.name, item.id) )
+                } else {
+                    list_item.className = 'dropdown-item'
+                    list_item.addEventListener('click', function() {
+                        updateListHandler(item.id, true)
+                    })
+                    list_item.innerText = item.name
+                }
+                return list_item
+            }
+
+            function renderSelectedList(dom_el, list) {
+                var dom_ul = dom_el.querySelector('.pick-list-selected')
+                var dom_lis = dom_ul.querySelectorAll('.pick-list-item')
+                var is_empty = true
+                for (var li of dom_lis) {
+                    li.remove()
+                }
+                for (var item in list) {
+                    if (list[item].selected) {
+                        dom_ul.appendChild(renderListItem(list[item]))
+                        is_empty = false
+                    }
+                }
+                if (is_empty) {
+                    var empty_li = document.createElement('li')
+                    empty_li.className = 'list-group-item pick-list-item'
+                    empty_li.innerText = 'Ingen valgt'
+                    dom_ul.appendChild(empty_li)
+                }
+            }
+
+            function renderAvailableList(dom_el, list) {
+                var dom_ul = dom_el.querySelector('.pick-list-available')
+                var is_empty = true
+                dom_ul.innerHTML = ''
+                for (var item in list) {
+                    if (!list[item].selected) {
+                        dom_ul.appendChild(renderListItem(list[item]))
+                        is_empty = false
+                    }
+                }
+                if (is_empty) {
+                    var empty_li = document.createElement('li')
+                    empty_li.className = 'dropdown-item'
+                    empty_li.innerText = 'Ingen valgmuligheder'
+                    dom_ul.appendChild(empty_li)
+                }
+            }
+
+            function renderPickList() {
+                renderAvailableList(list_el, options)
+                renderSelectedList(list_el, options)
+            }
+
+            // Initial setup
+            
+            // Render the list of selected items and the dropdown list of available items
+            renderPickList()
+            // Add whatever string you chose as readable_identifier to the "Tilføj ny" dropbox button
+            document.querySelector('.pick-list-dropdown-btn').innerHTML += ' '  + readable_identifier
+
+        })()
+
+    </script>
+
+{% else %}
+
+  <p>Data mangler</p>
+
+{% endif %}

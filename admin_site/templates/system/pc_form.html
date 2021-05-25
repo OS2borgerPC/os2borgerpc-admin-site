@@ -5,7 +5,6 @@ Computere
 {% endblock %}
 
 {% block javascripts %}
-  <script type="text/javascript" src="/static/js/pcgrouplist.js"></script>
   <script type="text/javascript" src="/static/js/configlist.js"></script>
 {% endblock %}
 
@@ -113,8 +112,8 @@ Computere
             <fieldset class="col-12 col-lg-6">
 
               {{ form.pc_groups.errors }}
-              <p>Grupper</p>
-              {% include 'system/pcgrouplist/list.html' with submit_name='pc_groups' %}
+              <label class="mb-2">Grupper</label>
+              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
 
             </fieldset>
           

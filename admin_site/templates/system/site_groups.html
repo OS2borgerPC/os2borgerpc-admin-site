@@ -6,7 +6,6 @@ Grupper
 
 {% block javascripts %}
 <script type="text/javascript" src="/static/js/configlist.js"></script>
-<script type="text/javascript" src="/static/js/pclist.js"></script>
 <script type="text/javascript" src="/static/js/policy_list.js"></script>
 {% endblock %}
 
@@ -96,8 +95,8 @@ active
             <fieldset class="col-12 col-lg-6">
 
               {{ form.pcs.errors }}
-              <p class="mb-2">Computere i denne gruppe</p>
-              {% include 'system/pclist/list.html' with submit_name='pcs' %}
+              <label class="mb-2">Computere i denne gruppe</label>
+              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' %}
 
             </fieldset>
           </div>
