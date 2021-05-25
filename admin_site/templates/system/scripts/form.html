@@ -95,9 +95,9 @@
     <div id="preview" class="tab-pane fade" role="tabpanel" aria-labelledby="preview-tab">
 {% endif %}
   
-      <fieldset>
+      <fieldset {% if disable_inputs == "yes" %}class="mt-3"{% endif %}>
 
-        <div style="margin-bottom: 1rem;">
+        <div class="mb-3">
           {{ form.executable_code.errors }}
           <label class="form-label" for="{{ form.executable_code.id_for_label }}">Upload scriptkode:</label>
           {{ form.executable_code }}
