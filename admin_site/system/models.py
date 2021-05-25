@@ -305,6 +305,9 @@ class Site(models.Model):
                                              related_name='alert_sites',
                                              blank=True)
 
+    class Meta:
+        ordering = ["name"]
+
     @staticmethod
     def get_system_site():
         try:
