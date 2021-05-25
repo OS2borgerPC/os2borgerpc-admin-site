@@ -103,10 +103,6 @@ ul.adduserlist {display: none; max-height: 300px; overflow-y: auto; position: ab
 ul.adduserlist li {cursor: pointer;}
 li.addusertrigger {position: relative;}
 li.addusertrigger:hover ul.adduserlist {display: block}
-ul.addpclist {display: none; max-height: 300px; overflow-y: auto; position: absolute; background-color: var(--bs-white);}
-ul.addpclist li {cursor: pointer;}
-li.addpctrigger {position: relative;}
-li.addpctrigger:hover ul.addpclist {display: block}
 li.selected {background-color: var(--bs-gray);}
 
 
