@@ -1,16 +1,16 @@
 # Admin Site UI elements
 
 TODO
+
 * errors
-
 * icons
-
 * tables
   configuration table http://localhost:9999/site/magenta/computers/computer3/
   item list http://localhost:9999/site/magenta/jobs/
-
-- giant popover
-- pagination
+* giant popover
+* pagination
+* little dropdowns
+  (site konfiguration, computer konfiguration, gruppe konfiguration)
 
 ## Pick list
 Styles in nodejs/src/_picklist.scss

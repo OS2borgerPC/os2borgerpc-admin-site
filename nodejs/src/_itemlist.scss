@@ -17,7 +17,8 @@
     }
 
     .active,
-    .active a {
+    .active a,
+    .active button {
         color: $white !important;
         background-color: $warning !important;
     }
@@ -26,6 +27,8 @@
         display: block;
         padding: $spacer*.75 $spacer;
         flex-grow: 1;
+        text-align: left;
+        border-radius: 0;
 
         &,
         &:link,
@@ -36,7 +39,7 @@
 
         &:hover,
         &:focus {
-            background-color: $gray-400;
+            background-color: $gray-300;
         }
     }
 

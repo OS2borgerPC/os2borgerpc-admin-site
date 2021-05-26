@@ -81,11 +81,16 @@ Jobs
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
 
-        <div id="batches" class="collapse collapse-content {% if selected_batch %} in{% endif %}">
+        <div id="batches" class="collapse collapse-content {% if selected_batch %}show{% endif %}">
           <ul class="item-list">
             {% for batch in batches %}
-            <li onclick="BibOS.JobList.selectBatch(this, '{{ batch.pk }}')" {% ifequal batch.pk selected_batch %}class="selected"{% endifequal %}>
-              <i class="icon-list-alt icon-white"></i> {{ batch.name }}
+            <li>
+              <button 
+                type="button" 
+                class="btn btn-link item-list-link {% ifequal batch.pk selected_batch %}active{% endifequal %}" 
+                onclick="BibOS.JobList.selectBatch(this, '{{ batch.pk }}')">
+                {{ batch.name }}
+              </button>
             </li>
             {% endfor %}
           </ul>
@@ -99,12 +104,17 @@ Jobs
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
 
-        <div id="computers" class="collapse collapse-content {% if selected_pc %} in{% endif %}">
+        <div id="computers" class="collapse collapse-content {% if selected_pc %}show{% endif %}">
           <ul class="item-list">
             {% for pc in pcs %}
-            <li onclick="BibOS.JobList.selectPC(this, '{{ pc.pk }}')" {% ifequal pc.pk selected_pc %}class="selected"{% endifequal %}>
-              <i class="icon-hdd icon-white"></i> {{ pc.name }}
-            </li>
+              <li>
+                <button 
+                  type="button" 
+                  class="btn btn-link item-list-link {% ifequal pc.pk selected_pc %}active{% endifequal %}" 
+                  onclick="BibOS.JobList.selectPC(this, '{{ pc.pk }}')">
+                  {{ pc.name }}
+                </button>
+              </li>
             {% endfor %}
           </ul>
         </div>
@@ -117,12 +127,17 @@ Jobs
           <span class="material-icons collapse-arrow">arrow_drop_down</span>
         </a>
 
-        <div id="groups" class="collapse collapse-content {% if selected_group %} in{% endif %}">
+        <div id="groups" class="collapse collapse-content {% if selected_group %}show{% endif %}">
           <ul class="item-list">
             {% for group in groups %}
-            <li onclick="BibOS.JobList.selectGroup(this, '{{ group.pk }}')" {% ifequal group.pk selected_group %}class="selected"{% endifequal %}>
-              <i class="icon-tags icon-white"></i> {{ group.name }}
-            </li>
+              <li>
+                <button 
+                  type="button" 
+                  class="btn btn-link item-list-link {% ifequal group.pk selected_group %}active{% endifequal %}" 
+                  onclick="BibOS.JobList.selectGroup(this, '{{ group.pk }}')">
+                  {{ group.name }}
+                </button>
+              </li>
             {% endfor %}
           </ul>
         </div>

@@ -47,12 +47,11 @@ $(function(){
 
         selectFilter: function(field, elem, val) {
             var e = $(elem)
-            if(e.hasClass('selected')) {
-                e.removeClass('selected')
+            e.parents('ul').find('button').removeClass('active')
+            if(e.hasClass('active')) {
                 val = ''
             } else {
-                e.parent().find('li').removeClass('selected')
-                e.addClass('selected')
+                e.addClass('active')
             }
             $('#jobsearch-filterform input[name=' + field + ']').val(val)
             this.search()
