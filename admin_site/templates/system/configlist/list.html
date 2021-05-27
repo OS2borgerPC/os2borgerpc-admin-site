@@ -1,19 +1,21 @@
 {% if cnf_id %}
-<div class="gray-box-border" id="{{ cnf_id }}">
-  <table class="table table-condensed table-hover">
+<div class="gray-box-border pt-2 pb-0" id="{{ cnf_id }}">
+  <table class="table table-configs mx-2 mb-0">
     <tr>
       <th>Nøgle</th>
       <th>Værdi</th>
     </tr>
-  {% for entry in entries %}
-    {% include 'system/configlist/item.html' with pk=entry.pk key=entry.key value=entry.value submit_name=cnf_id %}
-  {% endfor %}
+    {% for entry in entries %}
+      {% include 'system/configlist/item.html' with pk=entry.pk key=entry.key value=entry.value submit_name=cnf_id %}
+    {% endfor %}
     <tr>
       <td colspan="2">
         <input type="hidden" name="{{ cnf_id }}_new_entries" id="{{ cnf_id }}_new_entries" value="0">
-        <a href="javascript:void(0)" onclick="BibOS.ConfigList.startAdd('{{ cnf_id }}')" title="Tilføj ny konfiguration">
-          <span class="material-icons">add</span>
-          Tilføj konfiguration
+        <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ConfigList.startAdd('{{ cnf_id }}')" title="Tilføj ny konfiguration">
+          <span class="d-flex align-items-center ">
+            <span class="material-icons me-1">add</span>
+            Tilføj konfiguration
+          </span>
         </a>
       </td>
     </tr>

@@ -63,17 +63,6 @@ ul.nav li ul li.active { font-style: italic; }
   background-color: var(--bs-gray);
 }
 
-/* Tables */
-.well .table {margin-bottom: 0;}
-.table-striped tbody>tr:nth-child(odd)>th {background: var(--bs-gray-dark); color: var(--bs-white);}
-.jobtable .popover-content a {margin-bottom: 10px; display: inline-block;}
-.table th.orderby { cursor: pointer; vertical-align: top; white-space: nowrap; }
-.click-list--item td { border-top: solid 1px var(--bs-gray-dark); cursor: pointer; }
-#site_securityevents_table td { border-bottom: none; }
-#site_securityevents_table td:first-child strong, #site_securityevents_table th:first-child  {
-  padding-left: 30px;
-}
-
 /* Forms */
 
 input.phantom { display: none; }

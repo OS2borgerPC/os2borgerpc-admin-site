@@ -52,14 +52,6 @@ $(function(){
         },
 
         orderby: function(order) {
-            $('.orderby').each(function() {
-              if ($(this).hasClass('order-' + order)) {
-                $(this).addClass('active').find('i').toggleClass('icon-chevron-down icon-chevron-up').addClass('icon-white')
-              } else {
-                $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down')
-              }
-            })
-
             var input = $('#securityeventsearch-filterform input[name=orderby]')
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()
@@ -72,7 +64,7 @@ $(function(){
             pagination.empty()
             var eventsearch = this
 
-            var previous_item = $('<li class="page-item disabled"><a class="page-link">Forrige</a></li>')
+            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> Forrige</a></li>')
             if (data.has_previous) {
                 previous_item.removeClass("disabled")
                 previous_item.find('a').on("click", function() {
@@ -98,7 +90,7 @@ $(function(){
                 item.appendTo(pagination)
             })
 
-            var next_item = $('<li class="page-item disabled"><a class="page-link">Næste</a></li>')
+            var next_item = $('<li class="page-item disabled"><a class="page-link">Næste <span class="material-icons">navigate_next</span></a></li>')
             if (data.has_next) {
                 next_item.removeClass("disabled")
                 next_item.find('a').on("click", function() {

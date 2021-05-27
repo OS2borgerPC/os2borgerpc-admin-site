@@ -19,25 +19,3 @@
     flex-flow: row nowrap;
     align-items: center;
 }
-
-.pagination .page-item:first-child .page-link::before,
-.pagination .page-item:last-child .page-link::after {
-    content: '';
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    margin: 0 .25rem;
-    background-image: url("../img/glyphicons-halflings.png");
-    background-repeat: no-repeat;
-    background-position: -456px -72px;
-}
-
-.pagination .page-item:first-child .page-link::before {
-    background-position: -432px -72px;
-}
-
-.pagination .page-item.disabled:first-child .page-link::before,
-.pagination .page-item.disabled:last-child .page-link::after {
-    opacity: .125;
-}

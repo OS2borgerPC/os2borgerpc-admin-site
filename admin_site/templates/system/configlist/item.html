@@ -1,17 +1,21 @@
 {# Remember that this templates must be able to be called both from templates.html and from list.html #}
-<tr class="muted">
+<tr>
   <td class="config-print-key">{{ key }}</td>
-  <td>
-    <div class="btn-group profile dark">
-      <input class="config-pk" type="hidden" name="{{ submit_name|default:'configuration' }}" value="{{ pk }}" />
-      <input class="config-key" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_key" value="{{ key }}" />
-      <input class="config-value" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_value" value="{{ value }}" />
-      <a class="dropdown-toggle btn config-print-value" data-bs-toggle="dropdown"
-          href="javascript:void(0)">{{ value }}</a>
-      <ul class="dropdown-menu">
-        <li><a href="javascript:void(0)" onclick="BibOS.ConfigList.startEdit(this, '{{ submit_name }}')"><i class="icon-edit"></i> Redigér</a></li>
-        <li><a href="javascript:void(0)" onclick="BibOS.ConfigList.removeItem(this)"><i class="icon-remove"></i> Slet konfiguration</a></li>
-      </ul>
-    </div>
+  <td class="pe-0">
+    
+    <input class="config-pk" type="hidden" name="{{ submit_name|default:'configuration' }}" value="{{ pk }}">
+    <input class="config-key" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_key" value="{{ key }}">
+    <input class="config-value" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_value" value="{{ value }}">
+    
+    {{ value }}
+    <p class="mb-0" style="margin-left: -.5rem;">
+      <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.ConfigList.startEdit(this, '{{ submit_name }}')">
+        Redigér
+      </a>
+      <a class="btn btn-sm" href="javascript:void(0)" onclick="BibOS.ConfigList.removeItem(this)">
+        Slet konfiguration
+      </a>
+    </p>
+  
   </td>
 </tr>

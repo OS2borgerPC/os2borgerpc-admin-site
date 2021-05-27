@@ -22,7 +22,7 @@ class="detailpage"
 
     {% set_css_class_active request.resolver_match.url_name "site" as current_url_site %}
     <a href="{% url 'site' slug=site.url %}" class="nav-link link-light {{ current_url_site }}">
-      <i class="icon-eye-open icon-white"></i> Status
+      Status
     </a>
 
     <hr>

@@ -10,3 +10,7 @@
         max-width: 100%;
     }
 }
+
+.form-select[multiple] {
+    padding: $spacer*.25 0;
+}

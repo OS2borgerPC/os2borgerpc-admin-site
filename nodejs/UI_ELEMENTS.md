@@ -2,21 +2,30 @@
 
 TODO
 
-* errors
-* icons
 * tables
   configuration table http://localhost:9999/site/magenta/computers/computer3/
   item list http://localhost:9999/site/magenta/jobs/
+  javascript sort and filtering mess
+
+  Tables: 
+    Config table
+    http://localhost:9999/site/magenta/computers/computer4/ (Konfigurationer)
+    http://localhost:9999/site/magenta/configuration/
+    http://localhost:9999/site/magenta/groups/grp6/ (Konfigurationer)
+    http://localhost:9999/site/magenta/groups/grp6/ (Scripts)
+    http://localhost:9999/site/magenta/scripts/2/ (Indstillinger)
+
+* errors
+* icons
 * giant popover
-* pagination
 * little dropdowns
   (site konfiguration, computer konfiguration, gruppe konfiguration)
 
+* Lav sag: Redigering af konfiguration er broken. 
+  Se f.eks. http://localhost:9999/site/magenta/computers/computer3/#configs
+
 ## Pick list
 Styles in nodejs/src/_picklist.scss
-
-group selector http://localhost:9999/site/magenta/computers/computer4/
-batch/computer filter http://localhost:9999/site/magenta/jobs/
 
 **Example**
 ```

@@ -113,7 +113,8 @@
                 }
                 this.addConfig(id, name, value)
             } else {
-                p = $('#' + id).find(
+                console.log('where is p', window)
+                var p = $('#' + id).find(
                     'input.config-pk[value=' + pk + ']'
                 )
                 while (p && p.length && !p.is('tr')) {

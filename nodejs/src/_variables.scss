@@ -66,15 +66,13 @@ $nav-tabs-link-hover-color: $warning;
 $nav-tabs-link-hover-border-color: $warning;
 $nav-tabs-link-active-border-color: $gray-100;
 
-// List group
-//$list-group-bg: $gray-200;
-//$list-group-border-color: $white;
-//$list-group-border-radius: 0;
-//$list-group-border-width: 1px;
-//$list-group-item-padding-y: $spacer*.75;
-
 // Modal dialogs
 $modal-inner-padding: $spacer*1.5;
 $modal-footer-margin-between: $spacer;
 $modal-header-padding-y: $spacer*.75;
 $modal-header-padding-x: $spacer*1.5;
+
+// Forms
+$form-check-input-width: 1.25em;
+$form-check-input-border: solid 2px $gray-600;
+//$form-check-input-border-radius: .25em;

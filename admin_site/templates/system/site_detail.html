@@ -1,31 +1,29 @@
 {% extends "site_with_navigation.html" %}
 
 {% block specific_title %}
-Status
+  Aktive computere
+  {% if active_pcs > 0 %}
+    ({{ active_pcs }})
+  {% endif %}
 {% endblock %}
 
 {% block specific_content %}
 
-<ul class="sublevelnav">
+  <ul class="sublevelnav item-list">
     {% for pc in pcs %}
-    <li><a class="list-item" href="/site/{{ site.uid }}/computers/{{ pc.uid }}"><i
-            class="icon-hdd"></i> {{ pc.name }}
-    </a></li>
+      <li>
+        <a class="item-list-link" href="/site/{{ site.uid }}/computers/{{ pc.uid }}">
+          {{ pc.name }}
+        </a>
+      </li>
     {% endfor %}
-</ul>
+  </ul>
 
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
-    <h2 class="divideheader">
-    Aktive computere
-    {% if active_pcs > 0 %}
-    ({{ active_pcs }})
-    {% endif %}
-    </h2>
-    <table class="table table-hover warn-table"
-    id="#site_activepcs_table">
+    <table class="table table-hover warn-table" id="#site_activepcs_table">
       <thead>
         <tr>
-          <th><i class="icon-hdd"></i> Navn</th>
+          <th>Navn</th>
           <th>Beskrivelse</th>
           <th>Placering</th>
           <th>Senest set</th>
