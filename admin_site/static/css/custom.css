@@ -8,14 +8,6 @@
 /* TODO: The contents of this file should be merged to the custom Bootstrap build 
  or their related templates */
 
-/* Variables / Custom properties */
-
-:root {
-  --gentle-warning: #f0d764;
-}
-
-/* Global */
-.btn-gentle-warning { background-color: var(--bs-primary); border-color: var(--bs-primary); }
 
 /* Headers */
 div.runscriptdialogheader {display: none;}
@@ -52,7 +44,6 @@ ul.nav li ul li.active { font-style: italic; }
 .popover.top {margin: 0 20px 5px 0;}
 
 #jobinfo-popover {position: absolute; display: none; z-index: 10000; width: auto; min-width: 20em; max-width: 60em;}
-.addsitetrigger {padding-bottom: 0.5em;}
 #group_configuration, #pc_config {margin-bottom: 0;}
 .script-list {
   list-style-type:none;
@@ -110,46 +101,6 @@ div.docscontainer .nav-list {list-style: none; padding: 0; margin: 20px 0;}
 div.docscontainer .nav-list>li>a {margin: 0; display: inline-block; padding: 3px 6px; border-radius: 5px;}
 div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-decoration: none; color: var(--bs-white); text-shadow: none;}
 
-
-/* Security warning badges and labels */
-
-.sec-warn-blink {-webkit-animation: blinking 2s infinite; animation: blinking 2s infinite;}
-@-webkit-keyframes blinking {
-  0% { background-color: var(--bs-danger); }
-  50% { background-color: transparent; }
-  100% { background-color: var(--bs-danger); }
-}
-@keyframes blinking {
-  0% { background-color: var(--bs-danger); }
-  50% { background-color: transparent; }
-  100% { background-color: var(--bs-danger); }
-}
-.badge-gentle-warning {background-color: var(--gentle-warning); color: var(--bs-gray-dark);}
-.seclevel-danger {color: var(--bs-white); background-color: var(--bs-danger);}
-.seclevel-warning {color: var(--bs-gray-dark); background-color: var(--bs-warning);}
-.seclevel-gentle-warning {color: var(--bs-gray-dark); background-color: var(--gentle-warning);}
-.severity-label-important,
-.severity-label-warning,
-.severity-label-gentle-warning {
-    border-left: solid 10px var(--gentle-warning);
-    box-sizing: border-box;
-}
-.severity-label-important { border-color: var(--bs-danger); }
-.severity-label-warning { border-color: var(--bs-warning); }
-.severity-checkbox { padding-left: 0.5em; border-width: 0.5em; }
-
-/* Popup page */
-
-.popup-page { background-color: var(--bs-white); padding: 2em; min-height: 100%; }
-
-@media (min-width: 1200px) {
-
-  .popup-page {
-    max-width: 960px;
-    margin: 0 auto;
-  }
-
-}
 
 /* Loading animation */
 .overlay {position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);}

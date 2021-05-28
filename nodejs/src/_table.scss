@@ -77,4 +77,14 @@ table {
             margin-left: $spacer*-1;
         }
     }
+
+    &.table-hover {
+        tr:hover {
+            background-color: $gray-100;
+        }
+        td:hover {
+            cursor: pointer;
+
+        }
+    }
 }

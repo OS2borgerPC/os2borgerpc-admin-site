@@ -7,26 +7,46 @@
 {% block content %}
   <div class="container">
     {% if user.is_superuser %}
-    <div class="addsitetrigger"><a href="{% url 'new_site' %}" title="Tilføj nyt site"><i class="icon-plus"></i> tilføj nyt site</a></div>
+      <a href="{% url 'new_site' %}" title="Tilføj nyt site" class="btn btn-secondary my-3">
+        <span class="d-flex align-items-center">
+          <span class="material-icons me-1">add</span>
+          Tilføj nyt site
+        </span>
+      </a>
     {% endif %}
-    <div class="itemlist">
+    
+    <div>
       {% for site in site_list %}
-        <div class="btn-group btn-group-lg">
-          <a href="{% url 'site' slug=site.url %}" class="btn btn-light">
-            <i class="icon-home"></i> {{site.name}}
+
+        <div class="btn-group">
+          <a class="btn btn-light btn-lg" href="{% url 'site' slug=site.url %}" >
+            {{site.name}}
           </a>
-          <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
-            <span class="caret"></span>
+          <button type="button" class="btn btn-light btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Vis handlinger</span>
           </button>
-          <ul class="dropdown-menu float-end">
-              <li><a href="{% url 'site' slug=site.url %}"><i class="icon-home"></i> Gå til</a></li>
-              <li><a href="{% url 'edit_site' slug=site.url %}"><i class="icon-edit"></i> Redigér</a></li>
-              {% if site.is_delete_allowed %}
-              <li><a href="{% url 'delete_site' slug=site.url %}" title="Slet bibliotek"><i class="icon-remove"></i> Slet</a></li>
-              {% endif %}
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="{% url 'site' slug=site.url %}">
+                Gå til
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'edit_site' slug=site.url %}">
+                Redigér
+              </a>
+            </li>
+            {% if site.is_delete_allowed %}
+              <li>
+                <a class="dropdown-item" href="{% url 'delete_site' slug=site.url %}" title="Slet bibliotek">
+                  Slet
+                </a>
+              </li>
+            {% endif %}
           </ul>
         </div>
       {% endfor %}      
     </div>
+
   </div>
 {% endblock %}

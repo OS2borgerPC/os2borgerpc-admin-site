@@ -97,14 +97,12 @@ Sikkerhedsregler
                     {{ form.alert_groups.errors }}
                     <label class="form-label" for="{{ form.alert_groups.id_for_label }}">Overvågede grupper</label>
                     {{ form.alert_groups }}
-                    {# {% include 'system/pcgrouplist/list.html' with submit_name='alert_groups' %} #}
                 </p>
 
                 <p>
                     {{ form.alert_users.errors }}
                     <label class="form-label" for="{{ form.alert_users.id_for_label }}">Modtager(e) af email-advarsel</label>
                     {{ form.alert_users }}
-                    {# {% include 'system/userlist/list.html' with submit_name='alert_users' %} #}
                 </p>
 
             </fieldset>

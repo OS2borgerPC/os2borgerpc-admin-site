@@ -6,15 +6,25 @@
 
     {% if user.is_authenticated %}
   
-      <div class="btn-group profile float-end">
-        <span>Velkommen&nbsp;</span>
-        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" style="text-decoration: none;">{{ user }}
-        <ul class="dropdown-menu float-end">
-          <!---TODO: Commented out until we sort out how to handle this.
-          <li><a href="#"><i class="icon-user"></i> Min profil</a></li>
-          -->
-          <li><a href="/accounts/logout/"><i class="icon-share"></i> Log ud</a></li>
-        </ul>
+      <div class="float-end d-flex align-items-center" style="margin-top: -.25rem;">
+        <span>Velkommen</span>
+
+        <div class="dropdown">
+          <button class="btn btn-primary text-white dropdown-toggle px-1"
+            style="box-shadow: none;"
+            type="button" 
+            id="userActionDropdown" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+            {{ user }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="userActionDropdown">
+            <li>
+              <a class="dropdown-item" href="/accounts/logout/">Log ud</a>
+            </li>
+          </ul>
+        </div>
+        
       </div>
       
     {% endif %}

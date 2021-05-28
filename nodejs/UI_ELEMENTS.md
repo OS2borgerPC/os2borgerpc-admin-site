@@ -2,24 +2,10 @@
 
 TODO
 
-* tables
-  configuration table http://localhost:9999/site/magenta/computers/computer3/
-  item list http://localhost:9999/site/magenta/jobs/
-  javascript sort and filtering mess
-
-  Tables: 
-    Config table
-    http://localhost:9999/site/magenta/computers/computer4/ (Konfigurationer)
-    http://localhost:9999/site/magenta/configuration/
-    http://localhost:9999/site/magenta/groups/grp6/ (Konfigurationer)
-    http://localhost:9999/site/magenta/groups/grp6/ (Scripts)
-    http://localhost:9999/site/magenta/scripts/2/ (Indstillinger)
-
 * errors
 * icons
 * giant popover
-* little dropdowns
-  (site konfiguration, computer konfiguration, gruppe konfiguration)
+* old browser warning?
 
 * Lav sag: Redigering af konfiguration er broken. 
   Se f.eks. http://localhost:9999/site/magenta/computers/computer3/#configs

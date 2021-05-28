@@ -82,3 +82,18 @@ header {
     padding: $spacer;
     border: solid 1px $gray-400;
 }
+
+// Popup page
+.popup-page { 
+    padding: $spacer*2; 
+    min-height: 100%;
+    margin: $spacer auto;
+}
+
+@media (min-width: 1200px) {
+
+    .popup-page {
+        max-width: $spacer*60;
+    }
+
+}

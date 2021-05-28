@@ -31,7 +31,7 @@ class="detailpage"
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
       Sikkerhedshændelser {% if sec_events > 0 %}
-      <span class="float-end badge badge-important sec-warn-blink">{{ sec_events }}{% endif %}</span>
+      <span class="float-end badge badge-danger sec-warn-blink">{{ sec_events }}{% endif %}</span>
     </a>
   
     {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
