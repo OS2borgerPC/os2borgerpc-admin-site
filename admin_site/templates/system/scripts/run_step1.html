@@ -1,31 +1,34 @@
 {% extends 'system/scripts/run_base.html' %}
 
 {% block run_dialog_heading %}
-Kør script: <em>Vælg computer eller grupper</em>
+  <h3>
+    <span class="text-muted">Kør script:</span><br>
+    Vælg computer eller grupper
+  </h3>
 {% endblock %}
 
 {% block run_dialog_content %}
-<div class="row-fluid">
-  <div class="span6">
-    <label>Computere:</label>
+<div class="row">
+  <div class="col-6">
+    <label>Computere</label>
     <ul class="unstyled">
         {% for pc in pcs %}
         {% if pc.is_active %}
       <li onclick="BibOS.ScriptEdit.selectGroupOrPC(this)">
-        <input type="checkbox" name="pcs" style="display: none" value="{{pc.pk}}"/>
-        <a href="javascript:void(0)"><i class="icon-hdd"></i> {{pc.name}}</a>
+        <input type="checkbox" name="pcs" style="display: none" value="{{pc.pk}}">
+        <a href="javascript:void(0)">{{pc.name}}</a>
         </li>
         {% endif %}
       {% endfor %}
     </ul>
   </div>
-  <div class="span6">
-    <label>Grupper:</label>
+  <div class="col-6">
+    <label>Grupper</label>
     <ul class="unstyled">
       {% for group in groups %}
       <li onclick="BibOS.ScriptEdit.selectGroupOrPC(this)">
-        <input type="checkbox" name="groups" style="display: none" value="{{group.pk}}"/>
-        <a href="javascript:void(0)"><i class="icon-hdd"></i> {{group.name}}</a>
+        <input type="checkbox" name="groups" style="display: none" value="{{group.pk}}">
+        <a href="javascript:void(0)">{{group.name}}</a>
       </li>
       {% endfor %}
     </ul>
@@ -34,5 +37,12 @@ Kør script: <em>Vælg computer eller grupper</em>
 {% endblock %}
 
 {% block run_dialog_footer %}
-<a href="javascript:void(0)" onclick="BibOS.ScriptEdit.submitForm()" role="button" class="btn">Næste <i class="icon-chevron-right"></i></a>
+  <button onclick="BibOS.ScriptEdit.submitForm()" role="button" class="btn btn-secondary">
+    <span class="d-flex align-items-center">
+      Næste 
+      <span class="material-icons ms-1">
+        chevron_right
+      </span>
+    </span>
+  </button>
 {% endblock %}

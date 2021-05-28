@@ -16,7 +16,9 @@ Brugere
     <ul class="item-list">
       {% for user in user_list %}
         <li class="{% ifequal user selected_user %}active{% endifequal %}">
-          <a class="item-list-link " href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a>
+          <a class="item-list-link " href="/site/{{ site.url }}/users/{{ user.username }}"> 
+            {{ user.username }}
+          </a>
           {% ifequal user selected_user %}
             <a class="item-list-deletable material-icons" href="#" title="Slet bruger">
               clear

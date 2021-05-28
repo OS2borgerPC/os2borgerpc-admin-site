@@ -42,8 +42,12 @@ var BibOS
         try {
           var descriptor = JSON.parse(decodeURIComponent(m[1]))
           notification = $('.bibos-notification').first()
-          if (descriptor["type"] == "error")
-            notification.addClass("errorlist")
+          if (descriptor["type"] == "error") {
+            notification.addClass("alert-danger")
+          } else {
+            notification.addClass("alert-warning")
+          }
+          notification.toggleClass(["d-block", "d-none"])
           notification.html(descriptor["message"]).fadeIn()
         } catch (e) {
           /* If there was an exception here, then the cookie was malformed --
@@ -328,3 +332,22 @@ function calcPaginationRange(pag_data) {
   const range = first + "-" + last + " af " + pag_data.count
   return range
 }
+
+/* Feature to warn users with old IE browsers */
+window.addEventListener('load', function() {
+  var old_ie_match = /MSIE/g
+  var ie11_win8_match = /Windows NT.+Trident/g
+  var ie11_win10_match = /Windows NT 10.+Trident/g
+  var ua = navigator.userAgent
+  var warn_el = document.querySelector('ie11-browser-warning')
+
+  if (ua.match(ie11_win10_match)) {
+      warn_el.innerHTML = ''
+          + '<p>' + warn_el.dataset.warningText +'</p>'
+          + '<p><a href="microsoft-edge:' + window.location.href + '">' + warn_el.dataset.linkText +'</a></p>'
+  } else if (ua.match(ie11_win8_match) || ua.match(old_ie_match)) {
+      warn_el.innerHTML = '<p>' + warn_el.dataset.warningText + '</p>'
+  } else {
+      warn_el.remove()
+  }
+})

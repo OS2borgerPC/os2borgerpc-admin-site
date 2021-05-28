@@ -81,12 +81,6 @@ li.addusertrigger:hover ul.adduserlist {display: block}
 li.selected {background-color: var(--bs-gray);}
 
 
-/* Notifications and errors */
-
-.bibos-notification, .errorlist { display: none; background-color: var(--bs-primary); box-shadow: 2px 5px 10px var(--bs-gray-dark); padding: 0.25em 0.5em 0.25em 0.5em; color: var(--bs-white); margin: 0 0 10px; border: solid 1px rgba(0, 0, 0, 0.1)}
-.errorlist {background-color: var(--bs-danger); display: block; list-style: none;}
-
-
 /* Documentation */
 
 div.docscontainer {padding-bottom: 20px;}

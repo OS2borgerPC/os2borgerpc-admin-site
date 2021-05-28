@@ -1,7 +1,16 @@
 {% if job.failed %}
-<div><i class='icon-refresh'></i>&nbsp;<a href='{% url 'restart_job' site.uid job.pk %}'>Genstart&nbsp;job</a></div>
+    <div>
+        <a class="btn btn-secondary" href="{% url 'restart_job' site.uid job.pk %}">
+            <span class="d-flex align-items-center">
+                <span class="material-icons">
+                    refresh
+                </span>
+                Genstart job
+            </span>
+        </a>
+    </div>
 {% endif %}
 {% if job.log_output %}
-<label style="padding-top: 10px;">Log output</label>
-<pre>{{job.log_output|escape}}</pre>
+    <p class="mt-3">Log output</p>
+    <pre>{{job.log_output|escape}}</pre>
 {% endif %}

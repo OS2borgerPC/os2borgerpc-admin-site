@@ -21,10 +21,10 @@ $(function(){
                 var info_button = ''
                 if(this.has_info) {
                     info_button = '<button ' +
-                        'class="btn jobinfobutton" ' +
+                        'class="btn btn-secondary jobinfobutton" ' +
                         'title="Job-info" ' +
                         'data-pk="' + this.pk + '"'+
-                    '><i class="icon-info-sign"></i></button>'
+                    '><span class="material-icons">info</span></button>'
                 }
                 var item = $(BibOS.expandTemplate(
                     'job-entry',

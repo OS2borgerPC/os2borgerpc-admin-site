@@ -147,7 +147,9 @@ Computere
               <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>
                 {% if job.has_info %}
-                  <button type="button" class="btn btn-info jobinfobutton" data-pk="{{ job.pk }}"><i class="icon-info-sign"></i></button>
+                  <button type="button" class="btn btn-info jobinfobutton" data-pk="{{ job.pk }}">
+                    <span class="material-icons">info</span>
+                  </button>
                 {% endif %}
               </td>
             </tr>

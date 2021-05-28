@@ -2,12 +2,8 @@
 
 TODO
 
-* errors
-* icons
 * giant popover
-* old browser warning?
-
-* Lav sag: Redigering af konfiguration er broken. 
+* Lav sag: Redigering af konfiguration er broken.
   Se f.eks. http://localhost:9999/site/magenta/computers/computer3/#configs
 
 ## Pick list

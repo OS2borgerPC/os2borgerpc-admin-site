@@ -74,7 +74,7 @@
                 $('#security_update_form').append($(input));
             });
             
-            var html = '<ul class="errorlist" id="id_errorlist"><li></li></ul>';
+            var html = '<ul class="errorlist alert alert-danger" id="id_errorlist"><li></li></ul>';
             var onload_status = $("#id_status").val();
             var onload_assigned_user = $("#id_assigned_user").val(); 
             
@@ -101,7 +101,7 @@
                     /* No user is set... */
                     if (onload_assigned_user) {
                         /* ... but one was when we loaded the page -- forbidden */
-                        var html = '<ul class="errorlist" id="id_errorlist"><li>Når først en person er blevet tildelt til advarslen, skal en person altid være tildelt.</li></ul>';
+                        var html = '<ul class="errorlist alert alert-danger" id="id_errorlist"><li>Når først en person er blevet tildelt til advarslen, skal en person altid være tildelt.</li></ul>';
                         $("#id_assigned_user").parent().append(html);
                         $("#id_assigned_user").val(onload_assigned_user);
                     } else {
@@ -137,7 +137,7 @@
                         $("#id_assigned_user").attr("disabled", false)
                     } else {
                         /* ... and it wasn't when the page was loaded -- forbidden */
-                        var html = '<ul class="errorlist" id="id_errorlist"><li>Når først en advarsel har fået en status, kan den ikke sættes tilbage til status Ny.</li></ul>';
+                        var html = '<ul class="errorlist alert alert-danger" id="id_errorlist"><li>Når først en advarsel har fået en status, kan den ikke sættes tilbage til status Ny.</li></ul>';
                         $("#id_status").parent().append(html);
                         $("#id_status").val(onload_status);
                         $("#id_assigned_user").attr(

@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
 {% block stylesheets %}
-<style type="text/css">
-  body { background-color: transparent; }
+<style>
+  body { 
+    background-color: transparent; 
+    width: 27.5rem;
+    min-width: auto;
+  }
 </style>
 {% endblock %}
 
@@ -30,10 +34,11 @@
 </script>
 
 <form name="run_script_form" 
-      id="run_script_form"
-      action="{% url 'run_script' site.uid script.pk %}"
-      method="post" 
-      enctype="multipart/form-data">
+  id="run_script_form"
+  action="{% url 'run_script' site.uid script.pk %}"
+  method="post" 
+  enctype="multipart/form-data"
+  class="container-fluid">
   {% csrf_token %}
   <input type="hidden" name="action" value="{{ action }}">
   {% if message %}
@@ -45,8 +50,15 @@
 </form>
 
 <div id="dialogiframefooter" style="display: none;">
-{% block run_dialog_footer %}
-  <a href="javascript:void(0)" onclick="$('#run_script_form').submit()" role="button" class="btn btn-primary">Kør <i class="icon-chevron-right icon-white"></i></a>
-{% endblock %}
+  {% block run_dialog_footer %}
+    <a href="javascript:void(0)" onclick="$('#run_script_form').submit()" role="button" class="btn btn-warning">
+      <span class="d-flex align-items-center">
+        Kør 
+        <span class="material-icons ms-1">
+          arrow_forward
+        </span>
+      </span>
+    </a>
+  {% endblock %}
 </div>
 {% endblock %}

@@ -17,7 +17,7 @@ Brugere
       {% for user in user_list %}
         <li class="{% ifequal user selected_user %}active{% endifequal %}">
           <a href="/site/{{ site.url }}/users/{{ user.username }}" class="item-list-link">
-            <i class="icon-user"></i> {{ user.username }}
+            {{ user.username }}
           </a>
         </li>
       {% endfor %}
