@@ -12,6 +12,7 @@
             this.modalFooter = $('#runscriptmodalfooter')
             this.modalIframe = $('#runscriptmodaliframe')
             var b = this
+            console.log("init")
             this.modal.on('show', function() {
                 if(b.reload) {
                     b.modalIframe.attr('src', b.defaultIframeSrc)

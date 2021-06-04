@@ -18,17 +18,18 @@
 
 <script type="text/javascript">
   $(function() {
+    console.log("run.base")
     if(window.parent && window.parent.BibOS &&
        window.parent.BibOS.ScriptEdit) {
       window.BibOS = window.BibOS || window.parent.BibOS
       window.BibOS.ScriptEdit = window.BibOS.ScriptEdit ||
                                 window.parent.BibOS.ScriptEdit
-      window.parent.BibOS.ScriptEdit.updateDialog(
+      $.when(window.BibOS.ScriptEdit.init()).then(window.parent.BibOS.ScriptEdit.updateDialog(
         $('#run_script_form'),
         $('#dialogiframeheader').html(),
         $('#dialogiframefooter').html(),
         $('body').first().height()
-      )
+      ))
     }
   })
 </script>
