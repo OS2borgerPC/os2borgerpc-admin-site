@@ -238,27 +238,22 @@ var BibOS
         lastInsert(elem)
     },
     setupJobInfoButtons: function(rootElem) {
+      // initialize all popovers.
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+      })
+
       var t = this
-      $(rootElem).find('.jobinfobutton').on('click', function(e) {
-        e.preventDefault()
-        e.stopPropagation()
+      $(rootElem).find('.jobinfobutton').on('shown.bs.popover', function(e) {
         t.showJobInfo(this)
       })
     },
     showJobInfo: function(triggerElem) {
       var t = this
+      var popover = bootstrap.Popover.getInstance(triggerElem)
       triggerElem = $(triggerElem)
       var id = triggerElem.attr('data-pk')
-      var popover = $('#jobinfo-popover')
-      if(id == this.shownJobInfo && popover.is(":visible")) {
-        popover.hide()
-        return false
-      }
-      var title = triggerElem.attr('title') || 'Job-info'
-      $('#jobinfo-title').html(title)
-      $('#jobinfo-content').html("Loading...")
-      this.positionJobInfo(triggerElem)
-      popover.show()
       this.shownJobInfo = id
       var url = location.href.match(/^(https?:\/\/[^\/]+\/site\/[^\/]+\/)/)
       if (url) {
@@ -270,35 +265,15 @@ var BibOS
         'type': 'GET',
         'url': url,
         'success': function(data) {
-          $('#jobinfo-content').html(data)
-          t.positionJobInfo(triggerElem)
+          // set content from backend data and redraw popover.
+          triggerElem.attr("data-bs-content", data)
+          popover.setContent()
         },
         'error': function() {
-          $('#jobinfo-popover').hide()
         }
       })
       return false
     },
-    positionJobInfo: function(refElem) {
-      var offset = refElem.offset()
-      var popover = $('#jobinfo-popover')
-      popover.css({top: 0, left: 0})
-      // Move left according to popover width
-      offset.left -= popover.outerWidth()
-      // Then right according to placement of arrow
-      offset.left += 42
-      // And finally move to middle of trigger-element
-      offset.left += (refElem.outerWidth() / 2)
-      offset.top += refElem.outerHeight() + 5
-      $('#jobinfo-popover').css( {
-        'top': offset.top + "px",
-        'left': offset.left + "px",
-      })
-    },
-    onBodyClick: function(e) {
-      $('#jobinfo-popover').hide()
-      return true
-    }
   })
   window.BibOS = window.BibOS || new BibOS()
   var b = window.BibOS

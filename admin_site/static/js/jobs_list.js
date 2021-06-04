@@ -22,8 +22,14 @@ $(function(){
                 if(this.has_info) {
                     info_button = '<button ' +
                         'class="btn btn-secondary jobinfobutton" ' +
-                        'title="Job-info" ' +
-                        'data-pk="' + this.pk + '"'+
+                        'data-bs-title="Job-info" ' +
+                        'data-bs-toggle="popover" ' +
+                        'data-bs-content="Loading..." ' +
+                        'data-bs-html=true ' +
+                        'data-bs-placement=left ' +
+                        'data-bs-trigger=focus' +
+                        'data-bs-animation="true" ' +
+                        'data-pk="' + this.pk + '"' +
                     '><span class="material-icons">info</span></button>'
                 }
                 var item = $(BibOS.expandTemplate(
