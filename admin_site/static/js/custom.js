@@ -59,10 +59,9 @@ var BibOS
       }
 
       if(location.href.match(documentation_match))
+      {
         this.setupDocumentationBackLinks()
-      $('body').on('click', function(e) {
-        return t.onBodyClick(e)
-      })
+      }
     },
     setupDocumentationBackLinks: function() {
       var ref = document.referrer || ''
