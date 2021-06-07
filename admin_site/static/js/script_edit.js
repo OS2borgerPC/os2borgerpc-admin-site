@@ -21,6 +21,9 @@
                     b.reload = true
                 }
             })
+            // Make and dispatch event for updateDialog() to react upon
+            const init_event = new Event('initialized')
+            document.dispatchEvent(init_event);
         },
         setModalLoading: function() {
             var modal = $('#runscriptmodal')

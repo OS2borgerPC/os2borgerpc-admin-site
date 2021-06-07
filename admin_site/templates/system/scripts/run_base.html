@@ -24,12 +24,16 @@
       window.BibOS = window.BibOS || window.parent.BibOS
       window.BibOS.ScriptEdit = window.BibOS.ScriptEdit ||
                                 window.parent.BibOS.ScriptEdit
-      $.when(window.BibOS.ScriptEdit.init()).then(window.parent.BibOS.ScriptEdit.updateDialog(
-        $('#run_script_form'),
-        $('#dialogiframeheader').html(),
-        $('#dialogiframefooter').html(),
-        $('body').first().height()
-      ))
+
+      document.addEventListener('initialize', function(ev) {
+        window.BibOS.ScriptEdit.ScriptEdit.updateDialog(
+          $('#run_script_form'),
+          $('#dialogiframeheader').html(),
+          $('#dialogiframefooter').html(),
+          $('body').first().height()
+        )
+      })
+
     }
   })
 </script>
