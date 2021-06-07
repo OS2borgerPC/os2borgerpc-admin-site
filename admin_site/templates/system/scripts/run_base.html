@@ -15,24 +15,21 @@
 <div id="dialogiframeheader" style="display: none">
   {% block run_dialog_heading %}<h3>Kør script</h3>{% endblock %}
 </div>
+  
+<script>
+  window.addEventListener('message', function(ev) {
 
-<script type="text/javascript">
-  $(function() {
-    if(window.parent && window.parent.BibOS &&
-       window.parent.BibOS.ScriptEdit) {
-      window.BibOS = window.BibOS || window.parent.BibOS
-      window.BibOS.ScriptEdit = window.BibOS.ScriptEdit ||
-                                window.parent.BibOS.ScriptEdit
+    if(ev.data === 'please run updateDialog' && window.parent && window.parent.BibOS &&
+      window.parent.BibOS.ScriptEdit) {
+      window.BibOS = window.BibOS || window.parent.BibOS;
+      window.BibOS.ScriptEdit = window.BibOS.ScriptEdit || window.parent.BibOS.ScriptEdit;
 
-      document.addEventListener('initialize', function(ev) {
-        console.log("run.base")
-        window.BibOS.ScriptEdit.ScriptEdit.updateDialog(
-          $('#run_script_form'),
-          $('#dialogiframeheader').html(),
-          $('#dialogiframefooter').html(),
-          $('body').first().height()
-        )
-      })
+      window.BibOS.ScriptEdit.updateDialog(
+        $('#run_script_form'),
+        $('#dialogiframeheader').html(),
+        $('#dialogiframefooter').html(),
+        $('body').first().height()
+      )
 
     }
   })

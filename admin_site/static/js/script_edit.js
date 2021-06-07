@@ -12,7 +12,6 @@
             this.modalFooter = $('#runscriptmodalfooter')
             this.modalIframe = $('#runscriptmodaliframe')
             var b = this
-            console.log("init")
             this.modal.on('show', function() {
                 if(b.reload) {
                     b.modalIframe.attr('src', b.defaultIframeSrc)
@@ -21,8 +20,11 @@
                     b.reload = true
                 }
             })
+
             // Dispatch event for updateDialog() to react upon
-            document.dispatchEvent(init_event);
+            setTimeout(function() {
+                document.getElementById('runscriptmodaliframe').contentWindow.postMessage('please run updateDialog', '*')
+            }, 1000)
         },
         setModalLoading: function() {
             var modal = $('#runscriptmodal')
@@ -109,9 +111,6 @@
             form.submit()
         }
     })
-
-    // Make event for updateDialog() to react upon
-    const init_event = new Event('initialized')
     
     BibOS.ScriptEdit = new ScriptEdit()
     $(function() { BibOS.ScriptEdit.init() })
