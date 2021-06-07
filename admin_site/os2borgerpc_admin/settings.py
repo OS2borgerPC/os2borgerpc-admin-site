@@ -223,6 +223,8 @@ LOCAL_APPS = (
 THIRD_PARTY_APPS = (
     'django_xmlrpc',
     'django_extensions',
+    'crispy_forms',
+    'crispy_bootstrap5',
 )
 
 DJANGO_APPS = (
@@ -308,4 +310,6 @@ INITIALIZE_DATABASE = settings.getboolean(
     "INITIALIZE_DATABASE", False
 )
 
-FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

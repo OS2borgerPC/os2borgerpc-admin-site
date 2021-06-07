@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Rediger parameter
@@ -8,7 +9,7 @@ Rediger parameter
   <div class="container-fluid main">
     <form action="" method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form|crispy }}
       <input class="btn btn-primary" type="submit" value="Gem">
       <a class="btn btn-secondary" href="javascript:history.go(-1)">Annuller</a> 
     </form>

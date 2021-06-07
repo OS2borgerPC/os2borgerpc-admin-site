@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Computere
@@ -81,33 +82,15 @@ Computere
 
             <fieldset class="col-12 col-lg-6">
 
-              <p>
-                {{ form.name.errors }}
-                <label class="form-label" for="{{ form.name.id_for_label }}">Navn</label>
-                {{ form.name }}
-              </p>
+                {{ form.name|as_crispy_field }}
+                {{ form.description|as_crispy_field }}
+                {{ form.location|as_crispy_field }}
 
-              <p>  
-                {{ form.description.errors }}
-                <label class="form-label" for="{{ form.description.id_for_label }}">Beskrivelse</label>
-                {{ form.description }}
-              </p>
-
-              <p>
-                {{ form.location.errors }}
-                <label class="form-label" for="{{ form.location.id_for_label }}">Placering</label>  
-                {{ form.location }}
-              </p>
-
-              <div mb-5>
-                {{ form.is_active.errors }}
-                <div class="form-check form-switch">
-                  {{ form.is_active }}
-                  <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Aktiv</label>
+                <div mb-5>
+                    {{ form.is_active|as_crispy_field }}
                 </div>
-              </div>
 
-            </fieldset>
+              </fieldset>
 
             <fieldset class="col-12 col-lg-6">
 

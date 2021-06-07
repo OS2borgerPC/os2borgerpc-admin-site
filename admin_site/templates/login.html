@@ -1,4 +1,5 @@
 {% extends "sitebase.html" %}
+{% load crispy_forms_tags %}
 
 {% block header_title %}
     <div class="container">Log <em>ind</em></div>
@@ -9,14 +10,7 @@
     <form method="post" action="">
         {% csrf_token %}
         {% comment %} Ideally one shouldn't have to add this form-text class manually everywhere. {% endcomment %}
-        <p>
-            <label for="{{ form.username.id_for_label }}" class="form-label">Brugernavn:</label>
-            {{ form.username }}
-        </p>
-        <p>
-            <label for="{{ form.password.id_for_label }}" class="form-label">Password:</label>
-            {{ form.password }}
-        </p>
+        {{ form|crispy }}
         <input class="btn btn-primary" type="submit" value="Log ind">
         <input type="hidden" name="next" value="{{ next }}">
     </form>

@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Grupper
@@ -71,27 +72,11 @@ active
         <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
           <div class="row gx-5">
             <fieldset class="col-12 col-lg-6">
-              
               {% csrf_token %}
 
-              <p>
-                {{ form.name.errors }}
-                <label for="{{ form.name.id_for_label }}" class="form-label">Navn</label>
-                {{ form.name }}
-              </p>
-
-              <p>
-                {{ form.uid.errors }}
-                <label for="{{ form.uid.id_for_label }}" class="form-label">Id</label>
-                {{ form.uid }}
-              </p>
-
-              <p>
-                {{ form.description.errors }}
-                <label for="{{ form.description.id_for_label }}" class="form-label">Beskrivelse</label>
-                {{ form.description }}
-              </p>
-
+              {{ form.name|as_crispy_field }}
+              {{ form.uid|as_crispy_field }}
+              {{ form.description|as_crispy_field }}
             </fieldset>
 
             <fieldset class="col-12 col-lg-6">
@@ -132,7 +117,7 @@ active
             </div>
             <div class="modal-body">
                 {% csrf_token %}
-                {{ newform.as_p }}
+                {{ newform|crispy }}
             </div>
             <div class="modal-footer">
               <input type="submit" class="btn btn-primary" value="Gem">

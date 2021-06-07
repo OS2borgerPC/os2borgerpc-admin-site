@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Sikkerhedsregler
@@ -60,51 +61,17 @@ Sikkerhedsregler
                 <!-- Site field -->
                 <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
 
-                <p>
-                    {{ form.name.errors }}
-                    <label class="form-label" for="{{ form.name.id_for_label }}">Navn</label>
-                    {{ form.name }}
-                </p>
-
-                <p>
-                    {{ form.uid.errors }}
-                    <label class="form-label" for="{{ form.uid.id_for_label }}">ID</label>
-                    {{ form.uid }}
-                </p>
-
-                <p>
-                    {{ form.description.errors }}
-                    <label class="form-label" for="{{ form.description.id_for_label }}">Problemmeddelelse</label>
-                    {{ form.description }}
-                </p>
-
-                <p>
-                    {{ form.level.errors }}
-                    <label class="form-label" for="{{ form.level.id_for_label }}">Alvorsgrad</label>
-                    {{ form.level }}
-                </p>
+                {{ form.name|as_crispy_field }}
+                {{ form.uid|as_crispy_field }}
+                {{ form.description|as_crispy_field }}
+                {{ form.level|as_crispy_field }}
 
             </fieldset>
 
             <fieldset class="col-12 col-lg-6">
-
-                <p>
-                    {{ form.script.errors }}
-                    <label class="form-label" for="{{ form.script.id_for_label }}">Script</label>
-                    {{ form.script }}
-                </p>
-
-                <p>
-                    {{ form.alert_groups.errors }}
-                    <label class="form-label" for="{{ form.alert_groups.id_for_label }}">Overvågede grupper</label>
-                    {{ form.alert_groups }}
-                </p>
-
-                <p>
-                    {{ form.alert_users.errors }}
-                    <label class="form-label" for="{{ form.alert_users.id_for_label }}">Modtager(e) af email-advarsel</label>
-                    {{ form.alert_users }}
-                </p>
+                {{ form.script|as_crispy_field }}
+                {{ form.alert_groups|as_crispy_field }}
+                {{ form.alert_users|as_crispy_field }}
 
             </fieldset>
 
@@ -138,48 +105,13 @@ Sikkerhedsregler
                             <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
 
                             <!-- And now the rest -->
-                            <p>
-                                {{ newform.name.errors }}
-                                <label for="{{ newform.name.id_for_label }}" class="form-label">Navn</label>
-                                {{ newform.name }}
-                            </p>
-
-                            <p>
-                                {{ newform.uid.errors }}
-                                <label for="{{ newform.uid.id_for_label }}" class="form-label">Id</label>
-                                {{ newform.uid }}
-                            </p>
-
-                            <p>
-                                {{ newform.description.errors }}
-                                <label for="{{ newform.description.id_for_label }}" class="form-label">Problemmeddelelse</label>
-                                {{ newform.description }}
-                            </p>
-
-                            <p>
-                                {{ newform.level.errors }}
-                                <label for="{{ newform.level.id_for_label }}" class="form-label">Alvorsgrad</label>
-                                {{ newform.level }}
-                            </p>
-
-                            <p>
-                                {{ newform.script.errors }}
-                                <label for="{{ newform.script.id_for_label }}" class="form-label">Script</label>
-                                {{ newform.script }}
-                            </p>
-
-                            <p>
-                                {{ newform.alert_groups.errors }}
-                                <label for="{{ newform.alert_groups.id_for_label }}" class="form-label">Overvåg følgende grupper</label>
-                                {{ newform.alert_groups }}
-                            </p>
-
-                            <p>
-                                {{ newform.alert_users.errors }}
-                                <label for="{{ newform.alert_users.id_for_label }}" class="form-label">Modtager(e) af email-advarsel</label>
-                                {{ newform.alert_users }}
-                            </p>
-
+                            {{ newform.name|as_crispy_field }}
+                            {{ newform.uid|as_crispy_field }}
+                            {{ newform.description|as_crispy_field }}
+                            {{ newform.level|as_crispy_field }}
+                            {{ newform.script|as_crispy_field }}
+                            {{ newform.alert_groups|as_crispy_field }}
+                            {{ newform.alert_users|as_crispy_field }}
                         </fieldset>
 
                     </div>

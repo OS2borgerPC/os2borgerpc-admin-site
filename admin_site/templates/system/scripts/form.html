@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 <div class="d-flex justify-content-end">
   {% if form.instance.created %}
     <p class="mb-3 mt-3">
@@ -40,28 +42,10 @@
 {% endif %}
 
       <fieldset>
-        
-        <p>
-          {{ form.name.errors }}
-          <label class="form-label" for="{{ form.name.id_for_label }}">Navn</label>
-          {{ form.name }}
-        </p>
-        
-        <p class="scriptDescription">
-          {{ form.description.errors }}
-          <label class="form-label" for="{{ form.description.id_for_label }}">Beskrivelse</label>
-          {{ form.description }}
-        </p>
-
-        <p>
-          <label class="form-label" for="{{ form.author.id_for_label }}">{{ form.author.label }}</label>
-          {{ form.author }}
-        </p>
-
-        <p>
-          <label class="form-label" for="{{ form.author_email.id_for_label }}">{{ form.author_email.label }}</label>
-          {{ form.author_email }}
-        </p>
+        {{ form.name|as_crispy_field }}
+        {{ form.description|as_crispy_field }}
+        {{ form.author|as_crispy_field }}
+        {{ form.author_email|as_crispy_field }}
 
         <div class="form-check form-switch">
           <input
@@ -82,10 +66,7 @@
         </div>
 
         <div class="form-check form-switch">
-          {{ form.maintained_by_magenta }}
-          <label class="form-check-label" for="{{ form.maintained_by_magenta.id_for_label }}">
-            {{ form.maintained_by_magenta.label }}
-          </label>
+          {{ form.maintained_by_magenta|as_crispy_field }}
         </div>
 
       </fieldset>
@@ -96,12 +77,7 @@
 {% endif %}
   
       <fieldset {% if disable_inputs == "yes" %}class="mt-3"{% endif %}>
-
-        <div class="mb-3">
-          {{ form.executable_code.errors }}
-          <label class="form-label" for="{{ form.executable_code.id_for_label }}">Upload scriptkode:</label>
-          {{ form.executable_code }}
-        </div>
+        {{ form.executable_code|as_crispy_field }}
 
         {% if show_code_preview %}
           <p>Kode:</p>

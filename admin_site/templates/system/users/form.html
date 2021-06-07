@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 {% if form.non_field_errors %}
   <span class="form-error">
       {{ form.non_field_errors }}
@@ -5,27 +7,12 @@
 {% endif %}
 
 <fieldset>
-  
-  <p>
-    {{ form.username.errors }}
-    <label class="form-label" for="{{ form.username.id_for_label }}">Brugernavn</label>
-    {{ form.username }}
-    <span class="form-text">{{ form.username.help_text }}</span>
-  </p>
-
-  <p>
-    {{ form.new_password.errors }}
-    <label class="form-label" for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte)</label>
-    {{ form.new_password }}
-  </p>
+  {{ form.username|as_crispy_field }}
+  {{ form.new_password|as_crispy_field }}
   
   <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text">
   
-  <p>
-    {{ form.password_confirm.errors }}
-    <label class="form-label" for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen)</label>
-    {{ form.password_confirm }}
-  </p>
+  {{ form.password_confirm|as_crispy_field }}
   
   <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text">
 
@@ -38,20 +25,9 @@
     <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">Vis Password</label> 
   </div>
 
-  <p>
-    {{ form.email.errors }}
-    <label class="form-label" for="{{ form.email.id_for_label }}">E-mail adresse</label>
-    {{ form.email }}
-  </p>
-  
-  <p>
-    {{ form.usertype.errors }}
-    <label class="form-label" for="{{ form.usertype.id_for_label }}">Brugertype</label>
-    {{ form.usertype }}
-  </p>
-
+    {{ form.email|as_crispy_field }}
+    {{ form.usertype|as_crispy_field }}
 </fieldset>
-
 <script type="text/javascript">
   $(function() {
     var form = $("#{{ form_id|default:'user_form' }}");
