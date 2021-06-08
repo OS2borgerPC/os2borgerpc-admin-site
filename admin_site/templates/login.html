@@ -9,7 +9,6 @@
 <div class="container">
     <form method="post" action="">
         {% csrf_token %}
-        {% comment %} Ideally one shouldn't have to add this form-text class manually everywhere. {% endcomment %}
         {{ form|crispy }}
         <input class="btn btn-primary" type="submit" value="Log ind">
         <input type="hidden" name="next" value="{{ next }}">

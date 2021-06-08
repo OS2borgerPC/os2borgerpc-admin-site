@@ -46,8 +46,8 @@
         {{ form.description|as_crispy_field }}
         {{ form.author|as_crispy_field }}
         {{ form.author_email|as_crispy_field }}
+        {{ form.maintained_by_magenta|as_crispy_field }}
 
-        <div class="form-check form-switch">
           <input
             class="form-check-input"
             type="checkbox"
@@ -63,12 +63,6 @@
             name="is_security_script"
             value="{{ is_security }}" 
             type="hidden">
-        </div>
-
-        <div class="form-check form-switch">
-          {{ form.maintained_by_magenta|as_crispy_field }}
-        </div>
-
       </fieldset>
         
 {% if disable_inputs != "yes" %}
