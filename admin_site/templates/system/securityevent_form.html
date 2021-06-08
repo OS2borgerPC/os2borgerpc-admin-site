@@ -1,6 +1,6 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block specific_content %}
-
     <form id="security_update_form" action="" method="post" class="popup-page gray-box">
         {% csrf_token %}
 
@@ -10,53 +10,23 @@
 
         <div class="row">
             <div class="col">
-                
-                <dl class="dl-horizontal">
-                    <dt>Tid</dt>
-                    <dd>{{ securityevent.ocurred_time }}</dd>
-                    <dt>Maskine</dt>
-                    <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</dd>
-                    <dt>
-                        <label class="form-label" for="{{ form.note.id_for_label }}">
-                            Note
-                        </label>
-                    </dt>
-                    <dd>
-                        {{ form.note.errors }}
-                        {{ form.note }}
-                    </dd>
-            
-                    <dt>
-                        <label class="form-label" for="{{ form.assigned_user.id_for_label }}">
-                            Håndteres af
-                        </label>
-                    </dt>
-                    <dd>
-                        {{ form.assigned_user.errors }}
-                        {{ form.assigned_user }}
-                    </dd>
-                    <dt>
-                        <label class="form-label" for="{{ form.status.id_for_label }}">
-                            <strong>Status</strong>
-                        </label>
-                    </dt>
-                    <dd>
-                        {{ form.status.errors }}
-                        {{ form.status }}
-                    </dd>
-                </dl>
+                    <div class="mb-3">
+                    <label>Tid</label>
+                    <p>{{ securityevent.ocurred_time }}</p>
+                    </div>
+                    <div class="mb-3">
+                    <label>Maskine</label>
+                    <p><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</p>
+                    </div>
+                    {{ form.note|as_crispy_field }}
+                    {{ form.assigned_user|as_crispy_field }}
+                    {{ form.status|as_crispy_field }}
             </div>
 
-            <div class="col">
-                <dl>
-                    <dt>Log-output:</dt>
-                    <dd>
-                        <p name="securityevent-log">
-                            <pre>{{ securityevent.complete_log }}</pre>
-                        </p>
-                    </dd>
-                </dl>
-            </div>
+                <label>Log-output:</label>
+                <p name="securityevent-log">
+                    <pre>{{ securityevent.complete_log }}</pre>
+                </p>
 
         </div>
 
