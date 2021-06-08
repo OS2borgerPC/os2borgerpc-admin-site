@@ -1,66 +1,60 @@
 {% extends 'base.html' %}
 
 {% block stylesheets %}
-<style>
-  body { 
-    background-color: transparent; 
-    width: 27.5rem;
-    min-width: auto;
-  }
-</style>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+    body { 
+      padding: 0;
+      margin: 0;
+      background-color: transparent;
+      min-width: auto;
+      display: flex;
+      flex-flow: column nowrap;
+    }
+    #run_script_form {
+      flex-grow: 1;
+      display: flex;
+      flex-flow: column nowrap;
+    }
+  </style>
 {% endblock %}
 
 {% block body %}
-
-<div id="dialogiframeheader" style="display: none">
-  {% block run_dialog_heading %}<h3>Kør script</h3>{% endblock %}
-</div>
+  <div class="modal-header">
+    {% block run_dialog_heading %}{% endblock %}
+    <button type="button" class="btn btn-close" onclick="dismissDialog()"></button>
+  </div>
   
-<script>
-  window.addEventListener('message', function(ev) {
+  <form name="run_script_form" 
+    id="run_script_form"
+    action="{% url 'run_script' site.uid script.pk %}"
+    method="post" 
+    enctype="multipart/form-data">
+    
+    <div class="modal-body">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="{{ action }}">
+      {% if message %}
+        <p class="message text-danger">{{message}}</p>
+      {% endif %}
+      {% block run_dialog_content %}
+        Loading...
+      {% endblock %}
+    </div>
 
-    if(ev.data === 'please run updateDialog' && window.parent && window.parent.BibOS &&
-      window.parent.BibOS.ScriptEdit) {
-      window.BibOS = window.BibOS || window.parent.BibOS;
-      window.BibOS.ScriptEdit = window.BibOS.ScriptEdit || window.parent.BibOS.ScriptEdit;
+    <div class="modal-footer">
+      {% block run_dialog_footer %}{% endblock %}
+    </div>
 
-      window.BibOS.ScriptEdit.updateDialog(
-        $('#run_script_form'),
-        $('#dialogiframeheader').html(),
-        $('#dialogiframefooter').html(),
-        $('body').first().height()
-      )
+  </form>
 
+  <script>
+    const dismissDialog = function() {
+      window.parent.dismissModal()
     }
-  })
-</script>
-
-<form name="run_script_form" 
-  id="run_script_form"
-  action="{% url 'run_script' site.uid script.pk %}"
-  method="post" 
-  enctype="multipart/form-data"
-  class="container-fluid">
-  {% csrf_token %}
-  <input type="hidden" name="action" value="{{ action }}">
-  {% if message %}
-    <p class="message">{{message}}</p>
-  {% endif %}
-  {% block run_dialog_content %}
-    Loading...
-  {% endblock %}
-</form>
-
-<div id="dialogiframefooter" style="display: none;">
-  {% block run_dialog_footer %}
-    <a href="javascript:void(0)" onclick="$('#run_script_form').submit()" role="button" class="btn btn-warning">
-      <span class="d-flex align-items-center">
-        Kør 
-        <span class="material-icons ms-1">
-          arrow_forward
-        </span>
-      </span>
-    </a>
-  {% endblock %}
-</div>
+  </script>
 {% endblock %}

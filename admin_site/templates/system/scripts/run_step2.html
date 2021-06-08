@@ -1,26 +1,31 @@
 {% extends 'system/scripts/run_base.html' %}
 
 {% block run_dialog_heading %}
-  <h3><span class="text-muted">Kør script:</span> Angiv parametre</h3>
+  <h3>
+    <span class="text-muted">Kør script:</span><br> 
+    Angiv parametre
+  </h3>
 {% endblock %}
 
 {% block run_dialog_content %}
-{% for pk in pcs %}
-  <input type="hidden" name="pcs" value="{{ pk }}">
-{% endfor %}
-{% for field in form %}
-  {{ field.errors }}
-  <p class="row">
-    <label class="form-label col-4" for="{{ field.id_for_label }}">{{ field.label }}</label>
-    <span class="col-8">
-      {{ field }}
-    </span>
-  </p>
-{%endfor%}
+  
+    {% for pk in pcs %}
+      <input type="hidden" name="pcs" value="{{ pk }}">
+    {% endfor %}
+    {% for field in form %}
+      {{ field.errors }}
+      <p class="row">
+        <label class="form-label col-4" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <span class="col-8">
+          {{ field }}
+        </span>
+      </p>
+    {%endfor%}
+  
 {% endblock %}
 
 {% block run_dialog_footer %}
-  <button onclick="BibOS.ScriptEdit.submitForm()" type="button" class="btn btn-warning">
+  <button onclick="scriptStep2Submit()" type="button" class="btn btn-warning">
     <span class="d-flex align-items-center">
       Kør 
       <span class="material-icons ms-1" style="font-size: 1.25rem;">
@@ -28,4 +33,9 @@
       </span>
     </span>
   </button>
+  <script>
+    window.scriptStep2Submit = function() {
+      document.getElementById('run_script_form').submit()
+    }
+  </script>
 {% endblock %}

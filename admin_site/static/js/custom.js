@@ -308,7 +308,7 @@ function calcPaginationRange(pag_data) {
 }
 
 /* Feature to warn users with old IE browsers */
-window.addEventListener('load', function() {
+function oldBrowserWarning() {
   var old_ie_match = /MSIE/g
   var ie11_win8_match = /Windows NT.+Trident/g
   var ie11_win10_match = /Windows NT 10.+Trident/g
@@ -324,4 +324,8 @@ window.addEventListener('load', function() {
   } else {
       warn_el.remove()
   }
+}
+
+window.addEventListener('load', function() {
+  oldBrowserWarning()
 })

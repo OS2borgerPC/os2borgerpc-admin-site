@@ -47,15 +47,13 @@
 
       {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
 
-      {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
-      {% if selected_script.is_global is False or user.is_superuser %}
-        <fieldset class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
+      <fieldset class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
+        {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
+        {% if selected_script.is_global is False or user.is_superuser %}
           <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
-          <button type="reset" class="btn btn-secondary">Annuller</button>
-        </fieldset>
-      {% endif %}
-
-<!--      <button class="btn" onclick="location.href='{% url script_url site.uid selected_script.pk %}'; return false;">Fortryd ændringer</button>-->
+        {% endif %}
+        <button type="reset" class="btn btn-secondary">Annuller</button>
+      </fieldset>
 
     </form>
 
@@ -63,19 +61,16 @@
     <div id="runscriptmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <div id="runscriptmodalheader"><h3 class="modal-title">Kør script</h3></div>
-            <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <iframe id="runscriptmodaliframe" src="{% url 'run_script' site.uid script.pk %}" style="border: 0; width: 100%; height: 250px;"></iframe>
-          </div>
-          <div id="runscriptmodalfooter" class="modal-footer">
-            <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-          </div>
+          <iframe id="runscriptmodaliframe" src="{% url 'run_script' site.uid script.pk %}" style="border: 0; width: 100%; height: 80vh;"></iframe>
         </div>
       </div>
     </div>
+    <script>
+      window.dismissModal = function() {
+        const runModalEl = document.getElementById('runscriptmodal')
+        bootstrap.Modal.getInstance(runModalEl).hide()
+      }
+    </script>
     {% endif %}
 
   </div>  

@@ -76,39 +76,6 @@
                 elem.find('select.type-input').attr('name', 'script-input-' + i + '-type')
             })
             container.find('input.script-number-of-inputs').val(inputs.length)
-        },
-        selectGroupOrPC: function(htmlElem) {
-            elem = $(htmlElem)
-            input = elem.find('input[type=checkbox]').first()
-            if(input.is(':checked')) {
-                elem.removeClass('selected')
-                input.removeAttr('checked')
-            } else {
-                elem.addClass('selected')
-                input.attr('checked', 'checked')
-            }
-
-        },
-        updateDialog: function(form, header, footer, height) {
-            this.form = form
-            this.modalHeader.html(header)
-            this.modalFooter.html(footer)
-            this.modalIframe.height(height + 100)
-        },
-        submitForm: function() {
-            this.form.submit()
-        },
-        submitStep2: function(button) {
-            form = $(button).parent().parent()
-            this.iframeCount++
-            name = 'run_script_step2_iframe' + this.iframeCount
-            $('<iframe></iframe>', {
-                id: name,
-                name: name,
-                src: 'about:blank'
-            }).appendTo($('body').first())
-            form.attr('target', name)
-            form.submit()
         }
     })
     
