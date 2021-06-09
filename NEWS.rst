@@ -1,3 +1,12 @@
+Version 4.3.1, June 9, 2021
+---------------------------
+
+New in this version:
+
+- Prevent users from seeing local scripts on other sites.
+- Enable setting of Google Cloud Storage custom endpoint.
+
+
 Version 4.3.0, May 11, 2021
 ---------------------------
 
