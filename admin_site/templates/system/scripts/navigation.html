@@ -37,22 +37,30 @@
       {% endif %}
     {% endfor %}
 
-    {% if local_scripts_by_tag.untagged %}
-      <ul class="item-list">
+    <!-- Search box -->
+    <div class="input-group" style="padding: .5rem 1rem;">
+      <input id="search_form" type="search" id="form1" class="form-control" placeholder="Find ...">
+    </div>
+
+    <ul id="local-script-list" class="item-list"></ul>
+
+    <script src="/static/js/script_search.js"></script>
+    <script>
+      current_id = {{ selected_script.pk }}
+    
+      {% if local_scripts_by_tag.untagged %}
         {% for script in local_scripts_by_tag.untagged %}
-            <li class="{% ifequal script selected_script %}active{% endifequal %}">
-              <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
-                {{ script.name }}
-              </a>
-              {% ifequal script selected_script %}
-                <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
-                  clear
-                </a>
-              {% endifequal %}
-            </li>
+          local_scripts.push({
+            id: {{ script.pk }},
+            url: '{% url script_url site.uid script.pk %}',
+            name: '{{ script.name }}',
+            active: {% if script == selected_script %}true{% else %}false{% endif %},
+            delete_url: '{% url 'delete_script' site.uid script.pk %}'
+          })
         {% endfor %}
-      </ul>
-    {% endif %}
+      {% endif %}
+    
+    </script>
     
   </div>
 
