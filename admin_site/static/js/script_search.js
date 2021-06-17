@@ -53,6 +53,7 @@ const showNoneOrSome = function(state) {
 
 // Event listeners
 
+// React on search input
 search_form_el.addEventListener('input', function(ev) {
     state.query = this.value.toLowerCase()
     state.filtered_local_scripts = local_scripts.filter(script => {
