@@ -1,4 +1,5 @@
 // Properties
+
 let current_id = null,
     local_scripts = [],
     state = {
@@ -6,8 +7,12 @@ let current_id = null,
         filtered_local_scripts: []
     }
 
+// DOM elements
+
 const search_form_el = document.getElementById('search_form')
-const local_list_el = document.getElementById('local-script-list')
+const script_nav_el = document.getElementById('script-navigation')
+const search_result_el = document.getElementById('script-searchlist')
+const list_el = document.getElementById('script-search-list')
 
 // Methods
 
@@ -49,9 +54,9 @@ const loadState = function() {
 
 const showAllOrSome = function(state) {
     if (state.filtered_local_scripts.length > 0) {
-        renderList(local_list_el, state.filtered_local_scripts)
+        renderList(list_el, state.filtered_local_scripts)
     } else {
-        renderList(local_list_el, local_scripts)
+        renderList(list_el, local_scripts)
     }
 }
 
@@ -66,10 +71,17 @@ const initialize = function(state) {
 
 search_form_el.addEventListener('input', function(ev) {
     state.query = this.value
-    state.filtered_local_scripts = local_scripts.filter(script => {
-        return script.name.includes(state.query)
-    })
-    showAllOrSome(state)
+    if (state.query !== '') {
+        script_nav_el.style.display = 'none'
+        search_result_el.style.display = 'block'
+        state.filtered_local_scripts = local_scripts.filter(script => {
+            return script.name.includes(state.query)
+        })
+        showAllOrSome(state)
+    } else {
+        search_result_el.style.display = 'none'
+        script_nav_el.style.display = 'block'
+    }
 })
 
 window.addEventListener('load', function() {

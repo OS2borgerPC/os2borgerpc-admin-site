@@ -1,80 +1,87 @@
-<!-- The two tabs in the submenu: -->
-<ul class="nav nav-tabs scripttabs" role="tab-list">
-  <li class="nav-item" role="presentation">
-    <a id="localscripts-tab" class='nav-link {% if not global_selected %} active {% endif %}' href="#localscripts" data-bs-toggle="tab" role="tab" aria-controls="localscripts" aria-selected="true">Lokale scripts</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a id="globalscripts-tab" class='nav-link {% if global_selected %} active {% endif %}' href="#globalscripts" data-bs-toggle="tab" role="tab" aria-controls="globalscripts" aria-selected="false">Globale scripts</a>
-  </li>
-</ul>
+<div id="script-navigation">
 
-<!-- The content for the two tabs you can choose from above, one after one: -->
-<div class="tab-content">
+  <!-- The two tabs in the submenu: -->
+  <ul class="nav nav-tabs scripttabs" role="tab-list">
+    <li class="nav-item" role="presentation">
+      <a id="localscripts-tab" class='nav-link {% if not global_selected %} active {% endif %}' href="#localscripts" data-bs-toggle="tab" role="tab" aria-controls="localscripts" aria-selected="true">Lokale scripts</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a id="globalscripts-tab" class='nav-link {% if global_selected %} active {% endif %}' href="#globalscripts" data-bs-toggle="tab" role="tab" aria-controls="globalscripts" aria-selected="false">Globale scripts</a>
+    </li>
+  </ul>
 
-  <div class="tab-pane fade list-collapsible {% if not global_selected %}show active{% endif %}" id="localscripts" role="tabpanel" aria-labelledby="localscripts-tab">
-    
-    {% for ltag, scripts in local_scripts_by_tag.items %}
-      {% if ltag != 'untagged' %}
-        <a data-bs-toggle="collapse" href="#collapse{{ ltag.name }}local" role="button" aria-expanded="false" aria-controls="collapse{{ ltag.name }}local">
-          <span class="material-icons">folder</span>
-          <span class="collapse-label">{{ ltag.name }}</span>
-          <span class="material-icons collapse-arrow">arrow_drop_down</span>
-        </a>
-        <ul class="item-list collapse collapse-content" id="collapse{{ ltag.name }}local">
-          {% for script in scripts %}
-            <li class="{% ifequal script selected_script %}active{% endifequal %}">
-              <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
-                {{ script.name }}
-              </a>
-              {% ifequal script selected_script %}
-                <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
-                  clear
+  <!-- The content for the two tabs you can choose from above, one after one: -->
+  <div class="tab-content">
+
+    <div class="tab-pane fade list-collapsible {% if not global_selected %}show active{% endif %}" id="localscripts" role="tabpanel" aria-labelledby="localscripts-tab">
+      
+      {% for ltag, scripts in local_scripts_by_tag.items %}
+        {% if ltag != 'untagged' %}
+          <a data-bs-toggle="collapse" href="#collapse{{ ltag.name }}local" role="button" aria-expanded="false" aria-controls="collapse{{ ltag.name }}local">
+            <span class="material-icons">folder</span>
+            <span class="collapse-label">{{ ltag.name }}</span>
+            <span class="material-icons collapse-arrow">arrow_drop_down</span>
+          </a>
+          <ul class="item-list collapse collapse-content" id="collapse{{ ltag.name }}local">
+            {% for script in scripts %}
+              <li class="{% ifequal script selected_script %}active{% endifequal %}">
+                <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                  {{ script.name }}
                 </a>
-              {% endifequal %}
+                {% ifequal script selected_script %}
+                  <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                    clear
+                  </a>
+                {% endifequal %}
+                </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+
+      {% if local_scripts_by_tag.untagged %}
+        <ul class="item-list">
+          {% for script in local_scripts_by_tag.untagged %}
+              <li class="{% ifequal script selected_script %}active{% endifequal %}">
+                <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                  {{ script.name }}
+                </a>
+                {% ifequal script selected_script %}
+                  <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                    clear
+                  </a>
+                {% endifequal %}
               </li>
           {% endfor %}
         </ul>
       {% endif %}
-    {% endfor %}
-
-    <!-- Search box -->
-    <div class="input-group" style="padding: .5rem 1rem;">
-      <input id="search_form" type="search" id="form1" class="form-control" placeholder="Find ...">
+      
     </div>
 
-    <ul id="local-script-list" class="item-list"></ul>
+    <div class="tab-pane fade list-collapsible {% if global_selected %}show active{% endif %}" id="globalscripts" role="tabpanel" aria-labelledby="globalscripts-tab">
+      
+      {% for gtag, scripts in global_scripts_by_tag.items %}
+        {% if gtag != 'untagged' %}
+          <a data-bs-toggle="collapse" href="#collapse{{ gtag.name }}global" role="button" aria-expanded="false" aria-controls="collapse{{ gtag.name }}global">
+            <span class="material-icons">folder</span>
+            <span class="collapse-label">{{ gtag.name }}</span>
+            <span class="material-icons collapse-arrow">arrow_drop_down</span>
+          </a>
+          <ul class="item-list collapse collapse-content" id="collapse{{ gtag.name }}global">
+            {% for script in scripts %}
+              <li class="{% ifequal script selected_script %}active{% endifequal %}">
+                <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                  {{ script.name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
 
-    <script src="/static/js/script_search.js"></script>
-    <script>
-      current_id = {{ selected_script.pk }}
-    
-      {% if local_scripts_by_tag.untagged %}
-        {% for script in local_scripts_by_tag.untagged %}
-          local_scripts.push({
-            id: {{ script.pk }},
-            url: '{% url script_url site.uid script.pk %}',
-            name: '{{ script.name }}',
-            active: {% if script == selected_script %}true{% else %}false{% endif %},
-            delete_url: '{% url 'delete_script' site.uid script.pk %}'
-          })
-        {% endfor %}
-      {% endif %}
-    
-    </script>
-    
-  </div>
-
-  <div class="tab-pane fade list-collapsible {% if global_selected %}show active{% endif %}" id="globalscripts" role="tabpanel" aria-labelledby="globalscripts-tab">
-    
-    {% for gtag, scripts in global_scripts_by_tag.items %}
-      {% if gtag != 'untagged' %}
-        <a data-bs-toggle="collapse" href="#collapse{{ gtag.name }}global" role="button" aria-expanded="false" aria-controls="collapse{{ gtag.name }}global">
-          <span class="material-icons">folder</span>
-          <span class="collapse-label">{{ gtag.name }}</span>
-          <span class="material-icons collapse-arrow">arrow_drop_down</span>
-        </a>
-        <ul class="item-list collapse collapse-content" id="collapse{{ gtag.name }}global">
-          {% for script in scripts %}
+      {% if global_scripts_by_tag.untagged %}
+        <ul class="item-list">
+          {% for script in global_scripts_by_tag.untagged %}
             <li class="{% ifequal script selected_script %}active{% endifequal %}">
               <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
@@ -83,20 +90,8 @@
           {% endfor %}
         </ul>
       {% endif %}
-    {% endfor %}
 
-    {% if global_scripts_by_tag.untagged %}
-      <ul class="item-list">
-        {% for script in global_scripts_by_tag.untagged %}
-          <li class="{% ifequal script selected_script %}active{% endifequal %}">
-            <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
-              {{ script.name }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+    </div>
 
   </div>
-
 </div>

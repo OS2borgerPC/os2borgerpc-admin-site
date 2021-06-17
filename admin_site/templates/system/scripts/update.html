@@ -12,8 +12,13 @@
         <span class="material-icons">add</span>
         Tilføj nyt script
       </button>
+      <!-- Search box -->
+      <div class="input-group" style="padding: .5rem 1rem;">
+        <input id="search_form" type="search" id="form1" class="form-control" placeholder="Find ...">
+      </div>
     </div>
     {% include 'system/scripts/navigation.html' %}
+    {% include 'system/scripts/search_result.html' %}
   </div>
 
   {% include 'system/scripts/templates.html' %}
