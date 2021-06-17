@@ -13,8 +13,16 @@
         Tilføj nyt script
       </button>
       <!-- Search box -->
-      <div class="input-group" style="padding: .5rem 1rem;">
-        <input id="search_form" type="search" id="form1" class="form-control" placeholder="Find ...">
+
+      <div class="mx-3 my-2">
+        <div class="input-group">
+          <input id="search_form" type="search" class="form-control" placeholder="Find ...">
+          <span class="input-group-text bg-white">
+            <button type="button" class="btn btn-close btn-lg" id="search-clear-btn">
+              <span class="visually-hidden">Ryd filter</span>
+            </button>
+          </span>
+        </div>
       </div>
     </div>
     {% include 'system/scripts/navigation.html' %}

@@ -10,6 +10,7 @@ let current_id = null,
 // DOM elements
 
 const search_form_el = document.getElementById('search_form')
+const search_clear_el = document.getElementById('search-clear-btn')
 const script_nav_el = document.getElementById('script-navigation')
 const search_result_el = document.getElementById('script-searchlist')
 const list_el = document.getElementById('script-search-list')
@@ -53,9 +54,16 @@ const showNoneOrSome = function(state) {
 // Event listeners
 
 search_form_el.addEventListener('input', function(ev) {
-    state.query = this.value
+    state.query = this.value.toLowerCase()
     state.filtered_local_scripts = local_scripts.filter(script => {
-        return script.name.includes(state.query)
+        return script.name.toLowerCase().includes(state.query)
     })
+    showNoneOrSome(state)
+})
+
+// When clicking the search input "clear" button, reset the input
+search_clear_el.addEventListener('click', function(ev) {
+    search_form_el.value = ''
+    state.query = ''
     showNoneOrSome(state)
 })
