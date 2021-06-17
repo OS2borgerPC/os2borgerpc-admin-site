@@ -17,7 +17,11 @@
       
       {% for ltag, scripts in local_scripts_by_tag.items %}
         {% if ltag != 'untagged' %}
-          <a data-bs-toggle="collapse" href="#collapse{{ ltag.name }}local" role="button" aria-expanded="false" aria-controls="collapse{{ ltag.name }}local">
+          <a data-bs-toggle="collapse" 
+            href="#collapse{{ ltag.name }}local" 
+            role="button" 
+            aria-expanded="false" 
+            aria-controls="collapse{{ ltag.name }}local">
             <span class="material-icons">folder</span>
             <span class="collapse-label">{{ ltag.name }}</span>
             <span class="material-icons collapse-arrow">arrow_drop_down</span>
@@ -94,4 +98,12 @@
     </div>
 
   </div>
+
+  <script>
+    // Expand tag category if a child script is the currently selected one
+    let active_ul_el = document.querySelector('.item-list > .active').parentElement
+    active_ul_el.classList.add('show')
+    active_ul_el.previousElementSibling.setAttribute('aria-expanded', 'true')
+  </script>
+  
 </div>

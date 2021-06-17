@@ -5,16 +5,24 @@
     <script>
         current_id = {{ selected_script.pk }}
 
-        {% if local_scripts_by_tag.untagged %}
-            {% for script in local_scripts_by_tag.untagged %}
+        {% for script in local_scripts %}
             local_scripts.push({
                 id: {{ script.pk }},
                 url: '{% url script_url site.uid script.pk %}',
                 name: '{{ script.name }}',
-                active: {% if script == selected_script %}true{% else %}false{% endif %},
+                category: 'local',
                 delete_url: '{% url 'delete_script' site.uid script.pk %}'
             })
-            {% endfor %}
-        {% endif %}
+        {% endfor %}
+        {% for script in global_scripts %}
+            local_scripts.push({
+                id: {{ script.pk }},
+                url: '{% url script_url site.uid script.pk %}',
+                name: '{{ script.name }}',
+                category: 'global',
+                delete_url: '{% url 'delete_script' site.uid script.pk %}'
+            })
+        {% endfor %}
+    
     </script>
 </div>

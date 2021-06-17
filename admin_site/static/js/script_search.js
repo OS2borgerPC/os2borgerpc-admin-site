@@ -36,55 +36,26 @@ const renderList = function (list_el, script_list) {
         item.innerHTML = template
         list_el.appendChild(item)
     }
-    saveState(state)
 }
 
-const saveState = function(data) {
-    sessionStorage.setItem('os2borgerpcscriptsearch', JSON.stringify(data))
-}
-
-const loadState = function() {
-    const data = sessionStorage.getItem('os2borgerpcscriptsearch')
-    if (data) {
-        return JSON.parse(data)
-    } else {
-        return state
-    }   
-}
-
-const showAllOrSome = function(state) {
-    if (state.filtered_local_scripts.length > 0) {
+const showNoneOrSome = function(state) {
+    if (state.query !== '') {
+        script_nav_el.style.display = 'none'
+        search_result_el.style.display = 'block'
         renderList(list_el, state.filtered_local_scripts)
     } else {
+        search_result_el.style.display = 'none'
+        script_nav_el.style.display = 'block'
         renderList(list_el, local_scripts)
     }
-}
-
-const initialize = function(state) {
-    if (state.query) {
-        search_form_el.value = state.query
-    }
-    showAllOrSome(state)
 }
 
 // Event listeners
 
 search_form_el.addEventListener('input', function(ev) {
     state.query = this.value
-    if (state.query !== '') {
-        script_nav_el.style.display = 'none'
-        search_result_el.style.display = 'block'
-        state.filtered_local_scripts = local_scripts.filter(script => {
-            return script.name.includes(state.query)
-        })
-        showAllOrSome(state)
-    } else {
-        search_result_el.style.display = 'none'
-        script_nav_el.style.display = 'block'
-    }
-})
-
-window.addEventListener('load', function() {
-    state = loadState()
-    initialize(state)
+    state.filtered_local_scripts = local_scripts.filter(script => {
+        return script.name.includes(state.query)
+    })
+    showNoneOrSome(state)
 })
