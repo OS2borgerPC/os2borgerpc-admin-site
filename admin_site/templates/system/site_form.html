@@ -1,9 +1,9 @@
 {% extends "sitebase.html" %}
 
-{% block  header_title %}Tilføj nyt site{% endblock %}
+{% block  header_title %}Redigér site{% endblock %}
 
 {% block specific_content %}
-  <div class="container mt-5">
+  <div class="container mt-4">
     <form action="" method="post">
       {% csrf_token %}
       {{ form.as_p }}

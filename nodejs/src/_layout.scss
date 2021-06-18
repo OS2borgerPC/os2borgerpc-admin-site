@@ -2,14 +2,11 @@ body {
     background-color: $white;
 }
 
-
 // Headers
 
 header {
-    background: $gray-800; 
-    padding: $spacer;
+    padding: $spacer 0;
     color: $gray-300;
-    height: 100%;
 
     h1 {
         margin: 0;
@@ -21,6 +18,11 @@ header {
         }
     }
 
+}
+
+.actionpage #adm-header > header,
+.documentationpage #adm-header > header {
+    padding: $spacer $spacer*2 $spacer $spacer;
 }
 
 .divideheader {
@@ -63,9 +65,17 @@ header {
     flex-grow: 1;
 }
 
+#adm-body {
+    flex-grow: 1;
+}
+
 #adm-content {
     overflow: auto;
     flex: 1 1 auto;
+}
+
+#adm-header {
+    background-color: $gray-800;
 }
 
 .main {
@@ -97,7 +107,7 @@ header {
 
 // Documentation pages
 .documentationpage #adm-content {
-    padding: $spacer $spacer*2 $spacer $spacer;
+    padding: $spacer*1.75 $spacer*2;
     max-width: $spacer*60;
 }
 

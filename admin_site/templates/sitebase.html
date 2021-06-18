@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block header %}
-  
-  <header {% block header_class %}{% endblock %} >
+  <header class="container d-flex justify-content-between {% block header_class %}{% endblock %}">
+
+    <h1 class="siteheader">{% block  header_title %}{% endblock %}</h1>
 
     {% if user.is_authenticated %}
   
-      <div class="float-end d-flex align-items-center" style="margin-top: -.25rem;">
+      <div class="d-flex align-items-center" style="margin-top: -.25rem;">
         <span>Velkommen</span>
-
         <div class="dropdown">
           <button class="btn btn-primary text-white dropdown-toggle px-1"
             style="box-shadow: none;"
@@ -26,9 +26,7 @@
         </div>
         
       </div>
-      
     {% endif %}
-    <h1 class="siteheader">{% block  header_title %}{% endblock %}</h1>
-  </header>
 
+  </header>
 {% endblock %}

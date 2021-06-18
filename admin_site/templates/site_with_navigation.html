@@ -4,8 +4,12 @@
 <em>{{ site.name }}:</em> {% block specific_title %}{% endblock %}
 {% endblock %}
 
+{% block page_type_class %}
+actionpage
+{% endblock %}
+
 {% block header_class %}
-class="detailpage"
+detailpage
 {% endblock %}
 
 {% block globalnav %}
