@@ -222,7 +222,7 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
         return reverse("sites")
 
 
-class SiteList(ListView):
+class SiteList(ListView, LoginRequiredMixin):
     """
     Site overview.
 
