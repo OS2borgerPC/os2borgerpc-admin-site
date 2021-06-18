@@ -21,7 +21,6 @@ div.runscriptdialogheader {display: none;}
 .inertnav {background: var(--bs-gray-dark); border-radius: 5px; padding: 15px 20px;}
 .inertnav li {padding: 2px 0; color: var(--bs-gray-dark);}
 .inertnav li:hover {background: var(--bs-gray);}
-[data-bs-toggle="collapse"] {margin-bottom: 10px; display: block; text-align: left; height: auto}
 
 ul.nav li ul { color: var(--bs-white); list-style: none; padding: 0; margin: 0 0 0 1em; }
 ul.nav li ul a, ul.nav li ul a:hover, ul.nav li ul a:focus { color: var(--bs-white); text-decoration: none; }

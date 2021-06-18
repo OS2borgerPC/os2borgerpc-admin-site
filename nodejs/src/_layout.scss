@@ -20,8 +20,7 @@ header {
 
 }
 
-.actionpage #adm-header > header,
-.documentationpage #adm-header > header {
+.actionpage #adm-header > header {
     padding: $spacer $spacer*2 $spacer $spacer;
 }
 
@@ -106,6 +105,10 @@ header {
 }
 
 // Documentation pages
+.documentationpage #adm-header > header {
+    padding: $spacer $spacer*2;
+}
+
 .documentationpage #adm-content {
     padding: $spacer*1.75 $spacer*2;
     max-width: $spacer*60;
