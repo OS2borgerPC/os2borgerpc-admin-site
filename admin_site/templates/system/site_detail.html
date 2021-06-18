@@ -7,18 +7,19 @@
   {% endif %}
 {% endblock %}
 
+{% block subnav %}
+<ul class="sublevelnav item-list">
+  {% for pc in pcs %}
+    <li>
+      <a class="item-list-link" href="/site/{{ site.uid }}/computers/{{ pc.uid }}">
+        {{ pc.name }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
 {% block specific_content %}
-
-  <ul class="sublevelnav item-list">
-    {% for pc in pcs %}
-      <li>
-        <a class="item-list-link" href="/site/{{ site.uid }}/computers/{{ pc.uid }}">
-          {{ pc.name }}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     <table class="table table-hover warn-table" id="#site_activepcs_table">
       <thead>

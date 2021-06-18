@@ -8,15 +8,18 @@
 {% endif %}
 {% endblock %}
 
+{% block page_type_class %}
+documentationpage
+{% endblock %}
+
 {% block header_class %}
 class="detailpage"
 {% endblock %}
 
-{% block content %}
-
+{% block globalnav %}
 <nav id="left-menu" class="nav nav-pills utils-global">
   <h2 class="text-light">Dokumentation</h2>
-  <a href="/" class="nav-link link-light">
+  <a href="/" class="nav-link link-light d-flex align-items-center">
     <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
     Tilbage til admin
   </a>
@@ -36,17 +39,13 @@ class="detailpage"
   {% endif %}
   {% endfor %}
 </nav>
+{% endblock %}
 
-<div class="container-fluid main">
-  <div class="docscontainer">
-    {% block specific_content %}
-      <h1>OS2borgerPC</h1>
-      <p>
-        OS2borgerPC giver dig mulighed for at fjernadministre computere via
-        OS2borgerPC-administrationsinterfacet. I menuen til venstre kan du finde
-        dokumentation for de forskellige dele af systemet.
-      </p>
-    {% endblock %}
-  </div>
-</div>
+{% block specific_content %}
+  <h1>OS2borgerPC</h1>
+  <p>
+    OS2borgerPC giver dig mulighed for at fjernadministre computere via
+    OS2borgerPC-administrationsinterfacet. I menuen til venstre kan du finde
+    dokumentation for de forskellige dele af systemet.
+  </p>
 {% endblock %}

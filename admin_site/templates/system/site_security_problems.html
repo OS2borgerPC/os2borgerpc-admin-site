@@ -8,33 +8,34 @@ Sikkerhedsregler
 <script type="text/javascript" src="/static/js/userlist.js"></script>
 {% endblock %}
 
-{% block specific_content %}
-<div id="security-problems-nav" class="sublevelnav">
-    <div class="listutils">
-        <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
-            <span class="material-icons">add</span>
-            Definér nyt sikkerhedsproblem
-        </button>
+{% block subnav %}
+    <div id="security-problems-nav" class="sublevelnav">
+        <div class="listutils">
+            <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
+                <span class="material-icons">add</span>
+                Definér nyt sikkerhedsproblem
+            </button>
+        </div>
+        <ul class="item-list">
+            {% for sp in site.security_problems.all %}
+                <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>                
+                    <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/">
+                        {{ sp.name }}
+                    </a>
+                    {% ifequal sp selected_security_problem %}
+                        {% if selected_security_problem.is_delete_allowed %}
+                            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/" title="Slet sikkerhedsproblem">
+                                clear
+                            </a>
+                        {% endif %}
+                    {% endifequal %}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
-    <ul class="item-list">
-        {% for sp in site.security_problems.all %}
-            <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>                
-                <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/">
-                    {{ sp.name }}
-                </a>
-                {% ifequal sp selected_security_problem %}
-                    {% if selected_security_problem.is_delete_allowed %}
-                        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/" title="Slet sikkerhedsproblem">
-                            clear
-                        </a>
-                    {% endif %}
-                {% endifequal %}
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+{% endblock %}
 
-
+{% block specific_content %}
 <div class="container-fluid main sublevelmain">
 
     {% if selected_security_problem %}

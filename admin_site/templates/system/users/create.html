@@ -4,8 +4,7 @@
 Brugere
 {% endblock %}
 
-{% block specific_content %}
-
+{% block subnav %}
   <div class="sublevelnav">
     <div class="listutils">
       <a class="btn btn-link" href="{% url 'new_user' site.uid %}" title="Tilføj ny bruger">
@@ -23,7 +22,9 @@ Brugere
       {% endfor %}
     </ul>
   </div>
-  
+{% endblock %}
+
+{% block specific_content %}
   <div class="container-fluid main sublevelmain">
       <h2 class="divideheader">Opret ny bruger</em></h2>
       <div>

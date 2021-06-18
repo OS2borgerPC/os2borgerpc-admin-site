@@ -16,8 +16,26 @@
   {% block head_javascripts %}{% endblock %}
 </head>
 
-<body>
-  {% block body %}{% endblock %}
+<body class="{% block page_type_class %}{% endblock %}">
+
+  <div id="adm-wrapper">
+    <div id="adm-globalnav">
+      {% block globalnav %}{% endblock %}
+    </div>
+    <div id="adm-bodywrapper">
+      <div id="adm-header">
+        {% block header %}{% endblock %}
+      </div>
+      <div id="adm-body">
+        <div id="adm-subnav">
+          {% block subnav %}{% endblock %}
+        </div>
+        <div id="adm-content">
+          {% block specific_content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
 
   <ie11-browser-warning 
     data-warning-text="Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på dette site."

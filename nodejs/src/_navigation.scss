@@ -19,10 +19,6 @@
 
 // Global navigation
 #left-menu {
-    position: absolute; 
-    top: 0; 
-    bottom: 0; 
-    left: 0; 
     width: $navigation-width; 
     margin: 0; 
     border-radius: 0; 
@@ -32,6 +28,7 @@
     background-color: $gray-800;
     display: block;
     padding: 1.25rem .5rem 2rem .5rem;
+    height: 100%;
 
     h2 {
         padding: 0 1rem;
@@ -63,19 +60,16 @@
 
 // Sublevel navigation
 .sublevelnav {
-    position: absolute; 
-    top: $spacer*3.5; 
-    left: $navigation-width;
-    bottom: 0; 
     width: $navigation-width; 
     background-color: $gray-200;
     overflow-x: hidden; 
-    overflow-y: auto; 
+    overflow-y: auto;
     margin: 0;
     list-style-type: none; 
     padding-left: 0;
     display: flex;
     flex-flow: column nowrap;
+    height: 100%;
 
     hr {
         border-color: $white;
@@ -159,5 +153,32 @@
         padding: 0;
         flex-grow: 1;
         background-color: $gray-200;
+    }
+}
+
+// Documentation navigation
+.documentationpage #left-menu .docsubnav {
+    list-style: none;
+    background-color: $gray-900;
+    margin: $spacer*.5 $spacer*-.5;
+    padding: 0;
+
+    a,
+    a:link,
+    a:visited {
+        color: $gray-400;
+        padding: $spacer*.5 $spacer*1.5;
+        display: block;
+        text-decoration: none;
+    }
+    a:hover,
+    a:focus {
+        color: $white;
+        background-color: $gray-800;
+    }
+
+    .active a {
+        background-color: $orange;
+        color: $white;
     }
 }

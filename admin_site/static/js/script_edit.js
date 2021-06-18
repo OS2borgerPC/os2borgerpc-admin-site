@@ -23,7 +23,10 @@
 
             // Dispatch event for updateDialog() to react upon
             setTimeout(function() {
-                document.getElementById('runscriptmodaliframe').contentWindow.postMessage('please run updateDialog', '*')
+                const iframe = document.getElementById('runscriptmodaliframe')
+                if (iframe) {
+                    iframe.contentWindow.postMessage('please run updateDialog', '*')
+                }
             }, 1000)
         },
         setModalLoading: function() {

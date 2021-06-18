@@ -1,33 +1,38 @@
 {% extends "system/scripts/header.html" %}
 
-{% block specific_content %}
-  <div class="sublevelnav">
-    <div class="listutils">
-      <button 
-        class="btn btn-link" 
-        data-bs-target="#addNewScript" 
-        type="button" 
-        data-bs-toggle="modal" 
-        title="Tilføj nyt script">
-        <span class="material-icons">add</span>
-        Tilføj nyt script
-      </button>
-      <!-- Search box -->
-
-      <div class="mx-3 my-2">
-        <div class="input-group">
-          <input id="search_form" type="search" class="form-control" placeholder="Find ...">
-          <span class="input-group-text bg-white">
-            <button type="button" class="btn btn-close btn-lg" id="search-clear-btn">
-              <span class="visually-hidden">Ryd filter</span>
-            </button>
-          </span>
-        </div>
+{% block subnav %}
+<div class="sublevelnav">
+  <div class="listutils">
+    <button 
+      class="btn btn-link" 
+      data-bs-target="#addNewScript" 
+      type="button" 
+      data-bs-toggle="modal" 
+      title="Tilføj nyt script">
+      <span class="material-icons">add</span>
+      Tilføj nyt script
+    </button>
+  
+    <!-- Search box -->
+    <div class="mx-3 my-2">
+      <div class="input-group">
+        <input id="search_form" type="search" class="form-control" placeholder="Find ...">
+        <span class="input-group-text bg-white">
+          <button type="button" class="btn btn-close btn-lg" id="search-clear-btn">
+            <span class="visually-hidden">Ryd filter</span>
+          </button>
+        </span>
       </div>
     </div>
+    
     {% include 'system/scripts/navigation.html' %}
     {% include 'system/scripts/search_result.html' %}
+    
   </div>
+</div>
+{% endblock %}
+
+{% block specific_content %}
 
   {% include 'system/scripts/templates.html' %}
 
@@ -63,9 +68,10 @@
 
     </form>
 
+    <!-- MODAL WINDOW FOR SCRIPT EXECUTION: -->
     {% if not is_security %}
     <div id="runscriptmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="width: 650px; max-width: 90vw;">
         <div class="modal-content">
           <iframe id="runscriptmodaliframe" src="{% url 'run_script' site.uid script.pk %}" style="border: 0; width: 100%; height: 80vh;"></iframe>
         </div>

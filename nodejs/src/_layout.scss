@@ -1,6 +1,4 @@
 body {
-    min-width: 60rem;
-    overflow: auto;
     background-color: $white;
 }
 
@@ -11,10 +9,7 @@ header {
     background: $gray-800; 
     padding: $spacer;
     color: $gray-300;
-
-    &.detailpage {
-        margin-left: $navigation-width;
-    }
+    height: 100%;
 
     h1 {
         margin: 0;
@@ -44,25 +39,42 @@ header {
 
 // Containers
 
+#adm-wrapper {
+    min-width: 60rem;
+    height: 100vh;
+}
+
+#adm-wrapper,
+#adm-bodywrapper,
+#adm-body {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+#adm-wrapper,
+#adm-body {
+    flex-direction: row;
+}
+
+#adm-bodywrapper {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+#adm-content {
+    overflow: auto;
+    flex: 1 1 auto;
+}
+
 .main {
-    position: absolute; 
-    top: $spacer*3.5;
-    bottom: 0;
     padding: $spacer*1.75 $spacer*2;
-    left: $navigation-width;
-    right: 0; 
-    overflow-x: hidden; 
-    overflow-y: auto; 
-    width: auto;
     background-color: $white;
 
     & > table {
         margin: 0;
     }
-}
-
-.sublevelmain {
-    left: $navigation-width * 2;
 }
 
 .template-container {
@@ -81,6 +93,12 @@ header {
     border-radius: .33rem;
     padding: $spacer;
     border: solid 1px $gray-400;
+}
+
+// Documentation pages
+.documentationpage #adm-content {
+    padding: $spacer $spacer*2 $spacer $spacer;
+    max-width: $spacer*60;
 }
 
 // Popup page

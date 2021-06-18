@@ -13,32 +13,34 @@ Grupper
 active
 {% endblock %}
 
-{% block specific_content %}
-  <div class="sublevelnav">
-    <div class="listutils">
-      <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
-        <span class="material-icons">add</span>
-        Tilføj ny gruppe
-      </button>
-    </div>
-    <ul class="item-list">
-      {% for group in site.groups.all %}
-        <li class="{% ifequal group selected_group %}active{% endifequal %}">
-          <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
-            {{ group.name }}
-          </a>
-          {% ifequal group selected_group %}
-            {% if selected_group.is_delete_allowed %}
-              <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe">
-                clear
-              </a>
-            {% endif %}
-          {% endifequal %}
-        </li>
-      {% endfor %}
-    </ul>
+{% block subnav %}
+<div class="sublevelnav">
+  <div class="listutils">
+    <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
+      <span class="material-icons">add</span>
+      Tilføj ny gruppe
+    </button>
   </div>
+  <ul class="item-list">
+    {% for group in site.groups.all %}
+      <li class="{% ifequal group selected_group %}active{% endifequal %}">
+        <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
+          {{ group.name }}
+        </a>
+        {% ifequal group selected_group %}
+          {% if selected_group.is_delete_allowed %}
+            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe">
+              clear
+            </a>
+          {% endif %}
+        {% endifequal %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
 
+{% block specific_content %}
   <div class="container-fluid main sublevelmain">
 
     <h2 class="divideheader">Detaljer om <em>{{ selected_group.name }}</em></h2>

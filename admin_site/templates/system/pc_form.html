@@ -8,28 +8,28 @@ Computere
   <script type="text/javascript" src="/static/js/configlist.js"></script>
 {% endblock %}
 
+{% block subnav %}
+<ul class="sublevelnav item-list">
+  {% if not pc_list.all%}
+    <li class="disabled">Der er ingen computere</li>
+  {% endif %}
+  {% for pc in pc_list %}
+    <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
+      {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
+      <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
+        {{ pc.name }}
+      </a>
+      {% ifequal pc selected_pc %}
+        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
+          clear
+        </a>
+      {% endifequal %}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
 
 {% block specific_content %}
-
-  <ul class="sublevelnav item-list">
-    {% if not pc_list.all%}
-      <li class="disabled">Der er ingen computere</li>
-    {% endif %}
-    {% for pc in pc_list %}
-      <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
-        {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
-        <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
-          {{ pc.name }}
-        </a>
-        {% ifequal pc selected_pc %}
-          <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
-            clear
-          </a>
-        {% endifequal %}
-      </li>
-    {% endfor %}
-  </ul>
-
   <div class="container-fluid main sublevelmain">
 
     <h2 class="divideheader">

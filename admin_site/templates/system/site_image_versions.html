@@ -4,8 +4,7 @@
 Versioner
 {% endblock %}
 
-{% block specific_content %}
-
+{% block subnav %}
 <ul class="sublevelnav item-list">
   {% if site_allowed %}
     {% for maj_v in major_versions %}
@@ -24,7 +23,9 @@ Versioner
     {% endfor %}
   {% endif %}
 </ul>
- 
+{% endblock %}
+
+{% block specific_content %}
 <div class="container-fluid main sublevelmain">
 
   {% if site_allowed %}
