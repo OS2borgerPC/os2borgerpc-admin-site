@@ -5,6 +5,7 @@ New in this version:
 
 - Prevent users from seeing local scripts on other sites.
 - Enable setting of Google Cloud Storage custom endpoint.
+- Avoid crash (HTTP 500) on /sites/ URL when not logged in.
 
 
 Version 4.3.0, May 11, 2021
