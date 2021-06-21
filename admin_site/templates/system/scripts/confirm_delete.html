@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Slet script: {{script.name}}
@@ -11,7 +12,7 @@ Slet script: {{script.name}}
     <p>Scriptet kan hvis det behøves gendannes fra admin.</p>
     <form action="" method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form|crispy }}
       <input class="btn btn-danger" type="submit" value="Bekræft sletning">
       <a class="btn btn-secondary" href="javascript:history.go(-1)">Annullér</a>
     </form>

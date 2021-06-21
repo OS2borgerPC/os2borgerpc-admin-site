@@ -1,5 +1,5 @@
-
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Slet gruppe
@@ -10,7 +10,7 @@ Slet gruppe
     <p>Ønsker du virkelig at slette?</p>
     <form action="" method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form|crispy }}
       <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
       <a class="btn btn-secondary" href="javascript:history.go(-1)">Annuller</a>
     </form>
