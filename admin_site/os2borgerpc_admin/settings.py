@@ -176,6 +176,7 @@ if settings.get('GS_BUCKET_NAME'):
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         settings.get('GS_CREDENTIALS_FILE')
     )
+    GS_QUERYSTRING_AUTH = False
     GS_FILE_OVERWRITE = False
     GS_CUSTOM_ENDPOINT = settings.get('GS_CUSTOM_ENDPOINT', None)
 
