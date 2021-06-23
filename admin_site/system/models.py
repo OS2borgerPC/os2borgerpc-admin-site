@@ -933,7 +933,7 @@ class Job(models.Model):
                                   blank=True)
     started = models.DateTimeField(_('started'), null=True)
     finished = models.DateTimeField(_('finished'), null=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     batch = models.ForeignKey(
         Batch, related_name='jobs', on_delete=models.CASCADE
     )
@@ -1204,7 +1204,7 @@ class SecurityEvent(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
     assigned_user = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.PROTECT
+        User, null=True, blank=True, on_delete=models.SET_NULL
     )
     note = models.TextField(null=True, blank=True)
 
