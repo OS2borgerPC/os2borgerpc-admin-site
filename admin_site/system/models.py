@@ -696,6 +696,10 @@ class PC(models.Model):
         else:
             return False
 
+    def os2_product(self):
+        """Return whether a PC is running os2borgerpc or os2displaypc."""
+        return self.get_config_value("os2_product")
+
     def __str__(self):
         return self.name
 

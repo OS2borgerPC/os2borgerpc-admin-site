@@ -12,13 +12,17 @@ Computere
 {% block subnav %}
 <ul class="sublevelnav item-list">
   {% if not pc_list.all%}
-    <li class="disabled">Der er ingen computere</li>
+    <li>Der er ingen computere</li>
   {% endif %}
   {% for pc in pc_list %}
     <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
       {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
       <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
-        <span class="material-icons">computer</span>
+          {% if pc.os2_product == 'os2borgerpc' %}
+            <span class="material-icons">groups</span>
+          {% else %}
+            <span class="material-icons">theaters</span>
+          {% endif %}
         {{ pc.name }}
       </a>
       {% ifequal pc selected_pc %}
