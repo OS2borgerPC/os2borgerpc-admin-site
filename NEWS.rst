@@ -1,3 +1,12 @@
+Version 4.3.2, June 30, 2021
+----------------------------
+
+New in this version:
+
+- Fixed bug allowing users to be deleted even if they've 
+  run a script or have been assigned a security issue.
+- Add reference in README to Read the Docs documentation 
+
 Version 4.3.1, June 21, 2021
 ----------------------------
 
