@@ -53,6 +53,12 @@ ul.nav li ul li.active { font-style: italic; }
   background-color: var(--bs-gray);
 }
 
+.material-icons {
+ margin: 0 .25rem 0 -.25rem; 
+ font-size: 1.25rem;
+ vertical-align: middle;
+}
+
 /* Forms */
 
 input.phantom { display: none; }

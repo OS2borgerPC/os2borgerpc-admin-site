@@ -26,6 +26,7 @@ active
     {% for group in site.groups.all %}
       <li class="{% ifequal group selected_group %}active{% endifequal %}">
         <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
+          <span class="material-icons">local_offer</span>
           {{ group.name }}
         </a>
         {% ifequal group selected_group %}

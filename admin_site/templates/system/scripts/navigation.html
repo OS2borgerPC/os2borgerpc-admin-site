@@ -30,6 +30,7 @@
             {% for script in scripts %}
               <li class="{% ifequal script selected_script %}active{% endifequal %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                  <span class="material-icons">list</span>
                   {{ script.name }}
                 </a>
                 {% ifequal script selected_script %}
@@ -48,6 +49,7 @@
           {% for script in local_scripts_by_tag.untagged %}
               <li class="{% ifequal script selected_script %}active{% endifequal %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                  <span class="material-icons">list</span>
                   {{ script.name }}
                 </a>
                 {% ifequal script selected_script %}
@@ -75,6 +77,7 @@
             {% for script in scripts %}
               <li class="{% ifequal script selected_script %}active{% endifequal %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                  <span class="material-icons">list</span>
                   {{ script.name }}
                 </a>
               </li>
@@ -88,6 +91,7 @@
           {% for script in global_scripts_by_tag.untagged %}
             <li class="{% ifequal script selected_script %}active{% endifequal %}">
               <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
+                <span class="material-icons">list</span>
                 {{ script.name }}
               </a>
             </li>
