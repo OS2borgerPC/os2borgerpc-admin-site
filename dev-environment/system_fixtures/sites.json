@@ -1,1 +1,1 @@
-[{"model": "system.site", "pk": 1, "fields": {"name": "Magenta", "uid": "magenta", "configuration": 1, "last_version": null, "security_alerts": []}}]
+[{"model": "system.site", "pk": 1, "fields": {"name": "Magenta", "uid": "magenta", "configuration": 1, "paid_for_access_until": null, "security_alerts": []}}]

@@ -299,7 +299,10 @@ class Site(models.Model):
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255, unique=True)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    last_version = models.DateField(null=True, blank=True)
+    paid_for_access_until = models.DateField(
+        verbose_name=_("Paid for access until this date"),
+        null=True,
+        blank=True)
 
     security_alerts = models.ManyToManyField("SecurityProblem",
                                              related_name='alert_sites',
