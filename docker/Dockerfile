@@ -48,11 +48,6 @@ RUN set -ex \
 VOLUME /log
 VOLUME /media
 
-# Install frontend requirements
-COPY nodejs ./nodejs
-WORKDIR /code/nodejs/
-RUN npm run build
-
 WORKDIR /code/
 # Install requirements.
 COPY admin_site/scripts/requirements.txt /code/admin_site/scripts/requirements.txt
@@ -64,6 +59,11 @@ COPY LICENSE .
 COPY docker ./docker
 COPY admin_site ./admin_site
 
+# Install frontend requirements
+COPY nodejs ./nodejs
+WORKDIR /code/nodejs/
+RUN npm install
+RUN npm run build
 
 WORKDIR /code/admin_site
 
