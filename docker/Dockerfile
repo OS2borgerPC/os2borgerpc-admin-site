@@ -7,6 +7,13 @@
 # Labs as required approval to your MR if you have any changes.                #
 ################################################################################
 
+FROM node:16 as frontend
+
+WORKDIR /code/nodejs
+
+COPY nodejs .
+RUN npm ci \
+ && npm run build
 
 FROM python:3.8 AS os2borgerpc
 
@@ -21,7 +28,6 @@ ENV PYTHONUNBUFFERED=1 \
   BPC_USER_CONFIG_PATH=/user-settings.ini \
   PYTHONPATH=/code/admin_site/:$PYTHONPATH\
   DJANGO_SETTINGS_MODULE=os2borgerpc_admin.settings
-
 
 WORKDIR /code/
 COPY admin_site/sys-requirements.txt sys-requirements.txt
@@ -49,6 +55,7 @@ VOLUME /log
 VOLUME /media
 
 WORKDIR /code/
+
 # Install requirements.
 COPY admin_site/requirements.txt /code/admin_site/requirements.txt
 RUN pip3 install --no-cache-dir -r  admin_site/requirements.txt
@@ -59,13 +66,11 @@ COPY LICENSE .
 COPY docker ./docker
 COPY admin_site ./admin_site
 
-# Install frontend requirements
-COPY nodejs ./nodejs
-WORKDIR /code/nodejs/
-RUN npm install \
- && npm run build
-
 WORKDIR /code/admin_site
+
+# Copy frontend static files.
+COPY --from=frontend /code/nodejs/dist/css/bootstrap.* /frontend/css/
+COPY --from=frontend /code/nodejs/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* /frontend/js/
 
 # Unfortunately, `collectstatic` requires all settings to be set. We include a
 # set of insecure setting here for only this purpose. We make sure to delete it
@@ -74,7 +79,6 @@ WORKDIR /code/admin_site
 RUN set -ex \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
   && rm /code/docker/insecure-settings.ini
-
 
 # Run the server as the bpc user on port 9999
 USER bpc:bpc

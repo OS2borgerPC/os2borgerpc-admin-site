@@ -5,10 +5,8 @@
   "main": "src/custom.scss",
   "type": "module",
   "scripts": {
-    "build": "npm run build-sass && npm run copy-bootstrap-css && npm run copy-bootstrap-js",
+    "build": "npm run build-sass",
     "build-sass": "node_modules/.bin/sass src/custom.scss:dist/css/bootstrap.css --style=compressed --source-map",
-    "copy-bootstrap-css": "cp dist/css/bootstrap.* ../admin_site/static/css",
-    "copy-bootstrap-js": "cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* ../admin_site/static/js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Magenta ApS",

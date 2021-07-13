@@ -161,6 +161,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(install_dir, 'static'),
+    "/frontend",
 )
 
 # List of finder classes that know how to find static files in
