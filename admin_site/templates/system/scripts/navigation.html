@@ -28,7 +28,7 @@
           </a>
           <ul class="item-list collapse collapse-content" id="collapse{{ ltag.name }}local">
             {% for script in scripts %}
-              <li class="{% ifequal script selected_script %}active{% endifequal %}">
+              <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   <span class="material-icons">list</span>
                   {{ script.name }}
@@ -47,7 +47,7 @@
       {% if local_scripts_by_tag.untagged %}
         <ul class="item-list">
           {% for script in local_scripts_by_tag.untagged %}
-              <li class="{% ifequal script selected_script %}active{% endifequal %}">
+              <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   <span class="material-icons">list</span>
                   {{ script.name }}
@@ -75,7 +75,7 @@
           </a>
           <ul class="item-list collapse collapse-content" id="collapse{{ gtag.name }}global">
             {% for script in scripts %}
-              <li class="{% ifequal script selected_script %}active{% endifequal %}">
+              <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   <span class="material-icons">list</span>
                   {{ script.name }}
@@ -89,7 +89,7 @@
       {% if global_scripts_by_tag.untagged %}
         <ul class="item-list">
           {% for script in global_scripts_by_tag.untagged %}
-            <li class="{% ifequal script selected_script %}active{% endifequal %}">
+            <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
               <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                 <span class="material-icons">list</span>
                 {{ script.name }}
@@ -103,11 +103,18 @@
 
   </div>
 
-  <script>
-    // Expand tag category if a child script is the currently selected one
-    let active_ul_el = document.querySelector('.item-list > .active').parentElement
-    active_ul_el.classList.add('show')
-    active_ul_el.previousElementSibling.setAttribute('aria-expanded', 'true')
+  <script charset="utf-8">
+    window.addEventListener('load', (event) => {
+      // Expand tag category if a child script is the currently selected one
+      let active_ul_el = document.querySelector('.item-list > .active').parentElement
+      active_ul_el.classList.add('show')
+      if (active_ul_el.previousElementSibling) {
+        active_ul_el.previousElementSibling.setAttribute('aria-expanded', 'true')
+      }
+
+      // Scroll active script into view
+      document.getElementById('selected-script').scrollIntoView({'block': 'center'});
+    })
   </script>
   
 </div>

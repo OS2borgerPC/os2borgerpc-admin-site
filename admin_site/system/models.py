@@ -846,6 +846,9 @@ class Script(AuditModelMixin):
         else:
             return reverse('script', args=(site_uid, self.pk))
 
+    class Meta:
+        ordering = ['name']
+
 
 class Batch(models.Model):
     """A batch of jobs to be performed on a number of computers."""
