@@ -26,7 +26,7 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /code/
 COPY admin_site/scripts/sys-requirements.txt sys-requirements.txt
 
-# hadolint ignore=DL3008
+# hadolint ignore=SC2046,DL3008
 RUN set -ex \
   # Add a bpc group and user. Note: this is a system user/group, but have
   # UID/GID above the normal SYS_UID_MAX/SYS_GID_MAX of 999, but also above the
