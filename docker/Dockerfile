@@ -62,8 +62,8 @@ COPY admin_site ./admin_site
 # Install frontend requirements
 COPY nodejs ./nodejs
 WORKDIR /code/nodejs/
-RUN npm install
-RUN npm run build
+RUN npm install \
+ && npm run build
 
 WORKDIR /code/admin_site
 
