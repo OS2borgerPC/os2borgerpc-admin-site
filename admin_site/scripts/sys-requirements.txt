@@ -1,3 +1,2 @@
 gettext
-nodejs
 npm

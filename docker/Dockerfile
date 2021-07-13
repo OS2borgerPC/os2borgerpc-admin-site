@@ -70,7 +70,7 @@ WORKDIR /code/admin_site
 # Unfortunately, `collectstatic` requires all settings to be set. We include a
 # set of insecure setting here for only this purpose. We make sure to delete it
 # afterward. If `insecure-settings.ini` is found in any production image,
-# consider it a bug. See `insecure-settings.ini` for a detailed explatnation.
+# consider it a bug. See `insecure-settings.ini` for a detailed explanation.
 RUN set -ex \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
   && rm /code/docker/insecure-settings.ini
