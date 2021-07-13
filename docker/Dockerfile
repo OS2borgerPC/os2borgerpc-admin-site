@@ -37,7 +37,7 @@ RUN set -ex \
   && useradd -u 75030 --no-log-init -r -g bpc bpc \
   # Install system dependencies from file.
   && apt-get -y update \
-  && apt-get -y install --no-install-recommends "$(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt)" \
+  && apt-get -y install --no-install-recommends $(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt) \
   # clean up after apt-get and man-pages
   && apt-get clean \
   && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
@@ -48,7 +48,12 @@ RUN set -ex \
 VOLUME /log
 VOLUME /media
 
+# Install frontend requirements
+COPY nodejs ./nodejs
+WORKDIR /code/nodejs/
+RUN npm run build
 
+WORKDIR /code/
 # Install requirements.
 COPY admin_site/scripts/requirements.txt /code/admin_site/scripts/requirements.txt
 RUN pip3 install --no-cache-dir -r  admin_site/scripts/requirements.txt
