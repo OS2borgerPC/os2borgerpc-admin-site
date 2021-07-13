@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0013_script_author'),
+        ('system', '0014_script_author'),
     ]
 
     operations = [

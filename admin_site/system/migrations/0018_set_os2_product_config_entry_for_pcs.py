@@ -28,7 +28,7 @@ def set_os2_product_config_entry_for_pcs(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0016_auto_20210712_1136'),
+        ('system', '0017_auto_20210712_1136'),
     ]
 
     operations = [
