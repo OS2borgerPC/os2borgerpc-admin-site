@@ -24,7 +24,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 
 WORKDIR /code/
-COPY admin_site/scripts/sys-requirements.txt sys-requirements.txt
+COPY admin_site/sys-requirements.txt sys-requirements.txt
 
 # hadolint ignore=SC2046,DL3008
 RUN set -ex \
@@ -50,8 +50,8 @@ VOLUME /media
 
 WORKDIR /code/
 # Install requirements.
-COPY admin_site/scripts/requirements.txt /code/admin_site/scripts/requirements.txt
-RUN pip3 install --no-cache-dir -r  admin_site/scripts/requirements.txt
+COPY admin_site/requirements.txt /code/admin_site/requirements.txt
+RUN pip3 install --no-cache-dir -r  admin_site/requirements.txt
 
 # Copy backend code.
 COPY README.rst .
