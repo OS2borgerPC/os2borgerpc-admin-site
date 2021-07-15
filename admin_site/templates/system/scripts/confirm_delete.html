@@ -9,7 +9,6 @@ Slet script: {{script.name}}
   <div class="container-fluid main">
     <p>Ønsker du virkelig at slette scriptet:</p>
     <p><strong>{{ script.name }}</strong>?</p>
-    <p>Scriptet kan hvis det behøves gendannes fra admin.</p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
