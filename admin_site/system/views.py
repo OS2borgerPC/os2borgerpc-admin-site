@@ -1932,7 +1932,7 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         site_uid = self.kwargs.get('site_uid')
         site_obj = Site.objects.get(uid=site_uid)
-        last_pay_date = site_obj.last_version
+        last_pay_date = site_obj.paid_for_access_until
 
         if not last_pay_date:
 
