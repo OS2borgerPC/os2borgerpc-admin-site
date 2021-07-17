@@ -12,6 +12,7 @@
   "author": "Magenta ApS",
   "license": "MPL-2.0",
   "dependencies": {
+    "jquery": "^3.5.1",
     "bootstrap": "^5.0.1",
     "sass": "^1.35.1"
   }

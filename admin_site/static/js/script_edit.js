@@ -81,29 +81,11 @@
             container.find('input.script-number-of-inputs').val(inputs.length)
         }
     })
-    
+
     BibOS.ScriptEdit = new ScriptEdit()
     $(function() { BibOS.ScriptEdit.init() })
 })(BibOS, $)
 
 /* Syntax highlighting */
 const code = document.getElementById("script-code")
-hljs.highlightBlock(code)
-
-/* TODO: Search form for scripts */
-function search_script() {
-    if (window.location.toString().includes("scripts")) {
-      let search_term = document.getElementById('search_form').value
-      search_term=search_term.toLowerCase();
-      let x = document.getElementsByClassName('animals');
-
-      for (i = 0; i < x.length; i++) {
-          if (!x[i].innerHTML.toLowerCase().includes(input)) {
-              x[i].style.display="none";
-          }
-          else {
-              x[i].style.display="list-item";
-          }
-      }
-    }
-}
+hljs.highlightElement(code)
