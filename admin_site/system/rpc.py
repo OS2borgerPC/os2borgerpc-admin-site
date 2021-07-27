@@ -158,7 +158,9 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     # 3. Update jobs with job data
     if job_data is not None:
         for jd in job_data:
-            job = Job.objects.get(pk=jd['id'])
+            job = Job.objects.filter(pk=jd['id']).first()
+            if not job:
+                continue
             job.status = jd['status']
             job.started = jd['started']
             job.finished = jd['finished']
