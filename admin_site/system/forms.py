@@ -37,6 +37,9 @@ class SiteForm(forms.ModelForm):
     class Meta:
         model = Site
         exclude = ['configuration']
+        widgets = {
+            'paid_for_access_until': forms.widgets.DateInput(attrs={'type': 'date'}),
+        }
 
 
 class GroupForm(forms.ModelForm):
