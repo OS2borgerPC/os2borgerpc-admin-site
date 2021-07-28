@@ -18,8 +18,6 @@ Versioner
           </span>
         </a>
       </li>
-    {% empty %}
-      <li class="text-error">No image versions available.</li>
     {% endfor %}
   {% endif %}
 </ul>
@@ -87,7 +85,8 @@ Versioner
         
       {% endif %}
     {% else %}
-      <!-- Do nothing -->
+      <h2 class="divideheader">Versioner</h2>
+      <p>Der blev ikke fundet nogen versioner</p>
     {% endif %} 
   {% else %}
     <h2 class="text-error"><strong>INGEN ADGANG</strong></h2>
