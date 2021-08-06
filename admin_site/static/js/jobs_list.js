@@ -32,10 +32,12 @@ $(function(){
                         'data-pk="' + this.pk + '"' +
                     '><span class="material-icons">info</span></button>'
                 }
+                var script_link = '<a href="' + this.script_url + '">' + this.script_name + '</a>'
                 var item = $(BibOS.expandTemplate(
                     'job-entry',
                     $.extend(this, {
-                        'jobinfobutton': info_button
+                        'jobinfobutton': info_button,
+                        'script_link' : script_link
                     })
                 ))
                 item.find('input:checkbox').on("click", function() {
