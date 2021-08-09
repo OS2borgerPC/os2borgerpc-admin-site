@@ -13,6 +13,8 @@ import re
 import os.path
 from distutils.version import LooseVersion
 
+from system.mixins import AuditModelMixin
+
 """The following variables define states of objects like jobs or PCs. It is
 used for labeling in the GUI."""
 
@@ -297,11 +299,17 @@ class Site(models.Model):
     name = models.CharField(_('name'), max_length=255)
     uid = models.CharField(_('uid'), max_length=255, unique=True)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    last_version = models.DateField(null=True, blank=True)
+    paid_for_access_until = models.DateField(
+        verbose_name=_("Paid for access until this date"),
+        null=True,
+        blank=True)
 
     security_alerts = models.ManyToManyField("SecurityProblem",
                                              related_name='alert_sites',
                                              blank=True)
+
+    class Meta:
+        ordering = ["name"]
 
     @staticmethod
     def get_system_site():
@@ -688,6 +696,10 @@ class PC(models.Model):
         else:
             return False
 
+    def os2_product(self):
+        """Return whether a PC is running os2borgerpc or os2displaypc."""
+        return self.get_config_value("os2_product")
+
     def __str__(self):
         return self.name
 
@@ -695,19 +707,44 @@ class PC(models.Model):
         ordering = ['name']
 
 
-class Script(models.Model):
+class ScriptTag(models.Model):
+    """A tag model for scripts."""
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
-    name = models.CharField(_('name'), max_length=255)
-    description = models.TextField(_('description'), max_length=4096)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    description = models.TextField(verbose_name=_('description'),
+                                   max_length=4096)
     site = models.ForeignKey(Site, related_name='scripts',
                              null=True, blank=True, on_delete=models.CASCADE)
     # The executable_code field should contain a single executable (e.g. a Bash
     # script OR a single extractable .zip or .tar.gz file with all necessary
     # data.
-    executable_code = models.FileField(_('executable code'),
+    executable_code = models.FileField(verbose_name=_('executable code'),
                                        upload_to='script_uploads')
-    is_security_script = models.BooleanField(_('security script'),
+    is_security_script = models.BooleanField(verbose_name=_('security script'),
                                              default=False, null=False)
+    deleted = models.BooleanField(verbose_name=_("deleted"), default=False)
+
+    maintained_by_magenta = models.BooleanField(
+        verbose_name=_("maintained by Magenta"),
+        default=False,
+        null=False,
+    )
+    author = models.CharField(verbose_name=_("author"), max_length=255,
+                              null=False, blank=True)
+    author_email = models.EmailField(verbose_name=_("author email"),
+                                     null=False, blank=True)
+    tags = models.ManyToManyField(ScriptTag,
+                                  related_name='scripts', blank=True)
 
     @property
     def is_global(self):
@@ -808,6 +845,9 @@ class Script(models.Model):
             return reverse('security_script', args=(site_uid, self.pk))
         else:
             return reverse('script', args=(site_uid, self.pk))
+
+    class Meta:
+        ordering = ['name']
 
 
 class Batch(models.Model):
@@ -915,13 +955,14 @@ class Job(models.Model):
         (RESOLVED, STATUS_TRANSLATIONS[RESOLVED])
     )
 
+    # Is it ideal to hardcode CSS class names in here? Better in template tag?
     STATUS_TO_LABEL = {
-        NEW: '',
-        SUBMITTED: 'label-info',
-        RUNNING: 'label-warning',
-        DONE: 'label-success',
-        FAILED: 'label-important',
-        RESOLVED: 'label-success'
+        NEW: 'bg-secondary',
+        SUBMITTED: 'bg-info',
+        RUNNING: 'bg-warning',
+        DONE: 'bg-success',
+        FAILED: 'bg-danger',
+        RESOLVED: 'bg-primary'
     }
 
     # Fields
@@ -1187,9 +1228,9 @@ class SecurityEvent(models.Model):
     )
 
     STATUS_TO_LABEL = {
-        NEW: 'label-important',
-        ASSIGNED: 'label-warning',
-        RESOLVED: 'label-success'
+        NEW: 'bg-danger',
+        ASSIGNED: 'bg-warning',
+        RESOLVED: 'bg-success'
     }
     problem = models.ForeignKey(
         SecurityProblem, null=False, on_delete=models.CASCADE
@@ -1213,17 +1254,29 @@ class SecurityEvent(models.Model):
 
 
 class ImageVersion(models.Model):
-    img_vers = models.CharField(unique=True, max_length=7)
-    rel_date = models.DateField()
+    BORGERPC = "BORGERPC"
+    DISPLAYPC = "DISPLAYPC"
+
+    platform_choices = (
+        (BORGERPC, _("BorgerPC")),
+        (DISPLAYPC, _("DisplayPC")),
+    )
+
+    platform = models.CharField(max_length=128, choices=platform_choices)
+    image_version = models.CharField(unique=True, max_length=7)
+    release_date = models.DateField()
     os = models.CharField(max_length=30)
-    rel_notes = models.TextField(max_length=350)
+    release_notes = models.TextField(max_length=350)
     image_upload = models.FileField(upload_to="images", default='#')
 
     def __str__(self):
         return "| {0} | {1} | {2} | {3} | {4} |".format(
-            self.img_vers,
-            self.rel_date,
+            self.image_version,
+            self.release_date,
             self.os,
-            self.rel_notes,
+            self.release_notes,
             self.image_upload
         )
+
+    class Meta:
+        ordering = ['platform', '-image_version']

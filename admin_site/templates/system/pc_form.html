@@ -1,170 +1,181 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Computere
 {% endblock %}
 
-{% block specific_documentation_links %}
-  <li><a href="{% url 'doc' 'computers' %}"><i class="icon-question-sign icon-white"></i> Administration af computere</a></li>
-{% endblock %}
-
 {% block javascripts %}
-<script type="text/javascript" src="/static/js/pcgrouplist.js"></script>
-<script type="text/javascript" src="/static/js/configlist.js"></script>
+  <script type="text/javascript" src="/static/js/configlist.js"></script>
 {% endblock %}
 
-
-{% block computers_active %}
-class="active"
+{% block subnav %}
+<ul class="sublevelnav item-list">
+  {% if not pc_list.all%}
+    <li>Der er ingen computere</li>
+  {% endif %}
+  {% for pc in pc_list %}
+    <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
+      {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
+      <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
+          {% if pc.os2_product == 'os2borgerpc' %}
+            <span class="material-icons">groups</span>
+          {% else %}
+            <span class="material-icons">theaters</span>
+          {% endif %}
+        {{ pc.name }}
+      </a>
+      {% ifequal pc selected_pc %}
+        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
+          clear
+        </a>
+      {% endifequal %}
+    </li>
+  {% endfor %}
+</ul>
 {% endblock %}
 
 {% block specific_content %}
-
-  <script type="text/javascript">
-    $(document).ready( function() {
-      var el = document.getElementById("{{ selected_pc.uid }}");
-      el.scrollIntoView(true);
-    });
-
-    $(function(){
-      var hash = window.location.hash;
-      if (hash) {
-        $('ul.nav a[href="' + hash + '"]').tab('show');
-        console.log($('#computer_jobs_table').scrollTop());
-      };
-      $('.nav-tabs a').click(function (e) {
-        $(this).tab('show');
-        var scrollmem = $('.main').scrollTop();
-        window.location.hash = this.hash;
-        $('.main').scrollTop(scrollmem);
-      });
-    });
-  </script>
-
-  <ul class="sublevelnav">
-    {% if not pc_list.all%}
-      <li>Der er ingen computere</li>
-    {% endif %}
-    {% for pc in pc_list %}
-    <li {% ifequal pc selected_pc %}class="active" %}{% endifequal %}>
-        {% ifequal pc selected_pc %}
-          <a class="remove pull-right" href="/site/{{ site.url }}/computers/{{ selected_pc.uid }}/delete/" title="Slet computer"><i class="icon-remove icon-white"></i></a>
-        {% endifequal %}
-        <div id="{{pc.uid}}"> <a class="list-item" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();"><i class="icon-hdd"></i> {{ pc.name }}</a>
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
-
   <div class="container-fluid main sublevelmain">
 
-    <h2 class="divideheader">Detaljer om <em>{{ selected_pc.name }}</em>
+    <h2 class="divideheader">
+      Detaljer om <em>{{ selected_pc.name }}</em>
       {% if selected_pc.securityevent_set.count > 0 %}
-      <a href="/site/{{ site.url }}/security/pc/{{ pc.uid }}" title=" Se advarsler for denne PC"><span class="badge badge-important">
-              <icon
-                                                                                                                          class="{% if has_security_warnings %}icon-fire{% else %}icon-ok{% endif %} icon-white">
-              </icon></span></a>
-{% endif %}
+      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se hændelser for denne PC">
+        <span class="badge badge-important">
+          <icon class="{% if has_security_events %}icon-fire{% else %}icon-ok{% endif %} icon-white"></icon>
+        </span>
+      </a>
+      {% endif %}
     </h2>
+
     {% include 'notification.html' %}
 
-    {% if selected_pc.last_seen %}
-      <p class="" style="float:right;"><span class="muted"> &nbsp;Senest
-          set:</span> <strong>{{ selected_pc.last_seen|date:'Y-m-d H:i:s' }} </strong></p>
-    {% endif %}
-    {% if security_event != "Ingen advarsler"%}
-      <p style="float:right; clear:right;"><span class="muted"> &nbsp;Seneste advarsel set:</span> <strong>{{ security_event.reported_time|date }} </strong> {{ security_event.reported_time|time }}</p>
-    {% endif %}
+    <p class="d-flex justify-content-end mb-0">
+      {% if selected_pc.last_seen %}
+        Senest set: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
+      {% endif %}
+      {% if security_event != "Ingen hændelser"%}
+        <span class="ms-3">
+          Seneste advarsel set: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
+        </span>
+      {% endif %}
+    </p>
 
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       {% csrf_token %}
 
-      <button class="btn btn-primary">Gem ændringer</button>
-      <button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Annuller</button>
-
-      <ul class="nav nav-tabs">
-        <li class="active">
-          <a href="#pc-details" data-toggle="tab">Detaljer</a>
+      <!-- The three tabs on the page: -->
+      <ul class="nav nav-tabs" role="tablist" id="pc-tabs">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="details-tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
         </li>
-        <li>
-          <a href="#pc-configs" data-toggle="tab">Konfigurationer</a>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="configs-tabs" href="#configs" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
         </li>
-        <li>
-          <a href="#pc-jobs" data-toggle="tab">Jobhistorik</a>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="jobs-tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="false">Jobhistorik</a>
         </li>
       </ul>
 
-      <div id="pc-details" class="tabcontent active">
-        <div class="row-fluid">
-          <fieldset class="span6">
-            <label for="id_name">Navn:</label>
-            {{ form.name.errors }}
-            {{ form.name }}
+      <!-- The content for the three tabs you can choose from above, one after one: -->
+      <div class="tab-content">
 
-            <label for="id_description">Beskrivelse:</label>
-            {{ form.description.errors }}
-            {{ form.description }}
+        <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
+      
+          <div class="row gx-5">
 
-            <label for="id_location">Lokation:</label>
-            {{ form.location.errors }}
-            {{ form.location }}
+            <fieldset class="col-12 col-lg-6">
 
-            <label class="checkbox" for="id_is_active">
-              {{ form.is_active.errors }}
-              {{ form.is_active }} Aktiv
-            </label>
+                {{ form.name|as_crispy_field }}
+                {{ form.description|as_crispy_field }}
+                {{ form.location|as_crispy_field }}
 
-          </fieldset>
-          <fieldset class="span6">
-            {{ form.pc_groups.errors }}
-            <label>Grupper:</label>
-            {% include 'system/pcgrouplist/list.html' with submit_name='pc_groups' %}
+                <div mb-5>
+                    {{ form.is_active|as_crispy_field }}
+                </div>
+
+              </fieldset>
+
+            <fieldset class="col-12 col-lg-6">
+
+              {{ form.pc_groups.errors }}
+              <label class="mb-2">Grupper</label>
+              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
+
+            </fieldset>
+          
+          </div>
+        </div>
+
+        <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
+          <fieldset>
+            {% include 'system/configlist/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
           </fieldset>
         </div>
-      </div>
 
-      <div id="pc-configs" class="tabcontent">
-        <fieldset>
-          {% include 'system/configlist/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
+        <div id="jobs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="jobs-tab">
+          <table id="computer_jobs_table" class="table jobtable">
+            <thead>
+              <tr>
+                {% include 'widgets/orderby_th_reload.html' with key='batch__script__name' label='Script' anchor='#jobs' %}
+                {% include 'widgets/orderby_th_reload.html' with key='started' label='Startet' anchor='#jobs' %}
+                {% include 'widgets/orderby_th_reload.html' with key='finished' label='Sluttet' anchor='#jobs' %}
+                {% include 'widgets/orderby_th_reload.html' with key='status' label='Status' anchor='#jobs' %}
+                {% include 'widgets/orderby_th_reload.html' with key='batch__name' label='Batch' anchor='#jobs' %}
+                <th></th>
+              </tr>
+            </thead>
+            {% for job in joblist %}
+            <tr class="muted">
+              <td class="{% ifequal orderby_key 'batch__script__name' %}orderby-highligt{% endifequal %}">{{job.batch.script.name}}</td>
+              <td class="{% ifequal orderby_key 'started' %}orderby-highligt{% endifequal %}">{{job.started|default:'&nbsp'}}</td>
+              <td class="{% ifequal orderby_key 'finished' %}orderby-highligt{% endifequal %}">{{job.finished|default:'&nbsp'}}</td>
+              <td class="{% ifequal orderby_key 'status' %}orderby-highligt{% endifequal %}"><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
+              <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
+              <td>
+                {% if job.has_info %}
+                  <button type="button" class="btn btn-info jobinfobutton" data-pk="{{ job.pk }}">
+                    <span class="material-icons">info</span>
+                  </button>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+
+        </div>
+
+        <fieldset class="mt-5">
+          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+          <button class="btn btn-secondary" type="reset">Annuller</button>
+          <!--<button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Nulstil ændringer</button>-->
         </fieldset>
-      </div>
-
-      <div id="pc-jobs" class="tabcontent">
-        <table id="computer_jobs_table" class="table jobtable">
-          <tr>
-            {% include 'widgets/orderby_th.html' with key='batch__script__name' label='Script' anchor='#pc-jobs' %}
-            {% include 'widgets/orderby_th.html' with key='started' label='Startet' anchor='#pc-jobs' %}
-            {% include 'widgets/orderby_th.html' with key='finished' label='Sluttet' anchor='#pc-jobs' %}
-            {% include 'widgets/orderby_th.html' with key='status' label='Status' anchor='#pc-jobs' %}
-            {% include 'widgets/orderby_th.html' with key='batch__name' label='Batch' anchor='#pc-jobs' %}
-            <th></th>
-          </tr>
-          {% for job in joblist %}
-          <tr class="muted">
-            <td class="{% ifequal orderby_key 'batch__script__name' %}orderby-highligt{% endifequal %}">{{job.batch.script.name}}</td>
-            <td class="{% ifequal orderby_key 'started' %}orderby-highligt{% endifequal %}">{{job.started|default:'&nbsp'}}</td>
-            <td class="{% ifequal orderby_key 'finished' %}orderby-highligt{% endifequal %}">{{job.finished|default:'&nbsp'}}</td>
-            <td class="{% ifequal orderby_key 'status' %}orderby-highligt{% endifequal %}"><span class="label {{job.status_label}}">{{job.status_translated}}</span></td>
-            <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
-            <td>
-              {% if job.has_info %}
-              <button class="btn jobinfobutton" data-pk="{{ job.pk }}"><i class="icon-info-sign"></i></button>
-              {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </table>
-
-        <script type="text/javascript"><!--
-          $(function() {
-            BibOS.setupJobInfoButtons($('#computer_jobs_table'));
-          });
-        //--></script>
 
       </div>
 
+      <script>
+        // Hack to ensure that when sorting jobs table,
+        // the "Jobhistorik" tab opens on window load:
+        window.addEventListener('load', function() {
+          // Manually initialize javascript for tabs
+          var triggerTabList = [].slice.call(document.querySelectorAll('#pc-tabs a'))
+          triggerTabList.forEach(function (triggerEl) {
+            var tabTrigger = new bootstrap.Tab(triggerEl)
+            triggerEl.addEventListener('click', function (event) {
+              tabTrigger.show()
+            })
+          })
+          // Open #jobs tab if the url contains this hash
+          if (location.hash === '#jobs') {
+            var triggerEl = document.getElementById('jobs-tab')
+            console.log(bootstrap.Tab.getInstance(triggerEl))
+            bootstrap.Tab.getInstance(triggerEl).show()
+          }
+        })
+      </script>
     </form>
 
     {% include 'system/configlist/templates.html' %}
-  </p>
+  </div>
 {% endblock %}

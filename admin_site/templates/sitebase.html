@@ -1,27 +1,32 @@
 {% extends "base.html" %}
 
-{% block body %}
-  
-  <header {% block header_class %}{% endblock %} >
+{% block header %}
+  <header class="d-flex justify-content-between {% block header_class %}{% endblock %}">
+
+    <h1 class="siteheader">{% block  header_title %}{% endblock %}</h1>
 
     {% if user.is_authenticated %}
   
-      <div class="btn-group profile pull-right">
+      <div class="d-flex align-items-center" style="margin-top: -.25rem;">
         <span>Velkommen</span>
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user }} <i class="icon-chevron-down icon-white"></i></a>
-        <ul class="dropdown-menu pull-right">
-          <!---TODO: Commented out until we sort out how to handle this.
-          <li><a href="#"><i class="icon-user"></i> Min profil</a></li>
-          -->
-          <li><a href="/accounts/logout/"><i class="icon-share"></i> Log ud</a></li>
-        </ul>
+        <div class="dropdown">
+          <button class="btn btn-primary text-white dropdown-toggle px-1"
+            style="box-shadow: none;"
+            type="button" 
+            id="userActionDropdown" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+            {{ user }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="userActionDropdown">
+            <li>
+              <a class="dropdown-item" href="/accounts/logout/">Log ud</a>
+            </li>
+          </ul>
+        </div>
+        
       </div>
-      
     {% endif %}
-    <h1 class="siteheader">{% block  header_title %}{% endblock %}</h1>
+
   </header>
-
-  {% block content %}
-  {% endblock %}
-
 {% endblock %}

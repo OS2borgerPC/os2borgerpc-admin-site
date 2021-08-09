@@ -1,0 +1,23 @@
+{% extends "site_with_navigation.html" %}
+
+{% block specific_title %}
+{% if is_security %} Sikkerhedsscripts {% else %} Scripts {% endif %}
+{% endblock %}
+
+<!-- Syntax highlighting -->
+{% block stylesheets %}
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/foundation.min.css">
+{% endblock %}
+
+{% block javascripts %}
+<!-- Syntax highlighting -->
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+<script type="text/javascript" src="/static/js/script_edit.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var inputs = {{ script_inputs_json|safe }}
+        $.each(inputs, function() {BibOS.ScriptEdit.addInput('#script-inputs', this)})
+    })
+</script>
+{% endblock %}

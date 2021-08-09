@@ -1,0 +1,79 @@
+/* Custom variables for custom Bootstrap styles */
+
+$white:    #fbfbfb;
+$gray-100: #f1f1f1;
+$gray-200: #dddddd;
+$gray-300: #d6dadb;
+$gray-400: #cccccc;
+$gray-500: #b1c3c5;
+$gray-600: #808c8f;
+$gray-700: #6B8388;
+$gray-800: #173b42;
+$gray-900: #031a20;
+$black:    #222222;
+
+$blue:    #4C9EF5;
+$indigo:  #4C65F5;
+$purple:  #844CF5;
+$pink:    #F54CC2;
+$red:     #ED5854;
+$orange:  #F5914D;
+$yellow:  #F0D764;
+$green:   #5BA66E;
+$teal:    #4CF5C8;
+$cyan:    #77C7D9;
+
+$primary: $gray-800;
+$secondary: $gray-500;
+$warning: $orange;
+$gentle-warning: $yellow;
+
+// Sizes
+$spacer: 1rem;
+$navigation-width: $spacer*16;
+
+// Font
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-size-base: .9rem;
+
+// Pagination 
+$pagination-color: $black;
+$pagination-bg: $gray-100;
+$pagination-border-width: 0;
+$pagination-hover-color: $black;
+$pagination-hover-bg: $orange;
+$pagination-focus-color: $black;
+$pagination-focus-bg: $gray-200;
+$pagination-active-color: $black;
+$pagination-active-bg: $gray-200;
+$pagination-disabled-color: $gray-200;
+$pagination-disabled-bg: transparent;
+
+// Tables
+$table-cell-padding-y: .75rem;
+$table-cell-padding-x: 2rem;
+$table-cell-padding-y-sm: .25rem;
+$table-cell-padding-x-sm: .75rem;
+$table-bg: $gray-100;
+$table-border-width: 0;
+
+// Nav
+$nav-link-color: $gray-900;
+$nav-link-hover-color: $primary;
+$nav-tabs-border-color: $gray-100;
+$nav-tabs-link-active-bg: $gray-100;
+$nav-tabs-link-active-color: $black;
+$nav-tabs-link-hover-color: $warning;
+$nav-tabs-link-hover-border-color: $warning;
+$nav-tabs-link-active-border-color: $gray-100;
+
+// Modal dialogs
+$modal-inner-padding: $spacer*1.5;
+$modal-footer-margin-between: $spacer;
+$modal-header-padding-y: $spacer*.75;
+$modal-header-padding-x: $spacer*1.5;
+
+// Forms
+$form-check-input-width: 1.25em;
+$form-check-input-border: solid 2px $gray-600;
+//$form-check-input-border-radius: .25em;

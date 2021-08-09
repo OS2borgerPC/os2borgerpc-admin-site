@@ -1,0 +1,47 @@
+.list-collapsible {
+
+    [data-bs-toggle="collapse"] {
+        color: $gray-900;
+        margin: 0;
+        border-bottom: solid 1px $gray-100;
+        text-decoration: none;
+        padding: $spacer*.75 $spacer*.75 $spacer*.75 $spacer;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        align-content: stretch;
+    
+        &:hover {
+            background-color: $primary;
+            color: $white;
+            background-color: $gray-400;
+        }
+
+        .material-icons:first-child {
+            font-size: 1.25rem;
+        }
+
+        .collapse-label {
+            flex-grow: 1;
+            padding: 0 $spacer*.5;
+        }
+
+        .collapse-arrow {
+            transition: transform .3s;
+            transform: rotate(-90deg);
+        }
+    
+        &[aria-expanded="true"] .collapse-arrow {
+            transform: rotate(0deg);
+        }
+    }
+
+    .collapse-content {
+        background-color: $gray-100;
+    }
+
+    .item-list > li {
+        border-bottom: solid 1px $gray-200;
+    }
+
+}

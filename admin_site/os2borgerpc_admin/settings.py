@@ -3,6 +3,7 @@
 import os
 import configparser
 import logging
+import django
 from google.oauth2 import service_account
 
 logger = logging.getLogger(__name__)
@@ -63,7 +64,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS':
         [
-            os.path.join(install_dir, 'templates/')
+            os.path.join(install_dir, 'templates/'),
+            django.__path__[0] + '/forms/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -73,6 +75,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            ],
+            'builtins': [
+                'system.templatetags.custom_tags',
             ],
         },
     },
@@ -156,6 +161,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(install_dir, 'static'),
+    "/frontend",
 )
 
 # List of finder classes that know how to find static files in
@@ -218,6 +224,8 @@ LOCAL_APPS = (
 THIRD_PARTY_APPS = (
     'django_xmlrpc',
     'django_extensions',
+    'crispy_forms',
+    'crispy_bootstrap5',
 )
 
 DJANGO_APPS = (
@@ -302,3 +310,7 @@ CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS', [])
 INITIALIZE_DATABASE = settings.getboolean(
     "INITIALIZE_DATABASE", False
 )
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

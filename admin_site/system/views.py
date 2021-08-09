@@ -5,8 +5,8 @@ from datetime import datetime
 from functools import cmp_to_key
 from urllib.parse import quote
 
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect, Http404, JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -21,8 +21,11 @@ from django.views.generic import (
     RedirectView,
     TemplateView
 )
+from django.views.generic.list import BaseListView
+
 from django.db import transaction
 from django.db.models import Q
+from django.db.models.functions import Lower
 from django.conf import settings
 
 from account.models import (
@@ -42,6 +45,7 @@ from system.models import (
     SecurityEvent,
     MandatoryParameterMissingError,
     ImageVersion,
+    ScriptTag,
 )
 # PC Status codes
 from system.forms import (
@@ -83,7 +87,7 @@ def get_latest_security_event(pc):
     try:
         sc = SecurityEvent.objects.filter(pc_id=pc.id).latest('reported_time')
     except SecurityEvent.DoesNotExist:
-        sc = "Ingen advarsler"
+        sc = "Ingen hændelser"
     return sc
 
 
@@ -167,24 +171,28 @@ class SelectionMixin(View):
         return context
 
 
-class JSONResponseMixin(object):
-    def render_to_response(self, context):
-        """Returns a JSON response containing 'context' as payload"""
-        return self.get_json_response(self.convert_context_to_json(context))
+class JSONResponseMixin:
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
 
-    def get_json_response(self, content, **httpresponse_kwargs):
-        """Construct an `HttpResponse` object."""
-        return HttpResponse(content,
-                            content_type='application/json',
-                            **httpresponse_kwargs)
-
-    def convert_context_to_json(self, context):
-        """Convert the context dictionary into a JSON object"""
+    def get_data(self, context):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
         # Note: This is *EXTREMELY* naive; in reality, you'll need
         # to do much more complex handling to ensure that arbitrary
         # objects -- such as Django model instances or querysets
         # -- can be serialized as JSON.
-        return json.dumps(context)
+        return context
 
 
 # Mixin class for CRUD views that use site_uid in URL
@@ -319,9 +327,10 @@ class JobsView(SiteView):
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
         context = super(JobsView, self).get_context_data(**kwargs)
-        context['batches'] = self.object.batches.all()[:100]
-        context['pcs'] = self.object.pcs.all()
-        context['groups'] = self.object.groups.all()
+        site = context["site"]
+        context['batches'] = site.batches.all()[:100]
+        context['pcs'] = site.pcs.all()
+        context['groups'] = site.groups.all()
         preselected = set([
             Job.NEW,
             Job.SUBMITTED,
@@ -348,46 +357,26 @@ class JobsView(SiteView):
         return context
 
 
-class JobSearch(JSONResponseMixin, SiteView):
-    http_method_names = ['get', 'post']
+class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
+    paginate_by = 20
+    http_method_names = ['get']
     VALID_ORDER_BY = []
     for i in ['pk', 'batch__script__name', 'started', 'finished', 'status',
               'pc__name', 'batch__name']:
         VALID_ORDER_BY.append(i)
         VALID_ORDER_BY.append('-' + i)
 
-    @staticmethod
-    def get_jobs_display_data(joblist, site=None):
-        if len(joblist) == 0:
-            return []
+    context_object_name = "jobs_list"
 
-        if site is None:
-            site = joblist[0].batch.site
-        return [{
-            'pk': job.pk,
-            'script_name': job.batch.script.name,
-            'started': job.started.strftime("%Y-%m-%d %H:%M:%S") if
-            job.started else None,
-            'finished': job.finished.strftime("%Y-%m-%d %H:%M:%S") if
-            job.finished else None,
-            'status': job.status_translated + '',
-            'label': job.status_label,
-            'pc_name': job.pc.name,
-            'batch_name': job.batch.name,
-            # Yep, it's meant to be double-escaped - it's HTML-escaped
-            # content that will be stored in an HTML attribute
-            'has_info': job.has_info,
-            'restart_url': '/site/%s/jobs/%s/restart/' % (site.uid, job.pk)
-        } for job in joblist]
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
+    def get_queryset(self):
+        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        queryset = Job.objects.all()
+        params = self.request.GET
 
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super(JobSearch, self).get_context_data(**kwargs)
-        params = self.request.GET or self.request.POST
-        query = {'batch__site': context['site']}
+        query = {"batch__site": site}
 
         if 'status' in params:
             query['status__in'] = params.getlist('status')
@@ -404,27 +393,64 @@ class JobSearch(JSONResponseMixin, SiteView):
         orderby = params.get('orderby', '-pk')
         if orderby not in JobSearch.VALID_ORDER_BY:
             orderby = '-pk'
-        limit = int(params.get('do_limit', '0'))
 
-        if limit:
-            context['job_list'] = Job.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )[:limit]
-        else:
-            context['job_list'] = Job.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )
-
-        return context
-
-    def convert_context_to_json(self, context):
-        result = JobSearch.get_jobs_display_data(
-            context['job_list'],
-            site=context['site']
+        queryset = queryset.filter(**query).order_by(
+            orderby,
+            'pk'
         )
-        return json.dumps(result)
+
+        return queryset
+
+    def get_data(self, context):
+        site = context["site"]
+        page_obj = context["page_obj"]
+        paginator = context["paginator"]
+        adjacent_pages = 2
+        page_numbers = [
+            n for n in range(
+                page_obj.number - adjacent_pages,
+                page_obj.number + adjacent_pages + 1
+            ) if n > 0 and n <= paginator.num_pages
+        ]
+
+        result = {
+            "count": paginator.count,
+            "num_pages": paginator.num_pages,
+            "page": page_obj.number,
+            "page_numbers": page_numbers,
+            "has_next": page_obj.has_next(),
+            "next_page_number": (
+                page_obj.next_page_number()
+                if page_obj.has_next()
+                else None
+            ),
+            "has_previous": page_obj.has_previous(),
+            "previous_page_number": (
+                page_obj.previous_page_number()
+                if page_obj.has_previous()
+                else None
+            ),
+            "results": [{
+                'pk': job.pk,
+                'script_name': job.batch.script.name,
+                'started': job.started.strftime("%Y-%m-%d %H:%M:%S") if
+                job.started else None,
+                'finished': job.finished.strftime("%Y-%m-%d %H:%M:%S") if
+                job.finished else None,
+                'status': job.status_translated + '',
+                'label': job.status_label,
+                'pc_name': job.pc.name,
+                'batch_name': job.batch.name,
+                # Yep, it's meant to be double-escaped - it's HTML-escaped
+                # content that will be stored in an HTML attribute
+                'has_info': job.has_info,
+                'script_url': '/site/%s/scripts/%s/'
+                % (site.uid, job.batch.script.id),
+                'restart_url': '/site/%s/jobs/%s/restart/' % (site.uid, job.pk)
+            } for job in page_obj]
+        }
+
+        return result
 
 
 class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
@@ -504,7 +530,8 @@ class ScriptMixin(object):
         # Add the global and local script lists
         self.scripts = Script.objects.filter(
             Q(site=self.site) | Q(site=None),
-            is_security_script=self.is_security
+            is_security_script=self.is_security,
+            deleted=False
         ).exclude(
             site__name='system'
         )
@@ -524,10 +551,44 @@ class ScriptMixin(object):
         # Get context from super class
         context = super(ScriptMixin, self).get_context_data(**kwargs)
         context['site'] = self.site
-        context['local_scripts'] = sorted(self.scripts.filter(site=self.site),
-                                          key=lambda s: s.name.lower())
-        context['global_scripts'] = sorted(self.scripts.filter(site=None),
-                                           key=lambda s: s.name.lower())
+        context['script_tags'] = ScriptTag.objects.all()
+
+        local_scripts = self.scripts.filter(
+            site=self.site
+        ).order_by(Lower("name"))
+        context['local_scripts'] = local_scripts
+        global_scripts = self.scripts.filter(
+            site=None
+        ).order_by(Lower("name"))
+        context['global_scripts'] = global_scripts
+
+        # Create a tag->scripts dict for tags that has local scripts.
+        local_tag_scripts_dict = {
+            tag: local_scripts.filter(tags=tag)
+            for tag in ScriptTag.objects.all()
+            if local_scripts.filter(tags=tag).exists()
+        }
+        # Add scripts with no tags as untagged.
+        if local_scripts.filter(tags=None).exists():
+            local_tag_scripts_dict["untagged"] = local_scripts.filter(
+                tags=None
+            )
+
+        context['local_scripts_by_tag'] = local_tag_scripts_dict
+
+        # Create a tag->scripts dict for tags that has global scripts.
+        global_tag_scripts_dict = {
+            tag: global_scripts.filter(tags=tag)
+            for tag in ScriptTag.objects.all()
+            if global_scripts.filter(tags=tag).exists()
+        }
+        # Add scripts with no tags as untagged.
+        if global_scripts.filter(tags=None).exists():
+            global_tag_scripts_dict["untagged"] = global_scripts.filter(
+                tags=None
+            )
+
+        context['global_scripts_by_tag'] = global_tag_scripts_dict
 
         context['script_inputs'] = self.script_inputs
         context['is_security'] = self.is_security
@@ -612,7 +673,6 @@ class ScriptMixin(object):
 
 
 class ScriptList(ScriptMixin, SiteView):
-    template_name = 'system/scripts/list.html'
 
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
@@ -639,9 +699,9 @@ class ScriptList(ScriptMixin, SiteView):
 
         except IndexError:
             return HttpResponseRedirect(
-                "/site/%s/security/scripts/new/" % self.site.uid
+                reverse("new_security_script", args=[self.site.uid])
                 if self.is_security else
-                "/site/%s/scripts/new/" % self.site.uid
+                reverse("new_script", args=[self.site.uid])
             )
 
 
@@ -663,6 +723,8 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         if self.validate_script_inputs():
+            # save the username for the AuditModelMixin.
+            form.instance.user_created = self.request.user.username
             self.object = form.save()
             self.script = self.object
             if self.is_security:
@@ -681,10 +743,12 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         if self.is_security:
-            return '/site/%s/security/scripts/%s/' % (self.site.uid,
-                                                      self.script.pk)
+            return reverse(
+                "security_script",
+                args=[self.site.uid, self.script.pk]
+            )
         else:
-            return '/site/%s/scripts/%s/' % (self.site.uid, self.script.pk)
+            return reverse("script", args=[self.site.uid, self.script.pk])
 
 
 class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -717,6 +781,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         if self.validate_script_inputs():
+            # save the username for the AuditModelMixin.
+            form.instance.user_modified = self.request.user.username
             self.save_script_inputs()
             response = super(ScriptUpdate, self).form_valid(form)
             set_notification_cookie(
@@ -735,10 +801,12 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         if self.is_security:
-            return '/site/%s/security/scripts/%s/' % (self.site.uid,
-                                                      self.script.pk)
+            return reverse(
+                "security_script",
+                args=[self.site.uid, self.script.pk]
+            )
         else:
-            return '/site/%s/scripts/%s/' % (self.site.uid, self.script.pk)
+            return reverse("script", args=[self.site.uid, self.script.pk])
 
 
 class ScriptRun(SiteView):
@@ -829,8 +897,34 @@ class ScriptRun(SiteView):
         return context
 
 
-class ScriptDelete(ScriptMixin, DeleteView):
-    pass
+class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
+    template_name = 'system/scripts/confirm_delete.html'
+    model = Script
+
+    def get_object(self, queryset=None):
+        return Script.objects.get(
+            pk=self.kwargs['script_pk'],
+            site__uid=self.kwargs['slug']
+        )
+
+    def get_success_url(self):
+        if self.is_security:
+            return reverse(
+                "security_scripts",
+                kwargs={"slug": self.kwargs["slug"]}
+            )
+        else:
+            return reverse(
+                "scripts",
+                kwargs={"slug": self.kwargs["slug"]}
+            )
+
+    def delete(self, request, *args, **kwargs):
+        script = self.get_object()
+        script.deleted = True
+        script.save()
+
+        return redirect(self.get_success_url())
 
 
 class PCsView(SelectionMixin, SiteView):
@@ -914,7 +1008,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         context['selected_pc'] = pc
 
         context['security_event'] = get_latest_security_event(pc)
-        context['has_security_warnings'] = pc.securityevent_set.exclude(
+        context['has_security_events'] = pc.securityevent_set.exclude(
             status=SecurityEvent.RESOLVED
         ).exclude(
             problem__level=SecurityProblem.NORMAL
@@ -1571,8 +1665,9 @@ class SecurityEventsView(SiteView):
         return context
 
 
-class SecurityEventSearch(JSONResponseMixin, SiteView):
-    http_method_names = ['get', 'post']
+class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
+    paginate_by = 20
+    http_method_names = ['get']
     VALID_ORDER_BY = []
     for i in [
         'pk', 'problem__name', 'occurred_time', 'assigned_user__username'
@@ -1580,36 +1675,15 @@ class SecurityEventSearch(JSONResponseMixin, SiteView):
         VALID_ORDER_BY.append(i)
         VALID_ORDER_BY.append('-' + i)
 
-    @staticmethod
-    def get_event_display_data(eventlist, site=None):
-        if len(eventlist) == 0:
-            return []
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
 
-        if site is None:
-            site = eventlist[0].batch.site
+    def get_queryset(self):
+        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        queryset = SecurityEvent.objects.all()
+        params = self.request.GET
 
-        return [{
-            'pk': event.pk,
-            'site_uid': site.uid,
-            'problem_name': event.problem.name,
-            'pc_id': event.pc.id,
-            'occurred': event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
-            'status': event.get_status_display(),
-            'status_label': event.STATUS_TO_LABEL[event.status],
-            'level': SecurityProblem.LEVEL_TO_LABEL[event.problem.level] + '',
-            'pc_name': event.pc.name,
-            'assigned_user': (event.assigned_user.username if
-                              event.assigned_user else '')
-        } for event in eventlist]
-
-    def post(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        # First, get basic context from superclass
-        context = super(SecurityEventSearch, self).get_context_data(**kwargs)
-        params = self.request.GET or self.request.POST
-        query = {'problem__site': context['site']}
+        query = {'problem__site': site}
         if params.get('pc', None):
             query['pc__uid'] = params['pc']
 
@@ -1622,31 +1696,61 @@ class SecurityEventSearch(JSONResponseMixin, SiteView):
         orderby = params.get('orderby', '-pk')
         if orderby not in SecurityEventSearch.VALID_ORDER_BY:
             orderby = '-pk'
-        limit = int(params.get('do_limit', '0'))
 
-        if limit:
-            context[
-                'securityevent_list'
-            ] = SecurityEvent.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )[:limit]
-        else:
-            context[
-                'securityevent_list'
-            ] = SecurityEvent.objects.filter(**query).order_by(
-                orderby,
-                'pk'
-            )
-        return context
-
-    def convert_context_to_json(self, context):
-        result = SecurityEventSearch.get_event_display_data(
-            context['securityevent_list'],
-            site=context['site']
+        queryset = queryset.filter(**query).order_by(
+            orderby,
+            'pk'
         )
-        # print json.dumps(result)
-        return json.dumps(result)
+
+        return queryset
+
+    def get_data(self, context):
+        site = context["site"]
+        page_obj = context["page_obj"]
+        paginator = context["paginator"]
+        adjacent_pages = 2
+        page_numbers = [
+            n for n in range(
+                page_obj.number - adjacent_pages,
+                page_obj.number + adjacent_pages + 1
+            ) if n > 0 and n <= paginator.num_pages
+        ]
+
+        result = {
+            "count": paginator.count,
+            "num_pages": paginator.num_pages,
+            "page": page_obj.number,
+            "page_numbers": page_numbers,
+            "has_next": page_obj.has_next(),
+            "next_page_number": (
+                page_obj.next_page_number()
+                if page_obj.has_next()
+                else None
+            ),
+            "has_previous": page_obj.has_previous(),
+            "previous_page_number": (
+                page_obj.previous_page_number()
+                if page_obj.has_previous()
+                else None
+            ),
+            "results": [{
+                'pk': event.pk,
+                'site_uid': site.uid,
+                'problem_name': event.problem.name,
+                'pc_id': event.pc.id,
+                'occurred': event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
+                'status': event.get_status_display(),
+                'status_label': event.STATUS_TO_LABEL[event.status],
+                'level': SecurityProblem.LEVEL_TO_LABEL[
+                    event.problem.level
+                ] + '',
+                'pc_name': event.pc.name,
+                'assigned_user': (event.assigned_user.username if
+                                  event.assigned_user else '')
+                } for event in page_obj]
+        }
+
+        return result
 
 
 class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -1674,7 +1778,7 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return result
 
     def get_success_url(self):
-        return '/site/{0}/security/'.format(self.kwargs['site_uid'])
+        return reverse("security_events", args=[self.kwargs['site_uid']])
 
 
 documentation_menu_items = [
@@ -1830,7 +1934,7 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         site_uid = self.kwargs.get('site_uid')
         site_obj = Site.objects.get(uid=site_uid)
-        last_pay_date = site_obj.last_version
+        last_pay_date = site_obj.paid_for_access_until
 
         if not last_pay_date:
 
@@ -1842,11 +1946,12 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
             # excluding versions where
             # image release date > client's last pay date.
-            versions = ImageVersion.objects.exclude(rel_date__gt=last_pay_date)
+            versions = ImageVersion.objects.exclude(
+                release_date__gt=last_pay_date)
 
             major_versions_set = set()
             for minor_version in versions:
-                major_versions_set.add(minor_version.img_vers[:1])
+                major_versions_set.add(minor_version.image_version[:1])
 
             major_versions_list = list(major_versions_set)
             major_versions_list.sort(reverse=True)
@@ -1863,7 +1968,7 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
                 context["selected_image_version"] = url_ref_vers
 
                 minor_versions = versions.filter(
-                    img_vers__startswith=url_ref_vers
+                    image_version__startswith=url_ref_vers
                     )
 
                 context["minor_versions"] = minor_versions

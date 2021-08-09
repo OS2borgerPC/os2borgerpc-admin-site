@@ -1,97 +1,123 @@
+{% load crispy_forms_tags %}
+
+<div class="d-flex justify-content-end">
+  {% if form.instance.created %}
+    <p class="mb-3 mt-3">
+      Oprettet: {{ form.instance.created }}
+      {% if form.instance.user_created %}
+        <span class="text-muted">({{ form.instance.user_created }})</span>
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if form.instance.modified %}
+    <p class="mb-3 ms-3 mt-3">
+      Ændret: {{ form.instance.modified }} 
+      {% if form.instance.user_modified %}
+        <span class="text-muted">({{ form.instance.user_modified }})</span>
+      {% endif %}
+    </p>
+  {% endif %}
+</div>
+
 {% if disable_inputs != "yes" %}
-  <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#script-details" data-toggle="tab">Detaljer</a>
+  <!-- The three tabs on the page: -->
+  <ul class="nav nav-tabs mt-2" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
     </li>
-    <li>
-      <a href="#script-preview" data-toggle="tab">Kode</a>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="preview-tab" href="#preview" data-bs-toggle="tab" role="tab" aria-controls="preview" aria-selected="false">Kode</a>
     </li>
     {% if not is_security %}
-    <li>
-      <a href="#script-parameters" data-toggle="tab">Inputparametre</a>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="parameters-tab" role="tab" href="#parameters" data-bs-toggle="tab" role="tab" aria-controls="parameters" aria-selected="false">Indstillinger (Inputparametre)</a>
     </li>
     {% endif %}
   </ul>
-  <div id="script-details" class="tabcontent active">
+
+  <!-- The content for the three tabs you can choose from above, one after one: -->
+  <div class="tab-content" style="border-radius: .33rem .33rem 0 0;">
+    <div id="details" class="tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
 {% endif %}
-  
-    <fieldset>
-      <div class="row-fluid">
-        <div class="span6">
-          {{ form.name.errors }}
-          <label for="{{ form.name.id_for_label }}">Navn:</label>
-          {{ form.name }}        
-          {{ form.description.errors }}
-        </div>
-        <div class="span6" style="margin-top: 2em;">
-          <label class="checkbox" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
-            <input
-              type="checkbox"
-              id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
-              name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
-              value="{{ site.id }}"
-              {% if not global_script %}checked="checked"{% endif %}
-            >
-            Lokalt script for {{ site.uid }}
+
+      <fieldset>
+        {{ form.name|as_crispy_field }}
+        {{ form.description|as_crispy_field }}
+        {{ form.author|as_crispy_field }}
+        {{ form.author_email|as_crispy_field }}
+        {{ form.maintained_by_magenta|as_crispy_field }}
+
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+            name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+            value="{{ site.id }}"
+            {% if not global_script %}checked="checked"{% endif %}>
+          <label class="form-label checkbox" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
+            Lokalt script for {{ site.uid|capfirst }}
           </label>
-         <input id="id_is_security_script" name="is_security_script"
-         value="{{ is_security }}" type="hidden" /> 
-        </div>
-        <div class="span12" style="margin-left: 0;">
-          <label for="{{ form.description.id_for_label }}">Beskrivelse:</label>
-          <div class="scriptDescription">
-            {{ form.description }}
-          </div>
-        </div>
-      </div>
-    </fieldset>
-        
-{% if disable_inputs != "yes" %}
-  </div>
-  <div id="script-preview" class="tabcontent">
-{% endif %}
-  
-    <fieldset>
-      {{ form.executable_code.errors }}
-      <label for="{{ form.executable_code.id_for_label }}">Upload scriptkode:</label>
-      {{ form.executable_code }}
-      {% if show_code_preview %}
-      <label style="padding-top: 10px;">Kode:</label>
-      <pre>{{script_preview |escape}}</pre>
-      {% endif %}
-    </fieldset>
-        
-{% if disable_inputs != "yes" %}
-  </div>
-  <div id="script-parameters" class="tabcontent">
-{% endif %}
-  
-    {% if disable_inputs or is_security %}
-      <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0" />
-    {% else %}
-      <fieldset id="{{ form.prefix|default:'update' }}-script-inputs">
-        <label>Input-parametre:</label>
-        <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0" />
-        <div class="well">
-          <table class="table table-condensed">
-            <thead>
-              <tr>
-                <th>Navn</th>
-                <th>Type</th>
-              </tr>
-            </thead>
-            <tbody id="script-input-container">
-              <tr class="script-input-add">
-                <td colspan="3">
-                  <a href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#{{ form.prefix|default:'update' }}-script-inputs', {})" title="Tilføj ny konfiguration"><i class="icon-plus"></i> tilføj parameter</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <input 
+            id="id_is_security_script" 
+            name="is_security_script"
+            value="{{ is_security }}" 
+            type="hidden">
       </fieldset>
-    {% endif %}
+        
+{% if disable_inputs != "yes" %}
+    </div>
+    <div id="preview" class="tab-pane fade" role="tabpanel" aria-labelledby="preview-tab">
+{% endif %}
+  
+      <fieldset {% if disable_inputs == "yes" %}class="mt-3"{% endif %}>
+        {{ form.executable_code|as_crispy_field }}
+
+        {% if show_code_preview %}
+          <p>Kode:</p>
+          <pre class="mb-0"><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
+        {% endif %}
+
+      </fieldset>
+        
+{% if disable_inputs != "yes" %}
+    </div>
+    <div id="parameters" class="tab-pane fade" role="tabpanel" aria-labelledby="parameters-tab">
+{% endif %}
+  
+      {% if disable_inputs or is_security %}
+        <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
+      {% else %}
+        <fieldset id="script-inputs">
+          <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
+          <p>Input-parametre</p>
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Navn</th>
+                  <th>Type</th>
+                  <th class="ps-2">Slet</th>
+                </tr>
+              </thead>
+              <tbody id="script-input-container">
+                <tr class="script-input-add">
+                  <td colspan="3">
+                    <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="Tilføj ny konfiguration">
+                      <span class="d-flex align-items-center">
+                        <span class="material-icons me-1">add</span>
+                        Tilføj parametre
+                      </span>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </fieldset>
+      {% endif %}
   
 {% if disable_inputs != "yes" %}
+    </div>
   </div>
 {% endif %}

@@ -1,138 +1,127 @@
 {% extends "base.html" %}
-{% block body %}
+{% load crispy_forms_tags %}
+{% block specific_content %}
+    <form id="security_update_form" action="" method="post" class="popup-page gray-box">
+        {% csrf_token %}
 
-    <form id="security_update_form" action="" method="post" class="popup-page">{% csrf_token %}
-        <p>
-            <input class="btn btn-primary" type="submit" value="Gem">
-            <a class="btn" href="javascript:history.go(-1)">Luk</a>
-        </p>
-        <div class="alert alert-error">
-                    <p><strong>{{ securityevent.problem.name }}: {{ securityevent.summary }}</strong></p>
-                </div>
-        <div class="row-fluid">
-            <div class="span6">
-                
-                <dl class="dl-horizontal">
-                    <dt>Tid</dt>
-                    <dd>{{ securityevent.ocurred_time }}</dd>
-                    <dt>Maskine</dt>
-                    <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</dd>
-                    <dt>Note</dt>
-                    <dd>
-                    {{ form.note.errors }}
-                    {{ form.note }}
-                    </dd>
-            
-                    <dt>Håndteres af</dt>
-                    <dd>
-                    {{ form.assigned_user.errors }}
-                    {{ form.assigned_user }}
-                    </dd>
-                    <dt><strong>Status</strong></dt>
-                    <dd>
-                      {{ form.status.errors }}
-                      {{ form.status }}
-                    </dd>
-                </dl>
+        <h1 class="mb-5">
+            <span>{{ securityevent.problem.name }}:</span> <span class="alert alert-danger">{{ securityevent.summary }}</span>
+        </h1>
+
+        <div class="row">
+            <div class="col">
+                    <div class="mb-3">
+                    <label>Tid</label>
+                    <p>{{ securityevent.ocurred_time }}</p>
+                    </div>
+                    <div class="mb-3">
+                    <label>Maskine</label>
+                    <p><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</p>
+                    </div>
+                    {{ form.note|as_crispy_field }}
+                    {{ form.assigned_user|as_crispy_field }}
+                    {{ form.status|as_crispy_field }}
             </div>
-            <div class="span6">
-                <dl>
-                    <dt>Log-output:</dt>
-                    <dd>
-                        <p name="securityevent-log">
-                            <pre>{{ securityevent.complete_log }}</pre>
-                        </p>
-                    </dd>
-                </dl>
-            </div>
+
+                <label>Log-output:</label>
+                <p name="securityevent-log">
+                    <pre>{{ securityevent.complete_log }}</pre>
+                </p>
+
         </div>
+
+        <fieldset class="mt-3">
+            <input class="btn btn-primary me-3" type="submit" value="Gem">
+            <a class="btn btn-secondary" href="javascript:history.go(-1)">Luk</a>
+        </fieldset>
+
     </form>
 
     <script>
-$(document).ready(function() {
-	$( "#security_update_form" ).submit(function( event ) {
-		var input = $("<input>").attr("type", "hidden").attr("name", $('*:disabled').attr("name")).val($('*:disabled').val());							
-		$('#security_update_form').append($(input));
-	});
-	
-	var html = '<ul class="errorlist" id="id_errorlist"><li></li></ul>';
-	var onload_status = $("#id_status").val();
-	var onload_assigned_user = $("#id_assigned_user").val(); 
-	
-    if ($("#id_status").val() == "RESOLVED") {
-        $("#id_assigned_user").attr('disabled', true);
-    }
-    if ($("#id_status").val() == "NEW") {
-        $("#id_status").attr('disabled', true);
-        $("#id_assigned_user").attr('disabled', false);
-    }
-    
-    if (!$("#id_assigned_user").val()) {
-        $("#id_status").val('NEW');
-        $("#id_status").attr('disabled', true);
-        $("#id_assigned_user").attr('disabled', false);
-    }
-
-    $("#id_assigned_user").change(function() {
-        $('#id_errorlist').remove();
-        var status = $("#id_status").val();
-        var auser = $("#id_assigned_user").val();
-
-        if (!auser) {
-            /* No user is set... */
-            if (onload_assigned_user) {
-                /* ... but one was when we loaded the page -- forbidden */
-                var html = '<ul class="errorlist" id="id_errorlist"><li>Når først en person er blevet tildelt til advarslen, skal en person altid være tildelt.</li></ul>';
-                $("#id_assigned_user").parent().append(html);
-                $("#id_assigned_user").val(onload_assigned_user);
-            } else {
-                /* ... and no user was ever set in the database -- fine */
-                $("#id_status").val("NEW");
-                $("#id_status").attr("disabled", true);
+        $(document).ready(function() {
+            $( "#security_update_form" ).on("submit", function( event ) {
+                var input = $("<input>").attr("type", "hidden").attr("name", $('*:disabled').attr("name")).val($('*:disabled').val());							
+                $('#security_update_form').append($(input));
+            });
+            
+            var html = '<ul class="errorlist alert alert-danger" id="id_errorlist"><li></li></ul>';
+            var onload_status = $("#id_status").val();
+            var onload_assigned_user = $("#id_assigned_user").val(); 
+            
+            if ($("#id_status").val() == "RESOLVED") {
+                $("#id_assigned_user").attr('disabled', true);
             }
-        } else {
-            /* A user is now set... */
-            if (status == "NEW") {
-                /* ... and one wasn't before -- fine */
-                $("#id_status").val("ASSIGNED")
-                $("#id_status").attr("disabled", false)
-            } else if (status == "ASSIGNED") {
-                /* ... and one was before as well -- fine, take no action */
-            } else if (status == "RESOLVED") {
-                /* ... and the case was resolved, so the user list should have
-                   been disabled. How did we get here? */
+            if ($("#id_status").val() == "NEW") {
+                $("#id_status").attr('disabled', true);
+                $("#id_assigned_user").attr('disabled', false);
             }
-        }
-    });
-
-   $("#id_status").change(function() {
-        $('#id_errorlist').remove();
-        var status = $("#id_status").val();
-
-        if (status == "NEW") {
-            /* The status is now NEW... */
-            if (onload_status == "NEW") {
-                /* ... and it was when the page was loaded -- fine */
-                $("#id_status").attr("disabled", true)
-                $("#id_assigned_user").val("")
-                $("#id_assigned_user").attr("disabled", false)
-            } else {
-                /* ... and it wasn't when the page was loaded -- forbidden */
-                var html = '<ul class="errorlist" id="id_errorlist"><li>Når først en advarsel har fået en status, kan den ikke sættes tilbage til status Ny.</li></ul>';
-                $("#id_status").parent().append(html);
-                $("#id_status").val(onload_status);
-                $("#id_assigned_user").attr(
-                        "disabled", onload_status == "RESOLVED");
+            
+            if (!$("#id_assigned_user").val()) {
+                $("#id_status").val('NEW');
+                $("#id_status").attr('disabled', true);
+                $("#id_assigned_user").attr('disabled', false);
             }
-        } else if (status == "ASSIGNED") {
-            /* The case is now assigned -- fine */
-            $("#id_assigned_user").attr("disabled", false);
-        } else if (status == "RESOLVED") {
-            /* The status is now resolved -- fine */
-            $("#id_assigned_user").attr("disabled", true);
-        }
-   });
 
-});
+            $("#id_assigned_user").on("change", function() {
+                $('#id_errorlist').remove();
+                var status = $("#id_status").val();
+                var auser = $("#id_assigned_user").val();
+
+                if (!auser) {
+                    /* No user is set... */
+                    if (onload_assigned_user) {
+                        /* ... but one was when we loaded the page -- forbidden */
+                        var html = '<ul class="errorlist alert alert-danger" id="id_errorlist"><li>Når først en person er blevet tildelt til advarslen, skal en person altid være tildelt.</li></ul>';
+                        $("#id_assigned_user").parent().append(html);
+                        $("#id_assigned_user").val(onload_assigned_user);
+                    } else {
+                        /* ... and no user was ever set in the database -- fine */
+                        $("#id_status").val("NEW");
+                        $("#id_status").attr("disabled", true);
+                    }
+                } else {
+                    /* A user is now set... */
+                    if (status == "NEW") {
+                        /* ... and one wasn't before -- fine */
+                        $("#id_status").val("ASSIGNED")
+                        $("#id_status").attr("disabled", false)
+                    } else if (status == "ASSIGNED") {
+                        /* ... and one was before as well -- fine, take no action */
+                    } else if (status == "RESOLVED") {
+                        /* ... and the case was resolved, so the user list should have
+                        been disabled. How did we get here? */
+                    }
+                }
+            });
+
+            $("#id_status").on("change" ,function() {
+                $('#id_errorlist').remove();
+                var status = $("#id_status").val();
+
+                if (status == "NEW") {
+                    /* The status is now NEW... */
+                    if (onload_status == "NEW") {
+                        /* ... and it was when the page was loaded -- fine */
+                        $("#id_status").attr("disabled", true)
+                        $("#id_assigned_user").val("")
+                        $("#id_assigned_user").attr("disabled", false)
+                    } else {
+                        /* ... and it wasn't when the page was loaded -- forbidden */
+                        var html = '<ul class="errorlist alert alert-danger" id="id_errorlist"><li>Når først en advarsel har fået en status, kan den ikke sættes tilbage til status Ny.</li></ul>';
+                        $("#id_status").parent().append(html);
+                        $("#id_status").val(onload_status);
+                        $("#id_assigned_user").attr(
+                                "disabled", onload_status == "RESOLVED");
+                    }
+                } else if (status == "ASSIGNED") {
+                    /* The case is now assigned -- fine */
+                    $("#id_assigned_user").attr("disabled", false);
+                } else if (status == "RESOLVED") {
+                    /* The status is now resolved -- fine */
+                    $("#id_assigned_user").attr("disabled", true);
+                }
+            });
+
+        });
     </script>
 {% endblock %}

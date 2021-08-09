@@ -1,18 +1,21 @@
-
 {% extends "site_with_navigation.html" %}
 
 {% block specific_title %}
-Slet computer
+Slet computer: {{pc.uid}}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
-    <p>Ønsker du virkelig at slette denne maskine? Hele computerens jobhistorik
-    vil også blive slettet.</p>
-    <form action="" method="post">{% csrf_token %}
+    <p>
+      Ønsker du virkelig at slette denne maskine?<br>
+      <strong style="font-size: 1.25em;">{{ pc.uid }}</strong>
+    </p>
+    <p>Hele computerens jobhistorik vil også blive slettet.</p>
+    <form action="" method="post">
+      {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-primary" type="submit" value="Ja" />
-      <a class="btn" href="javascript:history.go(-1)">Nej</a>
+      <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">Annuller</button>
     </form>
   </div>
 {% endblock %}

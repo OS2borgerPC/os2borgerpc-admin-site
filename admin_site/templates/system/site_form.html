@@ -1,13 +1,19 @@
-
 {% extends "sitebase.html" %}
+{% load crispy_forms_tags %}
 
-{% block content %}
+{% block  header_title %}Redigér site{% endblock %}
 
-<div class="container">
-  <form action="" method="post">{% csrf_token %}
-      {{ form.as_p }}
-      <input class="btn btn-primary" type="submit" value="Gem" />
-      <a class="btn" href="javascript:history.go(-1)">Annuller</a>
-  </form>
-</div>
+{% block header_class %}container{% endblock %}
+
+{% block specific_content %}
+  <div class="container mt-4">
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <fieldset class="my-4">
+        <input class="btn btn-primary me-3" type="submit" value="Gem">
+        <a class="btn btn-secondary" href="javascript:history.go(-1)">Annuller</a>
+      </fieldset>
+    </form>
+  </div>
 {% endblock %}

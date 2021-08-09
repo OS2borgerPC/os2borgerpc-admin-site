@@ -1,0 +1,30 @@
+// Boostrap v5 custom.scss
+
+// Include any default variable overrides here (though functions won't be available)
+@import "variables";
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
+@import "layout";
+@import "form";
+@import "itemlist";
+@import "picklist";
+@import "collapsible";
+@import "navigation";
+@import "table";
+@import "pagination";
+@import "icons";
+@import "code";
+@import "modal";
+@import "warning";
+
+hr {
+    border-top: 1px solid $gray-700;
+    background-color: transparent;
+    opacity: 1;
+}
+
+.btn-warning {
+    color: $white;
+}

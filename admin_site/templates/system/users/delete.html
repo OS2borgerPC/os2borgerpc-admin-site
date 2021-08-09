@@ -4,29 +4,39 @@
 Brugere
 {% endblock %}
 
-{% block users_active %}
-class="active"
+{% block subnav %}
+<div class="sublevelnav">
+  <div class="listutils">
+    <button class="btn btn-link" data-bs-target="#addNewUser" type="button" data-bs-toggle="modal">
+      <span class="material-icons">add</span>
+      Tilføj ny bruger
+    </button>
+  </div>
+  <ul class="item-list">
+    {% for user in user_list %}
+      <li class="{% ifequal user selected_user %}active{% endifequal %}">
+        <a href="/site/{{ site.url }}/users/{{ user.username }}" class="item-list-link">
+          {{ user.username }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}
 
 {% block specific_content %}
-
-  <ul class="sublevelnav">
-    <li class="listutils"><a href="#addNewUser" role="button" data-toggle="modal" title="Tilføj ny bruger"><i class="icon-plus icon-white"></i> tilføj ny bruger</a></li>
-
-    {% for user in user_list %}
-    <li {% ifequal user selected_user %}class="active"{% endifequal %}><a
-        href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a></li>
-    {% endfor %}
-  </ul>
   
   <div class="container-fluid main sublevelmain">
       <h2 class="divideheader">Slet bruger: <em>{{ selected_user.username }}</em></h2>
       <div>
         <form action="{% url 'delete_user' site.uid selected_user.username %}" name="update_user_form" id="update_user_form" method="post">
           {% csrf_token %}
-          <p>Er du sikker på at du vil slette brugeren {{ selected_user.username }}{% if selected_user.email %} &lt;{{ selected_user.email }}&gt;{% endif %}?</p>
-          <input class="btn btn-primary" type="submit" value="Bekræft sletning" />
-          <input class="btn" type="button" onclick="location.href='{% url 'user' site.uid selected_user.username %}'" value="Annullér" />
+          <p>
+            Er du sikker på at du vil slette brugeren<br> 
+            <strong>{{ selected_user.username }}{% if selected_user.email %} &lt;{{ selected_user.email }}&gt;{% endif %}</strong>?
+          </p>
+          <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
+          <input class="btn btn-secondary" type="button" onclick="location.href='{% url 'user' site.uid selected_user.username %}'" value="Annuller">
         </form>
       </div>
     </div>
@@ -36,19 +46,23 @@ class="active"
   <!-- MODAL WINDOW FOR NEW USER REGISTRATION: -->
   
   <div id="addNewUser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form action="{% url 'new_user' site.uid %}" name="create_user_form" id="create_user_form" method="post">
-      {% csrf_token %}
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Tilføj ny bruger</h3>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="{% url 'new_user' site.uid %}" name="create_user_form" id="create_user_form" method="post">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h3 class="modal-title">Tilføj ny bruger</h3>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            {% include 'system/users/form.html' with form=create_form form_id='create_user_form' form_action=create_url %}
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" value="Gem">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuller</button>
+          </div>
+        </form>
       </div>
-      <div class="modal-body">
-        {% include 'system/users/form.html' with form=create_form form_id='create_user_form' form_action=create_url %}
-      </div>
-      <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="Gem" />
-        <button class="btn" data-dismiss="modal">Annuller</button>
-      </div>
-    </form>
+    </div>
   </div>
 {% endblock %}

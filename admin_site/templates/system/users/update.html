@@ -4,40 +4,53 @@
 Brugere
 {% endblock %}
 
-{% block users_active %}
-class="active"
-{% endblock %}
+{% block subnav %}
+<div class="sublevelnav">
 
-{% block specific_documentation_links %}
-  <li><a href="{% url 'doc' 'users' %}"><i class="icon-question-sign icon-white"></i> Administration af brugere</a></li>
-{% endblock %}
+  <div class="listutils">
+    <button class="btn btn-link" data-bs-target="#addNewUser" type="button" data-bs-toggle="modal">
+      <span class="material-icons">add</span>
+      Tilføj ny bruger
+    </button>
+  </div>
 
-
-{% block specific_content %}
-
-  <ul class="sublevelnav">
-    <li class="listutils"><a href="#addNewUser" role="button" data-toggle="modal" title="Tilføj ny bruger"><i class="icon-plus icon-white"></i> tilføj ny bruger</a></li>
-
+  <ul class="item-list">
     {% for user in user_list %}
-      <li {% ifequal user selected_user %}class="active"{% endifequal %}>
+      <li class="{% ifequal user selected_user %}active{% endifequal %}">
+        <a class="item-list-link" href="/site/{{ site.url }}/users/{{ user.username }}">
+          {{ user.username }}
+        </a>
         {% ifequal user selected_user %}
-          <a class="remove pull-right" href="{% url 'delete_user' site.uid selected_user.username %}" title="Slet bruger"><i class="icon icon-remove icon-white"></i></a>
+          <a class="item-list-deletable material-icons" href="{% url 'delete_user' site.uid selected_user.username %}" title="Slet bruger">
+            clear
+          </a>
         {% endifequal %}
-        <a class="list-item" href="/site/{{ site.url }}/users/{{ user.username }}"><i class="icon-user"></i> {{ user.username }}</a>
       </li>
     {% endfor %}
   </ul>
-  
+
+</div>
+{% endblock %}
+
+{% block specific_content %}
   <div class="container-fluid main sublevelmain">
       <h2 class="divideheader">Profil: <em>{{ selected_user.username }}</em></h2>
       {% include 'notification.html' %}
       <div>
-        <form action="{% url 'user' site.uid selected_user.username %}" name="update_user_form" id="update_user_form" method="post">
+        <form action="{% url 'user' site.uid selected_user.username %}" 
+          name="update_user_form" 
+          id="update_user_form" 
+          method="post"
+          class="gray-box">
           {% csrf_token %}
-          <input type="submit" class="btn btn-primary" value="Gem" />
-          <button class="btn">Annuller</button>
-          <hr>      
+
           {% include 'system/users/form.html' with form_id='update_user_form' %}
+
+          <fieldset class="mt-3">
+            <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
+            <button type="reset" class="btn btn-secondary">Annuller</button>
+          </fieldset>
+
         </form>
       </div>
     </div>
@@ -47,19 +60,23 @@ class="active"
   <!-- MODAL WINDOW FOR NEW USER REGISTRATION: -->
   
   <div id="addNewUser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form action="{% url 'new_user' site.uid %}" name="create_user_form" id="create_user_form" method="post">
-      {% csrf_token %}
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Tilføj ny bruger</h3>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="{% url 'new_user' site.uid %}" name="create_user_form" id="create_user_form" method="post">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h3 class="modal-title">Tilføj ny bruger</h3>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            {% include 'system/users/form.html' with form=create_form form_id='create_user_form' form_action=create_url %}
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" value="Gem">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuller</button>
+          </div>
+        </form>
       </div>
-      <div class="modal-body">
-        {% include 'system/users/form.html' with form=create_form form_id='create_user_form' form_action=create_url %}
-      </div>
-      <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="Gem" />
-        <button class="btn" data-dismiss="modal">Annuller</button>
-      </div>
-    </form>
+    </div>
   </div>
 {% endblock %}

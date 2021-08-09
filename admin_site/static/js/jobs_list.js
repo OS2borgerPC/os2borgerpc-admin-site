@@ -4,43 +4,48 @@ $(function(){
         this.searchConditions = {}
         this.searchUrl = window.bibos_job_search_url || './search/'
         this.statusSelectors = []
-        BibOS.addTemplate('job-entry', template_container_id);
+        BibOS.addTemplate('job-entry', template_container_id)
     }
     $.extend(JobList.prototype, {
         init: function() {
             var jobsearch = this
-            $('#jobsearch-status-selectors input:checkbox').change(function() {
-                jobsearch.search();
+            $('#jobsearch-status-selectors input:checkbox').on("change", function() {
+                jobsearch.search()
             })
-            $('#jobsearch-length-limitation input:radio').change(function() {
-                jobsearch.search();
-            })
-            jobsearch.search();
+            jobsearch.search()
         },
 
         appendEntries: function(dataList) {
             var container = this.elem
-            $.each(dataList, function() {
-                var info_button = '';
+            $.each(dataList.results, function() {
+                var info_button = ''
                 if(this.has_info) {
                     info_button = '<button ' +
-                        'class="btn jobinfobutton" ' +
-                        'title="Job-info" ' +
-                        'data-pk="' + this.pk + '"'+
-                    '><i class="icon-info-sign"></i></button>'
+                        'class="btn btn-secondary jobinfobutton" ' +
+                        'data-bs-title="Job-info" ' +
+                        'data-bs-toggle="popover" ' +
+                        'data-bs-content="Loading..." ' +
+                        'data-bs-html=true ' +
+                        'data-bs-placement=left ' +
+                        'data-bs-trigger=focus' +
+                        'data-bs-animation="true" ' +
+                        'data-pk="' + this.pk + '"' +
+                    '><span class="material-icons">info</span></button>'
                 }
+                var script_link = '<a href="' + this.script_url + '">' + this.script_name + '</a>'
                 var item = $(BibOS.expandTemplate(
                     'job-entry',
                     $.extend(this, {
-                        'jobinfobutton': info_button
+                        'jobinfobutton': info_button,
+                        'script_link' : script_link
                     })
-                ));
-                item.find('input:checkbox').click(function() {
-                    $(this).parents('tr').toggleClass('marked');
-                });
+                ))
+                item.find('input:checkbox').on("click", function() {
+                    $(this).parents('tr').toggleClass('marked')
+                })
                 item.appendTo(container)
-            });
-            BibOS.setupJobInfoButtons(container);
+            })
+            BibOS.setupJobInfoButtons(container)
         },
 
         replaceEntries: function(dataList) {
@@ -50,12 +55,11 @@ $(function(){
 
         selectFilter: function(field, elem, val) {
             var e = $(elem)
-            if(e.hasClass('selected')) {
-                e.removeClass('selected');
+            e.parents('ul').find('button').removeClass('active')
+            if(e.hasClass('active')) {
                 val = ''
             } else {
-                e.parent().find('li').removeClass('selected');
-                e.addClass('selected');
+                e.addClass('active')
             }
             $('#jobsearch-filterform input[name=' + field + ']').val(val)
             this.search()
@@ -74,31 +78,70 @@ $(function(){
         },
 
         orderby: function(order) {
-            $('.orderby').each(function() {
-              if ($(this).hasClass('order-' + order)) {
-                $(this).addClass('active').find('i').toggleClass('icon-chevron-down icon-chevron-up').addClass('icon-white');
-              } else {
-                $(this).removeClass('active').find('i').attr('class', 'icon-chevron-down');
-              };
-            });
-            
-            var input = $('#jobsearch-filterform input[name=orderby]');
+            var input = $('#jobsearch-filterform input[name=orderby]')
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()
         },
+        setUpPaginationCount: function(data) {
+            $("div#pagination-count").text(calcPaginationRange(data))
+        },
+        setUpPaginationLinks: function(data) {
+            var pagination = $("ul.pagination")
+            pagination.empty()
+            var jobsearch = this
 
+            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> Forrige</a></li>')
+            if (data.has_previous) {
+                previous_item.removeClass("disabled")
+                previous_item.find('a').on("click", function() {
+                    var input = $('#jobsearch-filterform input[name=page]')
+                    input.val(data.previous_page_number)
+                    jobsearch.search()
+                })
+            }
+            previous_item.appendTo(pagination)
+
+            data.page_numbers.forEach(function(page) {
+                if (data.page == page) {
+                    item = $('<li class="page-item active"><a class="page-link">' + page + '</a></li>')
+                }
+                else {
+                    item = $('<li class="page-item"><a class="page-link">' + page + '</a></li>')
+                }
+                item.find('a').on("click", function() {
+                    var input = $('#jobsearch-filterform input[name=page]')
+                    input.val(page)
+                    jobsearch.search()
+                })
+                item.appendTo(pagination)
+            })
+
+            var next_item = $('<li class="page-item disabled"><a class="page-link">Næste <span class="material-icons">navigate_next</span></a></li>')
+            if (data.has_next) {
+                next_item.removeClass("disabled")
+                next_item.find('a').on("click", function() {
+                    var input = $('#jobsearch-filterform input[name=page]')
+                    input.val(data.next_page_number)
+                    jobsearch.search()
+                })
+            }
+            next_item.appendTo(pagination)
+
+        },
         search: function() {
-            var js = this;
+            var js = this
             js.searchConditions = $('#jobsearch-filterform').serialize()
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: js.searchUrl,
                 data: js.searchConditions,
                 success: function(data) {
                     js.replaceEntries(data)
+                    js.setUpPaginationCount(data)
+                    js.setUpPaginationLinks(data)
                 },
                 dataType: "json"
-            });
+            })
         },
 
         reset: function() {
@@ -107,9 +150,10 @@ $(function(){
             $('#jobsearch-filterform input[name=batch]').val('')
             $('#jobsearch-filterform input[name=pc]').val('')
             $('#jobsearch-filterform input[name=group]').val('')
+            $('#jobsearch-filterform input[name=page]').val('1')
             this.search()
         }
-    });
-    BibOS.JobList = new JobList('#job-list', '#jobitem-template');
+    })
+    BibOS.JobList = new JobList('#job-list', '#jobitem-template')
     $(function() { BibOS.JobList.init() })
 })

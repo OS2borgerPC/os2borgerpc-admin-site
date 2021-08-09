@@ -1,37 +1,32 @@
 {% extends "site_with_navigation.html" %}
 
 {% block specific_title %}
-{% if site %}<span class="muted">({{ site.uid }})</span>{% endif %} 
-Aktive computere
-{% if active_pcs > 0 %}
-        ({{ active_pcs }})
-{% endif %}
+  Aktive computere
+  {% if active_pcs > 0 %}
+    ({{ active_pcs }})
+  {% endif %}
 {% endblock %}
 
-{% block site_active %}
-class="active"
+{% block subnav %}
+<ul class="sublevelnav item-list">
+  {% for pc in pcs %}
+    <li>
+      <a class="item-list-link" href="/site/{{ site.uid }}/computers/{{ pc.uid }}">
+        {{ pc.name }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
 {% endblock %}
 
 {% block specific_content %}
-
-<ul class="sublevelnav">
-    {% for pc in pcs %}
-    <li><a class="list-item" href="computers/{{ pc.uid }}"><i
-            class="icon-hdd"></i>{% if pc.status.state %} <span
-            class="label label-{{ pc.status.priority }}">{{ pc.status.state }}</span>{% endif %} {{ pc.name }}
-    </a></li>
-    {% endfor %}
-</ul>
-
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
-
-    <table class="table table-hover warn-table"
-    id="#site_activepcs_table">
+    <table class="table table-hover warn-table" id="#site_activepcs_table">
       <thead>
         <tr>
-          <th><i class="icon-hdd"></i> Navn</th>
+          <th>Navn</th>
           <th>Beskrivelse</th>
-          <th>Lokation</th>
+          <th>Placering</th>
           <th>Senest set</th>
           <th>Seneste advarsel set</th>
         </tr>

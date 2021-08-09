@@ -1,0 +1,19 @@
+{
+  "name": "os2borgerpc-nodejs",
+  "version": "0.0.1",
+  "description": "NodeJS application for compiling static (mostly Bootstrap) resources for admin_site",
+  "main": "src/custom.scss",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build-sass",
+    "build-sass": "node_modules/.bin/sass src/custom.scss:dist/css/bootstrap.css --style=compressed --source-map",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Magenta ApS",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "bootstrap": "^5.0.1",
+    "sass": "^1.35.1"
+  }
+}

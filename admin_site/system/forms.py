@@ -10,6 +10,23 @@ from account.models import SiteMembership
 from django.utils.translation import ugettext as _
 
 
+# Adds the passed-in CSS classes to CharField (type=text + textarea)
+# and the multitude of Fields that default to a <select> widget)
+def add_classes_to_form(someform, classes_to_add):
+    for field_name, field in someform.fields.items():
+        matches_select_widget = [forms.ChoiceField,
+                                 forms.TypedChoiceField,
+                                 forms.MultipleChoiceField,
+                                 forms.TypedMultipleChoiceField,
+                                 forms.ModelChoiceField,
+                                 forms.ModelMultipleChoiceField]
+        if type(field) in matches_select_widget + [forms.CharField]:
+            # Append if classes have already been added
+            if 'class' not in field.widget.attrs:
+                field.widget.attrs['class'] = ''
+            field.widget.attrs['class'] += ' ' + classes_to_add
+
+
 class SiteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SiteForm, self).__init__(*args, **kwargs)
@@ -20,6 +37,10 @@ class SiteForm(forms.ModelForm):
     class Meta:
         model = Site
         exclude = ['configuration']
+        widgets = {
+            'paid_for_access_until':
+                forms.widgets.DateInput(attrs={'type': 'date'}),
+        }
 
 
 class GroupForm(forms.ModelForm):
@@ -69,6 +90,10 @@ class ScriptForm(forms.ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['site'].widget.attrs['readonly'] = True
+            self.fields['tags'].disabled = True
+            self.fields[
+                'maintained_by_magenta'
+            ].widget.attrs['disabled'] = True
 
     class Meta:
         model = Script
@@ -178,6 +203,9 @@ class ParameterForm(forms.Form):
 
 
 class PCForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PCForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = PC
         exclude = ('uid', 'configuration', 'package_list', 'site',
@@ -186,6 +214,9 @@ class PCForm(forms.ModelForm):
 
 
 class SecurityProblemForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SecurityProblemForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = SecurityProblem
         fields = '__all__'
