@@ -1946,11 +1946,12 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
             # excluding versions where
             # image release date > client's last pay date.
-            versions = ImageVersion.objects.exclude(rel_date__gt=last_pay_date)
+            versions = ImageVersion.objects.exclude(
+                release_date__gt=last_pay_date)
 
             major_versions_set = set()
             for minor_version in versions:
-                major_versions_set.add(minor_version.img_vers[:1])
+                major_versions_set.add(minor_version.image_version[:1])
 
             major_versions_list = list(major_versions_set)
             major_versions_list.sort(reverse=True)
@@ -1967,7 +1968,7 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
                 context["selected_image_version"] = url_ref_vers
 
                 minor_versions = versions.filter(
-                    img_vers__startswith=url_ref_vers
+                    image_version__startswith=url_ref_vers
                     )
 
                 context["minor_versions"] = minor_versions

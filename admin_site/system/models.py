@@ -740,9 +740,9 @@ class Script(AuditModelMixin):
         null=False,
     )
     author = models.CharField(verbose_name=_("author"), max_length=255,
-                              null=False, blank=False, default="")
+                              null=False, blank=True)
     author_email = models.EmailField(verbose_name=_("author email"),
-                                     null=False, blank=False, default="")
+                                     null=False, blank=True)
     tags = models.ManyToManyField(ScriptTag,
                                   related_name='scripts', blank=True)
 
@@ -1254,17 +1254,29 @@ class SecurityEvent(models.Model):
 
 
 class ImageVersion(models.Model):
-    img_vers = models.CharField(unique=True, max_length=7)
-    rel_date = models.DateField()
+    BORGERPC = "BORGERPC"
+    DISPLAYPC = "DISPLAYPC"
+
+    platform_choices = (
+        (BORGERPC, _("BorgerPC")),
+        (DISPLAYPC, _("DisplayPC")),
+    )
+
+    platform = models.CharField(max_length=128, choices=platform_choices)
+    image_version = models.CharField(unique=True, max_length=7)
+    release_date = models.DateField()
     os = models.CharField(max_length=30)
-    rel_notes = models.TextField(max_length=350)
+    release_notes = models.TextField(max_length=350)
     image_upload = models.FileField(upload_to="images", default='#')
 
     def __str__(self):
         return "| {0} | {1} | {2} | {3} | {4} |".format(
-            self.img_vers,
-            self.rel_date,
+            self.image_version,
+            self.release_date,
             self.os,
-            self.rel_notes,
+            self.release_notes,
             self.image_upload
         )
+
+    class Meta:
+        ordering = ['platform', '-image_version']

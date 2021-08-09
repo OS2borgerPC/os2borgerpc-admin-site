@@ -1,25 +1,29 @@
 {% if policy_id %}
   <div class="gray-box-border pt-2 pb-0" id="{{ policy_id }}">
     <!-- TODO: Hav nummereret liste, så vi kan se at der er en eksekutionsrækkefølge -->
-    <table class="table table-configs mx-2 mb-0">
-      <tr>
-        <th>Script</th>
-        <th>Parametre</th>
-      </tr>
-      {% for ps in entries %}
-        {% include 'system/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk name=ps.script.name params=ps.ordered_parameters submit_name=policy_id %}
-      {% endfor %}
-      <tr>
-        <td colspan="2">
-          <input type="hidden" name="{{ policy_id }}_new_entries" id="{{ policy_id }}_new_entries" value="0">
-          <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.PolicyList.addScript('{{ policy_id }}')" title="Tilføj script">
-            <span class="d-flex align-items-center ">
-              <span class="material-icons me-1">add</span>
-              Tilføj script
-            </span>
-          </a>
-        </td>
-      </tr>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Script</th>
+          <th>Parametre</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ps in entries %}
+          {% include 'system/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk name=ps.script.name params=ps.ordered_parameters submit_name=policy_id %}
+        {% endfor %}
+        <tr>
+          <td colspan="2">
+            <input type="hidden" name="{{ policy_id }}_new_entries" id="{{ policy_id }}_new_entries" value="0">
+            <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.PolicyList.addScript('{{ policy_id }}')" title="Tilføj script">
+              <span class="d-flex align-items-center ">
+                <span class="material-icons me-1">add</span>
+                Tilføj script
+              </span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 {% else %}

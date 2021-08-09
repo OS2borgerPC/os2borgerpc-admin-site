@@ -31,20 +31,20 @@ Versioner
     {% if minor_versions.all.count > 0 %}
 
       <!-- First index of 'minor_versions' is the newest version -->
-      {% with minor_versions.all|dictsortreversed:"img_vers"|first as first_obj %}
-        <h2 class="divideheader">Nyeste udgave af v{{ first_obj.img_vers|slice:":1" }}</h2>
+      {% with minor_versions.all|dictsortreversed:"image_version"|first as first_obj %}
+        <h2 class="divideheader">Nyeste udgave af v{{ first_obj.image_version|slice:":1" }}</h2>
         <dl>
           <dt>VERSION</dt>
-          <dd>{{ first_obj.img_vers }}</dd>
+          <dd>{{ first_obj.image_version }}</dd>
           <dt>RELEASE DATO</dt>
-          <dd>{{ first_obj.rel_date }}</dd>
+          <dd>{{ first_obj.release_date }}</dd>
           <dt>OPERATIVSYSTEM</dt>
           <dd>{{ first_obj.os }}</dd>
           <dt>UDGIVELSESNOTER</dt>
-          <dd>{{ first_obj.rel_notes }}</dd>
+          <dd>{{ first_obj.release_notes }}</dd>
           <dt>DOWNLOAD</dt>
           <dd>
-            <a class="btn btn-sm btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.img_vers }}.iso</a>
+            <a class="btn btn-sm btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.image_version }}.iso</a>
           </dd>
         </dl>
       {% endwith %}
@@ -61,19 +61,19 @@ Versioner
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 
-                {% for iv in minor_versions.all|dictsortreversed:"img_vers"|slice:"1:" %}
+                {% for iv in minor_versions.all|dictsortreversed:"image_version"|slice:"1:" %}
                   <dl>
                     <dt>VERSION</dt>
-                    <dd>{{iv.img_vers}}</dd>
+                    <dd>{{iv.image_version}}</dd>
                     <dt>RELEASE DATE</dt>
-                    <dd>{{ iv.rel_date }}</dd> 
+                    <dd>{{ iv.release_date }}</dd> 
                     <dt>OPERATING SYSTEM</dt>
                     <dd>{{ iv.os }}</dd> 
                     <dt>RELEASE NOTES</dt>
-                    <dd>{{ iv.rel_notes }}</dd> 
+                    <dd>{{ iv.release_notes }}</dd> 
                     <dt>DOWNLOAD</dt>
                     <dd>
-                      <a class="btn btn-sm btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.img_vers}}</a>
+                      <a class="btn btn-sm btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.image_version}}</a>
                     </dd>
                   </dl>
                 {% endfor %}      

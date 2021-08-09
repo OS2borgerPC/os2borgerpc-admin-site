@@ -193,7 +193,7 @@ class PCAdmin(admin.ModelAdmin):
             request, queryset, search_term,
         )
         # PC UID is generated from a hashed MAC address
-        # so by reversing the process we allow searching by MAC address.
+        # so by hashing the input we allow searching by MAC address.
         maybe_uid_hash = md5(search_term.encode('utf-8')).hexdigest()
         queryset |= self.model.objects.filter(uid=maybe_uid_hash)
         return queryset, may_have_duplicates
@@ -208,6 +208,10 @@ class ScriptTagAdmin(admin.ModelAdmin):
     pass
 
 
+class ImageVersionAdmin(admin.ModelAdmin):
+    list_display = ("platform", "image_version", "os", "release_date")
+
+
 ar(Configuration, ConfigurationAdmin)
 ar(PackageList)
 ar(CustomPackages, CustomPackagesAdmin)
@@ -216,7 +220,7 @@ ar(Distribution)
 ar(PCGroup, PCGroupAdmin)
 ar(PC, PCAdmin)
 ar(Package)
-ar(ImageVersion)
+ar(ImageVersion, ImageVersionAdmin)
 # Job related stuff
 ar(Script, ScriptAdmin)
 ar(ScriptTag, ScriptTagAdmin)
