@@ -13,7 +13,10 @@ class AuditModelMixin(models.Model):
     )
 
     user_created = models.CharField(
-        blank=True, max_length=128, editable=False, verbose_name=_("created by user")
+        blank=True,
+        max_length=128,
+        editable=False,
+        verbose_name=_("created by user"),
     )
     user_modified = models.CharField(
         blank=True,
