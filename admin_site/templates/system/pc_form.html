@@ -135,7 +135,7 @@ Computere
               <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>
                 {% if job.has_info %}
-                  <button type="button" class="btn btn-info jobinfobutton" data-pk="{{ job.pk }}">
+                  <button type="button" class="btn btn-secondary jobinfobutton" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="focus" data-bs-animation="true">
                     <span class="material-icons">info</span>
                   </button>
                 {% endif %}
@@ -171,6 +171,7 @@ Computere
             var triggerEl = document.getElementById('jobs-tab')
             console.log(bootstrap.Tab.getInstance(triggerEl))
             bootstrap.Tab.getInstance(triggerEl).show()
+            BibOS.setupJobInfoButtons($(".jobtable"))
           }
         })
       </script>
