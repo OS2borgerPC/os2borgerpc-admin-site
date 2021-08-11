@@ -21,7 +21,6 @@ Sikkerhedsregler
             {% for sp in site.security_problems.all %}
                 <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>                
                     <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/">
-                        <span class="material-icons">error</span>
                         {{ sp.name }}
                     </a>
                     {% ifequal sp selected_security_problem %}
