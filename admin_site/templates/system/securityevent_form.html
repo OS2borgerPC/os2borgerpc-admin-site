@@ -1,32 +1,49 @@
-{% extends "base.html" %}
+{% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
+
+{% block specific_title %}
+{{ securityevent.problem.name }} hændelse
+{% endblock %}
+
 {% block specific_content %}
-    <form id="security_update_form" action="" method="post" class="popup-page gray-box">
+
+    <a href="{% url 'security_events' slug=site.url %}" class="btn mt-3 mx-4 d-flex">
+        <span class="material-icons">arrow_back</span>
+        Sikkerhedshændelser
+    </a>
+
+    <form id="security_update_form" action="" method="post" class="gray-box mt-3 mb-4 mx-4">
         {% csrf_token %}
 
-        <h1 class="mb-5">
-            <span>{{ securityevent.problem.name }}:</span> <span class="alert alert-danger">{{ securityevent.summary }}</span>
+        <h1 class="mb-5 fs-3">
+            <span class="severity-{{securityevent.problem.level|lower}}">{{ securityevent.problem.name }}</span><br> 
+            {{ securityevent.summary }}
         </h1>
 
         <div class="row">
             <div class="col">
-                    <div class="mb-3">
-                    <label>Tid</label>
-                    <p>{{ securityevent.ocurred_time }}</p>
-                    </div>
-                    <div class="mb-3">
-                    <label>Maskine</label>
-                    <p><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</p>
-                    </div>
-                    {{ form.note|as_crispy_field }}
-                    {{ form.assigned_user|as_crispy_field }}
-                    {{ form.status|as_crispy_field }}
+                <dl>
+                    <dt>Tid</dt>
+                    <dd>{{ securityevent.ocurred_time }}</dd>
+                    <dt>Computer</dt>
+                    <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</dd>
+                </dl>
+                
+                {{ form.note|as_crispy_field }}
+                {{ form.assigned_user|as_crispy_field }}
+                {{ form.status|as_crispy_field }}
             </div>
 
-                <label>Log-output:</label>
-                <p name="securityevent-log">
-                    <pre>{{ securityevent.complete_log }}</pre>
-                </p>
+            <div class="col">
+                <dl>
+                    <dt>Log-output</dt>
+                    <dd>
+                        <p name="securityevent-log">
+                            <code>{{ securityevent.complete_log }}</code>
+                        </p>        
+                    </dd>
+                </dl>
+            </div>
 
         </div>
 
