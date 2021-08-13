@@ -18,11 +18,6 @@ Computere
     <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
       {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
       <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
-          {% if pc.os2_product == 'os2borgerpc' %}
-            <span class="material-icons">groups</span>
-          {% else %}
-            <span class="material-icons">theaters</span>
-          {% endif %}
         {{ pc.name }}
       </a>
       {% ifequal pc selected_pc %}
