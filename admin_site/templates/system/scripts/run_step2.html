@@ -13,13 +13,13 @@
       <input type="hidden" name="pcs" value="{{ pk }}">
     {% endfor %}
     {% for field in form %}
-      {{ field.errors }}
-      <p class="row">
+      <div class="row">
         <label class="form-label col-4" for="{{ field.id_for_label }}">{{ field.label }}</label>
-        <span class="col-8">
+        <div class="col-8">
           {{ field }}
-        </span>
-      </p>
+          {{ field.errors }}
+        </div>
+      </div>
     {%endfor%}
   
 {% endblock %}
