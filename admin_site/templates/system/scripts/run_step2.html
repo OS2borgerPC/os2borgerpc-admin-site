@@ -20,6 +20,8 @@
           {{ field.errors }}
         </div>
       </div>
+    {%empty%}
+      <p>Scriptet tager ingen parametre.</p>
     {%endfor%}
   
 {% endblock %}
