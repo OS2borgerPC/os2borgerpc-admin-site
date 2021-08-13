@@ -29,3 +29,11 @@ hr {
 .btn-warning {
     color: $white;
 }
+
+.severity-critical {
+    color: $danger;
+}
+
+.severity-high {
+    color: $warning;
+}
