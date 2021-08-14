@@ -56,11 +56,14 @@ def register_new_computer(mac, name, distribution, site, configuration):
     configuration.update({'uid': uid})
 
     # Update configuration with os2 product
-    if "os2borgerpc_version" in configuration:
-        product = "os2borgerpc"
-    else:
-        product = "os2displaypc"
-    configuration.update({"os2_product": product})
+    # New image versions set it themselves, old don't so for those
+    # we detect and set it this way
+    if "os2_product" not in configuration:
+        if "os2borgerpc_version" in configuration:
+            product = "os2borgerpc"
+        else:
+            product = "os2displaypc"
+        configuration.update({"os2_product": product})
 
     for k, v in list(configuration.items()):
         entry = ConfigurationEntry(key=k, value=v,
