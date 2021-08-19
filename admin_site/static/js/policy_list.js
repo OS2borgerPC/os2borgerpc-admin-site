@@ -103,7 +103,7 @@
           $("#editpolicyscriptdialog .modal-body").html('') // delete old inputs
 
           // loop over all input fields in the list view, and render fields for them in the modal
-          var inputWrapper = $(clickElem).closest('div.btn-group')
+          var inputWrapper = $(clickElem).closest('.js-match')
           var inputFields = $([]) // make an empty jQuery object we can add to later
           $.each(inputWrapper.find('.policy-script-param'), function(idx, elm) {
             var t = $(elm)
@@ -111,7 +111,8 @@
             var newElement = $('<input/>', {
               type: BibOS.PolicyList.getFieldType(t.attr('data-inputtype')),
               name: "edit_" + t.attr('name'),
-              id: "edit_" + t.attr('name')
+              id: "edit_" + t.attr('name'),
+              class: "form-control"
             })
             if (newElement.attr('type') == "file") {
               /* In principle, it'd be nice (for display purposes) to copy the
