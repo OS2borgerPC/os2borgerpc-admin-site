@@ -823,7 +823,10 @@ class ScriptRun(SiteView):
         self.template_name = 'system/scripts/run_step1.html'
         context['pcs'] = self.object.pcs.all().order_by('name')
         context['groups'] = self.object.groups.all().order_by('name')
-        context['action'] = ScriptRun.STEP2
+        if len(context['script'].ordered_inputs) > 0:
+            context['action'] = ScriptRun.STEP2
+        else:
+            context['action'] = ScriptRun.STEP3
 
     def step2(self, context):
         self.template_name = 'system/scripts/run_step2.html'
