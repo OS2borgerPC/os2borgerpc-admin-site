@@ -123,9 +123,10 @@ class ConfigurationEntry(models.Model):
 
 class Package(models.Model):
     """This class represents a single Debian package to be installed."""
-    name = models.CharField(_('name'), max_length=255)
-    version = models.CharField(_('version'), max_length=255)
-    description = models.CharField(_('description'), max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    version = models.CharField(verbose_name=_('version'), max_length=255)
+    description = models.CharField(verbose_name=_('description'),
+                                   max_length=255)
 
     def __str__(self):
         return self.name
@@ -141,7 +142,7 @@ class CustomPackages(models.Model):
     class Meta:
         verbose_name_plural = "Custom packages"
 
-    name = models.CharField(_('name'), max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
     packages = models.ManyToManyField(Package,
                                       through='PackageInstallInfo',
                                       blank=True)
@@ -219,7 +220,7 @@ class PackageInstallInfo(models.Model):
 class PackageList(models.Model):
     """A list of packages to be installed on a PC or to be included in a
     distribution."""
-    name = models.CharField(_('name'), max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
     packages = models.ManyToManyField(Package,
                                       through='PackageStatus',
                                       blank=True)
@@ -296,8 +297,8 @@ class PackageStatus(models.Model):
 
 class Site(models.Model):
     """A site which we wish to admin"""
-    name = models.CharField(_('name'), max_length=255)
-    uid = models.CharField(_('uid'), max_length=255, unique=True)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    uid = models.CharField(verbose_name=_('uid'), max_length=255, unique=True)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"),
@@ -383,8 +384,8 @@ class Site(models.Model):
 
 class Distribution(models.Model):
     """This represents a GNU/Linux distribution managed by us."""
-    name = models.CharField(_('name'), max_length=255)
-    uid = models.CharField(_('uid'), max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    uid = models.CharField(verbose_name=_('uid'), max_length=255)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     # CustomPackages is preferrable here.
     # Maybe we'd like one distribution to inherit from another.
@@ -404,10 +405,10 @@ class MandatoryParameterMissingError(Error):
 
 class PCGroup(models.Model):
     """Groups of PCs. Each PC may be in zero or many groups."""
-    name = models.CharField(_('name'), max_length=255)
-    uid = models.CharField(_('id'), max_length=255, unique=True)
-    description = models.TextField(_('description'), max_length=1024,
-                                   null=True, blank=True)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    uid = models.CharField(verbose_name=_('id'), max_length=255, unique=True)
+    description = models.TextField(verbose_name=_('description'),
+                                   max_length=1024, null=True, blank=True)
     site = models.ForeignKey(
         Site, related_name='groups', on_delete=models.CASCADE
     )
@@ -540,11 +541,11 @@ class PCGroup(models.Model):
 
 class PC(models.Model):
     """This class represents one PC, i.e. one client of the admin system."""
-    mac = models.CharField(_('mac'), max_length=255, blank=True)
-    name = models.CharField(_('name'), max_length=255)
-    uid = models.CharField(_('uid'), max_length=255)
-    description = models.CharField(_('description'), max_length=1024,
-                                   blank=True)
+    mac = models.CharField(verbose_name=_('MAC'), max_length=255, blank=True)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    uid = models.CharField(verbose_name=_('UID'), max_length=255)
+    description = models.CharField(verbose_name=_('description'),
+                                   max_length=1024, blank=True)
     distribution = models.ForeignKey(Distribution, on_delete=models.PROTECT)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
@@ -557,18 +558,20 @@ class PC(models.Model):
     site = models.ForeignKey(
         Site, related_name='pcs', on_delete=models.CASCADE
     )
-    is_active = models.BooleanField(_('active'), default=False)
-    is_update_required = models.BooleanField(_('update required'),
+    is_active = models.BooleanField(verbose_name=_('active'), default=False)
+    is_update_required = models.BooleanField(verbose_name=_('update required'),
                                              default=False)
     # This field is used to communicate to the JobManager on each PC that it
     # should send an update of installed packages next time it contacts us.
-    do_send_package_info = models.BooleanField(_('send package info'),
-                                               default=True)
-    creation_time = models.DateTimeField(_('creation time'),
+    do_send_package_info = (
+        models.BooleanField(verbose_name=_('send package info'),
+                            default=True))
+    creation_time = models.DateTimeField(verbose_name=_('creation time'),
                                          auto_now_add=True)
-    last_seen = models.DateTimeField(_('last seen'), null=True, blank=True)
-    location = models.CharField(_('location'), max_length=1024, blank=True,
-                                default='')
+    last_seen = models.DateTimeField(verbose_name=_('last seen'),
+                                     null=True, blank=True)
+    location = models.CharField(verbose_name=_('location'),
+                                max_length=1024, blank=True, default='')
 
     @property
     def current_packages(self):
@@ -858,7 +861,7 @@ class Batch(models.Model):
 
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc.
-    name = models.CharField(_('name'), max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
     script = models.ForeignKey(Script, on_delete=models.CASCADE)
     site = models.ForeignKey(
         Site, related_name='batches', on_delete=models.CASCADE
@@ -879,7 +882,7 @@ class AssociatedScript(models.Model):
     script = models.ForeignKey(
         Script, related_name='associations', on_delete=models.PROTECT
     )
-    position = models.IntegerField(_('position'))
+    position = models.IntegerField(verbose_name=_('position'))
 
     def make_batch(self):
         now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -969,11 +972,11 @@ class Job(models.Model):
     # Use built-in ID field for ID.
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
-    log_output = models.CharField(_('log output'),
+    log_output = models.CharField(verbose_name=_('log output'),
                                   max_length=128000,
                                   blank=True)
-    started = models.DateTimeField(_('started'), null=True)
-    finished = models.DateTimeField(_('finished'), null=True)
+    started = models.DateTimeField(verbose_name=_('started'), null=True)
+    finished = models.DateTimeField(verbose_name=_('finished'), null=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     batch = models.ForeignKey(
         Batch, related_name='jobs', on_delete=models.CASCADE
@@ -1076,11 +1079,11 @@ class Input(models.Model):
         (FILE, _('File'))
     )
 
-    name = models.CharField(_('name'), max_length=255)
-    value_type = models.CharField(_('value type'), choices=VALUE_CHOICES,
-                                  max_length=10)
-    position = models.IntegerField(_('position'))
-    mandatory = models.BooleanField(_('mandatory'), default=True)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    value_type = models.CharField(verbose_name=_('value type'),
+                                  choices=VALUE_CHOICES, max_length=10)
+    position = models.IntegerField(verbose_name=_('position'))
+    mandatory = models.BooleanField(verbose_name=_('mandatory'), default=True)
     script = models.ForeignKey(
         Script, related_name='inputs', on_delete=models.CASCADE
     )
@@ -1180,11 +1183,11 @@ class SecurityProblem(models.Model):
         CRITICAL: 'label-important',
     }
 
-    name = models.CharField(_('name'), max_length=255)
-    uid = models.SlugField(_('uid'))
-    description = models.TextField(_('description'), blank=True)
-    level = models.CharField(max_length=10, choices=LEVEL_CHOICES,
-                             default=HIGH)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    uid = models.SlugField(verbose_name=_('uid'))
+    description = models.TextField(verbose_name=_('description'), blank=True)
+    level = models.CharField(verbose_name=_('level'), max_length=10,
+                             choices=LEVEL_CHOICES, default=HIGH)
     site = models.ForeignKey(
         Site, related_name='security_problems', on_delete=models.CASCADE
     )
@@ -1192,10 +1195,12 @@ class SecurityProblem(models.Model):
         Script, related_name='security_problems', on_delete=models.PROTECT
     )
     alert_groups = models.ManyToManyField(PCGroup,
-                                          related_name='security_problems',
+                                          related_name=_('security_problems'),
+                                          verbose_name=_('alert groups'),
                                           blank=True)
     alert_users = models.ManyToManyField(User,
-                                         related_name='security_problems',
+                                         related_name=_('security_problems'),
+                                         verbose_name=_('alert users'),
                                          blank=True)
 
     def __str__(self):
@@ -1236,9 +1241,9 @@ class SecurityEvent(models.Model):
         SecurityProblem, null=False, on_delete=models.CASCADE
     )
     # The time the problem was reported in the log file
-    ocurred_time = models.DateTimeField(_('occurred'))
+    ocurred_time = models.DateTimeField(verbose_name=_('occurred'))
     # The time the problem was submitted to the system
-    reported_time = models.DateTimeField(_('reported'))
+    reported_time = models.DateTimeField(verbose_name=_('reported'))
     pc = models.ForeignKey(PC, on_delete=models.CASCADE)
     summary = models.CharField(max_length=4096, null=False, blank=False)
     complete_log = models.TextField(null=True, blank=True)
