@@ -103,7 +103,7 @@
           $("#editpolicyscriptdialog .modal-body").html('') // delete old inputs
 
           // loop over all input fields in the list view, and render fields for them in the modal
-          var inputWrapper = $(clickElem).closest('.js-match')
+          var inputWrapper = $(clickElem).parent().parent().prev()
           var inputFields = $([]) // make an empty jQuery object we can add to later
           $.each(inputWrapper.find('.policy-script-param'), function(idx, elm) {
             var t = $(elm)
