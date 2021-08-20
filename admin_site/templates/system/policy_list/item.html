@@ -2,14 +2,13 @@
 
 <tr>
   {% if script_id %}
-    <td>{{ps.position}}</td>
-    <td class="policy-script-print-key"><a href="{% url 'script' site.uid script_id %}">{{ name }}</a></td>
+    <td>{{ps.position}} {{ order }}</td>
+    <td class="policy-script-print-key" style="vertical-align: middle;"><a href="{% url 'script' site.uid script_id %}">{{ name }}</a></td>
   {% else %}
     <td>Nyt</td>
-    <td class="policy-script-print-key"><a href="/site/{{site.uid}}/script/{{script_pk}}">{{ name }}</a></td>
+    <td class="policy-script-print-key" style="vertical-align: middle;"><a href="/site/{{site.uid}}/script/{{script_pk}}">{{ name }}</a></td>
   {% endif %}
-  <td class="pe-0 js-match">
-  
+  <td class="pe-0 js-match">  
     <div data-name="policy-script-{{ name }}" >
       <input class="policy-script-pos" type="hidden" name="{{ submit_name|default:'policy' }}" value="{{ ps_pk }}">
       <input class="policy-script-name" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}" value="{{ script_pk }}">
@@ -43,14 +42,15 @@
       {% endif %}
     </div>
 
+  </td>
+  <td>
     <p class="mb-0" style="margin-left: -.5rem;">
       <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.editScript(this, '{{ submit_name }}')">
         Redigér
       </a>
       <a class="btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')">
-        Slet script
+        Fjern script
       </a>
     </p>
-
   </td>
 </tr>
