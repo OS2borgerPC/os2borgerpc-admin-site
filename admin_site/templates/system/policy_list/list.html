@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         {% for ps in entries %}
-          {% include 'system/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk script_id=ps.script.id name=ps.script.name params=ps.ordered_parameters submit_name=policy_id order=forloop.counter %}
+          {% include 'system/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk script_id=ps.script.id name=ps.script.name params=ps.ordered_parameters submit_name=policy_id %}
         {% endfor %}
         <tr>
           <td colspan="3">
