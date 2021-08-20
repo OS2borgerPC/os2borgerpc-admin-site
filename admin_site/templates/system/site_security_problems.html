@@ -14,7 +14,7 @@ Sikkerhedsregler
         <div class="listutils">
             <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
                 <span class="material-icons">add</span>
-                Definér nyt sikkerhedsproblem
+                Definér ny sikkerhedsregel
             </button>
         </div>
         <ul class="item-list">
@@ -25,7 +25,9 @@ Sikkerhedsregler
                     </a>
                     {% ifequal sp selected_security_problem %}
                         {% if selected_security_problem.is_delete_allowed %}
-                            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/" title="Slet sikkerhedsproblem">
+                            <a class="item-list-deletable material-icons"
+                               href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/"
+                               title="Slet sikkerhedsregel">
                                 clear
                             </a>
                         {% endif %}
@@ -93,7 +95,7 @@ Sikkerhedsregler
                         id="new_security_problem_form" 
                         method="post">
                     <div class="modal-header">
-                        <h3 class="modal-title">Definér nyt sikkerhedsproblem</h3>
+                        <h3 class="modal-title">Definér ny sikkerhedsregel</h3>
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
