@@ -43,7 +43,7 @@ detailpage
     {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
     <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
       <span class="material-icons">gpp_maybe</span>
-      Regler
+      Sikkerhedsregler
     </a>
     
     {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
