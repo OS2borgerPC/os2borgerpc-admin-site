@@ -1,11 +1,12 @@
 {% if policy_id %}
-  <div class="gray-box-border pt-2 pb-0" id="{{ policy_id }}">
+  <div id="{{ policy_id }}">
     <table class="table">
       <thead>
         <tr>
           <th>Position</th>
           <th>Script</th>
           <th>Parametre</th>
+          <th>Handlinger</th>
         </tr>
       </thead>
       <tbody>
@@ -15,12 +16,7 @@
         <tr>
           <td colspan="3">
             <input type="hidden" name="{{ policy_id }}_new_entries" id="{{ policy_id }}_new_entries" value="0">
-            <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.PolicyList.addScript('{{ policy_id }}')" title="Tilføj script">
-              <span class="d-flex align-items-center ">
-                <span class="material-icons me-1">add</span>
-                Tilføj script
-              </span>
-            </a>
+            {% include 'widgets/scriptsearch.html' with id=policy_id list=all_scripts placeholder="Tilføj script" %}
           </td>
         </tr>
       </tbody>
@@ -29,3 +25,13 @@
 {% else %}
   <p>You must specify a <em>policy_id</em> when inserting a policy list</p>
 {% endif %}
+
+<script>
+  // Catch bubbling click event from scriptsearch.html include
+  document.getElementById('{{ policy_id }}').addEventListener('click', function(ev) {
+    if (ev.target.dataset.script) {
+      var script_data = JSON.parse(ev.target.dataset.script)
+      BibOS.PolicyList.addToPolicy('{{ policy_id }}', script_data.id, script_data.name, script_data.pk, script_data.inputs)
+    }
+  })
+</script>
