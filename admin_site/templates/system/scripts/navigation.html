@@ -33,9 +33,15 @@
                   {{ script.name }}
                 </a>
                 {% ifequal script selected_script %}
+                  {% if script.is_security_script %}
+                  <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
+                    clear
+                  </a>
+                  {% else %}
                   <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
                     clear
                   </a>
+                  {% endif %}
                 {% endifequal %}
                 </li>
             {% endfor %}
@@ -51,9 +57,15 @@
                   {{ script.name }}
                 </a>
                 {% ifequal script selected_script %}
+                  {% if script.is_security_script %}
+                  <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
+                    clear
+                  </a>
+                  {% else %}
                   <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
                     clear
                   </a>
+                  {% endif %}
                 {% endifequal %}
               </li>
           {% endfor %}
