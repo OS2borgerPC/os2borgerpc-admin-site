@@ -4,11 +4,12 @@
         **Properties for this widget**
         "submit_name" - the input value to submit to the backend
         "available_list" - list of available choices
-        "selected_list" - list of prior selected choices
         "identifier" - selection box title
+        "selected_list" - [optional] list of prior selected choices
+        "unique_id" - [optional] a unique ID for this widget (if you use more widgets in the same template)
     {% endcomment %} 
 
-    <div id="pick-list-{{ submit_name }}" class="pick-list">
+    <div id="pick-list-{{ submit_name }}{{ unique_id }}" class="pick-list">
 
         <ul class="pick-list-selected list-group">
             <li class="list-group-item list-group-item-action">
@@ -25,19 +26,20 @@
     <script type="text/javascript">
 
         (function() {
-
-            var identifier = '{{ submit_name }}'
+            
+            var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
             var readable_identifier = '{{ identifier }}'
-            var list_el = document.getElementById('pick-list-' + identifier)
+            var list_el = document.getElementById(element_id)
             var options = []
-
-            {% for pk, identifier in selected_list %}
-                options.push({
-                    id: '{{ pk }}',
-                    name: '{{ identifier }}',
-                    selected: true
-                })
-            {% endfor %}
+            {% if selected_list %}
+                {% for pk, identifier in selected_list %}
+                    options.push({
+                        id: '{{ pk }}',
+                        name: '{{ identifier }}',
+                        selected: true
+                    })
+                {% endfor %}
+            {% endif %}
             {% for pk, identifier in available_list %}
                 options.push({
                     id: '{{ pk }}',
@@ -58,7 +60,7 @@
             }
 
             function renderHiddenInput(input_value) {
-                var input = '<input type="hidden" name="' + identifier + '" value="' + input_value + '">'
+                var input = '<input type="hidden" name="{{ submit_name }}" value="' + input_value + '">'
                 return input
             }
 
