@@ -31,17 +31,17 @@
             var list_el = document.getElementById('pick-list-' + identifier)
             var options = []
 
-            {% for item in selected_list %}
+            {% for pk, identifier in selected_list %}
                 options.push({
-                    id: '{{ item.pk }}', 
-                    name: '{{ item.name }}',
+                    id: '{{ pk }}',
+                    name: '{{ identifier }}',
                     selected: true
                 })
             {% endfor %}
-            {% for item in available_list %}
+            {% for pk, identifier in available_list %}
                 options.push({
-                    id: '{{ item.pk }}', 
-                    name: '{{ item.name }}',
+                    id: '{{ pk }}',
+                    name: '{{ identifier }}',
                     selected: false
                 })
             {% endfor %}
