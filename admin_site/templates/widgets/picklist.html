@@ -1,5 +1,13 @@
 {% if submit_name and identifier %}
 
+    {% comment %}
+        **Properties for this widget**
+        "submit_name" - the input value to submit to the backend
+        "available_list" - list of available choices
+        "selected_list" - list of prior selected choices
+        "identifier" - selection box title
+    {% endcomment %} 
+
     <div id="pick-list-{{ submit_name }}" class="pick-list">
 
         <ul class="pick-list-selected list-group">
