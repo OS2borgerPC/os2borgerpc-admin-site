@@ -2,11 +2,11 @@
 
     {% comment %}
         **Properties for this widget**
-        "submit_name" - the input value to submit to the backend
-        "available_list" - list of available choices
-        "identifier" - selection box title
-        "selected_list" - [optional] list of prior selected choices
-        "unique_id" - [optional] a unique ID for this widget (if you use more widgets in the same template)
+        "submit_name" - String. The input value to submit to the backend
+        "available_list" - List. List of available choices
+        "identifier" - String. Selection box title
+        "selected_list" - List [optional]. List of prior selected choices
+        "unique_id" - String [optional]. A unique string ID postfix for this widget (if you use more widgets in the same template)
     {% endcomment %} 
 
     <div id="pick-list-{{ submit_name }}{{ unique_id }}" class="pick-list">
