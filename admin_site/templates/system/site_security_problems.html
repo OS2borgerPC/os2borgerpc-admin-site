@@ -120,16 +120,11 @@ Sikkerhedsregler
                             {{ newform.level|as_crispy_field }}
                             {{ newform.script|as_crispy_field }}
 
-                            <!-- TODO: remove -->
-                            {{ newform.alert_groups|as_crispy_field }}
-                            {{ newform.alert_users|as_crispy_field }}
-                            <!-- :end remove -->
-
                             <p>
-                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=available_groups identifier='gruppe' unique_id='ag2' %}
+                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=new_groups identifier='gruppe' unique_id='ag2' %}
                             </p>
                             <p>
-                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=available_users identifier='modtager' unique_id='au2' %}
+                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=new_users identifier='modtager' unique_id='au2' %}
                             </p>
                         </fieldset>
 

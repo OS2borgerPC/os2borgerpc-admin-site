@@ -1600,16 +1600,12 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         ).filter(is_security_script=True)
         form.fields['script'].queryset = script_set
 
-        # TODO: If the JS available/selected stuff above works out, the next
-        # two lines can be deleted.
-        form.fields['alert_users'].queryset = user_set
-        form.fields['alert_groups'].queryset = group_set
         # Extra fields
         context['selected_security_problem'] = self.object
         context['newform'] = SecurityProblemForm()
         context['newform'].fields['script'].queryset = script_set
-        context['newform'].fields['alert_users'].queryset = user_set
-        context['newform'].fields['alert_groups'].queryset = group_set
+        context['new_users'] = user_set.values_list("pk", "username")
+        context['new_groups'] = group_set.values_list("pk", "name")
 
         return context
 
