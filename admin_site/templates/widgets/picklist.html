@@ -1,6 +1,15 @@
 {% if submit_name and identifier %}
 
-    <div id="pick-list-{{ submit_name }}" class="pick-list">
+    {% comment %}
+        **Properties for this widget**
+        "submit_name" - String. The input value to submit to the backend
+        "available_list" - List. List of available choices
+        "identifier" - String. Selection box title. Not to be confused with `identifier` property of available_list items
+        "selected_list" - List [optional]. List of prior selected choices
+        "unique_id" - String [optional]. A unique string ID postfix for this widget (if you use more widgets in the same template)
+    {% endcomment %} 
+
+    <div id="pick-list-{{ submit_name }}{{ unique_id }}" class="pick-list">
 
         <ul class="pick-list-selected list-group">
             <li class="list-group-item list-group-item-action">
@@ -17,23 +26,24 @@
     <script type="text/javascript">
 
         (function() {
-
-            var identifier = '{{ submit_name }}'
+            
+            var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
             var readable_identifier = '{{ identifier }}'
-            var list_el = document.getElementById('pick-list-' + identifier)
+            var list_el = document.getElementById(element_id)
             var options = []
-
-            {% for item in selected_list %}
+            {% if selected_list %}
+                {% for pk, identifier in selected_list %}
+                    options.push({
+                        id: '{{ pk }}',
+                        name: '{{ identifier }}',
+                        selected: true
+                    })
+                {% endfor %}
+            {% endif %}
+            {% for pk, identifier in available_list %}
                 options.push({
-                    id: '{{ item.pk }}', 
-                    name: '{{ item.name }}',
-                    selected: true
-                })
-            {% endfor %}
-            {% for item in available_list %}
-                options.push({
-                    id: '{{ item.pk }}', 
-                    name: '{{ item.name }}',
+                    id: '{{ pk }}',
+                    name: '{{ identifier }}',
                     selected: false
                 })
             {% endfor %}
@@ -43,14 +53,13 @@
                     return o.id === id
                 })
                 if (item) {
-                    console.log('got item', item, selected_value)
                     item.selected = selected_value
                 }
                 renderPickList()
             }
 
             function renderHiddenInput(input_value) {
-                var input = '<input type="hidden" name="' + identifier + '" value="' + input_value + '">'
+                var input = '<input type="hidden" name="{{ submit_name }}" value="' + input_value + '">'
                 return input
             }
 
@@ -133,7 +142,7 @@
             // Render the list of selected items and the dropdown list of available items
             renderPickList()
             // Add whatever string you chose as readable_identifier to the "Tilføj ny" dropbox button
-            document.querySelector('.pick-list-dropdown-btn').innerHTML += ' '  + readable_identifier
+            list_el.querySelector('.pick-list-dropdown-btn').innerHTML += ' '  + readable_identifier
 
         })()
 

@@ -72,8 +72,15 @@ Sikkerhedsregler
 
             <fieldset class="col-12 col-lg-6">
                 {{ form.script|as_crispy_field }}
-                {{ form.alert_groups|as_crispy_field }}
-                {{ form.alert_users|as_crispy_field }}
+
+                <p>
+                    <label>Overvågede grupper</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
+                </p>
+                <p>
+                    <label>Modtager(e) af e-mail-advarsel</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' %}
+                </p>
 
             </fieldset>
 
@@ -112,8 +119,13 @@ Sikkerhedsregler
                             {{ newform.description|as_crispy_field }}
                             {{ newform.level|as_crispy_field }}
                             {{ newform.script|as_crispy_field }}
-                            {{ newform.alert_groups|as_crispy_field }}
-                            {{ newform.alert_users|as_crispy_field }}
+
+                            <p>
+                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=alert_groups identifier='gruppe' unique_id='ag2' %}
+                            </p>
+                            <p>
+                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=alert_users identifier='modtager' unique_id='au2' %}
+                            </p>
                         </fieldset>
 
                     </div>
