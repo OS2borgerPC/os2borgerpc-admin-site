@@ -1530,17 +1530,30 @@ class SecurityProblemsView(SelectionMixin, SiteView):
             """
             site = context['site']
             context['newform'] = SecurityProblemForm()
+            user_set = User.objects.filter(bibos_profile__sites=site)
+            group_set = site.groups.all()
             context['newform'].fields[
                 'alert_users'
-            ].queryset = User.objects.filter(bibos_profile__sites=site)
+            ].queryset = user_set
             context['newform'].fields[
                 'alert_groups'
-            ].queryset = site.groups.all()
+            ].queryset = group_set
+
             # Limit list of scripts to only include security scripts.
             script_set = Script.objects.filter(
-                Q(site__isnull=True) | Q(site=site)
-            ).filter(is_security_script=True)
+                Q(site__isnull=True) | Q(site=site),
+                is_security_script=True,
+                deleted=False
+            )
             context['newform'].fields['script'].queryset = script_set
+            # Pass users and groups to context
+            # that are available for a 'new' security problem.
+            context['alert_users'] = user_set.values_list(
+                "pk", "username"
+            )
+            context['alert_groups'] = group_set.values_list(
+                "pk", "name"
+            )
 
             return super(
                 SecurityProblemsView, self
@@ -1596,16 +1609,26 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         ).values_list("pk", "username")
         # Limit list of scripts to only include security scripts.
         script_set = Script.objects.filter(
-            Q(site__isnull=True) | Q(site=site)
-        ).filter(is_security_script=True)
+            Q(site__isnull=True) | Q(site=site),
+            is_security_script=True,
+            deleted=False
+        )
         form.fields['script'].queryset = script_set
 
         # Extra fields
         context['selected_security_problem'] = self.object
         context['newform'] = SecurityProblemForm()
         context['newform'].fields['script'].queryset = script_set
-        context['new_users'] = user_set.values_list("pk", "username")
-        context['new_groups'] = group_set.values_list("pk", "name")
+        context['newform'].fields['alert_users'].queryset = user_set
+        context['newform'].fields['alert_groups'].queryset = group_set
+        # Pass users and groups to context
+        # that are available for a 'new' security problem.
+        context['alert_users'] = user_set.values_list(
+            "pk", "username"
+        )
+        context['alert_groups'] = group_set.values_list(
+            "pk", "name"
+        )
 
         return context
 

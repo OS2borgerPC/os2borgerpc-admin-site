@@ -121,10 +121,10 @@ Sikkerhedsregler
                             {{ newform.script|as_crispy_field }}
 
                             <p>
-                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=new_groups identifier='gruppe' unique_id='ag2' %}
+                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=alert_groups identifier='gruppe' unique_id='ag2' %}
                             </p>
                             <p>
-                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=new_users identifier='modtager' unique_id='au2' %}
+                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=alert_users identifier='modtager' unique_id='au2' %}
                             </p>
                         </fieldset>
 
