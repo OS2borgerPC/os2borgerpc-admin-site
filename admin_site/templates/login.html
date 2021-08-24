@@ -2,12 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block header_title %}
-    <div class="container">Log <em>ind</em></div>
+    <div class="container">OS2 <em>borgerPC</em> admin</div>
 {% endblock %}
 
 {% block specific_content %}
-<div class="container">
-    <form method="post" action="">
+<div class="d-flex align-items-center justify-content-center" style="min-height: 50vh;">
+    <form method="post" action="" style="width: 18rem;">
+        <h2>Log ind</h2>
         {% csrf_token %}
         {{ form|crispy }}
         <input class="btn btn-primary" type="submit" value="Log ind">
