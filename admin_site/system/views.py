@@ -650,26 +650,23 @@ class ScriptMixin(object):
         return success
 
     def save_script_inputs(self):
-        seen = []
+        # First delete the existing inputs not found in the new inputs.
+        pks = [
+            script_input.get("pk")
+            for script_input in self.script_inputs
+            if script_input.get("pk")
+        ]
+        self.script.inputs.exclude(pk__in=pks).delete()
+
         for input_data in self.script_inputs:
             input_data['script'] = self.script
-
-            pk = None
-            if 'pk' in input_data:
-                pk = input_data['pk'] or None
+            if 'pk' in input_data and not input_data['pk']:
                 del input_data['pk']
 
-            if pk is None or pk == '':
-                script_input = Input.objects.create(**input_data)
-                script_input.save()
-                seen.append(script_input.pk)
-            else:
-                Input.objects.filter(pk=pk).update(**input_data)
-                seen.append(int(pk))
-
-        for inp in self.script.inputs.all():
-            if inp.pk not in seen:
-                inp.delete()
+            Input.objects.update_or_create(
+                pk=input_data.get("pk"),
+                defaults=input_data
+            )
 
 
 class ScriptList(ScriptMixin, SiteView):
