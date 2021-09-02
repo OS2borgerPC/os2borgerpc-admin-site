@@ -1195,11 +1195,11 @@ class SecurityProblem(models.Model):
         Script, related_name='security_problems', on_delete=models.PROTECT
     )
     alert_groups = models.ManyToManyField(PCGroup,
-                                          related_name=_('security_problems'),
+                                          related_name='security_problems',
                                           verbose_name=_('alert groups'),
                                           blank=True)
     alert_users = models.ManyToManyField(User,
-                                         related_name=_('security_problems'),
+                                         related_name='security_problems',
                                          verbose_name=_('alert users'),
                                          blank=True)
 
