@@ -106,11 +106,9 @@ class ScriptAdmin(admin.ModelAdmin):
         "site",
         "jobs_per_site",
         "jobs_per_site_for_the_last_year",
-        "deleted",
     )
     filter_horizontal = ("tags",)
     readonly_fields = ("user_created", "user_modified")
-    list_filter = ("deleted",)
     search_fields = ("name",)
     inlines = [InputInline]
 
