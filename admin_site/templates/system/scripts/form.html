@@ -54,7 +54,8 @@
             id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
             name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
             value="{{ site.id }}"
-            {% if not global_script %}checked="checked"{% endif %}>
+            {% if not global_script %}checked="checked"{% endif %}
+            disabled>
           <label class="form-label checkbox" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
             Lokalt script for {{ site.uid|capfirst }}
           </label>

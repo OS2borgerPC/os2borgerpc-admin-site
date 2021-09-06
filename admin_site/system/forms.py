@@ -89,7 +89,7 @@ class ScriptForm(forms.ModelForm):
         super(ScriptForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
-            self.fields['site'].widget.attrs['readonly'] = True
+            self.fields['site'].widget.attrs['disabled'] = True
             self.fields['tags'].disabled = True
             self.fields[
                 'maintained_by_magenta'
@@ -109,7 +109,8 @@ class ConfigurationEntryForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     usertype = forms.ChoiceField(
         required=True,
-        choices=SiteMembership.type_choices
+        choices=SiteMembership.type_choices,
+        label=_("Usertype"),
     )
 
     new_password = forms.CharField(

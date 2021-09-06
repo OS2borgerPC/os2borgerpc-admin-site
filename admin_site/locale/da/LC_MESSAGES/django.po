@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-06 09:58+0200\n"
+"POT-Creation-Date: 2021-09-06 11:07+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -47,15 +47,19 @@ msgstr "Antal computere"
 msgid "Site"
 msgstr "Site"
 
-#: system/forms.py:116
+#: system/forms.py:113
+msgid "Usertype"
+msgstr "Brugertype"
+
+#: system/forms.py:117
 msgid "Password"
 msgstr "Adgangskode"
 
-#: system/forms.py:123
+#: system/forms.py:124
 msgid "Password (again)"
 msgstr "Adgangskode (igen)"
 
-#: system/forms.py:170
+#: system/forms.py:171
 msgid "Passwords must be identical."
 msgstr "De to adgangskoder skal være ens"
 
