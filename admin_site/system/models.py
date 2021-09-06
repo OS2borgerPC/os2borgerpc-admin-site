@@ -449,6 +449,13 @@ class PCGroup(models.Model):
         # After save
         pass
 
+    def update_associated_script_positions(self):
+        existing_set = (
+            set(asc for asc in self.policy.all().order_by('position')))
+        for count, asc in enumerate(existing_set):
+            asc.position = count
+            self.save()
+
     def update_policy_from_request(self, request, submit_name):
         req_params = request.POST
         req_files = request.FILES
@@ -735,7 +742,6 @@ class Script(AuditModelMixin):
                                        upload_to='script_uploads')
     is_security_script = models.BooleanField(verbose_name=_('security script'),
                                              default=False, null=False)
-    deleted = models.BooleanField(verbose_name=_("deleted"), default=False)
 
     maintained_by_magenta = models.BooleanField(
         verbose_name=_("maintained by Magenta"),
@@ -880,7 +886,7 @@ class AssociatedScript(models.Model):
         PCGroup, related_name='policy', on_delete=models.CASCADE
     )
     script = models.ForeignKey(
-        Script, related_name='associations', on_delete=models.PROTECT
+        Script, related_name='associations', on_delete=models.CASCADE
     )
     position = models.IntegerField(verbose_name=_('position'))
 
@@ -1192,7 +1198,7 @@ class SecurityProblem(models.Model):
         Site, related_name='security_problems', on_delete=models.CASCADE
     )
     script = models.ForeignKey(
-        Script, related_name='security_problems', on_delete=models.PROTECT
+        Script, related_name='security_problems', on_delete=models.CASCADE
     )
     alert_groups = models.ManyToManyField(PCGroup,
                                           related_name='security_problems',
@@ -1270,7 +1276,7 @@ class ImageVersion(models.Model):
     platform = models.CharField(max_length=128, choices=platform_choices)
     image_version = models.CharField(unique=True, max_length=7)
     release_date = models.DateField()
-    os = models.CharField(max_length=30)
+    os = models.CharField(verbose_name="OS", max_length=30)
     release_notes = models.TextField(max_length=350)
     image_upload = models.FileField(upload_to="images", default='#')
 

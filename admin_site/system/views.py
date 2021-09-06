@@ -6,7 +6,7 @@ from functools import cmp_to_key
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -530,8 +530,7 @@ class ScriptMixin(object):
         # Add the global and local script lists
         self.scripts = Script.objects.filter(
             Q(site=self.site) | Q(site=None),
-            is_security_script=self.is_security,
-            deleted=False
+            is_security_script=self.is_security
         ).exclude(
             site__name='system'
         )
@@ -919,12 +918,20 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
                 kwargs={"slug": self.kwargs["slug"]}
             )
 
+    @transaction.atomic
     def delete(self, request, *args, **kwargs):
         script = self.get_object()
-        script.deleted = True
-        script.save()
 
-        return redirect(self.get_success_url())
+        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
+
+        # Update the PCGroups for which it's an AssociatedScript
+        scripts_pcgroups = PCGroup.objects.filter(policy__script=script)
+
+        # For each of those groups update the script positions to avoid gaps
+        for spcg in scripts_pcgroups:
+            spcg.update_associated_script_positions()
+
+        return response
 
 
 class PCsView(SelectionMixin, SiteView):
@@ -1540,7 +1547,6 @@ class SecurityProblemsView(SelectionMixin, SiteView):
             script_set = Script.objects.filter(
                 Q(site__isnull=True) | Q(site=site),
                 is_security_script=True,
-                deleted=False
             )
             context['newform'].fields['script'].queryset = script_set
             # Pass users and groups to context
@@ -1608,7 +1614,6 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         script_set = Script.objects.filter(
             Q(site__isnull=True) | Q(site=site),
             is_security_script=True,
-            deleted=False
         )
         form.fields['script'].queryset = script_set
 
