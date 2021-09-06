@@ -1816,8 +1816,7 @@ documentation_menu_items = [
     ('users', 'Brugere'),
 
     ('', 'Installation af OS2borgerPC'),
-    ('install_dvd', 'Installation via DVD'),
-    ('install_usb', 'Installation via USB'),
+    ('install', 'Installation'),
     ('install_network', 'Installation via netværk'),
     ('pdf_guide', 'Brugervenlig installationsguide (PDF)'),
     ('creating_security_problems',
