@@ -22,7 +22,7 @@ Changes to the model
 ++++++++++++++++++++
 
 
-A new Django model will be introduced in the Bibos Admin system. This
+A new Django model will be introduced in the OS2borgerPC Admin system. This
 model will be called SecurityEvent and will basically have the following
 fields (further analysis or actual implementation may show more fields
 to be needed):
