@@ -12,13 +12,13 @@
 	   Navn: Navnet på den pågældende sikkerhedsregel.
 	   </li>	     
 	   <li>
-	   ID: Et kort og unikt navn (som bruges internt i systemet). 
+	   UID: Et kort og unikt navn (som bruges internt i systemet). 
 	   Dette id bruges i det tilknyttede security script.
 	   Hvis ikke disse to passer sammen, ved systemet ikke 
 	   hvilken Sikkerhedsregel eventet hører til.
 	   </li>
 	   <li>
-	   Problemmeddelelse: En beskrivende tekst, som indgår i de afsendte advarselsmails.
+	   Beskrivelse: En beskrivende tekst, som indgår i de afsendte advarselsmails.
 	   </li>
 	   <li>
 	   Alvorsgrad: Vælg mellem Kritisk, Høj og Normal.
@@ -29,11 +29,11 @@
 	   Scriptet afvikles hver gang en maskine kontakter OS2borgerPC-admin.
 	   </li>
 	   <li>
-	   Overvåges af følgende grupper: Vælg fra listen.<br> 
+	   Overvågede grupper: Vælg fra listen.<br> 
 	   Grupperne definerer hvilke maskiner den aktuelle sikkerhedsregel er aktiv for.
 	   </li>
 	   <li>
-	   Modtager(e) af email-advarsler: Vælg hvilke brugere der skal modtage advarsel per mail.
+	   Modtager(e) af email-advarsel: Vælg hvilke brugere der skal modtage advarsel per mail.
 	   </li>
    </ul>
 {% endblock %}
