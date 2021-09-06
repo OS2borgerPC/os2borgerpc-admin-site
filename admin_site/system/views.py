@@ -920,8 +920,9 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
     @transaction.atomic
     def delete(self, request, *args, **kwargs):
-        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
         script = self.get_object()
+
+        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
 
         # Update the PCGroups for which it's an AssociatedScript
         scripts_pcgroups = PCGroup.objects.filter(policy__script=script)
