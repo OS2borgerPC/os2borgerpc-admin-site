@@ -1816,8 +1816,7 @@ documentation_menu_items = [
     ('users', 'Brugere'),
 
     ('', 'Installation af OS2borgerPC'),
-    ('install_dvd', 'Installation via DVD'),
-    ('install_usb', 'Installation via USB'),
+    ('install', 'Installation'),
     ('install_network', 'Installation via netværk'),
     ('pdf_guide', 'Brugervenlig installationsguide (PDF)'),
     ('creating_security_problems',
@@ -1831,9 +1830,9 @@ documentation_menu_items = [
     ('om_os2borgerpc_admin', 'Om OS2borgerPC-Admin'),
 
     ('', 'Teknisk dokumentation'),
-    ('tech/os2borgerpc-image', 'OS2borgerPC Desktop Image'),
+    ('tech/os2borgerpc-image', 'OS2borgerPC Image'),
     ('tech/os2borgerpc-admin', 'OS2borgerPC Admin Site'),
-    ('tech/os2borgerpc-server-image', 'OS2borgerPC Server Image'),
+    ('tech/os2borgerpc-server-image', 'OS2displayPC Image'),
     ('tech/os2borgerpc-client', 'OS2borgerPC Client'),
 
 ]

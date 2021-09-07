@@ -1,0 +1,18 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Scripts</h1>
+
+  <p>
+    Du har mulighed for at tildele hver gruppe en række tilknyttede scripts. For at ændre de tilknyttede scripts for en gruppe skal du klikke dig ind på gruppen og trykke på fanebladet "Scripts".
+    Tryk på input-feltet "Tilføj script" og søg efter det script du gerne vil tilknytte til gruppen, klik derefter på scriptet og det vil blive tilføjet som tilknyttet script.
+  </p>
+  <p>
+    Når en computer tilføjes til en gruppe bliver de tilknyttede scripts automatisk kørt.
+    Når man tilknytter et nyt script til en gruppe køres denne automatisk på de tilknyttede computere.
+  </p>
+  <p>
+    Hvert script kan have nogle parametre de køres med og en position der angiver i hvilken rækkefølge de bliver kørt.
+    Såfremt man ønsker at ændre på parametre for et givent script skal scriptet slettes fra gruppen og tilføjes på ny med de opdaterede parametre.
+  </p>
+{% endblock %}

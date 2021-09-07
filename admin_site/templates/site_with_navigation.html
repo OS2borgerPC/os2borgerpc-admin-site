@@ -107,12 +107,17 @@ detailpage
         Hjælp til sikkerhed
       </a>
     {% elif current_url_security_problems %}
-      <a href="{% url 'doc' 'groups' %}" class="nav-link link-light">
+      <a href="{% url 'doc' 'scripts/securityproblems' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         Definition af sikkerhedsregler
       </a>
-    {% elif current_url_security_scripts %}
+    {% elif current_url_security_events %}
       <a href="{% url 'doc' 'scripts/securityevents' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Hjælp til sikkerhedshændelser
+      </a>
+    {% elif current_url_security_scripts %}
+      <a href="{% url 'doc' 'scripts/securityproblems' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         Hjælp til sikkerhed
       </a>
