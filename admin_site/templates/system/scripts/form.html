@@ -49,14 +49,14 @@
         {{ form.maintained_by_magenta|as_crispy_field }}
 
           <input
-            class="form-check-input"
+            class="checkboxinput form-check-input"
             type="checkbox"
             id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
             name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
             value="{{ site.id }}"
             {% if not global_script %}checked="checked"{% endif %}
             disabled>
-          <label class="form-label checkbox" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
+          <label class="form-check-label" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
             Lokalt script for {{ site.uid|capfirst }}
           </label>
           <input 
