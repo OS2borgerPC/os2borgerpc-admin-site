@@ -10,7 +10,12 @@
       data-bs-toggle="modal" 
       title="Tilføj nyt script">
       <span class="material-icons">add</span>
-      Tilføj nyt script
+      Tilføj nyt 
+      {% if is_security %}
+      Sikkerhedsscript
+      {% else %}
+      Script
+      {% endif %}
     </button>
   
     <!-- Search box -->
@@ -38,7 +43,13 @@
 
   <div class="container-fluid main sublevelmain">
     <h2 class="divideheader">
-      Redigér script: <em>{{ selected_script.name }}</em>
+      Redigér
+      {% if is_security %}
+      Sikkerhedsscript
+      {% else %}
+      Script
+      {% endif %}
+      <em>{{ selected_script.name }}</em>
     </h2>
 
     <form method="post" 
