@@ -8,6 +8,8 @@
     <input class="config-value" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_value" value="{{ value }}">
     
     {{ value }}
+  </td>
+  <td>
     <p class="mb-0" style="margin-left: -.5rem;">
       <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.ConfigList.startEdit(this, '{{ submit_name }}')">
         Redigér

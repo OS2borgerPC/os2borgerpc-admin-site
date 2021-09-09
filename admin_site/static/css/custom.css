@@ -55,6 +55,9 @@ ul.nav li ul li.active { font-style: italic; }
   cursor:pointer;
   background-color: var(--bs-gray);
 }
+.script-input a {
+  padding: 0;
+}
 
 .material-icons {
  margin: 0 .25rem 0 -.25rem; 

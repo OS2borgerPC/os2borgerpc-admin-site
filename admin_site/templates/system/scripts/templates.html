@@ -1,14 +1,13 @@
 <div class="template-container">
+
   <table class="table">
     <tbody id="script-input-template">
       <tr class="script-input">
         <td>
           <input type="hidden" name="script-input-pk" value="#PK#" class="pk-input">
-          <p class="error text-danger mb-2">#NAME_ERROR#</p>
           <input type="text" name="script-input-name" value="#NAME#" class="name-input form-control">
         </td>
         <td>
-          <div class="error">#TYPE_ERROR#</div>
           <select name="script-input-type" class="type-input form-select">
             {% for value, name in type_choices %}
               <option value="{{value}}">{{name}}</option>
