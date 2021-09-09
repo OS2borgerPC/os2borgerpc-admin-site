@@ -1,7 +1,7 @@
 table {
  
     th {
-        background-color: $gray-200 !important;
+        background-color: $gray-400 !important;
         box-shadow: none !important;
         vertical-align: middle;
 
@@ -17,7 +17,7 @@ table {
             cursor: pointer;
 
             &.active {
-                background-color: $gray-400 !important;
+                background-color: $gray-600 !important;
             }
 
             &:hover {
@@ -28,7 +28,7 @@ table {
     }
 
     tbody tr {
-        border-top: solid 1px $gray-200;
+        border-top: solid 1px $gray-400;
 
         &:last-child td:first-child {
             border-radius: 0 0 0 .33rem;
@@ -55,7 +55,7 @@ table {
         td {
             box-shadow: none !important;
             background-color: transparent !important;
-            border-top: solid 1px $gray-100;
+            border-top: solid 1px $gray-200;
             color: $gray-600;
             padding-left: 0;
 
@@ -80,7 +80,7 @@ table {
 
     &.table-hover {
         tr:hover {
-            background-color: $gray-100;
+            background-color: $gray-200;
         }
         td:hover {
             cursor: pointer;

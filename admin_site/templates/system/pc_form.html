@@ -141,7 +141,7 @@ Computere
               <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>
                 {% if job.has_info %}
-                  <button type="button" class="btn btn-secondary jobinfobutton" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="focus" data-bs-animation="true">
+                  <button type="button" class="btn jobinfobutton" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="focus" data-bs-animation="true">
                     <span class="material-icons">info</span>
                   </button>
                 {% endif %}
