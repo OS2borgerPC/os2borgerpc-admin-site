@@ -82,7 +82,7 @@ active
 
               {{ form.pcs.errors }}
               <label class="mb-2">Computere i denne gruppe</label>
-              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' %}
+              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' %}
 
             </fieldset>
           </div>

@@ -99,7 +99,7 @@ Computere
 
               {{ form.pc_groups.errors }}
               <label class="mb-2">Grupper</label>
-              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
+              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til gruppe' remove_text='Fjern computer fra gruppe' %}
 
             </fieldset>
           </div>

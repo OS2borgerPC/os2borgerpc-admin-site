@@ -15,7 +15,6 @@
             <li class="list-group-item list-group-item-action">
                 <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="material-icons">add</span>
-                    Tilføj ny
                 </button>
                 <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
             </li>
@@ -28,7 +27,8 @@
         (function() {
             
             var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
-            var readable_identifier = '{{ identifier }}'
+            var text_add = '{{ add_text }}'
+            var text_remove = '{{ remove_text }}'
             var list_el = document.getElementById(element_id)
             var options = []
             {% if selected_list %}
@@ -67,7 +67,7 @@
                 var item = document.createElement('span')
                 var button = document.createElement('button')
                 button.type = 'button'
-                button.title = 'Fjern ' + readable_identifier
+                button.title = text_remove
                 button.className = 'btn btn-close'
                 button.addEventListener('click', function() {
                     updateListHandler(id, false)
@@ -142,7 +142,7 @@
             // Render the list of selected items and the dropdown list of available items
             renderPickList()
             // Add whatever string you chose as readable_identifier to the "Tilføj ny" dropbox button
-            list_el.querySelector('.pick-list-dropdown-btn').innerHTML += ' '  + readable_identifier + " til listen"
+            list_el.querySelector('.pick-list-dropdown-btn').innerHTML = text_add
 
         })()
 
