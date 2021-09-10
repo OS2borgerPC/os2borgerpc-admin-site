@@ -110,3 +110,22 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 
 /* Layout helpers */
 .inline {display: inline}
+
+
+@media screen and (max-width: 1535px) {
+  /* Make jobs and computer -> jobs look decent until around 1080px width */
+  #jobsearchnav {
+    width: 9rem;
+  }
+  .jobtable th, .jobtable td {
+    padding: .75rem .75rem!important;
+  }
+
+  /* Hide "batch" at lower resolutions */
+  .container-fluid > .jobtable th:nth-of-type(6), .container-fluid > .jobtable td:nth-of-type(6) {
+    display: none;
+  }
+  .tab-content .jobtable th:nth-of-type(5), .tab-content .jobtable td:nth-of-type(5) {
+    display: none;
+  }
+}
