@@ -161,12 +161,13 @@ Computere
               tabTrigger.show()
             })
           })
+          // Initialize job info buttons on load.
+          BibOS.setupJobInfoButtons($(".jobtable"))
+
           // Open #jobs tab if the url contains this hash
           if (location.hash === '#jobs') {
             var triggerEl = document.getElementById('jobs-tab')
-            console.log(bootstrap.Tab.getInstance(triggerEl))
             bootstrap.Tab.getInstance(triggerEl).show()
-            BibOS.setupJobInfoButtons($(".jobtable"))
           }
         })
       </script>

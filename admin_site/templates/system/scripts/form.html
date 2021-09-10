@@ -48,6 +48,11 @@
         {{ form.author_email|as_crispy_field }}
         {{ form.maintained_by_magenta|as_crispy_field }}
 
+          <input
+            type="hidden"
+            id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+            name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+            value="{{ site.id }}">
           <input 
             id="id_is_security_script" 
             name="is_security_script"
