@@ -90,10 +90,13 @@ class ScriptForm(forms.ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['site'].widget.attrs['disabled'] = True
-            self.fields['tags'].disabled = True
-            self.fields[
-                'maintained_by_magenta'
-            ].widget.attrs['disabled'] = True
+        else:
+            self.fields['maintained_by_magenta'].widget = forms.HiddenInput()
+
+        self.fields['tags'].disabled = True
+        self.fields[
+            'maintained_by_magenta'
+        ].widget.attrs['disabled'] = True
 
     class Meta:
         model = Script
