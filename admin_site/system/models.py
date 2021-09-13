@@ -298,7 +298,7 @@ class PackageStatus(models.Model):
 class Site(models.Model):
     """A site which we wish to admin"""
     name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('uid'), max_length=255, unique=True)
+    uid = models.CharField(verbose_name=_('UID'), max_length=255, unique=True)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"),
@@ -385,7 +385,7 @@ class Site(models.Model):
 class Distribution(models.Model):
     """This represents a GNU/Linux distribution managed by us."""
     name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('uid'), max_length=255)
+    uid = models.CharField(verbose_name=_('UID'), max_length=255)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     # CustomPackages is preferrable here.
     # Maybe we'd like one distribution to inherit from another.
@@ -1190,15 +1190,17 @@ class SecurityProblem(models.Model):
     }
 
     name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.SlugField(verbose_name=_('uid'))
+    uid = models.SlugField(verbose_name=_('UID'))
     description = models.TextField(verbose_name=_('description'), blank=True)
     level = models.CharField(verbose_name=_('level'), max_length=10,
                              choices=LEVEL_CHOICES, default=HIGH)
     site = models.ForeignKey(
         Site, related_name='security_problems', on_delete=models.CASCADE
     )
-    script = models.ForeignKey(
-        Script, related_name='security_problems', on_delete=models.CASCADE
+    security_script = models.ForeignKey(
+        Script, verbose_name=_('security script'),
+        related_name='security_problems',
+        on_delete=models.CASCADE
     )
     alert_groups = models.ManyToManyField(PCGroup,
                                           related_name='security_problems',

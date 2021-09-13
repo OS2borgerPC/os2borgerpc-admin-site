@@ -71,7 +71,7 @@ Sikkerhedsregler
             </fieldset>
 
             <fieldset class="col-12 col-lg-6">
-                {{ form.script|as_crispy_field }}
+                {{ form.security_script|as_crispy_field }}
 
                 <p>
                     <label>Overvågede grupper</label>
@@ -118,7 +118,7 @@ Sikkerhedsregler
                             {{ newform.uid|as_crispy_field }}
                             {{ newform.description|as_crispy_field }}
                             {{ newform.level|as_crispy_field }}
-                            {{ newform.script|as_crispy_field }}
+                            {{ newform.security_script|as_crispy_field }}
 
                             <p>
                                 {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=alert_groups identifier='gruppe' unique_id='ag2' %}
