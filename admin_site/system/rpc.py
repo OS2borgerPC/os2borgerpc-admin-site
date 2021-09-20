@@ -327,7 +327,7 @@ def get_instructions(pc_uid, update_data):
 
 
 def insert_security_problem_uid(securityproblem):
-    script = Script.objects.get(id=securityproblem.script_id)
+    script = Script.objects.get(security_problems=securityproblem)
     code = script.executable_code.read().decode('utf8')
     code = str(code).replace("%SECURITY_PROBLEM_UID%", securityproblem.uid)
     s = {
