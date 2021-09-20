@@ -1548,7 +1548,7 @@ class SecurityProblemsView(SelectionMixin, SiteView):
                 Q(site__isnull=True) | Q(site=site),
                 is_security_script=True,
             )
-            context['newform'].fields['script'].queryset = script_set
+            context['newform'].fields['security_script'].queryset = script_set
             # Pass users and groups to context
             # that are available for a 'new' security problem.
             context['alert_users'] = user_set.values_list(
