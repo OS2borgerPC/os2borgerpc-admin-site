@@ -71,26 +71,6 @@ def set_notification_cookie(response, message, error=False):
                         )
 
 
-def get_no_of_sec_events(site):
-    """Utility function to get number of security events."""
-    no_of_sec_events = SecurityEvent.objects.filter(
-        problem__site=site
-    ).exclude(
-        problem__level=SecurityProblem.NORMAL
-    ).exclude(status=SecurityEvent.RESOLVED).count()
-    return no_of_sec_events
-
-
-def get_latest_security_event(pc):
-    """Utility function to get latest security event for pc."""
-    sc = ""
-    try:
-        sc = SecurityEvent.objects.filter(pc_id=pc.id).latest('reported_time')
-    except SecurityEvent.DoesNotExist:
-        sc = "Ingen hændelser"
-    return sc
-
-
 # Mixin class to require login
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""
@@ -207,7 +187,7 @@ class SiteMixin(View):
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
         context['site'] = site
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
         context['sec_events'] = no_of_sec_events
 
         return context
@@ -263,7 +243,7 @@ class SiteView(DetailView,  SuperAdminOrThisSiteMixin):
         context = super(SiteView, self).get_context_data(**kwargs)
         site = self.get_object()
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
         context['sec_events'] = no_of_sec_events
 
         return context
@@ -282,12 +262,7 @@ class SiteDetailView(SiteView):
         site = context['site']
         active_pcs = site.pcs.filter(is_active=True)
         context['active_pcs'] = active_pcs.count()
-        context['ls_pcs'] = site.pcs.all().order_by('last_seen')
-        securityevents = []
-        for pc in context['ls_pcs']:
-            securityevents.append(get_latest_security_event(pc))
-
-        context['security_events'] = securityevents
+        context['ls_pcs'] = site.pcs.all().order_by('-is_active', 'last_seen')
         return context
 
 
@@ -614,7 +589,7 @@ class ScriptMixin(object):
 
         context['script_inputs_json'] = json.dumps(context['script_inputs'])
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(self.site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
         context['sec_events'] = no_of_sec_events
 
         return context
@@ -1014,8 +989,8 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
 
         context['selected_pc'] = pc
 
-        context['security_event'] = get_latest_security_event(pc)
-        context['has_security_events'] = pc.securityevent_set.exclude(
+        context['security_event'] = pc.security_events.latest_event()
+        context['has_security_events'] = pc.security_events.exclude(
             status=SecurityEvent.RESOLVED
         ).exclude(
             problem__level=SecurityProblem.NORMAL
@@ -1128,7 +1103,7 @@ class UsersMixin(object):
             self.add_site_to_context(context)
         context['user_list'] = context['site'].users
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(self.site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
         context['sec_events'] = no_of_sec_events
         return context
 
