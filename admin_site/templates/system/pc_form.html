@@ -99,14 +99,22 @@ Computere
               {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
 
             </fieldset>
-          
           </div>
+
+        <fieldset class="mt-5">
+          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+          <button class="btn btn-secondary" type="reset">Annuller</button>
+        </fieldset>
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
           <fieldset>
             {% include 'system/configlist/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
           </fieldset>
+          <fieldset class="mt-5">
+            <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+            <button class="btn btn-secondary" type="reset">Annuller</button>
+        </fieldset>
         </div>
 
         <div id="jobs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="jobs-tab">
@@ -140,12 +148,6 @@ Computere
           </table>
 
         </div>
-
-        <fieldset class="mt-5">
-          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
-          <button class="btn btn-secondary" type="reset">Annuller</button>
-          <!--<button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Nulstil ændringer</button>-->
-        </fieldset>
 
       </div>
 

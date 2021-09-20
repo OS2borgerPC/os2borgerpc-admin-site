@@ -1235,8 +1235,8 @@ class SecurityEvent(models.Model):
     )
 
     STATUS_TO_LABEL = {
-        NEW: 'bg-danger',
-        ASSIGNED: 'bg-warning',
+        NEW: 'bg-primary',
+        ASSIGNED: 'bg-secondary',
         RESOLVED: 'bg-success'
     }
     problem = models.ForeignKey(
