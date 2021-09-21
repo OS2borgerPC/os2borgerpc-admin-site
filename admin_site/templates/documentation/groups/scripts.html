@@ -1,26 +1,34 @@
 {% extends 'documentation/index.html' %}
 
 {% block specific_content %}
-  <h1>Scripts</h1>
+  <h1>Tilknyttede Scripts</h1>
 
   <p>
-    Du har mulighed for at tildele hver gruppe en række tilknyttede scripts. For at ændre de tilknyttede scripts for en
-    gruppe skal du klikke dig ind på gruppen og trykke på fanebladet <strong>Scripts</strong>.
-    Tryk på input-feltet <strong>Tilføj script</strong> og søg efter det script du gerne vil tilknytte til gruppen, klik derefter på scriptet og det vil blive tilføjet som tilknyttet script.
+    Du har mulighed for at tildele hver gruppe en række Tilknyttede Scripts. For at ændre de Tilknyttede Scripts for en
+    gruppe skal du klikke dig ind på gruppen og trykke på fanebladet <strong>Tilknyttede Scripts</strong>.
+    Tryk på input-feltet <strong>Tilføj script</strong> og søg efter det script du gerne vil tilknytte til gruppen, klik derefter på Scriptet og det vil blive tilføjet som Tilknyttet Script.
   </p>
   <p>
-    Når en computer tilføjes til en gruppe bliver de tilknyttede scripts automatisk kørt.
-    Når man tilknytter et nyt script til en gruppe køres denne automatisk på de tilknyttede computere.
+    Når en computer tilføjes til en gruppe bliver alle Tilknyttede Scripts automatisk kørt.
+    Når man tilknytter et nyt Script til en gruppe, køres dette automatisk på gruppens computere.
   </p>
   <p>
-    Hvert script kan have nogle parametre de køres med og en position der angiver i hvilken rækkefølge de bliver kørt.
-    Såfremt man ønsker at ændre på parametre for et givent script skal scriptet slettes fra gruppen og tilføjes på ny med de opdaterede parametre.
+    Scripts har en position der angiver i hvilken rækkefølge, de bliver kørt, og de kan have nogle inputparametre
+    de køres med.
+  </p>
+  <p>En computer kan sagtens tilmeldes flere grupper.<br/>
+    Eksempel: Der står en computer på biblioteket og en anden i borgerservice, som skal have forskellige startsider, 
+    men som begge har samme scanner sat til. I så fald kan computerne være tilmeldt en gruppe for borgerservice og en anden for scanner-computere.</p>
+  <p>
+    Vi anbefaler at bruge Tilknyttede Scripts hvor det er muligt, da det kan gøre det lettere at sætte nye
+  computere op på en afdeling, da alt man så skal gøre er at tilmelde den gruppen, og så køres de relevante Scripts
+  derpå med rette inputparametre automatisk.
   </p>
   <h2>Bemærkninger</h2>
-  <p>
-    Når der tilføjes eller slettes et script i listen, vil det først blive gemt, efter tryk
-    på <strong>Gem ændringer</strong>.
-    Hvis scriptet du tilføje tager parametre, sættes værdierne for disse ved at trykke på <strong>Rediger</strong>, og dette <em>skal</em> gøres før
-    ændringerne kan gemmes. Dvs. et script der tager parametre kan ikke tilknyttes, med tomme parametre.
-  </p>
+  <ul>
+    <li>Når der tilføjes eller slettes et Script i listen, vil det først blive gemt, efter tryk på <strong>Gem ændringer</strong>.</li>
+    <li>Hvis Scriptet du tilføjer benytter inputparametre, sættes værdierne for disse ved at trykke på <strong>Rediger</strong>, og dette <em>skal</em> gøres før
+      ændringerne kan gemmes. Dvs. et Script der benytter inputparametre kan ikke tilknyttes, med tomme inputparametre.</li>
+    <li>Såfremt man ønsker at ændre på inputparametre for et givent Script skal Scriptet slettes fra gruppen og tilføjes på ny med de opdaterede inputparametre.</li>
+  </ul>
 {% endblock %}

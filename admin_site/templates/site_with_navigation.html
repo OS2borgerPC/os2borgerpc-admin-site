@@ -101,33 +101,18 @@ detailpage
 
     {% if current_url_site %}
       {% comment %} Status currently has no documentation! {% endcomment %}
-    {% elif current_url_security %}
-      <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
+    {% elif current_url_security_scripts or current_url_security_problems or current_url_security_events %}
+      <a href="{% url 'doc' 'security_scripts' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
-        Hjælp til sikkerhed
+        Administration af sikkerhedsscripts
       </a>
-    {% elif current_url_security_problems %}
-      <a href="{% url 'doc' 'scripts/securityproblems' %}" class="nav-link link-light">
+      <a href="{% url 'doc' 'security_scripts/securityproblems' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         Definition af sikkerhedsregler
       </a>
-    {% elif current_url_security_events %}
-      <a href="{% url 'doc' 'scripts/securityevents' %}" class="nav-link link-light">
+      <a href="{% url 'doc' 'security_scripts/securityevents' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         Hjælp til sikkerhedshændelser
-      </a>
-    {% elif current_url_security_scripts %}
-      <a href="{% url 'doc' 'scripts/securityproblems' %}" class="nav-link link-light">
-        <span class='material-icons'>help_outline</span>
-        Hjælp til sikkerhed
-      </a>
-      <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
-        <span class='material-icons'>help_outline</span>
-        Administration af scripts
-      </a>
-      <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
-        <span class='material-icons'>help_outline</span>
-        Afvikling af scripts
       </a>
     {% elif current_url_site_configuration %}
       <a href="{% url 'doc' 'site_configuration' %}" class="nav-link link-light">

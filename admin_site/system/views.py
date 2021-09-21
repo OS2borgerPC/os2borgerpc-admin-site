@@ -1813,12 +1813,11 @@ documentation_menu_items = [
     ('groups', 'Grupper'),
     ('jobs', 'Jobs'),
     ('scripts', 'Scripts'),
+    ('security_scripts', 'Sikkerhedsscripts'),
     ('users', 'Brugere'),
 
     ('', 'Installation af OS2borgerPC'),
-    ('install', 'Installation'),
-    ('install_network', 'Installation via netværk'),
-    ('pdf_guide', 'Brugervenlig installationsguide (PDF)'),
+    ('pdf_guide', 'Installationsguide (PDF)'),
     ('creating_security_problems',
      'Oprettelse af Sikkerhedsovervågning (PDF)'),
 
