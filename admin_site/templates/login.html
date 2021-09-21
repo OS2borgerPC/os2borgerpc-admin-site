@@ -1,18 +1,185 @@
-{% extends "sitebase.html" %}
 {% load crispy_forms_tags %}
 
-{% block header_title %}
-    <div class="container">OS2 <em>borgerPC</em> admin</div>
-{% endblock %}
+{% load i18n %}
 
-{% block specific_content %}
-<div class="d-flex align-items-center justify-content-center" style="min-height: 50vh;">
-    <form method="post" action="" style="width: 18rem;">
-        <h2>Log ind</h2>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <input class="btn btn-primary" type="submit" value="Log ind">
-        <input type="hidden" name="next" value="{{ next }}">
-    </form>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <title>OS2borgerPC Administration Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/static/js/custom.js"></script>
+  <style>
+      :root {
+
+            /* Set sans-serif & mono fonts */
+            --sans-font: "Lato", sans-serif;
+            --mono-font: monospace;
+
+            /* Body font size. By default, effectively 18.4px, based on 16px as 'root em' */
+            --base-fontsize: 1rem;
+
+            /* Major third scale progression - see https://type-scale.com/ */
+            --header-scale: 1.25;
+
+            /* Line height is set to the "Golden ratio" for optimal legibility */
+            --line-height: 1.618;
+
+            /* Default (light) theme */
+            --bg: #ffffff;
+            --accent-bg: #EDEDED;
+            --text: #070707;
+            --text-light: #58595B;
+            --border: #58595B;
+            --accent: #e00099;
+            --accent-light: #F77CD0;
+            --code: #e00099;
+            --preformatted: #37393B;
+            --marked: #F77CD0;
+            --disabled: #A8AAAD;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            /* Set the font globally */
+            font-family: var(--sans-font);
+            font-size: 16px;
+        }
+        
+        /* Make the body a nice central block */
+        body {
+            color: var(--text);
+            background: var(--bg);
+            font-size: var(--base-fontsize);
+            line-height: var(--line-height);
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-bg);
+        }
+
+        main {
+            max-width: 90vw;
+            height: auto;
+            display: flex;
+            flex-flow: row nowrap;
+            background-color: var(--bg);
+        }
+
+        section {
+            width: 25rem;
+            padding: 4rem;
+            height: 40rem;
+            background-color: var(--bg);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .logo {
+            width: 10rem;
+            height: auto;
+        }
+
+        .photo {
+            height: 40rem;
+            width: 50rem;
+            background: url(https://www.magenta.dk/wp-content/uploads/2019/03/anne_dorte_bach_sorthvid-1024x683.jpg) no-repeat center center transparent;
+            background-size: cover;
+        }
+
+        form {
+            display: block;
+            width: 100%;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            border: solid 1px var(--accent-bg);
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        hr {
+            border: none;
+            border-top: solid 1px var(--accent-bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        p a,
+        p a:link,
+        p a:visited {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        p a:hover,
+        p a:focus {
+            text-decoration: underline;
+        } 
+
+        .cto {
+            background-color: var(--accent);
+            border: none;
+            padding: .5rem;
+            border-radius: .25rem;
+            color: var(--bg);
+            font-size: .8rem;
+            text-decoration: none;
+            width: auto;
+            margin-top: 1rem;
+        }
+
+        .cto.contact {
+            margin-top: 4rem;
+            float: right;
+        }
+
+        .muted {
+            color: var(--text-light);
+        }
+
+  </style>
+</head>
+
+<body class="{% block page_type_class %}{% endblock %}">
+
+  <main>
+    <div class="photo"></div>
+    <section>
+        <img class="logo" src="https://www.magenta.dk/wp-content/uploads/2019/03/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
+        
+        <form method="post" action="" style="width: 18rem;">
+            <h2><span class="muted">Log ind:</span> OS2borgerPC</h2>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="cto" type="submit" value="Log ind">
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+
+        <p>OS2borgerPC er en open source løsning. Du kan hente kildekode og dokumentation her: <a href="https://os2.eu/produkt/os2borgerpc">https://os2.eu/produkt/os2borgerpc</a></p>
+        <hr>
+        <a href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC" class="cto contact">Send en besked til Magenta</a>
+    </section>
+</main>
+
+  <ie11-browser-warning 
+    data-warning-text="Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på dette site."
+    data-link-text="Prøv at åbne denne side i Microsoft Edge">
+  </ie11-browser-warning>
+
+</body>
+</html>
