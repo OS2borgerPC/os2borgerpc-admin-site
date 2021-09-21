@@ -42,8 +42,6 @@ ul.nav li ul li.active { font-style: italic; }
 .popover.top .arrow {left: auto; right: 30px;}
 .popover.top {margin: 0 20px 5px 0;}
 
-.jobinfobutton { padding: 0; }
-.jobinfobutton span { font-size: 25px; } /* Slightly larger button please */
 #jobinfo-popover {position: absolute; display: none; z-index: 10000; width: auto; min-width: 20em; max-width: 60em;}
 
 #group_configuration, #pc_config {margin-bottom: 0;}
@@ -54,9 +52,6 @@ ul.nav li ul li.active { font-style: italic; }
 .script-list li:hover {
   cursor:pointer;
   background-color: var(--bs-gray);
-}
-.script-input a {
-  padding: 0;
 }
 
 .material-icons {

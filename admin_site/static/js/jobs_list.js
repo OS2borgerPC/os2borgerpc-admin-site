@@ -21,7 +21,7 @@ $(function(){
                 var info_button = ''
                 if(this.has_info) {
                     info_button = '<button ' +
-                        'class="btn btn-secondary jobinfobutton" ' +
+                        'class="btn btn-secondary jobinfobutton p-0" ' +
                         'data-bs-title="Job-info" ' +
                         'data-bs-toggle="popover" ' +
                         'data-bs-content="Loading..." ' +
@@ -30,7 +30,7 @@ $(function(){
                         'data-bs-trigger=focus' +
                         'data-bs-animation="true" ' +
                         'data-pk="' + this.pk + '"' +
-                    '><span class="material-icons">info</span></button>'
+                    '><span class="material-icons fs-3">info</span></button>'
                 }
                 var script_link = '<a href="' + this.script_url + '">' + this.script_name + '</a>'
                 var item = $(BibOS.expandTemplate(

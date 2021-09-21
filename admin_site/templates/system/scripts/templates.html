@@ -5,8 +5,8 @@
       <tr class="script-input">
         <td>
           <input type="hidden" name="script-input-pk" value="#PK#" class="pk-input">
-          <span class="error text-danger">#NAME_ERROR#</span>
           <input type="text" name="script-input-name" value="#NAME#" class="name-input form-control">
+          <p class="error text-danger d-inline">#NAME_ERROR#</p>
         </td>
         <td>
           <select name="script-input-type" class="type-input form-select">
@@ -16,7 +16,7 @@
           </select>
         </td>
         <td style="vertical-align: middle;">
-          <a class="btn btn-sm" href="javascript:void(0)" onclick="BibOS.ScriptEdit.removeInput($(this).parent().parent())">
+          <a class="btn btn-sm p-0" href="javascript:void(0)" onclick="BibOS.ScriptEdit.removeInput($(this).parent().parent())">
             Fjern
           </a>
         </td>

@@ -69,7 +69,7 @@
             this.updateNew()
         },
         startEdit: function(clickElem, id) {
-            c = $(clickElem).parents("tr")
+            var c = $(clickElem).parents("tr")
             $('#editconfigdialog input').removeAttr('disabled')
             $('#editconfig_id').val(id)
             $('#editconfig_pk').val(c.find('input.config-pk').val())
