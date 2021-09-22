@@ -10,12 +10,3 @@ def site_pre_delete(sender, instance, **kwargs):
     site = instance
     if not site.is_delete_allowed:
         raise ValidationError("Unable to delete site with computers attached.")
-
-
-@receiver(pre_delete, sender=PCGroup)
-def pcgroup_pre_delete(sender, instance, **kwargs):
-    group = instance
-    if not group.is_delete_allowed:
-        raise ValidationError(
-            "Unable to delete group with computers attached."
-        )

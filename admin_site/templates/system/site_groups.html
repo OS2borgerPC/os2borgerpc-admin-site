@@ -29,11 +29,9 @@ active
           {{ group.name }}
         </a>
         {% ifequal group selected_group %}
-          {% if selected_group.is_delete_allowed %}
             <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe">
               clear
             </a>
-          {% endif %}
         {% endifequal %}
       </li>
     {% endfor %}
