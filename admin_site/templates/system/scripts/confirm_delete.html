@@ -8,15 +8,21 @@ Slet script: {{script.name}}
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk:</h3>
+      <h3>Bemærk</h3>
       <ul>
-        <li><strong>Jobs</strong> med <strong>Scriptet</strong> listet vil blive slettet.</li>
-        <li>Hvis <strong>Scriptet</strong> er sat som <strong>Policy Script</strong> vil <strong>Policien</strong> blive opdateret med scriptet fjernet.</li>
-        <li>Hvis scriptet bruges i en <strong>Sikkerhedsregel</strong>, vil <strong>Sikkerhedsreglen</strong> blive slettet.</li>
+        <li>
+          Gamle <strong>Jobs</strong> med <strong>Scriptet</strong> vil blive slettet.
+        </li>
+        <li>
+          Hvis <strong>Scriptet</strong> er sat som <strong>Tilknyttet Script</strong> vil listen af de <strong>Tilknyttede Scripts</strong> blive opdateret med scriptet fjernet.
+        </li>
+        <li>
+          Hvis <strong>Scriptet</strong> bruges i en <strong>Sikkerhedsregel</strong>, vil <strong>Sikkerhedsreglen</strong> blive slettet.
+        </li>
       </ul>
     </div>
-    <p>Er du sikker på, du ønsker at slette scriptet?:</p>
-    <p><strong>{{ script.name }}</strong>?</p>
+    <p>Er du sikker på, du ønsker at slette scriptet
+    <strong style="font-size: 1.25em;">{{ script.name }}</strong>?</p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}

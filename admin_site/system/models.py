@@ -424,12 +424,6 @@ class PCGroup(models.Model):
     def url(self):
         return self.uid
 
-    @property
-    def is_delete_allowed(self):
-        """This should always be checked by the user interface to avoid
-        validation errors from the pre_delete signal."""
-        return self.pcs.count() == 0
-
     def save(self, *args, **kwargs):
         """Customize behaviour when saving a group object."""
         # Before actual save
