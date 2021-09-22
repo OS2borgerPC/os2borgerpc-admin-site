@@ -10,6 +10,12 @@ Slet gruppe: {{ pcgroup.uid }}
     <p>Ønsker du virkelig at slette denne gruppe?<br>
       <strong style="font-size: 1.25em;">{{ pcgroup.uid }}</strong>
     </p>
+    <p>
+      Computere og scripts der er tilknyttet gruppen vil blive fjernet fra gruppen.
+    </p>
+    <p>
+      Computere og scripts tilknyttet gruppen vil ikke blive slettet.
+    </p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
