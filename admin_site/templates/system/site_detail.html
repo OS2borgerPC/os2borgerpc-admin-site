@@ -6,11 +6,12 @@
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
-    <table class="table table-hover warn-table" id="#site_activepcs_table">
+    <table class="table table-hover warn-table caption-top" id="#site_activepcs_table">
+      <caption>Computere</caption>
       <thead>
         <tr>
-          <th>Navn</th>
-          <th>Aktiv</th>
+          <th class="px-2 active-col"></th>
+          <th class="ps-2">Navn</th>
           <th>Beskrivelse</th>
           <th>Placering</th>
           <th>Senest set</th>
@@ -20,8 +21,8 @@
       <tbody id="activepcs-list">
           {% for pc in ls_pcs %}
         <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
-            <td><strong>{{ pc.name }}</strong></td>
-            <td>{{ pc.is_active|yesno:"Ja,Nej" }}</td>
+            <td class="ps-3 pe-2 active-col">{% if not pc.is_active %}<span class="badge bg-danger">Ny{% endif %}</span></td>
+            <td class="ps-2"><strong>{{ pc.name }}</strong></td>
             <td>{{ pc.description }}</td>
             <td>{{ pc.location }}</td>
             <td>{% if pc.last_seen %}{{ pc.last_seen }}{% else %}Aldrig{% endif %}</td>

@@ -262,7 +262,7 @@ class SiteDetailView(SiteView):
         site = context['site']
         active_pcs = site.pcs.filter(is_active=True)
         context['active_pcs'] = active_pcs.count()
-        context['ls_pcs'] = site.pcs.all().order_by('-is_active', 'last_seen')
+        context['ls_pcs'] = site.pcs.all().order_by('is_active', '-last_seen')
         return context
 
 

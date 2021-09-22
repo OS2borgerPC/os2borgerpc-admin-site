@@ -84,7 +84,7 @@ detailpage
     </a>
   
     <hr>
-    <h2 class="text-light">Brugere og Versioner</h3>
+    <h2 class="text-light">Brugere & Versioner</h3>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
     <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
       <span class="material-icons">person</span> Brugere
@@ -92,7 +92,7 @@ detailpage
 
     {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
     <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
-      <span class="material-icons"> cloud_download </span>Versioner
+      <span class="material-icons"> cloud_download </span> Versioner
     </a>
     <hr>
 

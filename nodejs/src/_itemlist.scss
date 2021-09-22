@@ -5,7 +5,7 @@
 
     & > li {
         border-bottom: solid 1px $white;
-        padding: 0;
+        padding: $spacer*.75 $spacer;
         margin: 0;
         display: flex;
         flex-flow: row nowrap;
@@ -25,7 +25,6 @@
 
     .item-list-link {
         display: block;
-        padding: $spacer*.75 $spacer;
         flex-grow: 1;
         text-align: left;
         border-radius: 0;
@@ -47,8 +46,7 @@
         border-radius: .33rem;
         display: block;
         text-decoration: none;
-        padding: $spacer*.5;
-        margin: 0 $spacer*.25;
+        padding: $spacer*.25;
         font-size: 1.25rem;
 
         &:hover,

@@ -20,6 +20,7 @@ Computere
       <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
         {{ pc.name }}
       </a>
+      {% if not pc.is_active %}<span class="badge bg-danger me-2">Ny{% endif %}</span>
       {% ifequal pc selected_pc %}
         <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
           clear
