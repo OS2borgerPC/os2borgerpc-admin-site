@@ -36,13 +36,11 @@
                 Redigér
               </a>
             </li>
-            {% if site.is_delete_allowed %}
               <li>
                 <a class="dropdown-item" href="{% url 'delete_site' slug=site.url %}" title="Slet bibliotek">
                   Slet
                 </a>
               </li>
-            {% endif %}
           </ul>
         </div>
       {% endfor %}      
