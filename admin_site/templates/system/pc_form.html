@@ -20,6 +20,9 @@ Computere
       <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
         {{ pc.name }}
       </a>
+        {% if not pc.is_active %}
+          <span class="badge bg-danger">Inaktiv</span>
+        {% endif %}
       {% ifequal pc selected_pc %}
         <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
           clear
@@ -35,7 +38,7 @@ Computere
 
     <h2 class="divideheader">
       Detaljer om <em>{{ selected_pc.name }}</em>
-      {% if selected_pc.securityevent_set.count > 0 %}
+      {% if selected_pc.security_events.count > 0 %}
       <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se hændelser for denne PC">
         <span class="badge badge-important">
           <icon class="{% if has_security_events %}icon-fire{% else %}icon-ok{% endif %} icon-white"></icon>
@@ -50,7 +53,7 @@ Computere
       {% if selected_pc.last_seen %}
         Senest set: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
       {% endif %}
-      {% if security_event != "Ingen hændelser"%}
+      {% if security_event %}
         <span class="ms-3">
           Seneste advarsel set: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
         </span>
@@ -99,14 +102,22 @@ Computere
               {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
 
             </fieldset>
-          
           </div>
+
+        <fieldset class="mt-5">
+          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+          <button class="btn btn-secondary" type="reset">Annuller</button>
+        </fieldset>
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
           <fieldset>
             {% include 'system/configlist/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
           </fieldset>
+          <fieldset class="mt-5">
+            <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+            <button class="btn btn-secondary" type="reset">Annuller</button>
+        </fieldset>
         </div>
 
         <div id="jobs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="jobs-tab">
@@ -140,12 +151,6 @@ Computere
           </table>
 
         </div>
-
-        <fieldset class="mt-5">
-          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
-          <button class="btn btn-secondary" type="reset">Annuller</button>
-          <!--<button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Nulstil ændringer</button>-->
-        </fieldset>
 
       </div>
 

@@ -53,7 +53,7 @@ detailpage
     </a>
     
     <hr>
-    <h2 class="text-light">Maskiner</h3>
+    <h2 class="text-light">Organisering</h3>
     
     {% set_css_class_active request.resolver_match.url_name "configuration" as current_url_site_configuration %}
     <a class="nav-link link-light {{ current_url_site_configuration  }}" href="{% url 'configuration' slug=site.url %}">
@@ -68,11 +68,6 @@ detailpage
     {% set_css_class_active request.resolver_match.url_name "group" as current_url_groups %}
     <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">
       <span class="material-icons">queue</span> Grupper
-    </a>
-  
-    {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
-      <span class="material-icons"> cloud_download </span>Versioner
     </a>
     
     <hr>
@@ -89,12 +84,16 @@ detailpage
     </a>
   
     <hr>
-    
+    <h2 class="text-light">Brugere & Versioner</h3>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
     <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
       <span class="material-icons">person</span> Brugere
     </a>
-  
+
+    {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
+    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
+      <span class="material-icons"> cloud_download </span> Versioner
+    </a>
     <hr>
 
     <h2 class="text-light">Dokumentation</h3>

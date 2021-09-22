@@ -14,6 +14,7 @@ import os.path
 from distutils.version import LooseVersion
 
 from system.mixins import AuditModelMixin
+from system.managers import SecurityEventQuerySet
 
 """The following variables define states of objects like jobs or PCs. It is
 used for labeling in the GUI."""
@@ -1218,6 +1219,9 @@ class SecurityEvent(models.Model):
     """A security event is an instance of a security problem."""
 
     # Event status choices
+
+    objects = SecurityEventQuerySet.as_manager()
+
     NEW = 'NEW'
     ASSIGNED = 'ASSIGNED'
     RESOLVED = 'RESOLVED'
@@ -1235,8 +1239,8 @@ class SecurityEvent(models.Model):
     )
 
     STATUS_TO_LABEL = {
-        NEW: 'bg-danger',
-        ASSIGNED: 'bg-warning',
+        NEW: 'bg-primary',
+        ASSIGNED: 'bg-secondary',
         RESOLVED: 'bg-success'
     }
     problem = models.ForeignKey(
@@ -1246,7 +1250,7 @@ class SecurityEvent(models.Model):
     ocurred_time = models.DateTimeField(verbose_name=_('occurred'))
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(verbose_name=_('reported'))
-    pc = models.ForeignKey(PC, on_delete=models.CASCADE)
+    pc = models.ForeignKey(PC, on_delete=models.CASCADE, related_name="security_events")
     summary = models.CharField(max_length=4096, null=False, blank=False)
     complete_log = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
