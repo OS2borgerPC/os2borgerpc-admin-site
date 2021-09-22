@@ -21,7 +21,13 @@
       <tbody id="activepcs-list">
           {% for pc in ls_pcs %}
         <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
-            <td class="ps-3 pe-2 active-col">{% if not pc.is_active %}<span class="badge bg-danger">Ny{% endif %}</span></td>
+            <td class="ps-3 pe-2 active-col">
+              {% if pc.is_active %}
+                <span class="badge bg-success">Aktiv</span>
+              {% else %}
+                <span class="badge bg-danger">Inaktiv</span>
+            {% endif %}
+            </td>
             <td class="ps-2"><strong>{{ pc.name }}</strong></td>
             <td>{{ pc.description }}</td>
             <td>{{ pc.location }}</td>
