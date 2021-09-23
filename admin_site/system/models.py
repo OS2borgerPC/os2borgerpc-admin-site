@@ -306,10 +306,6 @@ class Site(models.Model):
         null=True,
         blank=True)
 
-    security_alerts = models.ManyToManyField("SecurityProblem",
-                                             related_name='alert_sites',
-                                             blank=True)
-
     class Meta:
         ordering = ["name"]
 

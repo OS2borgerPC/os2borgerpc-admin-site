@@ -49,7 +49,6 @@ from system.models import (
 )
 # PC Status codes
 from system.forms import (
-    SiteForm,
     GroupForm,
     ConfigurationEntryForm,
     ScriptForm,
@@ -1258,32 +1257,6 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             _('User %s deleted') % self.kwargs['username']
         )
         return response
-
-
-class SiteCreate(CreateView, SuperAdminOnlyMixin):
-    model = Site
-    form_class = SiteForm
-    slug_field = 'uid'
-
-    def get_success_url(self):
-        return '/sites/'
-
-
-class SiteUpdate(UpdateView, SuperAdminOnlyMixin):
-    model = Site
-    form_class = SiteForm
-    slug_field = 'uid'
-
-    def get_success_url(self):
-        return '/sites/'
-
-
-class SiteDelete(DeleteView, SuperAdminOnlyMixin):
-    model = Site
-    slug_field = 'uid'
-
-    def get_success_url(self):
-        return '/sites/'
 
 
 class ConfigurationEntryCreate(SiteMixin, CreateView,

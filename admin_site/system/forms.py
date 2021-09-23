@@ -3,7 +3,7 @@ import datetime
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Site, PCGroup, ConfigurationEntry, PC
+from .models import PCGroup, ConfigurationEntry, PC
 from .models import Script, Input, SecurityProblem
 from account.models import SiteMembership
 
@@ -25,22 +25,6 @@ def add_classes_to_form(someform, classes_to_add):
             if 'class' not in field.widget.attrs:
                 field.widget.attrs['class'] = ''
             field.widget.attrs['class'] += ' ' + classes_to_add
-
-
-class SiteForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SiteForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
-            self.fields['uid'].widget.attrs['readonly'] = True
-
-    class Meta:
-        model = Site
-        exclude = ['configuration']
-        widgets = {
-            'paid_for_access_until':
-                forms.widgets.DateInput(attrs={'type': 'date'}),
-        }
 
 
 class GroupForm(forms.ModelForm):
