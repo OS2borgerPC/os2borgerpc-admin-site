@@ -2,13 +2,19 @@ Version 5.0.0, August 8, 2021
 -----------------------------
 
 New in this version:
+
 - Overhaul user interface.
 - Add pagination on Jobs and SecurityEvents.
 - Add Script categories.
 - Overhaul Script model (created by, updated by, maintained by magenta, author fields).
 - Add Script search.
 - Make local scripts deletable.
-- Add Django admin improvements (jobs run per script, number of computers per site etc.)
+- Make groups deleteable.
+- Add Django admin improvements (jobs run per script, number of computers per site etc.).
+- Add generic Magenta login page.
+- Remove create, update, delete capabilities for Sites.
+- Overhaul documentation.
+- Update translations
 - Update jQuery to 3.5.1.
 - Update Bootstrap to version 5.
 
