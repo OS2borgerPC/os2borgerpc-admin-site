@@ -1696,9 +1696,9 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         if 'status' in params:
             query['status__in'] = params.getlist('status')
 
-        orderby = params.get('orderby', '-pk')
+        orderby = params.get('orderby', '-occurred_time')
         if orderby not in SecurityEventSearch.VALID_ORDER_BY:
-            orderby = '-pk'
+            orderby = '-occurred_time'
 
         queryset = queryset.filter(**query).order_by(
             orderby,
