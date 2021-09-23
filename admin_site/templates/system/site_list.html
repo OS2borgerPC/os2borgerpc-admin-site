@@ -9,7 +9,7 @@
     <div>
       {% for site in site_list %}
 
-        <div class="btn-group">
+        <div class="btn-group mt-3">
           <a class="btn btn-light btn-lg" href="{% url 'site' slug=site.url %}" >
             {{site.name}}
           </a>
