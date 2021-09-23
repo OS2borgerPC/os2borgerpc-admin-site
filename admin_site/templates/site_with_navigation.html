@@ -58,7 +58,7 @@ detailpage
     <h2 class="text-light">Organisering</h3>
   
     {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
-    <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}" onclick="spin();">
+    <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}">
       <span class="material-icons">computer</span> Computere
     </a>
   

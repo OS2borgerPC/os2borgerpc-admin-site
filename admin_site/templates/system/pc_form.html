@@ -17,7 +17,7 @@ Computere
   {% for pc in pc_list %}
     <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
       {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
-      <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
+      <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
         {{ pc.name }}
       </a>
         {% if not pc.is_active %}
