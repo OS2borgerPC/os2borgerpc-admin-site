@@ -2,6 +2,7 @@ Version 5.0.0, August 8, 2021
 -----------------------------
 
 New in this version:
+
 - Overhaul user interface.
 - Add pagination on Jobs and SecurityEvents.
 - Add Script categories.
