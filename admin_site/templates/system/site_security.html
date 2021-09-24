@@ -80,7 +80,7 @@ Sikkerhedshændelser
     <table class="table table-hover warn-table table-extendable" id="site_securityevents_table">
       <thead>
         <tr>
-          {% include 'widgets/orderby_th_ajax.html' with label='Advarsel' action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
+          {% include 'widgets/orderby_th_ajax.html' with label='Regel' action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
           <th>Maskine</th>
           <th>Tid</th>
           <th>Status</th>

@@ -55,7 +55,7 @@ Computere
       {% endif %}
       {% if security_event %}
         <span class="ms-3">
-          Seneste advarsel set: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
+          Seneste sikkerhedshændelse set: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
         </span>
       {% endif %}
     </p>
@@ -99,7 +99,7 @@ Computere
 
               {{ form.pc_groups.errors }}
               <label class="mb-2">Grupper</label>
-              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
+              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til gruppe' remove_text='Fjern computer fra gruppe' %}
 
             </fieldset>
           </div>
@@ -141,8 +141,8 @@ Computere
               <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>
                 {% if job.has_info %}
-                  <button type="button" class="btn btn-secondary jobinfobutton" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="focus" data-bs-animation="true">
-                    <span class="material-icons">info</span>
+                  <button type="button" class="btn jobinfobutton p-0" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="focus" data-bs-animation="true">
+                    <span class="material-icons fs-3">info</span>
                   </button>
                 {% endif %}
               </td>

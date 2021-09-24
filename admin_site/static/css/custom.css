@@ -43,6 +43,7 @@ ul.nav li ul li.active { font-style: italic; }
 .popover.top {margin: 0 20px 5px 0;}
 
 #jobinfo-popover {position: absolute; display: none; z-index: 10000; width: auto; min-width: 20em; max-width: 60em;}
+
 #group_configuration, #pc_config {margin-bottom: 0;}
 .script-list {
   list-style-type:none;

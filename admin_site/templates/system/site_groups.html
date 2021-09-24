@@ -82,20 +82,21 @@ active
 
               {{ form.pcs.errors }}
               <label class="mb-2">Computere i denne gruppe</label>
-              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' %}
+              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' %}
 
             </fieldset>
           </div>
-        </div>
-
-        <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
-          {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
         </div>
 
         <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
           {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
       </div>
+
+      <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
+        {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
+      </div>
+
 
       <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
         <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>

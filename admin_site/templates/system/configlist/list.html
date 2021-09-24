@@ -5,6 +5,7 @@
       <tr>
         <th>Nøgle</th>
         <th>Værdi</th>
+        <th>Handlinger</th>
       </tr>
     </thead>
     <tbody>
@@ -12,7 +13,7 @@
         {% include 'system/configlist/item.html' with pk=entry.pk key=entry.key value=entry.value submit_name=cnf_id %}
       {% endfor %}
       <tr>
-        <td colspan="2">
+        <td colspan="3">
           <input type="hidden" name="{{ cnf_id }}_new_entries" id="{{ cnf_id }}_new_entries" value="0">
           <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ConfigList.startAdd('{{ cnf_id }}')" title="Tilføj ny konfiguration">
             <span class="d-flex align-items-center ">

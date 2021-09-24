@@ -4,26 +4,6 @@
 Brugere
 {% endblock %}
 
-{% block subnav %}
-  <div class="sublevelnav">
-    <div class="listutils">
-      <a class="btn btn-link" href="{% url 'new_user' site.uid %}" title="Tilføj ny bruger">
-        <span class="material-icons">add</span>
-        Tilføj ny bruger
-      </a>
-    </div>
-    <ul class="item-list">
-      {% for user in user_list %}
-        <li class="{% ifequal user selected_user %}active{% endifequal %}">
-          <a class="item-list-link" href="/site/{{ site.url }}/users/{{ user.username }}">
-            {{ user.username }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-{% endblock %}
-
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
       <h2 class="divideheader">Opret ny bruger</em></h2>
@@ -39,4 +19,5 @@ Brugere
       </div>
     </div>
   </div>
+
 {% endblock %}

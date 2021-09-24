@@ -264,9 +264,10 @@ msgstr "Høj"
 msgid "securitylevel:Critical"
 msgstr "Kritisk"
 
+# Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: system/models.py:1195
 msgid "level"
-msgstr "alvorsgrad"
+msgstr "alvorlighedsgrad"
 
 #: system/models.py:1205
 msgid "alert groups"
