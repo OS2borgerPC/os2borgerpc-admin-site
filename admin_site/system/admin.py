@@ -69,6 +69,7 @@ class PCInline(admin.TabularInline):
 
 
 class PCGroupAdmin(admin.ModelAdmin):
+    list_display = ['site', 'name']
     inlines = [PCInline]
 
 
@@ -84,6 +85,7 @@ class BatchParameterInline(admin.TabularInline):
 
 
 class BatchAdmin(admin.ModelAdmin):
+    list_display = ['site', 'name', 'script']
     fields = ['site', 'name', 'script']
     inlines = [JobInline, BatchParameterInline]
 
@@ -210,6 +212,14 @@ class ImageVersionAdmin(admin.ModelAdmin):
     list_display = ("platform", "image_version", "os", "release_date")
 
 
+class SecurityProblemAdmin(admin.ModelAdmin):
+    list_display = ("site", "name", "level", "security_script")
+
+
+class SecurityEventAdmin(admin.ModelAdmin):
+    list_display = ("problem", "ocurred_time", "reported_time", "pc", "status")
+
+
 ar(Configuration, ConfigurationAdmin)
 ar(PackageList)
 ar(CustomPackages, CustomPackagesAdmin)
@@ -227,5 +237,5 @@ ar(Job, JobAdmin)
 ar(BatchParameter)
 ar(AssociatedScript)
 ar(AssociatedScriptParameter)
-ar(SecurityEvent)
-ar(SecurityProblem)
+ar(SecurityEvent, SecurityEventAdmin)
+ar(SecurityProblem, SecurityProblemAdmin)
