@@ -1,0 +1,64 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Konfigurationer</h1>
+
+  <p class="alert alert-warning">
+    Konfigurationer er power-user-funktionalitet, og formentligt ikke relevant at benytte for de fleste.
+  </p>
+
+  <p>
+    Konfigurationer bruges til at udveksle information mellem admin-sitet og de tilknyttede computere, i begge
+    retninger.<br/>
+    Dvs. det er både muligt fra adminsitet at specificere en værdi som en eller flere computere så vil modtage, 
+    og ligeledes sender en computer værdier til adminsitet.
+  </p>
+  <p>Eksempler på anvendelsesmuligheder:</p>
+  <ul>
+    <li>Computeren sender information om den kører borgerPC eller displayPC, samt hvilke specifikke versioner heraf den
+      har.</li> 
+    <li>Man ønsker ifm. et script at sende konfiguration dertil via adminsitet, som så kan opdateres uden genkørsel af
+      scripts, eller som kan variere ml. grupper eller computere.</li>
+  </ul>
+
+  <h3>Håndtering af konfigurationer</h3>
+
+  <p>
+    Klik på knappen "Tilføj konfiguration" for at tilføje en ny
+    konfigurationsnøgle/værdi.<br/>
+    For rette eller slette en værdi, skal du klikke på <strong>Rediger</strong> eller <strong>Slet</strong> ud for den enkelte nøgle.
+  </p>
+
+  <h3>Konfigurationer på forskellige niveauer</h3>
+
+  <p>Konfigurationer findes på tre niveauer:</p>
+
+
+  <p><strong>1. Site-konfigurationer</strong></p>
+
+  <p>
+    Disse konfigurationsparametre gælder for alle computere, der er tilknyttet det valgte site. 
+  </p>
+
+  <p>
+    Site konfigurationerne kan overstyres via tilpassede konfigurationsnøgler/værdier
+    på grupper og på de enkelte computere.
+  </p>
+
+  <p><strong>2. Gruppe-konfigurationer</strong></p>
+
+  <p>
+    Ændringer for konfigurationer på en gruppe vil påvirke alle
+    computere der er medlem af gruppen, <em>med mindre</em> den pågældende
+    konfigurationsnøgle er blevet special-tilpasset på den enkelte computer.
+  </p>
+
+  <p><strong>3. Computer-konfigurationer</strong></p>
+
+  <p>
+    Konfigurationer angivet på en computer vil altid tage præcedens over
+    site-konfiguration eller konfiguration på grupper som computeren er medlem af.
+  </p>
+
+
+{% endblock %}

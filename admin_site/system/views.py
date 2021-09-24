@@ -1787,13 +1787,13 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 documentation_menu_items = [
     ('', 'OS2borgerPC Administration'),
     ('status', 'Status'),
-    ('site_configuration', 'Site-konfiguration'),
     ('computers', 'Computere'),
     ('groups', 'Grupper'),
     ('jobs', 'Jobs'),
     ('scripts', 'Scripts'),
     ('security_scripts', 'Sikkerhedsscripts'),
     ('users', 'Brugere'),
+    ('configuration', 'Konfigurationer'),
 
     ('', 'Installation af OS2borgerPC'),
     ('pdf_guide', 'Installationsguide (PDF)'),

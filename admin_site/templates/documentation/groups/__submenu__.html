@@ -2,9 +2,6 @@
     <li {% ifequal submenu_active 'edit' %}class="active"{% endifequal %}>
       <a href="{% url 'doc' 'groups/edit' %}"> Generel redigering</a>
     </li>
-    <li {% ifequal submenu_active 'config' %}class="active"{% endifequal %}>
-      <a href="{% url 'doc' 'groups/config' %}"> Konfiguration</a>
-    </li>
     <li {% ifequal submenu_active 'scripts' %}class="active"{% endifequal %}>
       <a href="{% url 'doc' 'groups/scripts' %}"> Scripts</a>
     </li>

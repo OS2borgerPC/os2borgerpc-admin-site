@@ -3,37 +3,34 @@
 {% block specific_content %}
   <h1>Sikkerhedsregler</h1>
   <p>
-    I oversigten "Sikkerhedsregler" vises alle definerede sikkerhedsregler, som der holdes øje med.
-    Fra oversigten kan oprettes nye sikkerhedsregler.<br>
-    En ny sikkerhedsregel skal have følgende input:
-   </p>
-   <ul>
-	   <li>
-	   Navn: Navnet på den pågældende sikkerhedsregel.
-	   </li>	     
-	   <li>
-	   UID: Et kort og unikt navn (som bruges internt i systemet). 
-	   Dette id bruges i det tilknyttede security script.
-	   Hvis ikke disse to passer sammen, ved systemet ikke 
-	   hvilken Sikkerhedsregel, Sikkerhedshændelsen hører til.
-	   </li>
-	   <li>
-	   Beskrivelse: En beskrivende tekst, som indgår i de afsendte advarselsmails.
-	   </li>
-	   <li>
-	   Alvorsgrad: Vælg mellem Kritisk, Høj og Normal.
-	   </li>
-	   <li>
-	   Script: Vælg fra listen. Oversigten består af de relevante scripts, 
-	   som er markeret som sikkerhedsscripts. 
-	   Scriptet afvikles hver gang en maskine kontakter OS2borgerPC-admin.
-	   </li>
-	   <li>
-	   Overvågede grupper: Vælg fra listen.<br> 
-	   Grupperne definerer hvilke computere den aktuelle sikkerhedsregel er aktiv for.
-	   </li>
-	   <li>
-	   Modtager(e) af email-advarsel: Vælg hvilke brugere der skal modtage advarsel per mail.
-	   </li>
-   </ul>
+    I oversigten "Sikkerhedsregler" vises alle definerede Sikkerhedsregler, som der holdes øje med.
+    Fra oversigten kan oprettes nye Sikkerhedsregler.<br>
+    En ny Sikkerhedsregel skal have følgende input:
+  </p>
+  <ul>
+	  <li>
+      Navn: Navnet på den pågældende sikkerhedsregel.
+	  </li>	     
+	  <li>
+      UID: Et kort og unikt navn (som bruges internt i systemet). 
+      Dette ID bruges i koden for det tilknyttede Sikkerhedsscript.
+      Hvis ikke disse to passer sammen, ved systemet ikke 
+      hvilken Sikkerhedsregel, Sikkerhedshændelsen hører til.
+	  </li>
+	  <li>
+      Beskrivelse: En beskrivende tekst, som indgår i de afsendte advarsels-e-mails.
+	  </li>
+	  <li>
+      Alvorlighedsgrad: Vælg mellem Kritisk, Høj og Normal.
+	  </li>
+	  <li>
+      Sikkerhedsscript: Sikkerhedsscriptet afvikles hver gang en maskine kontakter OS2borgerPC-admin.
+	  </li>
+	  <li>
+      Overvågede grupper: Grupperne definerer hvilke computere, den aktuelle sikkerhedsregel er aktiv for.
+	  </li>
+	  <li>
+      Modtager(e) af email-advarsel: Hvilke brugere der skal modtage advisering om advarslen per e-mail.
+	  </li>
+  </ul>
 {% endblock %}
