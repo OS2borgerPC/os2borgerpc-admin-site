@@ -8,6 +8,7 @@
   <meta charset="utf-8">
   <title>OS2borgerPC Administration Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preload" href="/static/font/lato/Lato-Italic.woff2" as="font" type="font/ttf" crossorigin="">
   <script src="/static/js/custom.js"></script>
   <style>
       :root {
@@ -17,7 +18,7 @@
             --mono-font: monospace;
 
             /* Body font size. By default, effectively 18.4px, based on 16px as 'root em' */
-            --base-fontsize: 1rem;
+            --base-fontsize: 0.75rem;
 
             /* Major third scale progression - see https://type-scale.com/ */
             --header-scale: 1.25;
@@ -38,6 +39,51 @@
             --marked: #F77CD0;
             --disabled: #A8AAAD;
         }
+
+				@font-face{
+          font-family: 'Lato';src:url(/static/font/lato/Lato-Regular.eot);src:url(/static/font/lato/Lato-Regular.eot?#iefix) format('embedded-opentype'),
+                       url(/static/font/lato/Lato-Regular.woff2) format('woff2'),
+                       url(/static/font/lato/Lato-Regular.woff) format('woff'),
+                       url(/static/font/lato/Lato-Regular.ttf) format('truetype'),
+                       url(/static/font/lato/Lato-Regular.svg#Lato_regularregular) format('svg');
+          font-style:normal;
+          font-weight:400;
+          font-display:fallback;
+        }
+
+				@font-face{
+					font-family: 'Lato';src:url(/static/font/lato/Lato-Light.eot);src:url(/static/font/lato/Lato-Light.eot?#iefix) format('embedded-opentype'),
+                       url(/static/font/lato/Lato-Light.woff2) format('woff2'),
+                       url(/static/font/lato/Lato-Light.woff) format('woff'),
+                       url(/static/font/lato/Lato-Light.ttf) format('truetype'),
+                       url(/static/font/lato/Lato-Light.svg#Lato_regularregular) format('svg');
+					font-style:light;
+					font-weight:300;
+					font-display:fallback
+				}
+
+
+				@font-face{
+					font-family: 'Lato';src:url(/static/font/lato/Lato-Italic.eot);src:url(/static/font/lato/Lato-Italic.eot?#iefix) format('embedded-opentype'),
+                       url(/static/font/lato/Lato-Italic.woff2) format('woff2'),
+                       url(/static/font/lato/Lato-Italic.woff) format('woff'),
+                       url(/static/font/lato/Lato-Italic.ttf) format('truetype'),
+                       url(/static/font/lato/Lato-Italic.svg#Lato_regularitalic) format('svg');
+					font-style:italic;
+					font-weight:400;
+					font-display:fallback
+				}
+
+				@font-face{
+					font-family: 'Lato';src:url(/static/font/lato/Lato-Bold.eot);src:url(/static/font/lato/Lato-Bold.eot?#iefix) format('embedded-opentype'),
+                       url(/static/font/lato/Lato-Bold.woff2) format('woff2'),
+                       url(/static/font/lato/Lato-Bold.woff) format('woff'),
+                       url(/static/font/lato/Lato-Bold.ttf) format('truetype'),
+                       url(/static/font/lato/Lato-Bold.svg#Latobold) format('svg');
+          font-weight:700;
+          font-style:bold;
+          font-display:fallback
+				}
 
         * {
             box-sizing: border-box;
@@ -73,8 +119,8 @@
         }
 
         section {
-            width: 25rem;
-            padding: 4rem;
+            width: 35rem;
+            padding: 7rem;
             height: 40rem;
             background-color: var(--bg);
         }
@@ -85,31 +131,45 @@
         }
 
         .logo {
-            width: 10rem;
             height: auto;
+            margin-bottom: 50px;
+            width: 10rem;
         }
 
         .photo {
-            height: 40rem;
-            width: 50rem;
-            background: url(https://www.magenta.dk/wp-content/uploads/2019/03/anne_dorte_bach_sorthvid-1024x683.jpg) no-repeat center center transparent;
+            height: 50rem;
+            width: 55rem;
+            background: url(/static/img/anne_dorte_bach_sorthvid.jpg) no-repeat center center transparent;
             background-size: cover;
+        }
+
+        form, #div_id_username, #div_id_password, input {
+            width: 100%;
         }
 
         form {
             display: block;
-            width: 100%;
         }
 
         input {
             display: block;
-            width: 100%;
             border: solid 1px var(--accent-bg);
+        }
+
+        input[type="text"], input[type="password"] {
+          height: 35px;
+        }
+
+        h2 {
+          font-size: 1.45rem;
+          font-weight: bold;
         }
 
         label {
             display: block;
+            font-size: .7rem;
             margin-top: 1rem;
+            margin-bottom: 0.3rem;
         }
 
         hr {
@@ -138,9 +198,10 @@
             border-radius: .25rem;
             color: var(--bg);
             font-size: .8rem;
+            font-weight: bold;
             text-decoration: none;
             width: auto;
-            margin-top: 1rem;
+            margin: 1.5rem 0;
         }
 
         .cto.contact {
@@ -160,9 +221,9 @@
   <main>
     <div class="photo"></div>
     <section>
-        <img class="logo" src="https://www.magenta.dk/wp-content/uploads/2019/03/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
+        <img class="logo" src="/static/img/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
         
-        <form method="post" action="" style="width: 18rem;">
+        <form method="post" action="">
             <h2><span class="muted">Log ind:</span> OS2borgerPC</h2>
             {% csrf_token %}
             {{ form|crispy }}
@@ -170,9 +231,11 @@
             <input type="hidden" name="next" value="{{ next }}">
         </form>
 
-        <p>OS2borgerPC er en open source løsning. Du kan hente kildekode og dokumentation her: <a href="https://os2.eu/produkt/os2borgerpc">https://os2.eu/produkt/os2borgerpc</a></p>
+        <p>OS2borgerPC er en open source løsning. <br/>
+        Du kan hente kildekode og dokumentation her: <a href="https://os2.eu/produkt/os2borgerpc">https://os2.eu/produkt/os2borgerpc</a></p>
         <hr>
-        <a href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC" class="cto contact">Send en besked til Magenta</a>
+        <a href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC" class="cto
+                 contact"><strong>Send en besked til Magenta<strong></a>
     </section>
 </main>
 
