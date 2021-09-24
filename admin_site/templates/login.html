@@ -9,6 +9,7 @@
   <title>OS2borgerPC Administration Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preload" href="/static/font/lato/Lato-Italic.woff2" as="font" type="font/ttf" crossorigin="">
+  <link rel="icon" href="/static/img/favicon.svg">
   <script src="/static/js/custom.js"></script>
   <style>
       :root {
@@ -18,13 +19,13 @@
             --mono-font: monospace;
 
             /* Body font size. By default, effectively 18.4px, based on 16px as 'root em' */
-            --base-fontsize: 0.75rem;
+            --base-fontsize: .9rem;
 
             /* Major third scale progression - see https://type-scale.com/ */
             --header-scale: 1.25;
 
             /* Line height is set to the "Golden ratio" for optimal legibility */
-            --line-height: 1.618;
+            --line-height: 1.45;
 
             /* Default (light) theme */
             --bg: #ffffff;
@@ -92,7 +93,7 @@
         html {
             /* Set the font globally */
             font-family: var(--sans-font);
-            font-size: 16px;
+            font-size: var(--base-fontsize);
         }
         
         /* Make the body a nice central block */
@@ -111,36 +112,36 @@
         }
 
         main {
-            max-width: 90vw;
-            height: auto;
-            display: flex;
-            flex-flow: row nowrap;
-            background-color: var(--bg);
+          width: 100%;
+          height: 100%;
+          max-width: 90rem;
+          max-height: 47rem;
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: stretch;
+          background-color: var(--bg);
         }
 
         section {
-            width: 35rem;
-            padding: 7rem;
-            height: 40rem;
+            width: 40%;
+            padding: 5rem 7rem 2.5rem;
             background-color: var(--bg);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .logo {
             height: auto;
-            margin-bottom: 50px;
+            margin-bottom: 3rem;
             width: 10rem;
         }
 
         .photo {
-            height: 50rem;
-            width: 55rem;
-            background: url(/static/img/anne_dorte_bach_sorthvid.jpg) no-repeat center center transparent;
-            background-size: cover;
+          display: block;
+          height: auto;
+          width: 60%;
+          background: url('/static/img/anne_dorte_bach_sorthvid.jpg') no-repeat center center transparent;
+          background-size: cover;
         }
 
         form, #div_id_username, #div_id_password, input {
@@ -153,11 +154,22 @@
 
         input {
             display: block;
-            border: solid 1px var(--accent-bg);
         }
 
-        input[type="text"], input[type="password"] {
-          height: 35px;
+        input[type="text"], 
+        input[type="password"] {
+          height: 3rem;
+          border: solid 2px var(--accent-bg);
+          border-radius: .25rem;
+          padding: .5rem .75rem;
+          transition: outline .3s;
+        }
+
+        input[type="text"]:hover, 
+        input[type="password"]:hover,
+        input[type="text"]:focus, 
+        input[type="password"]:focus {
+          outline: solid 2px var(--accent);
         }
 
         h2 {
@@ -167,8 +179,7 @@
 
         label {
             display: block;
-            font-size: .7rem;
-            margin-top: 1rem;
+            margin-top: 1.25rem;
             margin-bottom: 0.3rem;
         }
 
@@ -194,24 +205,63 @@
         .cto {
             background-color: var(--accent);
             border: none;
-            padding: .5rem;
+            padding: .5rem .75rem;
             border-radius: .25rem;
             color: var(--bg);
-            font-size: .8rem;
+            font-size: var(--base-fontsize);
             font-weight: bold;
             text-decoration: none;
             width: auto;
-            margin: 1.5rem 0;
+            margin: 1.75rem 0;
             cursor: pointer;
+            transition: background-color .3s;
+        }
+
+        .cto:hover,
+        .cto:focus {
+          background-color: var(--text-light);
         }
 
         .cto.contact {
-            margin-top: 4rem;
+            margin-top: 3rem;
             float: right;
         }
 
         .muted {
             color: var(--text-light);
+        }
+
+        .alert {
+          background-color: var(--accent-bg);
+          padding: 1rem;
+        }
+
+        .alert ul {
+          margin: 0;
+          padding: 1.5rem;
+        }
+
+        @media screen and (max-width: 70rem) {
+          body {
+            background-color: var(--bg);
+          }
+          main {
+            justify-content: center;
+          }
+          section {
+            width: 100%;
+            max-width: 40rem;
+            overflow: visible;
+          }
+          .photo {
+            display: none;
+          }
+        }
+
+        @media screen and (max-width: 30rem) {
+          section {
+            padding: 4rem;
+          }
         }
 
   </style>
@@ -222,23 +272,32 @@
   <main>
     <div class="photo"></div>
     <section>
-        <img class="logo" src="/static/img/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
-        
-        <form method="post" action="">
-            <h2><span class="muted">Log ind:</span> OS2borgerPC</h2>
-            {% csrf_token %}
-            {{ form|crispy }}
-            <input class="cto" type="submit" value="Log ind">
-            <input type="hidden" name="next" value="{{ next }}">
-        </form>
 
-        <p>OS2borgerPC er en open source løsning. <br/>
-        Du kan hente kildekode og dokumentation her: <a href="https://os2.eu/produkt/os2borgerpc">https://os2.eu/produkt/os2borgerpc</a></p>
-        <hr>
-        <a href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC" class="cto
-                 contact"><strong>Send en besked til Magenta<strong></a>
+      <img class="logo" src="/static/img/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
+      
+      <form method="post" action="">
+          <h2><span class="muted">Log ind:</span> OS2borgerPC</h2>
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input class="cto" type="submit" value="Log ind">
+          <input type="hidden" name="next" value="{{ next }}">
+      </form>
+
+      <p style="margin: 2.5rem 0;">
+        OS2borgerPC er en open source løsning. Du kan hente kildekode og dokumentation her:
+        <a href="https://os2.eu/produkt/os2borgerpc">https://os2.eu/produkt/os2borgerpc</a>
+      </p>
+
+      <hr>
+
+      <a 
+        href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC" 
+        class="cto contact">
+        <strong>Send en besked til Magenta</strong>
+      </a>
+
     </section>
-</main>
+  </main>
 
   <ie11-browser-warning 
     data-warning-text="Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på dette site."
