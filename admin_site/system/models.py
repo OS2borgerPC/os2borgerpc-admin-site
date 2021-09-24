@@ -306,10 +306,6 @@ class Site(models.Model):
         null=True,
         blank=True)
 
-    security_alerts = models.ManyToManyField("SecurityProblem",
-                                             related_name='alert_sites',
-                                             blank=True)
-
     class Meta:
         ordering = ["name"]
 
@@ -340,12 +336,6 @@ class Site(models.Model):
     @property
     def url(self):
         return self.uid
-
-    @property
-    def is_delete_allowed(self):
-        """This should always be checked by the user interface to avoid
-        validation errors from the pre_delete signal."""
-        return self.pcs.count() == 0
 
     def __str__(self):
         return self.name

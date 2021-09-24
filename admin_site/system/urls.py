@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-from .views import SiteList, SiteCreate, SiteUpdate, SiteDelete
+from .views import SiteList
 from .views import AdminIndex, PCsView, GroupsView, UsersView, JobsView
 from .views import GroupCreate, GroupUpdate, GroupDelete, JobSearch, UserDelete
 from .views import SiteDetailView, UserCreate, UserUpdate, SiteConfiguration
@@ -64,13 +64,6 @@ urlpatterns = [
     # Sites
     url(r'^$', AdminIndex.as_view(), name='index'),
     url(r'^sites/$', SiteList.as_view(), name='sites'),
-    url(r'^sites/new/$', SiteCreate.as_view(), name='new_site'),
-    url(r'^sites/(?P<slug>[^/]+)/edit/$',
-        SiteUpdate.as_view(),
-        name='edit_site'),
-    url(r'^sites/(?P<slug>[^/]+)/delete/$',
-        SiteDelete.as_view(),
-        name='delete_site'),
     url(r'^site/(?P<slug>[^/]+)/$', SiteDetailView.as_view(),
         name='site'),
 
