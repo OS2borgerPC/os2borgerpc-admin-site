@@ -1,6 +1,15 @@
 version: "3.4"
 
 services:
+    frontend:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+            target: frontend
+        volumes:
+            - .:/code/
+        command:
+            sh -c "cd /code/nodejs && npm ci && npm run watch-sass"
     os2borgerpc-admin:
         build:
             context: .
