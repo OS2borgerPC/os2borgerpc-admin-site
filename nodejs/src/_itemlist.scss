@@ -5,11 +5,20 @@
 
     & > li {
         border-bottom: solid 1px $white;
-        padding: $spacer*.75 $spacer;
+        padding: 0;
         margin: 0;
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
+
+        &:hover,
+        &:focus {
+            background-color: $gray-300;
+        }
+
+        .badge {
+            margin-right: $spacer;
+        }
     }
 
     .disabled {
@@ -25,6 +34,7 @@
 
     .item-list-link {
         display: block;
+        padding: $spacer*.75 $spacer;
         flex-grow: 1;
         text-align: left;
         border-radius: 0;
@@ -36,10 +46,6 @@
             color: $gray-900;
         }
 
-        &:hover,
-        &:focus {
-            background-color: $gray-300;
-        }
     }
 
     .item-list-deletable {
