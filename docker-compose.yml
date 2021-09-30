@@ -12,8 +12,6 @@ services:
             # additional volume for it. It is important this anonymous volume
             # comes after the above bind to work.
             - /code/nodejs/node_modules/
-        command:
-            sh -c "cd /code/nodejs && npm ci && npm run watch-sass"
     os2borgerpc-admin:
         build:
             context: .
