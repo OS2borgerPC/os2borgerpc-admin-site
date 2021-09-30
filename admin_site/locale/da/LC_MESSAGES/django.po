@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-06 11:07+0200\n"
+"POT-Creation-Date: 2021-09-30 16:22+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -27,41 +27,45 @@ msgstr "Site-bruger"
 msgid "Site Admin"
 msgstr "Site-admin"
 
-#: system/admin.py:118
+#: system/admin.py:120
 msgid "Global"
 msgstr "Global"
 
-#: system/admin.py:131
+#: system/admin.py:133
 msgid "Jobs per site"
 msgstr "Jobs per site"
 
-#: system/admin.py:149
+#: system/admin.py:151
 msgid "Jobs per Site for the last year"
 msgstr "Jobs per site i det sidste år"
 
-#: system/admin.py:173
+#: system/admin.py:175
 msgid "Number of computers"
 msgstr "Antal computere"
 
-#: system/admin.py:186
+#: system/admin.py:188
 msgid "Site"
 msgstr "Site"
 
-#: system/forms.py:113
+#: system/forms.py:101
 msgid "Usertype"
 msgstr "Brugertype"
 
-#: system/forms.py:117
+#: system/forms.py:105
 msgid "Password"
 msgstr "Adgangskode"
 
-#: system/forms.py:124
+#: system/forms.py:112
 msgid "Password (again)"
 msgstr "Adgangskode (igen)"
 
-#: system/forms.py:171
+#: system/forms.py:160
 msgid "Passwords must be identical."
 msgstr "De to adgangskoder skal være ens"
+
+#: system/forms.py:167
+msgid "A user with this username already exists."
+msgstr "En bruger med det brugernavn eksisterer allerede."
 
 #: system/mixins.py:9
 msgid "created"
@@ -79,248 +83,243 @@ msgstr "oprettet af bruger"
 msgid "last modified by user"
 msgstr "sidst ændret af bruger"
 
-#: system/models.py:22
+#: system/models.py:23
 msgid "status:New"
 msgstr "Ny"
 
-#: system/models.py:23
+#: system/models.py:24
 msgid "status:Fail"
 msgstr "Fejlet"
 
-#: system/models.py:24
+#: system/models.py:25
 msgid "status:Update"
 msgstr "Opdatering"
 
-#: system/models.py:119
+#: system/models.py:120
 msgid "owner configuration"
 msgstr "ejer-konfiguration"
 
-#: system/models.py:126 system/models.py:145 system/models.py:223
-#: system/models.py:300 system/models.py:387 system/models.py:408
-#: system/models.py:552 system/models.py:722 system/models.py:733
-#: system/models.py:870 system/models.py:1088 system/models.py:1192
+#: system/models.py:127 system/models.py:146 system/models.py:224
+#: system/models.py:301 system/models.py:378 system/models.py:399
+#: system/models.py:537 system/models.py:707 system/models.py:718
+#: system/models.py:855 system/models.py:1073 system/models.py:1177
 msgid "name"
 msgstr "navn"
 
-#: system/models.py:127
+#: system/models.py:128
 msgid "version"
 msgstr "version"
 
-#: system/models.py:128 system/models.py:410 system/models.py:554
-#: system/models.py:734 system/models.py:1194
+#: system/models.py:129 system/models.py:401 system/models.py:539
+#: system/models.py:719 system/models.py:1179
 msgid "description"
 msgstr "beskrivelse"
 
-#: system/models.py:301 system/models.py:388 system/models.py:1193
-#, fuzzy
-#| msgid "id"
-msgid "uid"
-msgstr "ID"
+#: system/models.py:302 system/models.py:379 system/models.py:538
+#: system/models.py:1178
+msgid "UID"
+msgstr "UID"
 
-#: system/models.py:304
+#: system/models.py:305
 msgid "Paid for access until this date"
 msgstr "Betalt for adgang indtil denne dato"
 
-#: system/models.py:409
+#: system/models.py:400
 msgid "id"
 msgstr "ID"
 
-#: system/models.py:551
+#: system/models.py:536
 msgid "MAC"
 msgstr "MAC"
 
 #: system/models.py:553
-msgid "UID"
-msgstr "UID"
-
-#: system/models.py:568
 msgid "active"
 msgstr "aktiv"
 
-#: system/models.py:569
+#: system/models.py:554
 msgid "update required"
 msgstr "opdatering påkrævet"
 
-#: system/models.py:574
+#: system/models.py:559
 msgid "send package info"
 msgstr "send pakke-informationer"
 
-#: system/models.py:576
+#: system/models.py:561
 msgid "creation time"
 msgstr "oprettelsestidspunkt"
 
-#: system/models.py:578
+#: system/models.py:563
 msgid "last seen"
 msgstr "senest set"
 
-#: system/models.py:580
+#: system/models.py:565
 msgid "location"
 msgstr "placering"
 
-#: system/models.py:741
+#: system/models.py:726
 msgid "executable code"
 msgstr "eksekverbar kode"
 
-#: system/models.py:743
+#: system/models.py:728 system/models.py:1186
 msgid "security script"
 msgstr "sikkerhedsscript"
 
-#: system/models.py:747
+#: system/models.py:732
 msgid "maintained by Magenta"
 msgstr "vedligeholdt af Magenta"
 
-#: system/models.py:751
+#: system/models.py:736
 msgid "author"
 msgstr "forfatter"
 
-#: system/models.py:753
+#: system/models.py:738
 msgid "author email"
 msgstr "forfatter email"
 
-#: system/models.py:891 system/models.py:1091
+#: system/models.py:876 system/models.py:1076
 msgid "position"
 msgstr "position"
 
-#: system/models.py:950
+#: system/models.py:935
 msgid "jobstatus:New"
 msgstr "Nyt"
 
-#: system/models.py:951
+#: system/models.py:936
 msgid "jobstatus:Submitted"
 msgstr "Afsendt"
 
-#: system/models.py:952
+#: system/models.py:937
 msgid "jobstatus:Running"
 msgstr "Kører"
 
-#: system/models.py:953
+#: system/models.py:938
 msgid "jobstatus:Failed"
 msgstr "Fejlet"
 
-#: system/models.py:954
+#: system/models.py:939
 msgid "jobstatus:Done"
 msgstr "Udført"
 
-#: system/models.py:955
+#: system/models.py:940
 msgid "jobstatus:Resolved"
 msgstr "Genstartet"
 
-#: system/models.py:981
+#: system/models.py:966
 msgid "log output"
 msgstr "log output"
 
-#: system/models.py:984
+#: system/models.py:969
 msgid "started"
 msgstr "påbegyndt"
 
-#: system/models.py:985
+#: system/models.py:970
 msgid "finished"
 msgstr "afsluttet"
 
-#: system/models.py:1040
+#: system/models.py:1025
 #, python-brace-format
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:1047 system/views.py:464
+#: system/models.py:1032 system/views.py:438
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
 
-#: system/models.py:1082
+#: system/models.py:1067
 msgid "String"
 msgstr "Streng"
 
-#: system/models.py:1083
+#: system/models.py:1068
 msgid "Integer"
 msgstr "Heltal"
 
-#: system/models.py:1084
+#: system/models.py:1069
 msgid "Date"
 msgstr "Dato"
 
-#: system/models.py:1085
+#: system/models.py:1070
 msgid "File"
 msgstr "Fil"
 
-#: system/models.py:1089
+#: system/models.py:1074
 msgid "value type"
 msgstr "værdi-type"
 
-#: system/models.py:1092
+#: system/models.py:1077
 msgid "mandatory"
 msgstr "påkrævet"
 
 # SecurityProblem class
-#: system/models.py:1175
+#: system/models.py:1160
 msgid "securitylevel:Normal"
 msgstr "Normal"
 
-#: system/models.py:1176
+#: system/models.py:1161
 msgid "securitylevel:High"
 msgstr "Høj"
 
-#: system/models.py:1177
+#: system/models.py:1162
 msgid "securitylevel:Critical"
 msgstr "Kritisk"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: system/models.py:1195
+#: system/models.py:1180
 msgid "level"
 msgstr "alvorlighedsgrad"
 
-#: system/models.py:1205
+#: system/models.py:1192
 msgid "alert groups"
 msgstr "overvågede grupper"
 
-#: system/models.py:1209
+#: system/models.py:1196
 msgid "alert users"
 msgstr "modtager(e) af e-mail-advarsel"
 
 # SecurityEvent class
-#: system/models.py:1230
+#: system/models.py:1220
 msgid "eventstatus:New"
 msgstr "Ny"
 
-#: system/models.py:1231
+#: system/models.py:1221
 msgid "eventstatus:Assigned"
 msgstr "Tildelt"
 
-#: system/models.py:1232
+#: system/models.py:1222
 msgid "eventstatus:Resolved"
 msgstr "Løst"
 
-#: system/models.py:1250
+#: system/models.py:1240
 msgid "occurred"
 msgstr "tidspunkt"
 
-#: system/models.py:1252
+#: system/models.py:1242
 msgid "reported"
 msgstr "tidspunkt modtaget"
 
-#: system/models.py:1272
+#: system/models.py:1262
 msgid "BorgerPC"
 msgstr "BorgerPC"
 
-#: system/models.py:1273
+#: system/models.py:1263
 msgid "DisplayPC"
 msgstr "DisplayPC"
 
-#: system/views.py:317
+#: system/views.py:291
 #, python-format
 msgid "Configuration for %s updated"
 msgstr "Konfiguration for %s opdateret"
 
-#: system/views.py:786
+#: system/views.py:762
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:840 system/views.py:861
+#: system/views.py:816 system/views.py:837
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1055 system/views.py:1472
+#: system/views.py:1031 system/views.py:1425
 #, python-brace-format
 msgid ""
 "Computer {0} must be upgraded in order to join a group with scripts attached"
@@ -328,36 +327,41 @@ msgstr ""
 "Computer {0} skal opgraderes for at kunne meldes ind i en gruppe, der har "
 "scripts vedhæftet"
 
-#: system/views.py:1062
+#: system/views.py:1038
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
-#: system/views.py:1245
+#: system/views.py:1224
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:1279
+#: system/views.py:1258
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:1466
+#: system/views.py:1419
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:1483
+#: system/views.py:1436
 #, python-brace-format
 msgid ""
 "No value was specified for the mandatory input \"{0}\" of script \"{1}\""
 msgstr "Den obligatoriske parameterværdi \"{0}\" for script \"{1}\" mangler"
 
-#: system/views.py:1507
+#: system/views.py:1460
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
+
+#, fuzzy
+#~| msgid "id"
+#~ msgid "uid"
+#~ msgstr "ID"
 
 #~ msgid "deleted"
 #~ msgstr "slettet"
