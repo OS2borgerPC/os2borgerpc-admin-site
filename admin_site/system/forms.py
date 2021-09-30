@@ -73,7 +73,7 @@ class ScriptForm(forms.ModelForm):
         super(ScriptForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
-            self.fields['site'].widget.attrs['disabled'] = True
+            self.fields['site'].disabled = True
         else:
             self.fields['maintained_by_magenta'].widget = forms.HiddenInput()
 
