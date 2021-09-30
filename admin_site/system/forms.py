@@ -10,7 +10,6 @@ from .models import Script, Input, SecurityProblem
 from account.models import SiteMembership
 
 
-
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
 # and the multitude of Fields that default to a <select> widget)
 def add_classes_to_form(someform, classes_to_add):
@@ -120,7 +119,6 @@ class UserForm(forms.ModelForm):
         exclude = ('groups', 'user_permissions', 'first_name', 'last_name',
                    'is_staff', 'is_active', 'is_superuser', 'date_joined',
                    'last_login', 'password')
-
 
     def __init__(self, *args, **kwargs):
         initial = kwargs.setdefault('initial', {})
