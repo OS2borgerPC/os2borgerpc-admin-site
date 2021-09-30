@@ -963,7 +963,7 @@ class Job(models.Model):
     # Use built-in ID field for ID.
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
-    log_output = models.CharField(verbose_name=_('log output'),
+    log_output = models.TextField(verbose_name=_('log output'),
                                   max_length=128000,
                                   blank=True)
     started = models.DateTimeField(verbose_name=_('started'), null=True)
