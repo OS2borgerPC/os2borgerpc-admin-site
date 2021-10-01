@@ -7,6 +7,7 @@ from account.models import UserProfile, SiteMembership
 
 admin.site.unregister(User)
 
+
 class UserProfileInline(admin.TabularInline):
     model = UserProfile
     readonly_fields = ("id", "sites",)
@@ -16,9 +17,6 @@ class UserProfileInline(admin.TabularInline):
     def sites(self, obj):
         return obj.sites.values_list("name")
 
-
-
-
 @admin.register(User)
 class MyUserAdmin(UserAdmin):
     inlines = [UserProfileInline]
@@ -27,8 +25,7 @@ class MyUserAdmin(UserAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if not hasattr(obj, "bibos_profile"):
-            user_profile = UserProfile.objects.create(user=obj)
-
+            UserProfile.objects.create(user=obj)
 
 
 class SiteMembershipInline(admin.TabularInline):
