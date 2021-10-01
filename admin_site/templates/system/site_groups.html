@@ -91,19 +91,18 @@ active
         <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
           {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
-      </div>
 
-      <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
-        {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
-      </div>
+        <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
+          {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
+        </div>
 
+      </div>
 
       <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
         <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
         <button class="btn btn-secondary" type="reset">Annuller</button>
         <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
       </div>
-      
 
     </form>
 
