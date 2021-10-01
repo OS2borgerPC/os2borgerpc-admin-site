@@ -17,6 +17,7 @@ class UserProfileInline(admin.TabularInline):
     def sites(self, obj):
         return obj.sites.values_list("name")
 
+
 @admin.register(User)
 class MyUserAdmin(UserAdmin):
     inlines = [UserProfileInline]
