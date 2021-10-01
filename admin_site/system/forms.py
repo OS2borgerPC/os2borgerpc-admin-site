@@ -1,13 +1,13 @@
 import datetime
 
 from django import forms
+from django.forms import ValidationError
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
 from .models import PCGroup, ConfigurationEntry, PC
 from .models import Script, Input, SecurityProblem
 from account.models import SiteMembership
-
-from django.utils.translation import ugettext as _
 
 
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
@@ -114,6 +114,12 @@ class UserForm(forms.ModelForm):
         required=False
     )
 
+    class Meta:
+        model = User
+        exclude = ('groups', 'user_permissions', 'first_name', 'last_name',
+                   'is_staff', 'is_active', 'is_superuser', 'date_joined',
+                   'last_login', 'password')
+
     def __init__(self, *args, **kwargs):
         initial = kwargs.setdefault('initial', {})
         if 'instance' in kwargs and kwargs['instance'] is not None:
@@ -125,12 +131,6 @@ class UserForm(forms.ModelForm):
             initial['usertype'] = SiteMembership.SITE_USER
         self.initial_type = initial['usertype']
         super(UserForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = User
-        exclude = ('groups', 'user_permissions', 'first_name', 'last_name',
-                   'is_staff', 'is_active', 'is_superuser', 'date_joined',
-                   'last_login', 'password')
 
     def set_usertype_single_choice(self, choice_type):
         self.fields['usertype'].choices = [
@@ -156,6 +156,14 @@ class UserForm(forms.ModelForm):
         pw2 = cleaned_data.get("password_confirm")
         if pw1 != pw2:
             raise forms.ValidationError(_('Passwords must be identical.'))
+
+        username = cleaned_data.get("username")
+        user_exists = self.Meta.model.objects.filter(username=username).exists()
+
+        if not self.instance.pk and user_exists:
+            raise ValidationError(
+                _("A user with this username already exists.")
+            )
         return cleaned_data
 
     def save(self, commit=True):
