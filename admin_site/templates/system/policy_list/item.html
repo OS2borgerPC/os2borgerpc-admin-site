@@ -6,7 +6,7 @@
     <td class="policy-script-print-key"><a href="{% url 'script' site.uid script_id %}">{{ name }}</a></td>
   {% else %}
     <td>Nyt</td>
-    <td class="policy-script-print-key"><a href="/site/{{site.uid}}/script/{{script_pk}}">{{ name }}</a></td>
+    <td class="policy-script-print-key"><a href="/site/{{site.uid}}/scripts/{{script_pk}}/">{{ name }}</a></td>
   {% endif %}
   <td class="pe-0 js-match">
     <div data-name="policy-script-{{ name }}" >
