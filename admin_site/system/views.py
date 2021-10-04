@@ -255,13 +255,14 @@ class SiteDetailView(SiteView):
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         # Top level list of new PCs etc.
-        context['pcs'] = self.object.pcs.filter(Q(is_active=False))
+        context['pcs'] = self.object.pcs.filter(Q(is_activated=False))
         context['pcs'] = sorted(context['pcs'], key=lambda s: s.name.lower())
 
         site = context['site']
-        active_pcs = site.pcs.filter(is_active=True)
-        context['active_pcs'] = active_pcs.count()
-        context['ls_pcs'] = site.pcs.all().order_by('is_active', '-last_seen')
+        context['ls_pcs'] = site.pcs.all().order_by(
+            'is_activated',
+            '-last_seen'
+        )
         return context
 
 
@@ -1342,7 +1343,7 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context['form']
         site = context['site']
 
-        pc_queryset = site.pcs.filter(is_active=True)
+        pc_queryset = site.pcs.filter(is_activated=True)
         form.fields['pcs'].queryset = pc_queryset
 
         selected_pc_ids = form['pcs'].value()
@@ -1869,7 +1870,7 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
 
     interesting_properties = [
         'id', 'name', 'description', 'configuration_id', 'site_id',
-        'is_active', 'creation_time', 'last_seen', 'location']
+        'is_activated', 'creation_time', 'last_seen', 'location']
 
     def get_context_data(self, **kwargs):
         pcs = []

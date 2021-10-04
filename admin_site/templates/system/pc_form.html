@@ -20,7 +20,7 @@ Computere
       <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
         {{ pc.name }}
       </a>
-        {% if not pc.is_active %}
+        {% if not pc.is_activated %}
           <span class="badge bg-danger">Inaktiv</span>
         {% endif %}
       {% ifequal pc selected_pc %}
@@ -90,7 +90,7 @@ Computere
                 {{ form.location|as_crispy_field }}
 
                 <div mb-5>
-                    {{ form.is_active|as_crispy_field }}
+                    {{ form.is_activated|as_crispy_field }}
                 </div>
 
               </fieldset>

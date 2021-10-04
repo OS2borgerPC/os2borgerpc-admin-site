@@ -33,7 +33,7 @@ def register_new_computer(mac, name, distribution, site, configuration):
         custom_packages = CustomPackages(name=name)
 
     new_pc.distribution = Distribution.objects.get(uid=distribution)
-    new_pc.is_active = False
+    new_pc.is_activated = False
     new_pc.mac = mac
     # Create new configuration, populate with data from computer's config.
     # If a configuration with the same ID is hanging, reuse.
@@ -126,7 +126,7 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     # 1. Lookup PC, update "last_seen" field
     pc = PC.objects.get(uid=pc_uid)
 
-    if not pc.is_active:
+    if not pc.is_activated:
         # Fail silently
         return 0
 
@@ -211,7 +211,7 @@ def get_instructions(pc_uid, update_data):
     pc.last_seen = datetime.now()
     pc.save()
 
-    if not pc.is_active:
+    if not pc.is_activated:
         # Fail silently
         return ([], False)
 
@@ -340,14 +340,14 @@ def insert_security_problem_uid(securityproblem):
 
 def get_proxy_setup(pc_uid):
     pc = PC.objects.get(uid=pc_uid)
-    if not pc.is_active:
+    if not pc.is_activated:
         return 0
     return system.proxyconf.get_proxy_setup(pc_uid)
 
 
 def push_config_keys(pc_uid, config_dict):
     pc = PC.objects.get(uid=pc_uid)
-    if not pc.is_active:
+    if not pc.is_activated:
         return 0
 
     # We need two config dicts: one from the PC itself and one from groups

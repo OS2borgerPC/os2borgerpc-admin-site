@@ -550,7 +550,10 @@ class PC(models.Model):
     site = models.ForeignKey(
         Site, related_name='pcs', on_delete=models.CASCADE
     )
-    is_active = models.BooleanField(verbose_name=_('active'), default=False)
+    is_activated = models.BooleanField(
+        verbose_name=_('activated'),
+        default=False
+    )
     is_update_required = models.BooleanField(verbose_name=_('update required'),
                                              default=False)
     # This field is used to communicate to the JobManager on each PC that it
