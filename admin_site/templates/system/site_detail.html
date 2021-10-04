@@ -11,6 +11,7 @@
       <thead>
         <tr>
           <th class="px-2 active-col"></th>
+          <th>Aktiveret</th>
           <th class="ps-2">Navn</th>
           <th>Beskrivelse</th>
           <th>Placering</th>
@@ -23,9 +24,9 @@
         <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
             <td class="ps-3 pe-2 active-col">
               {% if pc.is_activated %}
-                <span class="badge bg-success">Aktiv</span>
+                <td><span class="badge bg-success">Ja</span></td>
               {% else %}
-                <span class="badge bg-danger">Inaktiv</span>
+                <td><span class="badge bg-danger">Nej</span></td>
             {% endif %}
             </td>
             <td class="ps-2"><strong>{{ pc.name }}</strong></td>

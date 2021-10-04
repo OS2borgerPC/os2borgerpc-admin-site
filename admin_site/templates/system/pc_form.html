@@ -21,7 +21,7 @@ Computere
         {{ pc.name }}
       </a>
         {% if not pc.is_activated %}
-          <span class="badge bg-danger">Inaktiv</span>
+          <span class="badge bg-danger">Ikke aktiveret</span>
         {% endif %}
       {% ifequal pc selected_pc %}
         <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
