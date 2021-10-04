@@ -14,7 +14,7 @@
         <h4>Computere</h4>
         <ul class="list-unstyled">
             {% for pc in pcs %}
-            {% if pc.is_active %}
+            {% if pc.is_activated %}
               <li>
                 <input type="checkbox" name="pcs" id="check-pc-{{pc.pk}}" value="{{pc.pk}}">
                 <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>

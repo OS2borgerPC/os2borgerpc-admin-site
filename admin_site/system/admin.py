@@ -176,7 +176,7 @@ class SiteAdmin(admin.ModelAdmin):
 
 
 class PCAdmin(admin.ModelAdmin):
-    list_display = ("name", "uid", "site_link", "is_active", "last_seen")
+    list_display = ("name", "uid", "site_link", "is_activated", "last_seen")
     search_fields = ("name", "uid")
 
     def site_link(self, obj):
