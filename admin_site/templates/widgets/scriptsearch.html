@@ -55,6 +55,14 @@
             ]
             var filtered_list = []
 
+            function displayAllScripts(ev) {
+                // If the user enters something, clicks away and then back don't refresh the list to show all scripts
+                var query = this.value.toLowerCase()
+                if (query.length == 0 ) {
+                    renderFilteredList(list)
+                }
+            }
+
             function displayOptions(ev) {
                 var query = this.value.toLowerCase()
                 if (query.length > 0) {
@@ -63,7 +71,7 @@
                     })
                     renderFilteredList(new_list)
                 } else {
-                    renderFilteredList([])
+                    renderFilteredList(list)
                 }
             }
 
@@ -106,6 +114,7 @@
             }
 
             // Initial setup
+            input_el.addEventListener('click', displayAllScripts)
             input_el.addEventListener('input', displayOptions)
             document.querySelector('#filtersearch-{{ id }} .btn-close').addEventListener('click', clearHandler)
             
