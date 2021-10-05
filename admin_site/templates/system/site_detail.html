@@ -10,7 +10,7 @@
       <caption>Computere</caption>
       <thead>
         <tr>
-          <th class="px-2 active-col"></th>
+          <th>Status</th>
           <th>Aktiveret</th>
           <th class="ps-2">Navn</th>
           <th>Beskrivelse</th>
@@ -22,13 +22,16 @@
       <tbody id="activepcs-list">
           {% for pc in ls_pcs %}
         <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
-            <td class="ps-3 pe-2 active-col">
-              {% if pc.is_activated %}
-                <td><span class="badge bg-success">Ja</span></td>
-              {% else %}
-                <td><span class="badge bg-danger">Nej</span></td>
+            {% if pc.online %}
+            <td><span class="badge bg-success">Online</span></td>
+            {% else %}
+            <td><span class="badge bg-danger">Offline</span></td>
             {% endif %}
-            </td>
+            {% if pc.is_activated %}
+              <td><span class="badge bg-success">Ja</span></td>
+            {% else %}
+              <td><span class="badge bg-danger">Nej</span></td>
+            {% endif %}
             <td class="ps-2"><strong>{{ pc.name }}</strong></td>
             <td>{{ pc.description }}</td>
             <td>{{ pc.location }}</td>
