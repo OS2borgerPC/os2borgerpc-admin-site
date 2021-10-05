@@ -1759,7 +1759,7 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
 
 documentation_menu_items = [
-    ('', 'OS2borgerPC Administration'),
+    ('', 'Administrationssiden'),
     ('status', 'Status'),
     ('computers', 'Computere'),
     ('groups', 'Grupper'),
@@ -1768,18 +1768,20 @@ documentation_menu_items = [
     ('security_scripts', 'Sikkerhedsscripts'),
     ('users', 'Brugere'),
     ('configuration', 'Konfigurationer'),
-
-    ('', 'Installation af OS2borgerPC'),
-    ('pdf_guide', 'Installationsguide (PDF)'),
     ('creating_security_problems',
      'Oprettelse af Sikkerhedsovervågning (PDF)'),
 
-    ('', 'OS2borgerPC-gateway'),
-    ('gateway_install', 'Installation af OS2borgerPC-gateway'),
+    ('', 'OS2borgerPC'),
+    ('os2borgerpc_installation_guide', 'Installationsguide (PDF)'),
+
+    ('', 'OS2displayPC'),
+    ('os2displaypc_installation_guide', 'Installationsguide (ekstern)'),
+    ('os2displaypc_wifi_guide', 'Opdatering af Wi-Fi opsætning'),
+
+    ('', 'Opsætning af Gateway'),
+    ('gateway_install', 'Installation af gateway'),
     ('gateway_admin', 'Administration af gateway'),
-    ('gateway_use', 'Anvendelse af gateway på OS2borgerPC-maskiner'),
-    ('', 'Om OS2borgerPC-Admin'),
-    ('om_os2borgerpc_admin', 'Om OS2borgerPC-Admin'),
+    ('gateway_use', 'Anvendelse af gateway'),
 
     ('', 'Teknisk dokumentation'),
     ('tech/os2borgerpc-image', 'OS2borgerPC Image'),

@@ -1,0 +1,151 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+<h1 class="title">Opdater kodeord på en OS2displayPC&rsquo;s Wi-Fi</h1>
+<p>
+Vi starter på en OS2displayPC som er startet op, hvor browseren vises, og hvor der er sat et tastatur til.
+</p>
+
+
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/1.png" />
+
+<p>
+Herfra trykker du Ctrl-Alt-F2.
+Da vil du komme til en loginprompt.
+&rsquo;marcus-01-vm&rsquo;, der vises her, er navnet på min OS2displayPC, som vil være anderledes for dig.
+</p>
+
+
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/2.png" />
+
+
+<p>
+Skriv &rsquo;superuser&rsquo;, tryk <strong>Enter</strong>, brugerens kodeord og tryk <strong>Enter</strong> igen.
+Vær opmærksom på at der ikke vises nogen indikation på, at den modtager din kode (eks. stjerner som tegn), men det gør den.
+</p>
+
+
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/3.png" />
+
+<p>
+Da vil du komme til en &ldquo;prompt&rdquo;:
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/4.png" />
+</p>
+
+<p>
+På denne prompt skriver du:
+<strong><strong>sudo nmtui</strong></strong>
+&#x2026;trykker <strong>Enter</strong> og indtaster igen brugerens kodeord:
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/5.png" />
+</p>
+
+<p>
+Dernæst vil du blive mødt af følgende skærm.
+</p>
+
+<p>
+I dette program navigerer du rundt med piletasterne, og bruger <strong>Enter</strong> til at trykke på en knap,
+og <strong>Escape</strong> kan bruges, til at gå tilbage.
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/6.png" />
+</p>
+
+<p>
+Den står allerede på <strong><strong>Edit a connection</strong></strong> så du trykker bare <strong>Enter</strong>, og du kommer så hertil:
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/7.png" />
+</p>
+
+<p>
+På denne side vil det variere hvad du ser, men hvis du tidligere havde en wifi-forbindelse sat op, vil den være listet her.
+Gå ned til dit wifi-netværk med piletasterne, og tryk igen <strong>Enter</strong>. Hvis du er i tvivl så kan du gå ind på dem hver især,
+for at se hvad navnet på netværket faktisk er. (SSID).
+</p>
+
+<p>
+Da vil du komme til følgende skærm. Hvad der står i felterne vil dog variere fra system til system.
+</p>
+
+<p><img src="/static/docs/img/os2displaypc_guide_to_update_wifi/9.png" />
+</p>
+
+<p>
+Brug piletasterne til at gå ned til kodeordet, slet det, og skriv det nye kodeord ind.
+Gå derefter til bunden og tryk OK.
+</p>
+
+
+<p><img src="/static/docs/img/os2displaypc_guide_to_update_wifi/10.png" />
+</p>
+
+
+<p>
+Du vil være tilbage på denne skærm - denne gang trykker du <strong>Escape</strong> for at gå et niveau tilbage, for at komme til hovedmenuen.
+</p>
+
+
+<p><img src="/static/docs/img/os2displaypc_guide_to_update_wifi/8.png" />
+</p>
+
+<p>
+Denne gang vælger du i stedet <strong><strong>Activate a connection</strong></strong>.
+</p>
+
+<p>
+Og du vil så komme hertil:
+</p>
+
+
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/ersatz1.jpg" />
+
+<p>
+Find dit netværk på listen, og hvis du ser muligheden for <strong><strong>Deactivate</strong></strong> gør du først dét, via piletasterne og <strong>Enter</strong>.
+Derefter vælger du <strong>Activate</strong>.
+</p>
+
+
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/ersatz2.jpg" />
+
+<p>
+Herefter vil netværket være aktiveret, hvis konfigurationen og kode var indtastet korrekt.
+</p>
+
+<p>
+Nu er vi færdige med <strong><strong>nmtui</strong></strong>.
+Tryk på <strong>Escape</strong> - eller alternativt vælg først &ldquo;Back&rdquo; med piletasterne efterfulgt af <strong>Enter</strong>,
+og derefter &ldquo;Quit&rdquo; og <strong>Enter</strong>, indtil programmet er lukket.
+</p>
+
+<p>
+Så vil du være tilbage i terminalen, som nu ser sådan her ud:
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/15.png" />
+</p>
+
+<p>
+Herefter kan du tjekke at netværksforbindelsen virker, eks. via følgende kommando, der bruger <strong>ping</strong>:
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/16.png" />
+</p>
+
+<p>
+Ved netforbindelse skulle du gerne se output som ovenover.
+</p>
+
+<p>
+Skriv &rsquo;exit&rsquo; på kommandolinien og tryk <strong>Enter</strong> for at logge ud - eller tryk <strong>Ctrl-d</strong>:
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/17.png" />
+</p>
+
+<p>
+Du vil så være tilbage hertil:
+</p>
+
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/2.png" />
+
+<p>
+Tryk nu Ctrl-Alt-F1 for at komme tilbage til browseren - så er vi tilbage til start:
+<img src="/static/docs/img/os2displaypc_guide_to_update_wifi/1.png" />
+</p>
+
+<p>
+Færdig!
+</p>
+
+{% endblock %}
