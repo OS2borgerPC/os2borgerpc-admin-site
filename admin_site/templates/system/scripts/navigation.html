@@ -123,16 +123,6 @@
       // Scroll active script into view
       document.getElementById('selected-script').scrollIntoView({'block': 'center'});
     })
-
-    // Only show the add script button when on the local script tabpane
-    const tabEl = document.getElementById('globalscripts-tab')
-    const addScriptBtn = document.getElementById('add-script-btn')
-    tabEl.addEventListener('show.bs.tab', function (event) {
-       addScriptBtn.style.visibility = 'hidden'
-    })
-    tabEl.addEventListener('hide.bs.tab', function (event) {
-       addScriptBtn.style.visibility = 'visible'
-    })
   </script>
   
 </div>
