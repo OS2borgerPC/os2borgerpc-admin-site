@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "build": "npm run build-sass",
-    "build-for-dev": "npm run build-sass && npm run copy-bootstrap-css && npm run copy-bootstrap-js",
     "build-sass": "node_modules/.bin/sass src/custom.scss:dist/css/bootstrap.css --style=compressed --source-map",
     "watch-sass": "node_modules/.bin/sass src/custom.scss:/code/admin_site/static/css/bootstrap.css --style=compressed --source-map --watch",
     "copy-bootstrap-css": "cp dist/css/bootstrap.* /code/admin_site/static/css",
