@@ -3,8 +3,12 @@
 {% block specific_content %}
   <h1>Konfigurationer</h1>
 
+  <p class="alert alert-danger">
+    Slet eller rediger ikke konfigurationer, medmindre du er sikker på, hvad du gør!
+  </p>
+
   <p class="alert alert-warning">
-    Konfigurationer er power-user-funktionalitet, og formentligt ikke relevant at benytte for de fleste.
+    Konfigurationer er funktionalitet henvendt primært til teknisk fejlfinding, systemadministratorer og scriptudviklere, og derfor formentlig ikke relevant for de fleste.
   </p>
 
   <p>
@@ -13,26 +17,30 @@
     Dvs. det er både muligt fra adminsitet at specificere en værdi som en eller flere computere så vil modtage, 
     og ligeledes sender en computer værdier til adminsitet.
   </p>
-  <p>Eksempler på anvendelsesmuligheder:</p>
+  <p>Generelle eksempler på anvendelsesmuligheder:</p>
   <ul>
-    <li>Computeren sender information om den kører borgerPC eller displayPC, samt hvilke specifikke versioner heraf den
-      har.</li> 
-    <li>Man ønsker ifm. et script at sende konfiguration dertil via adminsitet, som så kan opdateres uden genkørsel af
+    <li>Computeren sender bl.a. information om dens hostname, netværkskortets MAC-adresse og hvor mange opdateringer og sikkerhedsopdateringer, 
+      der er tilgængelig for den fra Ubuntu.<br>
+      Det kan i nogle tilfælde være relevant for systemadministratorer.</li> 
+    <li>Computeren sender ligeledes information om den kører borgerPC eller displayPC, samt de specifikke versioner heraf.<br/>
+      Det kan i nogle tilfælde være relevant at vide ift. fejlfinding.</li> 
+    <li>Man ønsker ifm. udviklingen af et script at sende konfiguration dertil via adminsitet, som så kan opdateres uden genkørsel af
       scripts, eller som kan variere ml. grupper eller computere.</li>
+      Det kan i nogle tilfælde være relevant at vide for scriptudviklere.</li> 
   </ul>
 
-  <h3>Håndtering af konfigurationer</h3>
+  <h3>Teknisk information til systemadministratorer</h3>
+
+  <h4>Håndtering af konfigurationer</h4>
 
   <p>
-    Klik på knappen "Tilføj konfiguration" for at tilføje en ny
-    konfigurationsnøgle/værdi.<br/>
+    Klik på knappen "Tilføj konfiguration" for at tilføje en ny konfigurationsnøgle/værdi.<br/>
     For rette eller slette en værdi, skal du klikke på <strong>Rediger</strong> eller <strong>Slet</strong> ud for den enkelte nøgle.
   </p>
 
-  <h3>Konfigurationer på forskellige niveauer</h3>
+  <h4>Konfigurationer på forskellige niveauer</h4>
 
   <p>Konfigurationer findes på tre niveauer:</p>
-
 
   <p><strong>1. Site-konfigurationer</strong></p>
 
@@ -60,5 +68,36 @@
     site-konfiguration eller konfiguration på grupper som computeren er medlem af.
   </p>
 
+  <h3>Teknisk information til scriptudviklere</h3>
+
+  <h4>Sådan udveksles information</h4>
+
+  <h5>Site <span class='material-icons'>arrow_right_alt</span> Computer</h5>
+
+  <p>Du opretter på et Site, en Gruppe eller en Computer en konfiguration, og den vil automatisk blive overført til
+  computeren, næste gang computeren tjekker ind omkring, om der er nye scripts, den skal køre.<p>
+
+  <h5>Computer <span class='material-icons'>arrow_right_alt</span> Site</h5>
+
+  <p>Fra en terminal på computeren, eller fra et script, kan du benytte disse funktioner:</p>
+  <table class="table table-hover">
+    <thead>
+      <tr><th>Navn</th><th>Funktionalitet</th><th>Brugseksempel</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>get_os2borgerpc_config</td>
+        <td>Henter værdien af en konfiguration.</td>
+        <td>get_os2borgerpc_config site<br/> <br/>
+          Får fat i UID'et på det site, computeren er tilknyttet.</td>
+      </tr>
+      <tr>
+        <td>set_os2borgerpc_config</td>
+        <td>Sætter værdien af en konfiguration.</td>
+        <td>set_os2borgerpc_config borger ja<br/> <br/>
+          Opretter en ny konfiguration kaldet borger, og sætter den til 'ja'</td>
+      </tr>
+    </tbody>
+  </table>
 
 {% endblock %}
