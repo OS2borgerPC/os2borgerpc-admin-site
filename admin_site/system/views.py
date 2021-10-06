@@ -24,7 +24,7 @@ from django.views.generic import (
 from django.views.generic.list import BaseListView
 
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, F
 from django.db.models.functions import Lower
 from django.conf import settings
 
@@ -261,7 +261,7 @@ class SiteDetailView(SiteView):
         site = context['site']
         context['ls_pcs'] = site.pcs.all().order_by(
             'is_activated',
-            '-last_seen'
+            F('last_seen').desc(nulls_last=True)
         )
         return context
 

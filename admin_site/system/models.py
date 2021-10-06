@@ -1,17 +1,19 @@
-from django.db import models
-from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
-
-from django.contrib.auth.models import User
-from django.urls import reverse
-from django.conf import settings
-
 import datetime
 import random
 import string
 import re
 import os.path
 from distutils.version import LooseVersion
+
+from dateutil.relativedelta import relativedelta
+
+from django.db import models
+from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
+from django.contrib.auth.models import User
+from django.urls import reverse
+from django.conf import settings
 
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
@@ -602,6 +604,14 @@ class PC(models.Model):
         return wanted_packages
 
     @property
+    def online(self):
+        """A PC being online is defined as last seen less than 5 minutes ago."""
+        if not self.last_seen:
+            return False
+        now = timezone.now()
+        return self.last_seen >= now - relativedelta(minutes=5)
+
+    @property
     def pending_package_updates(self):
         wanted = self.wanted_packages
         current = self.current_packages
@@ -625,7 +635,7 @@ class PC(models.Model):
 
     @property
     def status(self):
-        if not self.is_active:
+        if not self.is_activated:
             return self.Status(NEW, INFO)
         elif self.is_update_required:
             # If packages require update
