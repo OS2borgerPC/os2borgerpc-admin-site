@@ -48,8 +48,6 @@ ul.nav li ul li.active { font-style: italic; }
 .script-list { list-style-type:none; margin-left:0; }
 .script-list li:hover { cursor:pointer; background-color: var(--bs-gray); }
 
-.material-icons { margin: 0 .25rem 0 -.25rem; font-size: 1.25rem; vertical-align: middle; }
-
 /* Forms */
 
 input.phantom { display: none; }
