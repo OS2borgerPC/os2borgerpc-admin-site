@@ -251,6 +251,8 @@ class SiteView(DetailView,  SuperAdminOrThisSiteMixin):
 class SiteDetailView(SiteView):
     """Class for showing the overview that is displayed when entering a site"""
 
+    template_name = 'system/site_status.html'
+
     # For hver pc skal vi hente seneste security event.
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)

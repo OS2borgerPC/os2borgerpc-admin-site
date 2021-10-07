@@ -7,11 +7,11 @@
 {% block specific_content %}
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     <h2 class="divideheader">Computere</h2>
-    <table class="table table-hover warn-table caption-top" id="#site_activepcs_table">
+    <table class="table table-hover warn-table caption-top" id="site-status-table">
       <thead>
         <tr>
+          <th>Navn</th>
           <th>Aktiveret</th>
-          <th class="ps-2">Navn</th>
           <th>Beskrivelse</th>
           <th>Placering</th>
           <th>Status</th>
@@ -19,15 +19,15 @@
           <th>Seneste sikkerhedshændelse modtaget</th>
         </tr>
       </thead>
-      <tbody id="activepcs-list">
+      <tbody>
           {% for pc in ls_pcs %}
         <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
+            <td><strong>{{ pc.name }}</strong></td>
             {% if pc.is_activated %}
               <td><span class="badge bg-success">Aktiveret</span></td>
             {% else %}
               <td><span class="badge bg-danger">Ikke aktiveret</span></td>
             {% endif %}
-            <td class="ps-2"><strong>{{ pc.name }}</strong></td>
             <td>{{ pc.description }}</td>
             <td>{{ pc.location }}</td>
             {% if pc.online %}
