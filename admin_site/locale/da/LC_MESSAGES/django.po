@@ -146,7 +146,7 @@ msgstr "oprettelsestidspunkt"
 
 #: system/models.py:566
 msgid "last seen"
-msgstr "senest set"
+msgstr "seneste tjek-ind"
 
 #: system/models.py:568
 msgid "location"
