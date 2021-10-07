@@ -1606,7 +1606,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
 
 class SecurityEventsView(SiteView):
-    template_name = 'system/site_security.html'
+    template_name = 'system/site_security_events.html'
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
