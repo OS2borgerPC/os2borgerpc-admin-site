@@ -65,7 +65,8 @@ Sikkerhedshændelser
    <table class="table">
     <tbody id="securityeventitem-template">
       <tr class="click-list--item">
-        <td class="severity severity-#LEVEL#"><strong>#PROBLEM_NAME#</strong></td>
+        <td><span class="badge badge-#LEVEL_LABEL#">#LEVEL#</span></td> 
+        <td><strong>#PROBLEM_NAME#</strong></td>
         <td>#PC_NAME#</td>
         <td>#OCCURRED#</td>
         <td><span class="badge #STATUS_LABEL#">#STATUS#</span></td>
@@ -80,6 +81,7 @@ Sikkerhedshændelser
     <table class="table table-hover warn-table table-extendable" id="site_securityevents_table">
       <thead>
         <tr>
+          <th>Alvorlighedsgrad</th>
           {% include 'widgets/orderby_th_ajax.html' with label='Regel' action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
           <th>Maskine</th>
           <th>Tid</th>
