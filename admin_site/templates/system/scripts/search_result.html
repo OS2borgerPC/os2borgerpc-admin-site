@@ -9,7 +9,7 @@
             local_scripts.push({
                 id: {{ script.pk }},
                 url: '{% url script_url site.uid script.pk %}',
-                name: '{{ script.name }}',
+                name: '{{ script.name }} <span class="badge bg-info">Lokalt</span>',
                 category: 'local',
                 delete_url: '{% url 'delete_script' site.uid script.pk %}'
             })
@@ -18,7 +18,7 @@
             local_scripts.push({
                 id: {{ script.pk }},
                 url: '{% url script_url site.uid script.pk %}',
-                name: '{{ script.name }}',
+                name: '{{ script.name }} <span class="badge bg-primary">Globalt</span>',
                 category: 'global',
                 delete_url: '{% url 'delete_script' site.uid script.pk %}'
             })
