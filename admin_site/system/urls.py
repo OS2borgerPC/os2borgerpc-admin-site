@@ -145,6 +145,10 @@ urlpatterns = [
         name='delete_user'),
 
     # Documentation
+    url(r'^documentation/$',
+        RedirectView.as_view(
+            url='/documentation/om_os2borgerpc_admin/'
+        )),
     url(r'^documentation/os2borgerpc_installation_guide/',
         RedirectView.as_view(
             url='/static/docs/OS2BorgerPC-20-04-installationsguide.pdf'

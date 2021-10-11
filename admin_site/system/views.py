@@ -1760,6 +1760,7 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
 documentation_menu_items = [
     ('', 'Administrationssiden'),
+    ('om_os2borgerpc_admin', 'Om'),
     ('status', 'Status'),
     ('computers', 'Computere'),
     ('groups', 'Grupper'),
@@ -1775,7 +1776,7 @@ documentation_menu_items = [
     ('os2borgerpc_installation_guide', 'Installationsguide (PDF)'),
 
     ('', 'OS2displayPC'),
-    ('os2displaypc_installation_guide', 'Installationsguide (ekstern)'),
+    ('os2displaypc_installation_guide', 'Installationsguide'),
     ('os2displaypc_wifi_guide', 'Opdatering af Wi-Fi opsætning'),
 
     ('', 'Opsætning af Gateway'),
