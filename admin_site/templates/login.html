@@ -19,7 +19,7 @@
             --mono-font: monospace;
 
             /* Body font size. By default, effectively 18.4px, based on 16px as 'root em' */
-            --base-fontsize: .9rem;
+            --base-fontsize: 1.1rem;
 
             /* Major third scale progression - see https://type-scale.com/ */
             --header-scale: 1.25;
@@ -42,48 +42,48 @@
         }
 
 				@font-face{
-          font-family: 'Lato';src:url(/static/font/lato/Lato-Regular.eot);src:url(/static/font/lato/Lato-Regular.eot?#iefix) format('embedded-opentype'),
-                       url(/static/font/lato/Lato-Regular.woff2) format('woff2'),
-                       url(/static/font/lato/Lato-Regular.woff) format('woff'),
-                       url(/static/font/lato/Lato-Regular.ttf) format('truetype'),
-                       url(/static/font/lato/Lato-Regular.svg#Lato_regularregular) format('svg');
-          font-style:normal;
-          font-weight:400;
-          font-display:fallback;
+						font-family: 'Lato';src:url(/static/font/lato/Lato-Regular.eot);src:url(/static/font/lato/Lato-Regular.eot?#iefix) format('embedded-opentype'),
+												 url(/static/font/lato/Lato-Regular.woff2) format('woff2'),
+												 url(/static/font/lato/Lato-Regular.woff) format('woff'),
+												 url(/static/font/lato/Lato-Regular.ttf) format('truetype'),
+												 url(/static/font/lato/Lato-Regular.svg#Lato_regularregular) format('svg');
+						font-style:normal;
+						font-weight:400;
+						font-display:fallback;
         }
 
 				@font-face{
-					font-family: 'Lato';src:url(/static/font/lato/Lato-Light.eot);src:url(/static/font/lato/Lato-Light.eot?#iefix) format('embedded-opentype'),
-                       url(/static/font/lato/Lato-Light.woff2) format('woff2'),
-                       url(/static/font/lato/Lato-Light.woff) format('woff'),
-                       url(/static/font/lato/Lato-Light.ttf) format('truetype'),
-                       url(/static/font/lato/Lato-Light.svg#Lato_regularregular) format('svg');
-					font-style:light;
-					font-weight:300;
-					font-display:fallback
+						font-family: 'Lato';src:url(/static/font/lato/Lato-Light.eot);src:url(/static/font/lato/Lato-Light.eot?#iefix) format('embedded-opentype'),
+												 url(/static/font/lato/Lato-Light.woff2) format('woff2'),
+												 url(/static/font/lato/Lato-Light.woff) format('woff'),
+												 url(/static/font/lato/Lato-Light.ttf) format('truetype'),
+												 url(/static/font/lato/Lato-Light.svg#Lato_regularregular) format('svg');
+						font-style:light;
+						font-weight:300;
+						font-display:fallback
 				}
 
 
 				@font-face{
-					font-family: 'Lato';src:url(/static/font/lato/Lato-Italic.eot);src:url(/static/font/lato/Lato-Italic.eot?#iefix) format('embedded-opentype'),
-                       url(/static/font/lato/Lato-Italic.woff2) format('woff2'),
-                       url(/static/font/lato/Lato-Italic.woff) format('woff'),
-                       url(/static/font/lato/Lato-Italic.ttf) format('truetype'),
-                       url(/static/font/lato/Lato-Italic.svg#Lato_regularitalic) format('svg');
-					font-style:italic;
-					font-weight:400;
-					font-display:fallback
+						font-family: 'Lato';src:url(/static/font/lato/Lato-Italic.eot);src:url(/static/font/lato/Lato-Italic.eot?#iefix) format('embedded-opentype'),
+												 url(/static/font/lato/Lato-Italic.woff2) format('woff2'),
+												 url(/static/font/lato/Lato-Italic.woff) format('woff'),
+												 url(/static/font/lato/Lato-Italic.ttf) format('truetype'),
+												 url(/static/font/lato/Lato-Italic.svg#Lato_regularitalic) format('svg');
+						font-style:italic;
+						font-weight:400;
+						font-display:fallback
 				}
 
 				@font-face{
-					font-family: 'Lato';src:url(/static/font/lato/Lato-Bold.eot);src:url(/static/font/lato/Lato-Bold.eot?#iefix) format('embedded-opentype'),
-                       url(/static/font/lato/Lato-Bold.woff2) format('woff2'),
-                       url(/static/font/lato/Lato-Bold.woff) format('woff'),
-                       url(/static/font/lato/Lato-Bold.ttf) format('truetype'),
-                       url(/static/font/lato/Lato-Bold.svg#Latobold) format('svg');
-          font-weight:700;
-          font-style:bold;
-          font-display:fallback
+						font-family: 'Lato';src:url(/static/font/lato/Lato-Bold.eot);src:url(/static/font/lato/Lato-Bold.eot?#iefix) format('embedded-opentype'),
+												 url(/static/font/lato/Lato-Bold.woff2) format('woff2'),
+												 url(/static/font/lato/Lato-Bold.woff) format('woff'),
+												 url(/static/font/lato/Lato-Bold.ttf) format('truetype'),
+												 url(/static/font/lato/Lato-Bold.svg#Latobold) format('svg');
+						font-weight:700;
+						font-style:bold;
+						font-display:fallback
 				}
 
         * {
@@ -112,19 +112,18 @@
         }
 
         main {
-          width: 100%;
-          height: 100%;
-          max-width: 90rem;
-          max-height: 57rem;
-          display: flex;
-          flex-flow: row nowrap;
-          align-items: stretch;
-          background-color: var(--bg);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: stretch;
+            background-color: var(--bg);
         }
 
         section {
             width: 40%;
             padding: 5rem 7rem 1.0rem;
+						margin: auto;
             background-color: var(--bg);
             overflow-y: auto;
             overflow-x: hidden;
@@ -133,15 +132,15 @@
         .logo {
             height: auto;
             margin-bottom: 3rem;
-            width: 10rem;
+            width: 14rem;
         }
 
         .photo {
-          display: block;
-          height: auto;
-          width: 60%;
-          background: url('/static/img/anne_dorte_bach_sorthvid.jpg') no-repeat center center transparent;
-          background-size: cover;
+            display: block;
+            height: 100vh;
+            width: 60%;
+            background: url('/static/img/anne_dorte_bach_sorthvid.jpg') no-repeat center center transparent;
+            background-size: cover;
         }
 
         form, #div_id_username, #div_id_password, input {
@@ -169,12 +168,12 @@
         input[type="password"]:hover,
         input[type="text"]:focus, 
         input[type="password"]:focus {
-          outline: solid 2px var(--accent);
+            outline: solid 2px var(--accent);
         }
 
         h2 {
-          font-size: 1.45rem;
-          font-weight: bold;
+            font-size: 1.45rem;
+            font-weight: bold;
         }
 
         label {
@@ -219,7 +218,7 @@
 
         .cto:hover,
         .cto:focus {
-          background-color: var(--text-light);
+						background-color: var(--text-light);
         }
 
         .cto.contact {
@@ -232,37 +231,42 @@
         }
 
         .alert {
-          background-color: var(--accent-bg);
-          padding: 1rem;
+						background-color: var(--accent-bg);
+						padding: 1rem;
         }
 
         .alert ul {
-          margin: 0;
-          padding: 1.5rem;
+						margin: 0;
+						padding: 1.5rem;
         }
+        @media screen and (max-width: 120rem) {
+						:root {
+								--base-fontsize: 0.9rem;
+						}
+				}
 
         @media screen and (max-width: 70rem) {
-          body {
-            background-color: var(--bg);
-          }
-          main {
-            justify-content: center;
-          }
-          section {
-            width: 100%;
-            max-width: 40rem;
-            overflow: visible;
-          }
-          .photo {
-            display: none;
-          }
-        }
+							body {
+									background-color: var(--bg);
+							}
+							main {
+									justify-content: center;
+							}
+							section {
+									width: 100%;
+									max-width: 40rem;
+									overflow: visible;
+							}
+							.photo {
+									display: none;
+							}
+					}
 
-        @media screen and (max-width: 30rem) {
-          section {
-            padding: 4rem;
-          }
-        }
+				@media screen and (max-width: 30rem) {
+						section {
+								padding: 4rem;
+						}
+				}
 
   </style>
 </head>
@@ -274,7 +278,7 @@
     <section>
 
       <img class="logo" src="/static/img/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
-      
+
       <form method="post" action="">
           <h2><span class="muted">Log ind:</span> OS2borgerPC</h2>
           {% csrf_token %}
