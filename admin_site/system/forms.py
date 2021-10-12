@@ -141,7 +141,6 @@ class UserForm(forms.ModelForm):
     # Sets the choices in the usertype widget depending on the usertype
     # of the user currently filling out the form
     def setup_usertype_choices(self, loginuser_type, is_superuser):
-        print("Usertype: ", loginuser_type)
         if is_superuser or loginuser_type == SiteMembership.SITE_ADMIN:
             # superusers and site admins can both
             # choose site admin or site user.
