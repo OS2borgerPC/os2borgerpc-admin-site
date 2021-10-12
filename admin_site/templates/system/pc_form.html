@@ -51,11 +51,11 @@ Computere
 
     <p class="d-flex justify-content-end mb-0">
       {% if selected_pc.last_seen %}
-        Senest set: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
+        Seneste tjek-ind: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
       {% endif %}
       {% if security_event %}
         <span class="ms-3">
-          Seneste sikkerhedshændelse set: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
+          Seneste sikkerhedshændelse modtaget: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
         </span>
       {% endif %}
     </p>

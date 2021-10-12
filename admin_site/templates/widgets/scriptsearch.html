@@ -40,6 +40,7 @@
                         id: {{ item.id }},
                         name: '{{ item.name }}',
                         pk: {{ item.pk }},
+                        is_global: {% if item.site %}false{% else %}true{% endif %},
                         inputs: [
                             {% for input in item.ordered_inputs %}
                                 {
@@ -86,7 +87,13 @@
                     var new_node = document.createElement('li')
                     new_node.className = 'dropdown-item'
                     new_node.setAttribute('data-script', createItemData(new_list[listitem]))
-                    new_node.innerText = new_list[listitem].name
+                    new_node.innerHTML = new_list[listitem].name
+                    if (new_list[listitem].is_global) {
+                        new_node.innerHTML += " <span class='badge bg-primary'>Globalt</span>"
+                    }
+                    else {
+                        new_node.innerHTML += " <span class='badge bg-info'>Lokalt</span>"
+                    }
                     new_node.addEventListener('click', selectOption)
                     list_ul.appendChild(new_node)
                 }

@@ -48,8 +48,6 @@ ul.nav li ul li.active { font-style: italic; }
 .script-list { list-style-type:none; margin-left:0; }
 .script-list li:hover { cursor:pointer; background-color: var(--bs-gray); }
 
-.material-icons { margin: 0 .25rem 0 -.25rem; font-size: 1.25rem; vertical-align: middle; }
-
 /* Forms */
 
 input.phantom { display: none; }
@@ -105,4 +103,8 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
   /* Hide "batch" at lower resolutions */
   .container-fluid > .jobtable th:nth-of-type(6), .container-fluid > .jobtable td:nth-of-type(6) { display: none; }
   .tab-content .jobtable th:nth-of-type(5), .tab-content .jobtable td:nth-of-type(5) { display: none; }
+
+  /* Hide computer description from status page at lower resolution */
+  #site-status-table th:nth-of-type(3),  #site-status-table th:nth-of-type(4),
+  #site-status-table td:nth-of-type(3), #site-status-table td:nth-of-type(4) { display: none; }
 }

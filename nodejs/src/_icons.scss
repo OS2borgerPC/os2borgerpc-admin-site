@@ -19,6 +19,9 @@
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
+    margin: 0 .25rem 0 -.25rem; 
+    font-size: 1.25rem; 
+    vertical-align: text-bottom; 
   
     /* Support for all WebKit browsers. */
     -webkit-font-smoothing: antialiased;

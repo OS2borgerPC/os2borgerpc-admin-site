@@ -26,7 +26,7 @@
                     <dt>Tid</dt>
                     <dd>{{ securityevent.ocurred_time }}</dd>
                     <dt>Computer</dt>
-                    <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, senest set {{ securityevent.pc.last_seen }}</dd>
+                    <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, seneste tjek-ind {{ securityevent.pc.last_seen }}</dd>
                 </dl>
                 
                 {{ form.note|as_crispy_field }}
