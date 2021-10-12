@@ -1086,9 +1086,19 @@ class UsersView(SelectionMixin, SiteView):
 
     def render_to_response(self, context):
         if('selected_user' in context):
+            # Select your own user by default if you have a UserProfile on the site
+            # Fx. relevant to password changes
+
+            if (
+                context["site"]
+                in UserProfile.objects.get(user=self.request.user.id).sites.all()
+            ):
+                user = self.request.user.username
+            else:
+                user = context['selected_user'].username
             return HttpResponseRedirect('/site/%s/users/%s/' % (
                 context['site'].uid,
-                context['selected_user'].username
+                user
             ))
         else:
             return HttpResponseRedirect(
