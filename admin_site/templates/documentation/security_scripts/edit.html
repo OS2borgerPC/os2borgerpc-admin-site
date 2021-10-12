@@ -1,0 +1,49 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Redigering af Sikkerhedsscripts</h1>
+  <p>
+    For at redigere et Sikkerhedsscript skal du klikke på "Sikkerhedsscripts" i venstremenuen og
+    efterfølgende vælge Sikkerhedsscriptet i listen til højre for
+    venstremenuen. Bemærk at det kan være nødvendigt at skifte mellem
+    fanebladenene "Lokale scripts" og "Globale scripts" for at finde Sikkerhedsscriptet.
+  </p>
+  <p>
+    Når du redigerer et Sikkerhedsscript har du mulighed for at ændre dets navn og
+    beskrivelse. Du kan også uploade en ny version af Sikkerhedsscriptet ved at
+    udfylde feltet under "Upload scriptkode". Ændringer du har foretaget
+    træder ikke i kraft før du har klikket på "Gem ændringer" i toppen af
+    siden.
+  </p>
+  <p>
+    Ved Sikkerhedsscripts, skal du være opmærksom på følgende:
+    <br>
+    Et Sikkerhedsscript er et script, som indsamler <a href="{% url 'doc' 'security_scripts/securityevents' %}"> sikkerhedshændelser</a>.
+    <br>
+    <br>
+    Et Sikkerhedscript tager ikke nogen inputparametre,
+    og det skal følge et bestemt format.<br>
+    Opbygningen af et Sikkerhedscript vil typisk være, at læse en mængde data
+    fra en log fil, søge efter en hændelse via et eller flere keywords, og så herefter
+    gemme oplysningerne i et bestemt format. Et Sikkerhedsscript kan være et shellscript
+    eller et pythonscript.
+    <br>
+    <br>
+    Formatet ser således ud: "[Sikkerhedsregel id, Teknisk referat, De rå data]".<br>
+  </p>
+  <ul>
+    <li>
+      Sikkerhedsreglens id finder du på siden over Sikkerhedsregler. Dit Sikkerhedsscript
+      tilhører en sikkerhedsregel og det er dennes id du skal bruge.
+    </li>
+    <li>
+      Det tekniske referat kan enten være noget du definerer eller en bid af det indsamlede data.
+    </li>
+    <li>
+      De rå data er alt den indsamlede data vedrørende sikkerhedshændelsen.
+    </li>
+  </ul>
+  <p>
+    Aflever formatet som et array til modulet csv_writer ved at kalde metoden write.
+  </p>
+{% endblock %}

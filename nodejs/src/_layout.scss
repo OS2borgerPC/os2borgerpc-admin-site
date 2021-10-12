@@ -1,0 +1,141 @@
+body {
+    background-color: $white;
+}
+
+// Headers
+
+header {
+    padding: $spacer 0;
+    color: $gray-300;
+
+    h1 {
+        margin: 0;
+        padding: 0;
+        font-size: 1.25rem;
+        em {
+            color: $white;
+            font-style: normal; 
+        }
+    }
+
+}
+
+.actionpage #adm-header > header {
+    padding: $spacer $spacer*2 $spacer $spacer;
+}
+
+.divideheader {
+    background: $gray-800; 
+    padding: $spacer*.5 $spacer;
+    margin: 0 0 $spacer;
+    font-size: 1.25rem;
+    color: $gray-300;
+
+    em {
+        color: $white;
+        font-style: normal; 
+    }
+}
+
+
+// Containers
+
+#adm-wrapper {
+    min-width: 60rem;
+    height: 100vh;
+}
+
+#adm-wrapper,
+#adm-bodywrapper,
+#adm-body {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+#adm-wrapper,
+#adm-body {
+    flex-direction: row;
+}
+
+#adm-bodywrapper {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+#adm-body {
+    flex-grow: 1;
+}
+
+#adm-content {
+    overflow: auto;
+    flex: 1 1 auto;
+}
+
+#adm-header {
+    background-color: $gray-800;
+}
+
+.main {
+    padding: $spacer*1.75 $spacer*2;
+    background-color: $white;
+
+    & > table {
+        margin: 0;
+    }
+}
+
+.template-container {
+    display: none;
+}
+
+.gray-box {
+    background-color: $gray-100;
+    border-radius: .33rem;
+    padding: $spacer*2;
+    margin-top: $spacer*2;
+}
+
+.gray-box-border {
+    background-color: $gray-200;
+    border-radius: .33rem;
+    padding: $spacer;
+    border: solid 1px $gray-400;
+}
+
+// Documentation pages
+.documentationpage #adm-header > header {
+    padding: $spacer $spacer*2;
+}
+
+.documentationpage #adm-content {
+    padding: $spacer*1.75 $spacer*2;
+    max-width: $spacer*60;
+    overflow: visible;
+}
+
+.documentationpage img {
+  margin: auto;
+  display: block;
+  padding: 30px 0px;
+}
+
+.documentationpage #adm-body {
+  overflow: scroll;
+}
+
+// Popup page
+.popup-page { 
+    padding: $spacer*2; 
+    min-height: 100%;
+    margin: $spacer auto;
+}
+
+@media (min-width: 1200px) {
+
+    .popup-page {
+        max-width: $spacer*60;
+    }
+
+}

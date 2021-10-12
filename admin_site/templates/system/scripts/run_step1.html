@@ -1,38 +1,55 @@
 {% extends 'system/scripts/run_base.html' %}
 
 {% block run_dialog_heading %}
-Kør script: <em>Vælg computer eller grupper</em>
+  <h3>
+    <span class="text-muted">Kør script:</span><br>
+    Vælg computer eller grupper
+  </h3>
 {% endblock %}
 
 {% block run_dialog_content %}
-<div class="row-fluid">
-  <div class="span6">
-    <label>Computere:</label>
-    <ul class="unstyled">
-        {% for pc in pcs %}
-        {% if pc.is_active %}
-      <li onclick="BibOS.ScriptEdit.selectGroupOrPC(this)">
-        <input type="checkbox" name="pcs" style="display: none" value="{{pc.pk}}"/>
-        <a href="javascript:void(0)"><i class="icon-hdd"></i> {{pc.name}}</a>
-        </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="span6">
-    <label>Grupper:</label>
-    <ul class="unstyled">
-      {% for group in groups %}
-      <li onclick="BibOS.ScriptEdit.selectGroupOrPC(this)">
-        <input type="checkbox" name="groups" style="display: none" value="{{group.pk}}"/>
-        <a href="javascript:void(0)"><i class="icon-hdd"></i> {{group.name}}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
+  
+    <div class="row">
+      <div class="col-6">
+        <h4>Computere</h4>
+        <ul class="list-unstyled">
+            {% for pc in pcs %}
+            {% if pc.is_activated %}
+              <li>
+                <input type="checkbox" name="pcs" id="check-pc-{{pc.pk}}" value="{{pc.pk}}">
+                <label for="check-pc-{{pc.pk}}">{{pc.name}}</label>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-6">
+        <h4>Grupper</h4>
+        <ul class="list-unstyled">
+          {% for group in groups %}
+            <li>
+              <input type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}">
+              <label for="check-group-{{group.pk}}">{{group.name}}</label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  
 {% endblock %}
 
 {% block run_dialog_footer %}
-<a href="javascript:void(0)" onclick="BibOS.ScriptEdit.submitForm()" role="button" class="btn">Næste <i class="icon-chevron-right"></i></a>
+  <button onclick="scriptStep1Submit()" role="button" class="btn btn-secondary">
+    <span class="d-flex align-items-center">
+      Næste 
+      <span class="material-icons ms-1">
+        chevron_right
+      </span>
+    </span>
+  </button>
+  <script>
+    window.scriptStep1Submit = function() {
+      document.getElementById('run_script_form').submit()
+    }
+  </script>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% if orderby_key == key %}
+  <th class="orderby order-{{ key }} {{ orderby_direction }} active
+   location.href='{{ orderby_base_url }}orderby={% if orderby_direction != 'desc' %}-{% endif %}{{ key }}{{ anchor }}'">
+    <span class="d-flex align-items-center">
+      {{ label }}
+      <span class="material-icons">
+        arrow_drop_{% if orderby_direction == 'desc' %}down{% else %}up{% endif %}
+      </span>
+    </span>
+  </th>
+{% else %}
+  <th class="orderby order-{{ key }} desc
+   location.href='{{ orderby_base_url }}orderby={{ key }}{{ anchor }}'">
+    <span class="d-flex align-items-center">
+      {{ label }}
+      <span class="material-icons">arrow_drop_down</span>
+    </span>
+  </th>
+{% endif %}

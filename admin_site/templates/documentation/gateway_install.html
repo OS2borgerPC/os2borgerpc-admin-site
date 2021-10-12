@@ -23,7 +23,7 @@
     Installation foretages ved fysisk at logge ind som superbruger på den
     maskine man ønsker skal fungere som gateway. Derefter åbner man en konsol
     og udfører følgende kommando:
-    <pre>sudo /usr/share/bibos/gateway/install.sh</pre>
+    <pre>sudo /usr/share/os2borgerpc/gateway/install.sh</pre>
     Dette vil automatisk sætte maskinen op til at fungere som en OS2borgerPC-gateway.
   </p>
   <p>
@@ -36,7 +36,7 @@
   <p>
     Man kan vælge at udføre komandoen senere ved køre følgende kommando som
     superuser:
-    <pre>sudo /usr/share/bibos/gateway/rsync_archive.sh</pre>
+    <pre>sudo /usr/share/os2borgerpc/gateway/rsync_archive.sh</pre>
   </p>
   <p>
     Når gateway-maskinen er sat op kan man eventuelt
@@ -50,8 +50,8 @@
     netkort der skal bruges til at modtage/svare på broadcast-forespørgsler
     fra klienterne. Man kan ændre IP'en gateway'en lytter på/svarer med ved at
     udføre følgende kommandoer:
-    <pre>sudo set_bibos_config gateway_address 1.2.3.4
-bibos_push_config_keys gateway_address
+    <pre>sudo set_os2borgerpc_config gateway_address 1.2.3.4
+os2borgerpc_push_config_keys gateway_address
 sudo service bibos-broadcast-server restart
 </pre>
     Udskift 1.2.3.4 i ovenstående med den ønskede IP-adresse.

@@ -1,42 +1,56 @@
-{# Remember that this templates must be able to be called both from templates.html and from list.html #}
-<tr class="muted">
-  <td>{{ name }}</td>
-  <td>
-    <div class="btn-group profile dark">
-      <div data-name="policy-script-{{ name }}">
-        <input class="policy-script-pos" type="hidden" name="{{ submit_name|default:'policy' }}" value="{{ ps_pk }}" />
-        <input class="policy-script-name" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}" value="{{ script_pk }}" />
-        {% if params != '#PARAMS#' %}
-          {% for param in params %}
-            {% if param.input.value_type != 'FILE' %}
+{# Remember that this template must be able to be called both from templates.html and from list.html #}
+
+<tr>
+  {% if script_id %}
+    <td>{{ps.position}}</td>
+    <td class="policy-script-print-key"><a href="{% url 'script' site.uid script_id %}">{{ name }}</a></td>
+  {% else %}
+    <td>Nyt</td>
+    <td class="policy-script-print-key"><a href="/site/{{site.uid}}/scripts/{{script_pk}}/">{{ name }}</a></td>
+  {% endif %}
+  <td class="pe-0 js-match">
+    <div data-name="policy-script-{{ name }}" >
+      <input class="policy-script-pos" type="hidden" name="{{ submit_name|default:'policy' }}" value="{{ ps_pk }}">
+      <input class="policy-script-name" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}" value="{{ script_pk }}">
+      {% if params != '#PARAMS#' %}
+        {% for param in params %}
+          {% if param.input.value_type != 'FILE' %}
             {# Even though it looks complicated, the logic for mandatory parameters is simple enough: the server won't overwrite a parameter that already has a value with an empty value, so the browser doesn't need to enforce the non-emptiness check (and, indeed, it shouldn't for files!) #}
-            <input class="policy-script-param" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and not param.file_value and param.input.mandatory %} required="required" {% endif %} />
-            {% else %}
-            <input class="policy-script-param phantom" type="file" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.string_value and not param.file_value and param.input.mandatory %} required="required" {% endif %} />
-            {% endif %}
-            <div class="policy-script-print">
-              <strong class="policy-script-print-name">
-                {{ param.input.name }}:
-              </strong>
-              <span class="policy-script-print-value">
-                {% if param.input.value_type != 'FILE' %}
+            <input class="policy-script-param" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_param_{{ param.input.position }}" value="{{ param.string_value }}{{ param.file_value }}" data-inputtype="{{ param.input.value_type }}" {% if not param.string_value and not param.file_value and param.input.mandatory %} required="required" {% endif %}>
+          {% else %}
+            <input class="policy-script-param phantom form-control" type="file" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_param_{{ param.input.position }}" data-inputtype="FILE" {% if not param.string_value and not param.file_value and param.input.mandatory %} required="required" {% endif %}>
+          {% endif %}
+          <div class="policy-script-print">
+            <strong class="policy-script-print-name">
+              {{ param.input.name }}:
+            </strong>
+            <span class="policy-script-print-value">
+              {% if param.input.value_type != 'FILE' %}
                 {{ param.string_value }}
-                {% else %}
+              {% else %}
                 {{ param.file_value }}
-                {% endif %}
-              </span>
-            </div>
-          {% endfor %}
-        {% else %}
-          <script>
-            $(function(){
-              BibOS.PolicyList.renderScriptFields('{{ name }}', '{{ ps_pk }}', '{{ submit_name|default:'policy' }}');
-            });
-          </script>
-        {% endif %}
-      </div>
-      <div><a href="javascript:void(0)" onclick="BibOS.PolicyList.editScript(this, '{{ submit_name }}')"><i class="icon-edit"></i> Redigér</a></div>
-      <div><a href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')"><i class="icon-remove"></i> Slet script</a></div>
+              {% endif %}
+            </span>
+          </div>
+        {% endfor %}
+      {% else %}
+        <script>
+          $(function(){
+            BibOS.PolicyList.renderScriptFields('{{ name }}', '{{ ps_pk }}', '{{ submit_name|default:'policy' }}')
+          })
+        </script>
+      {% endif %}
     </div>
+
+  </td>
+  <td>
+    <p class="mb-0" style="margin-left: -.5rem;">
+      <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.editScript(this, '{{ submit_name }}')">
+        <span class='material-icons'>edit</span>Redigér
+      </a>
+      <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')">
+        <span class='material-icons'>delete</span>Fjern script
+      </a>
+    </p>
   </td>
 </tr>

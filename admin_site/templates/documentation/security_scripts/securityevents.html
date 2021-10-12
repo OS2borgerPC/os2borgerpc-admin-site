@@ -1,0 +1,22 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Sikkerhedshændelser</h1>
+  <p>
+	Denne oversigt viser de individuelle hændelser, som er udløst af systemet.
+	I venstre kolonne kan du vælge hvordan oversigten filtreres, altså hvilke hændelser du vil se.
+	Standard er, at du ser alle ikke-behandlede hændelser.
+	Af oversigten fremgår også hændelsernes alvorsgrad.
+  </p>  
+  <p>
+  Fra oversigten kan du udføre to handlinger.<br>
+  Du kan:</p>
+  <ul>
+	  <li>
+	  Markere at du tager ansvar for behandling af hændelsen. Dette skifter status til "Tildelt".
+	  </li>
+	  <li>
+	  Markere hændelsen som behandlet. Dette skifter status til "Løst".
+	  </li>
+  </ul>    
+{% endblock %}

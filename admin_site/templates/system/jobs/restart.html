@@ -7,9 +7,10 @@ Genstart job
 {% block specific_content %}
   <div class="container-fluid main">
     <p>Er du sikker på du vil genstarte job {{ selected_job.pk }}?</p>
-    <form action="{% url 'restart_job' site.uid selected_job.pk %}" method="post">{% csrf_token %}
-      <input class="btn btn-primary" type="submit" value="Ja" />
-      <a class="btn" href="{% url 'jobs' site.uid %}">Nej</a>
+    <form action="{% url 'restart_job' site.uid selected_job.pk %}" method="post">
+      {% csrf_token %}
+      <input class="btn btn-primary me-3" type="submit" value="Ja">
+      <a class="btn btn-secondary" href="{% url 'jobs' site.uid %}">Nej</a>
     </form>
   </div>
 {% endblock %}

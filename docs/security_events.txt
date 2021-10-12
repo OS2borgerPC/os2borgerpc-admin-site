@@ -22,7 +22,7 @@ Changes to the model
 ++++++++++++++++++++
 
 
-A new Django model will be introduced in the Bibos Admin system. This
+A new Django model will be introduced in the OS2borgerPC Admin system. This
 model will be called SecurityEvent and will basically have the following
 fields (further analysis or actual implementation may show more fields
 to be needed):
@@ -75,8 +75,8 @@ on the site and on any of its groups.
 Changes in the OS2borgerPC Admin GUI
 ++++++++++++++++++++++++++++++++++++
 
-Under the menu item "Maskiner" to the left of the current OS2borgerPC Admin
-layout, a new point will be introduced, called "Sikkerhedsadvarsler".
+Under the menu item "Sikkerhed" to the left of the current OS2borgerPC Admin
+layout, a new point will be introduced, called "Sikkerhedshændelser".
 
 This will contain a list of SecurityEvents which have not yet been taken
 care of. It will be possible to indicate that an event will be taken

@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-from .views import SiteList, SiteCreate, SiteUpdate, SiteDelete
+from .views import SiteList
 from .views import AdminIndex, PCsView, GroupsView, UsersView, JobsView
 from .views import GroupCreate, GroupUpdate, GroupDelete, JobSearch, UserDelete
 from .views import SiteDetailView, UserCreate, UserUpdate, SiteConfiguration
@@ -20,15 +20,17 @@ from .views import SecurityEventSearch
 
 urlpatterns = [
     # Security events UI
-    url(r'^site/(?P<site_uid>[^/]+)/security/(?P<pk>\d+)/$',
-        SecurityEventUpdate.as_view(), name='security_event_update'),
-    url(r'^site/(?P<slug>[^/]+)/security/search/$',
+    url(r'^site/(?P<site_uid>[^/]+)/security_events/(?P<pk>\d+)/$',
+        SecurityEventUpdate.as_view(),
+        name='security_event_update'),
+    url(r'^site/(?P<site_uid>[^/]+)/security_events/search/$',
         SecurityEventSearch.as_view(),
-        name='securityeventsearch'),
-    url(r'^site/(?P<slug>[^/]+)/security/pc/(?P<pc_uid>[^/]+)/$',
+        name='security_event_search'),
+    url(r'^site/(?P<slug>[^/]+)/security_events/pc/(?P<pc_uid>[^/]+)/$',
         SecurityEventsView.as_view(),
-        name='securityeventsearch'),
-    url(r'^site/(?P<slug>[^/]+)/security/$', SecurityEventsView.as_view(),
+        name='security_event_pc'),
+    url(r'^site/(?P<slug>[^/]+)/security_events/$',
+        SecurityEventsView.as_view(),
         name='security_events'),
 
     # Security problems UI
@@ -42,49 +44,51 @@ urlpatterns = [
         SecurityProblemUpdate.as_view(),
         name='security_problem'),
     url(r'^site/(?P<slug>[^/]+)/security_problems/$',
-        SecurityProblemsView.as_view(), name='security_problems'),
+        SecurityProblemsView.as_view(),
+        name='security_problems'),
 
     # Security scripts
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/(?P<script_pk>\d+)/delete/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/delete/',
         ScriptDelete.as_view(is_security=True),
         name='delete_security_script'),
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/(?P<script_pk>\d+)/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/',
         ScriptUpdate.as_view(is_security=True),
         name='security_script'),
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/new/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/new/',
         ScriptCreate.as_view(is_security=True),
         name='new_security_script'),
-    url(r'^site/(?P<slug>[^/]+)/security/scripts/',
+    url(r'^site/(?P<slug>[^/]+)/security_scripts/',
         ScriptList.as_view(is_security=True),
         name='security_scripts'),
 
+    # Sites
     url(r'^$', AdminIndex.as_view(), name='index'),
     url(r'^sites/$', SiteList.as_view(), name='sites'),
-    url(r'^sites/new/$', SiteCreate.as_view(), name='new_site'),
-    url(r'^sites/(?P<slug>[^/]+)/edit/$',
-        SiteUpdate.as_view(),
-        name='edit_site'),
-    url(r'^sites/(?P<slug>[^/]+)/delete/$',
-        SiteDelete.as_view(),
-        name='delete_site'),
-    url(r'^site/(?P<slug>[^/]+)/$', SiteDetailView.as_view(), name='site'),
+    url(r'^site/(?P<slug>[^/]+)/$', SiteDetailView.as_view(),
+        name='site'),
+
+    # Configurations
     url(r'^site/(?P<slug>[^/]+)/configuration/$',
         SiteConfiguration.as_view(),
         name='configuration'),
     url(r'^site/(?P<site_uid>[^/]+)/configuration/new/$',
-        ConfigurationEntryCreate.as_view(), name='new_config_entry'),
+        ConfigurationEntryCreate.as_view(), name='new_configuration'),
     url(r'^site/(?P<site_uid>[^/]+)/configuration/edit/(?P<pk>\d+)/$',
-        ConfigurationEntryUpdate.as_view(), name='edit_config_entry'),
+        ConfigurationEntryUpdate.as_view(), name='edit_configuration'),
     url(r'^site/(?P<site_uid>[^/]+)/configuration/delete/(?P<pk>\d+)/$',
-        ConfigurationEntryDelete.as_view(), name='delete_config_entry'),
+        ConfigurationEntryDelete.as_view(), name='delete_configuration'),
+
+    # Computers
     url(r'^site/(?P<slug>[^/]+)/computers/$', PCsView.as_view(),
         name='computers'),
     url(r'^site/(?P<slug>[^/]+)/computers/json/$',
-        JSONSiteSummary.as_view(), name='json_site_summary'),
+        JSONSiteSummary.as_view(), name='computers_json_site_summary'),
     url(r'^site/(?P<site_uid>[^/]+)/computers/(?P<pc_uid>[^/]+)/$',
         PCUpdate.as_view(), name='computer'),
     url(r'^site/(?P<site_uid>[^/]+)/computers/(?P<pc_uid>[^/]+)/delete/$',
         PCDelete.as_view(), name='computer_delete'),
+
+    # Groups
     url(r'^site/(?P<slug>[^/]+)/groups/$', GroupsView.as_view(),
         name='groups'),
     url(r'^site/(?P<site_uid>[^/]+)/groups/new/$', GroupCreate.as_view(),
@@ -93,7 +97,9 @@ urlpatterns = [
         GroupUpdate.as_view(), name='group'),
     url(r'^site/(?P<site_uid>[^/]+)/groups/(?P<group_uid>[^/]+)/delete/$',
         GroupDelete.as_view(), name='group_delete'),
-    url(r'^site/(?P<slug>[^/]+)/jobs/search/',
+
+    # Jobs
+    url(r'^site/(?P<site_uid>[^/]+)/jobs/search/',
         JobSearch.as_view(),
         name='jobsearch'),
     url(r'^site/(?P<site_uid>[^/]+)/jobs/(?P<pk>\d+)/restart/',
@@ -124,19 +130,32 @@ urlpatterns = [
         name='scripts'),
 
     # Users
-    url(r'^site/(?P<slug>[^/]+)/users/$', UsersView.as_view(), name='users'),
+    url(r'^site/(?P<slug>[^/]+)/users/$',
+        UsersView.as_view(),
+        name='users'),
     url(r'^site/(?P<site_uid>[^/]+)/new_user/$',
-        UserCreate.as_view(), name='new_user'),
+        UserCreate.as_view(),
+        name='new_user'),
     url(r'^site/(?P<site_uid>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$',
-        UserUpdate.as_view(), name='user'),
+        UserUpdate.as_view(),
+        name='user'),
     url((r'^site/(?P<site_uid>[^/]+)/users/' +
          r'(?P<username>[_\w\@\.\+\-]+)/delete/$'),
-        UserDelete.as_view(), name='delete_user'),
+        UserDelete.as_view(),
+        name='delete_user'),
 
     # Documentation
-    url(r'^documentation/pdf_guide/',
+    url(r'^documentation/$',
+        RedirectView.as_view(
+            url='/documentation/om_os2borgerpc_admin/'
+        )),
+    url(r'^documentation/os2borgerpc_installation_guide/',
         RedirectView.as_view(
             url='/static/docs/OS2BorgerPC-20-04-installationsguide.pdf'
+        )),
+    url(r'^documentation/os2displaypc_installation_guide',
+        RedirectView.as_view(
+            url='https://os2borgerpc-server-image.readthedocs.io/en/latest/dev.html'
         )),
     url(r'^documentation/creating_security_problems/',
         RedirectView.as_view(

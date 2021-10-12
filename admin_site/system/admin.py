@@ -5,14 +5,33 @@ from django.utils import timezone
 from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+from hashlib import md5
 
-from .models import Configuration, ConfigurationEntry, PackageList, Package
-from .models import Site, Distribution, PCGroup, PC, CustomPackages
-from .models import PackageInstallInfo, PackageStatus, ImageVersion
-from .models import SecurityEvent, SecurityProblem
-# Job-related stuff
-from .models import Script, Batch, Job, Input, BatchParameter
-from .models import AssociatedScript, AssociatedScriptParameter
+from system.models import (
+    Configuration,
+    ConfigurationEntry,
+    PackageList,
+    Package,
+    Site,
+    Distribution,
+    PCGroup,
+    PC,
+    CustomPackages,
+    PackageInstallInfo,
+    PackageStatus,
+    ImageVersion,
+    SecurityEvent,
+    SecurityProblem,
+    Script,
+    Batch,
+    Job,
+    Input,
+    BatchParameter,
+    AssociatedScript,
+    AssociatedScriptParameter,
+    ScriptTag,
+)
+
 ar = admin.site.register
 
 
@@ -50,6 +69,7 @@ class PCInline(admin.TabularInline):
 
 
 class PCGroupAdmin(admin.ModelAdmin):
+    list_display = ['site', 'name']
     inlines = [PCInline]
 
 
@@ -65,6 +85,7 @@ class BatchParameterInline(admin.TabularInline):
 
 
 class BatchAdmin(admin.ModelAdmin):
+    list_display = ['site', 'name', 'script']
     fields = ['site', 'name', 'script']
     inlines = [JobInline, BatchParameterInline]
 
@@ -86,8 +107,10 @@ class ScriptAdmin(admin.ModelAdmin):
         "is_security_script",
         "site",
         "jobs_per_site",
-        "jobs_per_site_for_the_last_year"
+        "jobs_per_site_for_the_last_year",
     )
+    filter_horizontal = ("tags",)
+    readonly_fields = ("user_created", "user_modified")
     search_fields = ("name",)
     inlines = [InputInline]
 
@@ -153,7 +176,8 @@ class SiteAdmin(admin.ModelAdmin):
 
 
 class PCAdmin(admin.ModelAdmin):
-    list_display = ("name", "uid", "site_link", "is_active", "last_seen")
+    list_display = ("name", "uid", "site_link", "is_activated", "last_seen")
+    search_fields = ("name", "uid")
 
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
@@ -164,9 +188,36 @@ class PCAdmin(admin.ModelAdmin):
     site_link.short_description = _('Site')
     site_link.admin_order_field = 'site'
 
+    def get_search_results(self, request, queryset, search_term):
+        queryset, may_have_duplicates = super().get_search_results(
+            request, queryset, search_term,
+        )
+        # PC UID is generated from a hashed MAC address
+        # so by hashing the input we allow searching by MAC address.
+        maybe_uid_hash = md5(search_term.encode('utf-8')).hexdigest()
+        queryset |= self.model.objects.filter(uid=maybe_uid_hash)
+        return queryset, may_have_duplicates
+
 
 class JobAdmin(admin.ModelAdmin):
     list_display = ("__str__", "status", "user", "pc")
+    search_fields = ("user", "pc")
+
+
+class ScriptTagAdmin(admin.ModelAdmin):
+    pass
+
+
+class ImageVersionAdmin(admin.ModelAdmin):
+    list_display = ("platform", "image_version", "os", "release_date")
+
+
+class SecurityProblemAdmin(admin.ModelAdmin):
+    list_display = ("site", "name", "level", "security_script")
+
+
+class SecurityEventAdmin(admin.ModelAdmin):
+    list_display = ("problem", "ocurred_time", "reported_time", "pc", "status")
 
 
 ar(Configuration, ConfigurationAdmin)
@@ -177,13 +228,14 @@ ar(Distribution)
 ar(PCGroup, PCGroupAdmin)
 ar(PC, PCAdmin)
 ar(Package)
-ar(ImageVersion)
+ar(ImageVersion, ImageVersionAdmin)
 # Job related stuff
 ar(Script, ScriptAdmin)
+ar(ScriptTag, ScriptTagAdmin)
 ar(Batch, BatchAdmin)
 ar(Job, JobAdmin)
 ar(BatchParameter)
 ar(AssociatedScript)
 ar(AssociatedScriptParameter)
-ar(SecurityEvent)
-ar(SecurityProblem)
+ar(SecurityEvent, SecurityEventAdmin)
+ar(SecurityProblem, SecurityProblemAdmin)

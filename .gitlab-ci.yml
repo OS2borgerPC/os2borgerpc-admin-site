@@ -40,7 +40,7 @@ variables:
 Lint Python:
     <<: *lint-default
     before_script:
-        - pip3 install -r admin_site/scripts/requirements.txt
+        - pip3 install -r admin_site/requirements.txt
     script:
         - cd admin_site
         - flake8 . --exclude=migrations

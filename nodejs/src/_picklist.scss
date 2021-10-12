@@ -1,0 +1,24 @@
+.pick-list {
+
+    .pick-list-dropdown-btn {
+        text-decoration: none;
+        width: 100%;
+        padding: $spacer*.25 0;
+
+        .material-icons {
+            margin-right: $spacer*.5;
+        }
+    }
+
+    .pick-list-item > span {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacer*.25 0;
+
+        .btn-close {
+            font-size: .7rem;
+        }
+    }
+}

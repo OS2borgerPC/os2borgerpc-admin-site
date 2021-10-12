@@ -1,0 +1,28 @@
+<div id="script-searchlist" class="tab-content" style="display: none;">
+    <ul id="script-search-list" class="item-list"></ul>
+
+    <script src="/static/js/script_search.js"></script>
+    <script>
+        current_id = {{ selected_script.pk }}
+
+        {% for script in local_scripts %}
+            local_scripts.push({
+                id: {{ script.pk }},
+                url: '{% url script_url site.uid script.pk %}',
+                name: '{{ script.name }} <span class="badge bg-info">Lokalt</span>',
+                category: 'local',
+                delete_url: '{% url 'delete_script' site.uid script.pk %}'
+            })
+        {% endfor %}
+        {% for script in global_scripts %}
+            local_scripts.push({
+                id: {{ script.pk }},
+                url: '{% url script_url site.uid script.pk %}',
+                name: '{{ script.name }} <span class="badge bg-primary">Globalt</span>',
+                category: 'global',
+                delete_url: '{% url 'delete_script' site.uid script.pk %}'
+            })
+        {% endfor %}
+    
+    </script>
+</div>

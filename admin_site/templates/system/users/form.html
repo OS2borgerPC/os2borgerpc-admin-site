@@ -1,55 +1,40 @@
-  {% if form.non_field_errors %}
-  <font color="red">
+{% load crispy_forms_tags %}
+
+{% if form.non_field_errors %}
+  <span class="form-error">
       {{ form.non_field_errors }}
-  </font>
-  {% endif %}
+  </span>
+{% endif %}
 
-  <fieldset>
-    <div class="row-fluid">
-      <p>
-        <label for="{{ form.username.id_for_label }}">Brugernavn:</label>
-        {{ form.username.errors }}
-        <div class="muted">{{ form.username.help_text }}</div>
-        {{ form.username }}
-      </p>
-      <p>
-        <label for="{{ form.new_password.id_for_label }}">Adgangskode (udfyld for at skifte):</label>
-        {{ form.new_password.errors }}
-        {{ form.new_password }}
-        <input class="hiddenpasswordfield" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text" />
+<fieldset>
+  {{ form.username|as_crispy_field }}
+  {{ form.new_password|as_crispy_field }}
+  
+  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.new_password.id_for_label }}_pwshadow" type="text">
+  
+  {{ form.password_confirm|as_crispy_field }}
+  
+  <input class="hiddenpasswordfield form-control" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text">
 
-        <label style="display: inline; margin-left: 10px;" for="{{ form_id|default:'user_form' }}_show_password">
-        <input style="vertical-align: baseline;" id="{{ form_id|default:'user_form' }}_show_password" type="checkbox" class="showpasswordcheckbox" tabindex="100"/> Vis Password</label>
+  <div class="form-check" style="margin-bottom: 1rem;">
+    <input 
+      id="{{ form_id|default:'user_form' }}_show_password" 
+      type="checkbox" 
+      class="showpasswordcheckbox form-check-input" 
+      tabindex="100">
+    <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">Vis Password</label> 
+  </div>
 
-        <label for="{{ form.password_confirm.id_for_label }}">Adgangskode (igen):</label>
-        {{ form.password_confirm.errors }}
-        {{ form.password_confirm }}
-        <input class="hiddenpasswordfield" type="text" id="{{ form.password_confirm.id_for_label }}_pwshadow" type="text" />
-      </p>
-      <p>
-        <label for="{{ form.email.id_for_label }}">E-mail adresse:</label>
-        {{ form.email.errors }}
-        {{ form.email }}
-      </p>
-    </div>
-    </fieldset>
-    <fieldset>
-      <div class="row-fluid">
-        <div class="span6">
-          <label for="{{ form.usertype.id_for_label }}">Brugertype:</label>
-          {{ form.usertype.errors }}
-          {{ form.usertype }}
-        </div>
-      </div>
-  </fieldset>
-
+    {{ form.email|as_crispy_field }}
+    {{ form.usertype|as_crispy_field }}
+</fieldset>
 <script type="text/javascript">
   $(function() {
-    var form = $('#{{ form_id|default:'user_form' }}');
+    var form = $("#{{ form_id|default:'user_form' }}");
 
     // Hide and readonly the shadow fields
     form.find('input.hiddenpasswordfield').hide().attr('readonly', 'readonly');
-    form.find('input.passwordinput').blur(function() {
+    form.find('input.passwordinput').on("blur", function() {
       var t = $(this);
       $('#' + t.attr('id') + '_pwshadow').val(t.val())
     })

@@ -9,19 +9,21 @@ Teknisk dokumentation
 <h1> {{ doc_title }} teknisk dokumentation</h1>
 <p>
 <ul class="nav-list">
-    {% for link, name in url_list %}
+  {% for link, name in url_list %}
     <li {% ifequal doc_active link %}class="active"{% endifequal %}>
-    <a href="{% url 'doc' link %}"><i class="icon-file"></i> {{ name }}</a>
+      <a href="{% url 'doc' link %}">
+        <span class="d-flex align-items-center">
+          <span class="material-icons">article</span> 
+          {{ name }}
+        </span>
+      </a>
     </li>
-    {% endfor %}
-
+  {% endfor %}
 </ul>
 
 
 {% if tech_content %}
-<pre>
-{{ tech_content }}
-</pre>
+  <pre>{{ tech_content }}</pre>
 {% endif %}
   </p>
 {% endblock %}

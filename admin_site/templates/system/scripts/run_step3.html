@@ -1,7 +1,7 @@
 {% extends 'system/scripts/run_base.html' %}
 
 {% block run_dialog_heading %}
-  <h3 id="myModalLabel3">Job startet!</h3>
+  <h3 class="modal-title" id="myModalLabel3">Job startet!</h3>
 {% endblock %}
 
 {% block run_dialog_content %}
@@ -10,5 +10,5 @@
 {% endblock %}
 
 {% block run_dialog_footer %}
-  <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Luk</button>
+  <button class="btn btn-primary" type="button" onclick="dismissDialog()">Luk</button>
 {% endblock %}

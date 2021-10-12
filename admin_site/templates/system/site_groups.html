@@ -1,112 +1,130 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Grupper
 {% endblock %}
 
-{% block specific_documentation_links %}
-    <li><a href="{% url 'doc' 'groups' %}"><i class="icon-question-sign icon-white"></i> Administration af grupper</a></li>
-{% endblock %}
-
 {% block javascripts %}
 <script type="text/javascript" src="/static/js/configlist.js"></script>
-<script type="text/javascript" src="/static/js/pclist.js"></script>
 <script type="text/javascript" src="/static/js/policy_list.js"></script>
 {% endblock %}
 
 {% block groups_active %}
-class="active"
+active
+{% endblock %}
+
+{% block subnav %}
+<div class="sublevelnav">
+  <div class="listutils">
+    <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
+      <span class="material-icons">add</span>
+      Tilføj ny gruppe
+    </button>
+  </div>
+  <ul class="item-list">
+    {% for group in site.groups.all %}
+      <li class="{% ifequal group selected_group %}active{% endifequal %}">
+        <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
+          {{ group.name }}
+        </a>
+        {% ifequal group selected_group %}
+            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe">
+              clear
+            </a>
+        {% endifequal %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}
 
 {% block specific_content %}
-  <ul class="sublevelnav">
-      <li class="listutils">
-        <a href="#addNewGroup" role="button" data-toggle="modal" title="tilføj ny gruppe"><i class="icon-plus icon-white"></i> tilføj ny gruppe</a>
-      </li>
-      {% for group in site.groups.all %}
-        <li {% ifequal group selected_group %}class="active"{% endifequal %}>
-          {% ifequal group selected_group %}
-            {% if selected_group.is_delete_allowed %}
-              <a class="remove pull-right" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe"><i class="icon-remove icon-white"></i></a>
-            {% endif %}
-          {% endifequal %}
-          <a class="list-item" href="/site/{{ site.url }}/groups/{{ group.url }}/"><i class="icon-tags"></i> {{ group.name }}</a>
-        </li>
-      {% endfor %}
-  </ul>
-
   <div class="container-fluid main sublevelmain">
 
     <h2 class="divideheader">Detaljer om <em>{{ selected_group.name }}</em></h2>
     {% include 'notification.html' %}
 
-    <form name="updategroupform" id="updategroupform"
+    <form name="updategroupform" 
+      id="updategroupform"
       action="{% url 'group' site.uid selected_group.url %}"
-      method="post" enctype="multipart/form-data" class="row-fluid">
+      method="post" 
+      enctype="multipart/form-data" 
+      class="row-fluid">
 
-      <button class="btn btn-primary">Gem ændringer</button>
-      <button class="btn" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>
-
-      <ul class="nav nav-tabs">
-        <li class="active">
-          <a href="#group-details" data-toggle="tab">Detaljer</a>
+      <!-- The three tabs on the page: -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
         </li>
-        <li>
-          <a href="#group-configs" data-toggle="tab">Konfigurationer</a>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="policies-tab" href="#policies" data-bs-toggle="tab" role="tab" aria-controls="policies" aria-selected="false">Tilknyttede Scripts</a>
         </li>
-        <li>
-          <a href="#group-policies" data-toggle="tab">Scripts</a>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+        </li>
       </ul>
 
-      <div id="group-details" class="tabcontent active">
-        <div class="row-fluid">
-          <fieldset class="span6">
-            {% csrf_token %}
-            <label for="id_name">Navn:</label>
-            {{ form.name.errors }}
-            {{ form.name }}
+      <!-- The content for the three tabs you can choose from above, one after one: -->
+      <div class="tab-content pb-4" style="border-radius: .33rem .33rem 0 0;">
 
-            <label for="id_uid">Id:</label>
-            {{ form.uid.errors }}
-            {{ form.uid }}
+        <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
+          <div class="row gx-5">
+            <fieldset class="col-12 col-lg-6">
+              {% csrf_token %}
 
-            <label for="id_description">Beskrivelse:</label>
-            {{ form.description.errors }}
-            {{ form.description }}
-          </fieldset>
-          <fieldset class="span6">
-            <label for="id_pcs">Computere i denne gruppe:</label>
-            {{ form.pcs.errors }}
-            {% include 'system/pclist/list.html' with submit_name='pcs' %}
-          </fieldset>
+              {{ form.name|as_crispy_field }}
+              {{ form.uid|as_crispy_field }}
+              {{ form.description|as_crispy_field }}
+            </fieldset>
+
+            <fieldset class="col-12 col-lg-6">
+
+              {{ form.pcs.errors }}
+              <label class="mb-2">Computere i denne gruppe</label>
+              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' %}
+
+            </fieldset>
+          </div>
         </div>
+
+        <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
+          {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
+        </div>
+
+        <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
+          {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
+        </div>
+
       </div>
 
-      <div id="group-configs" class="tabcontent">
-        {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
-      </div>
-
-      <div id="group-policies" class="tabcontent">
-        {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
+      <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
+        <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+        <button class="btn btn-secondary" type="reset">Annuller</button>
+        <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
       </div>
 
     </form>
 
     <div id="addNewGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <form action="{% url 'new_group' site.uid %}" name="new_group_form" id="new_group_form" method="post">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h3>Tilføj ny gruppe</h3>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="{% url 'new_group' site.uid %}" name="new_group_form" id="new_group_form" method="post">
+            <div class="modal-header">
+              <h3 class="modal-title">Tilføj ny gruppe</h3>
+              <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                {{ newform|crispy }}
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value="Gem">
+              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="Annuller">
+            </div>
+          </form>
         </div>
-        <div class="modal-body">
-            {% csrf_token %}
-            {{ newform.as_p }}
-        </div>
-        <div class="modal-footer">
-          <input type="submit" class="btn btn-primary" value="Gem" />
-          <input type="reset" class="btn" data-dismiss="modal" value="Annuller" />
-        </div>
-      </form>
+      </div>
     </div>
 
     {% include 'system/configlist/templates.html' %}

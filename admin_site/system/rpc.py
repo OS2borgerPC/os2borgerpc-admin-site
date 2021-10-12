@@ -33,7 +33,7 @@ def register_new_computer(mac, name, distribution, site, configuration):
         custom_packages = CustomPackages(name=name)
 
     new_pc.distribution = Distribution.objects.get(uid=distribution)
-    new_pc.is_active = False
+    new_pc.is_activated = False
     new_pc.mac = mac
     # Create new configuration, populate with data from computer's config.
     # If a configuration with the same ID is hanging, reuse.
@@ -54,6 +54,16 @@ def register_new_computer(mac, name, distribution, site, configuration):
 
     # Update configuration with uid
     configuration.update({'uid': uid})
+
+    # Update configuration with os2 product
+    # New image versions set it themselves, old don't so for those
+    # we detect and set it this way
+    if "os2_product" not in configuration:
+        if "os2borgerpc_version" in configuration:
+            product = "os2borgerpc"
+        else:
+            product = "os2displaypc"
+        configuration.update({"os2_product": product})
 
     for k, v in list(configuration.items()):
         entry = ConfigurationEntry(key=k, value=v,
@@ -116,7 +126,7 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     # 1. Lookup PC, update "last_seen" field
     pc = PC.objects.get(uid=pc_uid)
 
-    if not pc.is_active:
+    if not pc.is_activated:
         # Fail silently
         return 0
 
@@ -158,7 +168,9 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     # 3. Update jobs with job data
     if job_data is not None:
         for jd in job_data:
-            job = Job.objects.get(pk=jd['id'])
+            job = Job.objects.filter(pk=jd['id']).first()
+            if not job:
+                continue
             job.status = jd['status']
             job.started = jd['started']
             job.finished = jd['finished']
@@ -199,7 +211,7 @@ def get_instructions(pc_uid, update_data):
     pc.last_seen = datetime.now()
     pc.save()
 
-    if not pc.is_active:
+    if not pc.is_activated:
         # Fail silently
         return ([], False)
 
@@ -315,7 +327,7 @@ def get_instructions(pc_uid, update_data):
 
 
 def insert_security_problem_uid(securityproblem):
-    script = Script.objects.get(id=securityproblem.script_id)
+    script = Script.objects.get(security_problems=securityproblem)
     code = script.executable_code.read().decode('utf8')
     code = str(code).replace("%SECURITY_PROBLEM_UID%", securityproblem.uid)
     s = {
@@ -328,14 +340,14 @@ def insert_security_problem_uid(securityproblem):
 
 def get_proxy_setup(pc_uid):
     pc = PC.objects.get(uid=pc_uid)
-    if not pc.is_active:
+    if not pc.is_activated:
         return 0
     return system.proxyconf.get_proxy_setup(pc_uid)
 
 
 def push_config_keys(pc_uid, config_dict):
     pc = PC.objects.get(uid=pc_uid)
-    if not pc.is_active:
+    if not pc.is_activated:
         return 0
 
     # We need two config dicts: one from the PC itself and one from groups

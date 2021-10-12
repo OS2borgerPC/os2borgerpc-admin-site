@@ -1,0 +1,137 @@
+{% if list %}
+
+    <style>
+        .filtersearch {
+            position: relative;
+        }
+        .filtersearchinput {
+            width: 12rem !important;
+            flex-grow: 0 !important;
+        }
+        .filtersearchlist {
+            
+        }
+        .filtersearchlist button {
+            text-decoration: none;
+        }
+    </style>
+
+    <div class="filtersearch" id="filtersearch-{{ id }}">
+        <div class="input-group">
+            <input class="form-control filtersearchinput" type="search" placeholder="{{ placeholder }}">
+            <span class="input-group-text bg-white">
+                <button type="button" class="btn btn-close">
+                    <span class="visually-hidden">Ryd filter</span>
+                </button>
+            </span>
+        </div>
+        <ul class="filtersearchlist pick-list-available dropdown-menu"></ul>
+    </div>
+
+    <script type="text/javascript">
+
+        (function() {
+
+            var input_el = document.querySelector('#filtersearch-{{ id }} input[type="search"]')
+            var list_ul = document.querySelector('#filtersearch-{{ id }} .filtersearchlist')
+            var list = [
+                {% for item in list %}
+                    {
+                        id: {{ item.id }},
+                        name: '{{ item.name }}',
+                        pk: {{ item.pk }},
+                        is_global: {% if item.site %}false{% else %}true{% endif %},
+                        inputs: [
+                            {% for input in item.ordered_inputs %}
+                                {
+                                    name: '{{ input.name }}',
+                                    type: '{{ input.value_type }}',
+                                    position: '{{ input.position }}',
+                                    required: '{{ input.mandatory }}'
+                                },
+                            {% endfor %}
+                        ]
+                    },
+                {% endfor %}
+            ]
+            var filtered_list = []
+
+            function displayAllScripts(ev) {
+                // If the user enters something, clicks away and then back don't refresh the list to show all scripts
+                var query = this.value.toLowerCase()
+                if (query.length == 0 ) {
+                    renderFilteredList(list)
+                }
+            }
+
+            function displayOptions(ev) {
+                var query = this.value.toLowerCase()
+                if (query.length > 0) {
+                    var new_list = list.filter(script => {
+                        return script.name.toLowerCase().includes(query)
+                    })
+                    renderFilteredList(new_list)
+                } else {
+                    renderFilteredList(list)
+                }
+            }
+
+            function renderFilteredList(new_list) {
+                if (new_list.length > 0) {
+                    list_ul.classList.add('show')
+                } else {
+                    list_ul.classList.remove('show')
+                }
+                list_ul.innerHTML = ''
+                for (var listitem in new_list) {
+                    var new_node = document.createElement('li')
+                    new_node.className = 'dropdown-item'
+                    new_node.setAttribute('data-script', createItemData(new_list[listitem]))
+                    new_node.innerHTML = new_list[listitem].name
+                    if (new_list[listitem].is_global) {
+                        new_node.innerHTML += " <span class='badge bg-primary'>Globalt</span>"
+                    }
+                    else {
+                        new_node.innerHTML += " <span class='badge bg-info'>Lokalt</span>"
+                    }
+                    new_node.addEventListener('click', selectOption)
+                    list_ul.appendChild(new_node)
+                }
+            }
+
+            function createItemData(item) {
+                return JSON.stringify({
+                    id: item.pk,
+                    name: item.name,
+                    pk: item.pk,
+                    inputs: item.inputs
+                })
+            }
+
+            function selectOption(ev) {
+                clearHandler(ev)
+                // We leave it up to the parent element to process this event as it bubbles upwards
+                return true
+            }
+
+            function clearHandler(ev) {
+                list_ul.classList.remove('show')
+                list_ul.innerHTML = ''
+                input_el.value = null
+            }
+
+            // Initial setup
+            input_el.addEventListener('click', displayAllScripts)
+            input_el.addEventListener('input', displayOptions)
+            input_el.addEventListener('blur', (ev)=>setTimeout(clearHandler, 100))
+            document.querySelector('#filtersearch-{{ id }} .btn-close').addEventListener('click', clearHandler)
+            
+        })()
+
+    </script>
+
+{% else %}
+
+    <p>Data mangler</p>
+
+{% endif %}

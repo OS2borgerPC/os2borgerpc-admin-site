@@ -1,0 +1,35 @@
+/* Security warning badges and labels */
+
+.sec-warn-blink {-webkit-animation: blinking 2s infinite; animation: blinking 2s infinite;}
+@-webkit-keyframes blinking {
+  0% { background-color: $danger; }
+  50% { background-color: transparent; }
+  100% { background-color: $danger; }
+}
+@keyframes blinking {
+  0% { background-color: $danger; }
+  50% { background-color: transparent; }
+  100% { background-color: $danger; }
+}
+
+.seclevel-gentle-warning,
+.badge-gentle-warning,
+.badge-label-gentle-warning,
+.severity-label-gentle-warning::before {
+    color: $gray-800;
+    background-color: $gentle-warning;
+}
+
+.seclevel-warning,
+.badge-label-warning,
+.severity-label-warning::before { 
+    color: $white;
+    background-color: $warning; 
+}
+
+.seclevel-danger,
+.badge-label-important,
+.severity-label-important::before { 
+    color: $white;
+    background-color: $danger; 
+}

@@ -1,0 +1,21 @@
+.pagination-wrapper {
+    background-color: $gray-200;
+    padding: 1rem 1rem 1rem 2rem;
+    margin: 0 0 2.5rem !important;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 .33rem .33rem;
+
+    .pagination {
+        margin: 0;
+    }
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}

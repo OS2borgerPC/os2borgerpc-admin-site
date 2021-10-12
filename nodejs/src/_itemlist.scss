@@ -1,0 +1,63 @@
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    & > li {
+        border-bottom: solid 1px $white;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+
+        &:hover,
+        &:focus {
+            background-color: $gray-300;
+        }
+
+        .badge {
+            margin-right: $spacer;
+        }
+    }
+
+    .disabled {
+        color: $gray-500;
+    }
+
+    .active,
+    .active a,
+    .active button {
+        color: $white !important;
+        background-color: $warning !important;
+    }
+
+    .item-list-link {
+        display: block;
+        padding: $spacer*.75 $spacer;
+        flex-grow: 1;
+        text-align: left;
+        border-radius: 0;
+
+        &,
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: $gray-900;
+        }
+
+    }
+
+    .item-list-deletable {
+        border-radius: .33rem;
+        display: block;
+        text-decoration: none;
+        padding: $spacer*.25;
+        font-size: 1.25rem;
+
+        &:hover,
+        &:focus {
+            background-color: $danger !important;
+        }
+    }
+}

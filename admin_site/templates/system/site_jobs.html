@@ -9,34 +9,131 @@ Jobs
     var bibos_job_search_url = "{% url 'jobsearch' site.uid %}"
   </script>
   <script type="text/javascript" src="/static/js/jobs_list.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.collapsing').click(function() {
-        $(this).find('i').toggleClass('icon-chevron-up icon-chevron-down');
-      });
-    });
-  </script>
 {% endblock %}
 
-{% block jobs_active %}
-class="active"
-{% endblock %}
+{% block subnav %}
+<div id="jobsearchnav" class="sublevelnav">
 
-{% block specific_documentation_links %}
-  <li><a href="{% url 'doc' 'jobs' %}"><i class="icon-question-sign icon-white"></i> Hjælp til joblisten</a></li>
-  <li><a href="{% url 'doc' 'scripts' %}"><i class="icon-question-sign icon-white"></i> Administration af scripts</a></li>
-  <li><a href="{% url 'doc' 'scripts/running' %}"><i class="icon-question-sign icon-white"></i> Afvikling af scripts</a></li>
+  <div class="d-flex justify-content-between align-items-center px-3 py-1">
+    <h3 class="nav-header">Filtre</h3>
+    <button class="btn btn-link" type="button" onclick="BibOS.JobList.reset()">Nulstil filtre</button>
+  </div>
+
+  <hr class="mt-0">
+
+  <form id="jobsearch-filterform" name="filterform" action="./" method="post">
+
+    <input type="hidden" name="batch" value="{{ selected_batch }}">
+    <input type="hidden" name="pc" value="{{ selected_pc }}">
+    <input type="hidden" name="group" value="{{ selected_group }}">
+    <input type="hidden" name="orderby" value="-pk">
+    <input type="hidden" name="page" value="1">
+
+    <div id="jobsearch-status-selectors" class="px-3 pt-2">
+      <h3 class="mb-3">Status</h3>
+      {% for s in status_choices%}
+        <div class="form-check mb-3">
+          <input class="form-check-input" 
+            id="id_{{ s.value }}_chkbx"
+            type="checkbox" 
+            value="{{ s.value }}" 
+            name="status" 
+            {{ s.checked }}>
+          <label for="id_{{ s.value }}_chkbx" class="form-check-label">
+            <span class="badge {{ s.label }}">{{ s.name }}</span>
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+
+    <hr class="mb-0">
+
+    <div class="list-collapsible">
+
+      <a data-bs-toggle="collapse" href="#batches" role="button" aria-expanded="false" aria-controls="batches">
+        <span class="material-icons">folder</span>
+        <span class="collapse-label">
+          Batches
+        </span>
+        <span class="material-icons collapse-arrow">arrow_drop_down</span>
+      </a>
+
+      <div id="batches" class="collapse collapse-content {% if selected_batch %}show{% endif %}">
+        <ul class="item-list">
+          {% for batch in batches %}
+          <li>
+            <button 
+              type="button" 
+              class="btn btn-link item-list-link {% ifequal batch.pk selected_batch %}active{% endifequal %}" 
+              onclick="BibOS.JobList.selectBatch(this, '{{ batch.pk }}')">
+              {{ batch.name }}
+            </button>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <a data-bs-toggle="collapse" href="#computers" role="button" aria-expanded="false" aria-controls="computers">
+        <span class="material-icons">folder</span>
+        <span class="collapse-label">
+          Computere
+        </span>
+        <span class="material-icons collapse-arrow">arrow_drop_down</span>
+      </a>
+
+      <div id="computers" class="collapse collapse-content {% if selected_pc %}show{% endif %}">
+        <ul class="item-list">
+          {% for pc in pcs %}
+            <li>
+              <button 
+                type="button" 
+                class="btn btn-link item-list-link {% ifequal pc.pk selected_pc %}active{% endifequal %}" 
+                onclick="BibOS.JobList.selectPC(this, '{{ pc.pk }}')">
+                {{ pc.name }}
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <a data-bs-toggle="collapse" href="#groups" role="button" aria-expanded="false" aria-controls="groups">
+        <span class="material-icons">folder</span>
+        <span class="collapse-label">
+          Grupper
+        </span>
+        <span class="material-icons collapse-arrow">arrow_drop_down</span>
+      </a>
+
+      <div id="groups" class="collapse collapse-content {% if selected_group %}show{% endif %}">
+        <ul class="item-list">
+          {% for group in groups %}
+            <li>
+              <button 
+                type="button" 
+                class="btn btn-link item-list-link {% ifequal group.pk selected_group %}active{% endifequal %}" 
+                onclick="BibOS.JobList.selectGroup(this, '{{ group.pk }}')">
+                {{ group.name }}
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+
+  </form>
+</div>
 {% endblock %}
 
 {% block specific_content %}
   <div class="template-container">
-   <table>
+   <table class="table">
     <tbody id="jobitem-template">
       <tr>
-        <td><strong>#SCRIPT_NAME#</strong></td>
+        <td><strong>#SCRIPT_LINK#</strong></td>
         <td>#STARTED#</td>
         <td>#FINISHED#</td>
-        <td><span class="label #LABEL#">#STATUS#</span></td>
+        <td><span class="badge #LABEL#">#STATUS#</span></td>
         <td>#PC_NAME#</td>
         <td>#BATCH_NAME#</td>
         <td>#JOBINFOBUTTON#</td>
@@ -44,86 +141,18 @@ class="active"
     </tbody>
    </table>
   </div>
-  <div id="jobsearchnav" class="sublevelnav sublevelnav-inverted">
-    <form id="jobsearch-filterform" name="filterform" action="./" method="post">
-      <input type="hidden" name="batch" value="{{ selected_batch }}">
-      <input type="hidden" name="pc" value="{{ selected_pc }}">
-      <input type="hidden" name="group" value="{{ selected_group }}">
-      <input type="hidden" name="orderby" value="-pk">
-      <input class="btn btn-primary pull-right" type="button" onclick="BibOS.JobList.reset()" value="Nulstil filtre">
-      <h3 class="nav-header">Filtrér:</h3>
-      <hr>
-      <div id="jobsearch-status-selectors">
-      {% for s in status_choices%}
-      <label>
-        <input type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
-        <span class="label {{ s.label }}">{{ s.name }}</span>
-      </label>
-      {% endfor %}
-  </div>
-  <div id="jobsearch-length-limitation">
-      <hr>
-      <label>
-        <input type="radio" value="20"  checked="checked" name="do_limit">
-        <span class="label">Første 20</span>
-      </label>
-      <label>
-        <input type="radio" value="50"  name="do_limit">
-        <span class="label">Første 50</span>
-      </label>
-      <label>
-        <input type="radio" value="100"  name="do_limit">
-        <span class="label">Første 100</span>
-      </label>
-      <label>
-        <input type="radio" value="0"  name="do_limit">
-        <span class="label">Alle</span>
-      </label>
-  </div>
-      <hr>
-      <a href="javascript:void(0)" class="btn collapsing" data-toggle="collapse" data-target="#demo1"><i class="icon-chevron-down"></i> Batches</a>
-      <div id="demo1" class="collapse out{% if selected_batch %} in{% endif %}">
-        <ul class="unstyled">
-          {% for batch in batches %}
-          <li onclick="BibOS.JobList.selectBatch(this, '{{ batch.pk }}')" {% ifequal batch.pk selected_batch %}class="selected"{% endifequal %}>
-            <a href="javascript:void(0)"><i class="icon-list-alt icon-white"></i> {{ batch.name }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      <a href="javascript:void(0)" class="btn collapsing" data-toggle="collapse" data-target="#demo2"><i class="icon-chevron-down"></i> Computere</a>
-      <div id="demo2" class="collapse out{% if selected_pc %} in{% endif %}">
-        <ul class="unstyled">
-          {% for pc in pcs %}
-          <li onclick="BibOS.JobList.selectPC(this, '{{ pc.pk }}')" {% ifequal pc.pk selected_pc %}class="selected"{% endifequal %}>
-            <a href="javascript:void(0)"><i class="icon-hdd icon-white"></i> {{ pc.name }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      <a href="javascript:void(0)" class="btn collapsing" data-toggle="collapse" data-target="#demo3"><i class="icon-chevron-down"></i> Grupper</a>
-      <div id="demo3" class="collapse out{% if selected_group %} in{% endif %}">
-        <ul class="unstyled">
-          {% for group in groups %}
-          <li onclick="BibOS.JobList.selectGroup(this, '{{ group.pk }}')" {% ifequal group.pk selected_group %}class="selected"{% endifequal %}>
-            <a  href="javascript:void(0)"><i class="icon-tags icon-white"></i> {{ group.name }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </form>
-  </div>
+
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     {% include 'notification.html' %}
-    <table class="table jobtable">
+    <table class="table jobtable table-extendable">
       <thead>
         <tr>
-          <th class="orderby order-batch__script__name desc" onclick="BibOS.JobList.orderby('batch__script__name')">Script <i class="icon icon-chevron-down"></i></th>
-          <th class="orderby order-started desc" onclick="BibOS.JobList.orderby('started')">Startet <i class="icon icon-chevron-down"></i></th>
-          <th class="orderby order-finished desc" onclick="BibOS.JobList.orderby('finished')">Sluttet <i class="icon icon-chevron-down"></i></th>
-          <th class="orderby order-status desc" onclick="BibOS.JobList.orderby('status')">Status <i class="icon icon-chevron-down"></i></th>
-          <th class="orderby order-pc__name desc" onclick="BibOS.JobList.orderby('pc__name')">Computer <i class="icon icon-chevron-down"></i></th>
-          <th class="orderby order-batch__name desc" onclick="BibOS.JobList.orderby('batch__name')">Batch <i class="icon icon-chevron-down"></i></th>
+          {% include 'widgets/orderby_th_ajax.html' with label='Script' action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
+          {% include 'widgets/orderby_th_ajax.html' with label='Startet' action="BibOS.JobList.orderby('started')" slug='started' %}
+          {% include 'widgets/orderby_th_ajax.html' with label='Sluttet' action="BibOS.JobList.orderby('finished')" slug='finished' %}
+          {% include 'widgets/orderby_th_ajax.html' with label='Status' action="BibOS.JobList.orderby('status')" slug='status' %}
+          {% include 'widgets/orderby_th_ajax.html' with label='Computer' action="BibOS.JobList.orderby('pc__name')" slug='computer' %}
+          {% include 'widgets/orderby_th_ajax.html' with label='Batch' action="BibOS.JobList.orderby('batch__name')" slug='batch' %}
           <th></th>
         </tr>
       </thead>
@@ -132,7 +161,10 @@ class="active"
           <td colspan="8">Loading data...</td>
         </tr>
       </tbody>
-    </table> 
+    </table>
+    <nav class="pagination-wrapper" aria-label="Job list page">
+      {% include 'widgets/pagination.html' %}
+    </nav>
   </div>
   
 {% endblock %}

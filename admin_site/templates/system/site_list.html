@@ -1,32 +1,22 @@
 {% extends "sitebase.html" %}
 
-{% block header_title %}
-<div class="container">Administrér <em>Sites</em></div>
-{% endblock %}
+{% block header_title %}Administrér <em>Sites</em>{% endblock %}
 
-{% block content %}
+{% block header_class %}container{% endblock %}
+
+{% block specific_content %}
   <div class="container">
-    {% if user.is_superuser %}
-    <div class="addsitetrigger"><a href="/sites/new/" title="Tilføj nyt site"><i class="icon-plus"></i> tilføj nyt site</a></div>
-    {% endif %}
-    <div class="itemlist">
+    <div>
       {% for site in site_list %}
-        <div class="btn-group">
-          <a href="/site/{{site.url}}" class="btn btn-large">
-            <i class="icon-home"></i> {{site.name}}
+
+        <div class="btn-group mt-3">
+          <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
+            <span class='material-icons'>home</span>
+            {{site.name}}
           </a>
-          <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu pull-right">
-              <li><a href="/site/{{site.url}}/"><i class="icon-home"></i> Gå til</a></li>
-              <li><a href="/sites/{{ site.url }}/edit/"><i class="icon-edit"></i> Redigér</a></li>
-              {% if site.is_delete_allowed %}
-              <li><a href="/sites/{{ site.url }}/delete/" title="Slet bibliotek"><i class="icon-remove"></i> Slet</a></li>
-              {% endif %}
-          </ul>
         </div>
       {% endfor %}      
     </div>
+
   </div>
 {% endblock %}
