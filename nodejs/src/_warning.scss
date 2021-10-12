@@ -12,20 +12,6 @@
   100% { background-color: $danger; }
 }
 
-.severity {
-    position: relative;
-}
-
-.severity::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: $spacer*.75;
-}
-
 .seclevel-gentle-warning,
 .badge-gentle-warning,
 .badge-label-gentle-warning,
