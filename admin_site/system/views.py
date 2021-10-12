@@ -1089,10 +1089,7 @@ class UsersView(SelectionMixin, SiteView):
             # Select your own user by default if you have a UserProfile on the site
             # Fx. relevant to password changes
 
-            if (
-                context["site"]
-                in UserProfile.objects.get(user=self.request.user.id).sites.all()
-            ):
+            if (context["site"] in self.request.user.bibos_profile.sites.all()):
                 user = self.request.user.username
             else:
                 user = context['selected_user'].username
