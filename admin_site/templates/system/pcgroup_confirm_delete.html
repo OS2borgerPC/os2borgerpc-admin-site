@@ -2,12 +2,27 @@
 {% load crispy_forms_tags %}
 
 {% block specific_title %}
-Slet gruppe
+Slet gruppe: {{ pcgroup.name }}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
-    <p>Ønsker du virkelig at slette?</p>
+    <div class="alert alert-danger">
+      <h3>Bemærk</h3>
+      <ul>
+        <li>
+          Tilknyttede <strong>Computere</strong> og <strong>Tilknyttede Scripts</strong> vil blive fjernet fra
+          <strong>Gruppen</strong>.
+        </li>
+        <li>
+          Selve <strong>Computerne</strong> og <strong>Scriptsene</strong> vil <strong>IKKE</strong> blive slettet.
+        </li>
+      </ul>
+    </div>
+    <p>
+      Er du sikker på, du ønsker at slette gruppen
+      <strong style="font-size: 1.25em;">{{ pcgroup.name }}</strong>?
+    </p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}

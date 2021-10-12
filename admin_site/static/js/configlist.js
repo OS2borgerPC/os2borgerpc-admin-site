@@ -63,19 +63,13 @@
             })
         },
         removeItem: function(clickElem) {
-            var e = $(clickElem).parent()
-            while (e && e.length && !e.is('tr')) {
-                e = e.parent()
-            }
+            var e = $(clickElem).parents("tr:first")
             if (e)
                 e.remove()
             this.updateNew()
         },
         startEdit: function(clickElem, id) {
-            var c = $(clickElem).parent()
-            while (c && c.length && !c.is('div.btn-group')) {
-                c = c.parent()
-            }
+            var c = $(clickElem).parents("tr")
             $('#editconfigdialog input').removeAttr('disabled')
             $('#editconfig_id').val(id)
             $('#editconfig_pk').val(c.find('input.config-pk').val())

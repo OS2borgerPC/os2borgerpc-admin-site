@@ -1,9 +1,15 @@
-{# Remember that this templates must be able to be called both from templates.html and from list.html #}
+{# Remember that this template must be able to be called both from templates.html and from list.html #}
+
 <tr>
-  <td class="policy-script-print-key">{{ name }}</td>
-  <td class="pe-0">
-  
-    <div data-name="policy-script-{{ name }}">
+  {% if script_id %}
+    <td>{{ps.position}}</td>
+    <td class="policy-script-print-key"><a href="{% url 'script' site.uid script_id %}">{{ name }}</a></td>
+  {% else %}
+    <td>Nyt</td>
+    <td class="policy-script-print-key"><a href="/site/{{site.uid}}/scripts/{{script_pk}}/">{{ name }}</a></td>
+  {% endif %}
+  <td class="pe-0 js-match">
+    <div data-name="policy-script-{{ name }}" >
       <input class="policy-script-pos" type="hidden" name="{{ submit_name|default:'policy' }}" value="{{ ps_pk }}">
       <input class="policy-script-name" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}" value="{{ script_pk }}">
       {% if params != '#PARAMS#' %}
@@ -36,14 +42,15 @@
       {% endif %}
     </div>
 
+  </td>
+  <td>
     <p class="mb-0" style="margin-left: -.5rem;">
       <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.editScript(this, '{{ submit_name }}')">
-        Redigér
+        <span class='material-icons'>edit</span>Redigér
       </a>
-      <a class="btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')">
-        Slet script
+      <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')">
+        <span class='material-icons'>delete</span>Fjern script
       </a>
     </p>
-
   </td>
 </tr>

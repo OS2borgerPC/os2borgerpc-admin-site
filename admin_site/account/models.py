@@ -22,14 +22,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-    def clean(self):
-        from django.core.exceptions import ValidationError
-
-        if not self.user.is_superuser and not self.sites.exists():
-            raise ValidationError(_(
-                'Non-admin users MUST be attached to a site'
-            ))
-
 
 class SiteMembership(models.Model):
     SITE_USER = 1

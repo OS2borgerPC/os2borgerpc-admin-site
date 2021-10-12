@@ -26,10 +26,13 @@ We highly encourage you to start any attempt at customization by just tweaking t
 
 ## Step 2: Build CSS
 
-From [nodejs/](./) directory, run the npm `build` script.
+From [nodejs/](./) directory, run the npm `build-for-dev` script.
+
 ```
-$ npm run build
+$ npm run build-for-dev
 ```
 This compiles the base Bootstrap styles and your custom styles into a `bootstrap.css` file that is stored in the [static/css](../admin_site/static/css/bootstrap.css).
 
 You should be able to run the admin site application in a browser and see your changes.
+
+Note: `npm run build` only creates the file in [dist/css](dist/css/bootstrap.css), which is then picked up by Docker in its [Dockerfile](../docker/Dockerfile).

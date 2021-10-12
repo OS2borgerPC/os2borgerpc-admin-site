@@ -69,6 +69,7 @@ class PCInline(admin.TabularInline):
 
 
 class PCGroupAdmin(admin.ModelAdmin):
+    list_display = ['site', 'name']
     inlines = [PCInline]
 
 
@@ -84,6 +85,7 @@ class BatchParameterInline(admin.TabularInline):
 
 
 class BatchAdmin(admin.ModelAdmin):
+    list_display = ['site', 'name', 'script']
     fields = ['site', 'name', 'script']
     inlines = [JobInline, BatchParameterInline]
 
@@ -106,11 +108,9 @@ class ScriptAdmin(admin.ModelAdmin):
         "site",
         "jobs_per_site",
         "jobs_per_site_for_the_last_year",
-        "deleted",
     )
     filter_horizontal = ("tags",)
     readonly_fields = ("user_created", "user_modified")
-    list_filter = ("deleted",)
     search_fields = ("name",)
     inlines = [InputInline]
 
@@ -176,7 +176,7 @@ class SiteAdmin(admin.ModelAdmin):
 
 
 class PCAdmin(admin.ModelAdmin):
-    list_display = ("name", "uid", "site_link", "is_active", "last_seen")
+    list_display = ("name", "uid", "site_link", "is_activated", "last_seen")
     search_fields = ("name", "uid")
 
     def site_link(self, obj):
@@ -212,6 +212,14 @@ class ImageVersionAdmin(admin.ModelAdmin):
     list_display = ("platform", "image_version", "os", "release_date")
 
 
+class SecurityProblemAdmin(admin.ModelAdmin):
+    list_display = ("site", "name", "level", "security_script")
+
+
+class SecurityEventAdmin(admin.ModelAdmin):
+    list_display = ("problem", "ocurred_time", "reported_time", "pc", "status")
+
+
 ar(Configuration, ConfigurationAdmin)
 ar(PackageList)
 ar(CustomPackages, CustomPackagesAdmin)
@@ -229,5 +237,5 @@ ar(Job, JobAdmin)
 ar(BatchParameter)
 ar(AssociatedScript)
 ar(AssociatedScriptParameter)
-ar(SecurityEvent)
-ar(SecurityProblem)
+ar(SecurityEvent, SecurityEventAdmin)
+ar(SecurityProblem, SecurityProblemAdmin)

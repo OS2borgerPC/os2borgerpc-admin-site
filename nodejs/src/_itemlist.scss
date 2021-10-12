@@ -10,6 +10,15 @@
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
+
+        &:hover,
+        &:focus {
+            background-color: $gray-300;
+        }
+
+        .badge {
+            margin-right: $spacer;
+        }
     }
 
     .disabled {
@@ -37,18 +46,13 @@
             color: $gray-900;
         }
 
-        &:hover,
-        &:focus {
-            background-color: $gray-300;
-        }
     }
 
     .item-list-deletable {
         border-radius: .33rem;
         display: block;
         text-decoration: none;
-        padding: $spacer*.5;
-        margin: 0 $spacer*.25;
+        padding: $spacer*.25;
         font-size: 1.25rem;
 
         &:hover,

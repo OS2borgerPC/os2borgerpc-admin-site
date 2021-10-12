@@ -31,7 +31,7 @@
     </li>
     {% if not is_security %}
     <li class="nav-item" role="presentation">
-      <a class="nav-link" id="parameters-tab" role="tab" href="#parameters" data-bs-toggle="tab" role="tab" aria-controls="parameters" aria-selected="false">Indstillinger (Inputparametre)</a>
+      <a class="nav-link" id="parameters-tab" role="tab" href="#parameters" data-bs-toggle="tab" role="tab" aria-controls="parameters" aria-selected="false">Inputparametre</a>
     </li>
     {% endif %}
   </ul>
@@ -46,18 +46,15 @@
         {{ form.description|as_crispy_field }}
         {{ form.author|as_crispy_field }}
         {{ form.author_email|as_crispy_field }}
-        {{ form.maintained_by_magenta|as_crispy_field }}
+        {% if not global_script %}
+          {{ form.maintained_by_magenta|as_crispy_field }}
+        {% endif %}
 
           <input
-            class="form-check-input"
-            type="checkbox"
+            type="hidden"
             id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
             name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
-            value="{{ site.id }}"
-            {% if not global_script %}checked="checked"{% endif %}>
-          <label class="form-label checkbox" for="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site">
-            Lokalt script for {{ site.uid|capfirst }}
-          </label>
+            value="{{ site.id }}">
           <input 
             id="id_is_security_script" 
             name="is_security_script"
@@ -90,14 +87,13 @@
       {% else %}
         <fieldset id="script-inputs">
           <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
-          <p>Input-parametre</p>
           <div>
             <table class="table">
               <thead>
                 <tr>
                   <th>Navn</th>
                   <th>Type</th>
-                  <th class="ps-2">Slet</th>
+                  <th>Slet</th>
                 </tr>
               </thead>
               <tbody id="script-input-container">

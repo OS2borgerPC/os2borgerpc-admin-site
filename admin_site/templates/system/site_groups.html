@@ -26,15 +26,12 @@ active
     {% for group in site.groups.all %}
       <li class="{% ifequal group selected_group %}active{% endifequal %}">
         <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
-          <span class="material-icons">local_offer</span>
           {{ group.name }}
         </a>
         {% ifequal group selected_group %}
-          {% if selected_group.is_delete_allowed %}
             <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe">
               clear
             </a>
-          {% endif %}
         {% endifequal %}
       </li>
     {% endfor %}
@@ -61,10 +58,11 @@ active
           <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+          <a class="nav-link" id="policies-tab" href="#policies" data-bs-toggle="tab" role="tab" aria-controls="policies" aria-selected="false">Tilknyttede Scripts</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="policies-tab" href="#policies" data-bs-toggle="tab" role="tab" aria-controls="policies" aria-selected="false">Scripts</a>
+          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+        </li>
       </ul>
 
       <!-- The content for the three tabs you can choose from above, one after one: -->
@@ -84,19 +82,20 @@ active
 
               {{ form.pcs.errors }}
               <label class="mb-2">Computere i denne gruppe</label>
-              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' %}
+              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' %}
 
             </fieldset>
           </div>
+        </div>
+
+        <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
+          {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
           {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
         </div>
 
-        <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
-          {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
-        </div>
       </div>
 
       <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
@@ -104,7 +103,6 @@ active
         <button class="btn btn-secondary" type="reset">Annuller</button>
         <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
       </div>
-      
 
     </form>
 

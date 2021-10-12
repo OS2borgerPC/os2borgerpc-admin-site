@@ -112,6 +112,17 @@ header {
 .documentationpage #adm-content {
     padding: $spacer*1.75 $spacer*2;
     max-width: $spacer*60;
+    overflow: visible;
+}
+
+.documentationpage img {
+  margin: auto;
+  display: block;
+  padding: 30px 0px;
+}
+
+.documentationpage #adm-body {
+  overflow: scroll;
 }
 
 // Popup page

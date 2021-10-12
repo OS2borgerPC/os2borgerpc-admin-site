@@ -14,19 +14,20 @@ Sikkerhedsregler
         <div class="listutils">
             <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
                 <span class="material-icons">add</span>
-                Definér nyt sikkerhedsproblem
+                Definér ny sikkerhedsregel
             </button>
         </div>
         <ul class="item-list">
             {% for sp in site.security_problems.all %}
                 <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>                
                     <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/">
-                        <span class="material-icons">error</span>
                         {{ sp.name }}
                     </a>
                     {% ifequal sp selected_security_problem %}
                         {% if selected_security_problem.is_delete_allowed %}
-                            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/" title="Slet sikkerhedsproblem">
+                            <a class="item-list-deletable material-icons"
+                               href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/"
+                               title="Slet sikkerhedsregel">
                                 clear
                             </a>
                         {% endif %}
@@ -70,9 +71,16 @@ Sikkerhedsregler
             </fieldset>
 
             <fieldset class="col-12 col-lg-6">
-                {{ form.script|as_crispy_field }}
-                {{ form.alert_groups|as_crispy_field }}
-                {{ form.alert_users|as_crispy_field }}
+                {{ form.security_script|as_crispy_field }}
+
+                <p>
+                    <label>Overvågede grupper</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til overvågning' remove_text='Fjern overvåget gruppe' %}
+                </p>
+                <p>
+                    <label>Modtager(e) af e-mail-advarsel</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text='Tilføj e-mail-modtager' remove_text='Fjern modtager' %}
+                </p>
 
             </fieldset>
 
@@ -94,7 +102,7 @@ Sikkerhedsregler
                         id="new_security_problem_form" 
                         method="post">
                     <div class="modal-header">
-                        <h3 class="modal-title">Definér nyt sikkerhedsproblem</h3>
+                        <h3 class="modal-title">Definér ny sikkerhedsregel</h3>
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -110,9 +118,16 @@ Sikkerhedsregler
                             {{ newform.uid|as_crispy_field }}
                             {{ newform.description|as_crispy_field }}
                             {{ newform.level|as_crispy_field }}
-                            {{ newform.script|as_crispy_field }}
-                            {{ newform.alert_groups|as_crispy_field }}
-                            {{ newform.alert_users|as_crispy_field }}
+                            {{ newform.security_script|as_crispy_field }}
+
+                            <p>
+                                <label>Overvågede grupper</label>
+                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=alert_groups identifier='gruppe' unique_id='ag2' add_text='Tilføj gruppe til overvågning' %}
+                            </p>
+                            <p>
+                                <label>Modtager(e) af e-mail-advarsel</label>
+                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=alert_users identifier='modtager' unique_id='au2' add_text='Tilføj e-mail-modtager' %}
+                            </p>
                         </fieldset>
 
                     </div>

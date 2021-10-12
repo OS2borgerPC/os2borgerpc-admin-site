@@ -18,6 +18,7 @@
 @import "code";
 @import "modal";
 @import "warning";
+@import "errors";
 
 hr {
     border-top: 1px solid $gray-700;
@@ -27,4 +28,12 @@ hr {
 
 .btn-warning {
     color: $white;
+}
+
+.severity-critical {
+    color: $danger;
+}
+
+.severity-high {
+    color: $warning;
 }

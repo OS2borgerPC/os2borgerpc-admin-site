@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-from .views import SiteList, SiteCreate, SiteUpdate, SiteDelete
+from .views import SiteList
 from .views import AdminIndex, PCsView, GroupsView, UsersView, JobsView
 from .views import GroupCreate, GroupUpdate, GroupDelete, JobSearch, UserDelete
 from .views import SiteDetailView, UserCreate, UserUpdate, SiteConfiguration
@@ -64,13 +64,6 @@ urlpatterns = [
     # Sites
     url(r'^$', AdminIndex.as_view(), name='index'),
     url(r'^sites/$', SiteList.as_view(), name='sites'),
-    url(r'^sites/new/$', SiteCreate.as_view(), name='new_site'),
-    url(r'^sites/(?P<slug>[^/]+)/edit/$',
-        SiteUpdate.as_view(),
-        name='edit_site'),
-    url(r'^sites/(?P<slug>[^/]+)/delete/$',
-        SiteDelete.as_view(),
-        name='delete_site'),
     url(r'^site/(?P<slug>[^/]+)/$', SiteDetailView.as_view(),
         name='site'),
 
@@ -152,9 +145,17 @@ urlpatterns = [
         name='delete_user'),
 
     # Documentation
-    url(r'^documentation/pdf_guide/',
+    url(r'^documentation/$',
+        RedirectView.as_view(
+            url='/documentation/om_os2borgerpc_admin/'
+        )),
+    url(r'^documentation/os2borgerpc_installation_guide/',
         RedirectView.as_view(
             url='/static/docs/OS2BorgerPC-20-04-installationsguide.pdf'
+        )),
+    url(r'^documentation/os2displaypc_installation_guide',
+        RedirectView.as_view(
+            url='https://os2borgerpc-server-image.readthedocs.io/en/latest/dev.html'
         )),
     url(r'^documentation/creating_security_problems/',
         RedirectView.as_view(

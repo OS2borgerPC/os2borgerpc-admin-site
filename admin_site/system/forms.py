@@ -1,13 +1,13 @@
 import datetime
 
 from django import forms
+from django.forms import ValidationError
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
-from .models import Site, PCGroup, ConfigurationEntry, PC
+from .models import PCGroup, ConfigurationEntry, PC
 from .models import Script, Input, SecurityProblem
 from account.models import SiteMembership
-
-from django.utils.translation import ugettext as _
 
 
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
@@ -25,22 +25,6 @@ def add_classes_to_form(someform, classes_to_add):
             if 'class' not in field.widget.attrs:
                 field.widget.attrs['class'] = ''
             field.widget.attrs['class'] += ' ' + classes_to_add
-
-
-class SiteForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SiteForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
-            self.fields['uid'].widget.attrs['readonly'] = True
-
-    class Meta:
-        model = Site
-        exclude = ['configuration']
-        widgets = {
-            'paid_for_access_until':
-                forms.widgets.DateInput(attrs={'type': 'date'}),
-        }
 
 
 class GroupForm(forms.ModelForm):
@@ -89,11 +73,14 @@ class ScriptForm(forms.ModelForm):
         super(ScriptForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
-            self.fields['site'].widget.attrs['readonly'] = True
-            self.fields['tags'].disabled = True
-            self.fields[
-                'maintained_by_magenta'
-            ].widget.attrs['disabled'] = True
+            self.fields['site'].disabled = True
+        else:
+            self.fields['maintained_by_magenta'].widget = forms.HiddenInput()
+
+        self.fields['tags'].disabled = True
+        self.fields[
+            'maintained_by_magenta'
+        ].widget.attrs['disabled'] = True
 
     class Meta:
         model = Script
@@ -109,7 +96,8 @@ class ConfigurationEntryForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     usertype = forms.ChoiceField(
         required=True,
-        choices=SiteMembership.type_choices
+        choices=SiteMembership.type_choices,
+        label=_("Usertype"),
     )
 
     new_password = forms.CharField(
@@ -126,6 +114,12 @@ class UserForm(forms.ModelForm):
         required=False
     )
 
+    class Meta:
+        model = User
+        exclude = ('groups', 'user_permissions', 'first_name', 'last_name',
+                   'is_staff', 'is_active', 'is_superuser', 'date_joined',
+                   'last_login', 'password')
+
     def __init__(self, *args, **kwargs):
         initial = kwargs.setdefault('initial', {})
         if 'instance' in kwargs and kwargs['instance'] is not None:
@@ -138,12 +132,6 @@ class UserForm(forms.ModelForm):
         self.initial_type = initial['usertype']
         super(UserForm, self).__init__(*args, **kwargs)
 
-    class Meta:
-        model = User
-        exclude = ('groups', 'user_permissions', 'first_name', 'last_name',
-                   'is_staff', 'is_active', 'is_superuser', 'date_joined',
-                   'last_login', 'password')
-
     def set_usertype_single_choice(self, choice_type):
         self.fields['usertype'].choices = [
             (c, l) for c, l in SiteMembership.type_choices if c == choice_type
@@ -153,7 +141,6 @@ class UserForm(forms.ModelForm):
     # Sets the choices in the usertype widget depending on the usertype
     # of the user currently filling out the form
     def setup_usertype_choices(self, loginuser_type, is_superuser):
-        print("Usertype: ", loginuser_type)
         if is_superuser or loginuser_type == SiteMembership.SITE_ADMIN:
             # superusers and site admins can both
             # choose site admin or site user.
@@ -168,6 +155,14 @@ class UserForm(forms.ModelForm):
         pw2 = cleaned_data.get("password_confirm")
         if pw1 != pw2:
             raise forms.ValidationError(_('Passwords must be identical.'))
+
+        username = cleaned_data.get("username")
+        user_exists = self.Meta.model.objects.filter(username=username).exists()
+
+        if not self.instance.pk and user_exists:
+            raise ValidationError(
+                _("A user with this username already exists.")
+            )
         return cleaned_data
 
     def save(self, commit=True):

@@ -1,16 +1,21 @@
 {% extends "site_with_navigation.html" %}
 
 {% block specific_title %}
-Slet computer: {{pc.uid}}
+Slet computer: {{pc.name}}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
+    <div class="alert alert-danger">
+      <h3>Bemærk</h3>
+      <ul>
+        <li>Hele computerens jobhistorik vil også blive slettet.</li>
+      </ul>
+    </div>
     <p>
-      Ønsker du virkelig at slette denne maskine?<br>
-      <strong style="font-size: 1.25em;">{{ pc.uid }}</strong>
+      Er du sikker på, du ønsker at slette computeren
+      <strong style="font-size: 1.25em;">{{ pc.name }}</strong>
     </p>
-    <p>Hele computerens jobhistorik vil også blive slettet.</p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form.as_p }}

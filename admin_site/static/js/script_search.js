@@ -3,7 +3,7 @@
 let current_id = null,
     local_scripts = [],
     state = {
-        query: '',    
+        query: '',
         filtered_local_scripts: []
     }
 
@@ -20,7 +20,7 @@ const list_el = document.getElementById('script-search-list')
 const renderList = function (list_el, script_list) {
     list_el.innerHTML = ''
     for (let s of script_list) {
-        let item = document.createElement('li', {"id": "", "class": ""})
+        let item = document.createElement('li')
         let template = `
             <a class="item-list-link" href="${ s.url }">
                 ${ s.name }

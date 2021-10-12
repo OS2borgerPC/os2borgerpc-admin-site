@@ -1,0 +1,11 @@
+<ul class="docsubnav">
+    <li {% ifequal submenu_active 'edit' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'security_scripts/edit' %}"> Redigering af Sikkerhedsscripts</a>
+    </li>
+     <li {% ifequal submenu_active 'securityevents' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'security_scripts/securityevents' %}"> Sikkerhedshændelser</a>
+    </li>
+     <li {% ifequal submenu_active 'securityproblems' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'security_scripts/securityproblems' %}"> Sikkerhedsregler</a>
+    </li>
+</ul>

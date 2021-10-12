@@ -17,14 +17,12 @@ Computere
   {% for pc in pc_list %}
     <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
       {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer"></a>{% endcomment %}
-      <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}" onclick="spin();">
-          {% if pc.os2_product == 'os2borgerpc' %}
-            <span class="material-icons">groups</span>
-          {% else %}
-            <span class="material-icons">theaters</span>
-          {% endif %}
+      <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
         {{ pc.name }}
       </a>
+        {% if not pc.is_activated %}
+          <span class="badge bg-danger">Ikke aktiveret</span>
+        {% endif %}
       {% ifequal pc selected_pc %}
         <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
           clear
@@ -40,7 +38,7 @@ Computere
 
     <h2 class="divideheader">
       Detaljer om <em>{{ selected_pc.name }}</em>
-      {% if selected_pc.securityevent_set.count > 0 %}
+      {% if selected_pc.security_events.count > 0 %}
       <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se hændelser for denne PC">
         <span class="badge badge-important">
           <icon class="{% if has_security_events %}icon-fire{% else %}icon-ok{% endif %} icon-white"></icon>
@@ -53,11 +51,11 @@ Computere
 
     <p class="d-flex justify-content-end mb-0">
       {% if selected_pc.last_seen %}
-        Senest set: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
+        Seneste tjek-ind: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
       {% endif %}
-      {% if security_event != "Ingen hændelser"%}
+      {% if security_event %}
         <span class="ms-3">
-          Seneste advarsel set: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
+          Seneste sikkerhedshændelse modtaget: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
         </span>
       {% endif %}
     </p>
@@ -71,10 +69,10 @@ Computere
           <a class="nav-link active" id="details-tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="configs-tabs" href="#configs" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+          <a class="nav-link" id="jobs-tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="false">Jobhistorik</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="jobs-tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="false">Jobhistorik</a>
+          <a class="nav-link" id="configs-tabs" href="#configs" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
         </li>
       </ul>
 
@@ -92,7 +90,7 @@ Computere
                 {{ form.location|as_crispy_field }}
 
                 <div mb-5>
-                    {{ form.is_active|as_crispy_field }}
+                    {{ form.is_activated|as_crispy_field }}
                 </div>
 
               </fieldset>
@@ -101,17 +99,25 @@ Computere
 
               {{ form.pc_groups.errors }}
               <label class="mb-2">Grupper</label>
-              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' %}
+              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til gruppe' remove_text='Fjern computer fra gruppe' %}
 
             </fieldset>
-          
           </div>
+
+        <fieldset class="mt-5">
+          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+          <button class="btn btn-secondary" type="reset">Annuller</button>
+        </fieldset>
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
           <fieldset>
             {% include 'system/configlist/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
           </fieldset>
+          <fieldset class="mt-5">
+            <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
+            <button class="btn btn-secondary" type="reset">Annuller</button>
+        </fieldset>
         </div>
 
         <div id="jobs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="jobs-tab">
@@ -135,8 +141,8 @@ Computere
               <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>
                 {% if job.has_info %}
-                  <button type="button" class="btn btn-info jobinfobutton" data-pk="{{ job.pk }}">
-                    <span class="material-icons">info</span>
+                  <button type="button" class="btn jobinfobutton p-0" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="focus" data-bs-animation="true">
+                    <span class="material-icons fs-3">info</span>
                   </button>
                 {% endif %}
               </td>
@@ -145,12 +151,6 @@ Computere
           </table>
 
         </div>
-
-        <fieldset class="mt-5">
-          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
-          <button class="btn btn-secondary" type="reset">Annuller</button>
-          <!--<button class="btn" onclick="return ((location.href = '{% url 'computer' site.uid selected_pc.uid %}') && false)">Nulstil ændringer</button>-->
-        </fieldset>
 
       </div>
 
@@ -166,10 +166,12 @@ Computere
               tabTrigger.show()
             })
           })
+          // Initialize job info buttons on load.
+          BibOS.setupJobInfoButtons($(".jobtable"))
+
           // Open #jobs tab if the url contains this hash
           if (location.hash === '#jobs') {
             var triggerEl = document.getElementById('jobs-tab')
-            console.log(bootstrap.Tab.getInstance(triggerEl))
             bootstrap.Tab.getInstance(triggerEl).show()
           }
         })

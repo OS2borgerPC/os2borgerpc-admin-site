@@ -35,44 +35,41 @@ detailpage
     
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
-      <span class="material-icons"> whatshot </span>
-      Sikkerhedshændelser {% if sec_events > 0 %}
-      <span class="float-end badge badge-danger sec-warn-blink">{{ sec_events }}{% endif %}</span>
+      <span class="material-icons">whatshot</span>
+      Sikkerhedshændelser 
+      {% if sec_events > 0 %}
+        <span class="float-end badge badge-danger sec-warn-blink">{{ sec_events }}</span>
+      {% endif %}
     </a>
   
     {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
     <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
-      <span class="material-icons">error</span>
-      Regler
+      <span class="material-icons">gpp_maybe</span>
+      Sikkerhedsregler
     </a>
     
     {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
     <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
-      <span class="material-icons">list</span> 
+      <span class="material-icons">code</span> 
       Sikkerhedsscripts
     </a>
     
     <hr>
-    <h2 class="text-light">Maskiner</h3>
-    
-    {% set_css_class_active request.resolver_match.url_name "configuration" as current_url_site_configuration %}
-    <a class="nav-link link-light {{ current_url_site_configuration  }}" href="{% url 'configuration' slug=site.url %}">
-      <span class="material-icons">settings</span> Site-konfiguration
-    </a>
+    <h2 class="text-light">Organisering</h3>
   
     {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
-    <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}" onclick="spin();">
+    <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}">
       <span class="material-icons">computer</span> Computere
     </a>
   
     {% set_css_class_active request.resolver_match.url_name "group" as current_url_groups %}
     <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">
-      <span class="material-icons">local_offer</span> Grupper
+      <span class="material-icons">queue</span> Grupper
     </a>
-  
-    {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
-      <span class="material-icons"> cloud_download </span>Versioner
+    
+    {% set_css_class_active request.resolver_match.url_name "configuration" as current_url_site_configuration %}
+    <a class="nav-link link-light {{ current_url_site_configuration  }}" href="{% url 'configuration' slug=site.url %}">
+      <span class="material-icons">settings</span> Site-konfiguration
     </a>
     
     <hr>
@@ -80,98 +77,88 @@ detailpage
     
     {% set_css_class_active request.resolver_match.url_name "job" as current_url_jobs %}
     <a class="nav-link link-light {{ current_url_jobs }}" href="{% url 'jobs' slug=site.url %}">
-      <span class="material-icons">check_circle</span> Jobs
+      <span class="material-icons">task</span> Jobs
     </a>
   
     {% set_css_class_active request.resolver_match.url_name "script" as current_url_scripts %}
     <a class="nav-link link-light {{ current_url_scripts }}" href="{% url 'scripts' slug=site.url %}">
-      <span class="material-icons">list</span> Scripts
+      <span class="material-icons">code</span> Scripts
     </a>
   
     <hr>
-    
+    <h2 class="text-light">Brugere & Versioner</h3>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
     <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
       <span class="material-icons">person</span> Brugere
     </a>
-  
+
+    {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
+    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
+      <span class="material-icons"> cloud_download </span> Versioner
+    </a>
     <hr>
 
     <h2 class="text-light">Dokumentation</h3>
 
     {% if current_url_site %}
       {% comment %} Status currently has no documentation! {% endcomment %}
-    {% elif current_url_security %}
-      <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Hjælp til sikkerhed
+    {% elif current_url_security_scripts or current_url_security_problems or current_url_security_events %}
+      <a href="{% url 'doc' 'security_scripts' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Administration af sikkerhedsscripts
       </a>
-    {% elif current_url_security_problems %}
-      <a href="{% url 'doc' 'groups' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Definition af sikkerhedsproblemer
+      <a href="{% url 'doc' 'security_scripts/securityproblems' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Definition af sikkerhedsregler
       </a>
-    {% elif current_url_security_scripts %}
-      <a href="{% url 'doc' 'scripts/securityevents' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Hjælp til sikkerhed
-      </a>
-      <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Administration af scripts
-      </a>
-      <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Afvikling af scripts
-      </a>
-    {% elif current_url_site_configuration %}
-      <a href="{% url 'doc' 'site_configuration' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Site-konfiguration
+      <a href="{% url 'doc' 'security_scripts/securityevents' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Hjælp til sikkerhedshændelser
       </a>
     {% elif current_url_computers %}
       <a href="{% url 'doc' 'computers' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
+        <span class='material-icons'>help_outline</span>
         Administration af computere
       </a>
     {% elif current_url_groups %}
       <a href="{% url 'doc' 'groups' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
+        <span class='material-icons'>help_outline</span>
         Administration af grupper
       </a>
     {% elif current_url_image_versions %}
       {% comment %} Versions currently has no documentation! {% endcomment %}
     {% elif current_url_jobs %}
       <a href="{% url 'doc' 'jobs' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
+        <span class='material-icons'>help_outline</span>
         Hjælp til joblisten
-      </a>
-      <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Administration af scripts
-      </a>
-      <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Afvikling af scripts
-      </a>
-    {% elif current_url_scripts %}
-      <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Administration af scripts
-      </a>
-      <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
-        Afvikling af scripts
       </a>
     {% elif current_url_users %}
       <a href="{% url 'doc' 'users' %}" class="nav-link link-light">
-        <span class='material-icons'>help</span>
+        <span class='material-icons'>help_outline</span>
         Administration af brugere
       </a>
     {% endif %}
 
+    {% if current_url_scripts or current_url_jobs %}
+      <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Administration af scripts
+      </a>
+      <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Afvikling af scripts
+      </a>
+    {% endif %}
+
+    {% if current_url_site_configuration or current_url_groups or current_url_computers %}
+      <a href="{% url 'doc' 'configuration' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Konfigurationer
+      </a>
+    {% endif %}
+
     <a class="nav-link link-light" href="{% url 'doc_root' %}">
-      <span class='material-icons'>help</span>
+      <span class='material-icons'>help_outline</span>
       Læs dokumentation ...
     </a>
     

@@ -1,4 +1,4 @@
-"""Utility methods for the BibOS project."""
+"""Utility methods for the OS2borgerPC project."""
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -20,7 +20,7 @@ def notify_users(data, security_problem, pc):
     body += "Kort resume af data fra log filen : " + data[2]
     try:
         message = EmailMessage("Sikkerhedsadvarsel for PC : " + pc.name
-                               + ". Sikkerhedsproblem : " +
+                               + ". Sikkerhedsregel : " +
                                security_problem.name, body,
                                settings.DEFAULT_FROM_EMAIL, email_list)
         message.send(fail_silently=False)

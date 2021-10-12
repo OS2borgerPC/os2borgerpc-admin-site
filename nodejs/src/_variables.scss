@@ -24,13 +24,13 @@ $teal:    #4CF5C8;
 $cyan:    #77C7D9;
 
 $primary: $gray-800;
-$secondary: $gray-500;
+$secondary: $gray-600;
 $warning: $orange;
 $gentle-warning: $yellow;
 
 // Sizes
 $spacer: 1rem;
-$navigation-width: $spacer*16;
+$navigation-width: $spacer*18;
 
 // Font
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -38,7 +38,7 @@ $font-size-base: .9rem;
 
 // Pagination 
 $pagination-color: $black;
-$pagination-bg: $gray-100;
+$pagination-bg: $gray-200;
 $pagination-border-width: 0;
 $pagination-hover-color: $black;
 $pagination-hover-bg: $orange;
@@ -54,7 +54,7 @@ $table-cell-padding-y: .75rem;
 $table-cell-padding-x: 2rem;
 $table-cell-padding-y-sm: .25rem;
 $table-cell-padding-x-sm: .75rem;
-$table-bg: $gray-100;
+$table-bg: $gray-200;
 $table-border-width: 0;
 
 // Nav

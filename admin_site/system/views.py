@@ -6,7 +6,7 @@ from functools import cmp_to_key
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -24,7 +24,7 @@ from django.views.generic import (
 from django.views.generic.list import BaseListView
 
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, F
 from django.db.models.functions import Lower
 from django.conf import settings
 
@@ -49,7 +49,6 @@ from system.models import (
 )
 # PC Status codes
 from system.forms import (
-    SiteForm,
     GroupForm,
     ConfigurationEntryForm,
     ScriptForm,
@@ -69,26 +68,6 @@ def set_notification_cookie(response, message, error=False):
     response.set_cookie('bibos-notification',
                         quote(json.dumps(descriptor), safe='')
                         )
-
-
-def get_no_of_sec_events(site):
-    """Utility function to get number of security events."""
-    no_of_sec_events = SecurityEvent.objects.filter(
-        problem__site=site
-    ).exclude(
-        problem__level=SecurityProblem.NORMAL
-    ).exclude(status=SecurityEvent.RESOLVED).count()
-    return no_of_sec_events
-
-
-def get_latest_security_event(pc):
-    """Utility function to get latest security event for pc."""
-    sc = ""
-    try:
-        sc = SecurityEvent.objects.filter(pc_id=pc.id).latest('reported_time')
-    except SecurityEvent.DoesNotExist:
-        sc = "Ingen hændelser"
-    return sc
 
 
 # Mixin class to require login
@@ -207,7 +186,7 @@ class SiteMixin(View):
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
         context['site'] = site
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
         context['sec_events'] = no_of_sec_events
 
         return context
@@ -263,7 +242,7 @@ class SiteView(DetailView,  SuperAdminOrThisSiteMixin):
         context = super(SiteView, self).get_context_data(**kwargs)
         site = self.get_object()
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
         context['sec_events'] = no_of_sec_events
 
         return context
@@ -272,22 +251,20 @@ class SiteView(DetailView,  SuperAdminOrThisSiteMixin):
 class SiteDetailView(SiteView):
     """Class for showing the overview that is displayed when entering a site"""
 
+    template_name = 'system/site_status.html'
+
     # For hver pc skal vi hente seneste security event.
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         # Top level list of new PCs etc.
-        context['pcs'] = self.object.pcs.filter(Q(is_active=False))
+        context['pcs'] = self.object.pcs.filter(Q(is_activated=False))
         context['pcs'] = sorted(context['pcs'], key=lambda s: s.name.lower())
 
         site = context['site']
-        active_pcs = site.pcs.filter(is_active=True)
-        context['active_pcs'] = active_pcs.count()
-        context['ls_pcs'] = site.pcs.all().order_by('last_seen')
-        securityevents = []
-        for pc in context['ls_pcs']:
-            securityevents.append(get_latest_security_event(pc))
-
-        context['security_events'] = securityevents
+        context['ls_pcs'] = site.pcs.all().order_by(
+            'is_activated',
+            F('last_seen').desc(nulls_last=True)
+        )
         return context
 
 
@@ -530,8 +507,7 @@ class ScriptMixin(object):
         # Add the global and local script lists
         self.scripts = Script.objects.filter(
             Q(site=self.site) | Q(site=None),
-            is_security_script=self.is_security,
-            deleted=False
+            is_security_script=self.is_security
         ).exclude(
             site__name='system'
         )
@@ -615,7 +591,9 @@ class ScriptMixin(object):
 
         context['script_inputs_json'] = json.dumps(context['script_inputs'])
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(self.site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(
+            self.site
+        ).count()
         context['sec_events'] = no_of_sec_events
 
         return context
@@ -650,26 +628,23 @@ class ScriptMixin(object):
         return success
 
     def save_script_inputs(self):
-        seen = []
+        # First delete the existing inputs not found in the new inputs.
+        pks = [
+            script_input.get("pk")
+            for script_input in self.script_inputs
+            if script_input.get("pk")
+        ]
+        self.script.inputs.exclude(pk__in=pks).delete()
+
         for input_data in self.script_inputs:
             input_data['script'] = self.script
-
-            pk = None
-            if 'pk' in input_data:
-                pk = input_data['pk'] or None
+            if 'pk' in input_data and not input_data['pk']:
                 del input_data['pk']
 
-            if pk is None or pk == '':
-                script_input = Input.objects.create(**input_data)
-                script_input.save()
-                seen.append(script_input.pk)
-            else:
-                Input.objects.filter(pk=pk).update(**input_data)
-                seen.append(int(pk))
-
-        for inp in self.script.inputs.all():
-            if inp.pk not in seen:
-                inp.delete()
+            Input.objects.update_or_create(
+                pk=input_data.get("pk"),
+                defaults=input_data
+            )
 
 
 class ScriptList(ScriptMixin, SiteView):
@@ -823,7 +798,10 @@ class ScriptRun(SiteView):
         self.template_name = 'system/scripts/run_step1.html'
         context['pcs'] = self.object.pcs.all().order_by('name')
         context['groups'] = self.object.groups.all().order_by('name')
-        context['action'] = ScriptRun.STEP2
+        if len(context['script'].ordered_inputs) > 0:
+            context['action'] = ScriptRun.STEP2
+        else:
+            context['action'] = ScriptRun.STEP3
 
     def step2(self, context):
         self.template_name = 'system/scripts/run_step2.html'
@@ -919,12 +897,20 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
                 kwargs={"slug": self.kwargs["slug"]}
             )
 
+    @transaction.atomic
     def delete(self, request, *args, **kwargs):
         script = self.get_object()
-        script.deleted = True
-        script.save()
 
-        return redirect(self.get_success_url())
+        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
+
+        # Update the PCGroups for which it's an AssociatedScript
+        scripts_pcgroups = PCGroup.objects.filter(policy__script=script)
+
+        # For each of those groups update the script positions to avoid gaps
+        for spcg in scripts_pcgroups:
+            spcg.update_associated_script_positions()
+
+        return response
 
 
 class PCsView(SelectionMixin, SiteView):
@@ -983,10 +969,10 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         selected_group_ids = form['pc_groups'].value()
         context['available_groups'] = group_set.exclude(
             pk__in=selected_group_ids
-        )
+        ).values_list("pk", "name")
         context['selected_groups'] = group_set.filter(
             pk__in=selected_group_ids
-        )
+        ).values_list("pk", "name")
 
         orderby = params.get('orderby', '-pk')
         if orderby not in JobSearch.VALID_ORDER_BY:
@@ -1007,8 +993,8 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
 
         context['selected_pc'] = pc
 
-        context['security_event'] = get_latest_security_event(pc)
-        context['has_security_events'] = pc.securityevent_set.exclude(
+        context['security_event'] = pc.security_events.latest_event()
+        context['has_security_events'] = pc.security_events.exclude(
             status=SecurityEvent.RESOLVED
         ).exclude(
             problem__level=SecurityProblem.NORMAL
@@ -1100,9 +1086,16 @@ class UsersView(SelectionMixin, SiteView):
 
     def render_to_response(self, context):
         if('selected_user' in context):
+            # Select your own user by default if you have a UserProfile on the site
+            # Fx. relevant to password changes
+
+            if (context["site"] in self.request.user.bibos_profile.sites.all()):
+                user = self.request.user.username
+            else:
+                user = context['selected_user'].username
             return HttpResponseRedirect('/site/%s/users/%s/' % (
                 context['site'].uid,
-                context['selected_user'].username
+                user
             ))
         else:
             return HttpResponseRedirect(
@@ -1121,7 +1114,9 @@ class UsersMixin(object):
             self.add_site_to_context(context)
         context['user_list'] = context['site'].users
         # Add information about outstanding security events.
-        no_of_sec_events = get_no_of_sec_events(self.site)
+        no_of_sec_events = SecurityEvent.objects.priority_events_for_site(
+            self.site
+        ).count()
         context['sec_events'] = no_of_sec_events
         return context
 
@@ -1274,32 +1269,6 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         return response
 
 
-class SiteCreate(CreateView, SuperAdminOnlyMixin):
-    model = Site
-    form_class = SiteForm
-    slug_field = 'uid'
-
-    def get_success_url(self):
-        return '/sites/'
-
-
-class SiteUpdate(UpdateView, SuperAdminOnlyMixin):
-    model = Site
-    form_class = SiteForm
-    slug_field = 'uid'
-
-    def get_success_url(self):
-        return '/sites/'
-
-
-class SiteDelete(DeleteView, SuperAdminOnlyMixin):
-    model = Site
-    slug_field = 'uid'
-
-    def get_success_url(self):
-        return '/sites/'
-
-
 class ConfigurationEntryCreate(SiteMixin, CreateView,
                                SuperAdminOrThisSiteMixin):
     model = ConfigurationEntry
@@ -1383,16 +1352,16 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context['form']
         site = context['site']
 
-        pc_queryset = site.pcs.filter(is_active=True)
+        pc_queryset = site.pcs.filter(is_activated=True)
         form.fields['pcs'].queryset = pc_queryset
 
         selected_pc_ids = form['pcs'].value()
         context['available_pcs'] = pc_queryset.exclude(
             pk__in=selected_pc_ids
-        )
+        ).values_list("pk", "name")
         context['selected_pcs'] = pc_queryset.filter(
             pk__in=selected_pc_ids
-        )
+        ).values_list("pk", "name")
 
         context['selected_group'] = group
 
@@ -1527,17 +1496,29 @@ class SecurityProblemsView(SelectionMixin, SiteView):
             """
             site = context['site']
             context['newform'] = SecurityProblemForm()
+            user_set = User.objects.filter(bibos_profile__sites=site)
+            group_set = site.groups.all()
             context['newform'].fields[
                 'alert_users'
-            ].queryset = User.objects.filter(bibos_profile__sites=site)
+            ].queryset = user_set
             context['newform'].fields[
                 'alert_groups'
-            ].queryset = site.groups.all()
+            ].queryset = group_set
+
             # Limit list of scripts to only include security scripts.
             script_set = Script.objects.filter(
-                Q(site__isnull=True) | Q(site=site)
-            ).filter(is_security_script=True)
-            context['newform'].fields['script'].queryset = script_set
+                Q(site__isnull=True) | Q(site=site),
+                is_security_script=True,
+            )
+            context['newform'].fields['security_script'].queryset = script_set
+            # Pass users and groups to context
+            # that are available for a 'new' security problem.
+            context['alert_users'] = user_set.values_list(
+                "pk", "username"
+            )
+            context['alert_groups'] = group_set.values_list(
+                "pk", "name"
+            )
 
             return super(
                 SecurityProblemsView, self
@@ -1578,35 +1559,40 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         selected_group_ids = form['alert_groups'].value()
         context['available_groups'] = group_set.exclude(
             pk__in=selected_group_ids
-        )
+        ).values_list("pk", "name")
         context['selected_groups'] = group_set.filter(
             pk__in=selected_group_ids
-        )
+        ).values_list("pk", "name")
 
         user_set = User.objects.filter(bibos_profile__sites=site)
         selected_user_ids = form['alert_users'].value()
         context['available_users'] = user_set.exclude(
             pk__in=selected_user_ids
-        )
+        ).values_list("pk", "username")
         context['selected_users'] = user_set.filter(
             pk__in=selected_user_ids
-        )
+        ).values_list("pk", "username")
         # Limit list of scripts to only include security scripts.
         script_set = Script.objects.filter(
-            Q(site__isnull=True) | Q(site=site)
-        ).filter(is_security_script=True)
-        form.fields['script'].queryset = script_set
+            Q(site__isnull=True) | Q(site=site),
+            is_security_script=True,
+        )
+        form.fields['security_script'].queryset = script_set
 
-        # TODO: If the JS available/selected stuff above works out, the next
-        # two lines can be deleted.
-        form.fields['alert_users'].queryset = user_set
-        form.fields['alert_groups'].queryset = group_set
         # Extra fields
         context['selected_security_problem'] = self.object
         context['newform'] = SecurityProblemForm()
-        context['newform'].fields['script'].queryset = script_set
+        context['newform'].fields['security_script'].queryset = script_set
         context['newform'].fields['alert_users'].queryset = user_set
         context['newform'].fields['alert_groups'].queryset = group_set
+        # Pass users and groups to context
+        # that are available for a 'new' security problem.
+        context['alert_users'] = user_set.values_list(
+            "pk", "username"
+        )
+        context['alert_groups'] = group_set.values_list(
+            "pk", "name"
+        )
 
         return context
 
@@ -1627,7 +1613,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
 
 class SecurityEventsView(SiteView):
-    template_name = 'system/site_security.html'
+    template_name = 'system/site_security_events.html'
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -1693,9 +1679,9 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         if 'status' in params:
             query['status__in'] = params.getlist('status')
 
-        orderby = params.get('orderby', '-pk')
+        orderby = params.get('orderby', '-occurred_time')
         if orderby not in SecurityEventSearch.VALID_ORDER_BY:
-            orderby = '-pk'
+            orderby = '-occurred_time'
 
         queryset = queryset.filter(**query).order_by(
             orderby,
@@ -1741,7 +1727,9 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                 'occurred': event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
                 'status': event.get_status_display(),
                 'status_label': event.STATUS_TO_LABEL[event.status],
-                'level': SecurityProblem.LEVEL_TO_LABEL[
+                'level':
+                    SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],
+                'level_label': SecurityProblem.LEVEL_TO_LABEL[
                     event.problem.level
                 ] + '',
                 'pc_name': event.pc.name,
@@ -1782,34 +1770,35 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
 
 documentation_menu_items = [
-    ('', 'OS2borgerPC Administration'),
+    ('', 'Administrationssiden'),
+    ('om_os2borgerpc_admin', 'Om'),
     ('status', 'Status'),
-    ('site_configuration', 'Site-konfiguration'),
     ('computers', 'Computere'),
     ('groups', 'Grupper'),
     ('jobs', 'Jobs'),
     ('scripts', 'Scripts'),
+    ('security_scripts', 'Sikkerhedsscripts'),
     ('users', 'Brugere'),
-
-    ('', 'Installation af OS2borgerPC'),
-    ('install_dvd', 'Installation via DVD'),
-    ('install_usb', 'Installation via USB'),
-    ('install_network', 'Installation via netværk'),
-    ('pdf_guide', 'Brugervenlig installationsguide (PDF)'),
+    ('configuration', 'Konfigurationer'),
     ('creating_security_problems',
      'Oprettelse af Sikkerhedsovervågning (PDF)'),
 
-    ('', 'OS2borgerPC-gateway'),
-    ('gateway_install', 'Installation af OS2borgerPC-gateway'),
+    ('', 'OS2borgerPC'),
+    ('os2borgerpc_installation_guide', 'Installationsguide (PDF)'),
+
+    ('', 'OS2displayPC'),
+    ('os2displaypc_installation_guide', 'Installationsguide'),
+    ('os2displaypc_wifi_guide', 'Opdatering af Wi-Fi opsætning'),
+
+    ('', 'Opsætning af Gateway'),
+    ('gateway_install', 'Installation af gateway'),
     ('gateway_admin', 'Administration af gateway'),
-    ('gateway_use', 'Anvendelse af gateway på OS2borgerPC-maskiner'),
-    ('', 'Om OS2borgerPC-Admin'),
-    ('om_os2borgerpc_admin', 'Om OS2borgerPC-Admin'),
+    ('gateway_use', 'Anvendelse af gateway'),
 
     ('', 'Teknisk dokumentation'),
-    ('tech/os2borgerpc-image', 'OS2borgerPC Desktop Image'),
+    ('tech/os2borgerpc-image', 'OS2borgerPC Image'),
     ('tech/os2borgerpc-admin', 'OS2borgerPC Admin Site'),
-    ('tech/os2borgerpc-server-image', 'OS2borgerPC Server Image'),
+    ('tech/os2borgerpc-server-image', 'OS2displayPC Image'),
     ('tech/os2borgerpc-client', 'OS2borgerPC Client'),
 
 ]
@@ -1895,7 +1884,7 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
 
     interesting_properties = [
         'id', 'name', 'description', 'configuration_id', 'site_id',
-        'is_active', 'creation_time', 'last_seen', 'location']
+        'is_activated', 'creation_time', 'last_seen', 'location']
 
     def get_context_data(self, **kwargs):
         pcs = []

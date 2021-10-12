@@ -2,13 +2,39 @@
 {% load crispy_forms_tags %}
 
 {% block specific_title %}
-Slet script: {{script.name}}
+Slet 
+{% if is_security %}
+Sikkerhedsscript
+{% else %}
+Script
+{% endif %}: {{ script.name }}
 {% endblock %}
+
 
 {% block specific_content %}
   <div class="container-fluid main">
-    <p>Ønsker du virkelig at slette scriptet:</p>
-    <p><strong>{{ script.name }}</strong>?</p>
+    <div class="alert alert-danger">
+      <h3>Bemærk</h3>
+      <ul>
+        {% if not is_security %}
+        <li>
+          Gamle <strong>Jobs</strong> med <strong>Scriptet</strong> vil blive slettet.
+        </li>
+        <li>
+          Hvis <strong>Scriptet</strong> er sat som <strong>Tilknyttet Script</strong> vil listen af de
+          <strong>Tilknyttede Scripts</strong> blive opdateret med <strong>Scriptet</strong> fjernet.
+        </li>
+        {% else %}
+        <li>
+          Hvis <strong>Sikkerhedsscriptet</strong> bruges i en <strong>Sikkerhedsregel</strong>, vil
+          <strong>Sikkerhedsreglen</strong> også blive slettet.
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+    <p>Er du sikker på, du ønsker at slette {% if is_security %}Sikkerhedsscriptet{% else %}Scriptet{% endif %}
+    <strong style="font-size: 1.25em;">{{ script.name }}</strong>?</p>
+
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}

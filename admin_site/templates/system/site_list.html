@@ -6,44 +6,14 @@
 
 {% block specific_content %}
   <div class="container">
-    {% if user.is_superuser %}
-      <a href="{% url 'new_site' %}" title="Tilføj nyt site" class="btn btn-secondary my-3">
-        <span class="d-flex align-items-center">
-          <span class="material-icons me-1">add</span>
-          Tilføj nyt site
-        </span>
-      </a>
-    {% endif %}
-    
     <div>
       {% for site in site_list %}
 
-        <div class="btn-group">
-          <a class="btn btn-light btn-lg" href="{% url 'site' slug=site.url %}" >
+        <div class="btn-group mt-3">
+          <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
+            <span class='material-icons'>home</span>
             {{site.name}}
           </a>
-          <button type="button" class="btn btn-light btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="visually-hidden">Vis handlinger</span>
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" href="{% url 'site' slug=site.url %}">
-                Gå til
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'edit_site' slug=site.url %}">
-                Redigér
-              </a>
-            </li>
-            {% if site.is_delete_allowed %}
-              <li>
-                <a class="dropdown-item" href="{% url 'delete_site' slug=site.url %}" title="Slet bibliotek">
-                  Slet
-                </a>
-              </li>
-            {% endif %}
-          </ul>
         </div>
       {% endfor %}      
     </div>
