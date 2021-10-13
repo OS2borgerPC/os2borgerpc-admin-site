@@ -139,6 +139,7 @@ class ScriptAdmin(admin.ModelAdmin):
         return obj.is_global
     is_global.boolean = True
     is_global.short_description = _("Global")
+    is_global.admin_order_field = "site"
 
     def jobs_per_site(self, obj):
         sites = Site.objects.filter(
