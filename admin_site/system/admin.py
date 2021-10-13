@@ -58,9 +58,30 @@ class CustomPackagesAdmin(admin.ModelAdmin):
     inlines = [PackageInstallInfoInline]
 
 
+class SiteInlineForConfiguration(admin.TabularInline):
+    model = Site
+    extra = 0
+
+
+class PCGroupInlineForConfiguration(admin.TabularInline):
+    model = PCGroup
+    extra = 0
+
+
+class PCInlineForConfiguration(admin.TabularInline):
+    model = PC
+    extra = 0
+
+
 class ConfigurationAdmin(admin.ModelAdmin):
     fields = ['name']
-    inlines = [ConfigurationEntryInline]
+    search_fields = ("name",)
+    inlines = [
+        ConfigurationEntryInline,
+        SiteInlineForConfiguration,
+        PCGroupInlineForConfiguration,
+        PCInlineForConfiguration,
+    ]
 
 
 class PCInline(admin.TabularInline):
