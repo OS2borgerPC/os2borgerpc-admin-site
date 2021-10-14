@@ -6,7 +6,11 @@
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
-    <h2 class="divideheader">Computere</h2>
+    <h2 class="divideheader">
+      Computere 
+      <span class="ms-3 badge bg-success">Aktiverede: {{ active_pcs }}/ {{ total_pcs }}</span>
+      <span class="ms-3 badge bg-info">Online: {{ online_pcs }}/{{ active_pcs }}</span>
+    </h2>
     <table class="table table-hover warn-table caption-top" id="site-status-table">
       <thead>
         <tr>
