@@ -800,21 +800,16 @@ class ScriptRun(SiteView):
     def post(self, request, *args, **kwargs):
         return super(ScriptRun, self).get(request, *args, **kwargs)
 
-    def fetch_pcs(self, context):
-        # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
-        if 'selected_pcs' not in context:
-            # Transfer chosen groups and PCs as PC pks
-            pcs = [int(pk) for pk in self.request.POST.getlist('pcs', [])]
-            for group_pk in self.request.POST.getlist('groups', []):
-                group = PCGroup.objects.get(pk=group_pk)
-                for pc in group.pcs.all():
-                    pcs.append(int(pc.pk))
-            # Uniquify
-            selected_pcs_groups_set = list(set(pcs))
-            context['num_pcs'] = len(selected_pcs_groups_set)
-            return selected_pcs_groups_set
-        else:
-            return context['selected_pcs']
+    def fetch_pcs_from_request(self):
+        # Transfer chosen groups and PCs as PC pks
+        pcs = [int(pk) for pk in self.request.POST.getlist('pcs', [])]
+        for group_pk in self.request.POST.getlist('groups', []):
+            group = PCGroup.objects.get(pk=group_pk)
+            for pc in group.pcs.all():
+                pcs.append(int(pc.pk))
+        # Uniquify
+        selected_pcs_groups_set = list(set(pcs))
+        return (selected_pcs_groups_set, len(selected_pcs_groups_set))
 
     def step1(self, context):
         self.template_name = 'system/scripts/run_step1.html'
@@ -830,7 +825,7 @@ class ScriptRun(SiteView):
     def step2(self, context):
         self.template_name = 'system/scripts/run_step2.html'
 
-        context['pcs'] = self.fetch_pcs(context)
+        context['pcs'], context['num_pcs'] = self.fetch_pcs_from_request()
         if context['num_pcs'] == 0:
             context['message'] = _('You must specify at least one group or pc')
             self.step1(context)
@@ -850,7 +845,9 @@ class ScriptRun(SiteView):
                              script=context['script'])
         context['form'] = form
 
-        context['selected_pcs'] = self.fetch_pcs(context)
+        # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
+        if 'selected_pcs' not in context:
+            context['selected_pcs'], context['num_pcs'] = self.fetch_pcs_from_request()
         if context['num_pcs'] == 0:
             context['message'] = _('You must specify at least one group or pc')
             self.step1(context)
