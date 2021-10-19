@@ -802,7 +802,7 @@ class ScriptRun(SiteView):
 
     def fetch_pcs(self, context):
         # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
-        if not 'selected_pcs' in context:
+        if 'selected_pcs' not in context:
             # Transfer chosen groups and PCs as PC pks
             pcs = [int(pk) for pk in self.request.POST.getlist('pcs', [])]
             for group_pk in self.request.POST.getlist('groups', []):
@@ -814,14 +814,13 @@ class ScriptRun(SiteView):
             context['num_pcs'] = len(selected_pcs_groups_set)
             return selected_pcs_groups_set
         else:
-          return context['selected_pcs']
+            return context['selected_pcs']
 
     def step1(self, context):
         self.template_name = 'system/scripts/run_step1.html'
         context['pcs'] = self.object.pcs.all().order_by('name')
-        #context['groups'] = self.object.groups.all().order_by('name')
         all_groups = self.object.groups.all().order_by('name')
-        context['groups'] = [ group for group in all_groups if group.pcs.count() > 0 ]
+        context['groups'] = [group for group in all_groups if group.pcs.count() > 0]
 
         if len(context['script'].ordered_inputs) > 0:
             context['action'] = ScriptRun.STEP2
