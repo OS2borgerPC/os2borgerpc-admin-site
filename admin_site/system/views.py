@@ -267,7 +267,7 @@ class SiteDetailView(SiteView):
         )
 
         context['total_pcs'] = len(context['ls_pcs'])
-        context['active_pcs'] = context['total_pcs'] - len(context['pcs'])
+        context['activated_pcs'] = context['total_pcs'] - len(context['pcs'])
         activated_pcs = site.pcs.all().filter(is_activated=True)
         context['online_pcs'] = len([object for object in activated_pcs if object.online])
 
