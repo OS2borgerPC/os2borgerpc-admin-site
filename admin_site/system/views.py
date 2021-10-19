@@ -800,18 +800,9 @@ class ScriptRun(SiteView):
     def post(self, request, *args, **kwargs):
         return super(ScriptRun, self).get(request, *args, **kwargs)
 
-    def step1(self, context):
-        self.template_name = 'system/scripts/run_step1.html'
-        context['pcs'] = self.object.pcs.all().order_by('name')
-        context['groups'] = self.object.groups.all().order_by('name')
-        if len(context['script'].ordered_inputs) > 0:
-            context['action'] = ScriptRun.STEP2
-        else:
-            context['action'] = ScriptRun.STEP3
-
-    def step2(self, context):
-        self.template_name = 'system/scripts/run_step2.html'
-        if 'pcs' not in context:
+    def fetch_pcs(self, context):
+        # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
+        if not 'selected_pcs' in context:
             # Transfer chosen groups and PCs as PC pks
             pcs = [int(pk) for pk in self.request.POST.getlist('pcs', [])]
             for group_pk in self.request.POST.getlist('groups', []):
@@ -819,9 +810,29 @@ class ScriptRun(SiteView):
                 for pc in group.pcs.all():
                     pcs.append(int(pc.pk))
             # Uniquify
-            context['pcs'] = list(set(pcs))
+            selected_pcs_groups_set = list(set(pcs))
+            context['num_pcs'] = len(selected_pcs_groups_set)
+            return selected_pcs_groups_set
+        else:
+          return context['selected_pcs']
 
-        if len(context['pcs']) == 0:
+    def step1(self, context):
+        self.template_name = 'system/scripts/run_step1.html'
+        context['pcs'] = self.object.pcs.all().order_by('name')
+        #context['groups'] = self.object.groups.all().order_by('name')
+        all_groups = self.object.groups.all().order_by('name')
+        context['groups'] = [ group for group in all_groups if group.pcs.count() > 0 ]
+
+        if len(context['script'].ordered_inputs) > 0:
+            context['action'] = ScriptRun.STEP2
+        else:
+            context['action'] = ScriptRun.STEP3
+
+    def step2(self, context):
+        self.template_name = 'system/scripts/run_step2.html'
+
+        context['pcs'] = self.fetch_pcs(context)
+        if context['num_pcs'] == 0:
             context['message'] = _('You must specify at least one group or pc')
             self.step1(context)
             return
@@ -839,9 +850,8 @@ class ScriptRun(SiteView):
                              self.request.FILES,
                              script=context['script'])
         context['form'] = form
-        pcs = self.request.POST.getlist('pcs', [])
 
-        context['num_pcs'] = len(pcs)
+        context['selected_pcs'] = self.fetch_pcs(context)
         if context['num_pcs'] == 0:
             context['message'] = _('You must specify at least one group or pc')
             self.step1(context)
@@ -856,7 +866,7 @@ class ScriptRun(SiteView):
 
             context['batch'] = context['script'].run_on(
                 context['site'],
-                PC.objects.filter(pk__in=pcs),
+                PC.objects.filter(pk__in=context['selected_pcs']),
                 *args,
                 user=self.request.user
             )
