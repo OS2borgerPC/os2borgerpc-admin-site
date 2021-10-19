@@ -244,6 +244,14 @@ var BibOS
       })
 
       var t = this
+
+      $(rootElem).find('.jobinfobutton').on('show.bs.popover', function(e) {
+        // hide all popovers before a new popover is shown.
+        popoverTriggerList.map(function (popoverTriggerEl) {
+          $(popoverTriggerEl).popover('hide')
+        })
+      })
+
       $(rootElem).find('.jobinfobutton').on('shown.bs.popover', function(e) {
         t.showJobInfo(this)
       })

@@ -27,7 +27,7 @@ $(function(){
                         'data-bs-content="Loading..." ' +
                         'data-bs-html=true ' +
                         'data-bs-placement=left ' +
-                        'data-bs-trigger=focus' +
+                        'data-bs-trigger="click" ' +
                         'data-bs-animation="true" ' +
                         'data-pk="' + this.pk + '"' +
                     '><span class="material-icons fs-3">info</span></button>'
