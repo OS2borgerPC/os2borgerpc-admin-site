@@ -257,8 +257,9 @@ class SiteDetailView(SiteView):
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         # Top level list of new PCs etc.
-        context['pcs'] = self.object.pcs.filter(Q(is_activated=False))
-        context['pcs'] = sorted(context['pcs'], key=lambda s: s.name.lower())
+        context['pcs'] = self.object.pcs.filter(
+            Q(is_activated=False)
+        ).order_by(Lower('name'))
 
         site = context['site']
         context['ls_pcs'] = site.pcs.all().order_by(
@@ -266,10 +267,10 @@ class SiteDetailView(SiteView):
             F('last_seen').desc(nulls_last=True)
         )
 
-        context['total_pcs'] = len(context['ls_pcs'])
-        context['activated_pcs'] = context['total_pcs'] - len(context['pcs'])
+        context['total_pcs'] = context['ls_pcs'].count()
+        context['activated_pcs'] = context['total_pcs'] - context['pcs'].count()
         activated_pcs = site.pcs.all().filter(is_activated=True)
-        context['online_pcs'] = len([object for object in activated_pcs if object.online])
+        context['online_pcs'] = len([pc for pc in activated_pcs if pc.online])
 
         return context
 
