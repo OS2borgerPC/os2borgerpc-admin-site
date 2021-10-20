@@ -36,6 +36,8 @@
             <td>{{ pc.location }}</td>
             {% if pc.online %}
             <td><span class="badge bg-success">Online</span></td>
+            {% elif not pc.is_activated %}
+            <td><span class="badge bg-secondary">N/A</span></td>
             {% else %}
             <td><span class="badge bg-danger">Offline</span></td>
             {% endif %}
