@@ -1,3 +1,16 @@
+Version 5.1.0, October 20, 2021
+-----------------------------
+
+- Fix bug not allowing script running on groups
+- Fix bug not allowing job restart or copy-pasting the log
+- Fix hover on pagination buttons, now indicating they're clickable
+- Fix add new policy script, so clicking on the local/global badge adds the script as well.
+- Wider, more readable job log window
+- Scroll in job log and policy script search windows instead of the entire page
+- Add information about online/offline, active/inactive computers on status page
+  Related: For pcs that aren't activated, don't show the status instead of showing "Offline".
+- /admin/ improments to AssociatedScripts and Configurations
+
 Version 5.0.0, August 8, 2021
 -----------------------------
 
