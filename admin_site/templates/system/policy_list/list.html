@@ -29,8 +29,16 @@
 <script>
   // Catch bubbling click event from scriptsearch.html include
   document.getElementById('{{ policy_id }}').addEventListener('click', function(ev) {
+    /* Did they click on the li or the child element badge? */
     if (ev.target.dataset.script) {
-      var script_data = JSON.parse(ev.target.dataset.script)
+      let tg = ev.target
+    }
+    else if (ev.target.parentElement.dataset.script) {
+      let tg = ev.target.parentElement
+    }
+
+    if (tg && tg.dataset.script) {
+      var script_data = JSON.parse(tg.dataset.script)
       BibOS.PolicyList.addToPolicy('{{ policy_id }}', script_data.id, script_data.name, script_data.pk, script_data.inputs)
     }
   })
