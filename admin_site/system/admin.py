@@ -58,9 +58,30 @@ class CustomPackagesAdmin(admin.ModelAdmin):
     inlines = [PackageInstallInfoInline]
 
 
+class SiteInlineForConfiguration(admin.TabularInline):
+    model = Site
+    extra = 0
+
+
+class PCGroupInlineForConfiguration(admin.TabularInline):
+    model = PCGroup
+    extra = 0
+
+
+class PCInlineForConfiguration(admin.TabularInline):
+    model = PC
+    extra = 0
+
+
 class ConfigurationAdmin(admin.ModelAdmin):
     fields = ['name']
-    inlines = [ConfigurationEntryInline]
+    search_fields = ("name",)
+    inlines = [
+        ConfigurationEntryInline,
+        SiteInlineForConfiguration,
+        PCGroupInlineForConfiguration,
+        PCInlineForConfiguration,
+    ]
 
 
 class PCInline(admin.TabularInline):
@@ -108,6 +129,7 @@ class ScriptAdmin(admin.ModelAdmin):
         "site",
         "jobs_per_site",
         "jobs_per_site_for_the_last_year",
+        "associations_to_groups_per_site",
     )
     filter_horizontal = ("tags",)
     readonly_fields = ("user_created", "user_modified")
@@ -118,6 +140,7 @@ class ScriptAdmin(admin.ModelAdmin):
         return obj.is_global
     is_global.boolean = True
     is_global.short_description = _("Global")
+    is_global.admin_order_field = "site"
 
     def jobs_per_site(self, obj):
         sites = Site.objects.filter(
@@ -150,6 +173,21 @@ class ScriptAdmin(admin.ModelAdmin):
     jobs_per_site_for_the_last_year.short_description = _(
         "Jobs per Site for the last year"
     )
+
+    def associations_to_groups_per_site(self, obj):
+        sites = Site.objects.all()
+        pairs = []
+        for site in sites:
+            count = AssociatedScript.objects.filter(script=obj.id,
+                                                    group__site=site.id).count()
+            if count > 0:
+                pairs.append(tuple((site, count)))
+
+        return format_html_join(
+            "\n",
+            "<p>{} - {}</p>",
+            ([(pair[0], pair[1]) for pair in pairs])
+        )
 
 
 class PCInlineForSiteAdmin(admin.TabularInline):
@@ -220,6 +258,11 @@ class SecurityEventAdmin(admin.ModelAdmin):
     list_display = ("problem", "ocurred_time", "reported_time", "pc", "status")
 
 
+class AssociatedScriptAdmin(admin.ModelAdmin):
+    list_display = ("script", "group", "position")
+    search_fields = ("script",)
+
+
 ar(Configuration, ConfigurationAdmin)
 ar(PackageList)
 ar(CustomPackages, CustomPackagesAdmin)
@@ -235,7 +278,7 @@ ar(ScriptTag, ScriptTagAdmin)
 ar(Batch, BatchAdmin)
 ar(Job, JobAdmin)
 ar(BatchParameter)
-ar(AssociatedScript)
+ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)

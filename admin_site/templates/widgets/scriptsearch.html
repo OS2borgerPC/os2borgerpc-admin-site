@@ -9,7 +9,9 @@
             flex-grow: 0 !important;
         }
         .filtersearchlist {
-            
+           max-height: 400px;
+           overflow: scroll;
+           min-width: 20em;
         }
         .filtersearchlist button {
             text-decoration: none;
@@ -110,7 +112,7 @@
 
             function selectOption(ev) {
                 clearHandler(ev)
-                // We leave it up to the parent element to process this event as it bubbles upwards
+                // We leave it up to the parent element (list.html) to process this event as it bubbles upwards
                 return true
             }
 

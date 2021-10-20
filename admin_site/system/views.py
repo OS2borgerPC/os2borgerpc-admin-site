@@ -257,14 +257,20 @@ class SiteDetailView(SiteView):
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         # Top level list of new PCs etc.
-        context['pcs'] = self.object.pcs.filter(Q(is_activated=False))
-        context['pcs'] = sorted(context['pcs'], key=lambda s: s.name.lower())
+        not_activated_pcs = self.object.pcs.filter(is_activated=False)
 
         site = context['site']
-        context['ls_pcs'] = site.pcs.all().order_by(
+        site_pcs = site.pcs.all()
+        context['ls_pcs'] = site_pcs.order_by(
             'is_activated',
             F('last_seen').desc(nulls_last=True)
         )
+
+        context['total_pcs'] = context['ls_pcs'].count()
+        context['activated_pcs'] = context['total_pcs'] - not_activated_pcs.count()
+        activated_pcs = site_pcs.filter(is_activated=True)
+        context['online_pcs'] = len([pc for pc in activated_pcs if pc.online])
+
         return context
 
 
@@ -794,10 +800,23 @@ class ScriptRun(SiteView):
     def post(self, request, *args, **kwargs):
         return super(ScriptRun, self).get(request, *args, **kwargs)
 
+    def fetch_pcs_from_request(self):
+        # Transfer chosen groups and PCs as PC pks
+        pcs = [int(pk) for pk in self.request.POST.getlist('pcs', [])]
+        for group_pk in self.request.POST.getlist('groups', []):
+            group = PCGroup.objects.get(pk=group_pk)
+            for pc in group.pcs.all():
+                pcs.append(int(pc.pk))
+        # Uniquify
+        selected_pcs_groups_set = list(set(pcs))
+        return (selected_pcs_groups_set, len(selected_pcs_groups_set))
+
     def step1(self, context):
         self.template_name = 'system/scripts/run_step1.html'
         context['pcs'] = self.object.pcs.all().order_by('name')
-        context['groups'] = self.object.groups.all().order_by('name')
+        all_groups = self.object.groups.all().order_by('name')
+        context['groups'] = [group for group in all_groups if group.pcs.count() > 0]
+
         if len(context['script'].ordered_inputs) > 0:
             context['action'] = ScriptRun.STEP2
         else:
@@ -805,17 +824,9 @@ class ScriptRun(SiteView):
 
     def step2(self, context):
         self.template_name = 'system/scripts/run_step2.html'
-        if 'pcs' not in context:
-            # Transfer chosen groups and PCs as PC pks
-            pcs = [int(pk) for pk in self.request.POST.getlist('pcs', [])]
-            for group_pk in self.request.POST.getlist('groups', []):
-                group = PCGroup.objects.get(pk=group_pk)
-                for pc in group.pcs.all():
-                    pcs.append(int(pc.pk))
-            # Uniquify
-            context['pcs'] = list(set(pcs))
 
-        if len(context['pcs']) == 0:
+        context['pcs'], context['num_pcs'] = self.fetch_pcs_from_request()
+        if context['num_pcs'] == 0:
             context['message'] = _('You must specify at least one group or pc')
             self.step1(context)
             return
@@ -833,9 +844,10 @@ class ScriptRun(SiteView):
                              self.request.FILES,
                              script=context['script'])
         context['form'] = form
-        pcs = self.request.POST.getlist('pcs', [])
 
-        context['num_pcs'] = len(pcs)
+        # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
+        if 'selected_pcs' not in context:
+            context['selected_pcs'], context['num_pcs'] = self.fetch_pcs_from_request()
         if context['num_pcs'] == 0:
             context['message'] = _('You must specify at least one group or pc')
             self.step1(context)
@@ -850,7 +862,7 @@ class ScriptRun(SiteView):
 
             context['batch'] = context['script'].run_on(
                 context['site'],
-                PC.objects.filter(pk__in=pcs),
+                PC.objects.filter(pk__in=context['selected_pcs']),
                 *args,
                 user=self.request.user
             )
