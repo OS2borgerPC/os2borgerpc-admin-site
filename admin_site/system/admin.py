@@ -260,7 +260,7 @@ class SecurityEventAdmin(admin.ModelAdmin):
 
 class AssociatedScriptAdmin(admin.ModelAdmin):
     list_display = ("script", "group", "position")
-    search_fields = ("script",)
+    search_fields = ("script__name",)
 
 
 ar(Configuration, ConfigurationAdmin)
