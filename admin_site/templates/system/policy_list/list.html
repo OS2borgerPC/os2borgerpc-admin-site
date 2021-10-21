@@ -28,7 +28,7 @@
 
 <script>
   // Catch bubbling click event from scriptsearch.html include
-  document.getElementById('{{ policy_id }}').addEventListener('mousedown', function(ev) {
+  document.getElementById('{{ policy_id }}').addEventListener('click', function(ev) {
     /* Did they click on the li or the child element badge? */
     if (ev.target.dataset.script) {
       var tg = ev.target
