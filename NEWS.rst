@@ -1,5 +1,14 @@
+Version 5.1.1, October 20, 2021
+-------------------------------
+
+New in this version:
+
+- Fix bug making it difficult to add policy scripts
+
 Version 5.1.0, October 20, 2021
------------------------------
+-------------------------------
+
+New in this version:
 
 - Fix bug not allowing script running on groups
 - Fix bug not allowing job restart or copy-pasting the log

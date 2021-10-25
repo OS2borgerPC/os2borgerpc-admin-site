@@ -122,10 +122,18 @@
                 input_el.value = null
             }
 
+            function removeSearchResults(ev) {
+                document.addEventListener(
+                    'mouseup',
+                    (ev)=>setTimeout(clearHandler, 150),
+                    {once: true}
+                )
+            }
+
             // Initial setup
             input_el.addEventListener('click', displayAllScripts)
             input_el.addEventListener('input', displayOptions)
-            input_el.addEventListener('blur', (ev)=>setTimeout(clearHandler, 100))
+            input_el.addEventListener('blur', removeSearchResults)
             document.querySelector('#filtersearch-{{ id }} .btn-close').addEventListener('click', clearHandler)
             
         })()

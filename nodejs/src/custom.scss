@@ -19,6 +19,7 @@
 @import "modal";
 @import "warning";
 @import "errors";
+@import "dropdown";
 
 hr {
     border-top: 1px solid $gray-700;
@@ -36,8 +37,4 @@ hr {
 
 .severity-high {
     color: $warning;
-}
-
-.dropdown-item {
-  cursor: pointer;
 }

@@ -151,7 +151,8 @@ urlpatterns = [
         )),
     url(r'^documentation/os2borgerpc_installation_guide/',
         RedirectView.as_view(
-            url='/static/docs/OS2BorgerPC-20-04-installationsguide.pdf'
+          url='https://github.com/OS2borgerPC/image/raw/development/'
+          + 'docs/OS2BorgerPC 20.04 Installationsguide.pdf'
         )),
     url(r'^documentation/os2displaypc_installation_guide',
         RedirectView.as_view(
@@ -159,7 +160,8 @@ urlpatterns = [
         )),
     url(r'^documentation/creating_security_problems/',
         RedirectView.as_view(
-            url='/static/docs/OS2BorgerPC-sikkerhedsovervågning.pdf'
+          url='https://github.com/OS2borgerPC/admin-site/raw/development/admin_site' \
+          + '/static/docs/OS2BorgerPC-sikkerhedsovervågning.pdf'
         )),
     url(r'^documentation/tech/os2borgerpc-image',
         RedirectView.as_view(
