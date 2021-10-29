@@ -1350,8 +1350,12 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     model = PCGroup
 
     def get_object(self, queryset=None):
+        site = Site.objects.get(uid=self.kwargs['site_uid'])
         try:
-            return PCGroup.objects.get(uid=self.kwargs['group_uid'])
+            return PCGroup.objects.get(
+                uid=self.kwargs['group_uid'],
+                site=site
+            )
         except PCGroup.DoesNotExist:
             raise Http404(
                 f"der findes ingen gruppe med id {self.kwargs['group_uid']}"
@@ -1468,7 +1472,8 @@ class GroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        return PCGroup.objects.get(uid=self.kwargs['group_uid'])
+        site = Site.objects.get(uid=self.kwargs['site_uid'])
+        return PCGroup.objects.get(uid=self.kwargs['group_uid'], site=site)
 
     def get_success_url(self):
         return '/site/{0}/groups/'.format(self.kwargs['site_uid'])
