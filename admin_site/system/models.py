@@ -135,7 +135,11 @@ class Package(models.Model):
         return self.name
 
     class Meta:
-        unique_together = ('name', 'version')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name', 'version'],
+                name="unique_version_name"),
+        ]
 
 
 class CustomPackages(models.Model):
@@ -399,7 +403,7 @@ class MandatoryParameterMissingError(Error):
 class PCGroup(models.Model):
     """Groups of PCs. Each PC may be in zero or many groups."""
     name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('id'), max_length=255, unique=True)
+    uid = models.CharField(verbose_name=_('id'), max_length=255)
     description = models.TextField(verbose_name=_('description'),
                                    max_length=1024, null=True, blank=True)
     site = models.ForeignKey(
@@ -529,8 +533,13 @@ class PCGroup(models.Model):
         return '{0}/groups/{1}'.format(site_url, self.url)
 
     class Meta:
-        unique_together = ('uid', 'site')
         ordering = ['name']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['uid', 'site'],
+                name="unique_uid_per_group"
+            ),
+        ]
 
 
 class PC(models.Model):
@@ -930,7 +939,12 @@ Runs this script on several PCs, returning a batch representing this task."""
         return "{0}, {1}: {2}".format(self.group, self.position, self.script)
 
     class Meta:
-        unique_together = ('position', 'group')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['position', 'group'],
+                name="unique_group_position"
+            ),
+        ]
 
 
 class Job(models.Model):
@@ -1096,7 +1110,12 @@ class Input(models.Model):
         return self.script.name + "/" + self.name
 
     class Meta:
-        unique_together = ('position', 'script')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['position', 'script'],
+                name="unique_script_position"
+            ),
+        ]
 
 
 def upload_file_name(instance, filename):
@@ -1214,7 +1233,13 @@ class SecurityProblem(models.Model):
 
     class Meta:
         ordering = ['name']
-        unique_together = ('uid', 'site')
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=['uid', 'site'],
+                name="unique_uid_per_site"
+            ),
+        ]
 
 
 class SecurityEvent(models.Model):
@@ -1294,3 +1319,25 @@ class ImageVersion(models.Model):
 
     class Meta:
         ordering = ['platform', '-image_version']
+
+
+# https://et.cicero-fbs.com/externalapidocs/#!/external_agencyid_patrons/authenticateV6
+# last_successful_login is only updated whenever the user:
+# 1. Successfully authenticates with cicero (exists in their db and not locked out)
+# 2. Successfully logs into a borgerPC because they either still have time left or it's
+# after the quarantine period
+class CiceroPatron(models.Model):
+    patron_id = models.IntegerField()
+    last_successful_login = models.DateTimeField()
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.site} - {self.patron_id}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['patron_id', 'site'],
+                name="unique_patron_per_site"
+            ),
+        ]

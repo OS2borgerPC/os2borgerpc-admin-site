@@ -30,6 +30,7 @@ from system.models import (
     AssociatedScript,
     AssociatedScriptParameter,
     ScriptTag,
+    CiceroPatron,
 )
 
 ar = admin.site.register
@@ -263,6 +264,11 @@ class AssociatedScriptAdmin(admin.ModelAdmin):
     search_fields = ("script__name",)
 
 
+class CiceroPatronAdmin(admin.ModelAdmin):
+    list_display = ("patron_id", "last_successful_login", "site")
+    search_fields = ("patron_id",)
+
+
 ar(Configuration, ConfigurationAdmin)
 ar(PackageList)
 ar(CustomPackages, CustomPackagesAdmin)
@@ -282,3 +288,4 @@ ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
+ar(CiceroPatron, CiceroPatronAdmin)
