@@ -1327,7 +1327,7 @@ class ImageVersion(models.Model):
 # 2. Successfully logs into a borgerPC because they either still have time left or it's
 # after the quarantine period
 class CiceroPatron(models.Model):
-    patron_id = models.IntegerField()
+    patron_id = models.CharField(unique=True, max_length=128)
     last_successful_login = models.DateTimeField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
 
