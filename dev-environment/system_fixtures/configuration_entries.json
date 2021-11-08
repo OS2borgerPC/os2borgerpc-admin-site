@@ -1,0 +1,1 @@
+[{"model": "system.configurationentry", "pk": 1, "fields": {"key": "user_login_time", "value": "60", "owner_configuration": 1}}, {"model": "system.configurationentry", "pk": 2, "fields": {"key": "user_quarantine_time", "value": "2", "owner_configuration": 1}}]
