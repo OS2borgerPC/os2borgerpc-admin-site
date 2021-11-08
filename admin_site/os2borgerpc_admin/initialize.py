@@ -72,4 +72,3 @@ def initialize_configuration_entries():
     """
     if os.path.exists(os.path.join(fixtures_dir, "configuration_entries.json")):
         call_command("loaddata", "configuration_entries.json", app_label="system")
-
