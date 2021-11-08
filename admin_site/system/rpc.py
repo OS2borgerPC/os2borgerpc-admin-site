@@ -5,12 +5,13 @@ import system.proxyconf
 import system.utils
 import hashlib
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.conf import settings
 
 from .models import PC, Site, Distribution, Configuration, ConfigurationEntry
 from .models import PackageList, Package, PackageStatus, CustomPackages
 from .models import Job, Script, SecurityProblem, SecurityEvent
+from .models import CiceroPatron
 
 
 def register_new_computer(mac, name, distribution, site, configuration):
@@ -18,7 +19,7 @@ def register_new_computer(mac, name, distribution, site, configuration):
     computer will be submitted for approval."""
 
     # Hash our uid
-    uid = hashlib.md5(mac.encode('utf-8')).hexdigest()
+    uid = hashlib.md5(mac.encode("utf-8")).hexdigest()
 
     try:
         new_pc = PC.objects.get(uid=uid)
@@ -37,7 +38,7 @@ def register_new_computer(mac, name, distribution, site, configuration):
     new_pc.mac = mac
     # Create new configuration, populate with data from computer's config.
     # If a configuration with the same ID is hanging, reuse.
-    config_name = '_'.join([site, name, uid])
+    config_name = "_".join([site, name, uid])
     try:
         my_config = Configuration.objects.get(name=config_name)
     except Configuration.DoesNotExist:
@@ -45,15 +46,14 @@ def register_new_computer(mac, name, distribution, site, configuration):
         my_config.name = config_name
     finally:
         # Delete pre-existing entries
-        entries = ConfigurationEntry.objects.filter(
-            owner_configuration=my_config)
+        entries = ConfigurationEntry.objects.filter(owner_configuration=my_config)
         for e in entries:
             e.delete()
     my_config.save()
     # And load configuration
 
     # Update configuration with uid
-    configuration.update({'uid': uid})
+    configuration.update({"uid": uid})
 
     # Update configuration with os2 product
     # New image versions set it themselves, old don't so for those
@@ -66,8 +66,7 @@ def register_new_computer(mac, name, distribution, site, configuration):
         configuration.update({"os2_product": product})
 
     for k, v in list(configuration.items()):
-        entry = ConfigurationEntry(key=k, value=v,
-                                   owner_configuration=my_config)
+        entry = ConfigurationEntry(key=k, value=v, owner_configuration=my_config)
         entry.save()
     # Tell us about yourself
     new_pc.do_send_package_info = True
@@ -99,19 +98,18 @@ def upload_dist_packages(distribution_uid, package_data):
         for pd in package_data:
             # First, assume package & version already exists.
             try:
-                p = Package.objects.get(name=pd['name'],
-                                        version=pd['version'])
+                p = Package.objects.get(name=pd["name"], version=pd["version"])
             except Package.DoesNotExist:
                 p = Package.objects.create(
-                    name=pd['name'],
-                    version=pd['version'],
-                    description=pd['description']
+                    name=pd["name"],
+                    version=pd["version"],
+                    description=pd["description"],
                 )
             finally:
                 PackageStatus.objects.create(
                     package=p,
                     package_list=distribution.package_list,
-                    status=pd['status']
+                    status=pd["status"],
                 )
     return 0
 
@@ -145,22 +143,21 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
         for pd in package_data:
             # First, assume package & version already exists.
             try:
-                p = Package.objects.get(name=pd['name'], version=pd['version'])
+                p = Package.objects.get(name=pd["name"], version=pd["version"])
             except Package.DoesNotExist:
                 p = Package.objects.create(
-                    name=pd['name'],
-                    version=pd['version'],
-                    description=pd['description']
+                    name=pd["name"],
+                    version=pd["version"],
+                    description=pd["description"],
                 )
             finally:
                 PackageStatus.objects.create(
-                    package=p,
-                    package_list=pc.package_list,
-                    status=pd['status']
+                    package=p, package_list=pc.package_list, status=pd["status"]
                 )
         # Assume no packages are any longer "pending".
-        pc.custom_packages.update_by_package_names(pc.pending_packages_remove,
-                                                   pc.pending_packages_add)
+        pc.custom_packages.update_by_package_names(
+            pc.pending_packages_remove, pc.pending_packages_add
+        )
         # We just got the package info update we requested, so clear the flag
         # until we need a new update.
         pc.do_send_package_info = False
@@ -168,13 +165,13 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     # 3. Update jobs with job data
     if job_data is not None:
         for jd in job_data:
-            job = Job.objects.filter(pk=jd['id']).first()
+            job = Job.objects.filter(pk=jd["id"]).first()
             if not job:
                 continue
-            job.status = jd['status']
-            job.started = jd['started']
-            job.finished = jd['finished']
-            job.log_output = jd['log_output']
+            job.status = jd["status"]
+            job.started = jd["started"]
+            job.finished = jd["finished"]
+            job.log_output = jd["log_output"]
             job.save()
 
     # 4. Check if update is required.
@@ -184,8 +181,8 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
             pc.is_update_required = True
             # See if things have changed and we need to update the package
             # lists.
-            old_updates = int(pc.configuration.get('updates', 0))
-            old_security = int(pc.configuration.get('security_updates', 0))
+            old_updates = int(pc.configuration.get("updates", 0))
+            old_security = int(pc.configuration.get("security_updates", 0))
             if (security_updates > old_security) or (updates > old_updates):
                 pc.do_send_package_info = True
             else:
@@ -193,8 +190,8 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
         elif pc.is_update_required:
             pc.is_update_required = False
         # Save update info in configuration
-        pc.configuration.update_entry('updates', updates)
-        pc.configuration.update_entry('security_updates', security_updates)
+        pc.configuration.update_entry("updates", updates)
+        pc.configuration.update_entry("security_updates", security_updates)
 
     pc.save()
 
@@ -215,39 +212,34 @@ def get_instructions(pc_uid, update_data):
         # Fail silently
         return ([], False)
 
-    update_pkgs = update_data.get('updated_packages', [])
+    update_pkgs = update_data.get("updated_packages", [])
     if len(update_pkgs) > 0:
         for pdata in update_pkgs:
             # Find or create the package in the global collection of packages
             try:
-                p = Package.objects.get(
-                    name=pdata['name'],
-                    version=pdata['version']
-                )
+                p = Package.objects.get(name=pdata["name"], version=pdata["version"])
             except Package.DoesNotExist:
                 p = Package(
-                    name=pdata['name'],
-                    version=pdata['version'],
-                    description=pdata['description']
+                    name=pdata["name"],
+                    version=pdata["version"],
+                    description=pdata["description"],
                 )
                 p.save()
             # Change or create the package status for the package/PC
             p_status = pc.package_list.statuses.filter(
-                package__name=pdata['name'],
+                package__name=pdata["name"],
             ).delete()
             p_status = PackageStatus(
-                status='install',
-                package=p,
-                package_list=pc.package_list
+                status="install", package=p, package_list=pc.package_list
             )
             p_status.save()
 
             pc.package_list.statuses.filter(
-                package__name=pdata['name'],
-                package__version=pdata['version'],
-            ).update(status='installed ok')
+                package__name=pdata["name"],
+                package__version=pdata["version"],
+            ).update(status="installed ok")
 
-    remove_pkgs = update_data.get('removed_packages', [])
+    remove_pkgs = update_data.get("removed_packages", [])
     if len(remove_pkgs) > 0:
         pc.package_list.statuses.filter(package__name__in=remove_pkgs).delete()
 
@@ -266,7 +258,7 @@ def get_instructions(pc_uid, update_data):
     )
 
     # Make sure packages we just installed are not flagged for removal
-    for name in [p['name'] for p in update_pkgs]:
+    for name in [p["name"] for p in update_pkgs]:
         if name in to_remove:
             pc.custom_packages.update_package_status(name, True)
             to_remove.remove(name)
@@ -278,16 +270,16 @@ def get_instructions(pc_uid, update_data):
             to_install.remove(name)
 
     jobs = []
-    for job in pc.jobs.filter(status=Job.NEW).order_by('pk'):
+    for job in pc.jobs.filter(status=Job.NEW).order_by("pk"):
         job.status = Job.SUBMITTED
         job.save()
         jobs.append(job.as_instruction)
 
     security_objects = []
     # First check for security scripts covering the site
-    site_security_problems = (SecurityProblem.objects.
-                              filter(site_id=pc.site).
-                              exclude(alert_groups__isnull=False))
+    site_security_problems = SecurityProblem.objects.filter(site_id=pc.site).exclude(
+        alert_groups__isnull=False
+    )
 
     for security_problem in site_security_problems:
         security_objects.append(insert_security_problem_uid(security_problem))
@@ -297,43 +289,38 @@ def get_instructions(pc_uid, update_data):
     if len(pc_groups) > 0:
 
         for group in pc_groups:
-            security_problems = (SecurityProblem.objects.
-                                 filter(alert_groups=group.id))
+            security_problems = SecurityProblem.objects.filter(alert_groups=group.id)
             if len(security_problems) > 0:
                 for problem in security_problems:
-                    security_objects.append(insert_security_problem_uid
-                                            (problem))
+                    security_objects.append(insert_security_problem_uid(problem))
 
     scripts = []
 
     for script in security_objects:
-        if script['is_security_script'] == 1:
-            s = {
-                'name': script['name'],
-                'executable_code': script['executable_code']
-            }
+        if script["is_security_script"] == 1:
+            s = {"name": script["name"], "executable_code": script["executable_code"]}
             scripts.append(s)
 
     result = {
-        'security_scripts': scripts,
-        'jobs': jobs,
-        'configuration': pc.get_full_config(),
+        "security_scripts": scripts,
+        "jobs": jobs,
+        "configuration": pc.get_full_config(),
     }
 
     if pc.do_send_package_info:
-        result['do_send_package_info'] = True
+        result["do_send_package_info"] = True
 
     return result
 
 
 def insert_security_problem_uid(securityproblem):
     script = Script.objects.get(security_problems=securityproblem)
-    code = script.executable_code.read().decode('utf8')
+    code = script.executable_code.read().decode("utf8")
     code = str(code).replace("%SECURITY_PROBLEM_UID%", securityproblem.uid)
     s = {
-        'name': securityproblem.uid,
-        'executable_code': code,
-        'is_security_script': script.is_security_script
+        "name": securityproblem.uid,
+        "executable_code": code,
+        "is_security_script": script.is_security_script,
     }
     return s
 
@@ -386,9 +373,9 @@ def push_security_events(pc_uid, csv_data):
             security_problem = SecurityProblem.objects.get(uid=csv_split[1])
 
             new_security_event = SecurityEvent(problem=security_problem, pc=pc)
-            new_security_event.ocurred_time = (
-                datetime.strptime(csv_split[0],
-                                  '%Y%m%d%H%M'))
+            new_security_event.ocurred_time = datetime.strptime(
+                csv_split[0], "%Y%m%d%H%M"
+            )
             new_security_event.reported_time = datetime.now()
             new_security_event.summary = csv_split[2]
             new_security_event.complete_log = csv_split[3]
@@ -400,3 +387,38 @@ def push_security_events(pc_uid, csv_data):
         system.utils.notify_users(csv_split, security_problem, pc)
 
     return 0
+
+
+def cicero_login(username, password, site):
+    """Check if user is allowed to log in and give the go-ahead if so."""
+
+    patron_id = cicero_validate(username, password)
+    time_allowed = -1
+
+    if patron_id:
+        patron_hash = hashlib.sha512(patron_id.encode()).hexdigest()
+        login = CiceroPatron.objects.get(patron_hash)
+        now = datetime.now()
+        time_allowed = site.configuration.get(settings.USER_LOGIN_CONF, 30)
+
+        if login:
+            quarantine_time = site.configuration.get(settings.USER_QUARANTINE_CONF, 2)
+            if (now - login.last_successful_login) > timedelta(hours=quarantine_time):
+                login.last_successful_login = now
+            else:
+                time_allowed = 0
+        else:
+            # First-time login, all good.
+            login = CiceroPatron(
+                patron_id=patron_hash, last_successful_login=now, site=site
+            )
+        login.save()
+
+    return time_allowed
+
+
+def cicero_validate(username, password):
+    """Do the actual validation against the Cicero service."""
+
+    # TODO: Implement this.
+    return ""

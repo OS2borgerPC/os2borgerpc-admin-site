@@ -250,7 +250,8 @@ XMLRPC_METHODS = (
     ('system.rpc.get_instructions', 'get_instructions'),
     ('system.rpc.get_proxy_setup', 'get_proxy_setup'),
     ('system.rpc.push_config_keys', 'push_config_keys'),
-    ('system.rpc.push_security_events', 'push_security_events')
+    ('system.rpc.push_security_events', 'push_security_events'),
+    ('system.rpc.cicero_login', 'cicero_login'),
 )
 
 # A sample logging configuration. The only tangible logging
@@ -314,3 +315,9 @@ INITIALIZE_DATABASE = settings.getboolean(
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+# The configurations that contain the time a user may be logged in and the
+# subsequent quarantine period.
+USER_LOGIN_CONF = 'user_login_time'
+USER_QUARANTINE_CONF = 'user_quarantine_time'
