@@ -405,6 +405,10 @@ def cicero_login(username, password, site):
             quarantine_time = site.configuration.get(settings.USER_QUARANTINE_CONF, 2)
             if (now - login.last_successful_login) > timedelta(hours=quarantine_time):
                 login.last_successful_login = now
+            elif now - login.last_successful_login < timedelta(minutes=time_allowed):
+                time_allowed = (
+                    time_allowed - (now - login.last_successful_login).seconds // 60
+                )
             else:
                 time_allowed = 0
         else:
