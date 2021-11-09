@@ -4,6 +4,7 @@
 import system.proxyconf
 import system.utils
 import hashlib
+import requests
 
 from datetime import datetime, timedelta
 from django.conf import settings
@@ -400,6 +401,7 @@ def cicero_login(username, password, site):
 
     patron_id = cicero_validate(username, password)
     time_allowed = -1
+    site = Site.objects.get(uid=site)
 
     if patron_id:
         patron_hash = hashlib.sha512(patron_id.encode()).hexdigest()
@@ -427,12 +429,24 @@ def cicero_login(username, password, site):
     return time_allowed
 
 
-def cicero_validate(username, password):
+def cicero_validate(username, password, site):
     """Do the actual validation against the Cicero service.
 
     If successful, this function will return the Cicero Patron ID, otherwise it
     will return something falsey like None, 0 or ''.
     """
 
-    # TODO: Implement this.
-    return ""
+    # First, get sessionKey.
+    session_key_url = (
+        f"{settings.CICERO_URL}/rest/external/v1/{site.isil}/authentication/login/"
+    )
+    print(session_key_url)
+    response = requests.post(
+        session_key_url,
+        data={"username": settings.CICERO_USER, "password": settings.CICERO_PASSWORD},
+    )
+    print(response)
+    print(response.text)
+    session_key = response.json()["sessionKey"]
+    # Just debugging for the moment.
+    return session_key
