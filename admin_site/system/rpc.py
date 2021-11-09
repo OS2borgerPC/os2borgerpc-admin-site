@@ -390,7 +390,13 @@ def push_security_events(pc_uid, csv_data):
 
 
 def cicero_login(username, password, site):
-    """Check if user is allowed to log in and give the go-ahead if so."""
+    """Check if user is allowed to log in and give the go-ahead if so.
+
+    Return values:
+        -1: Unable to authenticate.
+         0: No time remaining, i.e. user is quarantined.
+        >0: The number of minutes the user is allowed.
+    """
 
     patron_id = cicero_validate(username, password)
     time_allowed = -1
@@ -422,7 +428,11 @@ def cicero_login(username, password, site):
 
 
 def cicero_validate(username, password):
-    """Do the actual validation against the Cicero service."""
+    """Do the actual validation against the Cicero service.
+
+    If successful, this function will return the Cicero Patron ID, otherwise it
+    will return something falsey like None, 0 or ''.
+    """
 
     # TODO: Implement this.
     return ""
