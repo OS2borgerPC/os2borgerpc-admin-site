@@ -311,6 +311,11 @@ class Site(models.Model):
         verbose_name=_("Paid for access until this date"),
         null=True,
         blank=True)
+    # Official library number
+    # https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre
+
+    # Necessary for customers who wish to integrate with standard library login.
+    isil = models.CharField(verbose_name="ISIL", max_length=10, blank=True, null=True)
 
     class Meta:
         ordering = ["name"]
