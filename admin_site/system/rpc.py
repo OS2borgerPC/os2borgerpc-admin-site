@@ -5,6 +5,7 @@ import system.proxyconf
 import system.utils
 import hashlib
 import requests
+import logging
 
 from datetime import datetime, timedelta
 from django.conf import settings
@@ -399,20 +400,32 @@ def cicero_login(username, password, site):
         >0: The number of minutes the user is allowed.
     """
 
-    patron_id = cicero_validate(username, password)
+    logger = logging.getLogger(__name__)
     time_allowed = -1
-    site = Site.objects.get(uid=site)
+    try:
+        site = Site.objects.get(uid=site)
+    except Site.DoesNotExist:
+        logger.error(f"Site {site} does not exist - unable to proceed.")
+        return time_allowed
+    patron_id = cicero_validate(username, password, site.isil)
 
     if patron_id:
-        patron_hash = hashlib.sha512(patron_id.encode()).hexdigest()
-        login = CiceroPatron.objects.get(patron_hash)
+        patron_hash = hashlib.sha512(str(patron_id).encode()).hexdigest()
         now = datetime.now()
         time_allowed = site.configuration.get(settings.USER_LOGIN_CONF, 30)
+        time_allowed = int(time_allowed)
+        # Get previous login, if any.
+        try:
+            login = CiceroPatron.objects.get(patron_id=patron_hash)
+        except CiceroPatron.DoesNotExist:
+            login = None
 
         if login:
             quarantine_time = site.configuration.get(settings.USER_QUARANTINE_CONF, 2)
+            quarantine_time = int(quarantine_time)
             if (now - login.last_successful_login) > timedelta(hours=quarantine_time):
                 login.last_successful_login = now
+                login.save()
             elif now - login.last_successful_login < timedelta(minutes=time_allowed):
                 time_allowed = (
                     time_allowed - (now - login.last_successful_login).seconds // 60
@@ -429,24 +442,59 @@ def cicero_login(username, password, site):
     return time_allowed
 
 
-def cicero_validate(username, password, site):
+def cicero_validate(loaner_number, pincode, agency_id):
     """Do the actual validation against the Cicero service.
 
     If successful, this function will return the Cicero Patron ID, otherwise it
     will return something falsey like None, 0 or ''.
     """
-
+    logger = logging.getLogger(__name__)
+    try:
+        pincode = int(pincode)
+    except ValueError:
+        logger.error("Pincode must be a number - {pincode} is not  number.")
+        return 0
+    if not agency_id:
+        logger.error("Agency ID / ISIL MUST be specified.")
+        return 0
     # First, get sessionKey.
     session_key_url = (
-        f"{settings.CICERO_URL}/rest/external/v1/{site.isil}/authentication/login/"
+        f"{settings.CICERO_URL}/rest/external/v1/{agency_id}/authentication/login/"
     )
-    print(session_key_url)
     response = requests.post(
         session_key_url,
-        data={"username": settings.CICERO_USER, "password": settings.CICERO_PASSWORD},
+        json={"username": settings.CICERO_USER, "password": settings.CICERO_PASSWORD},
     )
+    if response.ok:
+        session_key = response.json()["sessionKey"]
+        # Just debugging for the moment.
+    else:
+        # TODO: Unable to authenticate with system user - log this.
+        message = response.json()["message"]
+        logger.error(
+            f"Unable to log in with configured user name and password: {message}"
+        )
+        return 0
+    # We now have a valid session key.
+    loaner_auth_url = (
+        f"{settings.CICERO_URL}/rest/external/{agency_id}/patrons/authenticate/v6"
+    )
+    response = requests.post(
+        loaner_auth_url,
+        headers={"X-session": session_key},
+        json={"libraryCardNumber": loaner_number, "pincode": pincode},
+    )
+    if response.ok:
+        result = response.json()
+        authenticate_status = result["authenticateStatus"]
+        print(authenticate_status)
+        if authenticate_status != "VALID":
+            logger.error(
+                f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
+            )
+            return 0
+        # Loaner has been successfully authenticated.
+        patron_id = result["patron"]["patronId"]
+        return patron_id
+
     print(response)
-    print(response.text)
-    session_key = response.json()["sessionKey"]
-    # Just debugging for the moment.
-    return session_key
