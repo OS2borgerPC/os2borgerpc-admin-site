@@ -412,8 +412,7 @@ def cicero_login(username, password, site):
     if patron_id:
         patron_hash = hashlib.sha512(str(patron_id).encode()).hexdigest()
         now = datetime.now()
-        time_allowed = site.configuration.get(settings.USER_LOGIN_CONF, 30)
-        time_allowed = int(time_allowed)
+        time_allowed = int(site.configuration.get(settings.USER_LOGIN_CONF, 30))
         # Get previous login, if any.
         try:
             login = CiceroPatron.objects.get(patron_id=patron_hash)
