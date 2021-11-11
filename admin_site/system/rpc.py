@@ -415,28 +415,28 @@ def cicero_login(username, password, site):
         time_allowed = int(site.configuration.get(settings.USER_LOGIN_CONF, 30))
         # Get previous login, if any.
         try:
-            login = CiceroPatron.objects.get(patron_id=patron_hash)
+            patron = CiceroPatron.objects.get(patron_id=patron_hash)
         except CiceroPatron.DoesNotExist:
-            login = None
+            patron = None
 
-        if login:
+        if patron:
             quarantine_time = site.configuration.get(settings.USER_QUARANTINE_CONF, 2)
             quarantine_time = int(quarantine_time)
-            if (now - login.last_successful_login) > timedelta(hours=quarantine_time):
-                login.last_successful_login = now
-                login.save()
-            elif now - login.last_successful_login < timedelta(minutes=time_allowed):
+            if (now - patron.last_successful_login) > timedelta(hours=quarantine_time):
+                patron.last_successful_login = now
+                patron.save()
+            elif now - patron.last_successful_login < timedelta(minutes=time_allowed):
                 time_allowed = (
-                    time_allowed - (now - login.last_successful_login).seconds // 60
+                    time_allowed - (now - patron.last_successful_login).seconds // 60
                 )
             else:
                 time_allowed = 0
         else:
             # First-time login, all good.
-            login = CiceroPatron(
+            patron = CiceroPatron(
                 patron_id=patron_hash, last_successful_login=now, site=site
             )
-        login.save()
+        patron.save()
 
     return time_allowed
 
