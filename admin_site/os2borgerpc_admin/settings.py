@@ -319,8 +319,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # The configurations that contain the time a user may be logged in and the
 # subsequent quarantine period.
-USER_LOGIN_CONF = "user_login_time"
-USER_QUARANTINE_CONF = "user_quarantine_time"
+USER_LOGIN_DURATION_CONF = "user_login_duration"
+USER_QUARANTINE_DURATION_CONF = "user_quarantine_duration"
 CICERO_URL = settings.get("CICERO_URL")
 CICERO_USER = settings.get("CICERO_USER")
 CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
