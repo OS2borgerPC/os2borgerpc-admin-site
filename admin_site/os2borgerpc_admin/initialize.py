@@ -21,6 +21,7 @@ def initialize():
         initialize_sites()
         initialize_users()
         initialize_distributions()
+        initialize_configuration_entries()
 
 
 def initialize_users():
@@ -60,3 +61,14 @@ def initialize_distributions():
             "loaddata", "packagelists.json", app_label="system"
         )
         call_command("loaddata", "distributions.json", app_label="system")
+
+
+def initialize_configuration_entries():
+    """Prime the system with some users to get started.
+
+    Data should be the output of
+    "manage.py dumpdata system.ConfigurationEntry".
+
+    """
+    if os.path.exists(os.path.join(fixtures_dir, "configuration_entries.json")):
+        call_command("loaddata", "configuration_entries.json", app_label="system")
