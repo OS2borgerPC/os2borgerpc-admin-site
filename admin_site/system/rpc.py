@@ -412,7 +412,9 @@ def cicero_login(username, password, site):
     if patron_id:
         patron_hash = hashlib.sha512(str(patron_id).encode()).hexdigest()
         now = datetime.now()
-        time_allowed = int(site.configuration.get(settings.USER_LOGIN_CONF, 30))
+        time_allowed = int(
+            site.configuration.get(settings.USER_LOGIN_DURATION_CONF, 30)
+        )
         # Get previous login, if any.
         try:
             patron = CiceroPatron.objects.get(patron_id=patron_hash)
@@ -420,7 +422,9 @@ def cicero_login(username, password, site):
             patron = None
 
         if patron:
-            quarantine_time = site.configuration.get(settings.USER_QUARANTINE_CONF, 2)
+            quarantine_time = site.configuration.get(
+                settings.USER_QUARANTINE_DURATION_CONF, 2
+            )
             quarantine_time = int(quarantine_time)
             if (now - patron.last_successful_login) > timedelta(hours=quarantine_time):
                 patron.last_successful_login = now
