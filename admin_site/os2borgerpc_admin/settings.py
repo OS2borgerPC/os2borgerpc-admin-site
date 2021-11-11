@@ -321,6 +321,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # subsequent quarantine period.
 USER_LOGIN_CONF = "user_login_time"
 USER_QUARANTINE_CONF = "user_quarantine_time"
-CICERO_URL = settings.get("CICERO_URL", "https://et.cicero-fbs.com")
-CICERO_USER = settings.get("CICERO_USER", "Os2")
-CICERO_PASSWORD = settings.get("CICERO_PASSWORD", "Kombit1234")
+CICERO_URL = settings.get("CICERO_URL")
+CICERO_USER = settings.get("CICERO_USER")
+CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
