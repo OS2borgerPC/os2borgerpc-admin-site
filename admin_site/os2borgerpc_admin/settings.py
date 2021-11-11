@@ -251,7 +251,7 @@ XMLRPC_METHODS = (
     ('system.rpc.get_proxy_setup', 'get_proxy_setup'),
     ('system.rpc.push_config_keys', 'push_config_keys'),
     ('system.rpc.push_security_events', 'push_security_events'),
-    ('system.rpc.cicero_login', 'cicero_login'),
+    ('system.rpc.citizen_login', 'citizen_login'),
 )
 
 # A sample logging configuration. The only tangible logging
@@ -321,6 +321,11 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # subsequent quarantine period.
 USER_LOGIN_DURATION_CONF = "user_login_duration"
 USER_QUARANTINE_DURATION_CONF = "user_quarantine_duration"
+
+# Handler for citizen login.
+CITIZEN_LOGIN_VALIDATOR = "system.utils.cicero_validate"
+
+# Cicero specific stuff.
 CICERO_URL = settings.get("CICERO_URL")
 CICERO_USER = settings.get("CICERO_USER")
 CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
