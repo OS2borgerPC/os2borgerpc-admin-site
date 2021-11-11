@@ -30,7 +30,7 @@ from system.models import (
     AssociatedScript,
     AssociatedScriptParameter,
     ScriptTag,
-    CitizenLogin,
+    Citizen,
 )
 
 ar = admin.site.register
@@ -264,7 +264,7 @@ class AssociatedScriptAdmin(admin.ModelAdmin):
     search_fields = ("script__name",)
 
 
-class CitizenLoginAdmin(admin.ModelAdmin):
+class CitizenAdmin(admin.ModelAdmin):
     list_display = ("citizen_id", "last_successful_login", "site")
     search_fields = ("citizen_id",)
 
@@ -288,4 +288,4 @@ ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
-ar(CitizenLogin, CitizenLoginAdmin)
+ar(Citizen, CitizenAdmin)

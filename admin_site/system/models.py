@@ -1334,7 +1334,7 @@ class ImageVersion(models.Model):
 # 1. Successfully authenticates with their backend (exists in their db, not locked out)
 # 2. Successfully logs into a borgerPC because they either still have time left or it's
 # after the quarantine period
-class CitizenLogin(models.Model):
+class Citizen(models.Model):
     citizen_id = models.CharField(unique=True, max_length=128)
     last_successful_login = models.DateTimeField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)

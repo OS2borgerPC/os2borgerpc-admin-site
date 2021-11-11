@@ -12,7 +12,7 @@ from django.conf import settings
 from .models import PC, Site, Distribution, Configuration, ConfigurationEntry
 from .models import PackageList, Package, PackageStatus, CustomPackages
 from .models import Job, Script, SecurityProblem, SecurityEvent
-from .models import CitizenLogin
+from .models import Citizen
 
 from .utils import get_citizen_login_validator
 
@@ -419,34 +419,29 @@ def citizen_login(username, password, site):
         )
         # Get previous login, if any.
         try:
-            citizen_login = CitizenLogin.objects.get(citizen_id=citizen_hash)
-        except CitizenLogin.DoesNotExist:
-            citizen_login = None
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+        except Citizen.DoesNotExist:
+            citizen = None
 
-        if citizen_login:
+        if citizen:
             quarantine_time = site.configuration.get(
                 settings.USER_QUARANTINE_DURATION_CONF, 2
             )
             quarantine_time = int(quarantine_time)
-            if (now - citizen_login.last_successful_login) > timedelta(
-                hours=quarantine_time
-            ):
-                citizen_login.last_successful_login = now
-                citizen_login.save()
-            elif now - citizen_login.last_successful_login < timedelta(
-                minutes=time_allowed
-            ):
+            if (now - citizen.last_successful_login) > timedelta(hours=quarantine_time):
+                citizen.last_successful_login = now
+                citizen.save()
+            elif now - citizen.last_successful_login < timedelta(minutes=time_allowed):
                 time_allowed = (
-                    time_allowed
-                    - (now - citizen_login.last_successful_login).seconds // 60
+                    time_allowed - (now - citizen.last_successful_login).seconds // 60
                 )
             else:
                 time_allowed = 0
         else:
             # First-time login, all good.
-            citizen_login = CitizenLogin(
+            citizen = Citizen(
                 citizen_id=citizen_hash, last_successful_login=now, site=site
             )
-        citizen_login.save()
+        citizen.save()
 
     return time_allowed
