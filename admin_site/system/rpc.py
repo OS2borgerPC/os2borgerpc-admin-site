@@ -452,7 +452,7 @@ def cicero_validate(loaner_number, pincode, agency_id):
     try:
         pincode = int(pincode)
     except ValueError:
-        logger.error("Pincode must be a number - {pincode} is not  number.")
+        logger.error(f"Pincode must be a number - {pincode} is not  number.")
         return 0
     if not agency_id:
         logger.error("Agency ID / ISIL MUST be specified.")
