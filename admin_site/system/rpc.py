@@ -4,7 +4,6 @@
 import system.proxyconf
 import system.utils
 import hashlib
-import requests
 import logging
 
 from datetime import datetime, timedelta
@@ -13,7 +12,9 @@ from django.conf import settings
 from .models import PC, Site, Distribution, Configuration, ConfigurationEntry
 from .models import PackageList, Package, PackageStatus, CustomPackages
 from .models import Job, Script, SecurityProblem, SecurityEvent
-from .models import CiceroPatron
+from .models import CitizenLogin
+
+from .utils import get_citizen_login_validator
 
 
 def register_new_computer(mac, name, distribution, site, configuration):
@@ -391,7 +392,7 @@ def push_security_events(pc_uid, csv_data):
     return 0
 
 
-def cicero_login(username, password, site):
+def citizen_login(username, password, site):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
@@ -407,97 +408,45 @@ def cicero_login(username, password, site):
     except Site.DoesNotExist:
         logger.error(f"Site {site} does not exist - unable to proceed.")
         return time_allowed
-    patron_id = cicero_validate(username, password, site.isil)
+    login_validator = get_citizen_login_validator()
+    citizen_id = login_validator(username, password, site.isil)
 
-    if patron_id:
-        patron_hash = hashlib.sha512(str(patron_id).encode()).hexdigest()
+    if citizen_id:
+        citizen_hash = hashlib.sha512(str(citizen_id).encode()).hexdigest()
         now = datetime.now()
         time_allowed = int(
             site.configuration.get(settings.USER_LOGIN_DURATION_CONF, 30)
         )
         # Get previous login, if any.
         try:
-            patron = CiceroPatron.objects.get(patron_id=patron_hash)
-        except CiceroPatron.DoesNotExist:
-            patron = None
+            citizen_login = CitizenLogin.objects.get(citizen_id=citizen_hash)
+        except CitizenLogin.DoesNotExist:
+            citizen_login = None
 
-        if patron:
+        if citizen_login:
             quarantine_time = site.configuration.get(
                 settings.USER_QUARANTINE_DURATION_CONF, 2
             )
             quarantine_time = int(quarantine_time)
-            if (now - patron.last_successful_login) > timedelta(hours=quarantine_time):
-                patron.last_successful_login = now
-                patron.save()
-            elif now - patron.last_successful_login < timedelta(minutes=time_allowed):
+            if (now - citizen_login.last_successful_login) > timedelta(
+                hours=quarantine_time
+            ):
+                citizen_login.last_successful_login = now
+                citizen_login.save()
+            elif now - citizen_login.last_successful_login < timedelta(
+                minutes=time_allowed
+            ):
                 time_allowed = (
-                    time_allowed - (now - patron.last_successful_login).seconds // 60
+                    time_allowed
+                    - (now - citizen_login.last_successful_login).seconds // 60
                 )
             else:
                 time_allowed = 0
         else:
             # First-time login, all good.
-            patron = CiceroPatron(
-                patron_id=patron_hash, last_successful_login=now, site=site
+            citizen_login = CitizenLogin(
+                citizen_id=citizen_hash, last_successful_login=now, site=site
             )
-        patron.save()
+        citizen_login.save()
 
     return time_allowed
-
-
-def cicero_validate(loaner_number, pincode, agency_id):
-    """Do the actual validation against the Cicero service.
-
-    If successful, this function will return the Cicero Patron ID, otherwise it
-    will return something falsey like None, 0 or ''.
-    """
-    logger = logging.getLogger(__name__)
-    try:
-        pincode = int(pincode)
-    except ValueError:
-        logger.error(f"Pincode must be a number - {pincode} is not  number.")
-        return 0
-    if not agency_id:
-        logger.error("Agency ID / ISIL MUST be specified.")
-        return 0
-    # First, get sessionKey.
-    session_key_url = (
-        f"{settings.CICERO_URL}/rest/external/v1/{agency_id}/authentication/login/"
-    )
-    response = requests.post(
-        session_key_url,
-        json={"username": settings.CICERO_USER, "password": settings.CICERO_PASSWORD},
-    )
-    if response.ok:
-        session_key = response.json()["sessionKey"]
-        # Just debugging for the moment.
-    else:
-        # TODO: Unable to authenticate with system user - log this.
-        message = response.json()["message"]
-        logger.error(
-            f"Unable to log in with configured user name and password: {message}"
-        )
-        return 0
-    # We now have a valid session key.
-    loaner_auth_url = (
-        f"{settings.CICERO_URL}/rest/external/{agency_id}/patrons/authenticate/v6"
-    )
-    response = requests.post(
-        loaner_auth_url,
-        headers={"X-session": session_key},
-        json={"libraryCardNumber": loaner_number, "pincode": pincode},
-    )
-    if response.ok:
-        result = response.json()
-        authenticate_status = result["authenticateStatus"]
-        print(authenticate_status)
-        if authenticate_status != "VALID":
-            logger.error(
-                f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
-            )
-            return 0
-        # Loaner has been successfully authenticated.
-        patron_id = result["patron"]["patronId"]
-        return patron_id
-
-    print(response)
