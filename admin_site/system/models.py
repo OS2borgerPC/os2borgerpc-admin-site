@@ -1330,23 +1330,22 @@ class ImageVersion(models.Model):
         ordering = ['platform', '-image_version']
 
 
-# https://et.cicero-fbs.com/externalapidocs/#!/external_agencyid_patrons/authenticateV6
-# last_successful_login is only updated whenever the user:
-# 1. Successfully authenticates with cicero (exists in their db and not locked out)
+# Last_successful_login is only updated whenever the citizen user:
+# 1. Successfully authenticates with their backend (exists in their db, not locked out)
 # 2. Successfully logs into a borgerPC because they either still have time left or it's
 # after the quarantine period
-class CiceroPatron(models.Model):
-    patron_id = models.CharField(unique=True, max_length=128)
+class Citizen(models.Model):
+    citizen_id = models.CharField(unique=True, max_length=128)
     last_successful_login = models.DateTimeField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.site} - {self.patron_id}"
+        return f"{self.site} - {self.citizen_id}"
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['patron_id', 'site'],
-                name="unique_patron_per_site"
+                fields=['citizen_id', 'site'],
+                name="unique_citizen_per_site"
             ),
         ]
