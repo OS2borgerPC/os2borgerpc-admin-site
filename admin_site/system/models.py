@@ -315,7 +315,11 @@ class Site(models.Model):
     # https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre
 
     # Necessary for customers who wish to integrate with standard library login.
-    isil = models.CharField(verbose_name="ISIL", max_length=10, blank=True, null=True)
+    isil = models.CharField(
+        verbose_name="ISIL", max_length=10, blank=True,
+        help_text="Necessary for customers who wish to" +
+        " integrate with standard library login"
+    )
 
     class Meta:
         ordering = ["name"]
