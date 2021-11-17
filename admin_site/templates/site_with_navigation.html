@@ -67,9 +67,9 @@ detailpage
       <span class="material-icons">queue</span> Grupper
     </a>
     
-    {% set_css_class_active request.resolver_match.url_name "configuration" as current_url_site_configuration %}
-    <a class="nav-link link-light {{ current_url_site_configuration  }}" href="{% url 'configuration' slug=site.url %}">
-      <span class="material-icons">settings</span> Site-konfiguration
+    {% set_css_class_active request.resolver_match.url_name "settings" as current_url_site_settings %}
+    <a class="nav-link link-light {{ current_url_site_settings  }}" href="{% url 'settings' slug=site.url %}">
+      <span class="material-icons">settings</span> Site-indstillinger
     </a>
     
     <hr>
@@ -150,8 +150,8 @@ detailpage
       </a>
     {% endif %}
 
-    {% if current_url_site_configuration or current_url_groups or current_url_computers %}
-      <a href="{% url 'doc' 'configuration' %}" class="nav-link link-light">
+    {% if current_url_site_settings or current_url_groups or current_url_computers %}
+      <a href="{% url 'doc' 'settings' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         Konfigurationer
       </a>
