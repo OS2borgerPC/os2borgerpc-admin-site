@@ -316,12 +316,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-
-# The configurations that contain the time a user may be logged in and the
-# subsequent quarantine period.
-USER_LOGIN_DURATION_CONF = "user_login_duration"
-USER_QUARANTINE_DURATION_CONF = "user_quarantine_duration"
-
 # Handler for citizen login.
 CITIZEN_LOGIN_VALIDATOR = "system.utils.cicero_validate"
 
