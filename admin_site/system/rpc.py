@@ -6,7 +6,7 @@ import system.utils
 import hashlib
 import logging
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from django.conf import settings
 
 from .models import PC, Site, Distribution, Configuration, ConfigurationEntry
@@ -414,9 +414,8 @@ def citizen_login(username, password, site):
     if citizen_id:
         citizen_hash = hashlib.sha512(str(citizen_id).encode()).hexdigest()
         now = datetime.now()
-        time_allowed = int(
-            site.configuration.get(settings.USER_LOGIN_DURATION_CONF, 30)
-        )
+        # Time in minutes.
+        time_allowed = site.user_login_duration.seconds // 60
         # Get previous login, if any.
         try:
             citizen = Citizen.objects.get(citizen_id=citizen_hash)
@@ -424,14 +423,11 @@ def citizen_login(username, password, site):
             citizen = None
 
         if citizen:
-            quarantine_time = site.configuration.get(
-                settings.USER_QUARANTINE_DURATION_CONF, 2
-            )
-            quarantine_time = int(quarantine_time)
-            if (now - citizen.last_successful_login) > timedelta(hours=quarantine_time):
+            quarantine_duration = site.user_quarantine_duration
+            if (now - citizen.last_successful_login) > quarantine_duration:
                 citizen.last_successful_login = now
                 citizen.save()
-            elif now - citizen.last_successful_login < timedelta(minutes=time_allowed):
+            elif now - citizen.last_successful_login < site.user_login_duration:
                 time_allowed = (
                     time_allowed - (now - citizen.last_successful_login).seconds // 60
                 )

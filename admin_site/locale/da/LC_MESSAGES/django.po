@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-17 14:25+0100\n"
+"POT-Creation-Date: 2021-11-18 14:35+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -100,9 +100,9 @@ msgid "owner configuration"
 msgstr "ejer-konfiguration"
 
 #: system/models.py:129 system/models.py:152 system/models.py:230
-#: system/models.py:307 system/models.py:393 system/models.py:414
-#: system/models.py:557 system/models.py:738 system/models.py:749
-#: system/models.py:886 system/models.py:1109 system/models.py:1218
+#: system/models.py:307 system/models.py:407 system/models.py:428
+#: system/models.py:571 system/models.py:752 system/models.py:763
+#: system/models.py:900 system/models.py:1123 system/models.py:1232
 msgid "name"
 msgstr "navn"
 
@@ -110,13 +110,13 @@ msgstr "navn"
 msgid "version"
 msgstr "version"
 
-#: system/models.py:131 system/models.py:416 system/models.py:559
-#: system/models.py:750 system/models.py:1220
+#: system/models.py:131 system/models.py:430 system/models.py:573
+#: system/models.py:764 system/models.py:1234
 msgid "description"
 msgstr "beskrivelse"
 
-#: system/models.py:308 system/models.py:394 system/models.py:558
-#: system/models.py:1219
+#: system/models.py:308 system/models.py:408 system/models.py:572
+#: system/models.py:1233
 msgid "UID"
 msgstr "UID"
 
@@ -129,188 +129,204 @@ msgid ""
 "Necessary for customers who wish to integrate with standard library login"
 msgstr "Nødvendigt for kunder der ønsker at integrere standard bibliotekslogin"
 
-#: system/models.py:415
+#: system/models.py:324
+msgid "Login duration"
+msgstr "Login-tid"
+
+#: system/models.py:325
+msgid "Login duration when integrating with library login"
+msgstr "Hvor længe man kan bruge PC'en med bibliotekslogin"
+
+#: system/models.py:331
+msgid "Quarantine duration"
+msgstr "Karantæneperiode"
+
+#: system/models.py:332
+msgid "Quarantine period when integrating with library login"
+msgstr "Karantæneperiode, når den tilladte logintid er brugt"
+
+#: system/models.py:429
 msgid "id"
 msgstr "ID"
 
-#: system/models.py:556
+#: system/models.py:570
 msgid "MAC"
 msgstr "MAC"
 
-#: system/models.py:574
+#: system/models.py:588
 msgid "activated"
 msgstr "aktiveret"
 
-#: system/models.py:577
+#: system/models.py:591
 msgid "update required"
 msgstr "opdatering påkrævet"
 
-#: system/models.py:582
+#: system/models.py:596
 msgid "send package info"
 msgstr "send pakke-informationer"
 
-#: system/models.py:584
+#: system/models.py:598
 msgid "creation time"
 msgstr "oprettelsestidspunkt"
 
-#: system/models.py:586
+#: system/models.py:600
 msgid "last seen"
 msgstr "seneste tjek-ind"
 
-#: system/models.py:588
+#: system/models.py:602
 msgid "location"
 msgstr "placering"
 
-#: system/models.py:757
+#: system/models.py:771
 msgid "executable code"
 msgstr "eksekverbar kode"
 
-#: system/models.py:759 system/models.py:1227
+#: system/models.py:773 system/models.py:1241
 msgid "security script"
 msgstr "sikkerhedsscript"
 
-#: system/models.py:763
+#: system/models.py:777
 msgid "maintained by Magenta"
 msgstr "vedligeholdt af Magenta"
 
-#: system/models.py:767
+#: system/models.py:781
 msgid "author"
 msgstr "forfatter"
 
-#: system/models.py:769
+#: system/models.py:783
 msgid "author email"
 msgstr "forfatter email"
 
-#: system/models.py:907 system/models.py:1112
+#: system/models.py:921 system/models.py:1126
 msgid "position"
 msgstr "position"
 
-#: system/models.py:971
+#: system/models.py:985
 msgid "jobstatus:New"
 msgstr "Nyt"
 
-#: system/models.py:972
+#: system/models.py:986
 msgid "jobstatus:Submitted"
 msgstr "Afsendt"
 
-#: system/models.py:973
+#: system/models.py:987
 msgid "jobstatus:Running"
 msgstr "Kører"
 
-#: system/models.py:974
+#: system/models.py:988
 msgid "jobstatus:Failed"
 msgstr "Fejlet"
 
-#: system/models.py:975
+#: system/models.py:989
 msgid "jobstatus:Done"
 msgstr "Udført"
 
-#: system/models.py:976
+#: system/models.py:990
 msgid "jobstatus:Resolved"
 msgstr "Genstartet"
 
-#: system/models.py:1002
+#: system/models.py:1016
 msgid "log output"
 msgstr "log output"
 
-#: system/models.py:1005
+#: system/models.py:1019
 msgid "started"
 msgstr "påbegyndt"
 
-#: system/models.py:1006
+#: system/models.py:1020
 msgid "finished"
 msgstr "afsluttet"
 
-#: system/models.py:1061
+#: system/models.py:1075
 #, python-brace-format
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:1068 system/views.py:461
+#: system/models.py:1082 system/views.py:461
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
 
-#: system/models.py:1103
+#: system/models.py:1117
 msgid "String"
 msgstr "Streng"
 
-#: system/models.py:1104
+#: system/models.py:1118
 msgid "Integer"
 msgstr "Heltal"
 
-#: system/models.py:1105
+#: system/models.py:1119
 msgid "Date"
 msgstr "Dato"
 
-#: system/models.py:1106
+#: system/models.py:1120
 msgid "File"
 msgstr "Fil"
 
-#: system/models.py:1110
+#: system/models.py:1124
 msgid "value type"
 msgstr "værdi-type"
 
-#: system/models.py:1113
+#: system/models.py:1127
 msgid "mandatory"
 msgstr "påkrævet"
 
 # SecurityProblem class
-#: system/models.py:1201
+#: system/models.py:1215
 msgid "securitylevel:Normal"
 msgstr "Normal"
 
-#: system/models.py:1202
+#: system/models.py:1216
 msgid "securitylevel:High"
 msgstr "Høj"
 
-#: system/models.py:1203
+#: system/models.py:1217
 msgid "securitylevel:Critical"
 msgstr "Kritisk"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: system/models.py:1221
+#: system/models.py:1235
 msgid "level"
 msgstr "alvorlighedsgrad"
 
-#: system/models.py:1233
+#: system/models.py:1247
 msgid "alert groups"
 msgstr "overvågede grupper"
 
-#: system/models.py:1237
+#: system/models.py:1251
 msgid "alert users"
 msgstr "modtager(e) af e-mail-advarsel"
 
 # SecurityEvent class
-#: system/models.py:1267
+#: system/models.py:1281
 msgid "eventstatus:New"
 msgstr "Ny"
 
-#: system/models.py:1268
+#: system/models.py:1282
 msgid "eventstatus:Assigned"
 msgstr "Tildelt"
 
-#: system/models.py:1269
+#: system/models.py:1283
 msgid "eventstatus:Resolved"
 msgstr "Løst"
 
-#: system/models.py:1287
+#: system/models.py:1301
 msgid "occurred"
 msgstr "tidspunkt"
 
-#: system/models.py:1289
+#: system/models.py:1303
 msgid "reported"
 msgstr "tidspunkt modtaget"
 
-#: system/models.py:1296
+#: system/models.py:1310
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py:1309
+#: system/models.py:1324
 msgid "BorgerPC"
 msgstr "BorgerPC"
 
-#: system/models.py:1310
+#: system/models.py:1325
 msgid "DisplayPC"
 msgstr "DisplayPC"
 
