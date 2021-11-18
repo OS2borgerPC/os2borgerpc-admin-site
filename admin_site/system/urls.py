@@ -4,7 +4,7 @@ from django.views.generic import RedirectView
 from .views import SiteList
 from .views import AdminIndex, PCsView, GroupsView, UsersView, JobsView
 from .views import GroupCreate, GroupUpdate, GroupDelete, JobSearch, UserDelete
-from .views import SiteDetailView, UserCreate, UserUpdate, SiteConfiguration
+from .views import SiteDetailView, UserCreate, UserUpdate, SiteSettings
 from .views import ScriptList, ScriptUpdate, ScriptCreate, ScriptDelete
 from .views import ScriptRun, PCUpdate, JobRestarter
 from .views import ConfigurationEntryCreate, ConfigurationEntryUpdate
@@ -67,10 +67,10 @@ urlpatterns = [
     url(r'^site/(?P<slug>[^/]+)/$', SiteDetailView.as_view(),
         name='site'),
 
-    # Configurations
-    url(r'^site/(?P<slug>[^/]+)/configuration/$',
-        SiteConfiguration.as_view(),
-        name='configuration'),
+    # Site Settings
+    url(r'^site/(?P<slug>[^/]+)/settings/$',
+        SiteSettings.as_view(),
+        name='settings'),
     url(r'^site/(?P<site_uid>[^/]+)/configuration/new/$',
         ConfigurationEntryCreate.as_view(), name='new_configuration'),
     url(r'^site/(?P<site_uid>[^/]+)/configuration/edit/(?P<pk>\d+)/$',

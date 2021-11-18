@@ -1,0 +1,69 @@
+{% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
+
+{% block specific_title %}
+Site-indstillinger
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="/static/js/configlist.js"></script>
+{% endblock %}
+
+<!--
+<a style="border: none; border-left: 2px solid" class="border-warning btn btn-light btn-lg" href="{% url 'edit_site' slug=site.url %}">
+  <span class='material-icons'>edit</span>
+</a>
+-->
+
+{% block specific_content %}
+  <div class="container-fluid main">
+
+    <h2 class="divideheader">Indstillinger for <em>{{ site }}</em></h2>
+    {% include 'notification.html' %}
+
+      <!-- The tabs on the page: -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="settings-tab" href="#settings" data-bs-toggle="tab" role="tab" aria-controls="settings" aria-selected="true">Indstillinger</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+        </li>
+      </ul>
+
+    <!--<form action="{% url 'settings' site.uid %}" -->
+    <form action="" method="post" name="site_settings_form" id="site_settings_form" action="{% url 'settings' site.uid %}">
+      {% csrf_token %}
+      <div class="tab-content pb-4" style="border-radius: .33rem .33rem 0 0;">
+
+        <div id="settings" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="settings-tab">
+          <div>
+              {{ form|crispy }}
+              <fieldset class="my-4"></fieldset>
+          </div>
+        </div>
+
+        <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
+
+            {% csrf_token %}
+            
+            {% if site %}
+              <p class="well" style="font-size: 14px; line-height: 20px;">
+                <span class="muted">Dette sites ID er</span> <strong>{{ site.uid }}</strong>
+              </p>
+            {% endif %}
+
+            {% include 'system/configlist/list.html' with entries=site_configs cnf_id='site_configs' %}
+            
+            <!-- TODO: This include will put a form within a form. Not great.-->
+            {% include 'system/configlist/templates.html' %}
+
+        </div>
+        <fieldset class="mt-4">
+          <button class="btn btn-primary me-3" form="site_settings_form" type="submit">Gem ændringer</button>
+          <button class="btn btn-secondary" type="reset">Annuller</button>
+        </fieldset>
+      </div>
+    </form>
+
+{% endblock %}

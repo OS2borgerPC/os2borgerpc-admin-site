@@ -317,9 +317,9 @@ class Site(models.Model):
     # Necessary for customers who wish to integrate with standard library login.
     isil = models.CharField(
         verbose_name="ISIL", max_length=10, blank=True,
-        help_text="Necessary for customers who wish to" +
-        " integrate with standard library login"
-    )
+        help_text=_("Necessary for customers who wish to" +
+                    " integrate with standard library login")
+        )
 
     class Meta:
         ordering = ["name"]
@@ -1293,7 +1293,8 @@ class SecurityEvent(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
     assigned_user = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.SET_NULL
+        User, verbose_name=_('assigned user'),
+        null=True, blank=True, on_delete=models.SET_NULL
     )
     note = models.TextField(null=True, blank=True)
 

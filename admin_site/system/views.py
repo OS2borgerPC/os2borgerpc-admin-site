@@ -49,6 +49,7 @@ from system.models import (
 )
 # PC Status codes
 from system.forms import (
+    SiteForm,
     GroupForm,
     ConfigurationEntryForm,
     ScriptForm,
@@ -274,12 +275,25 @@ class SiteDetailView(SiteView):
         return context
 
 
-class SiteConfiguration(SiteView):
-    template_name = 'system/site_configuration.html'
+# Move this logic to SiteSettings
+# class SiteUpdate(UpdateView, SuperAdminOnlyMixin):
+#    model = Site
+#    form_class = SiteForm
+#    slug_field = 'uid'
+#
+#    def get_success_url(self):
+#        return '/sites/'
+
+
+class SiteSettings(UpdateView, SiteView):
+    model = Site
+    form_class = SiteForm
+    slug_field = 'uid'
+    template_name = 'system/site_settings.html'
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
-        context = super(SiteConfiguration, self).get_context_data(**kwargs)
+        context = super(SiteSettings, self).get_context_data(**kwargs)
         configs = self.object.configuration.entries.all()
         context['site_configs'] = configs.order_by('key')
 
@@ -297,7 +311,7 @@ class SiteConfiguration(SiteView):
 
         set_notification_cookie(
             response,
-            _('Configuration for %s updated') % kwargs['slug']
+            _('Settings for %s updated') % kwargs['slug']
         )
         return response
 
@@ -1294,7 +1308,7 @@ class ConfigurationEntryCreate(SiteMixin, CreateView,
         return super(ConfigurationEntryCreate, self).form_valid(form)
 
     def get_success_url(self):
-        return '/site/{0}/configuration/'.format(self.kwargs['site_uid'])
+        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
 
 
 class ConfigurationEntryUpdate(SiteMixin, UpdateView,
@@ -1303,7 +1317,7 @@ class ConfigurationEntryUpdate(SiteMixin, UpdateView,
     form_class = ConfigurationEntryForm
 
     def get_success_url(self):
-        return '/site/{0}/configuration/'.format(self.kwargs['site_uid'])
+        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
 
 
 class ConfigurationEntryDelete(SiteMixin, DeleteView,
@@ -1311,7 +1325,7 @@ class ConfigurationEntryDelete(SiteMixin, DeleteView,
     model = ConfigurationEntry
 
     def get_success_url(self):
-        return '/site/{0}/configuration/'.format(self.kwargs['site_uid'])
+        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
 
 
 class GroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
