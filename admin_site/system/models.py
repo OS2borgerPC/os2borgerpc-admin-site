@@ -322,12 +322,14 @@ class Site(models.Model):
         )
     user_login_duration = models.DurationField(
         verbose_name=_("Login duration"),
+        help_text=_("Login duration when integrating with library login"),
         null=True,
         blank=True,
         default=datetime.timedelta(hours=1),
     )
     user_quarantine_duration = models.DurationField(
         verbose_name=_("Quarantine duration"),
+        help_text=_("Quarantine period when integrating with library login"),
         null=True,
         blank=True,
         default=datetime.timedelta(hours=4),
