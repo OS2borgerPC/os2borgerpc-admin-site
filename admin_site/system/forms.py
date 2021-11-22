@@ -232,9 +232,10 @@ class PCForm(forms.ModelForm):
 
     class Meta:
         model = PC
-        exclude = ('uid', 'configuration', 'site',
-                   'is_update_required', 'creation_time', 'last_seen',
-                   'distribution')
+        exclude = (
+            'uid', 'configuration', 'site', 'is_update_required', 'creation_time',
+            'last_seen',
+        )
 
 
 class SecurityProblemForm(forms.ModelForm):
