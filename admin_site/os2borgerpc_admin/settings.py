@@ -305,9 +305,6 @@ DEFAULT_DIRECT_PROXY_HOSTS = settings.get(
     'DEFAULT_DIRECT_PROXY_HOSTS', []
 )
 
-# TODO: This is deprecated and should be removed.
-CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS', [])
-
 INITIALIZE_DATABASE = settings.getboolean(
     "INITIALIZE_DATABASE", False
 )

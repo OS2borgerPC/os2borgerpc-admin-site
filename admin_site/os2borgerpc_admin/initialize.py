@@ -20,7 +20,6 @@ def initialize():
     if os.path.exists(fixtures_dir) and os.path.isdir(fixtures_dir):
         initialize_sites()
         initialize_users()
-        initialize_distributions()
         initialize_configuration_entries()
 
 
@@ -48,19 +47,6 @@ def initialize_sites():
             "loaddata", "site_configurations.json", app_label="system"
         )
         call_command("loaddata", "sites.json", app_label="system")
-
-
-def initialize_distributions():
-    """Prime the system with some distributions to get started.
-
-    Data should be the output of "manage.py dumpdata system.Distribution"
-    and "manage.py dumpdata system.PackageList".
-    """
-    if os.path.exists(os.path.join(fixtures_dir, "distributions.json")):
-        call_command(
-            "loaddata", "packagelists.json", app_label="system"
-        )
-        call_command("loaddata", "distributions.json", app_label="system")
 
 
 def initialize_configuration_entries():

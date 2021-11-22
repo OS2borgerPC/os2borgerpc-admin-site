@@ -94,7 +94,7 @@ class GroupForm(forms.ModelForm):
 
     class Meta:
         model = PCGroup
-        exclude = ['site', 'configuration', 'custom_packages']
+        exclude = ['site', 'configuration']
 
 
 class ScriptForm(forms.ModelForm):
@@ -232,9 +232,10 @@ class PCForm(forms.ModelForm):
 
     class Meta:
         model = PC
-        exclude = ('uid', 'configuration', 'package_list', 'site',
-                   'is_update_required', 'creation_time', 'last_seen',
-                   'custom_packages', 'do_send_package_info', 'distribution')
+        exclude = (
+            'uid', 'configuration', 'site', 'is_update_required', 'creation_time',
+            'last_seen',
+        )
 
 
 class SecurityProblemForm(forms.ModelForm):

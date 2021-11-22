@@ -107,8 +107,9 @@ class SuperAdminOrThisSiteMixin(View):
             site = get_object_or_404(Site, uid=kwargs[slug_field])
         check_function = user_passes_test(
             lambda u:
-            (u.is_superuser) or
-            (site and site in u.bibos_profile.sites.all()), login_url='/'
+            (u.is_superuser) or (
+                site and site in u.bibos_profile.sites.all()
+            ), login_url='/'
         )
         wrapped_super = check_function(
             super(SuperAdminOrThisSiteMixin, self).dispatch
@@ -234,7 +235,7 @@ class SiteList(ListView, LoginRequiredMixin):
 
 
 # Base class for Site-based passive (non-form) views
-class SiteView(DetailView,  SuperAdminOrThisSiteMixin):
+class SiteView(DetailView, SuperAdminOrThisSiteMixin):
     """Base class for all views based on a single site."""
     model = Site
     slug_field = 'uid'
