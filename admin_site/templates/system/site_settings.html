@@ -37,6 +37,7 @@ Site-indstillinger
       <div class="tab-content pb-4" style="border-radius: .33rem .33rem 0 0;">
 
         <div id="settings" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="settings-tab">
+
           <div>
               {{ form|crispy }}
               <fieldset class="my-4"></fieldset>
@@ -46,12 +47,6 @@ Site-indstillinger
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
 
             {% csrf_token %}
-            
-            {% if site %}
-              <p class="well" style="font-size: 14px; line-height: 20px;">
-                <span class="muted">Dette sites ID er</span> <strong>{{ site.uid }}</strong>
-              </p>
-            {% endif %}
 
             {% include 'system/configlist/list.html' with entries=site_configs cnf_id='site_configs' %}
             
