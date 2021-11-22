@@ -1,8 +1,6 @@
 import datetime
 import random
 import string
-import re
-import os.path
 from distutils.version import LooseVersion
 
 from dateutil.relativedelta import relativedelta
@@ -12,7 +10,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.conf import settings
 
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
@@ -35,7 +32,7 @@ NONE = ''
 
 class Configuration(models.Model):
     """This class contains/represents the configuration of a Site, a
-    Distribution, a PC Group or a PC."""
+    a PC Group or a PC."""
     # Doesn't need any actual fields, it seems. Should not exist independently
     # of the classes to which it may be aggregated.
     name = models.CharField(max_length=255, unique=True)
@@ -138,9 +135,9 @@ class Site(models.Model):
     # Necessary for customers who wish to integrate with standard library login.
     isil = models.CharField(
         verbose_name="ISIL", max_length=10, blank=True,
-        help_text=_("Necessary for customers who wish to" +
+        help_text=_("Necessary for customers who wish to"
                     " integrate with standard library login")
-        )
+    )
     user_login_duration = models.DurationField(
         verbose_name=_("Login duration"),
         help_text=_("Login duration when integrating with library login"),
@@ -158,20 +155,6 @@ class Site(models.Model):
 
     class Meta:
         ordering = ["name"]
-
-    @staticmethod
-    def get_system_site():
-        try:
-            site = Site.objects.get(uid='system').first()
-        except Site.DoesNotExist:
-            site = Site.objects.create(
-                name='system',
-                uid='system',
-                configuration=Configuration.objects.create(
-                    name='system_site_configuration'
-                )
-            )
-        return site
 
     @property
     def users(self):
@@ -221,16 +204,6 @@ class Site(models.Model):
 
     def get_absolute_url(self):
         return '/site/{0}'.format(self.url)
-
-
-class Distribution(models.Model):
-    """This represents a GNU/Linux distribution managed by us."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('UID'), max_length=255)
-    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
 
 
 class Error(Exception):
@@ -302,7 +275,7 @@ class PCGroup(models.Model):
                 # from the database as well
                 try:
                     existing = AssociatedScript.objects.get(
-                            group=self, position=position)
+                        group=self, position=position)
                     # (... although we shouldn't try to remove it twice!)
                     existing_set.remove(existing.pk)
                     existing.delete()
@@ -310,20 +283,20 @@ class PCGroup(models.Model):
                     pass
 
                 asc = AssociatedScript(
-                        group=self, script=script, position=position)
+                    group=self, script=script, position=position)
                 asc.save()
                 pk = asc.pk
                 position += 1
             else:
                 pk = int(pk)
                 asc = AssociatedScript.objects.get(
-                        pk=pk, group=self, script=script)
+                    pk=pk, group=self, script=script)
                 position = asc.position + 1
 
             for inp in script.ordered_inputs:
                 try:
                     par = AssociatedScriptParameter.objects.get(
-                            script=asc, input=inp)
+                        script=asc, input=inp)
                 except AssociatedScriptParameter.DoesNotExist:
                     par = AssociatedScriptParameter(script=asc, input=inp)
                 param_name = "{0}_param_{1}".format(script_param, inp.position)
@@ -384,7 +357,6 @@ class PC(models.Model):
     uid = models.CharField(verbose_name=_('UID'), max_length=255)
     description = models.CharField(verbose_name=_('description'),
                                    max_length=1024, blank=True)
-    distribution = models.ForeignKey(Distribution, on_delete=models.PROTECT)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
     site = models.ForeignKey(
@@ -545,61 +517,6 @@ class Script(AuditModelMixin):
 
     def __str__(self):
         return self.name
-
-    @staticmethod
-    def get_system_script(name):
-        try:
-            script = Script.objects.get(description=name)
-        except Script.DoesNotExist:
-            system_site = Site.get_system_site()
-
-            full_script_path = os.path.join(
-                settings.MEDIA_ROOT,
-                'system_scripts/',
-                name
-            )
-
-            if(os.path.isfile(full_script_path)):
-                args = []
-                title = name
-                title_matcher = re.compile(r'BIBOS_SCRIPT_TITLE:\s*([^\n]+)')
-                arg_matcher = re.compile(
-                    'BIBOS_SCRIPT_ARG:(' +
-                    '|'.join([v for v, n in Input.VALUE_CHOICES]) +
-                    ')',
-                    flags=re.IGNORECASE
-                )
-
-                fh = open(full_script_path, 'r')
-                for line in fh.readlines():
-                    m = arg_matcher.search(line)
-                    if m is not None:
-                        args.append(m.group(1).upper())
-                    else:
-                        m = title_matcher.search(line)
-                        if m is not None:
-                            title = m.group(1)
-                fh.close()
-
-                script = Script.objects.create(
-                    name=title,
-                    description=name,
-                    executable_code='system_scripts/' + name,
-                    site=system_site
-                )
-                script.save()
-
-                for position, vtype in enumerate(args):
-                    Input.objects.create(
-                        name=script.name + " arg " + str(position + 1),
-                        position=position,
-                        value_type=vtype,
-                        mandatory=True,
-                        script=script
-                    )
-            else:
-                script = None
-        return script
 
     def run_on(self, site, pc_list, *args, user):
         now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

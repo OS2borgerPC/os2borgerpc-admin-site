@@ -8,7 +8,7 @@ import logging
 
 from datetime import datetime
 
-from .models import PC, Site, Distribution, Configuration, ConfigurationEntry
+from .models import PC, Site, Configuration, ConfigurationEntry
 from .models import Job, Script, SecurityProblem, SecurityEvent
 from .models import Citizen
 
@@ -28,7 +28,6 @@ def register_new_computer(mac, name, distribution, site, configuration):
         new_pc = PC(name=name, uid=uid)
         new_pc.site = Site.objects.get(uid=site)
 
-    new_pc.distribution = Distribution.objects.get(uid=distribution)
     new_pc.is_activated = False
     new_pc.mac = mac
     # Create new configuration, populate with data from computer's config.
@@ -71,9 +70,8 @@ def register_new_computer(mac, name, distribution, site, configuration):
 
 def upload_dist_packages(distribution_uid, package_data):
     """This will upload the packages and package versions for a given
-    BibOS distribution. A BibOS distribution is here defined as a completely
-    fresh install of a standardized Debian-like system which is to be supported
-    by the BibOS admin."""
+    BibOS distribution.
+    This is depreacated and will be removed when we can."""
     # Phased out - we keep this for backwards compliance only.
     return 0
 

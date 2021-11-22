@@ -11,7 +11,6 @@ from system.models import (
     Configuration,
     ConfigurationEntry,
     Site,
-    Distribution,
     PCGroup,
     PC,
     ImageVersion,
@@ -248,7 +247,6 @@ class CitizenAdmin(admin.ModelAdmin):
 
 ar(Configuration, ConfigurationAdmin)
 ar(Site, SiteAdmin)
-ar(Distribution)
 ar(PCGroup, PCGroupAdmin)
 ar(PC, PCAdmin)
 ar(ImageVersion, ImageVersionAdmin)
