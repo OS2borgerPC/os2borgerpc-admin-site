@@ -7,10 +7,8 @@ import hashlib
 import logging
 
 from datetime import datetime
-from django.conf import settings
 
 from .models import PC, Site, Distribution, Configuration, ConfigurationEntry
-from .models import PackageList, Package, PackageStatus, CustomPackages
 from .models import Job, Script, SecurityProblem, SecurityEvent
 from .models import Citizen
 
@@ -26,15 +24,9 @@ def register_new_computer(mac, name, distribution, site, configuration):
 
     try:
         new_pc = PC.objects.get(uid=uid)
-        package_list = new_pc.package_list
-        custom_packages = new_pc.custom_packages
     except PC.DoesNotExist:
         new_pc = PC(name=name, uid=uid)
         new_pc.site = Site.objects.get(uid=site)
-        # TODO: Better to enforce existence of package list in AfterSave
-        # signal.
-        package_list = PackageList(name=name)
-        custom_packages = CustomPackages(name=name)
 
     new_pc.distribution = Distribution.objects.get(uid=distribution)
     new_pc.is_activated = False
@@ -71,14 +63,8 @@ def register_new_computer(mac, name, distribution, site, configuration):
     for k, v in list(configuration.items()):
         entry = ConfigurationEntry(key=k, value=v, owner_configuration=my_config)
         entry.save()
-    # Tell us about yourself
-    new_pc.do_send_package_info = True
     # Set and save PmC
     new_pc.configuration = my_config
-    package_list.save()
-    new_pc.package_list = package_list
-    custom_packages.save()
-    new_pc.custom_packages = custom_packages
     new_pc.save()
     return uid
 
@@ -88,38 +74,13 @@ def upload_dist_packages(distribution_uid, package_data):
     BibOS distribution. A BibOS distribution is here defined as a completely
     fresh install of a standardized Debian-like system which is to be supported
     by the BibOS admin."""
-
-    if distribution_uid in settings.CLOSED_DISTRIBUTIONS:
-        # Ignore
-        return 0
-
-    distribution = Distribution.objects.get(uid=distribution_uid)
-
-    if package_data is not None:
-        distribution.package_list.packages.clear()
-
-        for pd in package_data:
-            # First, assume package & version already exists.
-            try:
-                p = Package.objects.get(name=pd["name"], version=pd["version"])
-            except Package.DoesNotExist:
-                p = Package.objects.create(
-                    name=pd["name"],
-                    version=pd["version"],
-                    description=pd["description"],
-                )
-            finally:
-                PackageStatus.objects.create(
-                    package=p,
-                    package_list=distribution.package_list,
-                    status=pd["status"],
-                )
+    # Phased out - we keep this for backwards compliance only.
     return 0
 
 
 def send_status_info(pc_uid, package_data, job_data, update_required):
-    """Update package lists as well as the status of outstanding jobs.
-    If no updates of package or job data, these will be None. In that
+    """Update the status of outstanding jobs and (now deprecated) package data.
+    If no updates, these will be None. In that
     case, this function really works as an "I'm alive" signal."""
 
     # TODO: Code this
@@ -134,38 +95,7 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     pc.last_seen = datetime.now()
     pc.save()
 
-    # 2. Update package lists with package data
-    if package_data and pc.do_send_package_info:
-        # Ignore if we didn't ask for this
-
-        # Clear existing packages
-        pc.package_list.packages.clear()
-
-        # Insert new ones
-        # package_data is a list of dicts with the correct field names.
-        for pd in package_data:
-            # First, assume package & version already exists.
-            try:
-                p = Package.objects.get(name=pd["name"], version=pd["version"])
-            except Package.DoesNotExist:
-                p = Package.objects.create(
-                    name=pd["name"],
-                    version=pd["version"],
-                    description=pd["description"],
-                )
-            finally:
-                PackageStatus.objects.create(
-                    package=p, package_list=pc.package_list, status=pd["status"]
-                )
-        # Assume no packages are any longer "pending".
-        pc.custom_packages.update_by_package_names(
-            pc.pending_packages_remove, pc.pending_packages_add
-        )
-        # We just got the package info update we requested, so clear the flag
-        # until we need a new update.
-        pc.do_send_package_info = False
-
-    # 3. Update jobs with job data
+    # 2. Update jobs with job data
     if job_data is not None:
         for jd in job_data:
             job = Job.objects.filter(pk=jd["id"]).first()
@@ -177,21 +107,9 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
             job.log_output = jd["log_output"]
             job.save()
 
-    # 4. Check if update is required.
+    # 3. Check if update is required.
     if update_required is not None:
         updates, security_updates = list(map(int, update_required))
-        if security_updates > 0:
-            pc.is_update_required = True
-            # See if things have changed and we need to update the package
-            # lists.
-            old_updates = int(pc.configuration.get("updates", 0))
-            old_security = int(pc.configuration.get("security_updates", 0))
-            if (security_updates > old_security) or (updates > old_updates):
-                pc.do_send_package_info = True
-            else:
-                pc.do_send_package_info = False
-        elif pc.is_update_required:
-            pc.is_update_required = False
         # Save update info in configuration
         pc.configuration.update_entry("updates", updates)
         pc.configuration.update_entry("security_updates", security_updates)
@@ -201,7 +119,7 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     return 0
 
 
-def get_instructions(pc_uid, update_data):
+def get_instructions(pc_uid, update_data=None):
     """This function will ask for new instructions in the form of a list of
     jobs, which will be scheduled for execution and executed upon receipt.
     These jobs will generally take the form of bash scripts."""
@@ -214,63 +132,6 @@ def get_instructions(pc_uid, update_data):
     if not pc.is_activated:
         # Fail silently
         return ([], False)
-
-    update_pkgs = update_data.get("updated_packages", [])
-    if len(update_pkgs) > 0:
-        for pdata in update_pkgs:
-            # Find or create the package in the global collection of packages
-            try:
-                p = Package.objects.get(name=pdata["name"], version=pdata["version"])
-            except Package.DoesNotExist:
-                p = Package(
-                    name=pdata["name"],
-                    version=pdata["version"],
-                    description=pdata["description"],
-                )
-                p.save()
-            # Change or create the package status for the package/PC
-            p_status = pc.package_list.statuses.filter(
-                package__name=pdata["name"],
-            ).delete()
-            p_status = PackageStatus(
-                status="install", package=p, package_list=pc.package_list
-            )
-            p_status.save()
-
-            pc.package_list.statuses.filter(
-                package__name=pdata["name"],
-                package__version=pdata["version"],
-            ).update(status="installed ok")
-
-    remove_pkgs = update_data.get("removed_packages", [])
-    if len(remove_pkgs) > 0:
-        pc.package_list.statuses.filter(package__name__in=remove_pkgs).delete()
-
-    # Get list of packages to install and remove.
-    to_install, to_remove = pc.pending_package_updates
-
-    # Add packages that are pending update to the list of packages we want
-    # installed, as apt-get will upgrade any package in the package list
-    # for apt-get install.
-    for p in pc.package_list.pending_upgrade_packages:
-        to_install.add(p.name)
-
-    # Make sure packages added to be upgraded now are no longer pending.
-    pc.package_list.flag_needs_upgrade(
-        [p.name for p in pc.package_list.pending_upgrade_packages]
-    )
-
-    # Make sure packages we just installed are not flagged for removal
-    for name in [p["name"] for p in update_pkgs]:
-        if name in to_remove:
-            pc.custom_packages.update_package_status(name, True)
-            to_remove.remove(name)
-
-    # Make sure packages we just removed are not flagged for installation
-    for name in remove_pkgs:
-        if name in to_install:
-            pc.custom_packages.update_package_status(name, False)
-            to_install.remove(name)
 
     jobs = []
     for job in pc.jobs.filter(status=Job.NEW).order_by("pk"):
@@ -309,9 +170,6 @@ def get_instructions(pc_uid, update_data):
         "jobs": jobs,
         "configuration": pc.get_full_config(),
     }
-
-    if pc.do_send_package_info:
-        result["do_send_package_info"] = True
 
     return result
 

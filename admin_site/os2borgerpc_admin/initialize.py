@@ -53,13 +53,9 @@ def initialize_sites():
 def initialize_distributions():
     """Prime the system with some distributions to get started.
 
-    Data should be the output of "manage.py dumpdata system.Distribution"
-    and "manage.py dumpdata system.PackageList".
+    Data should be the output of "manage.py dumpdata system.Distribution".
     """
     if os.path.exists(os.path.join(fixtures_dir, "distributions.json")):
-        call_command(
-            "loaddata", "packagelists.json", app_label="system"
-        )
         call_command("loaddata", "distributions.json", app_label="system")
 
 
