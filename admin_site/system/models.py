@@ -8,7 +8,6 @@ from distutils.version import LooseVersion
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
-from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -124,184 +123,6 @@ class ConfigurationEntry(models.Model):
     )
 
 
-class Package(models.Model):
-    """This class represents a single Debian package to be installed."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    version = models.CharField(verbose_name=_('version'), max_length=255)
-    description = models.CharField(verbose_name=_('description'),
-                                   max_length=255)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['name', 'version'],
-                name="unique_version_name"),
-        ]
-
-
-class CustomPackages(models.Model):
-    """A list of packages to be installed on a PC or to be included in a
-    distribution."""
-
-    class Meta:
-        verbose_name_plural = "Custom packages"
-
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    packages = models.ManyToManyField(Package,
-                                      through='PackageInstallInfo',
-                                      blank=True)
-
-    def update_by_package_names(self, addlist, removelist):
-        add_packages_old = set()
-        remove_packages_old = set()
-
-        for ii in self.install_infos.all():
-            if ii.do_add:
-                add_packages_old.add(ii.package.name)
-            else:
-                remove_packages_old.add(ii.package.name)
-
-        for oldlist, newlist, addflag in [
-            (add_packages_old, set(addlist), True),
-            (remove_packages_old, set(removelist), False),
-        ]:
-            # Add new add-packages
-            for name in newlist - oldlist:
-                try:
-                    package = Package.objects.filter(name=name)[0]
-                except IndexError:
-                    package = Package.objects.create(name=name)
-
-                ii = PackageInstallInfo(
-                    custom_packages=self,
-                    package=package,
-                    do_add=addflag
-                )
-                ii.save()
-            # Remove unwanted add-packages
-            qs = PackageInstallInfo.objects.filter(
-                do_add=addflag,
-                custom_packages=self,
-                package__name__in=list(oldlist - newlist)
-            )
-            qs.delete()
-
-    def update_package_status(self, name, do_add):
-        # Delete any old reference
-        self.install_infos.filter(
-            package__name=name
-        ).delete()
-
-        # And create a new
-        try:
-            package = Package.objects.filter(name=name)[0]
-        except IndexError:
-            package = Package.objects.create(name=name)
-
-        ii = PackageInstallInfo(
-            custom_packages=self,
-            package=package,
-            do_add=do_add
-        )
-
-        ii.save()
-
-    def __str__(self):
-        return self.name
-
-
-class PackageInstallInfo(models.Model):
-    do_add = models.BooleanField(default=True)
-    package = models.ForeignKey(Package, on_delete=models.CASCADE)
-    custom_packages = models.ForeignKey(CustomPackages,
-                                        related_name='install_infos',
-                                        on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
-
-
-class PackageList(models.Model):
-    """A list of packages to be installed on a PC or to be included in a
-    distribution."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    packages = models.ManyToManyField(Package,
-                                      through='PackageStatus',
-                                      blank=True)
-
-    @property
-    def names_of_installed_package(self):
-        return self.statuses.filter(
-            Q(status__startswith='install') |
-            Q(status=PackageStatus.NEEDS_UPGRADE) |
-            Q(status=PackageStatus.UPGRADE_PENDING)
-        ).values_list('package__name', flat=True)
-
-    @property
-    def needs_upgrade_packages(self):
-        return [s.package for s in self.statuses.filter(
-            status=PackageStatus.NEEDS_UPGRADE
-        )]
-
-    @property
-    def pending_upgrade_packages(self):
-        return [s.package for s in self.statuses.filter(
-            status=PackageStatus.UPGRADE_PENDING
-        )]
-
-    def flag_for_upgrade(self, package_names):
-        if len(package_names):
-            qs = self.statuses.filter(
-                package__name__in=package_names,
-                status=PackageStatus.NEEDS_UPGRADE
-            )
-            num = len(qs)
-            qs.update(
-                status=PackageStatus.UPGRADE_PENDING
-            )
-            return num
-        else:
-            return 0
-
-    def __str__(self):
-        return self.name
-
-    def flag_needs_upgrade(self, package_names):
-        if len(package_names):
-            qs = self.statuses.filter(
-                package__name__in=package_names,
-                status=PackageStatus.UPGRADE_PENDING
-            )
-            num = len(qs)
-            qs.update(
-                status=PackageStatus.NEEDS_UPGRADE
-            )
-            return num
-        else:
-            return 0
-
-
-class PackageStatus(models.Model):
-    NEEDS_UPGRADE = 'needs upgrade'
-    UPGRADE_PENDING = 'upgrade pending'
-
-    # Note that dpkg can output just about anything for the status-field,
-    # but installed packages will all have a status that starts with
-    # 'install'
-
-    status = models.CharField(max_length=255)
-    package = models.ForeignKey(Package, on_delete=models.CASCADE)
-    package_list = models.ForeignKey(PackageList,
-                                     related_name='statuses',
-                                     on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
-
-
 class Site(models.Model):
     """A site which we wish to admin"""
     name = models.CharField(verbose_name=_('name'), max_length=255)
@@ -407,9 +228,6 @@ class Distribution(models.Model):
     name = models.CharField(verbose_name=_('name'), max_length=255)
     uid = models.CharField(verbose_name=_('UID'), max_length=255)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    # CustomPackages is preferrable here.
-    # Maybe we'd like one distribution to inherit from another.
-    package_list = models.ForeignKey(PackageList, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -433,9 +251,6 @@ class PCGroup(models.Model):
         Site, related_name='groups', on_delete=models.CASCADE
     )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    custom_packages = models.ForeignKey(
-        CustomPackages, on_delete=models.PROTECT
-    )
 
     def __str__(self):
         return self.name
@@ -452,9 +267,6 @@ class PCGroup(models.Model):
             self.uid = self.uid.lower()
             related_name = 'Group: ' + self.name
             self.configuration, new = Configuration.objects.get_or_create(
-                name=related_name
-            )
-            self.custom_packages, new = CustomPackages.objects.get_or_create(
                 name=related_name
             )
         # Perform save
@@ -575,12 +387,6 @@ class PC(models.Model):
     distribution = models.ForeignKey(Distribution, on_delete=models.PROTECT)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
-    package_list = models.ForeignKey(
-        PackageList, null=True, blank=True, on_delete=models.PROTECT
-    )
-    custom_packages = models.ForeignKey(
-        CustomPackages, null=True, blank=True, on_delete=models.PROTECT
-    )
     site = models.ForeignKey(
         Site, related_name='pcs', on_delete=models.CASCADE
     )
@@ -590,11 +396,6 @@ class PC(models.Model):
     )
     is_update_required = models.BooleanField(verbose_name=_('update required'),
                                              default=False)
-    # This field is used to communicate to the JobManager on each PC that it
-    # should send an update of installed packages next time it contacts us.
-    do_send_package_info = (
-        models.BooleanField(verbose_name=_('send package info'),
-                            default=True))
     creation_time = models.DateTimeField(verbose_name=_('creation time'),
                                          auto_now_add=True)
     last_seen = models.DateTimeField(verbose_name=_('last seen'),
@@ -603,59 +404,12 @@ class PC(models.Model):
                                 max_length=1024, blank=True, default='')
 
     @property
-    def current_packages(self):
-        return set(self.package_list.names_of_installed_package)
-
-    @property
-    def wanted_packages(self):
-        """Wanted packages are all packages present on the system (including
-        manually installed) PLUS all packages *explicitly* added through the
-        admin system, MINUS all packages *explicitly* removed through the admin
-        system.
-
-        That is, the point of departure is NOT the packages present in the
-        distribution, but the packages present on the PC itself.
-        """
-        wanted_packages = self.current_packages
-
-        for group in self.pc_groups.all():
-            iis = group.custom_packages.install_infos
-            for do_add, name in iis.values_list('do_add', 'package__name'):
-                if do_add:
-                    wanted_packages.add(name)
-                else:
-                    wanted_packages.discard(name)
-
-        iis = self.custom_packages.install_infos
-        for do_add, name in iis.values_list('do_add', 'package__name'):
-            if do_add:
-                wanted_packages.add(name)
-            else:
-                wanted_packages.discard(name)
-
-        return wanted_packages
-
-    @property
     def online(self):
         """A PC being online is defined as last seen less than 5 minutes ago."""
         if not self.last_seen:
             return False
         now = timezone.now()
         return self.last_seen >= now - relativedelta(minutes=5)
-
-    @property
-    def pending_package_updates(self):
-        wanted = self.wanted_packages
-        current = self.current_packages
-        return (wanted - current, current - wanted)
-
-    @property
-    def pending_packages_add(self):
-        return self.wanted_packages - self.current_packages
-
-    @property
-    def pending_packages_remove(self):
-        return self.current_packages - self.wanted_packages
 
     class Status:
         """This class represents the status of af PC. We may want to do
