@@ -271,7 +271,7 @@ def citizen_login(username, password, site):
         citizen_hash = hashlib.sha512(str(citizen_id).encode()).hexdigest()
         now = datetime.now()
         # Time in minutes.
-        time_allowed = site.user_login_duration.seconds // 60
+        time_allowed = site.user_login_duration.total_seconds() // 60
         # Get previous login, if any.
         try:
             citizen = Citizen.objects.get(citizen_id=citizen_hash)
@@ -283,7 +283,8 @@ def citizen_login(username, password, site):
             quarantined_from = citizen.last_successful_login + site.user_login_duration
             if now < quarantined_from:
                 time_allowed = (
-                    time_allowed - (now - citizen.last_successful_login).seconds // 60
+                    time_allowed
+                    - (now - citizen.last_successful_login).total_seconds() // 60
                 )
             elif (now - quarantined_from) >= quarantine_duration:
                 citizen.last_successful_login = now
@@ -291,7 +292,8 @@ def citizen_login(username, password, site):
             else:
                 # (now - quarantined_from) < quarantine_duration:
                 time_allowed = (
-                    (now - quarantined_from).seconds - quarantine_duration.seconds
+                    (now - quarantined_from).total_seconds()
+                    - quarantine_duration.total_seconds()
                 ) // 60
         else:
             # First-time login, all good.
@@ -300,4 +302,4 @@ def citizen_login(username, password, site):
             )
         citizen.save()
 
-    return time_allowed
+    return int(time_allowed)
