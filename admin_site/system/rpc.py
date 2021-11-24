@@ -290,7 +290,9 @@ def citizen_login(username, password, site):
                 citizen.save()
             else:
                 # (now - quarantined_from) < quarantine_duration:
-                time_allowed = ((now - quarantined_from) - quarantine_duration) // 60
+                time_allowed = (
+                    (now - quarantined_from).seconds - quarantine_duration.seconds
+                ) // 60
         else:
             # First-time login, all good.
             citizen = Citizen(

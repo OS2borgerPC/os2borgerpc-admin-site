@@ -20,14 +20,14 @@ def notify_users(data, security_problem, pc):
     for user in alert_users:
         email_list.append(User.objects.get(id=user.id).email)
 
-    body = ("Beskrivelse af sikkerhedsadvarsel: " +
-            security_problem.description + "\n")
-    body += "Kort resume af data fra log filen : " + data[2]
+    body = f"Beskrivelse af sikkerhedsadvarsel: {security_problem.description}\n"
+    body += f"Kort resume af data fra log filen : {data[2]}"
     try:
-        message = EmailMessage("Sikkerhedsadvarsel for PC : " + pc.name
-                               + ". Sikkerhedsregel : " +
-                               security_problem.name, body,
-                               settings.DEFAULT_FROM_EMAIL, email_list)
+        message = EmailMessage(
+            f"Sikkerhedsadvarsel for PC : {pc.name}."
+            f" Sikkerhedsregel : {security_problem.name}",
+            body, settings.DEFAULT_FROM_EMAIL, email_list
+        )
         message.send(fail_silently=False)
     except Exception:
         return False
@@ -106,3 +106,17 @@ def cicero_validate(loaner_number, pincode, agency_id):
         return patron_id
 
     print(response)
+
+
+def always_validate_citizen(loaner_number, pincode, agency_id):
+    """Perform sanity checks, but always return a suitable patron ID."""
+    logger = logging.getLogger(__name__)
+    try:
+        pincode = int(pincode)
+    except ValueError:
+        logger.error(f"Pincode must be a number - {pincode} is not  number.")
+        return 0
+    if not agency_id:
+        logger.error("Agency ID / ISIL MUST be specified.")
+        return 0
+    return loaner_number
