@@ -287,9 +287,7 @@ class SiteDetailView(SiteView):
 
 
 class SiteSettings(UpdateView, SiteView):
-    model = Site
     form_class = SiteForm
-    slug_field = 'uid'
     template_name = 'system/site_settings.html'
 
     def get_context_data(self, **kwargs):
@@ -305,7 +303,10 @@ class SiteSettings(UpdateView, SiteView):
         kwargs['updated'] = True
         response = self.get(request, *args, **kwargs)
 
-        # Handle saving of data
+        # Handle saving of site settings data
+        super(SiteSettings, self).post(request, *args, **kwargs)
+
+        # Handle saving of site configs data
         self.object.configuration.update_from_request(
             request.POST, 'site_configs'
         )
