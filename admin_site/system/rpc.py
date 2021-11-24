@@ -252,13 +252,13 @@ def citizen_login(username, password, site):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
-        -1: Unable to authenticate.
-         0: No time remaining, i.e. user is quarantined.
-        >0: The number of minutes the user is allowed.
+        r < 0: User is quarantined and may login in -r minutes
+        r = 0: Unable to authenticate.
+        r > 0: The user is allowed r minutes of login time.
     """
 
     logger = logging.getLogger(__name__)
-    time_allowed = -1
+    time_allowed = 0
     try:
         site = Site.objects.get(uid=site)
     except Site.DoesNotExist:
@@ -280,15 +280,17 @@ def citizen_login(username, password, site):
 
         if citizen:
             quarantine_duration = site.user_quarantine_duration
-            if (now - citizen.last_successful_login) > quarantine_duration:
-                citizen.last_successful_login = now
-                citizen.save()
-            elif now - citizen.last_successful_login < site.user_login_duration:
+            quarantined_from = citizen.last_successful_login + site.user_login_duration
+            if now < quarantined_from:
                 time_allowed = (
                     time_allowed - (now - citizen.last_successful_login).seconds // 60
                 )
+            elif (now - quarantined_from) >= quarantine_duration:
+                citizen.last_successful_login = now
+                citizen.save()
             else:
-                time_allowed = 0
+                # (now - quarantined_from) < quarantine_duration:
+                time_allowed = ((now - quarantined_from) - quarantine_duration) // 60
         else:
             # First-time login, all good.
             citizen = Citizen(
