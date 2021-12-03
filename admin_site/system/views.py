@@ -49,6 +49,7 @@ from system.models import (
 )
 # PC Status codes
 from system.forms import (
+    SiteForm,
     GroupForm,
     ConfigurationEntryForm,
     ScriptForm,
@@ -106,8 +107,9 @@ class SuperAdminOrThisSiteMixin(View):
             site = get_object_or_404(Site, uid=kwargs[slug_field])
         check_function = user_passes_test(
             lambda u:
-            (u.is_superuser) or
-            (site and site in u.bibos_profile.sites.all()), login_url='/'
+            (u.is_superuser) or (
+                site and site in u.bibos_profile.sites.all()
+            ), login_url='/'
         )
         wrapped_super = check_function(
             super(SuperAdminOrThisSiteMixin, self).dispatch
@@ -233,7 +235,7 @@ class SiteList(ListView, LoginRequiredMixin):
 
 
 # Base class for Site-based passive (non-form) views
-class SiteView(DetailView,  SuperAdminOrThisSiteMixin):
+class SiteView(DetailView, SuperAdminOrThisSiteMixin):
     """Base class for all views based on a single site."""
     model = Site
     slug_field = 'uid'
@@ -274,12 +276,13 @@ class SiteDetailView(SiteView):
         return context
 
 
-class SiteConfiguration(SiteView):
-    template_name = 'system/site_configuration.html'
+class SiteSettings(UpdateView, SiteView):
+    form_class = SiteForm
+    template_name = 'system/site_settings.html'
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
-        context = super(SiteConfiguration, self).get_context_data(**kwargs)
+        context = super(SiteSettings, self).get_context_data(**kwargs)
         configs = self.object.configuration.entries.all()
         context['site_configs'] = configs.order_by('key')
 
@@ -290,14 +293,17 @@ class SiteConfiguration(SiteView):
         kwargs['updated'] = True
         response = self.get(request, *args, **kwargs)
 
-        # Handle saving of data
+        # Handle saving of site settings data
+        super(SiteSettings, self).post(request, *args, **kwargs)
+
+        # Handle saving of site configs data
         self.object.configuration.update_from_request(
             request.POST, 'site_configs'
         )
 
         set_notification_cookie(
             response,
-            _('Configuration for %s updated') % kwargs['slug']
+            _('Settings for %s updated') % kwargs['slug']
         )
         return response
 
@@ -1294,7 +1300,7 @@ class ConfigurationEntryCreate(SiteMixin, CreateView,
         return super(ConfigurationEntryCreate, self).form_valid(form)
 
     def get_success_url(self):
-        return '/site/{0}/configuration/'.format(self.kwargs['site_uid'])
+        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
 
 
 class ConfigurationEntryUpdate(SiteMixin, UpdateView,
@@ -1303,7 +1309,7 @@ class ConfigurationEntryUpdate(SiteMixin, UpdateView,
     form_class = ConfigurationEntryForm
 
     def get_success_url(self):
-        return '/site/{0}/configuration/'.format(self.kwargs['site_uid'])
+        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
 
 
 class ConfigurationEntryDelete(SiteMixin, DeleteView,
@@ -1311,7 +1317,7 @@ class ConfigurationEntryDelete(SiteMixin, DeleteView,
     model = ConfigurationEntry
 
     def get_success_url(self):
-        return '/site/{0}/configuration/'.format(self.kwargs['site_uid'])
+        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
 
 
 class GroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
@@ -1350,8 +1356,12 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     model = PCGroup
 
     def get_object(self, queryset=None):
+        site = Site.objects.get(uid=self.kwargs['site_uid'])
         try:
-            return PCGroup.objects.get(uid=self.kwargs['group_uid'])
+            return PCGroup.objects.get(
+                uid=self.kwargs['group_uid'],
+                site=site
+            )
         except PCGroup.DoesNotExist:
             raise Http404(
                 f"der findes ingen gruppe med id {self.kwargs['group_uid']}"
@@ -1468,7 +1478,8 @@ class GroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        return PCGroup.objects.get(uid=self.kwargs['group_uid'])
+        site = Site.objects.get(uid=self.kwargs['site_uid'])
+        return PCGroup.objects.get(uid=self.kwargs['group_uid'], site=site)
 
     def get_success_url(self):
         return '/site/{0}/groups/'.format(self.kwargs['site_uid'])

@@ -5,7 +5,7 @@ from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
-from .models import PCGroup, ConfigurationEntry, PC
+from .models import Site, PCGroup, ConfigurationEntry, PC
 from .models import Script, Input, SecurityProblem
 from account.models import SiteMembership
 
@@ -27,6 +27,22 @@ def add_classes_to_form(someform, classes_to_add):
             field.widget.attrs['class'] += ' ' + classes_to_add
 
 
+class SiteForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SiteForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['uid'].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = Site
+        exclude = ['configuration', 'paid_for_access_until']
+        widgets = {
+            'paid_for_access_until':
+                forms.widgets.DateInput(attrs={'type': 'date'}),
+        }
+
+
 class GroupForm(forms.ModelForm):
     # Need to set up this side of the many-to-many relation between groups
     # and PCs manually.
@@ -42,6 +58,19 @@ class GroupForm(forms.ModelForm):
                               kwargs['instance'].pcs.all()]
 
         forms.ModelForm.__init__(self, *args, **kwargs)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+
+        uid = cleaned_data.get("uid")
+        uid_exists = self.Meta.model.objects.filter(uid=uid).exists()
+
+        # self.instance.pk will be set if it's an update form
+        if not self.instance.pk and uid_exists:
+            raise ValidationError(
+                _("A group with this UID already exists.")
+            )
+        return cleaned_data
 
     def save(self, commit=True):
         instance = forms.ModelForm.save(self, False)
@@ -65,7 +94,7 @@ class GroupForm(forms.ModelForm):
 
     class Meta:
         model = PCGroup
-        exclude = ['site', 'configuration', 'custom_packages']
+        exclude = ['site', 'configuration']
 
 
 class ScriptForm(forms.ModelForm):
@@ -203,9 +232,10 @@ class PCForm(forms.ModelForm):
 
     class Meta:
         model = PC
-        exclude = ('uid', 'configuration', 'package_list', 'site',
-                   'is_update_required', 'creation_time', 'last_seen',
-                   'custom_packages', 'do_send_package_info', 'distribution')
+        exclude = (
+            'uid', 'configuration', 'site', 'is_update_required', 'creation_time',
+            'last_seen',
+        )
 
 
 class SecurityProblemForm(forms.ModelForm):

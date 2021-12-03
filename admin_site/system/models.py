@@ -1,19 +1,15 @@
 import datetime
 import random
 import string
-import re
-import os.path
 from distutils.version import LooseVersion
 
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
-from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.conf import settings
 
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
@@ -36,7 +32,7 @@ NONE = ''
 
 class Configuration(models.Model):
     """This class contains/represents the configuration of a Site, a
-    Distribution, a PC Group or a PC."""
+    a PC Group or a PC."""
     # Doesn't need any actual fields, it seems. Should not exist independently
     # of the classes to which it may be aggregated.
     name = models.CharField(max_length=255, unique=True)
@@ -124,180 +120,6 @@ class ConfigurationEntry(models.Model):
     )
 
 
-class Package(models.Model):
-    """This class represents a single Debian package to be installed."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    version = models.CharField(verbose_name=_('version'), max_length=255)
-    description = models.CharField(verbose_name=_('description'),
-                                   max_length=255)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        unique_together = ('name', 'version')
-
-
-class CustomPackages(models.Model):
-    """A list of packages to be installed on a PC or to be included in a
-    distribution."""
-
-    class Meta:
-        verbose_name_plural = "Custom packages"
-
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    packages = models.ManyToManyField(Package,
-                                      through='PackageInstallInfo',
-                                      blank=True)
-
-    def update_by_package_names(self, addlist, removelist):
-        add_packages_old = set()
-        remove_packages_old = set()
-
-        for ii in self.install_infos.all():
-            if ii.do_add:
-                add_packages_old.add(ii.package.name)
-            else:
-                remove_packages_old.add(ii.package.name)
-
-        for oldlist, newlist, addflag in [
-            (add_packages_old, set(addlist), True),
-            (remove_packages_old, set(removelist), False),
-        ]:
-            # Add new add-packages
-            for name in newlist - oldlist:
-                try:
-                    package = Package.objects.filter(name=name)[0]
-                except IndexError:
-                    package = Package.objects.create(name=name)
-
-                ii = PackageInstallInfo(
-                    custom_packages=self,
-                    package=package,
-                    do_add=addflag
-                )
-                ii.save()
-            # Remove unwanted add-packages
-            qs = PackageInstallInfo.objects.filter(
-                do_add=addflag,
-                custom_packages=self,
-                package__name__in=list(oldlist - newlist)
-            )
-            qs.delete()
-
-    def update_package_status(self, name, do_add):
-        # Delete any old reference
-        self.install_infos.filter(
-            package__name=name
-        ).delete()
-
-        # And create a new
-        try:
-            package = Package.objects.filter(name=name)[0]
-        except IndexError:
-            package = Package.objects.create(name=name)
-
-        ii = PackageInstallInfo(
-            custom_packages=self,
-            package=package,
-            do_add=do_add
-        )
-
-        ii.save()
-
-    def __str__(self):
-        return self.name
-
-
-class PackageInstallInfo(models.Model):
-    do_add = models.BooleanField(default=True)
-    package = models.ForeignKey(Package, on_delete=models.CASCADE)
-    custom_packages = models.ForeignKey(CustomPackages,
-                                        related_name='install_infos',
-                                        on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
-
-
-class PackageList(models.Model):
-    """A list of packages to be installed on a PC or to be included in a
-    distribution."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    packages = models.ManyToManyField(Package,
-                                      through='PackageStatus',
-                                      blank=True)
-
-    @property
-    def names_of_installed_package(self):
-        return self.statuses.filter(
-            Q(status__startswith='install') |
-            Q(status=PackageStatus.NEEDS_UPGRADE) |
-            Q(status=PackageStatus.UPGRADE_PENDING)
-        ).values_list('package__name', flat=True)
-
-    @property
-    def needs_upgrade_packages(self):
-        return [s.package for s in self.statuses.filter(
-            status=PackageStatus.NEEDS_UPGRADE
-        )]
-
-    @property
-    def pending_upgrade_packages(self):
-        return [s.package for s in self.statuses.filter(
-            status=PackageStatus.UPGRADE_PENDING
-        )]
-
-    def flag_for_upgrade(self, package_names):
-        if len(package_names):
-            qs = self.statuses.filter(
-                package__name__in=package_names,
-                status=PackageStatus.NEEDS_UPGRADE
-            )
-            num = len(qs)
-            qs.update(
-                status=PackageStatus.UPGRADE_PENDING
-            )
-            return num
-        else:
-            return 0
-
-    def __str__(self):
-        return self.name
-
-    def flag_needs_upgrade(self, package_names):
-        if len(package_names):
-            qs = self.statuses.filter(
-                package__name__in=package_names,
-                status=PackageStatus.UPGRADE_PENDING
-            )
-            num = len(qs)
-            qs.update(
-                status=PackageStatus.NEEDS_UPGRADE
-            )
-            return num
-        else:
-            return 0
-
-
-class PackageStatus(models.Model):
-    NEEDS_UPGRADE = 'needs upgrade'
-    UPGRADE_PENDING = 'upgrade pending'
-
-    # Note that dpkg can output just about anything for the status-field,
-    # but installed packages will all have a status that starts with
-    # 'install'
-
-    status = models.CharField(max_length=255)
-    package = models.ForeignKey(Package, on_delete=models.CASCADE)
-    package_list = models.ForeignKey(PackageList,
-                                     related_name='statuses',
-                                     on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
-
-
 class Site(models.Model):
     """A site which we wish to admin"""
     name = models.CharField(verbose_name=_('name'), max_length=255)
@@ -307,23 +129,32 @@ class Site(models.Model):
         verbose_name=_("Paid for access until this date"),
         null=True,
         blank=True)
+    # Official library number
+    # https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre
+
+    # Necessary for customers who wish to integrate with standard library login.
+    isil = models.CharField(
+        verbose_name="ISIL", max_length=10, blank=True,
+        help_text=_("Necessary for customers who wish to"
+                    " integrate with standard library login")
+    )
+    user_login_duration = models.DurationField(
+        verbose_name=_("Login duration"),
+        help_text=_("Login duration when integrating with library login"),
+        null=True,
+        blank=True,
+        default=datetime.timedelta(hours=1),
+    )
+    user_quarantine_duration = models.DurationField(
+        verbose_name=_("Quarantine duration"),
+        help_text=_("Quarantine period when integrating with library login"),
+        null=True,
+        blank=True,
+        default=datetime.timedelta(hours=4),
+    )
 
     class Meta:
         ordering = ["name"]
-
-    @staticmethod
-    def get_system_site():
-        try:
-            site = Site.objects.get(uid='system').first()
-        except Site.DoesNotExist:
-            site = Site.objects.create(
-                name='system',
-                uid='system',
-                configuration=Configuration.objects.create(
-                    name='system_site_configuration'
-                )
-            )
-        return site
 
     @property
     def users(self):
@@ -375,19 +206,6 @@ class Site(models.Model):
         return '/site/{0}'.format(self.url)
 
 
-class Distribution(models.Model):
-    """This represents a GNU/Linux distribution managed by us."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('UID'), max_length=255)
-    configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    # CustomPackages is preferrable here.
-    # Maybe we'd like one distribution to inherit from another.
-    package_list = models.ForeignKey(PackageList, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
-
-
 class Error(Exception):
     pass
 
@@ -399,16 +217,13 @@ class MandatoryParameterMissingError(Error):
 class PCGroup(models.Model):
     """Groups of PCs. Each PC may be in zero or many groups."""
     name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('id'), max_length=255, unique=True)
+    uid = models.CharField(verbose_name=_('id'), max_length=255)
     description = models.TextField(verbose_name=_('description'),
                                    max_length=1024, null=True, blank=True)
     site = models.ForeignKey(
         Site, related_name='groups', on_delete=models.CASCADE
     )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    custom_packages = models.ForeignKey(
-        CustomPackages, on_delete=models.PROTECT
-    )
 
     def __str__(self):
         return self.name
@@ -425,9 +240,6 @@ class PCGroup(models.Model):
             self.uid = self.uid.lower()
             related_name = 'Group: ' + self.name
             self.configuration, new = Configuration.objects.get_or_create(
-                name=related_name
-            )
-            self.custom_packages, new = CustomPackages.objects.get_or_create(
                 name=related_name
             )
         # Perform save
@@ -463,7 +275,7 @@ class PCGroup(models.Model):
                 # from the database as well
                 try:
                     existing = AssociatedScript.objects.get(
-                            group=self, position=position)
+                        group=self, position=position)
                     # (... although we shouldn't try to remove it twice!)
                     existing_set.remove(existing.pk)
                     existing.delete()
@@ -471,20 +283,20 @@ class PCGroup(models.Model):
                     pass
 
                 asc = AssociatedScript(
-                        group=self, script=script, position=position)
+                    group=self, script=script, position=position)
                 asc.save()
                 pk = asc.pk
                 position += 1
             else:
                 pk = int(pk)
                 asc = AssociatedScript.objects.get(
-                        pk=pk, group=self, script=script)
+                    pk=pk, group=self, script=script)
                 position = asc.position + 1
 
             for inp in script.ordered_inputs:
                 try:
                     par = AssociatedScriptParameter.objects.get(
-                            script=asc, input=inp)
+                        script=asc, input=inp)
                 except AssociatedScriptParameter.DoesNotExist:
                     par = AssociatedScriptParameter(script=asc, input=inp)
                 param_name = "{0}_param_{1}".format(script_param, inp.position)
@@ -529,8 +341,13 @@ class PCGroup(models.Model):
         return '{0}/groups/{1}'.format(site_url, self.url)
 
     class Meta:
-        unique_together = ('uid', 'site')
         ordering = ['name']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['uid', 'site'],
+                name="unique_uid_per_group"
+            ),
+        ]
 
 
 class PC(models.Model):
@@ -540,15 +357,8 @@ class PC(models.Model):
     uid = models.CharField(verbose_name=_('UID'), max_length=255)
     description = models.CharField(verbose_name=_('description'),
                                    max_length=1024, blank=True)
-    distribution = models.ForeignKey(Distribution, on_delete=models.PROTECT)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
-    package_list = models.ForeignKey(
-        PackageList, null=True, blank=True, on_delete=models.PROTECT
-    )
-    custom_packages = models.ForeignKey(
-        CustomPackages, null=True, blank=True, on_delete=models.PROTECT
-    )
     site = models.ForeignKey(
         Site, related_name='pcs', on_delete=models.CASCADE
     )
@@ -558,11 +368,6 @@ class PC(models.Model):
     )
     is_update_required = models.BooleanField(verbose_name=_('update required'),
                                              default=False)
-    # This field is used to communicate to the JobManager on each PC that it
-    # should send an update of installed packages next time it contacts us.
-    do_send_package_info = (
-        models.BooleanField(verbose_name=_('send package info'),
-                            default=True))
     creation_time = models.DateTimeField(verbose_name=_('creation time'),
                                          auto_now_add=True)
     last_seen = models.DateTimeField(verbose_name=_('last seen'),
@@ -571,59 +376,12 @@ class PC(models.Model):
                                 max_length=1024, blank=True, default='')
 
     @property
-    def current_packages(self):
-        return set(self.package_list.names_of_installed_package)
-
-    @property
-    def wanted_packages(self):
-        """Wanted packages are all packages present on the system (including
-        manually installed) PLUS all packages *explicitly* added through the
-        admin system, MINUS all packages *explicitly* removed through the admin
-        system.
-
-        That is, the point of departure is NOT the packages present in the
-        distribution, but the packages present on the PC itself.
-        """
-        wanted_packages = self.current_packages
-
-        for group in self.pc_groups.all():
-            iis = group.custom_packages.install_infos
-            for do_add, name in iis.values_list('do_add', 'package__name'):
-                if do_add:
-                    wanted_packages.add(name)
-                else:
-                    wanted_packages.discard(name)
-
-        iis = self.custom_packages.install_infos
-        for do_add, name in iis.values_list('do_add', 'package__name'):
-            if do_add:
-                wanted_packages.add(name)
-            else:
-                wanted_packages.discard(name)
-
-        return wanted_packages
-
-    @property
     def online(self):
         """A PC being online is defined as last seen less than 5 minutes ago."""
         if not self.last_seen:
             return False
         now = timezone.now()
         return self.last_seen >= now - relativedelta(minutes=5)
-
-    @property
-    def pending_package_updates(self):
-        wanted = self.wanted_packages
-        current = self.current_packages
-        return (wanted - current, current - wanted)
-
-    @property
-    def pending_packages_add(self):
-        return self.wanted_packages - self.current_packages
-
-    @property
-    def pending_packages_remove(self):
-        return self.current_packages - self.wanted_packages
 
     class Status:
         """This class represents the status of af PC. We may want to do
@@ -760,61 +518,6 @@ class Script(AuditModelMixin):
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def get_system_script(name):
-        try:
-            script = Script.objects.get(description=name)
-        except Script.DoesNotExist:
-            system_site = Site.get_system_site()
-
-            full_script_path = os.path.join(
-                settings.MEDIA_ROOT,
-                'system_scripts/',
-                name
-            )
-
-            if(os.path.isfile(full_script_path)):
-                args = []
-                title = name
-                title_matcher = re.compile(r'BIBOS_SCRIPT_TITLE:\s*([^\n]+)')
-                arg_matcher = re.compile(
-                    'BIBOS_SCRIPT_ARG:(' +
-                    '|'.join([v for v, n in Input.VALUE_CHOICES]) +
-                    ')',
-                    flags=re.IGNORECASE
-                )
-
-                fh = open(full_script_path, 'r')
-                for line in fh.readlines():
-                    m = arg_matcher.search(line)
-                    if m is not None:
-                        args.append(m.group(1).upper())
-                    else:
-                        m = title_matcher.search(line)
-                        if m is not None:
-                            title = m.group(1)
-                fh.close()
-
-                script = Script.objects.create(
-                    name=title,
-                    description=name,
-                    executable_code='system_scripts/' + name,
-                    site=system_site
-                )
-                script.save()
-
-                for position, vtype in enumerate(args):
-                    Input.objects.create(
-                        name=script.name + " arg " + str(position + 1),
-                        position=position,
-                        value_type=vtype,
-                        mandatory=True,
-                        script=script
-                    )
-            else:
-                script = None
-        return script
-
     def run_on(self, site, pc_list, *args, user):
         now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         batch = Batch(site=site, script=self,
@@ -930,7 +633,12 @@ Runs this script on several PCs, returning a batch representing this task."""
         return "{0}, {1}: {2}".format(self.group, self.position, self.script)
 
     class Meta:
-        unique_together = ('position', 'group')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['position', 'group'],
+                name="unique_group_position"
+            ),
+        ]
 
 
 class Job(models.Model):
@@ -1096,7 +804,12 @@ class Input(models.Model):
         return self.script.name + "/" + self.name
 
     class Meta:
-        unique_together = ('position', 'script')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['position', 'script'],
+                name="unique_script_position"
+            ),
+        ]
 
 
 def upload_file_name(instance, filename):
@@ -1214,7 +927,13 @@ class SecurityProblem(models.Model):
 
     class Meta:
         ordering = ['name']
-        unique_together = ('uid', 'site')
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=['uid', 'site'],
+                name="unique_uid_per_site"
+            ),
+        ]
 
 
 class SecurityEvent(models.Model):
@@ -1259,7 +978,8 @@ class SecurityEvent(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default=NEW)
     assigned_user = models.ForeignKey(
-        User, null=True, blank=True, on_delete=models.SET_NULL
+        User, verbose_name=_('assigned user'),
+        null=True, blank=True, on_delete=models.SET_NULL
     )
     note = models.TextField(null=True, blank=True)
 
@@ -1294,3 +1014,24 @@ class ImageVersion(models.Model):
 
     class Meta:
         ordering = ['platform', '-image_version']
+
+
+# Last_successful_login is only updated whenever the citizen user:
+# 1. Successfully authenticates with their backend (exists in their db, not locked out)
+# 2. Successfully logs into a borgerPC because they either still have time left or it's
+# after the quarantine period
+class Citizen(models.Model):
+    citizen_id = models.CharField(unique=True, max_length=128)
+    last_successful_login = models.DateTimeField()
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.site} - {self.citizen_id}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['citizen_id', 'site'],
+                name="unique_citizen_per_site"
+            ),
+        ]

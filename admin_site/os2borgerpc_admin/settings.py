@@ -250,7 +250,8 @@ XMLRPC_METHODS = (
     ('system.rpc.get_instructions', 'get_instructions'),
     ('system.rpc.get_proxy_setup', 'get_proxy_setup'),
     ('system.rpc.push_config_keys', 'push_config_keys'),
-    ('system.rpc.push_security_events', 'push_security_events')
+    ('system.rpc.push_security_events', 'push_security_events'),
+    ('system.rpc.citizen_login', 'citizen_login'),
 )
 
 # A sample logging configuration. The only tangible logging
@@ -304,9 +305,6 @@ DEFAULT_DIRECT_PROXY_HOSTS = settings.get(
     'DEFAULT_DIRECT_PROXY_HOSTS', []
 )
 
-# TODO: This is deprecated and should be removed.
-CLOSED_DISTRIBUTIONS = settings.get('CLOSED_DISTRIBUTIONS', [])
-
 INITIALIZE_DATABASE = settings.getboolean(
     "INITIALIZE_DATABASE", False
 )
@@ -314,3 +312,15 @@ INITIALIZE_DATABASE = settings.getboolean(
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# Handler for citizen login.
+CITIZEN_LOGIN_VALIDATOR = settings.get(
+    "CITIZEN_LOGIN_VALIDATOR", "system.utils.cicero_validate"
+)
+
+# Cicero specific stuff.
+CICERO_URL = settings.get("CICERO_URL")
+CICERO_USER = settings.get("CICERO_USER")
+CICERO_PASSWORD = settings.get("CICERO_PASSWORD")

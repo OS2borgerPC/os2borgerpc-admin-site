@@ -1,3 +1,18 @@
+Version 5.2.0, November 25, 2021
+--------------------------------
+
+New in this version:
+
+- Added RPC endpoint for citizen/audience login for integration with a
+  third-party authentication system like Cicero (e.g.).
+- Added Citizen model to represent logged-in citizens.
+- Site edit restored in frontend - this allows library users to change
+  user login & quarantine durations.
+- Site ID no longer displayed in configuration.
+- Performance: Packages, package lists and distributions are removed.
+- Upgraded to Django 3.2.9 - newer versions of a lot of other packages
+  as well.
+
 Version 5.1.1, October 20, 2021
 -------------------------------
 
