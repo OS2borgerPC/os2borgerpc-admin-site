@@ -308,6 +308,10 @@ class SiteSettings(UpdateView, SiteView):
         return response
 
 
+class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
+    template_name = 'system/site_two_factor.html'
+
+
 # Now follows all site-based views, i.e. subclasses
 # of SiteView.
 class JobsView(SiteView):
