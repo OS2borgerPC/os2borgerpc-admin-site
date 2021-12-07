@@ -987,10 +987,10 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
         selected_group_ids = form['pc_groups'].value()
         context['available_groups'] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
         context['selected_groups'] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
 
         orderby = params.get('orderby', '-pk')
         if orderby not in JobSearch.VALID_ORDER_BY:
@@ -1380,10 +1380,10 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         selected_pc_ids = form['pcs'].value()
         context['available_pcs'] = pc_queryset.exclude(
             pk__in=selected_pc_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
         context['selected_pcs'] = pc_queryset.filter(
             pk__in=selected_pc_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
 
         context['selected_group'] = group
 
@@ -1537,10 +1537,10 @@ class SecurityProblemsView(SelectionMixin, SiteView):
             # Pass users and groups to context
             # that are available for a 'new' security problem.
             context['alert_users'] = user_set.values_list(
-                "pk", "username"
+                "pk", "username", "username"
             )
             context['alert_groups'] = group_set.values_list(
-                "pk", "name"
+                "pk", "name", "uid"
             )
 
             return super(
@@ -1582,19 +1582,19 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         selected_group_ids = form['alert_groups'].value()
         context['available_groups'] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
         context['selected_groups'] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
 
         user_set = User.objects.filter(bibos_profile__sites=site)
         selected_user_ids = form['alert_users'].value()
         context['available_users'] = user_set.exclude(
             pk__in=selected_user_ids
-        ).values_list("pk", "username")
+        ).values_list("pk", "username", "username")
         context['selected_users'] = user_set.filter(
             pk__in=selected_user_ids
-        ).values_list("pk", "username")
+        ).values_list("pk", "username", "username")
         # Limit list of scripts to only include security scripts.
         script_set = Script.objects.filter(
             Q(site__isnull=True) | Q(site=site),
@@ -1611,10 +1611,10 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         # Pass users and groups to context
         # that are available for a 'new' security problem.
         context['alert_users'] = user_set.values_list(
-            "pk", "username"
+            "pk", "username", "username"
         )
         context['alert_groups'] = group_set.values_list(
-            "pk", "name"
+            "pk", "name", "uid"
         )
 
         return context
