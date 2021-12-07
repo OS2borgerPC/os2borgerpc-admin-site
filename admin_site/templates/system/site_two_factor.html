@@ -1,0 +1,98 @@
+{% extends "site_with_navigation.html" %}
+
+{% block specific_title %}
+Totrinsbekræftelse
+{% endblock %}
+
+{% block head_javascripts %}
+  <script type="text/javascript" src="/static/js/qrcode.min.js"></script>
+{% endblock %}
+
+{% block stylesheets %}
+<style type="text/css" media="screen">
+  .tab-content {
+    line-height: 2.3em;
+  }
+</style>
+{% endblock %}
+
+{% block specific_content %}
+  <div class="container-fluid main">
+    <h2 class="divideheader"> Aktivér: Totrinsbekræftelse for superuser </h2>
+    <div class="tab-content">
+
+    <ol>
+      <li class="py-3">
+        <strong>Opret sikkerhedsnøgle</strong><br/>
+        <label for="security_code">Sikkerhedsnøgle</label><br/>
+        <input type="text" id="security_code" class="form-control d-inline-block " />
+        <button class="btn btn-secondary" name="generate-security-key" id="generate-security-key">Generér sikkerhedsnøgle</button>
+        <p>Du kan alternativt generere én i din private password manager og indtaste den her.</p>
+        <p>Koden skal være i base32 - 26 tegn bestående af A-Z og 2-7 <strong>(ikke 0-9!)</strong></p>
+      </li>
+      <li class="py-3">
+        <p><strong>Generér en QR-kode ud fra sikkerhedsnøglen oven over</strong></p>
+        <button class="btn btn-primary mt-0 mb-4" id="generate-qr">Generér QR-kode</button>
+        <div id="qr"></div>
+      </li>
+      <li class="py-3">
+        <p><strong>Scan QR-koden oven over med din authenticator app.</strong></p>
+        <p>Som authenticator app kan eksempelvis bruges:</p>
+        <ul>
+          <li>FreeOTP Authenticator</li>
+          <li>Authy</li>
+          <li>Duo Mobile</li>
+          <li>Microsoft Authenticator</li>
+          <li>Google Authenticator</li>
+          <li>LastPass Authenticator</li>
+        </ul>
+      </li>
+      <li class="py-3">
+        <p><strong>Kopier sikkerhedsnøglen oven over, og kør totrinsscriptet med den som inputparameter</strong></p>
+        <p>
+          Åben scriptet i en ny browserfane
+          <a href="{% url 'script' site.uid 885 %}" target="_blank"><span class="material-icons ms-2">launch</span></a>
+        </p>
+        {# Hardcoded the UID of the two factor script below #}
+      </li>
+    </ol>
+    </div>
+  </div>
+
+  <script charset="utf-8">
+    const user = 'superuser'
+    // Generate a pseudo random security code
+    function generate_security_code() {
+      let security_code = ''
+      // The one the interactive program generates is A-Z2-7 and 26 characters, so we use that format
+      // The format of the code is apparently base32, and based on generating many of them they don't contain
+      // 0-1 or 8-9
+      // If a code DOES contain those numbers my auth app fails reading the QR
+      const character_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
+      const security_code_length = 26
+      const character_set_length = character_set.length
+      for ( var i = 0; i < security_code_length; i++ ) {
+        security_code += character_set.charAt(Math.floor(Math.random() * character_set_length))
+      }
+      document.getElementById('security_code').value = security_code
+    }
+
+    // Update page to show the QR code
+    function generate_qr() {
+      let security_code = document.getElementById('security_code').value
+
+      // Normally 'any' below is the hostname, but we're setting it up on multiple machines with different
+      // hostnames, but fortunately it's not important
+      const el = document.getElementById("qr")
+      el.innerHTML = "" // First empty the element as otherwise qrcode adds a new one next to the others each time
+      // url = "otpauth://totp/" + user + "@any%3Fsecret%3D" + security_code + "%26issuer%3Dany"
+      url = "otpauth://totp/" + user + "@any?secret=" + security_code + "&issuer=any"
+      new QRCode(el, url)
+    }
+
+    const btn_gen_sec = document.getElementById('generate-security-key')
+    const btn_gen_qr = document.getElementById('generate-qr')
+    btn_gen_sec.addEventListener('click', generate_security_code)
+    btn_gen_qr.addEventListener('click', generate_qr)
+  </script>
+{% endblock %}

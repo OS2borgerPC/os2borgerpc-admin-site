@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-from .views import SiteList
+from .views import SiteList, TwoFactor
 from .views import AdminIndex, PCsView, GroupsView, UsersView, JobsView
 from .views import GroupCreate, GroupUpdate, GroupDelete, JobSearch, UserDelete
 from .views import SiteDetailView, UserCreate, UserUpdate, SiteSettings
@@ -60,6 +60,9 @@ urlpatterns = [
     url(r'^site/(?P<slug>[^/]+)/security_scripts/',
         ScriptList.as_view(is_security=True),
         name='security_scripts'),
+
+    # Two-factor
+    url(r'^site/(?P<slug>[^/]+)/two-factor/$', TwoFactor.as_view(), name='two_factor'),
 
     # Sites
     url(r'^$', AdminIndex.as_view(), name='index'),

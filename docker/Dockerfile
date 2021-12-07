@@ -73,6 +73,7 @@ WORKDIR /code/admin_site
 COPY --from=frontend /code/nodejs/dist/css/bootstrap.* /frontend/css/
 COPY --from=frontend /code/nodejs/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* /frontend/js/
 COPY --from=frontend /code/nodejs/node_modules/jquery/dist/jquery.min.js  /frontend/js/
+COPY --from=frontend /code/nodejs/node_modules/qrcodejs/qrcode.min.js  /frontend/js/
 
 # Unfortunately, `collectstatic` requires all settings to be set. We include a
 # set of insecure setting here for only this purpose. We make sure to delete it
