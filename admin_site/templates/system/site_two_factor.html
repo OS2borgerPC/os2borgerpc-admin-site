@@ -23,16 +23,13 @@ Totrinsbekræftelse
 
     <ol>
       <li class="py-3">
-        <strong>Opret sikkerhedsnøgle</strong><br/>
-        <label for="security_code">Sikkerhedsnøgle</label><br/>
-        <input type="text" id="security_code" class="form-control d-inline-block " />
-        <button class="btn btn-secondary" name="generate-security-key" id="generate-security-key">Generér sikkerhedsnøgle</button>
-        <p>Du kan alternativt generere én i din private password manager og indtaste den her.</p>
-        <p>Koden skal være i base32 - 26 tegn bestående af A-Z og 2-7 <strong>(ikke 0-9!)</strong></p>
-      </li>
-      <li class="py-3">
-        <p><strong>Generér en QR-kode ud fra sikkerhedsnøglen oven over</strong></p>
-        <button class="btn btn-primary mt-0 mb-4" id="generate-qr">Generér QR-kode</button>
+        <strong>Opret sikkerhedsnøgle og QR</strong><br/>
+        <button class="btn btn-secondary my-3" name="generate-security-key-qr" id="generate-security-key-qr">
+          Generér sikkerhedsnøgle og QR
+        </button>
+        <p class='mb-0'>Sikkerhedsnøgle:</p>
+        <!-- Koden skal være i base32 - 26 tegn bestående af A-Z og 2-7 (ikke 0-9!) -->
+        <p id="security_code"></p>
         <div id="qr"></div>
       </li>
       <li class="py-3">
@@ -53,7 +50,7 @@ Totrinsbekræftelse
           Åben scriptet i en ny browserfane
           <a href="{% url 'script' site.uid 885 %}" target="_blank"><span class="material-icons ms-2">launch</span></a>
         </p>
-        {# Hardcoded the UID of the two factor script below #}
+        {# Hardcoded the UID of the two factor script below for lack of a better solution #}
       </li>
     </ol>
     </div>
@@ -74,12 +71,12 @@ Totrinsbekræftelse
       for ( var i = 0; i < security_code_length; i++ ) {
         security_code += character_set.charAt(Math.floor(Math.random() * character_set_length))
       }
-      document.getElementById('security_code').value = security_code
+      document.getElementById('security_code').innerText = security_code
     }
 
     // Update page to show the QR code
     function generate_qr() {
-      let security_code = document.getElementById('security_code').value
+      let security_code = document.getElementById('security_code').innerText
 
       // Normally 'any' below is the hostname, but we're setting it up on multiple machines with different
       // hostnames, but fortunately it's not important
@@ -90,9 +87,12 @@ Totrinsbekræftelse
       new QRCode(el, url)
     }
 
-    const btn_gen_sec = document.getElementById('generate-security-key')
-    const btn_gen_qr = document.getElementById('generate-qr')
-    btn_gen_sec.addEventListener('click', generate_security_code)
-    btn_gen_qr.addEventListener('click', generate_qr)
+    function generate_security_code_and_qr() {
+      generate_security_code()
+      generate_qr()
+    }
+
+    const btn_gen_sec = document.getElementById('generate-security-key-qr')
+    btn_gen_sec.addEventListener('click', generate_security_code_and_qr)
   </script>
 {% endblock %}
