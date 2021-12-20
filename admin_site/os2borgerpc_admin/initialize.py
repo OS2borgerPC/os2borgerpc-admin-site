@@ -43,9 +43,7 @@ def initialize_sites():
     and "manage.py dumpdata system.Configuration".
     """
     if os.path.exists(os.path.join(fixtures_dir, "sites.json")):
-        call_command(
-            "loaddata", "site_configurations.json", app_label="system"
-        )
+        call_command("loaddata", "site_configurations.json", app_label="system")
         call_command("loaddata", "sites.json", app_label="system")
 
 

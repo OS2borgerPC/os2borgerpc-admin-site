@@ -1,11 +1,6 @@
 # Copyright (C) 2021 Magenta ApS, http://magenta.dk.
 # Contact: info@magenta.dk.
 
-###############################################################################
-## Changes to this file requires approval from Labs. Please add a person from #
-## Labs as required approval to your MR if you have any changes.              #
-###############################################################################
-
 # For `docker push` to work, the following envionment variables have to be set
 # in the Gitlab UI.
 # RELEASE_REGISTRY_USER
@@ -43,6 +38,7 @@ Lint Python:
         - pip3 install -r admin_site/requirements.txt
     script:
         - cd admin_site
+        - black --check --diff --exclude=migrations .
         - flake8 . --exclude=migrations
 
 Lint Dockerfiles:
