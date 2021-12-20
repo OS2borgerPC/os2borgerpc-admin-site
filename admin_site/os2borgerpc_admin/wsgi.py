@@ -22,12 +22,10 @@ import sys
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "os2borgerpc_admin.settings")
 
-install_dir = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..')
-)
+install_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-lib_dir = ''
-var_dir = install_dir + '/var'
+lib_dir = ""
+var_dir = install_dir + "/var"
 
 sys.path[0:0] = [install_dir, lib_dir, var_dir]
 
@@ -35,6 +33,7 @@ sys.path[0:0] = [install_dir, lib_dir, var_dir]
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from django.core.wsgi import get_wsgi_application  # noqa
+
 application = get_wsgi_application()
 
 # Apply WSGI middleware here.

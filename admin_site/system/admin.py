@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.db.models import Count
 from django.utils import timezone
@@ -51,7 +50,7 @@ class PCInlineForConfiguration(admin.TabularInline):
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
-    fields = ['name']
+    fields = ["name"]
     search_fields = ("name",)
     inlines = [
         ConfigurationEntryInline,
@@ -67,12 +66,12 @@ class PCInline(admin.TabularInline):
 
 
 class PCGroupAdmin(admin.ModelAdmin):
-    list_display = ['site', 'name']
+    list_display = ["site", "name"]
     inlines = [PCInline]
 
 
 class JobInline(admin.TabularInline):
-    fields = ['pc']
+    fields = ["pc"]
     model = Job
     extra = 1
 
@@ -83,8 +82,8 @@ class BatchParameterInline(admin.TabularInline):
 
 
 class BatchAdmin(admin.ModelAdmin):
-    list_display = ['site', 'name', 'script']
-    fields = ['site', 'name', 'script']
+    list_display = ["site", "name", "script"]
+    fields = ["site", "name", "script"]
     inlines = [JobInline, BatchParameterInline]
 
 
@@ -115,36 +114,32 @@ class ScriptAdmin(admin.ModelAdmin):
 
     def is_global(self, obj):
         return obj.is_global
+
     is_global.boolean = True
     is_global.short_description = _("Global")
     is_global.admin_order_field = "site"
 
     def jobs_per_site(self, obj):
-        sites = Site.objects.filter(
-            batches__script=obj
-        ).annotate(num_jobs=Count("batches__jobs"))
+        sites = Site.objects.filter(batches__script=obj).annotate(
+            num_jobs=Count("batches__jobs")
+        )
 
         return format_html_join(
-            "\n",
-            "<p>{} - {}</p>",
-            ([(site.name, site.num_jobs) for site in sites])
+            "\n", "<p>{} - {}</p>", ([(site.name, site.num_jobs) for site in sites])
         )
 
     jobs_per_site.short_description = _("Jobs per site")
 
     def jobs_per_site_for_the_last_year(self, obj):
         now = timezone.now()
-        a_year_ago = now.replace(year=now.year-1)
+        a_year_ago = now.replace(year=now.year - 1)
 
         sites = Site.objects.filter(
-            batches__script=obj,
-            batches__jobs__started__gte=a_year_ago
+            batches__script=obj, batches__jobs__started__gte=a_year_ago
         ).annotate(num_jobs=Count("batches__jobs"))
 
         return format_html_join(
-            "\n",
-            "<p>{} - {}</p>",
-            ([(site.name, site.num_jobs) for site in sites])
+            "\n", "<p>{} - {}</p>", ([(site.name, site.num_jobs) for site in sites])
         )
 
     jobs_per_site_for_the_last_year.short_description = _(
@@ -155,15 +150,14 @@ class ScriptAdmin(admin.ModelAdmin):
         sites = Site.objects.all()
         pairs = []
         for site in sites:
-            count = AssociatedScript.objects.filter(script=obj.id,
-                                                    group__site=site.id).count()
+            count = AssociatedScript.objects.filter(
+                script=obj.id, group__site=site.id
+            ).count()
             if count > 0:
                 pairs.append(tuple((site, count)))
 
         return format_html_join(
-            "\n",
-            "<p>{} - {}</p>",
-            ([(pair[0], pair[1]) for pair in pairs])
+            "\n", "<p>{} - {}</p>", ([(pair[0], pair[1]) for pair in pairs])
         )
 
 
@@ -187,7 +181,8 @@ class SiteAdmin(admin.ModelAdmin):
 
     def number_of_computers(self, obj):
         return obj.pcs.count()
-    number_of_computers.short_description = _('Number of computers')
+
+    number_of_computers.short_description = _("Number of computers")
 
 
 class PCAdmin(admin.ModelAdmin):
@@ -196,20 +191,20 @@ class PCAdmin(admin.ModelAdmin):
 
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
-        return mark_safe(
-            f'<a href="{link}">{escape(obj.site.__str__())}</a>'
-        )
+        return mark_safe(f'<a href="{link}">{escape(obj.site.__str__())}</a>')
 
-    site_link.short_description = _('Site')
-    site_link.admin_order_field = 'site'
+    site_link.short_description = _("Site")
+    site_link.admin_order_field = "site"
 
     def get_search_results(self, request, queryset, search_term):
         queryset, may_have_duplicates = super().get_search_results(
-            request, queryset, search_term,
+            request,
+            queryset,
+            search_term,
         )
         # PC UID is generated from a hashed MAC address
         # so by hashing the input we allow searching by MAC address.
-        maybe_uid_hash = md5(search_term.encode('utf-8')).hexdigest()
+        maybe_uid_hash = md5(search_term.encode("utf-8")).hexdigest()
         queryset |= self.model.objects.filter(uid=maybe_uid_hash)
         return queryset, may_have_duplicates
 

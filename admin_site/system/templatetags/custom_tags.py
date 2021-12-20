@@ -5,10 +5,8 @@ register = template.Library()
 
 @register.filter
 def add_class(field, class_name):
-    """ Add CSS classes to tags, e.g. django generated forms."""
-    return field.as_widget(
-        attrs={"class": " ".join((field.css_classes(), class_name))}
-    )
+    """Add CSS classes to tags, e.g. django generated forms."""
+    return field.as_widget(attrs={"class": " ".join((field.css_classes(), class_name))})
 
 
 @register.simple_tag
