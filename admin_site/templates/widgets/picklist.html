@@ -92,7 +92,7 @@
                     list_item.addEventListener('click', function() {
                         updateListHandler(item.id, true)
                     })
-                    list_item.innerText = "<a class=\"nav-link\" href=\"/site/{{site_url}}/{{ target_section }}/" + item.uid  + "\">" + item.name + "</a>"
+                    list_item.innerText = item.name
                 }
                 return list_item
             }
