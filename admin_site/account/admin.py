@@ -10,7 +10,10 @@ admin.site.unregister(User)
 
 class UserProfileInline(admin.TabularInline):
     model = UserProfile
-    readonly_fields = ("id", "sites",)
+    readonly_fields = (
+        "id",
+        "sites",
+    )
     show_change_link = True
     extra = 0
 

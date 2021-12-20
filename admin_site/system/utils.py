@@ -26,7 +26,9 @@ def notify_users(data, security_problem, pc):
         message = EmailMessage(
             f"Sikkerhedsadvarsel for PC : {pc.name}."
             f" Sikkerhedsregel : {security_problem.name}",
-            body, settings.DEFAULT_FROM_EMAIL, email_list
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            email_list,
         )
         message.send(fail_silently=False)
     except Exception:
@@ -42,7 +44,7 @@ def get_citizen_login_validator():
     identity. It will return a unique ID of the authenticated user if
     successful, and something that evaluates to false if unsuccesful.
     """
-    path, function = settings.CITIZEN_LOGIN_VALIDATOR.rsplit('.', 1)
+    path, function = settings.CITIZEN_LOGIN_VALIDATOR.rsplit(".", 1)
 
     module = import_module(path)
     validator = getattr(module, function)
