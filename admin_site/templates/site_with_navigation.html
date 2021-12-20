@@ -53,6 +53,12 @@ detailpage
       <span class="material-icons">code</span> 
       Sikkerhedsscripts
     </a>
+
+    {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}
+    <a class="nav-link link-light {{ current_url_two_factor  }}" href="{% url 'two_factor' slug=site.url %}">
+      <span class="material-icons">pin</span> 
+      Totrinsbekræftelse
+    </a>
     
     <hr>
     <h2 class="text-light">Organisering</h3>
