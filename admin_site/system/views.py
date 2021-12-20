@@ -983,11 +983,9 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
     def form_valid(self, form):
         pc = self.object
         groups_pre = set(pc.pc_groups.all())
-        
+
         with transaction.atomic():
-            pc.configuration.update_from_request(
-                self.request.POST, 'pc_config'
-            )
+            pc.configuration.update_from_request(self.request.POST, "pc_config")
             response = super(PCUpdate, self).form_valid(form)
 
             # If this PC has joined any groups that have policies attached
