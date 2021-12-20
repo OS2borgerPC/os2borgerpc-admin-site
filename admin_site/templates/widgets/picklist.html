@@ -32,18 +32,20 @@
             var list_el = document.getElementById(element_id)
             var options = []
             {% if selected_list %}
-                {% for pk, identifier in selected_list %}
+                {% for pk, identifier, uid in selected_list %}
                     options.push({
                         id: '{{ pk }}',
                         name: '{{ identifier }}',
+                        uid: '{{ uid }}',
                         selected: true
                     })
                 {% endfor %}
             {% endif %}
-            {% for pk, identifier in available_list %}
+            {% for pk, identifier, uid in available_list %}
                 options.push({
                     id: '{{ pk }}',
                     name: '{{ identifier }}',
+                    uid: '{{ uid }}',
                     selected: false
                 })
             {% endfor %}
@@ -63,7 +65,7 @@
                 return input
             }
 
-            function renderSelectedListItem(name, id) {
+            function renderSelectedListItem(name, id, uid) {
                 var item = document.createElement('span')
                 var button = document.createElement('button')
                 button.type = 'button'
@@ -72,7 +74,7 @@
                 button.addEventListener('click', function() {
                     updateListHandler(id, false)
                 })
-                item.innerHTML = name
+               item.innerHTML = "<a class=\"nav-link\" href=\"/site/{{site_url}}/{{ target_section }}/" + uid  + "\">" + name + "</a>"
                 item.innerHTML += renderHiddenInput(id)
                 item.appendChild(button)
                 return item
@@ -82,7 +84,9 @@
                 var list_item = document.createElement('li')
                 list_item.className = 'list-group-item pick-list-item'
                 if (item.selected) {
-                    list_item.appendChild( renderSelectedListItem(item.name, item.id) )
+                    list_item.appendChild(
+                        renderSelectedListItem(item.name, item.id, item.uid)
+                    )
                 } else {
                     list_item.className = 'dropdown-item'
                     list_item.addEventListener('click', function() {
