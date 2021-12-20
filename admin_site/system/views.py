@@ -983,37 +983,21 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
     def form_valid(self, form):
         pc = self.object
         groups_pre = set(pc.pc_groups.all())
-        try:
-            with transaction.atomic():
-                pc.configuration.update_from_request(self.request.POST, "pc_config")
-                response = super(PCUpdate, self).form_valid(form)
 
-                # If this PC has joined any groups that have policies attached
-                # to them, then run their scripts (first making sure that this
-                # PC is capable of doing so!)
-                groups_post = set(pc.pc_groups.all())
-                new_groups = groups_post.difference(groups_pre)
-                supported = False
-                for g in new_groups:
-                    policy = g.ordered_policy
-                    if policy:
-                        if not supported:
-                            if not pc.supports_ordered_job_execution():
-                                raise OutdatedClientError(pc)
-                            supported = True
-                        for asc in policy:
-                            asc.run_on(self.request.user, [pc])
+        with transaction.atomic():
+            pc.configuration.update_from_request(self.request.POST, "pc_config")
+            response = super(PCUpdate, self).form_valid(form)
 
-        except OutdatedClientError as e:
-            set_notification_cookie(
-                response,
-                _(
-                    "Computer {0} must be upgraded in order to join a group "
-                    "with scripts attached"
-                ).format(e),
-                error=True,
-            )
-            return response
+            # If this PC has joined any groups that have policies attached
+            # to them, then run their scripts (first making sure that this
+            # PC is capable of doing so!)
+            groups_post = set(pc.pc_groups.all())
+            new_groups = groups_post.difference(groups_pre)
+            for g in new_groups:
+                policy = g.ordered_policy
+                if policy:
+                    for asc in policy:
+                        asc.run_on(self.request.user, [pc])
 
         set_notification_cookie(response, _("Computer %s updated") % pc.name)
         return response
@@ -1277,14 +1261,6 @@ class GroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
         return super(GroupCreate, self).form_valid(form)
 
 
-class Error(Exception):
-    pass
-
-
-class OutdatedClientError(Error):
-    pass
-
-
 class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     template_name = "system/site_groups.html"
     form_class = GroupForm
@@ -1352,13 +1328,6 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 new_members = members_post.difference(members_pre)
                 new_policy = policy_post.difference(policy_pre)
 
-                # If we have a policy, make sure all group members actually
-                # support ordered job execution
-                if len(policy_post) > 0:
-                    for g in members_post:
-                        if not g.supports_ordered_job_execution():
-                            raise OutdatedClientError(g)
-
                 # Run all policy scripts on new PCs...
                 if new_members:
                     ordered_policy = list(policy_post)
@@ -1376,16 +1345,6 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     response, _("Group %s updated") % self.object.name
                 )
                 return response
-        except OutdatedClientError as e:
-            set_notification_cookie(
-                response,
-                _(
-                    "Computer {0} must be upgraded in order to join a group"
-                    " with scripts attached"
-                ).format(e),
-                error=True,
-            )
-            return response
         except MandatoryParameterMissingError as e:
             # If this happens, it happens *before* we have a valid
             # HttpResponse, so make one with form_invalid()

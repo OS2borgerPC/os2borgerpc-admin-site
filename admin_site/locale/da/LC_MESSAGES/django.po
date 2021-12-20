@@ -345,14 +345,6 @@ msgstr "Script %s opdateret"
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1060 system/views.py:1464
-#, python-brace-format
-msgid ""
-"Computer {0} must be upgraded in order to join a group with scripts attached"
-msgstr ""
-"Computer {0} skal opgraderes for at kunne meldes ind i en gruppe, der har "
-"scripts vedhæftet"
-
 #: system/views.py:1067
 #, python-format
 msgid "Computer %s updated"
