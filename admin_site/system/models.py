@@ -1,7 +1,6 @@
 import datetime
 import random
 import string
-from distutils.version import LooseVersion
 
 from dateutil.relativedelta import relativedelta
 
@@ -441,13 +440,6 @@ class PC(models.Model):
 
     def get_absolute_url(self):
         return reverse("computer", args=(self.site.uid, self.uid))
-
-    def supports_ordered_job_execution(self):
-        v = self.get_config_value("_os2borgerpc.client_version")
-        if v:
-            return LooseVersion("0.0.5.0") <= LooseVersion(v)
-        else:
-            return False
 
     def os2_product(self):
         """Return whether a PC is running os2borgerpc or os2displaypc."""
