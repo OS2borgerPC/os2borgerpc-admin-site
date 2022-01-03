@@ -1,3 +1,11 @@
+Version 5.2.1, January 3, 2022
+--------------------------------
+
+Hotfix:
+
+- Added SERVER_EMAIL in settings to enable crash email.
+
+
 Version 5.2.0, November 25, 2021
 --------------------------------
 
