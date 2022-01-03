@@ -201,6 +201,7 @@ DEFAULT_FROM_EMAIL = settings.get("DEFAULT_FROM_EMAIL")
 ADMIN_EMAIL = settings.get("ADMIN_EMAIL")
 EMAIL_HOST = settings.get("EMAIL_HOST")
 EMAIL_PORT = settings.get("EMAIL_PORT")
+SERVER_EMAIL = settings.get("SERVER_EMAIL")
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 ROOT_URLCONF = "os2borgerpc_admin.urls"
