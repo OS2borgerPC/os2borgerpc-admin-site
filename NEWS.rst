@@ -1,3 +1,14 @@
+Version 5.3.0, January 4, 2022
+--------------------------------
+
+New in this version:
+
+- Run black on the python codebase
+- Setup black in the pipeline
+- Two factor authentication page created
+- Picklists: selected elements are now links instead of just plaintext
+
+
 Version 5.2.1, January 3, 2022
 --------------------------------
 
