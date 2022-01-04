@@ -1,3 +1,22 @@
+Version 5.3.0, January 26, 2022
+---------------------------------
+
+New in this version:
+
+- Run black on the python codebase
+- Setup black in the pipeline
+- Two factor authentication page created
+- Picklists: selected elements are now links instead of just plaintext
+- Jobs: improved job restart UX with name and computer instead of ID
+- Status: count online/all_pcs instead of online/activated
+- Image versions: Redesign page
+- Add checkbox input type
+- Fix AssociatedScriptParameters being added when new ScriptParameters
+  are added to a script.
+- Fix link to Configuration documentation
+- Make AssociatedScriptParameters that are files easily downloadable
+
+
 Version 5.2.1, January 3, 2022
 --------------------------------
 
