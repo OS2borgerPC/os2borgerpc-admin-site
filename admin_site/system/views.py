@@ -1301,7 +1301,7 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         context["all_scripts"] = sorted(
             Script.objects.filter(
                 Q(site=site) | Q(site=None), is_security_script=False
-            ).exclude(site__name="system"),
+            ),
             key=lambda s: s.name.lower(),
         )
 
