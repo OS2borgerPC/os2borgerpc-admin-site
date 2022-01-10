@@ -26,25 +26,26 @@ Totrinsbekræftelse
         <button class="btn btn-secondary my-3" name="generate-security-key-qr" id="generate-security-key-qr">
           Generér sikkerhedsnøgle og QR
         </button>
-        <p class='mb-0'>Sikkerhedsnøgle:</p>
+        <p class='mb-0 d-none' id='key-text'>Sikkerhedsnøgle:</p>
         <!-- Koden skal være i base32 - 26 tegn bestående af A-Z og 2-7 (ikke 0-9!) -->
         <p id="security_code"></p>
         <div id="qr"></div>
       </li>
       <li class="py-3">
-        <p><strong>Scan QR-koden oven over med din authenticator app.</strong></p>
+        <p><strong>Scan QR-koden fra trin 1 med din authenticator app</strong></p>
         <p>Som authenticator app kan eksempelvis bruges:</p>
         <ul>
-          <li>FreeOTP Authenticator</li>
-          <li>Authy</li>
-          <li>Duo Mobile</li>
-          <li>Microsoft Authenticator</li>
-          <li>Google Authenticator</li>
-          <li>LastPass Authenticator</li>
+          <li><a href="https://freeotp.github.io" target="_blank">FreeOTP Authenticator</a></li>
+          <li><a href="https://authy.com" target="_blank">Authy</a></li>
+          <li><a href="https://duo.com" target="_blank">Duo Mobile</a></li>
+          <li><a href="https://www.microsoft.com/en-us/security/mobile-authenticator-app" target="_blank">Microsoft Authenticator</a></li>
+          <!-- A better link would direct to both the version on Android and IOS, but I'm not sure it currently exists? -->
+          <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator</a></li>
+          <li><a href="https://lastpass.com/auth/" target="_blank">LastPass Authenticator</a></li>
         </ul>
       </li>
       <li class="py-3">
-        <p><strong>Kopier sikkerhedsnøglen oven over, og kør totrinsscriptet med den som inputparameter</strong></p>
+        <p><strong>Kopier sikkerhedsnøglen fra trin 1, og kør totrinsscriptet med den som inputparameter</strong></p>
         <p>
           Du kan finde scriptet
           "Totrinsbekræftelse for superuser" under menupunktet
@@ -70,6 +71,7 @@ Totrinsbekræftelse
       for ( var i = 0; i < security_code_length; i++ ) {
         security_code += character_set.charAt(Math.floor(Math.random() * character_set_length))
       }
+      document.getElementById('key-text').classList.remove('d-none')
       document.getElementById('security_code').innerText = security_code
     }
 
