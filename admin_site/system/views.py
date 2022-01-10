@@ -476,10 +476,12 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         if self.object.status != Job.FAILED:
             return self.status_fail_response()
 
-        new_job = self.object.restart(user=self.request.user)
+        self.object.restart(user=self.request.user)
         response = HttpResponseRedirect(self.get_success_url())
         set_notification_cookie(
-            response, "Job %s restarted as job %s" % (self.object.pk, new_job.pk)
+            response,
+            _("The script %s is being rerun on the computer %s")
+            % (self.object.batch.script.name, self.object.pc.name),
         )
         return response
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-10 12:41+0100\n"
+"POT-Creation-Date: 2022-01-10 15:12+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -314,46 +314,67 @@ msgstr "håndteres af"
 
 #: system/views.py:293
 #, fuzzy, python-format
-#| msgid "Configuration for %s updated"
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
-#: system/views.py:745
+#: system/views.py:483
+#, python-format
+msgid "The script %s is being rerun on the computer %s"
+msgstr "Scriptet %s bliver genkørt på computeren %s"
+
+#: system/views.py:747
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:800 system/views.py:822
+#: system/views.py:802 system/views.py:824
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1002
+#: system/views.py:1004
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
-#: system/views.py:1178
+#: system/views.py:1180
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:1207
+#: system/views.py:1209
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:1345
+#: system/views.py:1347
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:1356
+#: system/views.py:1358
 #, python-brace-format
 msgid ""
 "No value was specified for the mandatory input \"{0}\" of script \"{1}\""
 msgstr "Den obligatoriske parameterværdi \"{0}\" for script \"{1}\" mangler"
 
-#: system/views.py:1380
+#: system/views.py:1382
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
+
+#~ msgid "version"
+#~ msgstr "version"
+
+#~ msgid "Non-admin users MUST be attached to a site"
+#~ msgstr "Brugere der ikke er super-admins skal være tilknyttet et site"
+
+#, fuzzy
+#~| msgid "id"
+#~ msgid "uid"
+#~ msgstr "ID"
+
+#~ msgid "deleted"
+#~ msgstr "slettet"
+
+#~ msgid "security_problems"
+#~ msgstr "sikkerhedsregler"
