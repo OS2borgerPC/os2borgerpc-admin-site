@@ -6,7 +6,8 @@ Genstart job
 
 {% block specific_content %}
   <div class="container-fluid main">
-    <p>Er du sikker på du vil genstarte job {{ selected_job.pk }}?</p>
+    <p>Er du sikker på du vil genstarte kørslen af scriptet <strong>{{ selected_job.batch.script.name }}</strong> på
+    computeren <strong>{{ selected_job.pc.name }}</strong>?</p>
     <form action="{% url 'restart_job' site.uid selected_job.pk %}" method="post">
       {% csrf_token %}
       <input class="btn btn-primary me-3" type="submit" value="Ja">
