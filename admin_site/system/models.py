@@ -442,7 +442,7 @@ class PC(models.Model):
         return reverse("computer", args=(self.site.uid, self.uid))
 
     def os2_product(self):
-        """Return whether a PC is running os2borgerpc or os2displaypc."""
+        """Return whether a PC is running os2borgerpc or os2borgerpc kiosk."""
         return self.get_config_value("os2_product")
 
     def __str__(self):
@@ -958,11 +958,11 @@ class SecurityEvent(models.Model):
 
 class ImageVersion(models.Model):
     BORGERPC = "BORGERPC"
-    DISPLAYPC = "DISPLAYPC"
+    BORGERPC_KIOSK = "BORGERPC_KIOSK"
 
     platform_choices = (
-        (BORGERPC, _("BorgerPC")),
-        (DISPLAYPC, _("DisplayPC")),
+        (BORGERPC, "BorgerPC"),
+        (BORGERPC_KIOSK, "BorgerPC Kiosk"),
     )
 
     platform = models.CharField(max_length=128, choices=platform_choices)

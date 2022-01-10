@@ -56,7 +56,7 @@ def register_new_computer(mac, name, distribution, site, configuration):
         if "os2borgerpc_version" in configuration:
             product = "os2borgerpc"
         else:
-            product = "os2displaypc"
+            product = "os2borgerpc kiosk"
         configuration.update({"os2_product": product})
 
     for k, v in list(configuration.items()):
