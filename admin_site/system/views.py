@@ -1669,9 +1669,9 @@ documentation_menu_items = [
     ("creating_security_problems", "Oprettelse af Sikkerhedsovervågning (PDF)"),
     ("", "OS2borgerPC"),
     ("os2borgerpc_installation_guide", "Installationsguide (PDF)"),
-    ("", "OS2displayPC"),
-    ("os2displaypc_installation_guide", "Installationsguide"),
-    ("os2displaypc_wifi_guide", "Opdatering af Wi-Fi opsætning"),
+    ("", "OS2borgerPC Kiosk"),
+    ("os2borgerpc_kiosk_installation_guide", "Installationsguide"),
+    ("os2borgerpc_kiosk_wifi_guide", "Opdatering af Wi-Fi opsætning"),
     ("", "Opsætning af Gateway"),
     ("gateway_install", "Installation af gateway"),
     ("gateway_admin", "Administration af gateway"),
@@ -1679,7 +1679,7 @@ documentation_menu_items = [
     ("", "Teknisk dokumentation"),
     ("tech/os2borgerpc-image", "OS2borgerPC Image"),
     ("tech/os2borgerpc-admin", "OS2borgerPC Admin Site"),
-    ("tech/os2borgerpc-server-image", "OS2displayPC Image"),
+    ("tech/os2borgerpc-server-image", "OS2borgerPC Kiosk Image"),
     ("tech/os2borgerpc-client", "OS2borgerPC Client"),
 ]
 
