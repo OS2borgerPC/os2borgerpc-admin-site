@@ -9,7 +9,8 @@
     <h2 class="divideheader">
       Computere 
       <span class="ms-3 badge bg-secondary">Aktiverede: {{ activated_pcs }} / {{ total_pcs }}</span>
-      <span class="ms-3 badge bg-secondary">Online: {{ online_pcs }} / {{ activated_pcs }}</span>
+      {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
+      <span class="ms-3 badge bg-secondary">Online: {{ online_pcs }} / {{ total_pcs }}</span>
     </h2>
     <table class="table table-hover warn-table caption-top" id="site-status-table">
       <thead>
