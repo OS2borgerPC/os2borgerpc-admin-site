@@ -223,16 +223,31 @@ class ImageVersionAdmin(admin.ModelAdmin):
 
 
 class SecurityProblemAdmin(admin.ModelAdmin):
-    list_display = ("site", "name", "level", "security_script")
+    list_display = ("name", "site", "level", "security_script")
 
 
 class SecurityEventAdmin(admin.ModelAdmin):
-    list_display = ("problem", "ocurred_time", "reported_time", "pc", "status")
+    list_display = (
+        "problem",
+        "get_site",
+        "ocurred_time",
+        "reported_time",
+        "pc",
+        "status",
+    )
+
+    @admin.display(description="Site", ordering="pc__site")
+    def get_site(self, obj):
+        return obj.pc.site
 
 
 class AssociatedScriptAdmin(admin.ModelAdmin):
-    list_display = ("script", "group", "position")
+    list_display = ("script", "get_site", "group", "position")
     search_fields = ("script__name",)
+
+    @admin.display(description="Site", ordering="group__site")
+    def get_site(self, obj):
+        return obj.group.site
 
 
 class CitizenAdmin(admin.ModelAdmin):
