@@ -57,6 +57,11 @@ Sikkerhedsregler
         class="gray-box">
         {% csrf_token %} 
         
+        <p class="alert alert-info"><strong>Bemærk</strong><br/>
+        Hvis der ikke er nogen gruppe tilknyttet sikkerhedsreglen, så vil reglen gælde <strong>alle</strong> computere.<br/> 
+        Ønsker du midlertidigt at gøre en regel inaktiv, kan du oprette en <em>tom</em> gruppe (dvs. en gruppe uden computere)<br/>
+        og sætte denne gruppe som den overvågede gruppe.
+        </p>
         <div class="row gx-5">
             <fieldset class="col-12 col-lg-6">
                 
