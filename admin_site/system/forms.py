@@ -218,6 +218,9 @@ class ParameterForm(forms.Form):
                 field_data["initial"] = datetime.datetime.now
                 field_data["widget"] = forms.DateTimeInput(attrs={"class": "dateinput"})
                 self.fields[name] = forms.DateTimeField(**field_data)
+            elif inp.value_type == Input.BOOLEAN:
+                field_data["required"] = False
+                self.fields[name] = forms.BooleanField(**field_data)
             else:
                 self.fields[name] = forms.CharField(**field_data)
 
