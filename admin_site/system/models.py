@@ -969,7 +969,7 @@ class ImageVersion(models.Model):
     image_version = models.CharField(unique=True, max_length=7)
     release_date = models.DateField()
     os = models.CharField(verbose_name="OS", max_length=30)
-    release_notes = models.TextField(max_length=350)
+    release_notes = models.TextField(max_length=1500)
     image_upload = models.FileField(upload_to="images", default="#")
 
     def __str__(self):
