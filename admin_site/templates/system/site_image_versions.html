@@ -41,7 +41,9 @@ Versioner
           <dt>OPERATIVSYSTEM</dt>
           <dd>{{ first_obj.os }}</dd>
           <dt>UDGIVELSESNOTER</dt>
-          <dd>{{ first_obj.release_notes }}</dd>
+          <dd>
+            <pre>{{ first_obj.release_notes }}</pre>
+          </dd>
           <dt>DOWNLOAD</dt>
           <dd>
             <a class="btn btn-sm btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.image_version }}.iso</a>
@@ -54,23 +56,25 @@ Versioner
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                 Vis tidligere underversioner
               </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 
                 {% for iv in minor_versions.all|dictsortreversed:"image_version"|slice:"1:" %}
                   <dl>
                     <dt>VERSION</dt>
                     <dd>{{iv.image_version}}</dd>
-                    <dt>RELEASE DATE</dt>
+                    <dt>RELEASE DATO</dt>
                     <dd>{{ iv.release_date }}</dd> 
-                    <dt>OPERATING SYSTEM</dt>
+                    <dt>OPERATIVSYSTEM</dt>
                     <dd>{{ iv.os }}</dd> 
-                    <dt>RELEASE NOTES</dt>
-                    <dd>{{ iv.release_notes }}</dd> 
+                    <dt>UDGIVELSESNOTER</dt>
+                    <dd>
+                      <pre>{{ iv.release_notes }}</pre>
+                    </dd>
                     <dt>DOWNLOAD</dt>
                     <dd>
                       <a class="btn btn-sm btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.image_version}}</a>
