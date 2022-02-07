@@ -112,6 +112,9 @@ class ConfigurationEntry(models.Model):
         on_delete=models.CASCADE,
     )
 
+    class Meta:
+        ordering = ["key"]
+
 
 class Site(models.Model):
     """A site which we wish to admin"""
