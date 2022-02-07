@@ -274,8 +274,7 @@ class SiteSettings(UpdateView, SiteView):
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
         context = super(SiteSettings, self).get_context_data(**kwargs)
-        configs = self.object.configuration.entries.all()
-        context["site_configs"] = configs.order_by("key")
+        context["site_configs"] = self.object.configuration.entries.all()
 
         return context
 
