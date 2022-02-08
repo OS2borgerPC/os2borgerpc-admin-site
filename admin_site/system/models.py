@@ -4,11 +4,13 @@ import string
 
 from dateutil.relativedelta import relativedelta
 
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
@@ -241,11 +243,12 @@ class PCGroup(models.Model):
         # After save
         pass
 
+    @transaction.atomic
     def update_associated_script_positions(self):
-        existing_set = set(asc for asc in self.policy.all().order_by("position"))
-        for count, asc in enumerate(existing_set):
+        groups_policy_scripts = [asc for asc in self.policy.all().order_by("position")]
+        for count, asc in enumerate(groups_policy_scripts):
             asc.position = count
-            self.save()
+            asc.save()
 
     def update_policy_from_request(self, request, submit_name):
         req_params = request.POST
@@ -539,6 +542,27 @@ class Script(AuditModelMixin):
 
     class Meta:
         ordering = ["name"]
+
+
+@transaction.atomic
+@receiver(pre_delete, sender=Script)
+def call_update_associated_script_positions(sender, instance, *args, **kwargs):
+    script = instance
+
+    # Fetch the PCGroups for which it's an AssociatedScript
+    scripts_pcgroups = set(PCGroup.objects.filter(policy__script=script))
+
+    # Before we can update script positions we need to manually delete its
+    # AssociatedScript entries
+    scripts_associatedscripts = AssociatedScript.objects.filter(script=script)
+
+    for sas in scripts_associatedscripts:
+        sas.delete()  # sas.save()?
+
+    # Now that the AssociatedScripts have been deleted, for each of those groups update
+    # the script positions to avoid gaps
+    for spcg in scripts_pcgroups:
+        spcg.update_associated_script_positions()
 
 
 class Batch(models.Model):
