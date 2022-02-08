@@ -635,6 +635,11 @@ class ScriptMixin(object):
 
         for input_data in self.script_inputs:
             input_data["script"] = self.script
+
+            input_data["mandatory"] = (
+                True if input_data["value_type"] != "BOOLEAN" else False
+            )
+
             if "pk" in input_data and not input_data["pk"]:
                 del input_data["pk"]
 
