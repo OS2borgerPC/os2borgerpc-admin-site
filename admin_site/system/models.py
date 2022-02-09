@@ -9,8 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.db.models.signals import pre_delete
-from django.dispatch.dispatcher import receiver
 
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
@@ -542,27 +540,6 @@ class Script(AuditModelMixin):
 
     class Meta:
         ordering = ["name"]
-
-
-@transaction.atomic
-@receiver(pre_delete, sender=Script)
-def call_update_associated_script_positions(sender, instance, *args, **kwargs):
-    script = instance
-
-    # Fetch the PCGroups for which it's an AssociatedScript
-    scripts_pcgroups = set(PCGroup.objects.filter(policy__script=script))
-
-    # Before we can update script positions we need to manually delete its
-    # AssociatedScript entries
-    scripts_associatedscripts = AssociatedScript.objects.filter(script=script)
-
-    for sas in scripts_associatedscripts:
-        sas.delete()  # sas.save()?
-
-    # Now that the AssociatedScripts have been deleted, for each of those groups update
-    # the script positions to avoid gaps
-    for spcg in scripts_pcgroups:
-        spcg.update_associated_script_positions()
 
 
 class Batch(models.Model):
