@@ -872,6 +872,23 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         else:
             return reverse("scripts", kwargs={"slug": self.kwargs["slug"]})
 
+    @transaction.atomic
+    def delete(self, request, *args, **kwargs):
+        script = self.get_object()
+
+        # Fetch the PCGroups for which it's an AssociatedScript before
+        # we delete it from them
+        # We create a list as the next command would change it
+        scripts_pcgroups = list(PCGroup.objects.filter(policy__script=script))
+
+        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
+
+        # For each of those groups update the script positions to avoid gaps
+        for spcg in scripts_pcgroups:
+            spcg.update_associated_script_positions()
+
+        return response
+
 
 class PCsView(SelectionMixin, SiteView):
 
