@@ -745,6 +745,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.save_script_inputs()
             response = super(ScriptUpdate, self).form_valid(form)
             set_notification_cookie(response, _("Script %s updated") % self.script.name)
+
             return response
         else:
             return self.form_invalid(form, transfer_inputs=False)
@@ -875,10 +876,12 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         script = self.get_object()
 
-        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
+        # Fetch the PCGroups for which it's an AssociatedScript before
+        # we delete it from them
+        # We create a list as the next command would change it
+        scripts_pcgroups = list(PCGroup.objects.filter(policy__script=script))
 
-        # Update the PCGroups for which it's an AssociatedScript
-        scripts_pcgroups = PCGroup.objects.filter(policy__script=script)
+        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
 
         # For each of those groups update the script positions to avoid gaps
         for spcg in scripts_pcgroups:
@@ -1346,6 +1349,11 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 set_notification_cookie(
                     response, _("Group %s updated") % self.object.name
                 )
+
+                # Now update script positions in case a script has been deleted or added
+                if policy_pre != policy_post:
+                    self.object.update_associated_script_positions()
+
                 return response
         except MandatoryParameterMissingError as e:
             # If this happens, it happens *before* we have a valid

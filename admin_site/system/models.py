@@ -4,7 +4,7 @@ import string
 
 from dateutil.relativedelta import relativedelta
 
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -241,11 +241,12 @@ class PCGroup(models.Model):
         # After save
         pass
 
+    @transaction.atomic
     def update_associated_script_positions(self):
-        existing_set = set(asc for asc in self.policy.all().order_by("position"))
-        for count, asc in enumerate(existing_set):
+        groups_policy_scripts = [asc for asc in self.policy.all().order_by("position")]
+        for count, asc in enumerate(groups_policy_scripts):
             asc.position = count
-            self.save()
+            asc.save()
 
     def update_policy_from_request(self, request, submit_name):
         req_params = request.POST
