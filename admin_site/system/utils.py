@@ -62,7 +62,7 @@ def cicero_validate(loaner_number, pincode, agency_id):
     try:
         pincode = int(pincode)
     except ValueError:
-        logger.error(f"Pincode must be a number - {pincode} is not  number.")
+        # logger.warning("Pincode must be a number.")
         return 0
     if not agency_id:
         logger.error("Agency ID / ISIL MUST be specified.")
@@ -99,9 +99,9 @@ def cicero_validate(loaner_number, pincode, agency_id):
         authenticate_status = result["authenticateStatus"]
         print(authenticate_status)
         if authenticate_status != "VALID":
-            logger.error(
-                f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
-            )
+            # logger.warning(
+            #    f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
+            # )
             return 0
         # Loaner has been successfully authenticated.
         patron_id = result["patron"]["patronId"]
@@ -116,7 +116,7 @@ def always_validate_citizen(loaner_number, pincode, agency_id):
     try:
         pincode = int(pincode)
     except ValueError:
-        logger.error(f"Pincode must be a number - {pincode} is not  number.")
+        # logger.warning("Pincode must be a number.")
         return 0
     if not agency_id:
         logger.error("Agency ID / ISIL MUST be specified.")
