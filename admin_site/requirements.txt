@@ -3,7 +3,7 @@ cachetools==4.2.4
 certifi==2021.10.8
 charset-normalizer==2.0.7
 crispy-bootstrap5==0.6
-Django==3.2.9
+Django==3.2.12
 django-crispy-forms==1.13.0
 django-extensions==3.1.5
 django-storages==1.12.3
