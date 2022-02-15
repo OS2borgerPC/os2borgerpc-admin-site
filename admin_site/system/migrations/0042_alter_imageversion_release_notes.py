@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0040_alter_imageversion_platform'),
+        ('system', '0041_alter_configurationentry_options'),
     ]
 
     operations = [
