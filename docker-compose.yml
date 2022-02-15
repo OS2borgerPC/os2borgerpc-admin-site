@@ -1,5 +1,4 @@
 version: "3.4"
-
 services:
     frontend:
         build:
@@ -29,7 +28,8 @@ services:
             - postfix
         ports:
             - 9999:9999
-
+        stdin_open: true
+        tty: true
     db:
         image: magentaaps/postgres-os2bos:1-10.14-test
         env_file:
@@ -43,9 +43,5 @@ services:
         environment:
           - maildomain=magenta.example
           - smtp_user=bpc:bpc
-
 volumes:
     postgres-data:
-
-
-
