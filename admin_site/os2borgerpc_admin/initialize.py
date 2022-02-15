@@ -3,6 +3,7 @@
 """Functions for populating the database with initial data."""
 
 import os
+import glob
 
 from django.core.management import call_command
 
@@ -18,41 +19,6 @@ def initialize():
     generating duplicates.
     """
     if os.path.exists(fixtures_dir) and os.path.isdir(fixtures_dir):
-        initialize_sites()
-        initialize_users()
-        initialize_configuration_entries()
-
-
-def initialize_users():
-    """Prime the system with some users to get started.
-
-    Data should be the output of
-    "manage.py dumpdata django.contrib.auth.models.User" and
-    "manage.py dumpdata account.UserProfile".
-
-    """
-    if os.path.exists(os.path.join(fixtures_dir, "users.json")):
-        call_command("loaddata", "users.json", app_label="system")
-        call_command("loaddata", "user_profiles.json", app_label="system")
-
-
-def initialize_sites():
-    """Prime the system with some sites to get started.
-
-    Data should be the output of "manage.py dumpdata system.Site"
-    and "manage.py dumpdata system.Configuration".
-    """
-    if os.path.exists(os.path.join(fixtures_dir, "sites.json")):
-        call_command("loaddata", "site_configurations.json", app_label="system")
-        call_command("loaddata", "sites.json", app_label="system")
-
-
-def initialize_configuration_entries():
-    """Prime the system with some users to get started.
-
-    Data should be the output of
-    "manage.py dumpdata system.ConfigurationEntry".
-
-    """
-    if os.path.exists(os.path.join(fixtures_dir, "configuration_entries.json")):
-        call_command("loaddata", "configuration_entries.json", app_label="system")
+        for file in glob.glob(os.path.join(fixtures_dir, "*.json")):
+            if os.path.isfile(file):
+                call_command("loaddata", file)
