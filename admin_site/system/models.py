@@ -755,12 +755,14 @@ class Input(models.Model):
     INT = "INT"
     DATE = "DATE"
     FILE = "FILE"
+    BOOLEAN = "BOOLEAN"
 
     VALUE_CHOICES = (
         (STRING, _("String")),
         (INT, _("Integer")),
         (DATE, _("Date")),
         (FILE, _("File")),
+        (BOOLEAN, _("Boolean")),
     )
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
