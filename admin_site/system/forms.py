@@ -222,6 +222,8 @@ class ParameterForm(forms.Form):
                 self.fields[name] = forms.BooleanField(
                     **field_data, widget=forms.CheckboxInput()
                 )
+            elif inp.value_type == Input.INT:
+                self.fields[name] = forms.IntegerField(**field_data)
             else:
                 self.fields[name] = forms.CharField(**field_data)
 
