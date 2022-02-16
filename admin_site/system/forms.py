@@ -224,6 +224,10 @@ class ParameterForm(forms.Form):
             elif inp.value_type == Input.TIME:
                 field_data["widget"] = forms.TimeInput(attrs={"type": "time"})
                 self.fields[name] = forms.CharField(**field_data)
+            elif inp.value_type == Input.PASSWORD:
+                self.fields[name] = forms.CharField(
+                    **field_data, widget=forms.PasswordInput()
+                )
             else:
                 self.fields[name] = forms.CharField(**field_data)
 

@@ -17,8 +17,8 @@
                   + (type == 'FILE' ? ' phantom' : '')
                   + '" type="' + (type == 'FILE' ? 'file' : 'hidden')
                   + '" name="' + name 
-                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : '') + '" ' 
-                  + 'data-inputtype="' + type 
+                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : '') 
+                  + '" data-inputtype="' + type 
                   + '"' + (mandatory ? ' required="required"' : '') + '/>'
         }
         this.visibleParamField = function (input) {
@@ -41,6 +41,8 @@
               return 'checkbox'
             case 'TIME':
               return 'time'
+            case 'PASSWORD':
+              return 'password'
             default:
               return 'text'
           }
@@ -206,6 +208,9 @@
             } else if (t.attr('type') == 'checkbox') {
               inputField.val((this.checked) ? 'True' : 'False')
               visibleValueField[0].innerHTML = '<input type="checkbox" disabled ' + ((this.checked) ? 'checked>' : '>')
+            } else if (t.attr('type') == 'password') {
+              inputField.val(t.val())
+              visibleValueField.text('•••••')
             } else if (t.val().trim().length != 0) {
               inputField.val(t.val())
               visibleValueField.text(t.val())
