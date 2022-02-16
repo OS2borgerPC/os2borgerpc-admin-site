@@ -1,6 +1,9 @@
 {% extends "sitebase.html" %}
 
-{% block header_title %}Administrér <em>Sites</em>{% endblock %}
+{% block header_title %}
+Administrér <em>Sites</em>
+<span class="ms-3 badge bg-secondary" title="Antal sites i alt">Antal: {{site_list|length}}</span>
+{% endblock %}
 
 {% block header_class %}container{% endblock %}
 
