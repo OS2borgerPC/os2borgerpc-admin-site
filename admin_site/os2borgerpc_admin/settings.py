@@ -203,6 +203,8 @@ EMAIL_HOST = settings.get("EMAIL_HOST")
 EMAIL_PORT = settings.get("EMAIL_PORT")
 SERVER_EMAIL = settings.get("SERVER_EMAIL")
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST_USER = settings.get("EMAIL_USER")
+EMAIL_HOST_PASSWORD = settings.get("EMAIL_PASSWORD")
 
 ROOT_URLCONF = "os2borgerpc_admin.urls"
 
