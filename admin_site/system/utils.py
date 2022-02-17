@@ -2,6 +2,7 @@
 
 import requests
 import logging
+import traceback
 
 from importlib import import_module
 
@@ -12,6 +13,8 @@ from django.core.mail import EmailMessage
 
 def notify_users(data, security_problem, pc):
     """Notify users about security event."""
+
+    logger = logging.getLogger(__name__)
 
     # Subject = security name,
     # Body = description + technical summary
@@ -31,7 +34,9 @@ def notify_users(data, security_problem, pc):
             email_list,
         )
         message.send(fail_silently=False)
-    except Exception:
+    except Exception:  # Likely Exception: SMTPException
+        logger.warning("Security Event e-mail-sending failed:")
+        logger.warning(traceback.format_exc())
         return False
 
     return True
