@@ -1840,23 +1840,17 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             # image release date > client's last pay date.
             versions = ImageVersion.objects.exclude(release_date__gt=last_pay_date)
 
-            major_versions_set = set()
-            for minor_version in versions:
-                major_versions_set.add(minor_version.image_version[:1])
+            platform_choice = self.kwargs.get(
+                "platform", ImageVersion.platform_choices[0][0]
+            ).upper()
 
-            major_versions_list = list(major_versions_set)
-            major_versions_list.sort(reverse=True)
-
-            if len(major_versions_list) > 0:
-
-                context["major_versions"] = major_versions_list
-
-                url_ref_vers = self.kwargs.get("major_version", major_versions_list[0])
-
-                context["selected_image_version"] = url_ref_vers
-
-                minor_versions = versions.filter(image_version__startswith=url_ref_vers)
-
-                context["minor_versions"] = minor_versions
+            selected_platform = next(
+                (x for x in ImageVersion.platform_choices if x[0] == platform_choice)
+            )
+            context["selected_platform"] = selected_platform
+            context["selected_platform_images"] = versions.filter(
+                platform=selected_platform[0]
+            ).order_by("-release_date", "-id")
+            context["platform_choices"] = dict(ImageVersion.platform_choices)
 
         return context
