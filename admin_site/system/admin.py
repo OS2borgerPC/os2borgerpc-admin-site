@@ -84,6 +84,7 @@ class BatchParameterInline(admin.TabularInline):
 class BatchAdmin(admin.ModelAdmin):
     list_display = ["site", "name", "script"]
     fields = ["site", "name", "script"]
+    search_fields = ["name"]
     inlines = [JobInline, BatchParameterInline]
 
 
@@ -211,7 +212,7 @@ class PCAdmin(admin.ModelAdmin):
 
 class JobAdmin(admin.ModelAdmin):
     list_display = ("__str__", "status", "user", "pc")
-    search_fields = ("user", "pc")
+    search_fields = ("batch__name", "user__username", "pc__name")
 
 
 class ScriptTagAdmin(admin.ModelAdmin):
