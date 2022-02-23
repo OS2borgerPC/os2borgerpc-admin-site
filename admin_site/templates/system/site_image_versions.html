@@ -25,21 +25,23 @@
     {% with selected_platform_images|first as first_obj %}
     <h2 class="divideheader">Nyeste udgave af {{ selected_platform.1 }}</h2>
     <dl>
-      <dt>VERSION</dt>
+      <dt>Version</dt>
       <dd>{{ first_obj.image_version }}</dd>
-      <dt>RELEASE DATO</dt>
+      <dt>Release-dato</dt>
       <dd>{{ first_obj.release_date }}</dd>
-      <dt>OPERATIVSYSTEM</dt>
+      <dt>Operativsystem</dt>
       <dd>{{ first_obj.os }}</dd>
-      <dt>UDGIVELSESNOTER</dt>
+      <dt>Udgivelsesnoter</dt>
       <dd>
-    <pre>{{ first_obj.release_notes }}</pre>
-    </dd>
-    <dt>DOWNLOAD</dt>
-    <dd>
-    <a class="btn btn-md btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.image_version }}.iso</a>
+    <pre style="font-family: var(--bs-font-sans-serif)">{{ first_obj.release_notes }}</pre>
     </dd>
   </dl>
+  <a class="btn btn-md btn-success text-light" href="{{ first_obj.image_upload.url }}" download>
+    <span class="material-icons">
+      cloud_download
+    </span>
+    Download
+  </a>
 {% endwith %}
 {% else %}
 <h2 class="divideheader">Versioner</h2>
@@ -56,11 +58,11 @@
   <table class="table table-hover accordion-body accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
     <thead>
       <tr>
-        <th>VERSION</th>
-        <th>RELEASE DATO</th>
-        <th>OPERATIVSYSTEM</th>
-        <th>UDGIVELSESNOTER</th>
-        <th>DOWNLOAD</th>
+        <th>Version</th>
+        <th>Release-dato</th>
+        <th>Operativsystem</th>
+        <th>Udgivelsesnoter</th>
+        <th>Download</th>
       </tr>
     </thead>
     <tbody>
@@ -68,13 +70,16 @@
         {% for image in selected_platform_images|slice:"1:" %}
           <td>{{ image.image_version }}</td>
           <td>{{ image.release_date }}</td>
-          <td>{{ image.os }}</td>
+          <td>{{ image.os }}
+
+          </td>
           <td>
-          <pre>{{ image.release_notes }}</pre>
+          <pre style="font-family: var(--bs-font-sans-serif)">{{ image.release_notes }}</pre>
         </td>
         <td>
-          <a class="btn btn-sm" href="{{ iv.image_upload.url }}" download>            
+          <a class="btn btn-sm btn-secondary text-light" href="{{ iv.image_upload.url }}" download>
           <span clas="d-flex align-items-center">
+            
             <span class="material-icons">
               cloud_download
             </span>
