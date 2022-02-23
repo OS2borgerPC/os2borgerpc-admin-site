@@ -37,10 +37,13 @@
     </dd>
     <dt>DOWNLOAD</dt>
     <dd>
-    <a class="btn btn-sm btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.image_version }}.iso</a>
+    <a class="btn btn-md btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.image_version }}.iso</a>
     </dd>
   </dl>
 {% endwith %}
+{% else %}
+<h2 class="divideheader">Versioner</h2>
+<p>Der blev ikke fundet nogen versioner</p>
 {% endif %}
 {% if selected_platform_images.count > 1 %}
 <!-- Proceed to load remaining versions -->
@@ -70,17 +73,21 @@
           <pre>{{ image.release_notes }}</pre>
         </td>
         <td>
-          <a class="btn btn-sm btn-success" href="{{ iv.image_upload.url }}" download>v{{ image.image_version }}.iso</a>
+          <a class="btn btn-sm" href="{{ iv.image_upload.url }}" download>            
+          <span clas="d-flex align-items-center">
+            <span class="material-icons">
+              cloud_download
+            </span>
+            Download
+          </span>
+          </a>
         </td>
       {% endfor %}
-    </tr>
-  </tbody>
+    {% endif %}
+  </tr>
+</tbody>
 </table>
 </div>
-{% else %}
-<h2 class="divideheader">Versioner</h2>
-<p>Der blev ikke fundet nogen versioner</p>
-{% endif %}
 {% else %}
 <h2 class="text-error"><strong>INGEN ADGANG</strong></h2>
 <p>
