@@ -967,8 +967,8 @@ class ImageVersion(models.Model):
     BORGERPC_KIOSK = "BORGERPC_KIOSK"
 
     platform_choices = (
-        (BORGERPC, "BorgerPC"),
-        (BORGERPC_KIOSK, "BorgerPC Kiosk"),
+        (BORGERPC, "OS2borgerPC"),
+        (BORGERPC_KIOSK, "OS2borgerPC Kiosk"),
     )
 
     platform = models.CharField(max_length=128, choices=platform_choices)

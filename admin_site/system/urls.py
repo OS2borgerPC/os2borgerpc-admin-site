@@ -241,7 +241,7 @@ urlpatterns = [
         name="image-versions",
     ),
     url(
-        r"^site/(?P<site_uid>[^/]+)/image-versions/(?P<major_version>\d+)$",
+        r"^site/(?P<site_uid>[^/]+)/image-versions/(?P<platform>[^/]+)$",
         ImageVersionsView.as_view(),
         name="image-version-major",
     ),
