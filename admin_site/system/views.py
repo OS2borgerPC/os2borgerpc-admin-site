@@ -40,6 +40,7 @@ from system.models import (
     MandatoryParameterMissingError,
     ImageVersion,
     ScriptTag,
+    AssociatedScriptParameter,
 )
 
 # PC Status codes
@@ -644,6 +645,18 @@ class ScriptMixin(object):
 
             Input.objects.update_or_create(pk=input_data.get("pk"), defaults=input_data)
 
+    def create_associated_script_parameters(self):
+        for associated_script in self.script.associations.all():
+            for script_input in self.script.ordered_inputs:
+                par = AssociatedScriptParameter.objects.filter(
+                    script=associated_script, input=script_input
+                ).first()
+                if not par:
+                    par = AssociatedScriptParameter(
+                        script=associated_script, input=script_input
+                    )
+                    par.save()
+
 
 class ScriptList(ScriptMixin, SiteView):
     def get(self, request, *args, **kwargs):
@@ -747,6 +760,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             # save the username for the AuditModelMixin.
             form.instance.user_modified = self.request.user.username
             self.save_script_inputs()
+            self.create_associated_script_parameters()
             response = super(ScriptUpdate, self).form_valid(form)
             set_notification_cookie(response, _("Script %s updated") % self.script.name)
 
