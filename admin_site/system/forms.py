@@ -226,7 +226,13 @@ class ParameterForm(forms.Form):
                 self.fields[name] = forms.CharField(**field_data)
             elif inp.value_type == Input.PASSWORD:
                 self.fields[name] = forms.CharField(
-                    **field_data, widget=forms.PasswordInput()
+                    **field_data,
+                    widget=forms.PasswordInput(
+                        attrs={
+                            "readonly": "",
+                            "onfocus": "this.removeAttribute('readonly')",
+                        }
+                    )
                 )
             else:
                 self.fields[name] = forms.CharField(**field_data)

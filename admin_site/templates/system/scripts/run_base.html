@@ -46,7 +46,8 @@
     id="run_script_form"
     action="{% url 'run_script' site.uid script.pk %}"
     method="post" 
-    enctype="multipart/form-data">
+    enctype="multipart/form-data"
+    autocomplete="off">
     
     <div class="modal-body">
       {% csrf_token %}
