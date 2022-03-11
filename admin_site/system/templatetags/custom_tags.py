@@ -1,4 +1,5 @@
 from django import template
+import os
 
 register = template.Library()
 
@@ -22,3 +23,14 @@ def set_css_class_active(url_name, match):
         if match == "script" and "security_script" in url_name:
             return
         return "active"
+
+
+# Useful for debugging
+@register.filter
+def get_fields(obj):
+    return [(field.name, field.value_to_string(obj)) for field in obj._meta.fields]
+
+
+@register.filter
+def file_basename(value):
+    return os.path.basename(value.file.name)
