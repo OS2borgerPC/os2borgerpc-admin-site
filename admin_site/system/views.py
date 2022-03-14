@@ -1303,15 +1303,6 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context["form"]
         site = context["site"]
 
-        # Obtain the base URL for media to make a link to
-        # download script file parameters
-        if hasattr(settings, "GS_CUSTOM_ENDPOINT"):
-            context["media_base_url"] = (
-                settings.GS_CUSTOM_ENDPOINT + "/" + settings.MEDIA_URL
-            )
-        else:
-            context["media_base_url"] = settings.MEDIA_URL
-
         pc_queryset = site.pcs.filter(is_activated=True)
         form.fields["pcs"].queryset = pc_queryset
 
