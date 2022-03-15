@@ -2,6 +2,7 @@
 
 import requests
 import logging
+import traceback
 
 from importlib import import_module
 
@@ -12,6 +13,8 @@ from django.core.mail import EmailMessage
 
 def notify_users(data, security_problem, pc):
     """Notify users about security event."""
+
+    logger = logging.getLogger(__name__)
 
     # Subject = security name,
     # Body = description + technical summary
@@ -26,10 +29,14 @@ def notify_users(data, security_problem, pc):
         message = EmailMessage(
             f"Sikkerhedsadvarsel for PC : {pc.name}."
             f" Sikkerhedsregel : {security_problem.name}",
-            body, settings.DEFAULT_FROM_EMAIL, email_list
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            email_list,
         )
         message.send(fail_silently=False)
-    except Exception:
+    except Exception:  # Likely Exception: SMTPException
+        logger.warning("Security Event e-mail-sending failed:")
+        logger.warning(traceback.format_exc())
         return False
 
     return True
@@ -42,7 +49,7 @@ def get_citizen_login_validator():
     identity. It will return a unique ID of the authenticated user if
     successful, and something that evaluates to false if unsuccesful.
     """
-    path, function = settings.CITIZEN_LOGIN_VALIDATOR.rsplit('.', 1)
+    path, function = settings.CITIZEN_LOGIN_VALIDATOR.rsplit(".", 1)
 
     module = import_module(path)
     validator = getattr(module, function)
@@ -60,7 +67,7 @@ def cicero_validate(loaner_number, pincode, agency_id):
     try:
         pincode = int(pincode)
     except ValueError:
-        logger.error(f"Pincode must be a number - {pincode} is not  number.")
+        # logger.warning("Pincode must be a number.")
         return 0
     if not agency_id:
         logger.error("Agency ID / ISIL MUST be specified.")
@@ -97,9 +104,9 @@ def cicero_validate(loaner_number, pincode, agency_id):
         authenticate_status = result["authenticateStatus"]
         print(authenticate_status)
         if authenticate_status != "VALID":
-            logger.error(
-                f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
-            )
+            # logger.warning(
+            #    f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
+            # )
             return 0
         # Loaner has been successfully authenticated.
         patron_id = result["patron"]["patronId"]
@@ -114,7 +121,7 @@ def always_validate_citizen(loaner_number, pincode, agency_id):
     try:
         pincode = int(pincode)
     except ValueError:
-        logger.error(f"Pincode must be a number - {pincode} is not  number.")
+        # logger.warning("Pincode must be a number.")
         return 0
     if not agency_id:
         logger.error("Agency ID / ISIL MUST be specified.")

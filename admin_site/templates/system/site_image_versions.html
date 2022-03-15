@@ -1,101 +1,105 @@
 {% extends "site_with_navigation.html" %}
-
 {% block specific_title %}
-Versioner
+  Versioner
 {% endblock %}
-
 {% block subnav %}
-<ul class="sublevelnav item-list">
-  {% if site_allowed %}
-    {% for maj_v in major_versions %}
-      <li class="{% ifequal maj_v selected_image_version %}active{% endifequal %}">
-        <a class="item-list-link" href="/site/{{ site.url }}/image-versions/{{ maj_v }}">
-          <span clas="d-flex align-items-center">
-            <span class="material-icons">
-              cloud_download
-            </span> 
-            v{{ maj_v }}
-          </span>
-        </a>
-      </li>
-    {% endfor %}
-  {% endif %}
+  <ul class="sublevelnav item-list">
+    {% if site_allowed %}
+      {% for platform_choice, platform_readable in platform_choices.items %}
+      <li class="{% ifequal platform_choice|slugify selected_platform.0|slugify %}active{% endifequal %}">
+      <a class="item-list-link" href="/site/{{ site.url }}/image-versions/{{ platform_choice|slugify }}">
+        <span clas="d-flex align-items-center">
+          {{ platform_readable }}
+        </span>
+      </a>
+    </li>
+  {% endfor %}
+{% endif %}
 </ul>
 {% endblock %}
-
 {% block specific_content %}
 <div class="container-fluid main sublevelmain">
+{% if site_allowed %}
+  {% if selected_platform_images %}
+    <!-- First index of 'minor_versions' is the newest version -->
+    {% with selected_platform_images|first as first_obj %}
+    <h2 class="divideheader">Nyeste udgave af {{ selected_platform.1 }}</h2>
+    <dl>
+      <dt>Version</dt>
+      <dd>{{ first_obj.image_version }}</dd>
+      <dt>Release-dato</dt>
+      <dd>{{ first_obj.release_date }}</dd>
+      <dt>Operativsystem</dt>
+      <dd>{{ first_obj.os }}</dd>
+      <dt>Udgivelsesnoter</dt>
+      <dd>
+    <pre style="font-family: var(--bs-font-sans-serif)">{{ first_obj.release_notes }}</pre>
+    </dd>
+  </dl>
+  <a class="btn btn-md btn-success text-light" href="{{ first_obj.image_upload.url }}" download>
+    <span class="material-icons">
+      cloud_download
+    </span>
+    Download
+  </a>
+{% endwith %}
+{% else %}
+<h2 class="divideheader">Versioner</h2>
+<p>Der blev ikke fundet nogen versioner</p>
+{% endif %}
+{% if selected_platform_images.count > 1 %}
+<!-- Proceed to load remaining versions -->
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+    Tidligere versioner
+    </button>
+  </div>
+  <table class="table table-hover accordion-body accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    <thead>
+      <tr>
+        <th>Version</th>
+        <th>Release-dato</th>
+        <th>Operativsystem</th>
+        <th>Udgivelsesnoter</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for image in selected_platform_images|slice:"1:" %}
+          <td>{{ image.image_version }}</td>
+          <td>{{ image.release_date }}</td>
+          <td>{{ image.os }}
 
-  {% if site_allowed %}
-
-    {% if minor_versions.all.count > 0 %}
-
-      <!-- First index of 'minor_versions' is the newest version -->
-      {% with minor_versions.all|dictsortreversed:"image_version"|first as first_obj %}
-        <h2 class="divideheader">Nyeste udgave af v{{ first_obj.image_version|slice:":1" }}</h2>
-        <dl>
-          <dt>VERSION</dt>
-          <dd>{{ first_obj.image_version }}</dd>
-          <dt>RELEASE DATO</dt>
-          <dd>{{ first_obj.release_date }}</dd>
-          <dt>OPERATIVSYSTEM</dt>
-          <dd>{{ first_obj.os }}</dd>
-          <dt>UDGIVELSESNOTER</dt>
-          <dd>{{ first_obj.release_notes }}</dd>
-          <dt>DOWNLOAD</dt>
-          <dd>
-            <a class="btn btn-sm btn-success" href="{{ first_obj.image_upload.url }}" download>v{{ first_obj.image_version }}.iso</a>
-          </dd>
-        </dl>
-      {% endwith %}
-      
-      {% if minor_versions.all.count > 1 %}
-        <!-- Proceed to load remainding 'minor_versions' -->
-        <div class="accordion" id="accordionExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Vis tidligere underversioner
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                
-                {% for iv in minor_versions.all|dictsortreversed:"image_version"|slice:"1:" %}
-                  <dl>
-                    <dt>VERSION</dt>
-                    <dd>{{iv.image_version}}</dd>
-                    <dt>RELEASE DATE</dt>
-                    <dd>{{ iv.release_date }}</dd> 
-                    <dt>OPERATING SYSTEM</dt>
-                    <dd>{{ iv.os }}</dd> 
-                    <dt>RELEASE NOTES</dt>
-                    <dd>{{ iv.release_notes }}</dd> 
-                    <dt>DOWNLOAD</dt>
-                    <dd>
-                      <a class="btn btn-sm btn-success" href="{{ iv.image_upload.url }}" download>v{{iv.image_version}}</a>
-                    </dd>
-                  </dl>
-                {% endfor %}      
-                
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      {% endif %}
-    {% else %}
-      <h2 class="divideheader">Versioner</h2>
-      <p>Der blev ikke fundet nogen versioner</p>
-    {% endif %} 
-  {% else %}
-    <h2 class="text-error"><strong>INGEN ADGANG</strong></h2>
-    <p>
-      Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, og
-      derfor vises ingen versioner.
-    </p>
-    <p>Kontakt venligst OS2borgerpc leverandør, for at høre mere.</p>
-  {% endif %} 
+          </td>
+          <td>
+          <pre style="font-family: var(--bs-font-sans-serif)">{{ image.release_notes }}</pre>
+        </td>
+        <td>
+          <a class="btn btn-sm btn-secondary text-light" href="{{ iv.image_upload.url }}" download>
+          <span clas="d-flex align-items-center">
+            
+            <span class="material-icons">
+              cloud_download
+            </span>
+            Download
+          </span>
+          </a>
+        </td>
+      {% endfor %}
+    {% endif %}
+  </tr>
+</tbody>
+</table>
 </div>
-
+{% else %}
+<h2 class="text-error"><strong>INGEN ADGANG</strong></h2>
+<p>
+Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, og
+derfor vises ingen versioner.
+</p>
+<p>Kontakt venligst OS2borgerpc leverandør, for at høre mere.</p>
+{% endif %}
+</div>
 {% endblock %}

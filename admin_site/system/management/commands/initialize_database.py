@@ -8,17 +8,17 @@ from django.conf import settings
 
 class Command(BaseCommand):
     """
-    Initialize database.
-    Helper command to seed database with (static) basic data.
+        Initialize database.
+        Helper command to seed database with (static) basic data.
 
-    :Reference: :mod:`bevillingsplatform.initialize`
+        :Reference: :mod:`bevillingsplatform.initialize`
 
-    Should be able to be run multiple times over without generating
-duplicates.
+        Should be able to be run multiple times over without generating
+    duplicates.
 
-    Example:
+        Example:
 
-                $ python manage.py initialize_database
+                    $ python manage.py initialize_database
 
     """
 

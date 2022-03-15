@@ -12,14 +12,20 @@
         this.scriptInputs = []
         // These two snippets of HTML should match what's inside item.html
         this.hiddenParamField = function (name, type, mandatory) {
+
           return '<input class="policy-script-param'
                   + (type == 'FILE' ? ' phantom' : '')
                   + '" type="' + (type == 'FILE' ? 'file' : 'hidden')
-                  + '" name="' + name + '" value="" data-inputtype="' + type +
-                  '"' + (mandatory ? ' required="required"' : '') + '/>'
+                  + '" name="' + name 
+                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : '') + '" ' 
+                  + 'data-inputtype="' + type 
+                  + '"' + (mandatory ? ' required="required"' : '') + '/>'
         }
-        this.visibleParamField = function (name) {
-          return '<div class="policy-script-print"><strong class="policy-script-print-name">' + name + ': </strong><span class="policy-script-print-value"></span></div>'
+        this.visibleParamField = function (input) {
+          return '<div class="policy-script-print"><strong class="policy-script-print-name">' 
+                  + input.name + ': </strong><span class="policy-script-print-value">' 
+                  + ((input.type == 'BOOLEAN') ? '<input type="checkbox" checked disabled>' : '') 
+                  + '</span></div>'
         }
         this.getFieldType = function(type) {
           switch(type) {
@@ -31,11 +37,13 @@
               return 'file'
             case 'DATE':
               return 'date'
+            case 'BOOLEAN':
+              return 'checkbox'
             default:
               return 'text'
           }
         }
-    }
+      }
 
     $.extend(PolicyList.prototype, {
         init: function() {
@@ -72,7 +80,7 @@
 
                 if (t.val().match(/^new_/)) {
                     p.find('input.policy-script-name').attr(
-                        'name',
+                          'name',
                         id + '_new_' + num
                     )
                     p.find('input.policy-script-param').each(function(i) {
@@ -108,12 +116,15 @@
           $.each(inputWrapper.find('.policy-script-param'), function(idx, elm) {
             var t = $(elm)
             var label = t.next('.policy-script-print').find('.policy-script-print-name')
+            const type = BibOS.PolicyList.getFieldType(t.attr('data-inputtype'))
             var newElement = $('<input/>', {
-              type: BibOS.PolicyList.getFieldType(t.attr('data-inputtype')),
+              type: type,
               name: "edit_" + t.attr('name'),
               id: "edit_" + t.attr('name'),
-              class: "form-control"
+              checked: (type === 'checkbox' && t.val() === 'True'),
+              class: (type !== 'checkbox') ? 'form-control' : 'form-control form-check-input',
             })
+
             if (newElement.attr('type') == "file") {
               /* In principle, it'd be nice (for display purposes) to copy the
                  FileList from the hidden input into the modal dialog -- but
@@ -121,6 +132,9 @@
                  the FileList back again, it gets cleared! */
 //              newElement[0].files = t[0].files
             } else {
+              if (newElement.attr('type') == 'checkbox') {
+                newElement[0].checked = (t.val() === 'True') ? true : false
+              }
               newElement[0].value = t.val()
             }
             inputFields = inputFields.add($('<label/>', {
@@ -139,7 +153,7 @@
           for(var i = 0; i < BibOS.PolicyList.scriptInputs.length; i++) {
             paramName = submitName + '_' + scriptPk + '_param_' + i
             param_fields += this.hiddenParamField(paramName, BibOS.PolicyList.scriptInputs[i].type, BibOS.PolicyList.scriptInputs[i].mandatory)
-            param_fields += this.visibleParamField(BibOS.PolicyList.scriptInputs[i].name)
+            param_fields += this.visibleParamField(BibOS.PolicyList.scriptInputs[i])
           }
 
           // output the fields
@@ -187,6 +201,9 @@
                 inputField[0].files = t[0].files
                 visibleValueField.text(t[0].files[0].name)
               }
+            } else if (t.attr('type') == 'checkbox') {
+              inputField.val((this.checked) ? 'True' : 'False')
+              visibleValueField[0].innerHTML = '<input type="checkbox" disabled ' + ((this.checked) ? 'checked>' : '>')
             } else if (t.val().trim().length != 0) {
               inputField.val(t.val())
               visibleValueField.text(t.val())

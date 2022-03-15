@@ -57,6 +57,11 @@ Sikkerhedsregler
         class="gray-box">
         {% csrf_token %} 
         
+        <p class="alert alert-info"><strong>Bemærk</strong><br/>
+        Hvis der ikke er nogen gruppe tilknyttet sikkerhedsreglen, så vil reglen gælde <strong>alle</strong> computere.<br/> 
+        Ønsker du midlertidigt at gøre en regel inaktiv, kan du oprette en <em>tom</em> gruppe (dvs. en gruppe uden computere)<br/>
+        og sætte denne gruppe som den overvågede gruppe.
+        </p>
         <div class="row gx-5">
             <fieldset class="col-12 col-lg-6">
                 
@@ -75,11 +80,11 @@ Sikkerhedsregler
 
                 <p>
                     <label>Overvågede grupper</label>
-                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til overvågning' remove_text='Fjern overvåget gruppe' %}
+                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til overvågning' remove_text='Fjern overvåget gruppe' site_url=site.uid target_section='computers' %}
                 </p>
                 <p>
                     <label>Modtager(e) af e-mail-advarsel</label>
-                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text='Tilføj e-mail-modtager' remove_text='Fjern modtager' %}
+                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text='Tilføj e-mail-modtager' remove_text='Fjern modtager' site_url=site.uid target_section='users' %}
                 </p>
 
             </fieldset>

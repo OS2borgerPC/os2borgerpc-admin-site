@@ -17,20 +17,18 @@ from account.models import UserProfile
 
 print("FILE", os.path.dirname(__file__))
 
-parent_directory = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..')
-)
+parent_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 
 # setup account_userprofile, auth_user, securityproblem
 class SimpleTest(TestCase):
     def setUp(self):
-        site_user = User.objects.create_superuser('danni',
-                                                  'danni@magenta-aps.dk',
-                                                  'hejsa')
-        test_user = User.objects.create_superuser('test',
-                                                  'test@magenta-aps.dk',
-                                                  'hejsa')
+        site_user = User.objects.create_superuser(
+            "danni", "danni@magenta-aps.dk", "hejsa"
+        )
+        test_user = User.objects.create_superuser(
+            "test", "test@magenta-aps.dk", "hejsa"
+        )
         # security_problem = SecurityProblem.objects.create(name='Keyboard',
         # uid='KEYBOARD', description='Usb keyboard added.',
         # level='High', script_id=1, site_id=1)
@@ -44,15 +42,14 @@ class SimpleTest(TestCase):
         self.assertEqual(1 + 1, 2)
 
     def test_notify_user(self):
-        data = 'KEYBOARD, Summary, Raw data'
-        split = data.split(',')
+        data = "KEYBOARD, Summary, Raw data"
+        split = data.split(",")
         email_list = []
         user_profiles = UserProfile.objects.filter(type=1)
         for user in user_profiles:
             email_list.append(User.objects.get(id=user.user_id).email)
 
-        message = EmailMessage(split[0], split[1], settings.ADMIN_EMAIL,
-                               email_list)
+        message = EmailMessage(split[0], split[1], settings.ADMIN_EMAIL, email_list)
 
         self.assertEqual(len(email_list), 2)
         self.assertEqual(message.send(), 1)
@@ -60,7 +57,7 @@ class SimpleTest(TestCase):
 
 def pep8_test(filepath):
     def do_test(self):
-        arglist = ['--exclude=migrations', filepath]
+        arglist = ["--exclude=migrations", filepath]
         pep8.process_options(arglist)
 
         pep8.input_dir(filepath)
@@ -74,14 +71,15 @@ def pep8_test(filepath):
 class Pep8Test(TestCase):
     """Test that the template system a well as the default clients and plugins
     are PEP8-compliant."""
+
     def j(d):
         result = os.path.abspath(os.path.join(parent_directory, d))
         return result
 
-    system_dir = j('system')
-    admin_dir = j('admin')
-    client_dir = j('../bibos_client')
-    utils_dir = j('../bibos_utils')
+    system_dir = j("system")
+    admin_dir = j("admin")
+    client_dir = j("../bibos_client")
+    utils_dir = j("../bibos_utils")
     test_system = pep8_test(system_dir)
     test_admin = pep8_test(admin_dir)
     test_client = pep8_test(client_dir)

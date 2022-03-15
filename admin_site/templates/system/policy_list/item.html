@@ -25,10 +25,18 @@
               {{ param.input.name }}:
             </strong>
             <span class="policy-script-print-value">
-              {% if param.input.value_type != 'FILE' %}
-                {{ param.string_value }}
+              {% if param.input.value_type == 'FILE' %}
+              <a href="{{param.file_value.url}}">
+                {{ param.file_value|file_basename }}
+              </a>
+              {% elif param.input.value_type == 'BOOLEAN' %}
+                {% if param.string_value == 'True' %}
+                  <input type="checkbox" disabled checked>
+                {% else %}
+                  <input type="checkbox" disabled unchecked>
+                {% endif %}
               {% else %}
-                {{ param.file_value }}
+                {{ param.string_value }}
               {% endif %}
             </span>
           </div>
@@ -49,7 +57,7 @@
         <span class='material-icons'>edit</span>Redigér
       </a>
       <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')">
-        <span class='material-icons'>delete</span>Fjern script
+        <span class='material-icons'>delete</span>Fjern
       </a>
     </p>
   </td>

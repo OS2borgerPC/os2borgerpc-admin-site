@@ -14,20 +14,26 @@
   <p>
     Konfigurationer bruges til at udveksle information mellem admin-sitet og de tilknyttede computere, i begge
     retninger.<br/>
-    Dvs. det er både muligt fra adminsitet at specificere en værdi som en eller flere computere så vil modtage, 
+    Dvs. det er både muligt fra adminsitet at specificere en værdi som en eller flere computere så vil modtage,
     og ligeledes sender en computer værdier til adminsitet.
   </p>
   <p>Generelle eksempler på anvendelsesmuligheder:</p>
   <ul>
-    <li>Computeren sender bl.a. information om dens hostname, netværkskortets MAC-adresse og hvor mange opdateringer og sikkerhedsopdateringer, 
+    <li>Computeren sender bl.a. information om dens hostname, netværkskortets MAC-adresse og hvor mange opdateringer og sikkerhedsopdateringer,
       der er tilgængelig for den fra Ubuntu.<br>
-      Det kan i nogle tilfælde være relevant for systemadministratorer.</li> 
-    <li>Computeren sender ligeledes information om den kører borgerPC eller displayPC, samt de specifikke versioner heraf.<br/>
-      Det kan i nogle tilfælde være relevant at vide ift. fejlfinding.</li> 
+      Det kan i nogle tilfælde være relevant for systemadministratorer.</li>
+    <li>Computeren sender ligeledes information om den kører BorgerPC eller BorgerPC Kiosk, samt de specifikke versioner heraf.<br/>
+      Det kan i nogle tilfælde være relevant at vide ift. fejlfinding.</li>
     <li>Man ønsker ifm. udviklingen af et script at sende konfiguration dertil via adminsitet, som så kan opdateres uden genkørsel af
       scripts, eller som kan variere ml. grupper eller computere.</li>
-      Det kan i nogle tilfælde være relevant at vide for scriptudviklere.</li> 
+      Det kan i nogle tilfælde være relevant at vide for scriptudviklere.</li>
   </ul>
+
+  <p>
+    Langt de fleste konfigurationer styres af adminsitet fremfor på den enkelte maskine.
+    Dvs. hvis du ændrer værdien på den enkelte maskine, vil den oftest blive ændret tilbage til hvad adminsitet siger ved
+    næste tjek-ind.
+  </p>
 
   <h3>Teknisk information til systemadministratorer</h3>
 
@@ -45,7 +51,7 @@
   <p><strong>1. Site-konfigurationer</strong></p>
 
   <p>
-    Disse konfigurationsparametre gælder for alle computere, der er tilknyttet det valgte site. 
+    Disse konfigurationsparametre gælder for alle computere, der er tilknyttet det valgte site.
   </p>
 
   <p>
@@ -68,18 +74,121 @@
     site-konfiguration eller konfiguration på grupper som computeren er medlem af.
   </p>
 
+  <h4>Betydningen af de indbyggede konfigurationer</h4>
+
+  <p class="alert alert-info">
+    Alle værdier uden _ foran bestemmes af adminsitet, mens værdier med _ bestemmes af computeren / klienten.<br/>
+    Det vil i praksis sige, at ændrer man eks. <strong>os2borgerpc_version</strong> på maskinen, så vil den blive overskrevet efter næste
+    tjek-ind med adminsitet.
+  </p>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Navn</th>
+        <th>Betydning</th>
+        <th>Kommentar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>_os2borgerpc.client_version</td>
+        <td>Versionen på OS2borgerPC-klienten</td>
+        <td>Klienten er den software der kører på maskinen, som er i kontakt med adminsitet</td>
+      </tr>
+      <tr>
+        <td>_os_name</td>
+        <td>Navnet på operativsystemet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>_os_release</td>
+        <td>Versionen af operativsystemet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>admin_url</td>
+        <td>Adressen til serveren der tjekkes ind hos</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>distribution</td>
+        <td>Navnet på operativsystemet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>fresh_install</td>
+        <td>-</td>
+        <td>Under udfasning</td>
+      </tr>
+      <tr>
+        <td>gateway</td>
+        <td>Bruges hvis man opsætter en gateway som mellemled ml. maskinen og adminsitet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>hostname</td>
+        <td>Maskinens hostname</td>
+        <td>Sættes pt. kun ifm. installationen</td>
+      </tr>
+      <tr>
+      <tr>
+        <td>job_timeout</td>
+        <td>Hvor længe klienten venter på færdiggørelsen af jobs, angivet i sekunder</td>
+        <td>Hvis job_timeout løber ud stoppes processen. Det er brugbart hvis noget i systemet hænger,
+          såsom at pakkesystemet eller et script forgæves forsøger at få input fra brugeren
+        </td>
+      </tr>
+      <tr>
+        <td>mac</td>
+        <td>Netværkskortets MAC-adresse</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>os2_product</td>
+        <td>Identificerer om maskinen er en OS2borgerPC eller en OS2borgerPC Kiosk</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>os2borgerpc_version</td>
+        <td>Versionen på OS2borgerPC</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>security_updates</td>
+        <td>Antallet af sikkerheds pakke-opdateringer fra Ubuntu, der er tilgængelige for maskinen</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>site</td>
+        <td>Hvilket site maskinen er tilknyttet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>updates</td>
+        <td>Antallet af almindelige pakke-opdateringer fra Ubuntu, der er tilgængelige for maskinen</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>uid</td>
+        <td>Maskinens UID</td>
+        <td>Adminsitet bruger denne til at identificere maskinen</td>
+      </tr>
+    </tbody>
+  </table>
+
   <h3>Teknisk information til scriptudviklere</h3>
 
   <h4>Sådan udveksles information</h4>
 
   <h5>Site <span class='material-icons'>arrow_right_alt</span> Computer</h5>
 
-  <p>Du opretter på et Site, en Gruppe eller en Computer en konfiguration, og den vil automatisk blive overført til
+  <p>Du opretter på et Site, en Gruppe eller en Computer en konfigurationsværdi, og den vil automatisk blive overført til
   computeren, næste gang computeren tjekker ind omkring, om der er nye scripts, den skal køre.<p>
 
   <h5>Computer <span class='material-icons'>arrow_right_alt</span> Site</h5>
 
-  <p>Fra en terminal på computeren, eller fra et script, kan du benytte disse funktioner:</p>
+  <p>Fra en terminal på computeren, eller fra et script, kan du benytte disse programmer:</p>
   <table class="table table-hover">
     <thead>
       <tr><th>Navn</th><th>Funktionalitet</th><th>Brugseksempel</th></tr>
@@ -87,17 +196,19 @@
     <tbody>
       <tr>
         <td>get_os2borgerpc_config</td>
-        <td>Henter værdien af en konfiguration.</td>
+        <td>Henter værdien af en konfigurationværdi</td>
         <td>get_os2borgerpc_config site<br/> <br/>
           Får fat i UID'et på det site, computeren er tilknyttet.</td>
       </tr>
       <tr>
         <td>set_os2borgerpc_config</td>
-        <td>Sætter værdien af en konfiguration.</td>
+        <td>Sætter værdien af en konfigurationværdi</td>
         <td>set_os2borgerpc_config borger ja<br/> <br/>
           Opretter en ny konfiguration kaldet borger, og sætter den til 'ja'</td>
       </tr>
     </tbody>
   </table>
+
+  <p>Ovenstående programmer interagerer i praksis med filen /etc/os2borgerpc/os2borgerpc.conf</p>
 
 {% endblock %}

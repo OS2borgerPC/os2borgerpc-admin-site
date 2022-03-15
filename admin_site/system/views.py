@@ -14,13 +14,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import (
-    View,
-    ListView,
-    DetailView,
-    RedirectView,
-    TemplateView
-)
+from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
 
 from django.db import transaction
@@ -46,7 +40,9 @@ from system.models import (
     MandatoryParameterMissingError,
     ImageVersion,
     ScriptTag,
+    AssociatedScriptParameter,
 )
+
 # PC Status codes
 from system.forms import (
     SiteForm,
@@ -61,14 +57,9 @@ from system.forms import (
 
 
 def set_notification_cookie(response, message, error=False):
-    descriptor = {
-        "message": message,
-        "type": "success" if not error else "error"
-    }
+    descriptor = {"message": message, "type": "success" if not error else "error"}
 
-    response.set_cookie('bibos-notification',
-                        quote(json.dumps(descriptor), safe='')
-                        )
+    response.set_cookie("bibos-notification", quote(json.dumps(descriptor), safe=""))
 
 
 # Mixin class to require login
@@ -82,7 +73,8 @@ class LoginRequiredMixin(View):
 
 class SuperAdminOnlyMixin(View):
     """Only allows access to super admins."""
-    check_function = user_passes_test(lambda u: u.is_superuser, login_url='/')
+
+    check_function = user_passes_test(lambda u: u.is_superuser, login_url="/")
 
     @method_decorator(login_required)
     @method_decorator(check_function)
@@ -91,29 +83,25 @@ class SuperAdminOnlyMixin(View):
 
 
 class SuperAdminOrThisSiteMixin(View):
-
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """Limit access to super users or users belonging to THIS site."""
         site = None
         slug_field = None
         # Find out which field is used as site slug
-        if 'site_uid' in kwargs:
-            slug_field = 'site_uid'
-        elif 'slug' in kwargs:
-            slug_field = 'slug'
+        if "site_uid" in kwargs:
+            slug_field = "site_uid"
+        elif "slug" in kwargs:
+            slug_field = "slug"
         # If none given, give up
         if slug_field:
             site = get_object_or_404(Site, uid=kwargs[slug_field])
         check_function = user_passes_test(
-            lambda u:
-            (u.is_superuser) or (
-                site and site in u.bibos_profile.sites.all()
-            ), login_url='/'
+            lambda u: (u.is_superuser)
+            or (site and site in u.bibos_profile.sites.all()),
+            login_url="/",
         )
-        wrapped_super = check_function(
-            super(SuperAdminOrThisSiteMixin, self).dispatch
-        )
+        wrapped_super = check_function(super(SuperAdminOrThisSiteMixin, self).dispatch)
         return wrapped_super(*args, **kwargs)
 
 
@@ -122,6 +110,7 @@ class SelectionMixin(View):
     """This supplies the ability to highlight a selected object of a given
     class. This is useful if a Detail view contains a list of children which
     the user is allowed to select."""
+
     # The Python class of the Django model corresponding to the objects you
     # want to be able to select. MUST be specified in subclass.
     selection_class = None
@@ -129,7 +118,7 @@ class SelectionMixin(View):
     # class specified by selection_class. MUST be specified in subclass.
     get_list = None
     # The field which is used to look up the selected object.
-    lookup_field = 'uid'
+    lookup_field = "uid"
     # Overrides the default class name in context.
     class_display_name = None
 
@@ -144,11 +133,14 @@ class SelectionMixin(View):
         else:
             selected = self.get_list()[0] if self.get_list() else None
 
-        display_name = (self.class_display_name if self.class_display_name else
-                        self.selection_class.__name__.lower())
+        display_name = (
+            self.class_display_name
+            if self.class_display_name
+            else self.selection_class.__name__.lower()
+        )
         if selected is not None:
-            context['selected_{0}'.format(display_name)] = selected
-        context['{0}_list'.format(display_name)] = self.get_list()
+            context["selected_{0}".format(display_name)] = selected
+        context["{0}_list".format(display_name)] = self.get_list()
         return context
 
 
@@ -156,14 +148,12 @@ class JSONResponseMixin:
     """
     A mixin that can be used to render a JSON response.
     """
+
     def render_to_json_response(self, context, **response_kwargs):
         """
         Returns a JSON response, transforming 'context' to make the payload.
         """
-        return JsonResponse(
-            self.get_data(context),
-            **response_kwargs
-        )
+        return JsonResponse(self.get_data(context), **response_kwargs)
 
     def get_data(self, context):
         """
@@ -181,15 +171,15 @@ class JSONResponseMixin:
 class SiteMixin(View):
     """Mixin class to extract site UID from URL"""
 
-    site_uid = 'site_uid'
+    site_uid = "site_uid"
 
     def get_context_data(self, **kwargs):
         context = super(SiteMixin, self).get_context_data(**kwargs)
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
-        context['site'] = site
+        context["site"] = site
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
-        context['sec_events'] = no_of_sec_events
+        context["sec_events"] = no_of_sec_events
 
         return context
 
@@ -197,6 +187,7 @@ class SiteMixin(View):
 # Main index/site root view
 class AdminIndex(RedirectView, LoginRequiredMixin):
     """Redirects to admin overview (sites list) or site main page."""
+
     def get_redirect_url(self, **kwargs):
         """Redirect based on user. This view will use the RequireLogin mixin,
         so we'll always have a logged-in user."""
@@ -217,8 +208,9 @@ class SiteList(ListView, LoginRequiredMixin):
 
     Provides a list of sites a user has access to.
     """
+
     model = Site
-    context_object_name = 'site_list'
+    context_object_name = "site_list"
 
     def get_queryset(self):
         user = self.request.user
@@ -237,15 +229,16 @@ class SiteList(ListView, LoginRequiredMixin):
 # Base class for Site-based passive (non-form) views
 class SiteView(DetailView, SuperAdminOrThisSiteMixin):
     """Base class for all views based on a single site."""
+
     model = Site
-    slug_field = 'uid'
+    slug_field = "uid"
 
     def get_context_data(self, **kwargs):
         context = super(SiteView, self).get_context_data(**kwargs)
         site = self.get_object()
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
-        context['sec_events'] = no_of_sec_events
+        context["sec_events"] = no_of_sec_events
 
         return context
 
@@ -253,7 +246,7 @@ class SiteView(DetailView, SuperAdminOrThisSiteMixin):
 class SiteDetailView(SiteView):
     """Class for showing the overview that is displayed when entering a site"""
 
-    template_name = 'system/site_status.html'
+    template_name = "system/site_status.html"
 
     # For hver pc skal vi hente seneste security event.
     def get_context_data(self, **kwargs):
@@ -261,99 +254,105 @@ class SiteDetailView(SiteView):
         # Top level list of new PCs etc.
         not_activated_pcs = self.object.pcs.filter(is_activated=False)
 
-        site = context['site']
+        site = context["site"]
         site_pcs = site.pcs.all()
-        context['ls_pcs'] = site_pcs.order_by(
-            'is_activated',
-            F('last_seen').desc(nulls_last=True)
+        context["ls_pcs"] = site_pcs.order_by(
+            "is_activated", F("last_seen").desc(nulls_last=True)
         )
 
-        context['total_pcs'] = context['ls_pcs'].count()
-        context['activated_pcs'] = context['total_pcs'] - not_activated_pcs.count()
+        context["total_pcs"] = context["ls_pcs"].count()
+        context["activated_pcs"] = context["total_pcs"] - not_activated_pcs.count()
         activated_pcs = site_pcs.filter(is_activated=True)
-        context['online_pcs'] = len([pc for pc in activated_pcs if pc.online])
+        context["online_pcs"] = len([pc for pc in activated_pcs if pc.online])
 
         return context
 
 
 class SiteSettings(UpdateView, SiteView):
     form_class = SiteForm
-    template_name = 'system/site_settings.html'
+    template_name = "system/site_settings.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
         context = super(SiteSettings, self).get_context_data(**kwargs)
-        configs = self.object.configuration.entries.all()
-        context['site_configs'] = configs.order_by('key')
+        context["site_configs"] = self.object.configuration.entries.all()
 
         return context
 
     def post(self, request, *args, **kwargs):
         # Do basic method
-        kwargs['updated'] = True
+        kwargs["updated"] = True
         response = self.get(request, *args, **kwargs)
 
         # Handle saving of site settings data
         super(SiteSettings, self).post(request, *args, **kwargs)
 
         # Handle saving of site configs data
-        self.object.configuration.update_from_request(
-            request.POST, 'site_configs'
-        )
+        self.object.configuration.update_from_request(request.POST, "site_configs")
 
-        set_notification_cookie(
-            response,
-            _('Settings for %s updated') % kwargs['slug']
-        )
+        set_notification_cookie(response, _("Settings for %s updated") % kwargs["slug"])
         return response
+
+
+class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
+    template_name = "system/site_two_factor.html"
 
 
 # Now follows all site-based views, i.e. subclasses
 # of SiteView.
 class JobsView(SiteView):
-    template_name = 'system/site_jobs.html'
+    template_name = "system/site_jobs.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
         context = super(JobsView, self).get_context_data(**kwargs)
         site = context["site"]
-        context['batches'] = site.batches.all()[:100]
-        context['pcs'] = site.pcs.all()
-        context['groups'] = site.groups.all()
-        preselected = set([
-            Job.NEW,
-            Job.SUBMITTED,
-            Job.RUNNING,
-            Job.FAILED,
-            Job.DONE,
-        ])
-        context['status_choices'] = [
+        context["batches"] = site.batches.all()[:100]
+        context["pcs"] = site.pcs.all()
+        context["groups"] = site.groups.all()
+        preselected = set(
+            [
+                Job.NEW,
+                Job.SUBMITTED,
+                Job.RUNNING,
+                Job.FAILED,
+                Job.DONE,
+            ]
+        )
+        context["status_choices"] = [
             {
-                'name': name,
-                'value': value,
-                'label': Job.STATUS_TO_LABEL[value],
-                'checked':
-                'checked="checked' if value in preselected else ''
-            } for (value, name) in Job.STATUS_CHOICES
+                "name": name,
+                "value": value,
+                "label": Job.STATUS_TO_LABEL[value],
+                "checked": 'checked="checked' if value in preselected else "",
+            }
+            for (value, name) in Job.STATUS_CHOICES
         ]
         params = self.request.GET or self.request.POST
 
-        for k in ['batch', 'pc', 'group']:
+        for k in ["batch", "pc", "group"]:
             v = params.get(k, None)
             if v is not None and v.isdigit():
-                context['selected_%s' % k] = int(v)
+                context["selected_%s" % k] = int(v)
 
         return context
 
 
 class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
     paginate_by = 20
-    http_method_names = ['get']
+    http_method_names = ["get"]
     VALID_ORDER_BY = []
-    for i in ['pk', 'batch__script__name', 'started', 'finished', 'status',
-              'pc__name', 'batch__name']:
+    for i in [
+        "pk",
+        "batch__script__name",
+        "started",
+        "finished",
+        "status",
+        "pc__name",
+        "batch__name",
+    ]:
         VALID_ORDER_BY.append(i)
-        VALID_ORDER_BY.append('-' + i)
+        VALID_ORDER_BY.append("-" + i)
 
     context_object_name = "jobs_list"
 
@@ -367,26 +366,23 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
 
         query = {"batch__site": site}
 
-        if 'status' in params:
-            query['status__in'] = params.getlist('status')
+        if "status" in params:
+            query["status__in"] = params.getlist("status")
 
-        for k in ['pc', 'batch']:
-            v = params.get(k, '')
-            if v != '':
+        for k in ["pc", "batch"]:
+            v = params.get(k, "")
+            if v != "":
                 query[k] = v
 
-        group = params.get('group', '')
-        if group != '':
-            query['pc__pc_groups'] = group
+        group = params.get("group", "")
+        if group != "":
+            query["pc__pc_groups"] = group
 
-        orderby = params.get('orderby', '-pk')
+        orderby = params.get("orderby", "-pk")
         if orderby not in JobSearch.VALID_ORDER_BY:
-            orderby = '-pk'
+            orderby = "-pk"
 
-        queryset = queryset.filter(**query).order_by(
-            orderby,
-            'pk'
-        )
+        queryset = queryset.filter(**query).order_by(orderby, "pk")
 
         return queryset
 
@@ -396,10 +392,11 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
         paginator = context["paginator"]
         adjacent_pages = 2
         page_numbers = [
-            n for n in range(
-                page_obj.number - adjacent_pages,
-                page_obj.number + adjacent_pages + 1
-            ) if n > 0 and n <= paginator.num_pages
+            n
+            for n in range(
+                page_obj.number - adjacent_pages, page_obj.number + adjacent_pages + 1
+            )
+            if n > 0 and n <= paginator.num_pages
         ]
 
         result = {
@@ -409,53 +406,53 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
             "page_numbers": page_numbers,
             "has_next": page_obj.has_next(),
             "next_page_number": (
-                page_obj.next_page_number()
-                if page_obj.has_next()
-                else None
+                page_obj.next_page_number() if page_obj.has_next() else None
             ),
             "has_previous": page_obj.has_previous(),
             "previous_page_number": (
-                page_obj.previous_page_number()
-                if page_obj.has_previous()
-                else None
+                page_obj.previous_page_number() if page_obj.has_previous() else None
             ),
-            "results": [{
-                'pk': job.pk,
-                'script_name': job.batch.script.name,
-                'started': job.started.strftime("%Y-%m-%d %H:%M:%S") if
-                job.started else None,
-                'finished': job.finished.strftime("%Y-%m-%d %H:%M:%S") if
-                job.finished else None,
-                'status': job.status_translated + '',
-                'label': job.status_label,
-                'pc_name': job.pc.name,
-                'batch_name': job.batch.name,
-                # Yep, it's meant to be double-escaped - it's HTML-escaped
-                # content that will be stored in an HTML attribute
-                'has_info': job.has_info,
-                'script_url': '/site/%s/scripts/%s/'
-                % (site.uid, job.batch.script.id),
-                'restart_url': '/site/%s/jobs/%s/restart/' % (site.uid, job.pk)
-            } for job in page_obj]
+            "results": [
+                {
+                    "pk": job.pk,
+                    "script_name": job.batch.script.name,
+                    "started": job.started.strftime("%Y-%m-%d %H:%M:%S")
+                    if job.started
+                    else None,
+                    "finished": job.finished.strftime("%Y-%m-%d %H:%M:%S")
+                    if job.finished
+                    else None,
+                    "status": job.status_translated + "",
+                    "label": job.status_label,
+                    "pc_name": job.pc.name,
+                    "batch_name": job.batch.name,
+                    # Yep, it's meant to be double-escaped - it's HTML-escaped
+                    # content that will be stored in an HTML attribute
+                    "has_info": job.has_info,
+                    "script_url": "/site/%s/scripts/%s/"
+                    % (site.uid, job.batch.script.id),
+                    "restart_url": "/site/%s/jobs/%s/restart/" % (site.uid, job.pk),
+                }
+                for job in page_obj
+            ],
         }
 
         return result
 
 
 class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
-    template_name = 'system/jobs/restart.html'
+    template_name = "system/jobs/restart.html"
     model = Job
 
     def status_fail_response(self):
         response = HttpResponseRedirect(self.get_success_url())
         set_notification_cookie(
-            response,
-            _('Can only restart jobs with status %s') % Job.FAILED
+            response, _("Can only restart jobs with status %s") % Job.FAILED
         )
         return response
 
     def get(self, request, *args, **kwargs):
-        self.site = get_object_or_404(Site, uid=kwargs['site_uid'])
+        self.site = get_object_or_404(Site, uid=kwargs["site_uid"])
         self.object = self.get_object()
 
         # Only restart jobs that have failed
@@ -468,64 +465,62 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
     def get_context_data(self, **kwargs):
         context = super(JobRestarter, self).get_context_data(**kwargs)
-        context['site'] = self.site
-        context['selected_job'] = self.object
+        context["site"] = self.site
+        context["selected_job"] = self.object
         return context
 
     def post(self, request, *args, **kwargs):
-        self.site = get_object_or_404(Site, uid=kwargs['site_uid'])
+        self.site = get_object_or_404(Site, uid=kwargs["site_uid"])
         self.object = self.get_object()
 
         if self.object.status != Job.FAILED:
             return self.status_fail_response()
 
-        new_job = self.object.restart(user=self.request.user)
+        self.object.restart(user=self.request.user)
         response = HttpResponseRedirect(self.get_success_url())
         set_notification_cookie(
             response,
-            "Job %s restarted as job %s" % (self.object.pk, new_job.pk)
+            _("The script %s is being rerun on the computer %s")
+            % (self.object.batch.script.name, self.object.pc.name),
         )
         return response
 
     def get_success_url(self):
-        return '/site/%s/jobs/' % self.kwargs['site_uid']
+        return "/site/%s/jobs/" % self.kwargs["site_uid"]
 
 
 class JobInfo(DetailView, LoginRequiredMixin):
-    template_name = 'system/jobs/info.html'
+    template_name = "system/jobs/info.html"
     model = Job
 
     def get(self, request, *args, **kwargs):
-        self.site = get_object_or_404(Site, uid=kwargs['site_uid'])
+        self.site = get_object_or_404(Site, uid=kwargs["site_uid"])
         return super(JobInfo, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(JobInfo, self).get_context_data(**kwargs)
         if self.site != self.object.batch.site:
             raise Http404
-        context['site'] = self.site
-        context['job'] = self.object
+        context["site"] = self.site
+        context["job"] = self.object
         return context
 
 
 class ScriptMixin(object):
     script = None
-    script_inputs = ''
+    script_inputs = ""
     is_security = False
 
     def setup_script_editing(self, **kwargs):
         # Get site
-        self.site = get_object_or_404(Site, uid=kwargs['slug'])
+        self.site = get_object_or_404(Site, uid=kwargs["slug"])
         # Add the global and local script lists
         self.scripts = Script.objects.filter(
-            Q(site=self.site) | Q(site=None),
-            is_security_script=self.is_security
-        ).exclude(
-            site__name='system'
-        )
+            Q(site=self.site) | Q(site=None), is_security_script=self.is_security
+        ).exclude(site__name="system")
 
-        if 'script_pk' in kwargs:
-            self.script = get_object_or_404(Script, pk=kwargs['script_pk'])
+        if "script_pk" in kwargs:
+            self.script = get_object_or_404(Script, pk=kwargs["script_pk"])
 
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
@@ -538,17 +533,13 @@ class ScriptMixin(object):
     def get_context_data(self, **kwargs):
         # Get context from super class
         context = super(ScriptMixin, self).get_context_data(**kwargs)
-        context['site'] = self.site
-        context['script_tags'] = ScriptTag.objects.all()
+        context["site"] = self.site
+        context["script_tags"] = ScriptTag.objects.all()
 
-        local_scripts = self.scripts.filter(
-            site=self.site
-        ).order_by(Lower("name"))
-        context['local_scripts'] = local_scripts
-        global_scripts = self.scripts.filter(
-            site=None
-        ).order_by(Lower("name"))
-        context['global_scripts'] = global_scripts
+        local_scripts = self.scripts.filter(site=self.site).order_by(Lower("name"))
+        context["local_scripts"] = local_scripts
+        global_scripts = self.scripts.filter(site=None).order_by(Lower("name"))
+        context["global_scripts"] = global_scripts
 
         # Create a tag->scripts dict for tags that has local scripts.
         local_tag_scripts_dict = {
@@ -558,11 +549,9 @@ class ScriptMixin(object):
         }
         # Add scripts with no tags as untagged.
         if local_scripts.filter(tags=None).exists():
-            local_tag_scripts_dict["untagged"] = local_scripts.filter(
-                tags=None
-            )
+            local_tag_scripts_dict["untagged"] = local_scripts.filter(tags=None)
 
-        context['local_scripts_by_tag'] = local_tag_scripts_dict
+        context["local_scripts_by_tag"] = local_tag_scripts_dict
 
         # Create a tag->scripts dict for tags that has global scripts.
         global_tag_scripts_dict = {
@@ -572,65 +561,61 @@ class ScriptMixin(object):
         }
         # Add scripts with no tags as untagged.
         if global_scripts.filter(tags=None).exists():
-            global_tag_scripts_dict["untagged"] = global_scripts.filter(
-                tags=None
-            )
+            global_tag_scripts_dict["untagged"] = global_scripts.filter(tags=None)
 
-        context['global_scripts_by_tag'] = global_tag_scripts_dict
+        context["global_scripts_by_tag"] = global_tag_scripts_dict
 
-        context['script_inputs'] = self.script_inputs
-        context['is_security'] = self.is_security
+        context["script_inputs"] = self.script_inputs
+        context["is_security"] = self.is_security
         if self.is_security:
-            context['script_url'] = 'security_script'
+            context["script_url"] = "security_script"
         else:
-            context['script_url'] = 'script'
+            context["script_url"] = "script"
 
         # If we selected a script add it to context
         if self.script is not None:
-            context['selected_script'] = self.script
+            context["selected_script"] = self.script
             if self.script.site is None:
-                context['global_selected'] = True
-            if not context['script_inputs']:
-                context['script_inputs'] = [
-                    {
-                        'pk': input.pk,
-                        'name': input.name,
-                        'value_type': input.value_type
-                    } for input in self.script.ordered_inputs
+                context["global_selected"] = True
+            if not context["script_inputs"]:
+                context["script_inputs"] = [
+                    {"pk": input.pk, "name": input.name, "value_type": input.value_type}
+                    for input in self.script.ordered_inputs
                 ]
-        elif not context['script_inputs']:
-            context['script_inputs'] = []
+        elif not context["script_inputs"]:
+            context["script_inputs"] = []
 
-        context['script_inputs_json'] = json.dumps(context['script_inputs'])
+        context["script_inputs_json"] = json.dumps(context["script_inputs"])
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(
             self.site
         ).count()
-        context['sec_events'] = no_of_sec_events
+        context["sec_events"] = no_of_sec_events
 
         return context
 
     def validate_script_inputs(self):
         params = self.request.POST
-        num_inputs = params.get('script-number-of-inputs', 0)
+        num_inputs = params.get("script-number-of-inputs", 0)
         inputs = []
         success = True
         if int(num_inputs) > 0:
             for i in range(int(num_inputs)):
                 data = {
-                    'pk': params.get('script-input-%d-pk' % i, None),
-                    'name': params.get('script-input-%d-name' % i, ''),
-                    'value_type': params.get('script-input-%d-type' % i, ''),
-                    'position': i,
+                    "pk": params.get("script-input-%d-pk" % i, None),
+                    "name": params.get("script-input-%d-name" % i, ""),
+                    "value_type": params.get("script-input-%d-type" % i, ""),
+                    "position": i,
                 }
 
-                if data['name'] is None or data['name'] == '':
-                    data['name_error'] = 'Fejl: Du skal angive et navn'
+                if data["name"] is None or data["name"] == "":
+                    data["name_error"] = "Fejl: Du skal angive et navn"
                     success = False
 
-                if data['value_type'] not in [value for (value, name)
-                                              in Input.VALUE_CHOICES]:
-                    data['type_error'] = 'Fejl: Du skal angive en korrekt type'
+                if data["value_type"] not in [
+                    value for (value, name) in Input.VALUE_CHOICES
+                ]:
+                    data["type_error"] = "Fejl: Du skal angive en korrekt type"
                     success = False
 
                 inputs.append(data)
@@ -649,18 +634,31 @@ class ScriptMixin(object):
         self.script.inputs.exclude(pk__in=pks).delete()
 
         for input_data in self.script_inputs:
-            input_data['script'] = self.script
-            if 'pk' in input_data and not input_data['pk']:
-                del input_data['pk']
+            input_data["script"] = self.script
 
-            Input.objects.update_or_create(
-                pk=input_data.get("pk"),
-                defaults=input_data
+            input_data["mandatory"] = (
+                True if input_data["value_type"] != "BOOLEAN" else False
             )
+
+            if "pk" in input_data and not input_data["pk"]:
+                del input_data["pk"]
+
+            Input.objects.update_or_create(pk=input_data.get("pk"), defaults=input_data)
+
+    def create_associated_script_parameters(self):
+        for associated_script in self.script.associations.all():
+            for script_input in self.script.ordered_inputs:
+                par = AssociatedScriptParameter.objects.filter(
+                    script=associated_script, input=script_input
+                ).first()
+                if not par:
+                    par = AssociatedScriptParameter(
+                        script=associated_script, input=script_input
+                    )
+                    par.save()
 
 
 class ScriptList(ScriptMixin, SiteView):
-
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
         try:
@@ -669,43 +667,41 @@ class ScriptList(ScriptMixin, SiteView):
                 if a.site == b.site:
                     # cmp deprecated: cmp(a, b) has been changed to
                     # the ((a > b) - (a < b)) formats
-                    return (
-                            (a.name.lower() > b.name.lower())
-                            - (a.name.lower() < b.name.lower())
-                            )
+                    return (a.name.lower() > b.name.lower()) - (
+                        a.name.lower() < b.name.lower()
+                    )
                 else:
                     if b.site is not None:
                         return 1
                     else:
                         return -1
+
             # cmp deprecated: cmp converted to key function
             script = sorted(self.scripts, key=cmp_to_key(sort_by))[0]
-            return HttpResponseRedirect(
-                script.get_absolute_url(site_uid=self.site.uid)
-            )
+            return HttpResponseRedirect(script.get_absolute_url(site_uid=self.site.uid))
 
         except IndexError:
             return HttpResponseRedirect(
                 reverse("new_security_script", args=[self.site.uid])
-                if self.is_security else
-                reverse("new_script", args=[self.site.uid])
+                if self.is_security
+                else reverse("new_script", args=[self.site.uid])
             )
 
 
 class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
-    template_name = 'system/scripts/create.html'
+    template_name = "system/scripts/create.html"
     form_class = ScriptForm
 
     def get_context_data(self, **kwargs):
         context = super(ScriptCreate, self).get_context_data(**kwargs)
-        context['type_choices'] = Input.VALUE_CHOICES
+        context["type_choices"] = Input.VALUE_CHOICES
         return context
 
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
         form = super(ScriptCreate, self).get_form(form_class)
-        form.prefix = 'create'
+        form.prefix = "create"
         return form
 
     def form_valid(self, form):
@@ -730,16 +726,13 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         if self.is_security:
-            return reverse(
-                "security_script",
-                args=[self.site.uid, self.script.pk]
-            )
+            return reverse("security_script", args=[self.site.uid, self.script.pk])
         else:
             return reverse("script", args=[self.site.uid, self.script.pk])
 
 
 class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    template_name = 'system/scripts/update.html'
+    template_name = "system/scripts/update.html"
     form_class = ScriptForm
 
     def get_context_data(self, **kwargs):
@@ -747,20 +740,16 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context = super(ScriptUpdate, self).get_context_data(**kwargs)
         if self.script is not None and self.script.executable_code is not None:
             try:
-                display_code = self.script.executable_code.read().decode(
-                    "utf-8"
-                )
+                display_code = self.script.executable_code.read().decode("utf-8")
             except UnicodeDecodeError:
                 display_code = "<Kan ikke vise koden - binære data.>"
             except FileNotFoundError:
                 display_code = "<Kan ikke vise koden - upload venligst igen.>"
-            context[
-                'script_preview'
-            ] = display_code
-        context['type_choices'] = Input.VALUE_CHOICES
+            context["script_preview"] = display_code
+        context["type_choices"] = Input.VALUE_CHOICES
         self.create_form = ScriptForm()
-        self.create_form.prefix = 'create'
-        context['create_form'] = self.create_form
+        self.create_form.prefix = "create"
+        context["create_form"] = self.create_form
         return context
 
     def get_object(self, queryset=None):
@@ -771,11 +760,10 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             # save the username for the AuditModelMixin.
             form.instance.user_modified = self.request.user.username
             self.save_script_inputs()
+            self.create_associated_script_parameters()
             response = super(ScriptUpdate, self).form_valid(form)
-            set_notification_cookie(
-                response,
-                _('Script %s updated') % self.script.name
-            )
+            set_notification_cookie(response, _("Script %s updated") % self.script.name)
+
             return response
         else:
             return self.form_invalid(form, transfer_inputs=False)
@@ -788,10 +776,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         if self.is_security:
-            return reverse(
-                "security_script",
-                args=[self.site.uid, self.script.pk]
-            )
+            return reverse("security_script", args=[self.site.uid, self.script.pk])
         else:
             return reverse("script", args=[self.site.uid, self.script.pk])
 
@@ -799,17 +784,17 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 class ScriptRun(SiteView):
     action = None
     form = None
-    STEP1 = 'choose_pcs_and_groups'
-    STEP2 = 'choose_parameters'
-    STEP3 = 'run_script'
+    STEP1 = "choose_pcs_and_groups"
+    STEP2 = "choose_parameters"
+    STEP3 = "run_script"
 
     def post(self, request, *args, **kwargs):
         return super(ScriptRun, self).get(request, *args, **kwargs)
 
     def fetch_pcs_from_request(self):
         # Transfer chosen groups and PCs as PC pks
-        pcs = [int(pk) for pk in self.request.POST.getlist('pcs', [])]
-        for group_pk in self.request.POST.getlist('groups', []):
+        pcs = [int(pk) for pk in self.request.POST.getlist("pcs", [])]
+        for group_pk in self.request.POST.getlist("groups", []):
             group = PCGroup.objects.get(pk=group_pk)
             for pc in group.pcs.all():
                 pcs.append(int(pc.pk))
@@ -818,44 +803,44 @@ class ScriptRun(SiteView):
         return (selected_pcs_groups_set, len(selected_pcs_groups_set))
 
     def step1(self, context):
-        self.template_name = 'system/scripts/run_step1.html'
-        context['pcs'] = self.object.pcs.all().order_by('name')
-        all_groups = self.object.groups.all().order_by('name')
-        context['groups'] = [group for group in all_groups if group.pcs.count() > 0]
+        self.template_name = "system/scripts/run_step1.html"
+        context["pcs"] = self.object.pcs.all().order_by("name")
+        all_groups = self.object.groups.all().order_by("name")
+        context["groups"] = [group for group in all_groups if group.pcs.count() > 0]
 
-        if len(context['script'].ordered_inputs) > 0:
-            context['action'] = ScriptRun.STEP2
+        if len(context["script"].ordered_inputs) > 0:
+            context["action"] = ScriptRun.STEP2
         else:
-            context['action'] = ScriptRun.STEP3
+            context["action"] = ScriptRun.STEP3
 
     def step2(self, context):
-        self.template_name = 'system/scripts/run_step2.html'
+        self.template_name = "system/scripts/run_step2.html"
 
-        context['pcs'], context['num_pcs'] = self.fetch_pcs_from_request()
-        if context['num_pcs'] == 0:
-            context['message'] = _('You must specify at least one group or pc')
+        context["pcs"], context["num_pcs"] = self.fetch_pcs_from_request()
+        if context["num_pcs"] == 0:
+            context["message"] = _("You must specify at least one group or pc")
             self.step1(context)
             return
 
         # Set up the form
-        if 'form' not in context:
-            context['form'] = ParameterForm(script=context['script'])
+        if "form" not in context:
+            context["form"] = ParameterForm(script=context["script"])
 
         # Go to step3 on submit
-        context['action'] = ScriptRun.STEP3
+        context["action"] = ScriptRun.STEP3
 
     def step3(self, context):
-        self.template_name = 'system/scripts/run_step3.html'
-        form = ParameterForm(self.request.POST,
-                             self.request.FILES,
-                             script=context['script'])
-        context['form'] = form
+        self.template_name = "system/scripts/run_step3.html"
+        form = ParameterForm(
+            self.request.POST, self.request.FILES, script=context["script"]
+        )
+        context["form"] = form
 
         # When run in step 3 and step 2 wasn't bypassed, don't do this calculation again
-        if 'selected_pcs' not in context:
-            context['selected_pcs'], context['num_pcs'] = self.fetch_pcs_from_request()
-        if context['num_pcs'] == 0:
-            context['message'] = _('You must specify at least one group or pc')
+        if "selected_pcs" not in context:
+            context["selected_pcs"], context["num_pcs"] = self.fetch_pcs_from_request()
+        if context["num_pcs"] == 0:
+            context["message"] = _("You must specify at least one group or pc")
             self.step1(context)
             return
 
@@ -863,22 +848,21 @@ class ScriptRun(SiteView):
             self.step2(context)
         else:
             args = []
-            for i in range(0, context['script'].inputs.count()):
-                args.append(form.cleaned_data['parameter_%s' % i])
+            for i in range(0, context["script"].inputs.count()):
+                args.append(form.cleaned_data["parameter_%s" % i])
 
-            context['batch'] = context['script'].run_on(
-                context['site'],
-                PC.objects.filter(pk__in=context['selected_pcs']),
+            context["batch"] = context["script"].run_on(
+                context["site"],
+                PC.objects.filter(pk__in=context["selected_pcs"]),
                 *args,
-                user=self.request.user
+                user=self.request.user,
             )
 
     def get_context_data(self, **kwargs):
         context = super(ScriptRun, self).get_context_data(**kwargs)
-        context['script'] = get_object_or_404(Script,
-                                              pk=self.kwargs['script_pk'])
+        context["script"] = get_object_or_404(Script, pk=self.kwargs["script_pk"])
 
-        action = self.request.POST.get('action', 'choose_pcs_and_groups')
+        action = self.request.POST.get("action", "choose_pcs_and_groups")
         if action == ScriptRun.STEP1:
             self.step1(context)
         elif action == ScriptRun.STEP2:
@@ -886,43 +870,36 @@ class ScriptRun(SiteView):
         elif action == ScriptRun.STEP3:
             self.step3(context)
         else:
-            raise Exception(
-                "POST to ScriptRun with wrong action %s" % self.action
-            )
+            raise Exception("POST to ScriptRun with wrong action %s" % self.action)
 
         return context
 
 
 class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
-    template_name = 'system/scripts/confirm_delete.html'
+    template_name = "system/scripts/confirm_delete.html"
     model = Script
 
     def get_object(self, queryset=None):
         return Script.objects.get(
-            pk=self.kwargs['script_pk'],
-            site__uid=self.kwargs['slug']
+            pk=self.kwargs["script_pk"], site__uid=self.kwargs["slug"]
         )
 
     def get_success_url(self):
         if self.is_security:
-            return reverse(
-                "security_scripts",
-                kwargs={"slug": self.kwargs["slug"]}
-            )
+            return reverse("security_scripts", kwargs={"slug": self.kwargs["slug"]})
         else:
-            return reverse(
-                "scripts",
-                kwargs={"slug": self.kwargs["slug"]}
-            )
+            return reverse("scripts", kwargs={"slug": self.kwargs["slug"]})
 
     @transaction.atomic
     def delete(self, request, *args, **kwargs):
         script = self.get_object()
 
-        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
+        # Fetch the PCGroups for which it's an AssociatedScript before
+        # we delete it from them
+        # We create a list as the next command would change it
+        scripts_pcgroups = list(PCGroup.objects.filter(policy__script=script))
 
-        # Update the PCGroups for which it's an AssociatedScript
-        scripts_pcgroups = PCGroup.objects.filter(policy__script=script)
+        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
 
         # For each of those groups update the script positions to avoid gaps
         for spcg in scripts_pcgroups:
@@ -933,131 +910,119 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
 class PCsView(SelectionMixin, SiteView):
 
-    template_name = 'system/site_pcs.html'
+    template_name = "system/site_pcs.html"
     selection_class = PC
 
     def get_list(self):
-        return self.object.pcs.all().extra(
-            select={'lower_name': 'lower(name)'}
-        ).order_by('lower_name')
+        return (
+            self.object.pcs.all()
+            .extra(select={"lower_name": "lower(name)"})
+            .order_by("lower_name")
+        )
 
     def render_to_response(self, context):
-        if('selected_pc' in context):
-            return HttpResponseRedirect('/site/%s/computers/%s/' % (
-                context['site'].uid,
-                context['selected_pc'].uid
-            ))
+        if "selected_pc" in context:
+            return HttpResponseRedirect(
+                "/site/%s/computers/%s/"
+                % (context["site"].uid, context["selected_pc"].uid)
+            )
         else:
             return super(PCsView, self).render_to_response(context)
 
 
 class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
-    template_name = 'system/pc_form.html'
+    template_name = "system/pc_form.html"
     form_class = PCForm
-    slug_field = 'uid'
+    slug_field = "uid"
 
     VALID_ORDER_BY = []
-    for i in ['pk', 'batch__script__name', 'started', 'finished', 'status',
-              'batch__name']:
+    for i in [
+        "pk",
+        "batch__script__name",
+        "started",
+        "finished",
+        "status",
+        "batch__name",
+    ]:
         VALID_ORDER_BY.append(i)
-        VALID_ORDER_BY.append('-' + i)
+        VALID_ORDER_BY.append("-" + i)
 
     def get_object(self, queryset=None):
         try:
-            return PC.objects.get(uid=self.kwargs['pc_uid'])
+            return PC.objects.get(uid=self.kwargs["pc_uid"])
         except PC.DoesNotExist:
-            raise Http404(
-                f"der findes ingen computer med id {self.kwargs['pc_uid']}"
-            )
+            raise Http404(f"der findes ingen computer med id {self.kwargs['pc_uid']}")
 
     def get_context_data(self, **kwargs):
         context = super(PCUpdate, self).get_context_data(**kwargs)
 
-        site = context['site']
-        form = context['form']
+        site = context["site"]
+        form = context["form"]
         pc = self.object
         params = self.request.GET or self.request.POST
 
-        context['pc_list'] = site.pcs.all().extra(
-            select={'lower_name': 'lower(name)'}
-        ).order_by('lower_name')
+        context["pc_list"] = (
+            site.pcs.all()
+            .extra(select={"lower_name": "lower(name)"})
+            .order_by("lower_name")
+        )
 
         group_set = site.groups.all()
 
-        selected_group_ids = form['pc_groups'].value()
-        context['available_groups'] = group_set.exclude(
+        selected_group_ids = form["pc_groups"].value()
+        context["available_groups"] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
-        context['selected_groups'] = group_set.filter(
+        ).values_list("pk", "name", "uid")
+        context["selected_groups"] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
 
-        orderby = params.get('orderby', '-pk')
+        orderby = params.get("orderby", "-pk")
         if orderby not in JobSearch.VALID_ORDER_BY:
-            orderby = '-pk'
-        context['joblist'] = pc.jobs.order_by('status', 'pk').order_by(
-            orderby,
-            'pk'
-        )
+            orderby = "-pk"
+        context["joblist"] = pc.jobs.order_by("status", "pk").order_by(orderby, "pk")
 
-        if orderby.startswith('-'):
-            context['orderby_key'] = orderby[1:]
-            context['orderby_direction'] = 'desc'
+        if orderby.startswith("-"):
+            context["orderby_key"] = orderby[1:]
+            context["orderby_direction"] = "desc"
         else:
-            context['orderby_key'] = orderby
-            context['orderby_direction'] = 'asc'
+            context["orderby_key"] = orderby
+            context["orderby_direction"] = "asc"
 
-        context['orderby_base_url'] = pc.get_absolute_url() + '?'
+        context["orderby_base_url"] = pc.get_absolute_url() + "?"
 
-        context['selected_pc'] = pc
+        context["selected_pc"] = pc
 
-        context['security_event'] = pc.security_events.latest_event()
-        context['has_security_events'] = pc.security_events.exclude(
-            status=SecurityEvent.RESOLVED
-        ).exclude(
-            problem__level=SecurityProblem.NORMAL
-        ).count() > 0
+        context["security_event"] = pc.security_events.latest_event()
+        context["has_security_events"] = (
+            pc.security_events.exclude(status=SecurityEvent.RESOLVED)
+            .exclude(problem__level=SecurityProblem.NORMAL)
+            .count()
+            > 0
+        )
 
         return context
 
     def form_valid(self, form):
         pc = self.object
         groups_pre = set(pc.pc_groups.all())
-        try:
-            with transaction.atomic():
-                pc.configuration.update_from_request(
-                    self.request.POST, 'pc_config'
-                )
-                response = super(PCUpdate, self).form_valid(form)
 
-                # If this PC has joined any groups that have policies attached
-                # to them, then run their scripts (first making sure that this
-                # PC is capable of doing so!)
-                groups_post = set(pc.pc_groups.all())
-                new_groups = groups_post.difference(groups_pre)
-                supported = False
-                for g in new_groups:
-                    policy = g.ordered_policy
-                    if policy:
-                        if not supported:
-                            if not pc.supports_ordered_job_execution():
-                                raise OutdatedClientError(pc)
-                            supported = True
-                        for asc in policy:
-                            asc.run_on(self.request.user, [pc])
+        with transaction.atomic():
+            pc.configuration.update_from_request(self.request.POST, "pc_config")
+            response = super(PCUpdate, self).form_valid(form)
 
-        except OutdatedClientError as e:
-            set_notification_cookie(
-                response,
-                _('Computer {0} must be upgraded in order to join a group '
-                    'with scripts attached').format(e),
-                error=True)
-            return response
+            # If this PC has joined any groups that have policies attached
+            # to them, then run their scripts (first making sure that this
+            # PC is capable of doing so!)
+            groups_post = set(pc.pc_groups.all())
+            new_groups = groups_post.difference(groups_pre)
+            for g in new_groups:
+                policy = g.ordered_policy
+                if policy:
+                    for asc in policy:
+                        asc.run_on(self.request.user, [pc])
 
-        set_notification_cookie(
-            response,
-            _('Computer %s updated') % pc.name
-        )
+        set_notification_cookie(response, _("Computer %s updated") % pc.name)
         return response
 
 
@@ -1065,91 +1030,92 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PC
 
     def get_object(self, queryset=None):
-        return PC.objects.get(uid=self.kwargs['pc_uid'])
+        return PC.objects.get(uid=self.kwargs["pc_uid"])
 
     def get_success_url(self):
-        return '/site/{0}/computers/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/computers/".format(self.kwargs["site_uid"])
 
 
 class GroupsView(SelectionMixin, SiteView):
-    template_name = 'system/site_groups.html'
+    template_name = "system/site_groups.html"
     selection_class = PCGroup
-    class_display_name = 'group'
+    class_display_name = "group"
 
     def get_list(self):
-        return self.object.groups.all().extra(
-            select={'lower_name': 'lower(name)'}
-        ).order_by('lower_name')
+        return (
+            self.object.groups.all()
+            .extra(select={"lower_name": "lower(name)"})
+            .order_by("lower_name")
+        )
 
     def render_to_response(self, context):
-        if('selected_group' in context):
-            return HttpResponseRedirect('/site/%s/groups/%s/' % (
-                context['site'].uid,
-                context['selected_group'].url
-            ))
+        if "selected_group" in context:
+            return HttpResponseRedirect(
+                "/site/%s/groups/%s/"
+                % (context["site"].uid, context["selected_group"].url)
+            )
         else:
             return HttpResponseRedirect(
-                '/site/%s/groups/new/' % context['site'].uid,
+                "/site/%s/groups/new/" % context["site"].uid,
             )
 
 
 class UsersView(SelectionMixin, SiteView):
 
-    template_name = 'system/site_users.html'
+    template_name = "system/site_users.html"
     selection_class = User
-    lookup_field = 'username'
+    lookup_field = "username"
 
     def get_list(self):
         return self.object.users
 
     def render_to_response(self, context):
-        if('selected_user' in context):
+        if "selected_user" in context:
             # Select your own user by default if you have a UserProfile on the site
             # Fx. relevant to password changes
 
-            if (context["site"] in self.request.user.bibos_profile.sites.all()):
+            if context["site"] in self.request.user.bibos_profile.sites.all():
                 user = self.request.user.username
             else:
-                user = context['selected_user'].username
-            return HttpResponseRedirect('/site/%s/users/%s/' % (
-                context['site'].uid,
-                user
-            ))
+                user = context["selected_user"].username
+            return HttpResponseRedirect(
+                "/site/%s/users/%s/" % (context["site"].uid, user)
+            )
         else:
             return HttpResponseRedirect(
-                '/site/%s/new_user/' % context['site'].uid,
+                "/site/%s/new_user/" % context["site"].uid,
             )
 
 
 class UsersMixin(object):
     def add_site_to_context(self, context):
-        self.site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
-        context['site'] = self.site
+        self.site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        context["site"] = self.site
         return context
 
     def add_userlist_to_context(self, context):
-        if 'site' not in context:
+        if "site" not in context:
             self.add_site_to_context(context)
-        context['user_list'] = context['site'].users
+        context["user_list"] = context["site"].users
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(
             self.site
         ).count()
-        context['sec_events'] = no_of_sec_events
+        context["sec_events"] = no_of_sec_events
         return context
 
 
 class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
     form_class = UserForm
-    lookup_field = 'username'
-    template_name = 'system/users/create.html'
+    lookup_field = "username"
+    template_name = "system/users/create.html"
 
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
         form = super(UserCreate, self).get_form(form_class)
-        form.prefix = 'create'
+        form.prefix = "create"
         return form
 
     def get_context_data(self, **kwargs):
@@ -1160,66 +1126,53 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def form_valid(self, form):
         self.object = form.save()
 
-        site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
-        user_profile = UserProfile.objects.create(
-            user=self.object
-        )
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        user_profile = UserProfile.objects.create(user=self.object)
         SiteMembership.objects.create(
             user_profile=user_profile,
             site=site,
-            site_user_type=form.cleaned_data["usertype"]
+            site_user_type=form.cleaned_data["usertype"],
         )
         result = super(UserCreate, self).form_valid(form)
         return result
 
     def get_success_url(self):
-        return '/site/%s/users/%s/' % (
-            self.kwargs['site_uid'],
-            self.object.username
-        )
+        return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
 
 
 class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
     form_class = UserForm
-    template_name = 'system/users/update.html'
+    template_name = "system/users/update.html"
 
     def get_object(self, queryset=None):
         try:
-            self.selected_user = User.objects.get(
-                username=self.kwargs['username']
-            )
+            self.selected_user = User.objects.get(username=self.kwargs["username"])
         except User.DoesNotExist:
-            raise Http404(
-                f"der findes ingen bruger med id {self.kwargs['username']}"
-            )
+            raise Http404(f"der findes ingen bruger med id {self.kwargs['username']}")
         return self.selected_user
 
     def get_context_data(self, **kwargs):
-        self.context_object_name = 'selected_user'
+        self.context_object_name = "selected_user"
         context = super(UserUpdate, self).get_context_data(**kwargs)
         self.add_userlist_to_context(context)
 
-        site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
 
         request_user = self.request.user
         user_profile = request_user.bibos_profile
-        site_membership = user_profile.sitemembership_set.filter(
-            site=site
-        ).first()
+        site_membership = user_profile.sitemembership_set.filter(site=site).first()
 
         if site_membership:
             loginusertype = site_membership.site_user_type
         else:
             loginusertype = None
 
-        context['selected_user'] = self.selected_user
-        context['form'].setup_usertype_choices(
-            loginusertype, request_user.is_superuser
-        )
+        context["selected_user"] = self.selected_user
+        context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
 
-        context['create_form'] = UserForm(prefix='create')
-        context['create_form'].setup_usertype_choices(
+        context["create_form"] = UserForm(prefix="create")
+        context["create_form"].setup_usertype_choices(
             loginusertype, request_user.is_superuser
         )
 
@@ -1227,7 +1180,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def get_form_kwargs(self):
         kwargs = super(UserUpdate, self).get_form_kwargs()
-        site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         kwargs["site"] = site
 
         return kwargs
@@ -1235,168 +1188,143 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def form_valid(self, form):
         self.object = form.save()
 
-        site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         user_profile = self.object.bibos_profile
 
         site_membership = user_profile.sitemembership_set.get(
-            site=site,
-            user_profile=user_profile
+            site=site, user_profile=user_profile
         )
 
         site_membership.site_user_type = form.cleaned_data["usertype"]
         site_membership.save()
         response = super(UserUpdate, self).form_valid(form)
-        set_notification_cookie(
-            response,
-            _('User %s updated') % self.object.username
-        )
+        set_notification_cookie(response, _("User %s updated") % self.object.username)
         return response
 
     def get_success_url(self):
-        return '/site/%s/users/%s/' % (
-            self.kwargs['site_uid'],
-            self.object.username
-        )
+        return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
 
 
 class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
-    template_name = 'system/users/delete.html'
+    template_name = "system/users/delete.html"
 
     def get_object(self, queryset=None):
-        self.selected_user = User.objects.get(username=self.kwargs['username'])
+        self.selected_user = User.objects.get(username=self.kwargs["username"])
         return self.selected_user
 
     def get_context_data(self, **kwargs):
         context = super(UserDelete, self).get_context_data(**kwargs)
         self.add_userlist_to_context(context)
-        context['selected_user'] = self.selected_user
-        context['create_form'] = UserForm(prefix='create')
+        context["selected_user"] = self.selected_user
+        context["create_form"] = UserForm(prefix="create")
 
         return context
 
     def get_success_url(self):
-        return '/site/%s/users/' % self.kwargs['site_uid']
+        return "/site/%s/users/" % self.kwargs["site_uid"]
 
     def delete(self, request, *args, **kwargs):
         response = super(UserDelete, self).delete(request, *args, **kwargs)
         set_notification_cookie(
-            response,
-            _('User %s deleted') % self.kwargs['username']
+            response, _("User %s deleted") % self.kwargs["username"]
         )
         return response
 
 
-class ConfigurationEntryCreate(SiteMixin, CreateView,
-                               SuperAdminOrThisSiteMixin):
+class ConfigurationEntryCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
     model = ConfigurationEntry
     form_class = ConfigurationEntryForm
 
     def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         self.object = form.save(commit=False)
         self.object.owner_configuration = site.configuration
 
         return super(ConfigurationEntryCreate, self).form_valid(form)
 
     def get_success_url(self):
-        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
 
 
-class ConfigurationEntryUpdate(SiteMixin, UpdateView,
-                               SuperAdminOrThisSiteMixin):
+class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     model = ConfigurationEntry
     form_class = ConfigurationEntryForm
 
     def get_success_url(self):
-        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
 
 
-class ConfigurationEntryDelete(SiteMixin, DeleteView,
-                               SuperAdminOrThisSiteMixin):
+class ConfigurationEntryDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     model = ConfigurationEntry
 
     def get_success_url(self):
-        return '/site/{0}/settings/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
 
 
 class GroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
     model = PCGroup
     form_class = GroupForm
-    slug_field = 'uid'
+    slug_field = "uid"
 
     def get_context_data(self, **kwargs):
         context = super(GroupCreate, self).get_context_data(**kwargs)
 
         # We don't want to edit computers yet
-        if 'pcs' in context['form'].fields:
-            del context['form'].fields['pcs']
+        if "pcs" in context["form"].fields:
+            del context["form"].fields["pcs"]
 
         return context
 
     def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs['site_uid'])
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         self.object = form.save(commit=False)
         self.object.site = site
 
         return super(GroupCreate, self).form_valid(form)
 
 
-class Error(Exception):
-    pass
-
-
-class OutdatedClientError(Error):
-    pass
-
-
 class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
-    template_name = 'system/site_groups.html'
+    template_name = "system/site_groups.html"
     form_class = GroupForm
     model = PCGroup
 
     def get_object(self, queryset=None):
-        site = Site.objects.get(uid=self.kwargs['site_uid'])
+        site = Site.objects.get(uid=self.kwargs["site_uid"])
         try:
-            return PCGroup.objects.get(
-                uid=self.kwargs['group_uid'],
-                site=site
-            )
+            return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
         except PCGroup.DoesNotExist:
-            raise Http404(
-                f"der findes ingen gruppe med id {self.kwargs['group_uid']}"
-            )
+            raise Http404(f"der findes ingen gruppe med id {self.kwargs['group_uid']}")
 
     def get_context_data(self, **kwargs):
         context = super(GroupUpdate, self).get_context_data(**kwargs)
 
         group = self.object
-        form = context['form']
-        site = context['site']
+        form = context["form"]
+        site = context["site"]
 
         pc_queryset = site.pcs.filter(is_activated=True)
-        form.fields['pcs'].queryset = pc_queryset
+        form.fields["pcs"].queryset = pc_queryset
 
-        selected_pc_ids = form['pcs'].value()
-        context['available_pcs'] = pc_queryset.exclude(
+        selected_pc_ids = form["pcs"].value()
+        context["available_pcs"] = pc_queryset.exclude(
             pk__in=selected_pc_ids
-        ).values_list("pk", "name")
-        context['selected_pcs'] = pc_queryset.filter(
+        ).values_list("pk", "name", "uid")
+        context["selected_pcs"] = pc_queryset.filter(
             pk__in=selected_pc_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
 
-        context['selected_group'] = group
+        context["selected_group"] = group
 
-        context['newform'] = GroupForm()
-        del context['newform'].fields['pcs']
+        context["newform"] = GroupForm()
+        del context["newform"].fields["pcs"]
 
-        context['all_scripts'] = sorted(
+        context["all_scripts"] = sorted(
             Script.objects.filter(
-                Q(site=site) | Q(site=None),
-                is_security_script=False
-            ).exclude(
-                site__name='system'
-            ), key=lambda s: s.name.lower())
+                Q(site=site) | Q(site=None), is_security_script=False
+            ),
+            key=lambda s: s.name.lower(),
+        )
 
         return context
 
@@ -1409,11 +1337,9 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         try:
             with transaction.atomic():
                 self.object.configuration.update_from_request(
-                    self.request.POST, 'group_configuration'
+                    self.request.POST, "group_configuration"
                 )
-                self.object.update_policy_from_request(
-                    self.request, 'group_policies'
-                )
+                self.object.update_policy_from_request(self.request, "group_policies")
 
                 response = super(GroupUpdate, self).form_valid(form)
 
@@ -1424,13 +1350,6 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 surviving_members = members_post.intersection(members_pre)
                 new_members = members_post.difference(members_pre)
                 new_policy = policy_post.difference(policy_pre)
-
-                # If we have a policy, make sure all group members actually
-                # support ordered job execution
-                if len(policy_post) > 0:
-                    for g in members_post:
-                        if not g.supports_ordered_job_execution():
-                            raise OutdatedClientError(g)
 
                 # Run all policy scripts on new PCs...
                 if new_members:
@@ -1446,17 +1365,14 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     asc.run_on(self.request.user, surviving_members)
 
                 set_notification_cookie(
-                    response,
-                    _('Group %s updated') % self.object.name
+                    response, _("Group %s updated") % self.object.name
                 )
+
+                # Now update script positions in case a script has been deleted or added
+                if policy_pre != policy_post:
+                    self.object.update_associated_script_positions()
+
                 return response
-        except OutdatedClientError as e:
-            set_notification_cookie(
-                response,
-                _('Computer {0} must be upgraded in order to join a group'
-                    ' with scripts attached').format(e),
-                error=True)
-            return response
         except MandatoryParameterMissingError as e:
             # If this happens, it happens *before* we have a valid
             # HttpResponse, so make one with form_invalid()
@@ -1464,10 +1380,12 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             parameter = e.args[0]
             set_notification_cookie(
                 response,
-                _('No value was specified for the mandatory input "{0}"'
-                    ' of script "{1}"').format(
-                        parameter.name, parameter.script.name),
-                error=True)
+                _(
+                    'No value was specified for the mandatory input "{0}"'
+                    ' of script "{1}"'
+                ).format(parameter.name, parameter.script.name),
+                error=True,
+            )
             return response
 
     def form_invalid(self, form):
@@ -1478,94 +1396,83 @@ class GroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        site = Site.objects.get(uid=self.kwargs['site_uid'])
-        return PCGroup.objects.get(uid=self.kwargs['group_uid'], site=site)
+        site = Site.objects.get(uid=self.kwargs["site_uid"])
+        return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
 
     def get_success_url(self):
-        return '/site/{0}/groups/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/groups/".format(self.kwargs["site_uid"])
 
     def delete(self, request, *args, **kwargs):
         name = self.get_object().name
         response = super(GroupDelete, self).delete(request, *args, **kwargs)
-        set_notification_cookie(
-            response,
-            _('Group %s deleted') % name
-        )
+        set_notification_cookie(response, _("Group %s deleted") % name)
         return response
 
 
 class SecurityProblemsView(SelectionMixin, SiteView):
 
-    template_name = 'system/site_security_problems.html'
+    template_name = "system/site_security_problems.html"
     selection_class = SecurityProblem
-    class_display_name = 'security_problem'
+    class_display_name = "security_problem"
 
     def get_list(self):
-        return self.object.security_problems.all().extra(
-            select={'lower_name': 'lower(name)'}
-        ).order_by('lower_name')
+        return (
+            self.object.security_problems.all()
+            .extra(select={"lower_name": "lower(name)"})
+            .order_by("lower_name")
+        )
 
     def render_to_response(self, context):
-        if 'selected_security_problem' in context:
-            return HttpResponseRedirect('/site/%s/security_problems/%s/' % (
-                context['site'].uid,
-                context['selected_security_problem'].uid
-            ))
+        if "selected_security_problem" in context:
+            return HttpResponseRedirect(
+                "/site/%s/security_problems/%s/"
+                % (context["site"].uid, context["selected_security_problem"].uid)
+            )
         else:
             """
             return HttpResponseRedirect(
                 '/site/%s/security_problems/new/' % context['site'].uid,
             )
             """
-            site = context['site']
-            context['newform'] = SecurityProblemForm()
+            site = context["site"]
+            context["newform"] = SecurityProblemForm()
             user_set = User.objects.filter(bibos_profile__sites=site)
             group_set = site.groups.all()
-            context['newform'].fields[
-                'alert_users'
-            ].queryset = user_set
-            context['newform'].fields[
-                'alert_groups'
-            ].queryset = group_set
+            context["newform"].fields["alert_users"].queryset = user_set
+            context["newform"].fields["alert_groups"].queryset = group_set
 
             # Limit list of scripts to only include security scripts.
             script_set = Script.objects.filter(
                 Q(site__isnull=True) | Q(site=site),
                 is_security_script=True,
             )
-            context['newform'].fields['security_script'].queryset = script_set
+            context["newform"].fields["security_script"].queryset = script_set
             # Pass users and groups to context
             # that are available for a 'new' security problem.
-            context['alert_users'] = user_set.values_list(
-                "pk", "username"
-            )
-            context['alert_groups'] = group_set.values_list(
-                "pk", "name"
-            )
+            context["alert_users"] = user_set.values_list("pk", "username", "username")
+            context["alert_groups"] = group_set.values_list("pk", "name", "uid")
 
-            return super(
-                SecurityProblemsView, self
-            ).render_to_response(context)
+            return super(SecurityProblemsView, self).render_to_response(context)
 
 
 class SecurityProblemCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    template_name = 'system/site_security_problems.html'
+    template_name = "system/site_security_problems.html"
     model = SecurityProblem
-    fields = '__all__'
+    fields = "__all__"
 
     def get_success_url(self):
-        return '/site/{0}/security_problems/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
 
 
 class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    template_name = 'system/site_security_problems.html'
+    template_name = "system/site_security_problems.html"
     model = SecurityProblem
     form_class = SecurityProblemForm
 
     def get_object(self, queryset=None):
         try:
             return SecurityProblem.objects.get(
-                    uid=self.kwargs['uid'], site__uid=self.kwargs['site_uid']
+                uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
             )
         except SecurityProblem.DoesNotExist:
             raise Http404(
@@ -1576,51 +1483,47 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
         context = super(SecurityProblemUpdate, self).get_context_data(**kwargs)
 
-        site = context['site']
-        form = context['form']
+        site = context["site"]
+        form = context["form"]
         group_set = site.groups.all()
-        selected_group_ids = form['alert_groups'].value()
-        context['available_groups'] = group_set.exclude(
+        selected_group_ids = form["alert_groups"].value()
+        context["available_groups"] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
-        context['selected_groups'] = group_set.filter(
+        ).values_list("pk", "name", "uid")
+        context["selected_groups"] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name")
+        ).values_list("pk", "name", "uid")
 
         user_set = User.objects.filter(bibos_profile__sites=site)
-        selected_user_ids = form['alert_users'].value()
-        context['available_users'] = user_set.exclude(
+        selected_user_ids = form["alert_users"].value()
+        context["available_users"] = user_set.exclude(
             pk__in=selected_user_ids
-        ).values_list("pk", "username")
-        context['selected_users'] = user_set.filter(
+        ).values_list("pk", "username", "username")
+        context["selected_users"] = user_set.filter(
             pk__in=selected_user_ids
-        ).values_list("pk", "username")
+        ).values_list("pk", "username", "username")
         # Limit list of scripts to only include security scripts.
         script_set = Script.objects.filter(
             Q(site__isnull=True) | Q(site=site),
             is_security_script=True,
         )
-        form.fields['security_script'].queryset = script_set
+        form.fields["security_script"].queryset = script_set
 
         # Extra fields
-        context['selected_security_problem'] = self.object
-        context['newform'] = SecurityProblemForm()
-        context['newform'].fields['security_script'].queryset = script_set
-        context['newform'].fields['alert_users'].queryset = user_set
-        context['newform'].fields['alert_groups'].queryset = group_set
+        context["selected_security_problem"] = self.object
+        context["newform"] = SecurityProblemForm()
+        context["newform"].fields["security_script"].queryset = script_set
+        context["newform"].fields["alert_users"].queryset = user_set
+        context["newform"].fields["alert_groups"].queryset = group_set
         # Pass users and groups to context
         # that are available for a 'new' security problem.
-        context['alert_users'] = user_set.values_list(
-            "pk", "username"
-        )
-        context['alert_groups'] = group_set.values_list(
-            "pk", "name"
-        )
+        context["alert_users"] = user_set.values_list("pk", "username", "username")
+        context["alert_groups"] = group_set.values_list("pk", "name", "uid")
 
         return context
 
     def get_success_url(self):
-        return '/site/{0}/security_problems/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
@@ -1628,61 +1531,54 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     # form_class = <hopefully_not_necessary>
 
     def get_object(self, queryset=None):
-        return SecurityProblem.objects.get(uid=self.kwargs['uid'],
-                                           site__uid=self.kwargs['site_uid'])
+        return SecurityProblem.objects.get(
+            uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
+        )
 
     def get_success_url(self):
-        return '/site/{0}/security_problems/'.format(self.kwargs['site_uid'])
+        return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
 
 
 class SecurityEventsView(SiteView):
-    template_name = 'system/site_security_events.html'
+    template_name = "system/site_security_events.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
         context = super(SecurityEventsView, self).get_context_data(**kwargs)
         # Supply extra info as needed.
-        level_preselected = set([
-            SecurityProblem.CRITICAL,
-            SecurityProblem.HIGH
-        ])
-        context['level_choices'] = [
+        level_preselected = set([SecurityProblem.CRITICAL, SecurityProblem.HIGH])
+        context["level_choices"] = [
             {
-                'name': name,
-                'value': value,
-                'label': SecurityProblem.LEVEL_TO_LABEL[value],
-                'checked':
-                'checked="checked' if value in level_preselected else ''
-            } for (value, name) in SecurityProblem.LEVEL_CHOICES
+                "name": name,
+                "value": value,
+                "label": SecurityProblem.LEVEL_TO_LABEL[value],
+                "checked": 'checked="checked' if value in level_preselected else "",
+            }
+            for (value, name) in SecurityProblem.LEVEL_CHOICES
         ]
-        status_preselected = set([
-            SecurityEvent.NEW,
-            SecurityEvent.ASSIGNED
-        ])
-        context['status_choices'] = [
+        status_preselected = set([SecurityEvent.NEW, SecurityEvent.ASSIGNED])
+        context["status_choices"] = [
             {
-                'name': name,
-                'value': value,
-                'label': SecurityEvent.STATUS_TO_LABEL[value],
-                'checked':
-                'checked="checked' if value in status_preselected else ''
-            } for (value, name) in SecurityEvent.STATUS_CHOICES
+                "name": name,
+                "value": value,
+                "label": SecurityEvent.STATUS_TO_LABEL[value],
+                "checked": 'checked="checked' if value in status_preselected else "",
+            }
+            for (value, name) in SecurityEvent.STATUS_CHOICES
         ]
 
-        if 'pc_uid' in self.kwargs:
-            context['pc_uid'] = self.kwargs['pc_uid']
+        if "pc_uid" in self.kwargs:
+            context["pc_uid"] = self.kwargs["pc_uid"]
         return context
 
 
 class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
     paginate_by = 20
-    http_method_names = ['get']
+    http_method_names = ["get"]
     VALID_ORDER_BY = []
-    for i in [
-        'pk', 'problem__name', 'occurred_time', 'assigned_user__username'
-    ]:
+    for i in ["pk", "problem__name", "occurred_time", "assigned_user__username"]:
         VALID_ORDER_BY.append(i)
-        VALID_ORDER_BY.append('-' + i)
+        VALID_ORDER_BY.append("-" + i)
 
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
@@ -1692,24 +1588,21 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         queryset = SecurityEvent.objects.all()
         params = self.request.GET
 
-        query = {'problem__site': site}
-        if params.get('pc', None):
-            query['pc__uid'] = params['pc']
+        query = {"problem__site": site}
+        if params.get("pc", None):
+            query["pc__uid"] = params["pc"]
 
-        if 'level' in params:
-            query['problem__level__in'] = params.getlist('level')
+        if "level" in params:
+            query["problem__level__in"] = params.getlist("level")
 
-        if 'status' in params:
-            query['status__in'] = params.getlist('status')
+        if "status" in params:
+            query["status__in"] = params.getlist("status")
 
-        orderby = params.get('orderby', '-occurred_time')
+        orderby = params.get("orderby", "-occurred_time")
         if orderby not in SecurityEventSearch.VALID_ORDER_BY:
-            orderby = '-occurred_time'
+            orderby = "-occurred_time"
 
-        queryset = queryset.filter(**query).order_by(
-            orderby,
-            'pk'
-        )
+        queryset = queryset.filter(**query).order_by(orderby, "pk")
 
         return queryset
 
@@ -1719,10 +1612,11 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         paginator = context["paginator"]
         adjacent_pages = 2
         page_numbers = [
-            n for n in range(
-                page_obj.number - adjacent_pages,
-                page_obj.number + adjacent_pages + 1
-            ) if n > 0 and n <= paginator.num_pages
+            n
+            for n in range(
+                page_obj.number - adjacent_pages, page_obj.number + adjacent_pages + 1
+            )
+            if n > 0 and n <= paginator.num_pages
         ]
 
         result = {
@@ -1732,33 +1626,31 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
             "page_numbers": page_numbers,
             "has_next": page_obj.has_next(),
             "next_page_number": (
-                page_obj.next_page_number()
-                if page_obj.has_next()
-                else None
+                page_obj.next_page_number() if page_obj.has_next() else None
             ),
             "has_previous": page_obj.has_previous(),
             "previous_page_number": (
-                page_obj.previous_page_number()
-                if page_obj.has_previous()
-                else None
+                page_obj.previous_page_number() if page_obj.has_previous() else None
             ),
-            "results": [{
-                'pk': event.pk,
-                'site_uid': site.uid,
-                'problem_name': event.problem.name,
-                'pc_id': event.pc.id,
-                'occurred': event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
-                'status': event.get_status_display(),
-                'status_label': event.STATUS_TO_LABEL[event.status],
-                'level':
-                    SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],
-                'level_label': SecurityProblem.LEVEL_TO_LABEL[
-                    event.problem.level
-                ] + '',
-                'pc_name': event.pc.name,
-                'assigned_user': (event.assigned_user.username if
-                                  event.assigned_user else '')
-                } for event in page_obj]
+            "results": [
+                {
+                    "pk": event.pk,
+                    "site_uid": site.uid,
+                    "problem_name": event.problem.name,
+                    "pc_id": event.pc.id,
+                    "occurred": event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "status": event.get_status_display(),
+                    "status_label": event.STATUS_TO_LABEL[event.status],
+                    "level": SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],
+                    "level_label": SecurityProblem.LEVEL_TO_LABEL[event.problem.level]
+                    + "",
+                    "pc_name": event.pc.name,
+                    "assigned_user": (
+                        event.assigned_user.username if event.assigned_user else ""
+                    ),
+                }
+                for event in page_obj
+            ],
         }
 
         return result
@@ -1766,89 +1658,79 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
 
 class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     model = SecurityEvent
-    fields = ['assigned_user', 'status', 'note']
+    fields = ["assigned_user", "status", "note"]
 
     def get_object(self, queryset=None):
-        return SecurityEvent.objects.get(id=self.kwargs['pk'])
+        return SecurityEvent.objects.get(id=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         context = super(SecurityEventUpdate, self).get_context_data(**kwargs)
 
         qs = context["form"].fields["assigned_user"].queryset
         qs = qs.filter(
-                Q(bibos_profile__sites=self.get_object().pc.site) |
-                Q(is_superuser=True))
+            Q(bibos_profile__sites=self.get_object().pc.site) | Q(is_superuser=True)
+        )
         context["form"].fields["assigned_user"].queryset = qs
 
         # Set fields to read-only
         return context
 
     def post(self, request, *args, **kwargs):
-        result = super(SecurityEventUpdate,
-                       self).post(request, *args, **kwargs)
+        result = super(SecurityEventUpdate, self).post(request, *args, **kwargs)
         return result
 
     def get_success_url(self):
-        return reverse("security_events", args=[self.kwargs['site_uid']])
+        return reverse("security_events", args=[self.kwargs["site_uid"]])
 
 
 documentation_menu_items = [
-    ('', 'Administrationssiden'),
-    ('om_os2borgerpc_admin', 'Om'),
-    ('status', 'Status'),
-    ('computers', 'Computere'),
-    ('groups', 'Grupper'),
-    ('jobs', 'Jobs'),
-    ('scripts', 'Scripts'),
-    ('security_scripts', 'Sikkerhedsscripts'),
-    ('users', 'Brugere'),
-    ('configuration', 'Konfigurationer'),
-    ('creating_security_problems',
-     'Oprettelse af Sikkerhedsovervågning (PDF)'),
-
-    ('', 'OS2borgerPC'),
-    ('os2borgerpc_installation_guide', 'Installationsguide (PDF)'),
-
-    ('', 'OS2displayPC'),
-    ('os2displaypc_installation_guide', 'Installationsguide'),
-    ('os2displaypc_wifi_guide', 'Opdatering af Wi-Fi opsætning'),
-
-    ('', 'Opsætning af Gateway'),
-    ('gateway_install', 'Installation af gateway'),
-    ('gateway_admin', 'Administration af gateway'),
-    ('gateway_use', 'Anvendelse af gateway'),
-
-    ('', 'Teknisk dokumentation'),
-    ('tech/os2borgerpc-image', 'OS2borgerPC Image'),
-    ('tech/os2borgerpc-admin', 'OS2borgerPC Admin Site'),
-    ('tech/os2borgerpc-server-image', 'OS2displayPC Image'),
-    ('tech/os2borgerpc-client', 'OS2borgerPC Client'),
-
+    ("", "Administrationssiden"),
+    ("om_os2borgerpc_admin", "Om"),
+    ("status", "Status"),
+    ("computers", "Computere"),
+    ("groups", "Grupper"),
+    ("jobs", "Jobs"),
+    ("scripts", "Scripts"),
+    ("security_scripts", "Sikkerhedsscripts"),
+    ("users", "Brugere"),
+    ("configuration", "Konfigurationer"),
+    ("creating_security_problems", "Oprettelse af Sikkerhedsovervågning (PDF)"),
+    ("", "OS2borgerPC"),
+    ("os2borgerpc_installation_guide", "Installationsguide (PDF)"),
+    ("", "OS2borgerPC Kiosk"),
+    ("os2borgerpc_kiosk_installation_guide", "Installationsguide"),
+    ("os2borgerpc_kiosk_wifi_guide", "Opdatering af Wi-Fi opsætning"),
+    ("", "Opsætning af Gateway"),
+    ("gateway_install", "Installation af gateway"),
+    ("gateway_admin", "Administration af gateway"),
+    ("gateway_use", "Anvendelse af gateway"),
+    ("", "Teknisk dokumentation"),
+    ("tech/os2borgerpc-image", "OS2borgerPC Image"),
+    ("tech/os2borgerpc-admin", "OS2borgerPC Admin Site"),
+    ("tech/os2borgerpc-server-image", "OS2borgerPC Kiosk Image"),
+    ("tech/os2borgerpc-client", "OS2borgerPC Client"),
 ]
 
 
 class DocView(TemplateView):
-    docname = 'status'
+    docname = "status"
 
     def template_exists(self, subpath):
         fullpath = os.path.join(settings.DOCUMENTATION_DIR, subpath)
         return os.path.isfile(fullpath)
 
     def get_context_data(self, **kwargs):  # noqa
-        if 'name' in self.kwargs:
-            self.docname = self.kwargs['name']
+        if "name" in self.kwargs:
+            self.docname = self.kwargs["name"]
         else:
             # This will be mapped to documentation/index.html
-            self.docname = 'index'
+            self.docname = "index"
 
         if self.docname.find("..") != -1:
             raise Http404
 
         # Try <docname>.html and <docname>/index.html
-        name_templates = [
-            'documentation/{0}.html',
-            'documentation/{0}/index.html'
-        ]
+        name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
 
         templatename = None
         for nt in name_templates:
@@ -1863,39 +1745,39 @@ class DocView(TemplateView):
             self.template_name = templatename
 
         context = super(DocView, self).get_context_data(**kwargs)
-        context['docmenuitems'] = documentation_menu_items
+        context["docmenuitems"] = documentation_menu_items
         docnames = self.docname.split("/")
 
-        context['menu_active'] = docnames[0]
+        context["menu_active"] = docnames[0]
 
         # Set heading according to chosen item
         current_heading = None
-        for link, name in context['docmenuitems']:
-            if link == '':
+        for link, name in context["docmenuitems"]:
+            if link == "":
                 current_heading = name
             elif link == docnames[0]:
-                context['docheading'] = current_heading
+                context["docheading"] = current_heading
                 break
 
         # Add a submenu if it exists
         submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
         if self.template_exists(submenu_template):
-            context['submenu_template'] = submenu_template
+            context["submenu_template"] = submenu_template
 
         if len(docnames) > 1 and docnames[1]:
             # Don't allow direct access to submenus
-            if docnames[1] == '__submenu__':
+            if docnames[1] == "__submenu__":
                 raise Http404
-            context['submenu_active'] = docnames[1]
+            context["submenu_active"] = docnames[1]
 
         params = self.request.GET or self.request.POST
-        back_link = params.get('back')
+        back_link = params.get("back")
         if back_link is None:
-            referer = self.request.META.get('HTTP_REFERER')
+            referer = self.request.META.get("HTTP_REFERER")
             if referer and referer.find("/documentation/") == -1:
                 back_link = referer
         if back_link:
-            context['back_link'] = back_link
+            context["back_link"] = back_link
 
         return context
 
@@ -1906,8 +1788,16 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
     """
 
     interesting_properties = [
-        'id', 'name', 'description', 'configuration_id', 'site_id',
-        'is_activated', 'creation_time', 'last_seen', 'location']
+        "id",
+        "name",
+        "description",
+        "configuration_id",
+        "site_id",
+        "is_activated",
+        "creation_time",
+        "last_seen",
+        "location",
+    ]
 
     def get_context_data(self, **kwargs):
         pcs = []
@@ -1916,8 +1806,12 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
             for pn in JSONSiteSummary.interesting_properties:
                 pv = getattr(p, pn)
                 # Don't convert these types to string representations...
-                if (pv is None or isinstance(pv, bool)
-                        or isinstance(pv, float) or isinstance(pv, int)):
+                if (
+                    pv is None
+                    or isinstance(pv, bool)
+                    or isinstance(pv, float)
+                    or isinstance(pv, int)
+                ):
                     pass
                 # ... use the right date format for datetimes...
                 elif isinstance(pv, datetime):
@@ -1935,16 +1829,16 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     all versions released before the site's last_version datestamp).
     """
 
-    template_name = 'system/site_image_versions.html'
+    template_name = "system/site_image_versions.html"
     model = ImageVersion
-    context_object_name = 'image_versions'
+    context_object_name = "image_versions"
     selection_class = ImageVersion
-    class_display_name = 'image_version'
+    class_display_name = "image_version"
 
     def get_context_data(self, **kwargs):
         context = super(ImageVersionsView, self).get_context_data(**kwargs)
 
-        site_uid = self.kwargs.get('site_uid')
+        site_uid = self.kwargs.get("site_uid")
         site_obj = Site.objects.get(uid=site_uid)
         last_pay_date = site_obj.paid_for_access_until
 
@@ -1958,31 +1852,19 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
             # excluding versions where
             # image release date > client's last pay date.
-            versions = ImageVersion.objects.exclude(
-                release_date__gt=last_pay_date)
+            versions = ImageVersion.objects.exclude(release_date__gt=last_pay_date)
 
-            major_versions_set = set()
-            for minor_version in versions:
-                major_versions_set.add(minor_version.image_version[:1])
+            platform_choice = self.kwargs.get(
+                "platform", ImageVersion.platform_choices[0][0]
+            ).upper()
 
-            major_versions_list = list(major_versions_set)
-            major_versions_list.sort(reverse=True)
-
-            if len(major_versions_list) > 0:
-
-                context["major_versions"] = major_versions_list
-
-                url_ref_vers = self.kwargs.get(
-                    'major_version',
-                    major_versions_list[0]
-                    )
-
-                context["selected_image_version"] = url_ref_vers
-
-                minor_versions = versions.filter(
-                    image_version__startswith=url_ref_vers
-                    )
-
-                context["minor_versions"] = minor_versions
+            selected_platform = next(
+                (x for x in ImageVersion.platform_choices if x[0] == platform_choice)
+            )
+            context["selected_platform"] = selected_platform
+            context["selected_platform_images"] = versions.filter(
+                platform=selected_platform[0]
+            ).order_by("-release_date", "-id")
+            context["platform_choices"] = dict(ImageVersion.platform_choices)
 
         return context

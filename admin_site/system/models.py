@@ -1,11 +1,10 @@
 import datetime
 import random
 import string
-from distutils.version import LooseVersion
 
 from dateutil.relativedelta import relativedelta
 
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -21,18 +20,19 @@ used for labeling in the GUI."""
 NEW = _("status:New")
 FAIL = _("status:Fail")
 UPDATE = _("status:Update")
-OK = ''
+OK = ""
 
 # Priorities
-INFO = 'info'
-WARNING = 'warning'
-IMPORTANT = 'important'
-NONE = ''
+INFO = "info"
+WARNING = "warning"
+IMPORTANT = "important"
+NONE = ""
 
 
 class Configuration(models.Model):
     """This class contains/represents the configuration of a Site, a
     a PC Group or a PC."""
+
     # Doesn't need any actual fields, it seems. Should not exist independently
     # of the classes to which it may be aggregated.
     name = models.CharField(max_length=255, unique=True)
@@ -47,17 +47,13 @@ class Configuration(models.Model):
             key_param = "%s_%s_key" % (submit_name, pk)
             value_param = "%s_%s_value" % (submit_name, pk)
 
-            key = req_params.getlist(key_param, '')
-            value = req_params.getlist(value_param, '')
+            key = req_params.getlist(key_param, "")
+            value = req_params.getlist(value_param, "")
 
             if pk.startswith("new_"):
                 # Create one or more new entries
                 for k, v in zip(key, value):
-                    cnf = ConfigurationEntry(
-                        key=k,
-                        value=v,
-                        owner_configuration=self
-                    )
+                    cnf = ConfigurationEntry(key=k, value=v, owner_configuration=self)
                     cnf.save()
             else:
                 # Update submitted entry
@@ -80,11 +76,7 @@ class Configuration(models.Model):
             e = self.entries.get(key=key)
             e.value = value
         except ConfigurationEntry.DoesNotExist:
-            e = ConfigurationEntry(
-                owner_configuration=self,
-                key=key,
-                value=value
-            )
+            e = ConfigurationEntry(owner_configuration=self, key=key, value=value)
         finally:
             e.save()
 
@@ -110,33 +102,41 @@ class Configuration(models.Model):
 class ConfigurationEntry(models.Model):
     """A single configuration entry - always part of an entire
     configuration."""
+
     key = models.CharField(max_length=32)
     value = models.CharField(max_length=4096)
     owner_configuration = models.ForeignKey(
         Configuration,
-        related_name='entries',
-        verbose_name=_('owner configuration'),
+        related_name="entries",
+        verbose_name=_("owner configuration"),
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        ordering = ["key"]
 
 
 class Site(models.Model):
     """A site which we wish to admin"""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('UID'), max_length=255, unique=True)
+
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     paid_for_access_until = models.DateField(
-        verbose_name=_("Paid for access until this date"),
-        null=True,
-        blank=True)
+        verbose_name=_("Paid for access until this date"), null=True, blank=True
+    )
     # Official library number
     # https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre
 
     # Necessary for customers who wish to integrate with standard library login.
     isil = models.CharField(
-        verbose_name="ISIL", max_length=10, blank=True,
-        help_text=_("Necessary for customers who wish to"
-                    " integrate with standard library login")
+        verbose_name="ISIL",
+        max_length=10,
+        blank=True,
+        help_text=_(
+            "Necessary for customers who wish to"
+            " integrate with standard library login"
+        ),
     )
     user_login_duration = models.DurationField(
         verbose_name=_("Login duration"),
@@ -158,11 +158,11 @@ class Site(models.Model):
 
     @property
     def users(self):
-        users = User.objects.filter(
-            bibos_profile__sites=self
-        ).extra(
-            select={'lower_name': 'lower(username)'}
-        ).order_by('lower_name')
+        users = (
+            User.objects.filter(bibos_profile__sites=self)
+            .extra(select={"lower_name": "lower(username)"})
+            .order_by("lower_name")
+        )
 
         return users
 
@@ -188,13 +188,9 @@ class Site(models.Model):
 
         if is_new and conf is None:
             try:
-                self.configuration = Configuration.objects.get(
-                    name=self.uid
-                )
+                self.configuration = Configuration.objects.get(name=self.uid)
             except Configuration.DoesNotExist:
-                self.configuration = Configuration.objects.create(
-                    name=self.uid
-                )
+                self.configuration = Configuration.objects.create(name=self.uid)
 
         # Perform save
         super(Site, self).save(*args, **kwargs)
@@ -203,7 +199,7 @@ class Site(models.Model):
         pass
 
     def get_absolute_url(self):
-        return '/site/{0}'.format(self.url)
+        return "/site/{0}".format(self.url)
 
 
 class Error(Exception):
@@ -216,13 +212,13 @@ class MandatoryParameterMissingError(Error):
 
 class PCGroup(models.Model):
     """Groups of PCs. Each PC may be in zero or many groups."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('id'), max_length=255)
-    description = models.TextField(verbose_name=_('description'),
-                                   max_length=1024, null=True, blank=True)
-    site = models.ForeignKey(
-        Site, related_name='groups', on_delete=models.CASCADE
+
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    uid = models.CharField(verbose_name=_("id"), max_length=255)
+    description = models.TextField(
+        verbose_name=_("description"), max_length=1024, null=True, blank=True
     )
+    site = models.ForeignKey(Site, related_name="groups", on_delete=models.CASCADE)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -238,7 +234,7 @@ class PCGroup(models.Model):
         is_new = self.id is None
         if is_new and self.name:
             self.uid = self.uid.lower()
-            related_name = 'Group: ' + self.name
+            related_name = "Group: " + self.name
             self.configuration, new = Configuration.objects.get_or_create(
                 name=related_name
             )
@@ -248,12 +244,12 @@ class PCGroup(models.Model):
         # After save
         pass
 
+    @transaction.atomic
     def update_associated_script_positions(self):
-        existing_set = (
-            set(asc for asc in self.policy.all().order_by('position')))
-        for count, asc in enumerate(existing_set):
+        groups_policy_scripts = [asc for asc in self.policy.all().order_by("position")]
+        for count, asc in enumerate(groups_policy_scripts):
             asc.position = count
-            self.save()
+            asc.save()
 
     def update_policy_from_request(self, request, submit_name):
         req_params = request.POST
@@ -275,34 +271,31 @@ class PCGroup(models.Model):
                 # from the database as well
                 try:
                     existing = AssociatedScript.objects.get(
-                        group=self, position=position)
+                        group=self, position=position
+                    )
                     # (... although we shouldn't try to remove it twice!)
                     existing_set.remove(existing.pk)
                     existing.delete()
                 except AssociatedScript.DoesNotExist:
                     pass
 
-                asc = AssociatedScript(
-                    group=self, script=script, position=position)
+                asc = AssociatedScript(group=self, script=script, position=position)
                 asc.save()
                 pk = asc.pk
                 position += 1
             else:
                 pk = int(pk)
-                asc = AssociatedScript.objects.get(
-                    pk=pk, group=self, script=script)
+                asc = AssociatedScript.objects.get(pk=pk, group=self, script=script)
                 position = asc.position + 1
 
             for inp in script.ordered_inputs:
                 try:
-                    par = AssociatedScriptParameter.objects.get(
-                        script=asc, input=inp)
+                    par = AssociatedScriptParameter.objects.get(script=asc, input=inp)
                 except AssociatedScriptParameter.DoesNotExist:
                     par = AssociatedScriptParameter(script=asc, input=inp)
                 param_name = "{0}_param_{1}".format(script_param, inp.position)
                 if inp.value_type == Input.FILE:
-                    if param_name not in req_files \
-                            or not req_files[param_name]:
+                    if param_name not in req_files or not req_files[param_name]:
                         if par.pk is not None:
                             # Don't blank existing values
                             continue
@@ -313,8 +306,7 @@ class PCGroup(models.Model):
                     else:
                         par.file_value = req_files[param_name]
                 else:
-                    if param_name not in req_params \
-                            or not req_params[param_name]:
+                    if param_name not in req_params or not req_params[param_name]:
                         if par.pk is not None:
                             # Don't blank existing values
                             continue
@@ -334,46 +326,44 @@ class PCGroup(models.Model):
 
     @property
     def ordered_policy(self):
-        return self.policy.all().order_by('position')
+        return self.policy.all().order_by("position")
 
     def get_absolute_url(self):
         site_url = self.site.get_absolute_url()
-        return '{0}/groups/{1}'.format(site_url, self.url)
+        return "{0}/groups/{1}".format(site_url, self.url)
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
         constraints = [
             models.UniqueConstraint(
-                fields=['uid', 'site'],
-                name="unique_uid_per_group"
+                fields=["uid", "site"], name="unique_uid_per_group"
             ),
         ]
 
 
 class PC(models.Model):
     """This class represents one PC, i.e. one client of the admin system."""
-    mac = models.CharField(verbose_name=_('MAC'), max_length=255, blank=True)
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.CharField(verbose_name=_('UID'), max_length=255)
-    description = models.CharField(verbose_name=_('description'),
-                                   max_length=1024, blank=True)
+
+    mac = models.CharField(verbose_name=_("MAC"), max_length=255, blank=True)
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    uid = models.CharField(verbose_name=_("UID"), max_length=255)
+    description = models.CharField(
+        verbose_name=_("description"), max_length=1024, blank=True
+    )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    pc_groups = models.ManyToManyField(PCGroup, related_name='pcs', blank=True)
-    site = models.ForeignKey(
-        Site, related_name='pcs', on_delete=models.CASCADE
+    pc_groups = models.ManyToManyField(PCGroup, related_name="pcs", blank=True)
+    site = models.ForeignKey(Site, related_name="pcs", on_delete=models.CASCADE)
+    is_activated = models.BooleanField(verbose_name=_("activated"), default=False)
+    is_update_required = models.BooleanField(
+        verbose_name=_("update required"), default=False
     )
-    is_activated = models.BooleanField(
-        verbose_name=_('activated'),
-        default=False
+    creation_time = models.DateTimeField(
+        verbose_name=_("creation time"), auto_now_add=True
     )
-    is_update_required = models.BooleanField(verbose_name=_('update required'),
-                                             default=False)
-    creation_time = models.DateTimeField(verbose_name=_('creation time'),
-                                         auto_now_add=True)
-    last_seen = models.DateTimeField(verbose_name=_('last seen'),
-                                     null=True, blank=True)
-    location = models.CharField(verbose_name=_('location'),
-                                max_length=1024, blank=True, default='')
+    last_seen = models.DateTimeField(verbose_name=_("last seen"), null=True, blank=True)
+    location = models.CharField(
+        verbose_name=_("location"), max_length=1024, blank=True, default=""
+    )
 
     @property
     def online(self):
@@ -445,7 +435,7 @@ class PC(models.Model):
                 entry = conf.entries.get(key=key)
                 for v in entry.value.split(","):
                     v = v.strip()
-                    if v != '' and v not in result:
+                    if v != "" and v not in result:
                         result.append(v)
             except ConfigurationEntry.DoesNotExist:
                 pass
@@ -453,32 +443,26 @@ class PC(models.Model):
         return result
 
     def get_absolute_url(self):
-        return reverse('computer', args=(self.site.uid, self.uid))
-
-    def supports_ordered_job_execution(self):
-        v = self.get_config_value("_os2borgerpc.client_version")
-        if v:
-            return LooseVersion("0.0.5.0") <= LooseVersion(v)
-        else:
-            return False
+        return reverse("computer", args=(self.site.uid, self.uid))
 
     def os2_product(self):
-        """Return whether a PC is running os2borgerpc or os2displaypc."""
+        """Return whether a PC is running os2borgerpc or os2borgerpc kiosk."""
         return self.get_config_value("os2_product")
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
 
 class ScriptTag(models.Model):
     """A tag model for scripts."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
+
+    name = models.CharField(verbose_name=_("name"), max_length=255)
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -486,30 +470,34 @@ class ScriptTag(models.Model):
 
 class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    description = models.TextField(verbose_name=_('description'),
-                                   max_length=4096)
-    site = models.ForeignKey(Site, related_name='scripts',
-                             null=True, blank=True, on_delete=models.CASCADE)
+
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    description = models.TextField(verbose_name=_("description"), max_length=4096)
+    site = models.ForeignKey(
+        Site, related_name="scripts", null=True, blank=True, on_delete=models.CASCADE
+    )
     # The executable_code field should contain a single executable (e.g. a Bash
     # script OR a single extractable .zip or .tar.gz file with all necessary
     # data.
-    executable_code = models.FileField(verbose_name=_('executable code'),
-                                       upload_to='script_uploads')
-    is_security_script = models.BooleanField(verbose_name=_('security script'),
-                                             default=False, null=False)
+    executable_code = models.FileField(
+        verbose_name=_("executable code"), upload_to="script_uploads"
+    )
+    is_security_script = models.BooleanField(
+        verbose_name=_("security script"), default=False, null=False
+    )
 
     maintained_by_magenta = models.BooleanField(
         verbose_name=_("maintained by Magenta"),
         default=False,
         null=False,
     )
-    author = models.CharField(verbose_name=_("author"), max_length=255,
-                              null=False, blank=True)
-    author_email = models.EmailField(verbose_name=_("author email"),
-                                     null=False, blank=True)
-    tags = models.ManyToManyField(ScriptTag,
-                                  related_name='scripts', blank=True)
+    author = models.CharField(
+        verbose_name=_("author"), max_length=255, null=False, blank=True
+    )
+    author_email = models.EmailField(
+        verbose_name=_("author email"), null=False, blank=True
+    )
+    tags = models.ManyToManyField(ScriptTag, related_name="scripts", blank=True)
 
     @property
     def is_global(self):
@@ -519,21 +507,18 @@ class Script(AuditModelMixin):
         return self.name
 
     def run_on(self, site, pc_list, *args, user):
-        now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        batch = Batch(site=site, script=self,
-                      name=' '.join([self.name, now_str]))
+        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        batch = Batch(site=site, script=self, name=" ".join([self.name, now_str]))
         batch.save()
 
         # Add parameters
         for i, inp in enumerate(self.ordered_inputs):
             if i < len(args):
                 value = args[i]
-                if(inp.value_type == Input.FILE):
-                    p = BatchParameter(
-                        input=inp, batch=batch, file_value=value)
+                if inp.value_type == Input.FILE:
+                    p = BatchParameter(input=inp, batch=batch, file_value=value)
                 else:
-                    p = BatchParameter(
-                        input=inp, batch=batch, string_value=value)
+                    p = BatchParameter(input=inp, batch=batch, string_value=value)
                 p.save()
 
         for pc in pc_list:
@@ -544,20 +529,20 @@ class Script(AuditModelMixin):
 
     @property
     def ordered_inputs(self):
-        return self.inputs.all().order_by('position')
+        return self.inputs.all().order_by("position")
 
     def get_absolute_url(self, **kwargs):
-        if 'site_uid' in kwargs:
-            site_uid = kwargs['site_uid']
+        if "site_uid" in kwargs:
+            site_uid = kwargs["site_uid"]
         else:
             site_uid = self.site.uid
         if self.is_security_script:
-            return reverse('security_script', args=(site_uid, self.pk))
+            return reverse("security_script", args=(site_uid, self.pk))
         else:
-            return reverse('script', args=(site_uid, self.pk))
+            return reverse("script", args=(site_uid, self.pk))
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
 
 class Batch(models.Model):
@@ -568,11 +553,9 @@ class Batch(models.Model):
 
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc.
-    name = models.CharField(verbose_name=_('name'), max_length=255)
+    name = models.CharField(verbose_name=_("name"), max_length=255)
     script = models.ForeignKey(Script, on_delete=models.CASCADE)
-    site = models.ForeignKey(
-        Site, related_name='batches', on_delete=models.CASCADE
-    )
+    site = models.ForeignKey(Site, related_name="batches", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -583,21 +566,19 @@ class AssociatedScript(models.Model):
     to be run on all computers in the group; adding a computer to a group with
     scripts will cause all of those scripts to be run on the new member."""
 
-    group = models.ForeignKey(
-        PCGroup, related_name='policy', on_delete=models.CASCADE
-    )
+    group = models.ForeignKey(PCGroup, related_name="policy", on_delete=models.CASCADE)
     script = models.ForeignKey(
-        Script, related_name='associations', on_delete=models.CASCADE
+        Script, related_name="associations", on_delete=models.CASCADE
     )
-    position = models.IntegerField(verbose_name=_('position'))
+    position = models.IntegerField(verbose_name=_("position"))
 
     def make_batch(self):
-        now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        return Batch(site=self.group.site, script=self.script,
-                     name=', '.join([self.group.name,
-                                    self.script.name,
-                                    now_str]
-                                    ))
+        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return Batch(
+            site=self.group.site,
+            script=self.script,
+            name=", ".join([self.group.name, self.script.name, now_str]),
+        )
 
     def make_parameters(self, batch):
         params = []
@@ -612,7 +593,7 @@ class AssociatedScript(models.Model):
 
     @property
     def ordered_parameters(self):
-        return self.parameters.all().order_by('input__position')
+        return self.parameters.all().order_by("input__position")
 
     def run_on(self, user, pcs):
         """\
@@ -635,8 +616,7 @@ Runs this script on several PCs, returning a batch representing this task."""
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['position', 'group'],
-                name="unique_group_position"
+                fields=["position", "group"], name="unique_group_position"
             ),
         ]
 
@@ -645,20 +625,20 @@ class Job(models.Model):
     """A Job or task to be performed on a single computer."""
 
     # Job status choices
-    NEW = 'NEW'
-    SUBMITTED = 'SUBMITTED'
-    RUNNING = 'RUNNING'
-    DONE = 'DONE'
-    FAILED = 'FAILED'
-    RESOLVED = 'RESOLVED'
+    NEW = "NEW"
+    SUBMITTED = "SUBMITTED"
+    RUNNING = "RUNNING"
+    DONE = "DONE"
+    FAILED = "FAILED"
+    RESOLVED = "RESOLVED"
 
     STATUS_TRANSLATIONS = {
-        NEW: _('jobstatus:New'),
-        SUBMITTED: _('jobstatus:Submitted'),
-        RUNNING: _('jobstatus:Running'),
-        FAILED: _('jobstatus:Failed'),
-        DONE: _('jobstatus:Done'),
-        RESOLVED: _('jobstatus:Resolved')
+        NEW: _("jobstatus:New"),
+        SUBMITTED: _("jobstatus:Submitted"),
+        RUNNING: _("jobstatus:Running"),
+        FAILED: _("jobstatus:Failed"),
+        DONE: _("jobstatus:Done"),
+        RESOLVED: _("jobstatus:Resolved"),
     }
 
     STATUS_CHOICES = (
@@ -667,36 +647,33 @@ class Job(models.Model):
         (RUNNING, STATUS_TRANSLATIONS[RUNNING]),
         (FAILED, STATUS_TRANSLATIONS[FAILED]),
         (DONE, STATUS_TRANSLATIONS[DONE]),
-        (RESOLVED, STATUS_TRANSLATIONS[RESOLVED])
+        (RESOLVED, STATUS_TRANSLATIONS[RESOLVED]),
     )
 
     # Is it ideal to hardcode CSS class names in here? Better in template tag?
     STATUS_TO_LABEL = {
-        NEW: 'bg-secondary',
-        SUBMITTED: 'bg-info',
-        RUNNING: 'bg-warning',
-        DONE: 'bg-success',
-        FAILED: 'bg-danger',
-        RESOLVED: 'bg-primary'
+        NEW: "bg-secondary",
+        SUBMITTED: "bg-info",
+        RUNNING: "bg-warning",
+        DONE: "bg-success",
+        FAILED: "bg-danger",
+        RESOLVED: "bg-primary",
     }
 
     # Fields
     # Use built-in ID field for ID.
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES,
-                              default=NEW)
-    log_output = models.TextField(verbose_name=_('log output'),
-                                  max_length=128000,
-                                  blank=True)
-    started = models.DateTimeField(verbose_name=_('started'), null=True)
-    finished = models.DateTimeField(verbose_name=_('finished'), null=True)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    batch = models.ForeignKey(
-        Batch, related_name='jobs', on_delete=models.CASCADE
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
+    log_output = models.TextField(
+        verbose_name=_("log output"), max_length=128000, blank=True
     )
-    pc = models.ForeignKey(PC, related_name='jobs', on_delete=models.CASCADE)
+    started = models.DateTimeField(verbose_name=_("started"), null=True)
+    finished = models.DateTimeField(verbose_name=_("finished"), null=True)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    batch = models.ForeignKey(Batch, related_name="jobs", on_delete=models.CASCADE)
+    pc = models.ForeignKey(PC, related_name="jobs", on_delete=models.CASCADE)
 
     def __str__(self):
-        return '_'.join(map(str, [self.batch, self.id]))
+        return "_".join(map(str, [self.batch, self.id]))
 
     @property
     def has_info(self):
@@ -705,14 +682,14 @@ class Job(models.Model):
     @property
     def status_label(self):
         if self.status is None:
-            return ''
+            return ""
         else:
             return Job.STATUS_TO_LABEL[self.status]
 
     @property
     def status_translated(self):
         if self.status is None:
-            return ''
+            return ""
         else:
             return Job.STATUS_TRANSLATIONS[self.status]
 
@@ -725,17 +702,15 @@ class Job(models.Model):
         parameters = []
 
         for param in self.batch.parameters.order_by("input__position"):
-            parameters.append({
-                'type': param.input.value_type,
-                'value': param.transfer_value
-            })
+            parameters.append(
+                {"type": param.input.value_type, "value": param.transfer_value}
+            )
 
         return {
-            'id': self.pk,
-            'status': self.status,
-            'parameters': parameters,
-            'executable_code':
-                self.batch.script.executable_code.read().decode('utf8')
+            "id": self.pk,
+            "status": self.status,
+            "parameters": parameters,
+            "executable_code": self.batch.script.executable_code.read().decode("utf8"),
         }
 
     def resolve(self):
@@ -743,28 +718,28 @@ class Job(models.Model):
             self.status = Job.RESOLVED
             self.save()
         else:
-            raise Exception(_('Cannot change status from {0} to {1}').format(
-                self.status,
-                Job.RESOLVED
-            ))
+            raise Exception(
+                _("Cannot change status from {0} to {1}").format(
+                    self.status, Job.RESOLVED
+                )
+            )
 
     def restart(self, user=user):
         if not self.failed:
-            raise Exception(_('Can only restart jobs with status %s') % (
-                Job.FAILED
-            ))
+            raise Exception(_("Can only restart jobs with status %s") % (Job.FAILED))
         # Create a new batch
-        now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         script = self.batch.script
-        new_batch = Batch(site=self.batch.site, script=script,
-                          name=' '.join([script.name, now_str]))
+        new_batch = Batch(
+            site=self.batch.site, script=script, name=" ".join([script.name, now_str])
+        )
         new_batch.save()
         for p in self.batch.parameters.all():
             new_p = BatchParameter(
                 input=p.input,
                 batch=new_batch,
                 file_value=p.file_value,
-                string_value=p.string_value
+                string_value=p.string_value,
             )
             new_p.save()
 
@@ -779,26 +754,27 @@ class Input(models.Model):
     """Input for a script"""
 
     # Value types
-    STRING = 'STRING'
-    INT = 'INT'
-    DATE = 'DATE'
-    FILE = 'FILE'
+    STRING = "STRING"
+    INT = "INT"
+    DATE = "DATE"
+    FILE = "FILE"
+    BOOLEAN = "BOOLEAN"
 
     VALUE_CHOICES = (
-        (STRING, _('String')),
-        (INT, _('Integer')),
-        (DATE, _('Date')),
-        (FILE, _('File'))
+        (STRING, _("String")),
+        (INT, _("Integer")),
+        (DATE, _("Date")),
+        (FILE, _("File")),
+        (BOOLEAN, _("Boolean")),
     )
 
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    value_type = models.CharField(verbose_name=_('value type'),
-                                  choices=VALUE_CHOICES, max_length=10)
-    position = models.IntegerField(verbose_name=_('position'))
-    mandatory = models.BooleanField(verbose_name=_('mandatory'), default=True)
-    script = models.ForeignKey(
-        Script, related_name='inputs', on_delete=models.CASCADE
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    value_type = models.CharField(
+        verbose_name=_("value type"), choices=VALUE_CHOICES, max_length=10
     )
+    position = models.IntegerField(verbose_name=_("position"))
+    mandatory = models.BooleanField(verbose_name=_("mandatory"), default=True)
+    script = models.ForeignKey(Script, related_name="inputs", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.script.name + "/" + self.name
@@ -806,29 +782,24 @@ class Input(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['position', 'script'],
-                name="unique_script_position"
+                fields=["position", "script"], name="unique_script_position"
             ),
         ]
 
 
 def upload_file_name(instance, filename):
     size = 32
-    random_dirname = ''.join(
-        random.choice(
-            string.ascii_lowercase + string.digits
-        ) for x in range(size)
+    random_dirname = "".join(
+        random.choice(string.ascii_lowercase + string.digits) for x in range(size)
     )
-    return '/'.join(['parameter_uploads', random_dirname, filename])
+    return "/".join(["parameter_uploads", random_dirname, filename])
 
 
 class Parameter(models.Model):
     """A concrete value for the Input of a Script."""
 
     string_value = models.CharField(max_length=4096, null=True, blank=True)
-    file_value = models.FileField(upload_to=upload_file_name,
-                                  null=True,
-                                  blank=True)
+    file_value = models.FileField(upload_to=upload_file_name, null=True, blank=True)
     # which input does this belong to?
     input = models.ForeignKey(Input, on_delete=models.CASCADE)
 
@@ -847,7 +818,7 @@ class Parameter(models.Model):
 class BatchParameter(Parameter):
     # Which batch is this parameter associated with?
     batch = models.ForeignKey(
-        Batch, related_name='parameters', on_delete=models.CASCADE
+        Batch, related_name="parameters", on_delete=models.CASCADE
     )
 
     def __str__(self):
@@ -857,20 +828,21 @@ class BatchParameter(Parameter):
 class AssociatedScriptParameter(Parameter):
     # Which associated script is this parameter, er, associated with?
     script = models.ForeignKey(
-        AssociatedScript, related_name='parameters', on_delete=models.CASCADE
+        AssociatedScript, related_name="parameters", on_delete=models.CASCADE
     )
 
     def make_batch_parameter(self, batch):
         if self.input.value_type == Input.FILE:
             return BatchParameter(
-                batch=batch, input=self.input, file_value=self.file_value)
+                batch=batch, input=self.input, file_value=self.file_value
+            )
         else:
             return BatchParameter(
-                batch=batch, input=self.input, string_value=self.string_value)
+                batch=batch, input=self.input, string_value=self.string_value
+            )
 
     def __str__(self):
-        return "{0} - {1}: {2}".format(
-            self.script, self.input, self.transfer_value)
+        return "{0} - {1}: {2}".format(self.script, self.input, self.transfer_value)
 
 
 class SecurityProblem(models.Model):
@@ -878,14 +850,14 @@ class SecurityProblem(models.Model):
 
     # Problem levels.
 
-    NORMAL = 'Normal'
-    HIGH = 'High'
-    CRITICAL = 'Critical'
+    NORMAL = "Normal"
+    HIGH = "High"
+    CRITICAL = "Critical"
 
     LEVEL_TRANSLATIONS = {
-        NORMAL: _('securitylevel:Normal'),
-        HIGH: _('securitylevel:High'),
-        CRITICAL: _('securitylevel:Critical'),
+        NORMAL: _("securitylevel:Normal"),
+        HIGH: _("securitylevel:High"),
+        CRITICAL: _("securitylevel:Critical"),
     }
 
     LEVEL_CHOICES = (
@@ -895,44 +867,47 @@ class SecurityProblem(models.Model):
     )
 
     LEVEL_TO_LABEL = {
-        NORMAL: 'label-gentle-warning',
-        HIGH: 'label-warning',
-        CRITICAL: 'label-important',
+        NORMAL: "label-gentle-warning",
+        HIGH: "label-warning",
+        CRITICAL: "label-important",
     }
 
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    uid = models.SlugField(verbose_name=_('UID'))
-    description = models.TextField(verbose_name=_('description'), blank=True)
-    level = models.CharField(verbose_name=_('level'), max_length=10,
-                             choices=LEVEL_CHOICES, default=HIGH)
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    uid = models.SlugField(verbose_name=_("UID"))
+    description = models.TextField(verbose_name=_("description"), blank=True)
+    level = models.CharField(
+        verbose_name=_("level"), max_length=10, choices=LEVEL_CHOICES, default=HIGH
+    )
     site = models.ForeignKey(
-        Site, related_name='security_problems', on_delete=models.CASCADE
+        Site, related_name="security_problems", on_delete=models.CASCADE
     )
     security_script = models.ForeignKey(
-        Script, verbose_name=_('security script'),
-        related_name='security_problems',
-        on_delete=models.CASCADE
+        Script,
+        verbose_name=_("security script"),
+        related_name="security_problems",
+        on_delete=models.CASCADE,
     )
-    alert_groups = models.ManyToManyField(PCGroup,
-                                          related_name='security_problems',
-                                          verbose_name=_('alert groups'),
-                                          blank=True)
-    alert_users = models.ManyToManyField(User,
-                                         related_name='security_problems',
-                                         verbose_name=_('alert users'),
-                                         blank=True)
+    alert_groups = models.ManyToManyField(
+        PCGroup,
+        related_name="security_problems",
+        verbose_name=_("alert groups"),
+        blank=True,
+    )
+    alert_users = models.ManyToManyField(
+        User,
+        related_name="security_problems",
+        verbose_name=_("alert users"),
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
         constraints = [
-            models.UniqueConstraint(
-                fields=['uid', 'site'],
-                name="unique_uid_per_site"
-            ),
+            models.UniqueConstraint(fields=["uid", "site"], name="unique_uid_per_site"),
         ]
 
 
@@ -944,42 +919,42 @@ class SecurityEvent(models.Model):
 
     objects = SecurityEventQuerySet.as_manager()
 
-    NEW = 'NEW'
-    ASSIGNED = 'ASSIGNED'
-    RESOLVED = 'RESOLVED'
+    NEW = "NEW"
+    ASSIGNED = "ASSIGNED"
+    RESOLVED = "RESOLVED"
 
     STATUS_TRANSLATIONS = {
-        NEW: _('eventstatus:New'),
-        ASSIGNED: _('eventstatus:Assigned'),
-        RESOLVED: _('eventstatus:Resolved')
+        NEW: _("eventstatus:New"),
+        ASSIGNED: _("eventstatus:Assigned"),
+        RESOLVED: _("eventstatus:Resolved"),
     }
 
     STATUS_CHOICES = (
         (NEW, STATUS_TRANSLATIONS[NEW]),
         (ASSIGNED, STATUS_TRANSLATIONS[ASSIGNED]),
-        (RESOLVED, STATUS_TRANSLATIONS[RESOLVED])
+        (RESOLVED, STATUS_TRANSLATIONS[RESOLVED]),
     )
 
     STATUS_TO_LABEL = {
-        NEW: 'bg-primary',
-        ASSIGNED: 'bg-secondary',
-        RESOLVED: 'bg-success'
+        NEW: "bg-primary",
+        ASSIGNED: "bg-secondary",
+        RESOLVED: "bg-success",
     }
-    problem = models.ForeignKey(
-        SecurityProblem, null=False, on_delete=models.CASCADE
-    )
+    problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
     # The time the problem was reported in the log file
-    ocurred_time = models.DateTimeField(verbose_name=_('occurred'))
+    ocurred_time = models.DateTimeField(verbose_name=_("occurred"))
     # The time the problem was submitted to the system
-    reported_time = models.DateTimeField(verbose_name=_('reported'))
+    reported_time = models.DateTimeField(verbose_name=_("reported"))
     pc = models.ForeignKey(PC, on_delete=models.CASCADE, related_name="security_events")
     summary = models.CharField(max_length=4096, null=False, blank=False)
     complete_log = models.TextField(null=True, blank=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES,
-                              default=NEW)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
     assigned_user = models.ForeignKey(
-        User, verbose_name=_('assigned user'),
-        null=True, blank=True, on_delete=models.SET_NULL
+        User,
+        verbose_name=_("assigned user"),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
     note = models.TextField(null=True, blank=True)
 
@@ -989,19 +964,19 @@ class SecurityEvent(models.Model):
 
 class ImageVersion(models.Model):
     BORGERPC = "BORGERPC"
-    DISPLAYPC = "DISPLAYPC"
+    BORGERPC_KIOSK = "BORGERPC_KIOSK"
 
     platform_choices = (
-        (BORGERPC, _("BorgerPC")),
-        (DISPLAYPC, _("DisplayPC")),
+        (BORGERPC, "OS2borgerPC"),
+        (BORGERPC_KIOSK, "OS2borgerPC Kiosk"),
     )
 
     platform = models.CharField(max_length=128, choices=platform_choices)
     image_version = models.CharField(unique=True, max_length=7)
     release_date = models.DateField()
     os = models.CharField(verbose_name="OS", max_length=30)
-    release_notes = models.TextField(max_length=350)
-    image_upload = models.FileField(upload_to="images", default='#')
+    release_notes = models.TextField(max_length=1500)
+    image_upload = models.FileField(upload_to="images", default="#")
 
     def __str__(self):
         return "| {0} | {1} | {2} | {3} | {4} |".format(
@@ -1009,11 +984,11 @@ class ImageVersion(models.Model):
             self.release_date,
             self.os,
             self.release_notes,
-            self.image_upload
+            self.image_upload,
         )
 
     class Meta:
-        ordering = ['platform', '-image_version']
+        ordering = ["platform", "-image_version"]
 
 
 # Last_successful_login is only updated whenever the citizen user:
@@ -1031,7 +1006,6 @@ class Citizen(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['citizen_id', 'site'],
-                name="unique_citizen_per_site"
+                fields=["citizen_id", "site"], name="unique_citizen_per_site"
             ),
         ]
