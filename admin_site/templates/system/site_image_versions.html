@@ -66,30 +66,30 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        {% for image in selected_platform_images|slice:"1:" %}
+      {% for image in selected_platform_images|slice:"1:" %}
+        <tr>
           <td>{{ image.image_version }}</td>
           <td>{{ image.release_date }}</td>
           <td>{{ image.os }}
 
           </td>
           <td>
-          <pre style="font-family: var(--bs-font-sans-serif)">{{ image.release_notes }}</pre>
-        </td>
-        <td>
-          <a class="btn btn-sm btn-secondary text-light" href="{{ iv.image_upload.url }}" download>
-          <span clas="d-flex align-items-center">
-            
-            <span class="material-icons">
-              cloud_download
+            <pre style="font-family: var(--bs-font-sans-serif)">{{ image.release_notes }}</pre>
+          </td>
+          <td>
+            <a class="btn btn-sm btn-secondary text-light" href="{{ iv.image_upload.url }}" download>
+            <span clas="d-flex align-items-center">
+              
+              <span class="material-icons">
+                cloud_download
+              </span>
+              Download
             </span>
-            Download
-          </span>
-          </a>
-        </td>
+            </a>
+          </td>
+        </tr>
       {% endfor %}
     {% endif %}
-  </tr>
 </tbody>
 </table>
 </div>
