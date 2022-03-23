@@ -429,9 +429,11 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     # Yep, it's meant to be double-escaped - it's HTML-escaped
                     # content that will be stored in an HTML attribute
                     "has_info": job.has_info,
-                    "script_url": "/site/%s/scripts/%s/"
-                    % (site.uid, job.batch.script.id),
-                    "restart_url": "/site/%s/jobs/%s/restart/" % (site.uid, job.pk),
+                    "script_url": reverse(
+                        "script", args=[site.uid, job.batch.script.id]
+                    ),
+                    "pc_url": reverse("computer", args=[site.uid, job.pc.uid]),
+                    "restart_url": reverse("restart_job", args=[site.uid, job.pk]),
                 }
                 for job in page_obj
             ],
