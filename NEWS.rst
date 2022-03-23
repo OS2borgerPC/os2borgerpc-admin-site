@@ -1,3 +1,11 @@
+Version 5.3.1, March 21, 2022
+---------------------------------
+
+New in this version:
+
+- Make Versions page render correctly
+- Update Django version
+
 Version 5.3.0, January 26, 2022
 ---------------------------------
 
