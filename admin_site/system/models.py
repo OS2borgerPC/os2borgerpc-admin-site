@@ -807,7 +807,7 @@ class Parameter(models.Model):
     def transfer_value(self):
         input_type = self.input.value_type
         if input_type == Input.FILE:
-            return self.file_value.url
+            return self.file_value.url if self.file_value else ""
         else:
             return self.string_value
 
