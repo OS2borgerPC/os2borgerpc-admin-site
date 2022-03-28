@@ -69,7 +69,7 @@
                 submit_name: id
             }))
             this.scriptInputs = scriptInputs
-            item.insertBefore($('#' + id + '_new_entries').parent().parent())
+            item.insertBefore($('#' + id + '_new_entries'))
             this.updateNew(id)
             $("#addpolicyscriptdialog").modal('hide')
         },

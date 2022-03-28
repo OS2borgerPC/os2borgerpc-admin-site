@@ -255,38 +255,23 @@ class PCGroup(models.Model):
         req_params = request.POST
         req_files = request.FILES
 
-        seen_set = set()
         existing_set = set(asc.pk for asc in self.policy.all())
 
-        position = 0
+        for pk in existing_set:
+            asc = AssociatedScript.objects.get(pk=pk)
+            asc.delete()
+
         for pk in req_params.getlist(submit_name, []):
             script_param = "%s_%s" % (submit_name, pk)
 
-            script_pk = int(req_params.get(script_param, None))
-            script = Script.objects.get(pk=script_pk)
+            script_pk = req_params.get(script_param, None)
+            script = Script.objects.get(pk=int(script_pk))
+            position = req_params.get(script_param + "_position", int)
 
-            if pk.startswith("new_"):
-                # If the model already has a script at this position in the
-                # list, then the user must have deleted it in the UI; remove it
-                # from the database as well
-                try:
-                    existing = AssociatedScript.objects.get(
-                        group=self, position=position
-                    )
-                    # (... although we shouldn't try to remove it twice!)
-                    existing_set.remove(existing.pk)
-                    existing.delete()
-                except AssociatedScript.DoesNotExist:
-                    pass
-
-                asc = AssociatedScript(group=self, script=script, position=position)
-                asc.save()
-                pk = asc.pk
-                position += 1
-            else:
-                pk = int(pk)
-                asc = AssociatedScript.objects.get(pk=pk, group=self, script=script)
-                position = asc.position + 1
+            asc = AssociatedScript(group=self, script=script, position=position)
+            if not pk.startswith("new_"):
+                asc.pk = pk
+            asc.save()
 
             for inp in script.ordered_inputs:
                 try:
@@ -317,12 +302,6 @@ class PCGroup(models.Model):
                     else:
                         par.string_value = req_params[param_name]
                 par.save()
-            seen_set.add(pk)
-
-        # Delete entries that were not in the submitted data
-        for pk in existing_set - seen_set:
-            asc = AssociatedScript.objects.get(pk=pk)
-            asc.delete()
 
     @property
     def ordered_policy(self):

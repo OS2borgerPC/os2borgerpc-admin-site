@@ -1370,10 +1370,6 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     response, _("Group %s updated") % self.object.name
                 )
 
-                # Now update script positions in case a script has been deleted or added
-                if policy_pre != policy_post:
-                    self.object.update_associated_script_positions()
-
                 return response
         except MandatoryParameterMissingError as e:
             # If this happens, it happens *before* we have a valid

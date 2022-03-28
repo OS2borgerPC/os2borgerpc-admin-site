@@ -50,7 +50,8 @@ active
       action="{% url 'group' site.uid selected_group.url %}"
       method="post" 
       enctype="multipart/form-data" 
-      class="row-fluid">
+      class="row-fluid"
+      onsubmit="updateScriptPositions()">
 
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
@@ -109,6 +110,18 @@ active
       </div>
 
     </form>
+
+    <script>
+      function updateScriptPositions(){
+        fields = document.getElementsByClassName("position-field")
+
+        let i = 0
+        for (let item of fields) {
+          item.value = i
+          i++
+        }
+      }
+    </script>
 
     <div id="addNewGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
