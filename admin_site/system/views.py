@@ -1857,7 +1857,8 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             ).upper()
 
             selected_platform = next(
-                (x for x in ImageVersion.platform_choices if x[0] == platform_choice)
+                (x for x in ImageVersion.platform_choices if x[0] == platform_choice),
+                ImageVersion.platform_choices[0][0],
             )
             context["selected_platform"] = selected_platform
             context["selected_platform_images"] = versions.filter(
