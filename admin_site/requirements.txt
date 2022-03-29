@@ -33,4 +33,4 @@ six==1.16.0
 sqlparse==0.4.2
 urllib3==1.26.7
 whitenoise==5.2.0
-black==21.11b1
+black==22.3.0
