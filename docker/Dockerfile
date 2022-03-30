@@ -1,11 +1,5 @@
 # Copyright (C) 2021 Magenta ApS, http://magenta.dk.
 # Contact: info@magenta.dk.
-#
-
-################################################################################
-# Changes to this file requires approval from Labs. Please add a person from   #
-# Labs as required approval to your MR if you have any changes.                #
-################################################################################
 
 FROM node:16 as frontend
 
@@ -70,10 +64,16 @@ COPY admin_site ./admin_site
 WORKDIR /code/admin_site
 
 # Copy frontend static files.
-COPY --from=frontend /code/nodejs/dist/css/bootstrap.* /frontend/css/
-COPY --from=frontend /code/nodejs/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* /frontend/js/
-COPY --from=frontend /code/nodejs/node_modules/jquery/dist/jquery.min.js  /frontend/js/
-COPY --from=frontend /code/nodejs/node_modules/qrcodejs/qrcode.min.js  /frontend/js/
+COPY --from=frontend \
+  /code/nodejs/dist/css/bootstrap.* \
+  /code/nodejs/node_modules/bootstrap-table/dist/bootstrap-table.min.css \
+  /frontend/css/
+COPY --from=frontend \
+  /code/nodejs/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* \
+  /code/nodejs/node_modules/jquery/dist/jquery.min.js \
+  /code/nodejs/node_modules/qrcodejs/qrcode.min.js \
+  /code/nodejs/node_modules/bootstrap-table/dist/bootstrap-table.min.js \
+  /frontend/js/
 
 # Unfortunately, `collectstatic` requires all settings to be set. We include a
 # set of insecure setting here for only this purpose. We make sure to delete it
