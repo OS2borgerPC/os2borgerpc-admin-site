@@ -3,7 +3,6 @@
 """Functions for populating the database with initial data."""
 
 import os
-import glob
 
 from django.core.management import call_command
 
@@ -19,6 +18,6 @@ def initialize():
     generating duplicates.
     """
     if os.path.exists(fixtures_dir) and os.path.isdir(fixtures_dir):
-        for file in glob.glob(os.path.join(fixtures_dir, "*.json")):
-            if os.path.isfile(file):
-                call_command("loaddata", file)
+        call_command("loaddata", os.path.join(fixtures_dir, "auth.json"))
+        call_command("loaddata", os.path.join(fixtures_dir, "system.json"))
+        call_command("loaddata", os.path.join(fixtures_dir, "account.json"))
