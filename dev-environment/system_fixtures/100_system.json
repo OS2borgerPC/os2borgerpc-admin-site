@@ -9035,7 +9035,7 @@
     "model": "system.imageversion",
     "pk": 2,
     "fields": {
-        "platform": "DISPLAYPC",
+        "platform": "BORGERPC_KIOSK",
         "image_version": "1.0.0",
         "release_date": "2021-02-02",
         "os": "Ubuntu 20.04",
@@ -9065,6 +9065,18 @@
         "os": "Ubuntu 20.04",
         "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
         "image_upload": "images/os2borgerpc-3.1.0.iso"
+    }
+},
+{
+    "model": "system.imageversion",
+    "pk": 5,
+    "fields": {
+        "platform": "BORGERPC",
+        "image_version": "3.1.1",
+        "release_date": "2021-07-12",
+        "os": "Ubuntu 20.04",
+        "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
+        "image_upload": "images/os2borgerpc-3.1.1.iso"
     }
 }
 ]
