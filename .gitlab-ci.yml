@@ -43,7 +43,8 @@ Lint Python:
 
 Lint Dockerfiles:
       <<: *lint-default
-      image: hadolint/hadolint:latest-debian
+      # TODO: waits for https://github.com/hadolint/hadolint/issues/808
+      image: hadolint/hadolint:2.9.3-debian
       before_script:
           - apt-get -y update
           - apt-get -y install --no-install-recommends git
