@@ -1,0 +1,34 @@
+[
+{
+    "model": "account.userprofile",
+    "pk": 34,
+    "fields": {
+        "user": 35
+    }
+},
+{
+    "model": "account.userprofile",
+    "pk": 35,
+    "fields": {
+        "user": 36
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 24,
+    "fields": {
+        "site_user_type": 2,
+        "site": 1,
+        "user_profile": 34
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 25,
+    "fields": {
+        "site_user_type": 1,
+        "site": 1,
+        "user_profile": 35
+    }
+}
+]
