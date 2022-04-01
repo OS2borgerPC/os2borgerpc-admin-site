@@ -176,9 +176,10 @@ class PCInlineForSiteAdmin(admin.TabularInline):
 
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ("name", "number_of_computers")
+    list_display = ("name", "number_of_computers", "created")
     search_fields = ("name",)
     inlines = (PCInlineForSiteAdmin,)
+    readonly_fields = ("created",)
 
     def number_of_computers(self, obj):
         return obj.pcs.count()
@@ -187,8 +188,16 @@ class SiteAdmin(admin.ModelAdmin):
 
 
 class PCAdmin(admin.ModelAdmin):
-    list_display = ("name", "uid", "site_link", "is_activated", "last_seen")
+    list_display = (
+        "name",
+        "uid",
+        "site_link",
+        "is_activated",
+        "last_seen",
+        "created",
+    )
     search_fields = ("name", "uid")
+    readonly_fields = ("created",)
 
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
@@ -211,8 +220,9 @@ class PCAdmin(admin.ModelAdmin):
 
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "status", "user", "pc")
+    list_display = ("__str__", "status", "user", "pc", "created", "started", "finished")
     search_fields = ("batch__name", "user__username", "pc__name")
+    readonly_fields = ("created", "started", "finished")
 
 
 class ScriptTagAdmin(admin.ModelAdmin):
@@ -251,6 +261,17 @@ class AssociatedScriptAdmin(admin.ModelAdmin):
         return obj.group.site
 
 
+# Note: script within AssociatedScriptParameter is actually
+# an AssociatedScript, not a Script
+class AssociatedScriptParameterAdmin(admin.ModelAdmin):
+    list_display = ("script", "input", "string_value", "file_value", "get_site")
+    search_fields = ("script__script__name",)
+
+    @admin.display(description="Site", ordering="script__group__site")
+    def get_site(self, obj):
+        return obj.script.group.site
+
+
 class CitizenAdmin(admin.ModelAdmin):
     list_display = ("citizen_id", "last_successful_login", "site")
     search_fields = ("citizen_id",)
@@ -268,7 +289,7 @@ ar(Batch, BatchAdmin)
 ar(Job, JobAdmin)
 ar(BatchParameter)
 ar(AssociatedScript, AssociatedScriptAdmin)
-ar(AssociatedScriptParameter)
+ar(AssociatedScriptParameter, AssociatedScriptParameterAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
 ar(Citizen, CitizenAdmin)

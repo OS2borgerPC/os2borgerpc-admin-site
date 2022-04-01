@@ -345,6 +345,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
     for i in [
         "pk",
         "batch__script__name",
+        "created",
         "started",
         "finished",
         "status",
@@ -418,10 +419,13 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "script_name": job.batch.script.name,
                     "started": job.started.strftime("%Y-%m-%d %H:%M:%S")
                     if job.started
-                    else None,
+                    else "-",
                     "finished": job.finished.strftime("%Y-%m-%d %H:%M:%S")
                     if job.finished
-                    else None,
+                    else "-",
+                    "created": job.created.strftime("%Y-%m-%d %H:%M:%S")
+                    if job.created
+                    else "-",
                     "status": job.status_translated + "",
                     "label": job.status_label,
                     "pc_name": job.pc.name,
@@ -1792,7 +1796,7 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
         "configuration_id",
         "site_id",
         "is_activated",
-        "creation_time",
+        "created",
         "last_seen",
         "location",
     ]

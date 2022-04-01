@@ -150,6 +150,7 @@ $(function(){
             $('#jobsearch-filterform')[0].reset()
             $('#jobsearch-filterform li.selected').removeClass('selected')
             $('#jobsearch-filterform input[name=batch]').val('')
+            $('#jobsearch-filterform input[name=created]').val('')
             $('#jobsearch-filterform input[name=pc]').val('')
             $('#jobsearch-filterform input[name=group]').val('')
             $('#jobsearch-filterform input[name=page]').val('1')
