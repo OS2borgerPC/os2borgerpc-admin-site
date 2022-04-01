@@ -3379,6 +3379,7 @@
         "name": "Magenta",
         "uid": "magenta",
         "configuration": 1,
+        "created": "2020-01-01",
         "paid_for_access_until": "2022-04-02",
         "isil": "",
         "user_login_duration": "01:00:00",
@@ -3392,6 +3393,7 @@
         "name": "Magenta Test",
         "uid": "magenta-test",
         "configuration": 60,
+        "created": "2020-01-01",
         "paid_for_access_until": "2025-01-17",
         "isil": "",
         "user_login_duration": "01:00:00",
@@ -3465,7 +3467,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2020-11-30T18:15:43.997",
+        "created": "2020-11-30T18:15:43.997",
         "last_seen": "2020-12-01T14:15:03",
         "location": "",
         "pc_groups": [
@@ -3486,7 +3488,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-01-11T11:03:36.510",
+        "created": "2021-01-11T11:03:36.510",
         "last_seen": "2021-01-11T15:30:04",
         "location": "",
         "pc_groups": [
@@ -3507,7 +3509,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-01-21T08:50:37.470",
+        "created": "2021-01-21T08:50:37.470",
         "last_seen": "2021-01-21T09:05:02",
         "location": "",
         "pc_groups": [
@@ -3528,7 +3530,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-01-21T11:16:10.403",
+        "created": "2021-01-21T11:16:10.403",
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
         "pc_groups": [
@@ -3550,7 +3552,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-01-29T12:52:58.793",
+        "created": "2021-01-29T12:52:58.793",
         "last_seen": "2021-01-29T14:14:32",
         "location": "",
         "pc_groups": [
@@ -3570,7 +3572,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": true,
-        "creation_time": "2021-08-25T10:01:37.352",
+        "created": "2021-08-25T10:01:37.352",
         "last_seen": "2021-08-25T15:30:08",
         "location": "",
         "pc_groups": [
@@ -3590,7 +3592,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-09-11T13:33:02.398",
+        "created": "2021-09-11T13:33:02.398",
         "last_seen": null,
         "location": "",
         "pc_groups": [
@@ -3610,7 +3612,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-11-25T15:34:19.791",
+        "created": "2021-11-25T15:34:19.791",
         "last_seen": "2021-11-30T10:30:02",
         "location": "",
         "pc_groups": [
@@ -3630,7 +3632,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-11-29T09:22:59.334",
+        "created": "2021-11-29T09:22:59.334",
         "last_seen": "2021-12-01T11:35:04",
         "location": "",
         "pc_groups": [
@@ -3651,7 +3653,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-11-29T10:39:13.906",
+        "created": "2021-11-29T10:39:13.906",
         "last_seen": "2022-01-18T10:45:11",
         "location": "",
         "pc_groups": [
@@ -3671,7 +3673,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-11-30T12:59:58.700",
+        "created": "2021-11-30T12:59:58.700",
         "last_seen": "2022-01-10T09:20:08",
         "location": "",
         "pc_groups": [
@@ -3691,7 +3693,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-11-30T13:03:03.481",
+        "created": "2021-11-30T13:03:03.481",
         "last_seen": "2022-01-14T16:55:06",
         "location": "",
         "pc_groups": [
@@ -3711,7 +3713,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2021-12-02T13:32:08.296",
+        "created": "2021-12-02T13:32:08.296",
         "last_seen": "2021-12-02T15:05:05",
         "location": "",
         "pc_groups": [
@@ -3731,7 +3733,7 @@
         "site": 9,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2022-01-05T14:43:09.479",
+        "created": "2022-01-05T14:43:09.479",
         "last_seen": "2022-01-17T17:20:05",
         "location": "",
         "pc_groups": []
@@ -3749,7 +3751,7 @@
         "site": 1,
         "is_activated": true,
         "is_update_required": false,
-        "creation_time": "2022-01-10T11:37:48.592",
+        "created": "2022-01-10T11:37:48.592",
         "last_seen": "2022-01-14T15:10:04",
         "location": "beskrivelse 5",
         "pc_groups": [
@@ -8860,7 +8862,7 @@
         "string_value": "kk.dk",
         "file_value": "",
         "input": 2,
-        "script": 7
+        "associated_script": 7
     }
 },
 {
@@ -8870,7 +8872,7 @@
         "string_value": "https://magenta.dk",
         "file_value": "",
         "input": 2,
-        "script": 16
+        "associated_script": 16
     }
 },
 {
@@ -8880,7 +8882,7 @@
         "string_value": "left",
         "file_value": "",
         "input": 27,
-        "script": 18
+        "associated_script": 18
     }
 },
 {

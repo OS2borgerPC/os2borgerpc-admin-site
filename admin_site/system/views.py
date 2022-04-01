@@ -345,6 +345,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
     for i in [
         "pk",
         "batch__script__name",
+        "created",
         "started",
         "finished",
         "status",
@@ -418,10 +419,13 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "script_name": job.batch.script.name,
                     "started": job.started.strftime("%Y-%m-%d %H:%M:%S")
                     if job.started
-                    else None,
+                    else "-",
                     "finished": job.finished.strftime("%Y-%m-%d %H:%M:%S")
                     if job.finished
-                    else None,
+                    else "-",
+                    "created": job.created.strftime("%Y-%m-%d %H:%M:%S")
+                    if job.created
+                    else "-",
                     "status": job.status_translated + "",
                     "label": job.status_label,
                     "pc_name": job.pc.name,
@@ -651,11 +655,11 @@ class ScriptMixin(object):
         for associated_script in self.script.associations.all():
             for script_input in self.script.ordered_inputs:
                 par = AssociatedScriptParameter.objects.filter(
-                    script=associated_script, input=script_input
+                    associated_script=associated_script, input=script_input
                 ).first()
                 if not par:
                     par = AssociatedScriptParameter(
-                        script=associated_script, input=script_input
+                        associated_script=associated_script, input=script_input
                     )
                     par.save()
 
@@ -1636,7 +1640,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "site_uid": site.uid,
                     "problem_name": event.problem.name,
                     "pc_id": event.pc.id,
-                    "occurred": event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
                     "level": SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],
@@ -1792,7 +1796,7 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
         "configuration_id",
         "site_id",
         "is_activated",
-        "creation_time",
+        "created",
         "last_seen",
         "location",
     ]

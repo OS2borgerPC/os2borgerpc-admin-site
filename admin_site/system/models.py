@@ -125,6 +125,9 @@ class Site(models.Model):
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"), null=True, blank=True
     )
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
+    )
     # Official library number
     # https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre
 
@@ -275,9 +278,11 @@ class PCGroup(models.Model):
 
             for inp in script.ordered_inputs:
                 try:
-                    par = AssociatedScriptParameter.objects.get(script=asc, input=inp)
+                    par = AssociatedScriptParameter.objects.get(
+                        associated_script=asc, input=inp
+                    )
                 except AssociatedScriptParameter.DoesNotExist:
-                    par = AssociatedScriptParameter(script=asc, input=inp)
+                    par = AssociatedScriptParameter(associated_script=asc, input=inp)
                 param_name = "{0}_param_{1}".format(script_param, inp.position)
                 if inp.value_type == Input.FILE:
                     if param_name not in req_files or not req_files[param_name]:
@@ -336,8 +341,8 @@ class PC(models.Model):
     is_update_required = models.BooleanField(
         verbose_name=_("update required"), default=False
     )
-    creation_time = models.DateTimeField(
-        verbose_name=_("creation time"), auto_now_add=True
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
     )
     last_seen = models.DateTimeField(verbose_name=_("last seen"), null=True, blank=True)
     location = models.CharField(
@@ -480,8 +485,7 @@ class Script(AuditModelMixin):
         return self.name
 
     def run_on(self, site, pc_list, *args, user):
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        batch = Batch(site=site, script=self, name=" ".join([self.name, now_str]))
+        batch = Batch(site=site, script=self, name=self.id)
         batch.save()
 
         # Add parameters
@@ -546,11 +550,10 @@ class AssociatedScript(models.Model):
     position = models.IntegerField(verbose_name=_("position"))
 
     def make_batch(self):
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return Batch(
             site=self.group.site,
             script=self.script,
-            name=", ".join([self.group.name, self.script.name, now_str]),
+            name=", ".join([self.script.id, self.group.name]),
         )
 
     def make_parameters(self, batch):
@@ -638,6 +641,9 @@ class Job(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
     log_output = models.TextField(
         verbose_name=_("log output"), max_length=128000, blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
     )
     started = models.DateTimeField(verbose_name=_("started"), null=True)
     finished = models.DateTimeField(verbose_name=_("finished"), null=True)
@@ -799,8 +805,7 @@ class BatchParameter(Parameter):
 
 
 class AssociatedScriptParameter(Parameter):
-    # Which associated script is this parameter, er, associated with?
-    script = models.ForeignKey(
+    associated_script = models.ForeignKey(
         AssociatedScript, related_name="parameters", on_delete=models.CASCADE
     )
 
@@ -915,7 +920,7 @@ class SecurityEvent(models.Model):
     }
     problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
     # The time the problem was reported in the log file
-    ocurred_time = models.DateTimeField(verbose_name=_("occurred"))
+    occurred_time = models.DateTimeField(verbose_name=_("occurred"))
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(verbose_name=_("reported"))
     pc = models.ForeignKey(PC, on_delete=models.CASCADE, related_name="security_events")
