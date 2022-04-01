@@ -1,8 +1,9 @@
 {% extends "sitebase.html" %}
 
 {% block header_title %}
-Administrér <em>Sites</em>
-<span class="ms-3 badge bg-secondary" title="Antal sites i alt">Antal: {{site_list|length}}</span>
+  Administrér <em>Sites</em>
+  <span class="ms-3 badge bg-secondary" title="Antal sites i alt">Sites: {{site_list|length}}</span>
+  <span class="ms-3 badge bg-secondary" title="Antal computere i alt">Computere: {{pcs_count}}</span>
 {% endblock %}
 
 {% block header_class %}container{% endblock %}
@@ -14,8 +15,11 @@ Administrér <em>Sites</em>
 
         <div class="btn-group mt-3">
           <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
-            <span class='material-icons'>home</span>
-            {{site.name}}
+            <span class="pe-4">
+              <span class='material-icons'>home</span>
+              {{site.name}}
+            </span>
+           <span class="material-icons">computer</span>{{site.pcs.count}}
           </a>
         </div>
       {% endfor %}      
