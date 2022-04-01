@@ -176,15 +176,41 @@ class PCInlineForSiteAdmin(admin.TabularInline):
 
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ("name", "number_of_computers", "created")
+    list_display = (
+        "name",
+        "number_of_computers",
+        "created",
+        "number_of_borgerpc_computers",
+        "number_of_kioskpc_computers",
+    )
     search_fields = ("name",)
     inlines = (PCInlineForSiteAdmin,)
     readonly_fields = ("created",)
+
+    def number_of_borgerpc_computers(self, obj):
+        borgerpc_computers_count = (
+            PC.objects.filter(site=obj)
+            .filter(configuration__entries__value="os2borgerpc")
+            .count()
+        )
+
+        return borgerpc_computers_count
+
+    def number_of_kioskpc_computers(self, obj):
+        kioskpc_computers_count = (
+            PC.objects.filter(site=obj)
+            .filter(configuration__entries__value="os2borgerpc kiosk")
+            .count()
+        )
+
+        return kioskpc_computers_count
 
     def number_of_computers(self, obj):
         return obj.pcs.count()
 
     number_of_computers.short_description = _("Number of computers")
+    number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
+    number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
 
 
 class PCAdmin(admin.ModelAdmin):
