@@ -470,12 +470,6 @@ class Script(AuditModelMixin):
         default=False,
         null=False,
     )
-    author = models.CharField(
-        verbose_name=_("author"), max_length=255, null=False, blank=True
-    )
-    author_email = models.EmailField(
-        verbose_name=_("author email"), null=False, blank=True
-    )
     tags = models.ManyToManyField(ScriptTag, related_name="scripts", blank=True)
 
     @property
