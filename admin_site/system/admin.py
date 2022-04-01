@@ -188,22 +188,22 @@ class SiteAdmin(admin.ModelAdmin):
     readonly_fields = ("created",)
 
     def number_of_borgerpc_computers(self, obj):
-        borgerpc_computers = (
+        borgerpc_computers_count = (
             PC.objects.filter(site=obj)
             .filter(configuration__entries__value="os2borgerpc")
             .count()
         )
 
-        return borgerpc_computers
+        return borgerpc_computers_count
 
     def number_of_kioskpc_computers(self, obj):
-        kioskpc_computers = (
+        kioskpc_computers_count = (
             PC.objects.filter(site=obj)
             .filter(configuration__entries__value="os2borgerpc kiosk")
             .count()
         )
 
-        return kioskpc_computers
+        return kioskpc_computers_count
 
     def number_of_computers(self, obj):
         return obj.pcs.count()
