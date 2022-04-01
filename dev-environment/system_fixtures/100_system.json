@@ -3799,8 +3799,6 @@
         "executable_code": "script_uploads/sudoEvent_p1Nm05j.py",
         "is_security_script": true,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -3818,8 +3816,6 @@
         "executable_code": "script_uploads/keyboardEvent_3doAonF.py",
         "is_security_script": true,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -3837,8 +3833,6 @@
         "executable_code": "script_uploads/remove_bluetooth_applet_GFCSe0M.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -3856,8 +3850,6 @@
         "executable_code": "script_uploads/chrome_autostart_cP5Rsu2.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             3
         ]
@@ -3877,8 +3869,6 @@
         "executable_code": "script_uploads/chrome_policy_deactivate_login_m0TvmUo.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             3
         ]
@@ -3898,8 +3888,6 @@
         "executable_code": "script_uploads/chrome_disable_keyring.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             3
         ]
@@ -3919,8 +3907,6 @@
         "executable_code": "script_uploads/chrome_install_KDwvq0C.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             3
         ]
@@ -3940,8 +3926,6 @@
         "executable_code": "script_uploads/chrome_policy_homepage_hd2Rmxs.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             3
         ]
@@ -3961,8 +3945,6 @@
         "executable_code": "script_uploads/chrome_policy_default_browser.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             3
         ]
@@ -3982,8 +3964,6 @@
         "executable_code": "script_uploads/polkit_policy_shutdown_R6uMvd2.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             4
         ]
@@ -4003,8 +3983,6 @@
         "executable_code": "script_uploads/remove_new_release_message.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             4
         ]
@@ -4024,8 +4002,6 @@
         "executable_code": "script_uploads/dconf_policy_desktop.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             4
         ]
@@ -4045,8 +4021,6 @@
         "executable_code": "script_uploads/dconf_policy.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             4
         ]
@@ -4066,8 +4040,6 @@
         "executable_code": "script_uploads/randomize_jobmanager.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             2
         ]
@@ -4087,8 +4059,6 @@
         "executable_code": "script_uploads/chromium_install.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             2
         ]
@@ -4108,8 +4078,6 @@
         "executable_code": "script_uploads/vnc_and_ssh_install_7Q7CazQ.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             2
         ]
@@ -4129,8 +4097,6 @@
         "executable_code": "script_uploads/chromium_setup_ocWvyJg.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             2
         ]
@@ -4150,8 +4116,6 @@
         "executable_code": "script_uploads/user_automatic_login.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4171,8 +4135,6 @@
         "executable_code": "script_uploads/apt_periodic_control_qqYafra.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4192,8 +4154,6 @@
         "executable_code": "script_uploads/reboot_after_time_aG4Gjkw.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4213,8 +4173,6 @@
         "executable_code": "script_uploads/reboot_now.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4234,8 +4192,6 @@
         "executable_code": "script_uploads/grub_set_password_HdoIPiZ.py",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4255,8 +4211,6 @@
         "executable_code": "script_uploads/always_logout_after_time.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4276,8 +4230,6 @@
         "executable_code": "script_uploads/setup_inactive_logout.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4297,8 +4249,6 @@
         "executable_code": "script_uploads/logout_user.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4318,8 +4268,6 @@
         "executable_code": "script_uploads/shutdown_at_time.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4339,8 +4287,6 @@
         "executable_code": "script_uploads/shutdown_and_wakeup_R3wRh69.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4360,8 +4306,6 @@
         "executable_code": "script_uploads/update_all_7LM3G3y.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4381,8 +4325,6 @@
         "executable_code": "script_uploads/rotate_display_6g79WvQ.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4402,8 +4344,6 @@
         "executable_code": "script_uploads/set_local_time_from_bios.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4423,8 +4363,6 @@
         "executable_code": "script_uploads/pulse_policy_profile.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4444,8 +4382,6 @@
         "executable_code": "script_uploads/change_computer_name1.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4465,8 +4401,6 @@
         "executable_code": "script_uploads/change_user_password_bO697ab.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4486,8 +4420,6 @@
         "executable_code": "script_uploads/change_superuser_password_6zL696e.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4507,8 +4439,6 @@
         "executable_code": "script_uploads/Exfat_enable_qCyiT2z.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4528,8 +4458,6 @@
         "executable_code": "script_uploads/pingevent.py",
         "is_security_script": true,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -4547,8 +4475,6 @@
         "executable_code": "script_uploads/diagnostic_logfiles_b649s9e.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "John Doe",
-        "author_email": "john@doe.com",
         "tags": []
     }
 },
@@ -4566,8 +4492,6 @@
         "executable_code": "script_uploads/test-script_xKItgpL.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -4585,8 +4509,6 @@
         "executable_code": "script_uploads/dbus-address.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -4604,8 +4526,6 @@
         "executable_code": "script_uploads/emptyish.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "John Doe",
-        "author_email": "john@doe.com",
         "tags": []
     }
 },
@@ -4623,8 +4543,6 @@
         "executable_code": "script_uploads/test.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             1
         ]
@@ -4644,8 +4562,6 @@
         "executable_code": "script_uploads/desktop_logout_button_icon_W0J3c67.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": [
             4
         ]
@@ -4665,8 +4581,6 @@
         "executable_code": "script_uploads/desktop_activate_shortcuts.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "John Doe",
-        "author_email": "john@doe.com",
         "tags": []
     }
 },
@@ -4684,8 +4598,6 @@
         "executable_code": "script_uploads/always_logout_after_time_visual_WRE7ERj.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "john@doe.com",
         "tags": []
     }
 },
@@ -4703,8 +4615,6 @@
         "executable_code": "script_uploads/cicero_install_pam_gsMTFne.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "john@doe.com",
         "tags": []
     }
 },
@@ -4722,8 +4632,6 @@
         "executable_code": "script_uploads/update_client_yanked.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -4741,8 +4649,6 @@
         "executable_code": "script_uploads/chromium_change_homepage.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "",
         "tags": []
     }
 },
@@ -4760,8 +4666,6 @@
         "executable_code": "script_uploads/setup_two_factor_superuser_BAk1AH4.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "",
-        "author_email": "john@doe.com",
         "tags": [
             1
         ]
@@ -4781,8 +4685,6 @@
         "executable_code": "script_uploads/test_sHq1sWl.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "John Doe",
-        "author_email": "john@doe.com",
         "tags": []
     }
 },
@@ -4800,8 +4702,6 @@
         "executable_code": "script_uploads/desktop_toggle_writable_uD7ggxo.sh",
         "is_security_script": false,
         "maintained_by_magenta": false,
-        "author": "John Doe",
-        "author_email": "john@doe.com",
         "tags": []
     }
 },
