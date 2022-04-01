@@ -3479,5 +3479,5531 @@
         "site": 1,
         "configuration": 58
     }
+},
+{
+    "model": "system.pc",
+    "pk": 1,
+    "fields": {
+        "mac": "",
+        "name": "pc3",
+        "uid": "pc3",
+        "description": "",
+        "configuration": 3,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2020-11-30T18:15:43.997",
+        "last_seen": "2020-12-01T14:15:03",
+        "location": "",
+        "pc_groups": [
+            10,
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 6,
+    "fields": {
+        "mac": "",
+        "name": "pc4",
+        "uid": "pc4",
+        "description": "",
+        "configuration": 15,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-01-11T11:03:36.510",
+        "last_seen": "2021-01-11T15:30:04",
+        "location": "",
+        "pc_groups": [
+            10,
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 8,
+    "fields": {
+        "mac": "",
+        "name": "pc1",
+        "uid": "pc1",
+        "description": "doner",
+        "configuration": 17,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-01-21T08:50:37.470",
+        "last_seen": "2021-01-21T09:05:02",
+        "location": "",
+        "pc_groups": [
+            10,
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 9,
+    "fields": {
+        "mac": "",
+        "name": "pc2",
+        "uid": "pc2",
+        "description": "",
+        "configuration": 18,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-01-21T11:16:10.403",
+        "last_seen": "2021-01-28T12:50:03",
+        "location": "beskrivelse 2",
+        "pc_groups": [
+            10,
+            17,
+            3
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 12,
+    "fields": {
+        "mac": "",
+        "name": "pc13",
+        "uid": "pc13",
+        "description": "",
+        "configuration": 28,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-01-29T12:52:58.793",
+        "last_seen": "2021-01-29T14:14:32",
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 16,
+    "fields": {
+        "mac": "",
+        "name": "pc14",
+        "uid": "pc14",
+        "description": "",
+        "configuration": 32,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": true,
+        "created": "2021-08-25T10:01:37.352",
+        "last_seen": "2021-08-25T15:30:08",
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 18,
+    "fields": {
+        "mac": "",
+        "name": "pc11",
+        "uid": "pc11",
+        "description": "-",
+        "configuration": 1,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-09-11T13:33:02.398",
+        "last_seen": null,
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 22,
+    "fields": {
+        "mac": "",
+        "name": "pc12",
+        "uid": "pc12",
+        "description": "",
+        "configuration": 46,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-11-25T15:34:19.791",
+        "last_seen": "2021-11-30T10:30:02",
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 23,
+    "fields": {
+        "mac": "",
+        "name": "pc9",
+        "uid": "pc9",
+        "description": "",
+        "configuration": 48,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-11-29T09:22:59.334",
+        "last_seen": "2021-12-01T11:35:04",
+        "location": "",
+        "pc_groups": [
+            17,
+            9
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 24,
+    "fields": {
+        "mac": "",
+        "name": "pc15",
+        "uid": "pc15",
+        "description": "",
+        "configuration": 49,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-11-29T10:39:13.906",
+        "last_seen": "2022-01-18T10:45:11",
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 25,
+    "fields": {
+        "mac": "",
+        "name": "pc8",
+        "uid": "pc8",
+        "description": "",
+        "configuration": 50,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-11-30T12:59:58.700",
+        "last_seen": "2022-01-10T09:20:08",
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 26,
+    "fields": {
+        "mac": "",
+        "name": "pc10",
+        "uid": "pc10",
+        "description": "",
+        "configuration": 51,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-11-30T13:03:03.481",
+        "last_seen": "2022-01-14T16:55:06",
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 28,
+    "fields": {
+        "mac": "",
+        "name": "pc7",
+        "uid": "pc7",
+        "description": "",
+        "configuration": 55,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2021-12-02T13:32:08.296",
+        "last_seen": "2021-12-02T15:05:05",
+        "location": "",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 30,
+    "fields": {
+        "mac": "",
+        "name": "pc6",
+        "uid": "pc6",
+        "description": "",
+        "configuration": 57,
+        "site": 9,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2022-01-05T14:43:09.479",
+        "last_seen": "2022-01-17T17:20:05",
+        "location": "",
+        "pc_groups": []
+    }
+},
+{
+    "model": "system.pc",
+    "pk": 31,
+    "fields": {
+        "mac": "",
+        "name": "pc5",
+        "uid": "pc5",
+        "description": "",
+        "configuration": 59,
+        "site": 1,
+        "is_activated": true,
+        "is_update_required": false,
+        "created": "2022-01-10T11:37:48.592",
+        "last_seen": "2022-01-14T15:10:04",
+        "location": "beskrivelse 5",
+        "pc_groups": [
+            17
+        ]
+    }
+},
+{
+    "model": "system.scripttag",
+    "pk": 1,
+    "fields": {
+        "name": "System"
+    }
+},
+{
+    "model": "system.scripttag",
+    "pk": 2,
+    "fields": {
+        "name": "OS2displayPC"
+    }
+},
+{
+    "model": "system.scripttag",
+    "pk": 3,
+    "fields": {
+        "name": "Chrome"
+    }
+},
+{
+    "model": "system.scripttag",
+    "pk": 4,
+    "fields": {
+        "name": "Desktop"
+    }
+},
+{
+    "model": "system.script",
+    "pk": 1,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-07T10:24:34.194",
+        "user_created": "",
+        "user_modified": "",
+        "name": "Detect sudo event",
+        "description": "Email: john@doe.comDette script alarmerer, hvis der bliver forsøgt at køre en sudo kommando på maskinen.\r\n\r\n \r\nUdarbejdet af john@doe.com",
+        "site": null,
+        "executable_code": "script_uploads/sudoEvent_p1Nm05j.py",
+        "is_security_script": true,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 2,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-07T10:24:20.988",
+        "user_created": "",
+        "user_modified": "",
+        "name": "Detect new keyboard event",
+        "description": "Keyboard detect script som forsøger at finde keyboard inputs helt tilbage fra sidste gang systemet blev tjekket.",
+        "site": null,
+        "executable_code": "script_uploads/keyboardEvent_3doAonF.py",
+        "is_security_script": true,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 3,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:18:02.204",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Bluetooth - Fjern ikon fra menu-bjælke",
+        "description": "Dette script fjerner Bluetooth ikonet fra Ubuntus menu-bjælke.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": 1,
+        "executable_code": "script_uploads/remove_bluetooth_applet_GFCSe0M.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 5,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:16:32.818",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Autostart tilføj/fjern",
+        "description": "Dette script tilføjer eller fjerner Google Chrome fra autostart. Det er endvidere muligt at få Google Chrome til at starte op i fuldskærm.\r\n\r\nAutostart betyder at Google Chrome vil starte op når brugeren logger ind.\r\n\r\nHvis du tilføjer \"Ja\" som argument bliver Google Chrome tilføjet til autostart og åbnet i fuldskærm.\r\nHvis du tilføjer \"Nej\" som argument bliver Google Chrome tilføjet til autostart og åbnet i normal skærm størelse.\r\nHvis du tilføjer \"Fjern\" som argument bliver Google Chrome fjernet fra autostart.\r\n\r\nTestet på Ubuntu 20.04",
+        "site": null,
+        "executable_code": "script_uploads/chrome_autostart_cP5Rsu2.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 6,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:16:16.929",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Deaktiver autologin",
+        "description": "Deaktiverer browserlogin og 'husk password' for Google Chrome.\r\n\r\nDette script kan køres uden at have installeret Google Chrome.\r\n\r\nTestet på Ubuntu 20.04",
+        "site": null,
+        "executable_code": "script_uploads/chrome_policy_deactivate_login_m0TvmUo.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 7,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:16:10.864",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Deaktiver nøglering",
+        "description": "Dette script deaktivere Ubuntu pop-up når Publikumsbruger åbner Google Chrome. \r\nGoogle-Chrome ønsker at oprette en standard nøglering.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_disable_keyring.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 8,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:27:09.584",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Chrome - Installér",
+        "description": "Installerer Google Chrome.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_install_KDwvq0C.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 9,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:15:57.250",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Skift startside",
+        "description": "Scriptet skifter startside for Google Chrome for brugeren Borger.\r\nScriptet forventer en hjemmeside URL som input paramter.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_policy_homepage_hd2Rmxs.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 10,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:26:58.614",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Chrome - Sæt som default browser",
+        "description": "Baseret på policies.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_policy_default_browser.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 11,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:30:10.289",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Desktop - Fjern \"Luk ned\" og \"Genstart\" fra sessionmenuen og blokér for nedlukning via systempolitik",
+        "description": "Opdateret til Ubuntu 20.04 (dog stadig med baglæns-kompatibilitet).",
+        "site": null,
+        "executable_code": "script_uploads/polkit_policy_shutdown_R6uMvd2.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 12,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:30:03.787",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Desktop - Fjern besked om opdatering",
+        "description": "Dette script fjerner popup om ny LTS-version.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/remove_new_release_message.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 13,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:15:34.367",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Desktop - Skift baggrundsbillede",
+        "description": "Dette script skifter baggrundsbillede for borger på en OS2borgerPC.\r\nScriptet tager en baggrundsbillede fil som parameter.\r\nBorger behøver ikke at logge ud før baggrundsbillede skifter.\r\nEfterfølgende vil det ikke være muligt for borger at skifte baggrundsbilledet.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/dconf_policy_desktop.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 14,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:15:40.905",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Desktop - Vis tilgængelighedsfunktioner",
+        "description": "Viser en menu for at styre systemets tilgængelighedsfunktioner øverste på skærmen.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/dconf_policy.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 16,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:24:03.341",
+        "user_created": "",
+        "user_modified": "",
+        "name": "OS2borgerPC - Skift start tidspunkt og interval",
+        "description": "This script sets the cron.d/bibos_jobmanager job to execute at a random startup time with a certain interval. So if the interval is 5 minutes, the jobmanager could run at\r\n 1, 6, 11...56 every hour, instead of 0, 5, 10 ...55.\r\n\r\nStart time is chosen randomly within interval.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/randomize_jobmanager.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 17,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:23:42.962",
+        "user_created": "",
+        "user_modified": "",
+        "name": "OS2DisplayPC - Installer Chromium",
+        "description": "Installér Chromium og en minimal X.\r\n\r\nOpgradering af Chromium-install-scriptet til Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/chromium_install.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 18,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:23:36.807",
+        "user_created": "",
+        "user_modified": "",
+        "name": "OS2displayPC - Installer SSH og VNC",
+        "description": "Installer SSH og VNC for fjernadgang. \r\n\r\nDu kan lave SSH-forbindelse med det almindelige Unix-password.\r\n\r\nGiv VNC-passwordet med som parameter.",
+        "site": null,
+        "executable_code": "script_uploads/vnc_and_ssh_install_7Q7CazQ.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 19,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-12-02T13:39:30.625",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "OS2displayPC - Autostart Chromium",
+        "description": "Start Chromium i kiosk-mode og sæt start-URL-en.\r\n\r\nDer angives en forsinkelse før browseren startes, der kan hjælpe med at løse evt. timing issues (som regel virker det fint med 1 sekund, der angives ved tallet 1).\r\n\r\nSkærmens højde og bredde skal sættes til skærmens korrekte opløsning.\r\n\r\nDesuden skal der angives en orientering, som kan være \"left\", \"right\" eller \"normal\".",
+        "site": null,
+        "executable_code": "script_uploads/chromium_setup_ocWvyJg.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 20,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:26.875",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Aktivér automatisk borgerlogin",
+        "description": "Skift frem og tilbage mellem automatisk login for publikum eller ej.\r\n\r\nScriptet tager én parameter, som kan være \"--enable\" eller \"--disable\", som slår automatisk login til hhv. fra.\r\n\r\nAutomatisk login er som standard slået TIL på publikums-PC'er.  \r\n\r\nHvis man slår det FRA, skal man bruge scriptet \"Skift password for bruger\" til at sætte et kendt password for publikumsbrugeren.",
+        "site": null,
+        "executable_code": "script_uploads/user_automatic_login.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 21,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:15.258",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Aktivér automatiske opdateringer",
+        "description": "Dette script aktiverer automatiske opdateringer. \r\nNår du slår automatiske opdateringer til skal du vælge om du både vil have sikkerhedsopdateringer og generelle opdateringer slået til, eller blot sikkerhedsopdateringer.\r\nHvis du ønsker at det kun er sikkerhedsopdateringer der skal slåes til skal du tilføje parametren \"sikkerhed\". Hvis det derimod er både sikkerhedsopdateringer og generelle opdateringer skal du tilføje parametren \"alt\".\r\n\r\nVær opmærksom på at med det nyeste os2borgerpc-image er sikkerhedsopdateringer slået til.\r\nMagenta anbefaler at kun sikkerhedsopdateringer er slået til. Især hvis man gør brug af Google Chrome.\r\n\r\nInfo om de to opdateringsmuligheder:\r\n\r\nSikkerhedsopdateringer:\r\nDe vigtigste opdateringer, som retter sårbarheder i systemet og dets programmer.\r\n\r\nGenerelle opdateringer:\r\nRetter fejl i tilføjelsesprogrammerne.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/apt_periodic_control_qqYafra.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 22,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:36.967",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Genstart computer efter X minutter",
+        "description": "Genstart computeren én gang efter et foruddefineret antal minutter.\r\n\r\nHvis antallet af minutter er større end fem, bliver brugeren notificeret først. Brugeren har ingen mulighed for at undgå genstarten.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/reboot_after_time_aG4Gjkw.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 23,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:42.820",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Genstart computeren NU",
+        "description": "Genstarter computeren med det samme.\r\n\r\nAdvarsel: Jobs lavet ud fra dette script vil altid ende i status \"Afsendt\".\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/reboot_now.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 24,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:31.797",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Grub: Aktiver sikkerhed",
+        "description": "Dette script vil gøre at alle grub menuerne på nær Ubuntu vil kræve en adgangskode for brugeren superuser. \r\n\r\nDet er vigtigt at man afprøver scriptet på en enkelt borgerpc før man ruller det ud på dem alle sammen.\r\n\r\nDet er også vigtigt at man husker det kodeord man sætter på grub.\r\nDet er dog muligt at ændre det igen hvis man glemmer kodeordet. \r\n\r\n*Note: Man kan læse om hvad grub er, her: https://help.ubuntu.com/community/Grub2\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/grub_set_password_HdoIPiZ.py",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 25,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:54.489",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Log altid ud efter X minutter uden besked",
+        "description": "Log altid brugeren ud efter et antal minutter uden at give besked.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/always_logout_after_time.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 26,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:52.581",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Log bruger ud efter X minutter med besked",
+        "description": "Log altid brugeren ud efter et antal minutter. Det vil sige, at hvis dette script kaldes med parameteren \"60\", vil brugerne altid automatisk blive logget ud en time efter, at de loggede ind.\r\n\r\nScriptet tager altså én parameter, antallet af minutter. Hvis antallet af minutter er mindre end fem (anbefales kun til test), får brugeren ikke besked om det først.\r\n\r\nEllers vil brugeren få en tydelig besked fem minutter før nedlukning.\r\n\r\nTestet på Ubuntu 20.04. Der er i 20.04 ikke noget problem med æ, ø og å i dialogteksterne.",
+        "site": null,
+        "executable_code": "script_uploads/setup_inactive_logout.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 27,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:44.437",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Log brugeren ud",
+        "description": "Dette script logger brugeren borger(user) ud med det samme.",
+        "site": null,
+        "executable_code": "script_uploads/logout_user.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 28,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:57.595",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Luk ned dagligt",
+        "description": "Lukker computeren ned på et bestemt tidspunkt hver dag.\r\n\r\nParametrene angiver timer og minutter i klokkeslettet.\r\n\r\nDet er muligt at angive \"--off\" som første parameter og en blank som anden parameter. Dette standser den daglige nedlukning.\r\n\r\nBrugeren varskos fem minutter før nedlukningen.\r\n\r\nNB: Brugeren har ingen mulighed for at undgå dette.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/shutdown_at_time.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 29,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:23.733",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Luk ned og vågn dagligt",
+        "description": "Dette script sætter computeren til at lukke ned og vågne op på det samme tidspunkt hver dag.\r\nSom argument tager scriptet HH:MM (tidspunktet for nedlukning) og antallet af timer computeren skal vågne op efter nedlukning.\r\n\r\nDet er muligt at angive \"--off\" som første parameter og 0 og 0 som de næste to parametre. Dette standser den daglige nedlukning.\r\nScriptet er baseret på \"System - Luk ned dagligt\" https://bibos-admin.magenta-aps.dk/site/magenta/scripts/12/",
+        "site": null,
+        "executable_code": "script_uploads/shutdown_and_wakeup_R3wRh69.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 30,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:14:11.937",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Opdater alt",
+        "description": "Dettte script opdaterer alle pakker på systemet. \r\n\r\nSå det anbefales at køre dette script hvis en opdatering ude på maskinen er gået galt, eller hvis man kun har sat automatiske sikkerhedsopdateringer til.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/update_all_7LM3G3y.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 31,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:14:21.909",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - rotér skærm",
+        "description": "Rotérer den første skærm der bliver fundet til \"normal\", \"left\" eller \"right\".\r\n\r\n\r\nTestet på Ubuntu 20.04",
+        "site": null,
+        "executable_code": "script_uploads/rotate_display_6g79WvQ.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 32,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:40.123",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Set system clock from BIOS",
+        "description": "Dette script sætter local time fra BIOS.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/set_local_time_from_bios.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 33,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:14:30.786",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Skift lydudgang",
+        "description": "Skifter den default-lydudgang, systemet benytter. (Publikums-brugeren må gerne skifte lydudgang under brug, men denne ændring vil også slettes ved logout.)\r\nÆndringerne vil også være der efter borgerPC'en har været slukket.\r\n\r\nScriptet virker på OS2borgerPC 16.04 og 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/pulse_policy_profile.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 34,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:48.545",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Skift navn på en computer",
+        "description": "Ændring af hostname på en maskine; den skifter IKKE navn mv. i admin systemet. Maskinen skal genstartes før ændringen træder i kraft.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/change_computer_name1.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 35,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-10-08T16:03:07.664",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "System - Skift password for bruger",
+        "description": "Skifter publikumsbrugerens password til det angivne.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDa publikumsbrugeren logger ind automatisk, er det normalt ikke nødvendigt at sætte et password for denne bruger.\r\n\r\nPasswords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/change_user_password_bO697ab.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 36,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:57.053",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Skift password for superbruger",
+        "description": "Skift til det angivne superbrugerpassword.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDet er MEGET VIGTIGT at skifte fra standard-passwordet til et andet, så snart en BibOS-maskine er færdiginstalleret. Passwords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/change_superuser_password_6zL696e.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 37,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:20:23.484",
+        "user_created": "",
+        "user_modified": "",
+        "name": "System - Tilføj Exfat support",
+        "description": "Gør det muligt for Ubuntu at tilkoble et Windows exfat drev.\r\n\r\nTestet på Ubuntu 20.04.\r\n\r\nUdviklet af: Unkown.",
+        "site": null,
+        "executable_code": "script_uploads/Exfat_enable_qCyiT2z.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 56,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:12:51.853",
+        "user_created": "",
+        "user_modified": "",
+        "name": "Ping-advarsel",
+        "description": "Ping!",
+        "site": 1,
+        "executable_code": "script_uploads/pingevent.py",
+        "is_security_script": true,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 58,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:09:26.671",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Test scriptfilnavne",
+        "description": "dfsdf",
+        "site": 1,
+        "executable_code": "script_uploads/diagnostic_logfiles_b649s9e.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 59,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-25T16:19:38.683",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "script test",
+        "description": "1",
+        "site": 1,
+        "executable_code": "script_uploads/test-script_xKItgpL.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 60,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-25T16:19:45.291",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "script test 2",
+        "description": "2",
+        "site": 1,
+        "executable_code": "script_uploads/dbus-address.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 61,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:08:35.963",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Sæt baggrundsbillede",
+        "description": "a",
+        "site": 1,
+        "executable_code": "script_uploads/emptyish.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 62,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:09:59.510",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "test",
+        "description": "Just a test script",
+        "site": 1,
+        "executable_code": "script_uploads/test.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 68,
+    "fields": {
+        "created": "2021-08-25T11:19:11.606",
+        "modified": "2022-01-26T15:15:27.842",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "Desktop - Logud-knap med valgfrit ikon",
+        "description": "Tilføjer en logud-knap til skrivebordet, med valgfrit navn og ikon (uploades), og mulighed for at bestemme om der skal logges ud øjeblikkeligt, \r\neller om brugeren skal bekræfte først.\r\n\r\nParametre:\r\n\r\n1: Navnet du ønsker, knappen skal have på skrivebordet.\r\n2. Om der skal genstartes øjeblikkeligt eller om brugeren skal spørges om bekræftelse (med mulighed for at stoppe logud).\r\n3. Hvilket ikon logudknappen skal have (en kvadratisk .SVG- eller .PNG-fil).\r\n\r\nBemærk: Dette script forudsætter at også scriptet \"Desktop - Aktiver genveje\" køres for at aktivere knappen.\r\n\r\nØnsker du at slette genvejen, kan det gøres med scriptet \"Desktop - Tilføj/Fjern programgenvej på skrivebord\".",
+        "site": null,
+        "executable_code": "script_uploads/desktop_logout_button_icon_W0J3c67.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 69,
+    "fields": {
+        "created": "2021-08-25T11:20:13.670",
+        "modified": "2022-01-26T15:18:12.344",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "Desktop - Aktiver genveje",
+        "description": "\"Aktiverer\" genveje på skrivebordet.\r\n\r\nInden dette script køres kan man godt tilføje en genvej, men det rette ikon ikke dukke op, og programmet vil i stedet blive åbnet i et tekstredigeringsprogram.\r\n\r\nDer skal logges ud og ind igen - eller alternativt genstartes - før det tager effekt.\r\nScriptet skal kun køres én gang - så virker genveje der er tilføjet til skrivebordet både før og efter.",
+        "site": 1,
+        "executable_code": "script_uploads/desktop_activate_shortcuts.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 74,
+    "fields": {
+        "created": "2021-11-28T15:43:34.421",
+        "modified": "2022-01-26T15:12:05.296",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "OS2borgerPC - Log altid ud efter X minutter med nedtæller",
+        "description": "Opsætter en OS2borgerPC til altid at logge ud efter et bestemt antal sekunder, med en visuel nedtæller på skærmen, til at vise, hvor længe, der er tilbage.\r\n\r\nScriptet tager 4 parametre:\r\n  1. Aktivér?: ja/nej\r\n  2. Antal sekunder før logud\r\n  3. Hvilket x-koordinat nedtæller-vinduet skal have.\r\n  3. Hvilket y-koordinat nedtæller-vinduet skal have.",
+        "site": null,
+        "executable_code": "script_uploads/always_logout_after_time_visual_WRE7ERj.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 75,
+    "fields": {
+        "created": "2021-11-28T15:44:26.423",
+        "modified": "2022-01-26T15:12:10.354",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "Cicero - Installér PAM-modul",
+        "description": "Opsætter en OS2borgerPC til at tjekke op mod Cicero ved login for Borger.\r\n\r\nScriptet tager ét parameter:\r\n1: Aktivér: ja/nej\r\n\r\nDette script afhænger af, at følgende andre scripts er kørt:\r\n- System - Aktivér automatisk borgerlogin (det skal slås fra)\r\n\r\n...og det vil oftest også bruges sammen med:\r\nOS2borgerPC - Log altid ud efter X minutter med nedtæller",
+        "site": null,
+        "executable_code": "script_uploads/cicero_install_pam_gsMTFne.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 76,
+    "fields": {
+        "created": "2021-11-30T14:50:10.592",
+        "modified": "2021-11-30T14:50:40.156",
+        "user_created": "mowgli",
+        "user_modified": "",
+        "name": "OS2borgerPC - Opdater klient (yanked)",
+        "description": "Midlertidigt script ifm. test af PAM, der opdaterer klienten til nyeste version",
+        "site": null,
+        "executable_code": "script_uploads/update_client_yanked.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 77,
+    "fields": {
+        "created": "2021-12-02T13:40:43.310",
+        "modified": "2021-12-02T13:40:51.799",
+        "user_created": "mowgli",
+        "user_modified": "mowgli",
+        "name": "OS2displayPC - Chromium - Skift startside",
+        "description": "-",
+        "site": 1,
+        "executable_code": "script_uploads/chromium_change_homepage.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 78,
+    "fields": {
+        "created": "2022-01-04T16:36:40.662",
+        "modified": "2022-01-04T16:41:07.708",
+        "user_created": "mowgli",
+        "user_modified": "mowgli",
+        "name": "System - Slå to-faktor autentifikation for superbruger til",
+        "description": "Slår tidsbaseret totrinsbekræftelse til for superbrugeren, ved login på en borgerPC.\r\n\r\nGå først ind på siden \"Totrinsbekræftelse\" i menuen til venstre her på adminsitet, for at se processen for at slå totrinsbekræftelse til.\r\n\r\nSå snart du har genereret en sikkerhedsnøgle på ovenstående side, skal dette script køres med sikkerhedsnøgle som det andet parameter.\r\n\r\nFra næste login, vil der nu for superbrugeren være et ekstra skridt i loginprocessen efter koden, hvor der skal indtastes totrins-koden.\r\n\r\nTager det ikke effekt øjeblikkeligt efter logud, foreslås en genstart af maskinen.\r\n\r\nInputparametre:\r\n1. Aktivér?: 'Ja' slår totrinsbekræftelse til, 'nej' slår det fra.\r\n2: Sikkerhedsnøgle: Sikkerhedsnøglen totrinsbekræftelse-systemet internt har brug for. \r\nSamme sikkerhedsnøgle for flere computere betyder, du kan logge ind på flere computere med samme totrins-koder, fremfor hver computer skal tilføjes individuelt til din totrinsbekræftelse-app.",
+        "site": null,
+        "executable_code": "script_uploads/setup_two_factor_superuser_BAk1AH4.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 79,
+    "fields": {
+        "created": "2022-01-17T11:45:01.720",
+        "modified": "2022-01-26T15:07:45.964",
+        "user_created": "flash_gordon",
+        "user_modified": "magenta",
+        "name": "OS2borgerPC - Spær adgang til terminalen",
+        "description": "Spær adgangen til terminalen for publikumsbrugeren (superuser har stadig adgang).\r\n\r\nBemærk, at brugerens adgang til terminalen ikke i sig selv er et sikkerhedshul. Brugeren kan fra terminalen gøre præcis de ting, som vedkommende har tilladelse til i forvejen.\r\n\r\nHvis brugeren er i stand til at udfordre systemets sikkerhed fra terminalen, skyldes det altså de underliggende tilladelser - ikke terminaladgangen, som ikke gør en grundlæggende forskel.\r\n\r\nBlokering af terminaladgangen er dermed dybest set en lappeløsning, som kan være ganske fornuftig - men de underliggende problemer burde adresseres, og hvis de bliver det, vil det ikke længere være nødvendigt at blokere for terminaladgangen.",
+        "site": 1,
+        "executable_code": "script_uploads/test_sHq1sWl.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 80,
+    "fields": {
+        "created": "2022-01-18T10:06:14.551",
+        "modified": "2022-01-26T15:09:01.715",
+        "user_created": "flash_gordon",
+        "user_modified": "magenta",
+        "name": "Desktop - Slå skriverettigheder for skrivebord fra/til",
+        "description": "Slår skriverettigheder for skrivebordet til og fra for Borger-brugeren.\r\n\r\nArgumenter:\r\n  1. Aktivér?: \r\n     ja: brugeren har IKKE rettighed til at lægge filer på skrivebordet (standard)\r\n     nej: brugeren har rettighed til at lægge filer på skrivebordet",
+        "site": 1,
+        "executable_code": "script_uploads/desktop_toggle_writable_uD7ggxo.sh",
+        "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 1,
+    "fields": {
+        "name": "Gruppe1, Chrome - Installér, 2022-01-26 15:22:28",
+        "script": 8,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 2,
+    "fields": {
+        "name": "Gruppe1, Chrome - Deaktiver autologin, 2022-01-26 15:22:28",
+        "script": 6,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 3,
+    "fields": {
+        "name": "Gruppe1, Chrome - Deaktiver nøglering, 2022-01-26 15:22:28",
+        "script": 7,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 4,
+    "fields": {
+        "name": "Gruppe1, Chrome - Sæt som default browser, 2022-01-26 15:22:28",
+        "script": 10,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 5,
+    "fields": {
+        "name": "Gruppe1, Chrome - Skift startside, 2022-01-26 15:22:28",
+        "script": 9,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 6,
+    "fields": {
+        "name": "Gruppe1, System - Log brugeren ud, 2022-01-26 15:23:47",
+        "script": 27,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 7,
+    "fields": {
+        "name": "Gruppe1, System - rotér skærm, 2022-01-26 15:23:47",
+        "script": 31,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 8,
+    "fields": {
+        "name": "Gruppe1, Chrome - Installér, 2022-01-26 15:25:06",
+        "script": 8,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 9,
+    "fields": {
+        "name": "Gruppe1, Chrome - Deaktiver autologin, 2022-01-26 15:25:06",
+        "script": 6,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 10,
+    "fields": {
+        "name": "Gruppe1, Chrome - Deaktiver nøglering, 2022-01-26 15:25:06",
+        "script": 7,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 11,
+    "fields": {
+        "name": "Gruppe1, Chrome - Sæt som default browser, 2022-01-26 15:25:06",
+        "script": 10,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 12,
+    "fields": {
+        "name": "Gruppe1, Chrome - Skift startside, 2022-01-26 15:25:06",
+        "script": 9,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 13,
+    "fields": {
+        "name": "Gruppe1, System - Log brugeren ud, 2022-01-26 15:25:06",
+        "script": 27,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 14,
+    "fields": {
+        "name": "Gruppe1, System - rotér skærm, 2022-01-26 15:25:06",
+        "script": 31,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 15,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 16,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 17,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 18,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 19,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 20,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 21,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 22,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 23,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 24,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 25,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 26,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 27,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 28,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 29,
+    "fields": {
+        "name": "Gruppe2, Bluetooth - Fjern ikon fra menu-bjælke, 2022-02-12 20:22:10",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 6,
+    "fields": {
+        "group": 9,
+        "script": 8,
+        "position": 1
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 7,
+    "fields": {
+        "group": 9,
+        "script": 9,
+        "position": 2
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 10,
+    "fields": {
+        "group": 3,
+        "script": 8,
+        "position": 0
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 12,
+    "fields": {
+        "group": 10,
+        "script": 8,
+        "position": 0
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 13,
+    "fields": {
+        "group": 10,
+        "script": 6,
+        "position": 1
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 14,
+    "fields": {
+        "group": 10,
+        "script": 7,
+        "position": 2
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 15,
+    "fields": {
+        "group": 10,
+        "script": 10,
+        "position": 3
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 16,
+    "fields": {
+        "group": 10,
+        "script": 9,
+        "position": 4
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 17,
+    "fields": {
+        "group": 10,
+        "script": 27,
+        "position": 5
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 18,
+    "fields": {
+        "group": 10,
+        "script": 31,
+        "position": 6
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 21,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 0
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 22,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 1
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 23,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 2
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 24,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 3
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 25,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 4
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 26,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 5
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 27,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 6
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 28,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 7
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 29,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 8
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 30,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 9
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 31,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 10
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 32,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 11
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 33,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 12
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 34,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 13
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 35,
+    "fields": {
+        "group": 17,
+        "script": 3,
+        "position": 14
+    }
+},
+{
+    "model": "system.job",
+    "pk": 1,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 8,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 2,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 8,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 3,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 8,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 4,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 8,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 5,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 9,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 6,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 9,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 7,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 9,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 8,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 9,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 9,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 10,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 10,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 10,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 11,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 10,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 12,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 10,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 13,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 11,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 14,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 11,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 15,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 11,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 16,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 11,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 17,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 12,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 18,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 12,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 19,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 12,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 20,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 12,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 21,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 13,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 22,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 13,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 23,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 13,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 24,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 13,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 25,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 14,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 26,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 14,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 27,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 14,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 28,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 14,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 29,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 30,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 31,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 32,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 33,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 34,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 35,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 36,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 37,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 38,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 39,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 40,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 41,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 42,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 15,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 43,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 44,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 45,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 46,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 47,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 48,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 49,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 50,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 51,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 52,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 53,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 54,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 55,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 56,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 16,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 57,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 58,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 59,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 60,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 61,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 62,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 63,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 64,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 65,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 66,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 67,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 68,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 69,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 70,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 17,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 71,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 72,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 73,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 74,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 75,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 76,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 77,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 78,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 79,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 80,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 81,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 82,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 83,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 84,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 18,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 85,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 86,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 87,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 88,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 89,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 90,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 91,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 92,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 93,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 94,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 95,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 96,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 97,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 98,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 19,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 99,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 100,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 101,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 102,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 103,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 104,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 105,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 106,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 107,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 108,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 109,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 110,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 111,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 112,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 20,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 113,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 114,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 115,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 116,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 117,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 118,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 119,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 120,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 121,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 122,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 123,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 124,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 125,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 126,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 21,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 127,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 128,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 129,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 130,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 131,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 132,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 133,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 134,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 135,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 136,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 137,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 138,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 139,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 140,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 22,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 141,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 142,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 143,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 144,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 145,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 146,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 147,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 148,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 149,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 150,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 151,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 152,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 153,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 154,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 23,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 155,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 156,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 157,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 158,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 159,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 160,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 161,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 162,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 163,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 164,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 165,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 166,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 167,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 168,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 24,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 169,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 170,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 171,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 172,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 173,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 174,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 175,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 176,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 177,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 178,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 179,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 180,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 181,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 182,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 25,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 183,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 184,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 185,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 186,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 187,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 188,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 189,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 190,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 191,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 192,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 193,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 194,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 195,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 196,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 26,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 197,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 198,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 199,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 200,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 201,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 202,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 203,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 204,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 205,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 206,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 207,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 208,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 209,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 210,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 27,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 211,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 212,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 213,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 214,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 215,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 216,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 217,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 218,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 219,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 220,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 221,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 222,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 223,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 224,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 28,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 225,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 226,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 6
+    }
+},
+{
+    "model": "system.job",
+    "pk": 227,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 228,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 229,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 230,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 231,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 232,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 233,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 234,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 235,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 236,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 237,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 238,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 29,
+        "pc": 31
+    }
+},
+{
+    "model": "system.input",
+    "pk": 1,
+    "fields": {
+        "name": "Ja/Nej/Fjern",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 5
+    }
+},
+{
+    "model": "system.input",
+    "pk": 2,
+    "fields": {
+        "name": "URL",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 9
+    }
+},
+{
+    "model": "system.input",
+    "pk": 3,
+    "fields": {
+        "name": "Aktivér?",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 11
+    }
+},
+{
+    "model": "system.input",
+    "pk": 4,
+    "fields": {
+        "name": "Baggrundsbillede",
+        "value_type": "FILE",
+        "position": 0,
+        "mandatory": true,
+        "script": 13
+    }
+},
+{
+    "model": "system.input",
+    "pk": 5,
+    "fields": {
+        "name": "Aktivér?",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 14
+    }
+},
+{
+    "model": "system.input",
+    "pk": 6,
+    "fields": {
+        "name": "Interval",
+        "value_type": "INT",
+        "position": 0,
+        "mandatory": true,
+        "script": 16
+    }
+},
+{
+    "model": "system.input",
+    "pk": 7,
+    "fields": {
+        "name": "vncpassword",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 18
+    }
+},
+{
+    "model": "system.input",
+    "pk": 8,
+    "fields": {
+        "name": "forsinkelse",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 19
+    }
+},
+{
+    "model": "system.input",
+    "pk": 9,
+    "fields": {
+        "name": "URL",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 19
+    }
+},
+{
+    "model": "system.input",
+    "pk": 10,
+    "fields": {
+        "name": "bredde",
+        "value_type": "STRING",
+        "position": 2,
+        "mandatory": true,
+        "script": 19
+    }
+},
+{
+    "model": "system.input",
+    "pk": 11,
+    "fields": {
+        "name": "højde",
+        "value_type": "STRING",
+        "position": 3,
+        "mandatory": true,
+        "script": 19
+    }
+},
+{
+    "model": "system.input",
+    "pk": 12,
+    "fields": {
+        "name": "orientering",
+        "value_type": "STRING",
+        "position": 4,
+        "mandatory": true,
+        "script": 19
+    }
+},
+{
+    "model": "system.input",
+    "pk": 13,
+    "fields": {
+        "name": "action",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 20
+    }
+},
+{
+    "model": "system.input",
+    "pk": 14,
+    "fields": {
+        "name": "Aktiver generelle opdateringer (sikkerhed/alt)",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 21
+    }
+},
+{
+    "model": "system.input",
+    "pk": 15,
+    "fields": {
+        "name": "minutter",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 22
+    }
+},
+{
+    "model": "system.input",
+    "pk": 16,
+    "fields": {
+        "name": "password",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 24
+    }
+},
+{
+    "model": "system.input",
+    "pk": 17,
+    "fields": {
+        "name": "minutter",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 25
+    }
+},
+{
+    "model": "system.input",
+    "pk": 18,
+    "fields": {
+        "name": "Tid til dialog bliver vist",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 26
+    }
+},
+{
+    "model": "system.input",
+    "pk": 19,
+    "fields": {
+        "name": "Tid til brugeren bliver logget ud",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 26
+    }
+},
+{
+    "model": "system.input",
+    "pk": 20,
+    "fields": {
+        "name": "Tekst som bliver vist i dialogboksen",
+        "value_type": "STRING",
+        "position": 2,
+        "mandatory": true,
+        "script": 26
+    }
+},
+{
+    "model": "system.input",
+    "pk": 21,
+    "fields": {
+        "name": "Tekst som bliver vist på dialogboks knappen",
+        "value_type": "STRING",
+        "position": 3,
+        "mandatory": true,
+        "script": 26
+    }
+},
+{
+    "model": "system.input",
+    "pk": 22,
+    "fields": {
+        "name": "timer",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 28
+    }
+},
+{
+    "model": "system.input",
+    "pk": 23,
+    "fields": {
+        "name": "minutter",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 28
+    }
+},
+{
+    "model": "system.input",
+    "pk": 24,
+    "fields": {
+        "name": "timer",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 29
+    }
+},
+{
+    "model": "system.input",
+    "pk": 25,
+    "fields": {
+        "name": "minutter",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 29
+    }
+},
+{
+    "model": "system.input",
+    "pk": 26,
+    "fields": {
+        "name": "timer til opvågning",
+        "value_type": "STRING",
+        "position": 2,
+        "mandatory": true,
+        "script": 29
+    }
+},
+{
+    "model": "system.input",
+    "pk": 27,
+    "fields": {
+        "name": "Retning ('normal', 'left' eller 'right')",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 31
+    }
+},
+{
+    "model": "system.input",
+    "pk": 28,
+    "fields": {
+        "name": "Lydudgang (f.eks. hdmi eller analog)",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 33
+    }
+},
+{
+    "model": "system.input",
+    "pk": 29,
+    "fields": {
+        "name": "navn",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 34
+    }
+},
+{
+    "model": "system.input",
+    "pk": 30,
+    "fields": {
+        "name": "password",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 35
+    }
+},
+{
+    "model": "system.input",
+    "pk": 31,
+    "fields": {
+        "name": "password_igen",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 35
+    }
+},
+{
+    "model": "system.input",
+    "pk": 32,
+    "fields": {
+        "name": "password",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 36
+    }
+},
+{
+    "model": "system.input",
+    "pk": 33,
+    "fields": {
+        "name": "password_igen",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 36
+    }
+},
+{
+    "model": "system.input",
+    "pk": 54,
+    "fields": {
+        "name": "Tekst",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 60
+    }
+},
+{
+    "model": "system.input",
+    "pk": 55,
+    "fields": {
+        "name": "Billede",
+        "value_type": "FILE",
+        "position": 0,
+        "mandatory": true,
+        "script": 61
+    }
+},
+{
+    "model": "system.input",
+    "pk": 56,
+    "fields": {
+        "name": "Navn på genvejen",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 68
+    }
+},
+{
+    "model": "system.input",
+    "pk": 57,
+    "fields": {
+        "name": "Bekræftelse på logud? (ja/nej)",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 68
+    }
+},
+{
+    "model": "system.input",
+    "pk": 58,
+    "fields": {
+        "name": "Ikon til genvejen",
+        "value_type": "FILE",
+        "position": 2,
+        "mandatory": true,
+        "script": 68
+    }
+},
+{
+    "model": "system.input",
+    "pk": 62,
+    "fields": {
+        "name": "fs",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 61
+    }
+},
+{
+    "model": "system.input",
+    "pk": 63,
+    "fields": {
+        "name": "Aktivér? (ja/nej)",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 75
+    }
+},
+{
+    "model": "system.input",
+    "pk": 64,
+    "fields": {
+        "name": "Aktiver?: ja / nej",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 74
+    }
+},
+{
+    "model": "system.input",
+    "pk": 65,
+    "fields": {
+        "name": "Minutter til logud",
+        "value_type": "INT",
+        "position": 1,
+        "mandatory": true,
+        "script": 74
+    }
+},
+{
+    "model": "system.input",
+    "pk": 66,
+    "fields": {
+        "name": "Logud-vindue x-position",
+        "value_type": "INT",
+        "position": 2,
+        "mandatory": true,
+        "script": 74
+    }
+},
+{
+    "model": "system.input",
+    "pk": 67,
+    "fields": {
+        "name": "Logud-vindue y-position",
+        "value_type": "INT",
+        "position": 3,
+        "mandatory": true,
+        "script": 74
+    }
+},
+{
+    "model": "system.input",
+    "pk": 68,
+    "fields": {
+        "name": "URL",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 77
+    }
+},
+{
+    "model": "system.input",
+    "pk": 69,
+    "fields": {
+        "name": "Aktivér? (ja/nej)",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 78
+    }
+},
+{
+    "model": "system.input",
+    "pk": 70,
+    "fields": {
+        "name": "Sikkerhedsnøgle",
+        "value_type": "STRING",
+        "position": 1,
+        "mandatory": true,
+        "script": 78
+    }
+},
+{
+    "model": "system.input",
+    "pk": 71,
+    "fields": {
+        "name": "Aktivér? (ja: fjern skriverettighed / nej: giv skriverettighed)",
+        "value_type": "STRING",
+        "position": 0,
+        "mandatory": true,
+        "script": 80
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 1,
+    "fields": {
+        "string_value": "https://magenta.dk",
+        "file_value": "",
+        "input": 2,
+        "batch": 5
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 2,
+    "fields": {
+        "string_value": "left",
+        "file_value": "",
+        "input": 27,
+        "batch": 7
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 3,
+    "fields": {
+        "string_value": "https://magenta.dk",
+        "file_value": "",
+        "input": 2,
+        "batch": 12
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 4,
+    "fields": {
+        "string_value": "left",
+        "file_value": "",
+        "input": 27,
+        "batch": 14
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 5,
+    "fields": {
+        "string_value": "kk.dk",
+        "file_value": "",
+        "input": 2,
+        "associated_script": 7
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 6,
+    "fields": {
+        "string_value": "https://magenta.dk",
+        "file_value": "",
+        "input": 2,
+        "associated_script": 16
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 7,
+    "fields": {
+        "string_value": "left",
+        "file_value": "",
+        "input": 27,
+        "associated_script": 18
+    }
+},
+{
+    "model": "system.securityproblem",
+    "pk": 1,
+    "fields": {
+        "name": "Ping advarsel",
+        "uid": "MPING",
+        "description": "Ping!",
+        "level": "Normal",
+        "site": 1,
+        "security_script": 56,
+        "alert_groups": [
+            3
+        ],
+        "alert_users": []
+    }
+},
+{
+    "model": "system.securityproblem",
+    "pk": 4,
+    "fields": {
+        "name": "Sudo-advarsel",
+        "uid": "sa",
+        "description": "a",
+        "level": "High",
+        "site": 1,
+        "security_script": 1,
+        "alert_groups": [
+            17
+        ],
+        "alert_users": []
+    }
+},
+{
+    "model": "system.securityproblem",
+    "pk": 5,
+    "fields": {
+        "name": "Keyboard-advarsel",
+        "uid": "ka",
+        "description": "",
+        "level": "High",
+        "site": 1,
+        "security_script": 2,
+        "alert_groups": [
+            17
+        ],
+        "alert_users": []
+    }
+},
+{
+    "model": "system.imageversion",
+    "pk": 2,
+    "fields": {
+        "platform": "BORGERPC_KIOSK",
+        "image_version": "1.0.0",
+        "release_date": "2021-02-02",
+        "os": "Ubuntu 20.04",
+        "release_notes": "OS2displayPC (OS2borgerPC Server) 1.0.0 med Ubuntu 20.04.",
+        "image_upload": "images/os2displaypc-1.0.0.iso"
+    }
+},
+{
+    "model": "system.imageversion",
+    "pk": 3,
+    "fields": {
+        "platform": "BORGERPC",
+        "image_version": "3.0.0",
+        "release_date": "2021-05-12",
+        "os": "Ubuntu 20.04",
+        "release_notes": "OS2borgerPC 3.0.0 med Ubuntu 20.04.1.",
+        "image_upload": "images/os2borgerpc-3.0.0.iso"
+    }
+},
+{
+    "model": "system.imageversion",
+    "pk": 4,
+    "fields": {
+        "platform": "BORGERPC",
+        "image_version": "3.1.0",
+        "release_date": "2021-05-12",
+        "os": "Ubuntu 20.04",
+        "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
+        "image_upload": "images/os2borgerpc-3.1.0.iso"
+    }
+},
+{
+    "model": "system.imageversion",
+    "pk": 5,
+    "fields": {
+        "platform": "BORGERPC",
+        "image_version": "3.1.1",
+        "release_date": "2021-07-12",
+        "os": "Ubuntu 20.04",
+        "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
+        "image_upload": "images/os2borgerpc-3.1.1.iso"
+    }
 }
 ]
