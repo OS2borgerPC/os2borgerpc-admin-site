@@ -222,6 +222,7 @@ class SiteList(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super(SiteList, self).get_context_data(**kwargs)
+        context["pcs_count"] = PC.objects.filter(site__in=self.get_queryset()).count()
         context["user"] = self.request.user
         return context
 
