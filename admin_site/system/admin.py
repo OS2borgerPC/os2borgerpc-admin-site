@@ -241,7 +241,7 @@ class SecurityEventAdmin(admin.ModelAdmin):
     list_display = (
         "problem",
         "get_site",
-        "ocurred_time",
+        "occurred_time",
         "reported_time",
         "pc",
         "status",
@@ -262,7 +262,13 @@ class AssociatedScriptAdmin(admin.ModelAdmin):
 
 
 class AssociatedScriptParameterAdmin(admin.ModelAdmin):
-    list_display = ("associated_script", "input", "string_value", "file_value", "get_site")
+    list_display = (
+        "associated_script",
+        "input",
+        "string_value",
+        "file_value",
+        "get_site",
+    )
     search_fields = ("associated_script__script__name",)
 
     @admin.display(description="Site", ordering="associated_script__group__site")

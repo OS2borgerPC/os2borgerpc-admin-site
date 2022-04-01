@@ -232,7 +232,7 @@ def push_security_events(pc_uid, csv_data):
             security_problem = SecurityProblem.objects.get(uid=csv_split[1])
 
             new_security_event = SecurityEvent(problem=security_problem, pc=pc)
-            new_security_event.ocurred_time = datetime.strptime(
+            new_security_event.occurred_time = datetime.strptime(
                 csv_split[0], "%Y%m%d%H%M"
             )
             new_security_event.reported_time = datetime.now()

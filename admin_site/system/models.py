@@ -278,7 +278,9 @@ class PCGroup(models.Model):
 
             for inp in script.ordered_inputs:
                 try:
-                    par = AssociatedScriptParameter.objects.get(associated_script=asc, input=inp)
+                    par = AssociatedScriptParameter.objects.get(
+                        associated_script=asc, input=inp
+                    )
                 except AssociatedScriptParameter.DoesNotExist:
                     par = AssociatedScriptParameter(associated_script=asc, input=inp)
                 param_name = "{0}_param_{1}".format(script_param, inp.position)
@@ -918,7 +920,7 @@ class SecurityEvent(models.Model):
     }
     problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
     # The time the problem was reported in the log file
-    ocurred_time = models.DateTimeField(verbose_name=_("occurred"))
+    occurred_time = models.DateTimeField(verbose_name=_("occurred"))
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(verbose_name=_("reported"))
     pc = models.ForeignKey(PC, on_delete=models.CASCADE, related_name="security_events")
