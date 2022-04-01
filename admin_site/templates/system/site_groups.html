@@ -91,9 +91,11 @@ active
 
         <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
           <p class="alert alert-info"><strong>Bemærk</strong><br/>
-          Tilføjes et nyt script til listen, der tager parametre, skal disse parametre sættes først, ved tryk på
-          "Rediger", før man kan "Gemme ændringerne".<br/>
-          Redigering medfører ikke, at et script køres på ny.</p>
+            Tilføjes et nyt script til listen, der tager parametre, skal disse parametre sættes først, ved tryk på
+            "Rediger", før man kan "Gemme ændringerne".<br/>
+            Redigering af inputparametre medfører ikke, at et script køres på ny.<br/>
+            Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-tilføjede Computere til Gruppen kører hele listen af scripts.
+          </p>
           {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
 
