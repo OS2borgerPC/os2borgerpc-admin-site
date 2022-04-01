@@ -655,11 +655,11 @@ class ScriptMixin(object):
         for associated_script in self.script.associations.all():
             for script_input in self.script.ordered_inputs:
                 par = AssociatedScriptParameter.objects.filter(
-                    script=associated_script, input=script_input
+                    associated_script=associated_script, input=script_input
                 ).first()
                 if not par:
                     par = AssociatedScriptParameter(
-                        script=associated_script, input=script_input
+                        associated_script=associated_script, input=script_input
                     )
                     par.save()
 

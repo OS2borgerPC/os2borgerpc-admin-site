@@ -8862,7 +8862,7 @@
         "string_value": "kk.dk",
         "file_value": "",
         "input": 2,
-        "script": 7
+        "associated_script": 7
     }
 },
 {
@@ -8872,7 +8872,7 @@
         "string_value": "https://magenta.dk",
         "file_value": "",
         "input": 2,
-        "script": 16
+        "associated_script": 16
     }
 },
 {
@@ -8882,7 +8882,7 @@
         "string_value": "left",
         "file_value": "",
         "input": 27,
-        "script": 18
+        "associated_script": 18
     }
 },
 {

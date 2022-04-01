@@ -261,15 +261,13 @@ class AssociatedScriptAdmin(admin.ModelAdmin):
         return obj.group.site
 
 
-# Note: script within AssociatedScriptParameter is actually
-# an AssociatedScript, not a Script
 class AssociatedScriptParameterAdmin(admin.ModelAdmin):
-    list_display = ("script", "input", "string_value", "file_value", "get_site")
-    search_fields = ("script__script__name",)
+    list_display = ("associated_script", "input", "string_value", "file_value", "get_site")
+    search_fields = ("associated_script__script__name",)
 
-    @admin.display(description="Site", ordering="script__group__site")
+    @admin.display(description="Site", ordering="associated_script__group__site")
     def get_site(self, obj):
-        return obj.script.group.site
+        return obj.associated_script.group.site
 
 
 class CitizenAdmin(admin.ModelAdmin):

@@ -278,9 +278,9 @@ class PCGroup(models.Model):
 
             for inp in script.ordered_inputs:
                 try:
-                    par = AssociatedScriptParameter.objects.get(script=asc, input=inp)
+                    par = AssociatedScriptParameter.objects.get(associated_script=asc, input=inp)
                 except AssociatedScriptParameter.DoesNotExist:
-                    par = AssociatedScriptParameter(script=asc, input=inp)
+                    par = AssociatedScriptParameter(associated_script=asc, input=inp)
                 param_name = "{0}_param_{1}".format(script_param, inp.position)
                 if inp.value_type == Input.FILE:
                     if param_name not in req_files or not req_files[param_name]:
@@ -802,9 +802,8 @@ class BatchParameter(Parameter):
         return "{0}: {1}".format(self.input, self.transfer_value)
 
 
-# TODO: Rename script foreign key to associated_script which is what it is
 class AssociatedScriptParameter(Parameter):
-    script = models.ForeignKey(
+    associated_script = models.ForeignKey(
         AssociatedScript, related_name="parameters", on_delete=models.CASCADE
     )
 
