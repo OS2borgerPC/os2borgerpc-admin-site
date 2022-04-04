@@ -820,7 +820,9 @@ class AssociatedScriptParameter(Parameter):
             )
 
     def __str__(self):
-        return "{0} - {1}: {2}".format(self.script, self.input, self.transfer_value)
+        return "{0} - {1}: {2}".format(
+            self.associated_script, self.input, self.transfer_value
+        )
 
 
 class SecurityProblem(models.Model):
