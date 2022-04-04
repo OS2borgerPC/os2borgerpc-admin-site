@@ -777,7 +777,7 @@ def upload_file_name(instance, filename):
 class Parameter(models.Model):
     """A concrete value for the Input of a Script."""
 
-    string_value = models.CharField(max_length=4096, null=True, blank=True)
+    string_value = models.CharField(max_length=4096, blank=True)
     file_value = models.FileField(upload_to=upload_file_name, null=True, blank=True)
     # which input does this belong to?
     input = models.ForeignKey(Input, on_delete=models.CASCADE)
