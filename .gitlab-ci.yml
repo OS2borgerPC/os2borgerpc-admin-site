@@ -70,7 +70,9 @@ Lint Dockerfiles:
 
 Build app image:
   stage: build
-  needs: ["Lint Dockerfiles"]
+  needs: 
+    - Lint Python
+    - Lint Dockerfiles
   dependencies: []
   image:
     name: gcr.io/kaniko-project/executor:debug-v0.16.0
