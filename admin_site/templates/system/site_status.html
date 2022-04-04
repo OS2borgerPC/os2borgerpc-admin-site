@@ -26,8 +26,8 @@
       </thead>
       <tbody>
           {% for pc in ls_pcs %}
-        <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
-            <td><strong>{{ pc.name }}</strong></td>
+        <tr class="click-list--item">
+            <td><strong><a href="{% url 'computer' site_uid=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong></td>
             {% if pc.is_activated %}
               <td><span class="badge bg-success">Aktiveret</span></td>
             {% else %}
