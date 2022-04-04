@@ -70,7 +70,7 @@ Lint Dockerfiles:
 
 Build app image:
   stage: build
-  needs: []
+  needs: ["Lint Dockerfiles"]
   dependencies: []
   image:
     name: gcr.io/kaniko-project/executor:debug-v0.16.0
@@ -92,7 +92,7 @@ Build app image:
 
 .release-default: &release-default
   stage: release
-  needs: ["Lint Python"]
+  needs: ["Build app image"]
   image: alpine
   variables:
     GIT_STRATEGY: none # We do not need the source code
