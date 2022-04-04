@@ -553,7 +553,7 @@ class AssociatedScript(models.Model):
         return Batch(
             site=self.group.site,
             script=self.script,
-            name=", ".join([self.script.id, self.group.name]),
+            name=", ".join([str(self.script.id), self.group.name]),
         )
 
     def make_parameters(self, batch):
