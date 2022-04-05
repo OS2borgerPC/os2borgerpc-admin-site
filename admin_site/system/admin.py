@@ -31,7 +31,7 @@ ar = admin.site.register
 
 class ConfigurationEntryInline(admin.TabularInline):
     model = ConfigurationEntry
-    extra = 3
+    extra = 0
 
 
 class SiteInlineForConfiguration(admin.TabularInline):
@@ -78,7 +78,7 @@ class JobInline(admin.TabularInline):
 
 class BatchParameterInline(admin.TabularInline):
     model = BatchParameter
-    extra = 1
+    extra = 0
 
 
 class BatchAdmin(admin.ModelAdmin):
@@ -90,7 +90,7 @@ class BatchAdmin(admin.ModelAdmin):
 
 class InputInline(admin.TabularInline):
     model = Input
-    extra = 1
+    extra = 0
 
 
 class ScriptAdmin(admin.ModelAdmin):
