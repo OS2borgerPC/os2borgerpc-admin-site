@@ -36,7 +36,7 @@
             </strong>
             <span class="policy-script-print-value">
               {% if param.input.value_type == 'FILE' %}
-              <a href="{{param.file_value.url}}">
+              <a href="{{param.file_value.url}}" target="_blank">
                 {{ param.file_value|file_basename }}
               </a>
               {% elif param.input.value_type == 'BOOLEAN' %}
