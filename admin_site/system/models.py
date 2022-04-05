@@ -259,22 +259,29 @@ class PCGroup(models.Model):
         req_files = request.FILES
 
         existing_set = set(asc.pk for asc in self.policy.all())
+        old_params = set()
 
         for pk in existing_set:
             asc = AssociatedScript.objects.get(pk=pk)
+            for old_param in asc.parameters.all():
+                old_params.add(old_param)
             asc.delete()
 
         for pk in req_params.getlist(submit_name, []):
             script_param = "%s_%s" % (submit_name, pk)
 
-            script_pk = req_params.get(script_param, None)
-            script = Script.objects.get(pk=int(script_pk))
-            position = req_params.get(script_param + "_position", int)
-
+            script_pk = int(req_params.get(script_param, None))
+            script = Script.objects.get(pk=script_pk)
+            position = req_params.get(script_param + "_position")
             asc = AssociatedScript(group=self, script=script, position=position)
             if not pk.startswith("new_"):
                 asc.pk = pk
             asc.save()
+
+            for old_param in old_params:
+                if old_param.associated_script_id == asc.pk:
+                    old_param.associated_script = asc
+                    old_param.save()
 
             for inp in script.ordered_inputs:
                 try:
