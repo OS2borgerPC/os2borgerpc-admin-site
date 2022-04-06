@@ -263,8 +263,7 @@ class PCGroup(models.Model):
 
         for pk in existing_set:
             asc = AssociatedScript.objects.get(pk=pk)
-            for old_param in asc.parameters.all():
-                old_params.add(old_param)
+            old_params.update(asc.parameters.all())
             asc.delete()
 
         for pk in req_params.getlist(submit_name, []):
