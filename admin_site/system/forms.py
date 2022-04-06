@@ -239,7 +239,7 @@ class PCForm(forms.ModelForm):
             "configuration",
             "site",
             "is_update_required",
-            "creation_time",
+            "created",
             "last_seen",
         )
 

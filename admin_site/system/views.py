@@ -222,6 +222,7 @@ class SiteList(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super(SiteList, self).get_context_data(**kwargs)
+        context["pcs_count"] = PC.objects.filter(site__in=self.get_queryset()).count()
         context["user"] = self.request.user
         return context
 
@@ -345,6 +346,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
     for i in [
         "pk",
         "batch__script__name",
+        "created",
         "started",
         "finished",
         "status",
@@ -418,10 +420,13 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "script_name": job.batch.script.name,
                     "started": job.started.strftime("%Y-%m-%d %H:%M:%S")
                     if job.started
-                    else None,
+                    else "-",
                     "finished": job.finished.strftime("%Y-%m-%d %H:%M:%S")
                     if job.finished
-                    else None,
+                    else "-",
+                    "created": job.created.strftime("%Y-%m-%d %H:%M:%S")
+                    if job.created
+                    else "-",
                     "status": job.status_translated + "",
                     "label": job.status_label,
                     "pc_name": job.pc.name,
@@ -429,9 +434,11 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     # Yep, it's meant to be double-escaped - it's HTML-escaped
                     # content that will be stored in an HTML attribute
                     "has_info": job.has_info,
-                    "script_url": "/site/%s/scripts/%s/"
-                    % (site.uid, job.batch.script.id),
-                    "restart_url": "/site/%s/jobs/%s/restart/" % (site.uid, job.pk),
+                    "script_url": reverse(
+                        "script", args=[site.uid, job.batch.script.id]
+                    ),
+                    "pc_url": reverse("computer", args=[site.uid, job.pc.uid]),
+                    "restart_url": reverse("restart_job", args=[site.uid, job.pk]),
                 }
                 for job in page_obj
             ],
@@ -649,11 +656,11 @@ class ScriptMixin(object):
         for associated_script in self.script.associations.all():
             for script_input in self.script.ordered_inputs:
                 par = AssociatedScriptParameter.objects.filter(
-                    script=associated_script, input=script_input
+                    associated_script=associated_script, input=script_input
                 ).first()
                 if not par:
                     par = AssociatedScriptParameter(
-                        script=associated_script, input=script_input
+                        associated_script=associated_script, input=script_input
                     )
                     par.save()
 
@@ -1368,10 +1375,6 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     response, _("Group %s updated") % self.object.name
                 )
 
-                # Now update script positions in case a script has been deleted or added
-                if policy_pre != policy_post:
-                    self.object.update_associated_script_positions()
-
                 return response
         except MandatoryParameterMissingError as e:
             # If this happens, it happens *before* we have a valid
@@ -1638,7 +1641,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "site_uid": site.uid,
                     "problem_name": event.problem.name,
                     "pc_id": event.pc.id,
-                    "occurred": event.ocurred_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
                     "level": SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],
@@ -1794,7 +1797,7 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
         "configuration_id",
         "site_id",
         "is_activated",
-        "creation_time",
+        "created",
         "last_seen",
         "location",
     ]
@@ -1859,7 +1862,8 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             ).upper()
 
             selected_platform = next(
-                (x for x in ImageVersion.platform_choices if x[0] == platform_choice)
+                (x for x in ImageVersion.platform_choices if x[0] == platform_choice),
+                ImageVersion.platform_choices[0][0],
             )
             context["selected_platform"] = selected_platform
             context["selected_platform_images"] = versions.filter(

@@ -2,13 +2,23 @@
 
 <tr>
   {% if script_id %}
-    <td>{{ps.position}}</td>
-    <td class="policy-script-print-key"><a href="{% url 'script' site.uid script_id %}">{{ name }}</a></td>
+    <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
+      <input type="hidden" class="position-field" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_position" value="{{ ps.position }}">
+      <span class="material-icons disable-select">&#xf101;</span>
+    </td>
+    <td class="policy-script-print-key" style="width: 35%;">
+      <a href="{% url 'script' site.uid script_id %}">{{ name }}</a>
+    </td>
   {% else %}
-    <td>Nyt</td>
-    <td class="policy-script-print-key"><a href="/site/{{site.uid}}/scripts/{{script_pk}}/">{{ name }}</a></td>
+    <td class="sortable-handle" style="width: 5%; cursor: pointer;">
+      <span class="material-icons disable-select">&#xf101;</span>
+    </td>
+    <input type="hidden" class="position-field" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}_position" value="{{ ps.position }}">
+    <td class="policy-script-print-key" style="width: 35%;">
+      <a href="/site/{{site.uid}}/scripts/{{script_pk}}/">{{ name }}</a>
+    </td>
   {% endif %}
-  <td class="pe-0 js-match">
+  <td class="pe-0 js-match" style="width: 40%;">
     <div data-name="policy-script-{{ name }}" >
       <input class="policy-script-pos" type="hidden" name="{{ submit_name|default:'policy' }}" value="{{ ps_pk }}">
       <input class="policy-script-name" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}" value="{{ script_pk }}">
@@ -26,7 +36,7 @@
             </strong>
             <span class="policy-script-print-value">
               {% if param.input.value_type == 'FILE' %}
-              <a href="{{param.file_value.url}}">
+              <a href="{{param.file_value.url}}" target="_blank">
                 {{ param.file_value|file_basename }}
               </a>
               {% elif param.input.value_type == 'BOOLEAN' %}
@@ -51,7 +61,7 @@
     </div>
 
   </td>
-  <td style="min-width: 6.2rem;">
+  <td style="min-width: 6.2rem; width: 20%;">
     <p class="mb-0" style="margin-left: -.5rem;">
       <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.editScript(this, '{{ submit_name }}')">
         <span class='material-icons'>edit</span>Redigér

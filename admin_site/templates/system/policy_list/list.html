@@ -9,17 +9,19 @@
           <th>Handlinger</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="sortable">
         {% for ps in entries %}
           {% include 'system/policy_list/item.html' with ps_pk=ps.pk script_pk=ps.script.pk script_id=ps.script.id name=ps.script.name params=ps.ordered_parameters submit_name=policy_id %}
         {% endfor %}
+        <input type="hidden" name="{{ policy_id }}_new_entries" id="{{ policy_id }}_new_entries" value="0">
+      </tbody>
+      <tfoot>
         <tr>
           <td colspan="4">
-            <input type="hidden" name="{{ policy_id }}_new_entries" id="{{ policy_id }}_new_entries" value="0">
             {% include 'widgets/scriptsearch.html' with id=policy_id list=all_scripts placeholder="Tilføj script" %}
           </td>
         </tr>
-      </tbody>
+      </tfoot>
     </table>
   </div>
 {% else %}
@@ -27,6 +29,16 @@
 {% endif %}
 
 <script>
+
+  $( function() {
+    $( ".sortable" ).sortable({
+      containment: document.getElementById("updategroupform"),
+      handle: ".sortable-handle",
+      forcePlaceholderSize: true,
+      cursor: "move",
+    })
+  })
+
   // Catch bubbling click event from scriptsearch.html include
   document.getElementById('{{ policy_id }}').addEventListener('click', function(ev) {
     /* Did they click on the li or the child element badge? */

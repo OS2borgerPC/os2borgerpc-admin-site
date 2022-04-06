@@ -1,5 +1,16 @@
+Version 5.4.1, April 1, 2022
+----------------------------
+
+New in this version:
+
+- Reordering policy scripts is now possible
+- Add link from Jobs page to PC
+- Add created field for Site and Jobs, display it for PCs and Jobs
+- More info on Sites overview
+- Remove author field
+
 Version 5.3.1, March 21, 2022
----------------------------------
+-----------------------------
 
 New in this version:
 
@@ -7,7 +18,7 @@ New in this version:
 - Update Django version
 
 Version 5.3.0, January 26, 2022
----------------------------------
+-------------------------------
 
 New in this version:
 
@@ -26,7 +37,7 @@ New in this version:
 
 
 Version 5.2.1, January 3, 2022
---------------------------------
+------------------------------
 
 Hotfix:
 

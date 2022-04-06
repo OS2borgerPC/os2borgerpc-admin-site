@@ -5,11 +5,26 @@
 # in the Gitlab UI.
 # RELEASE_REGISTRY_USER
 # RELEASE_REGISTRY_PASSWORD
+#
+# For deployment via config-updater and saltbert these variables are needed as well:
+# CONFIG_UPDATER_USERNAME
+# CONFIG_UPDATER_PASSWORD
+# SALTBERT_TEST_PASSWORD and SALBERT_PROD_PASSWORD 
+# (both are used as SALBERT_PASSWORD for test and prod servers respectively)
+
+include:
+  - project: 'labs/salt-automation'
+    ref: 'master'
+    file:
+      - '/gitlab-ci-templates/common/rules.v1.yml'
+      - '/gitlab-ci-templates/common/config-updater-meta.v1.yml'
+      - '/gitlab-ci-templates/common/saltbert.v1.yml'
 
 stages:
     - lint
     - build
     - release
+    - deploy
 
 variables:
     # Project variables
@@ -19,7 +34,6 @@ variables:
     RELEASE_IMAGE: magentaaps/os2borgerpc-admin
     RELEASE_IMAGE_TAG: ${RELEASE_IMAGE}:${CI_COMMIT_TAG}
     RELEASE_IMAGE_LATEST: ${RELEASE_IMAGE}:latest
-
 
 
 # Lint stage
@@ -56,7 +70,9 @@ Lint Dockerfiles:
 
 Build app image:
   stage: build
-  needs: []
+  needs: 
+    - Lint Python
+    - Lint Dockerfiles
   dependencies: []
   image:
     name: gcr.io/kaniko-project/executor:debug-v0.16.0
@@ -78,7 +94,7 @@ Build app image:
 
 .release-default: &release-default
   stage: release
-  needs: ["Lint Python"]
+  needs: ["Build app image"]
   image: alpine
   variables:
     GIT_STRATEGY: none # We do not need the source code
@@ -103,10 +119,8 @@ Release dev:
 
 Release rc:
   <<: *release-default
-  only:
-    variables:
-      # Matches all of SemVer 2.0.0
-      - $CI_COMMIT_TAG =~ /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
+  extends:
+    - .rules:semver-all
   script:
     - skopeo copy
       --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
@@ -116,10 +130,8 @@ Release rc:
 
 Release master:
   <<: *release-default
-  only:
-    variables:
-      # Matches <version core> from SemVer 2.0.0 BNF grammar. Ex. 2.3.4, but not 2.3.4-rc
-      - $CI_COMMIT_TAG =~ /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
+  extends:
+    - .rules:semver-core
   script:
     - skopeo copy
       --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
@@ -131,3 +143,55 @@ Release master:
       --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
       "docker://${RELEASE_IMAGE_LATEST}"
+
+
+# Deploy stage
+##############
+
+Update os2borgerpc-test version salt:
+  extends:
+    - .rules:semver-all
+    - .config:endpoint-with-tag
+  needs: ["Release rc"]
+  when: manual
+  variables:
+    ENDPOINT: os2bpc/salt/update-test
+    CONFIG_UPDATER_USERNAME: os2bpc
+
+Trigger salt deployment os2borgerpc-test server:
+  extends:
+    - .rules:semver-all
+    - .saltbert
+  needs: ["Update os2borgerpc-test version salt"]
+  when: manual
+  variables:
+    SALTBERT_ORCHESTRATION: os2bpc.test
+    SALTBERT_URL: https://ctrldev1.magenta-aps.dk
+    SALTBERT_PASSWORD: $SALTBERT_TEST_PASSWORD
+  environment:
+    name: os2borgerpc-test
+    url: https://os2borgerpc-test.magenta.dk
+
+Update os2borgerpc-admin version salt:
+  extends:
+    - .rules:semver-core
+    - .config:endpoint-with-tag
+  needs: ["Release master"]
+  when: manual
+  variables:
+    ENDPOINT: os2bpc/salt/update-production
+    CONFIG_UPDATER_USERNAME: os2bpc
+
+Trigger salt deployment os2borgerpc-admin server:
+  extends:
+    - .rules:semver-core
+    - .saltbert
+  needs: ["Update os2borgerpc-admin version salt"]
+  when: manual
+  variables:
+    SALTBERT_ORCHESTRATION: os2bpc.production
+    SALTBERT_URL: https://ctrl1.magenta-aps.dk
+    SALTBERT_PASSWORD: $SALTBERT_PROD_PASSWORD
+  environment:
+    name: os2borgerpc-admin
+    url: https://os2borgerpc-admin.magenta.dk

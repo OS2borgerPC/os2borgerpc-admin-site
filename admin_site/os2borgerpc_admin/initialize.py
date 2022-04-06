@@ -19,6 +19,6 @@ def initialize():
     generating duplicates.
     """
     if os.path.exists(fixtures_dir) and os.path.isdir(fixtures_dir):
-        for file in glob.glob(os.path.join(fixtures_dir, "*.json")):
+        for file in sorted(glob.glob(os.path.join(fixtures_dir, "*.json"))):
             if os.path.isfile(file):
                 call_command("loaddata", file)

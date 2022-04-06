@@ -131,10 +131,11 @@ Jobs
     <tbody id="jobitem-template">
       <tr>
         <td><strong>#SCRIPT_LINK#</strong></td>
+        <td>#CREATED#</td>
         <td>#STARTED#</td>
         <td>#FINISHED#</td>
         <td><span class="badge #LABEL#">#STATUS#</span></td>
-        <td>#PC_NAME#</td>
+        <td><strong>#PC_LINK#</strong></td>
         <td>#BATCH_NAME#</td>
         <td>#JOBINFOBUTTON#</td>
       </tr>
@@ -148,6 +149,7 @@ Jobs
       <thead>
         <tr>
           {% include 'widgets/orderby_th_ajax.html' with label='Script' action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
+          {% include 'widgets/orderby_th_ajax.html' with label='Oprettet' action="BibOS.JobList.orderby('created')" slug='created' %}
           {% include 'widgets/orderby_th_ajax.html' with label='Startet' action="BibOS.JobList.orderby('started')" slug='started' %}
           {% include 'widgets/orderby_th_ajax.html' with label='Sluttet' action="BibOS.JobList.orderby('finished')" slug='finished' %}
           {% include 'widgets/orderby_th_ajax.html' with label='Status' action="BibOS.JobList.orderby('status')" slug='status' %}

@@ -49,18 +49,32 @@ Computere
 
     {% include 'notification.html' %}
 
-    <p class="d-flex justify-content-end mb-0">
-      {% if selected_pc.last_seen %}
-        Seneste tjek-ind: {{ selected_pc.last_seen|date:'Y-m-d H:i:s' }}
-      {% endif %}
-      {% if security_event %}
-        <span class="ms-3">
-          Seneste sikkerhedshændelse modtaget: {{ security_event.reported_time|date }} {{ security_event.reported_time|time }}
-        </span>
-      {% endif %}
-    </p>
-
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
+
+      <ul class="list-group list-group-horizontal mb-5 mx-4">
+        <li class="list-group-item">
+          Oprettelsestidspunkt: {{ pc.created }}
+        </li>
+        <li class="list-group-item">
+          Seneste tjek-ind:
+          {% if selected_pc.last_seen %}
+            {{ selected_pc.last_seen|timesince }} siden
+          {% else %}
+            Aldrig
+          {% endif %}
+        </li>
+        <li class="list-group-item">
+          <span class="ms-3">
+            Seneste sikkerhedshændelse modtaget:
+            {% if security_event %}
+              {{ security_event.reported_time|timesince }} siden
+            {% else %}
+              Aldrig
+            {% endif %}
+          </span>
+        </li>
+      </ul>
+
       {% csrf_token %}
 
       <!-- The three tabs on the page: -->
@@ -125,6 +139,7 @@ Computere
             <thead>
               <tr>
                 {% include 'widgets/orderby_th_reload.html' with key='batch__script__name' label='Script' anchor='#jobs' %}
+                {% include 'widgets/orderby_th_reload.html' with key='created' label='Oprettet' anchor='#jobs' %}
                 {% include 'widgets/orderby_th_reload.html' with key='started' label='Startet' anchor='#jobs' %}
                 {% include 'widgets/orderby_th_reload.html' with key='finished' label='Sluttet' anchor='#jobs' %}
                 {% include 'widgets/orderby_th_reload.html' with key='status' label='Status' anchor='#jobs' %}
@@ -137,8 +152,9 @@ Computere
               <td class="{% ifequal orderby_key 'batch__script__name' %}orderby-highligt{% endifequal %}">
                   <a href="{% url 'script' site.uid job.batch.script.pk %}"><strong>{{job.batch.script.name}}</strong></a>
               </td>
-              <td class="{% ifequal orderby_key 'started' %}orderby-highligt{% endifequal %}">{{job.started|default:'&nbsp'}}</td>
-              <td class="{% ifequal orderby_key 'finished' %}orderby-highligt{% endifequal %}">{{job.finished|default:'&nbsp'}}</td>
+              <td class="{% ifequal orderby_key 'created' %}orderby-highligt{% endifequal %}">{{job.created|default:'-'}}</td>
+              <td class="{% ifequal orderby_key 'started' %}orderby-highligt{% endifequal %}">{{job.started|default:'-'}}</td>
+              <td class="{% ifequal orderby_key 'finished' %}orderby-highligt{% endifequal %}">{{job.finished|default:'-'}}</td>
               <td class="{% ifequal orderby_key 'status' %}orderby-highligt{% endifequal %}"><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
               <td class="{% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>

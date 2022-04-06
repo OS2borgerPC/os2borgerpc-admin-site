@@ -12,22 +12,22 @@
       {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
       <span class="ms-3 badge bg-secondary">Online: {{ online_pcs }} / {{ total_pcs }}</span>
     </h2>
-    <table class="table table-hover warn-table caption-top" id="site-status-table">
+    <table class="table caption-top" data-toggle="table" data-classes="table table-bordered" id="site-status-table">
       <thead>
         <tr>
-          <th>Navn</th>
-          <th>Aktiveret</th>
-          <th>Beskrivelse</th>
-          <th>Placering</th>
-          <th>Status</th>
-          <th>Seneste tjek-ind</th>
-          <th>Seneste sikkerhedshændelse modtaget</th>
+          <th data-sortable="true">Navn</th>
+          <th data-sortable="true">Aktiveret</th>
+          <th data-sortable="true">Beskrivelse</th>
+          <th data-sortable="true">Placering</th>
+          <th data-sortable="true">Status</th>
+          <th data-sortable="true">Seneste tjek-ind</th>
+          <th data-sortable="true">Seneste sikkerhedshændelse modtaget</th>
         </tr>
       </thead>
       <tbody>
           {% for pc in ls_pcs %}
-        <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
-            <td><strong>{{ pc.name }}</strong></td>
+        <tr class="click-list--item">
+            <td><strong><a href="{% url 'computer' site_uid=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong></td>
             {% if pc.is_activated %}
               <td><span class="badge bg-success">Aktiveret</span></td>
             {% else %}

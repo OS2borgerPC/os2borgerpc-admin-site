@@ -125,6 +125,9 @@ class Site(models.Model):
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"), null=True, blank=True
     )
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
+    )
     # Official library number
     # https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre
 
@@ -255,44 +258,37 @@ class PCGroup(models.Model):
         req_params = request.POST
         req_files = request.FILES
 
-        seen_set = set()
         existing_set = set(asc.pk for asc in self.policy.all())
+        old_params = set()
 
-        position = 0
+        for pk in existing_set:
+            asc = AssociatedScript.objects.get(pk=pk)
+            old_params.update(asc.parameters.all())
+            asc.delete()
+
         for pk in req_params.getlist(submit_name, []):
             script_param = "%s_%s" % (submit_name, pk)
 
             script_pk = int(req_params.get(script_param, None))
             script = Script.objects.get(pk=script_pk)
+            position = req_params.get(script_param + "_position")
+            asc = AssociatedScript(group=self, script=script, position=position)
+            if not pk.startswith("new_"):
+                asc.pk = pk
+            asc.save()
 
-            if pk.startswith("new_"):
-                # If the model already has a script at this position in the
-                # list, then the user must have deleted it in the UI; remove it
-                # from the database as well
-                try:
-                    existing = AssociatedScript.objects.get(
-                        group=self, position=position
-                    )
-                    # (... although we shouldn't try to remove it twice!)
-                    existing_set.remove(existing.pk)
-                    existing.delete()
-                except AssociatedScript.DoesNotExist:
-                    pass
-
-                asc = AssociatedScript(group=self, script=script, position=position)
-                asc.save()
-                pk = asc.pk
-                position += 1
-            else:
-                pk = int(pk)
-                asc = AssociatedScript.objects.get(pk=pk, group=self, script=script)
-                position = asc.position + 1
+            for old_param in old_params:
+                if old_param.associated_script_id == asc.pk:
+                    old_param.associated_script = asc
+                    old_param.save()
 
             for inp in script.ordered_inputs:
                 try:
-                    par = AssociatedScriptParameter.objects.get(script=asc, input=inp)
+                    par = AssociatedScriptParameter.objects.get(
+                        associated_script=asc, input=inp
+                    )
                 except AssociatedScriptParameter.DoesNotExist:
-                    par = AssociatedScriptParameter(script=asc, input=inp)
+                    par = AssociatedScriptParameter(associated_script=asc, input=inp)
                 param_name = "{0}_param_{1}".format(script_param, inp.position)
                 if inp.value_type == Input.FILE:
                     if param_name not in req_files or not req_files[param_name]:
@@ -317,12 +313,6 @@ class PCGroup(models.Model):
                     else:
                         par.string_value = req_params[param_name]
                 par.save()
-            seen_set.add(pk)
-
-        # Delete entries that were not in the submitted data
-        for pk in existing_set - seen_set:
-            asc = AssociatedScript.objects.get(pk=pk)
-            asc.delete()
 
     @property
     def ordered_policy(self):
@@ -357,8 +347,8 @@ class PC(models.Model):
     is_update_required = models.BooleanField(
         verbose_name=_("update required"), default=False
     )
-    creation_time = models.DateTimeField(
-        verbose_name=_("creation time"), auto_now_add=True
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
     )
     last_seen = models.DateTimeField(verbose_name=_("last seen"), null=True, blank=True)
     location = models.CharField(
@@ -491,12 +481,6 @@ class Script(AuditModelMixin):
         default=False,
         null=False,
     )
-    author = models.CharField(
-        verbose_name=_("author"), max_length=255, null=False, blank=True
-    )
-    author_email = models.EmailField(
-        verbose_name=_("author email"), null=False, blank=True
-    )
     tags = models.ManyToManyField(ScriptTag, related_name="scripts", blank=True)
 
     @property
@@ -507,8 +491,7 @@ class Script(AuditModelMixin):
         return self.name
 
     def run_on(self, site, pc_list, *args, user):
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        batch = Batch(site=site, script=self, name=" ".join([self.name, now_str]))
+        batch = Batch(site=site, script=self, name=self.id)
         batch.save()
 
         # Add parameters
@@ -573,11 +556,10 @@ class AssociatedScript(models.Model):
     position = models.IntegerField(verbose_name=_("position"))
 
     def make_batch(self):
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return Batch(
             site=self.group.site,
             script=self.script,
-            name=", ".join([self.group.name, self.script.name, now_str]),
+            name=", ".join([str(self.script.id), self.group.name]),
         )
 
     def make_parameters(self, batch):
@@ -665,6 +647,9 @@ class Job(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
     log_output = models.TextField(
         verbose_name=_("log output"), max_length=128000, blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name=_("created"), auto_now_add=True, null=True
     )
     started = models.DateTimeField(verbose_name=_("started"), null=True)
     finished = models.DateTimeField(verbose_name=_("finished"), null=True)
@@ -798,7 +783,7 @@ def upload_file_name(instance, filename):
 class Parameter(models.Model):
     """A concrete value for the Input of a Script."""
 
-    string_value = models.CharField(max_length=4096, null=True, blank=True)
+    string_value = models.CharField(max_length=4096, blank=True)
     file_value = models.FileField(upload_to=upload_file_name, null=True, blank=True)
     # which input does this belong to?
     input = models.ForeignKey(Input, on_delete=models.CASCADE)
@@ -807,7 +792,7 @@ class Parameter(models.Model):
     def transfer_value(self):
         input_type = self.input.value_type
         if input_type == Input.FILE:
-            return self.file_value.url
+            return self.file_value.url if self.file_value else ""
         else:
             return self.string_value
 
@@ -826,8 +811,7 @@ class BatchParameter(Parameter):
 
 
 class AssociatedScriptParameter(Parameter):
-    # Which associated script is this parameter, er, associated with?
-    script = models.ForeignKey(
+    associated_script = models.ForeignKey(
         AssociatedScript, related_name="parameters", on_delete=models.CASCADE
     )
 
@@ -842,7 +826,9 @@ class AssociatedScriptParameter(Parameter):
             )
 
     def __str__(self):
-        return "{0} - {1}: {2}".format(self.script, self.input, self.transfer_value)
+        return "{0} - {1}: {2}".format(
+            self.associated_script, self.input, self.transfer_value
+        )
 
 
 class SecurityProblem(models.Model):
@@ -942,7 +928,7 @@ class SecurityEvent(models.Model):
     }
     problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
     # The time the problem was reported in the log file
-    ocurred_time = models.DateTimeField(verbose_name=_("occurred"))
+    occurred_time = models.DateTimeField(verbose_name=_("occurred"))
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(verbose_name=_("reported"))
     pc = models.ForeignKey(PC, on_delete=models.CASCADE, related_name="security_events")

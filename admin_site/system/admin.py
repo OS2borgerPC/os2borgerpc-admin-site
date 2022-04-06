@@ -31,7 +31,7 @@ ar = admin.site.register
 
 class ConfigurationEntryInline(admin.TabularInline):
     model = ConfigurationEntry
-    extra = 3
+    extra = 0
 
 
 class SiteInlineForConfiguration(admin.TabularInline):
@@ -78,7 +78,7 @@ class JobInline(admin.TabularInline):
 
 class BatchParameterInline(admin.TabularInline):
     model = BatchParameter
-    extra = 1
+    extra = 0
 
 
 class BatchAdmin(admin.ModelAdmin):
@@ -88,14 +88,9 @@ class BatchAdmin(admin.ModelAdmin):
     inlines = [JobInline, BatchParameterInline]
 
 
-class AssociatedScriptParameterInline(admin.TabularInline):
-    model = AssociatedScriptParameter
-    extra = 1
-
-
 class InputInline(admin.TabularInline):
     model = Input
-    extra = 1
+    extra = 0
 
 
 class ScriptAdmin(admin.ModelAdmin):
@@ -176,19 +171,54 @@ class PCInlineForSiteAdmin(admin.TabularInline):
 
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ("name", "number_of_computers")
+    list_display = (
+        "name",
+        "number_of_computers",
+        "created",
+        "number_of_borgerpc_computers",
+        "number_of_kioskpc_computers",
+    )
     search_fields = ("name",)
     inlines = (PCInlineForSiteAdmin,)
+    readonly_fields = ("created",)
+
+    def number_of_borgerpc_computers(self, obj):
+        borgerpc_computers_count = (
+            PC.objects.filter(site=obj)
+            .filter(configuration__entries__value="os2borgerpc")
+            .count()
+        )
+
+        return borgerpc_computers_count
+
+    def number_of_kioskpc_computers(self, obj):
+        kioskpc_computers_count = (
+            PC.objects.filter(site=obj)
+            .filter(configuration__entries__value="os2borgerpc kiosk")
+            .count()
+        )
+
+        return kioskpc_computers_count
 
     def number_of_computers(self, obj):
         return obj.pcs.count()
 
     number_of_computers.short_description = _("Number of computers")
+    number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
+    number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
 
 
 class PCAdmin(admin.ModelAdmin):
-    list_display = ("name", "uid", "site_link", "is_activated", "last_seen")
+    list_display = (
+        "name",
+        "uid",
+        "site_link",
+        "is_activated",
+        "last_seen",
+        "created",
+    )
     search_fields = ("name", "uid")
+    readonly_fields = ("created",)
 
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
@@ -211,8 +241,9 @@ class PCAdmin(admin.ModelAdmin):
 
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "status", "user", "pc")
+    list_display = ("__str__", "status", "user", "pc", "created", "started", "finished")
     search_fields = ("batch__name", "user__username", "pc__name")
+    readonly_fields = ("created", "started", "finished")
 
 
 class ScriptTagAdmin(admin.ModelAdmin):
@@ -231,7 +262,7 @@ class SecurityEventAdmin(admin.ModelAdmin):
     list_display = (
         "problem",
         "get_site",
-        "ocurred_time",
+        "occurred_time",
         "reported_time",
         "pc",
         "status",
@@ -242,13 +273,34 @@ class SecurityEventAdmin(admin.ModelAdmin):
         return obj.pc.site
 
 
+class AssociatedScriptParameterInline(admin.TabularInline):
+    model = AssociatedScriptParameter
+    extra = 0
+
+
 class AssociatedScriptAdmin(admin.ModelAdmin):
     list_display = ("script", "get_site", "group", "position")
     search_fields = ("script__name",)
+    inlines = [AssociatedScriptParameterInline]
 
     @admin.display(description="Site", ordering="group__site")
     def get_site(self, obj):
         return obj.group.site
+
+
+class AssociatedScriptParameterAdmin(admin.ModelAdmin):
+    list_display = (
+        "associated_script",
+        "input",
+        "string_value",
+        "file_value",
+        "get_site",
+    )
+    search_fields = ("associated_script__script__name",)
+
+    @admin.display(description="Site", ordering="associated_script__group__site")
+    def get_site(self, obj):
+        return obj.associated_script.group.site
 
 
 class CitizenAdmin(admin.ModelAdmin):
@@ -268,7 +320,7 @@ ar(Batch, BatchAdmin)
 ar(Job, JobAdmin)
 ar(BatchParameter)
 ar(AssociatedScript, AssociatedScriptAdmin)
-ar(AssociatedScriptParameter)
+ar(AssociatedScriptParameter, AssociatedScriptParameterAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
 ar(Citizen, CitizenAdmin)

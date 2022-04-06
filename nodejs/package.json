@@ -8,14 +8,15 @@
     "build": "npm run build-sass",
     "build-sass": "node_modules/.bin/sass src/custom.scss:dist/css/bootstrap.css --style=compressed --source-map",
     "watch-sass": "node_modules/.bin/sass src/custom.scss:/code/admin_site/static/css/bootstrap.css --style=compressed --source-map --watch",
-    "copy-bootstrap-css": "cp dist/css/bootstrap.* /code/admin_site/static/css",
-    "copy-bootstrap-js": "cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* /code/admin_site/static/js",
+    "copy-bootstrap-css": "cp dist/css/bootstrap.* node_modules/bootstrap-table/dist/bootstrap-table.min.css /code/admin_site/static/css",
+    "copy-bootstrap-js": "cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* node_modules/bootstrap-table/dist/bootstrap-table.min.js /code/admin_site/static/js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Magenta ApS",
   "license": "MPL-2.0",
   "dependencies": {
     "bootstrap": "~5.0.2",
+    "bootstrap-table": "^1.19.1",
     "jquery": "^3.5.1",
     "qrcodejs": "1.0.0",
     "sass": "^1.35.1"

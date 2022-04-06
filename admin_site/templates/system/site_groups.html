@@ -50,7 +50,8 @@ active
       action="{% url 'group' site.uid selected_group.url %}"
       method="post" 
       enctype="multipart/form-data" 
-      class="row-fluid">
+      class="row-fluid"
+      onsubmit="updateScriptPositions()">
 
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
@@ -90,9 +91,11 @@ active
 
         <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
           <p class="alert alert-info"><strong>Bemærk</strong><br/>
-          Tilføjes et nyt script til listen, der tager parametre, skal disse parametre sættes først, ved tryk på
-          "Rediger", før man kan "Gemme ændringerne".<br/>
-          Redigering medfører ikke, at et script køres på ny.</p>
+            Tilføjes et nyt script til listen, der tager parametre, skal disse parametre sættes først, ved tryk på
+            "Rediger", før man kan "Gemme ændringerne".<br/>
+            Redigering af inputparametre medfører ikke, at et script køres på ny.<br/>
+            Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-tilføjede Computere til Gruppen kører hele listen af scripts.
+          </p>
           {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
 
@@ -109,6 +112,18 @@ active
       </div>
 
     </form>
+
+    <script>
+      function updateScriptPositions(){
+        fields = document.getElementsByClassName("position-field")
+
+        let i = 0
+        for (let item of fields) {
+          item.value = i
+          i++
+        }
+      }
+    </script>
 
     <div id="addNewGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
