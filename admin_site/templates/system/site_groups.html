@@ -79,13 +79,13 @@ active
               {{ form.description|as_crispy_field }}
             </fieldset>
 
-            <fieldset class="col-12 col-lg-6">
+            <fieldset id="pcfieldset" class="col-12 col-lg-6" onclick="totalpcs()">
 
               {{ form.pcs.errors }}
               <label class="mb-2">Computere i denne gruppe</label>
                 <span class="badge bg-secondary" style="font-size: 0.80em; float: right;">
                   <span class="material-icons px-2">computer</span>
-                  {{selected_pcs.count}}
+                    <span id="totalpcs">{{selected_pcs.count}}</span>
                 </span>
               {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' site_url=site.uid target_section='computers' %}
 
@@ -118,6 +118,13 @@ active
     </form>
 
     <script>
+      function totalpcs(){
+        if (document.getElementById("empty-list") == undefined){
+          document.getElementById("totalpcs").innerHTML = document.getElementById("picked-pcs").childElementCount - 1
+        } else {
+          document.getElementById("totalpcs").innerHTML = 0
+        }
+      }
       function updateScriptPositions(){
         fields = document.getElementsByClassName("position-field")
 
