@@ -11,7 +11,7 @@
 
     <div id="pick-list-{{ submit_name }}{{ unique_id }}" class="pick-list">
 
-        <ul class="pick-list-selected list-group">
+        <ul id="picked-{{ submit_name }}{{ unique_id }}"class="pick-list-selected list-group">
             <li class="list-group-item list-group-item-action">
                 <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="material-icons">add</span>
@@ -112,6 +112,7 @@
                 }
                 if (is_empty) {
                     var empty_li = document.createElement('li')
+                    empty_li.id= 'empty-list'
                     empty_li.className = 'list-group-item pick-list-item'
                     empty_li.innerText = 'Ingen valgt'
                     dom_ul.appendChild(empty_li)
