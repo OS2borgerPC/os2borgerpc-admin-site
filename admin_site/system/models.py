@@ -259,22 +259,28 @@ class PCGroup(models.Model):
         req_files = request.FILES
 
         existing_set = set(asc.pk for asc in self.policy.all())
+        old_params = set()
 
         for pk in existing_set:
             asc = AssociatedScript.objects.get(pk=pk)
+            old_params.update(asc.parameters.all())
             asc.delete()
 
         for pk in req_params.getlist(submit_name, []):
             script_param = "%s_%s" % (submit_name, pk)
 
-            script_pk = req_params.get(script_param, None)
-            script = Script.objects.get(pk=int(script_pk))
-            position = req_params.get(script_param + "_position", int)
-
+            script_pk = int(req_params.get(script_param, None))
+            script = Script.objects.get(pk=script_pk)
+            position = req_params.get(script_param + "_position")
             asc = AssociatedScript(group=self, script=script, position=position)
             if not pk.startswith("new_"):
                 asc.pk = pk
             asc.save()
+
+            for old_param in old_params:
+                if old_param.associated_script_id == asc.pk:
+                    old_param.associated_script = asc
+                    old_param.save()
 
             for inp in script.ordered_inputs:
                 try:
@@ -553,7 +559,7 @@ class AssociatedScript(models.Model):
         return Batch(
             site=self.group.site,
             script=self.script,
-            name=", ".join([self.script.id, self.group.name]),
+            name=", ".join([str(self.script.id), self.group.name]),
         )
 
     def make_parameters(self, batch):
@@ -777,7 +783,7 @@ def upload_file_name(instance, filename):
 class Parameter(models.Model):
     """A concrete value for the Input of a Script."""
 
-    string_value = models.CharField(max_length=4096, null=True, blank=True)
+    string_value = models.CharField(max_length=4096, blank=True)
     file_value = models.FileField(upload_to=upload_file_name, null=True, blank=True)
     # which input does this belong to?
     input = models.ForeignKey(Input, on_delete=models.CASCADE)
@@ -820,7 +826,9 @@ class AssociatedScriptParameter(Parameter):
             )
 
     def __str__(self):
-        return "{0} - {1}: {2}".format(self.script, self.input, self.transfer_value)
+        return "{0} - {1}: {2}".format(
+            self.associated_script, self.input, self.transfer_value
+        )
 
 
 class SecurityProblem(models.Model):

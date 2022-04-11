@@ -12,7 +12,7 @@
       {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
       <span class="ms-3 badge bg-secondary">Online: {{ online_pcs }} / {{ total_pcs }}</span>
     </h2>
-    <table class="table table-hover warn-table caption-top" data-toggle="table" id="site-status-table">
+    <table class="table caption-top" data-toggle="table" data-classes="table table-bordered" id="site-status-table">
       <thead>
         <tr>
           <th data-sortable="true">Navn</th>
@@ -26,8 +26,8 @@
       </thead>
       <tbody>
           {% for pc in ls_pcs %}
-        <tr class="click-list--item" onclick="location.href = '/site/{{ site.uid }}/computers/{{ pc.uid }}'">
-            <td><strong>{{ pc.name }}</strong></td>
+        <tr class="click-list--item">
+            <td><strong><a href="{% url 'computer' site_uid=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong></td>
             {% if pc.is_activated %}
               <td><span class="badge bg-success">Aktiveret</span></td>
             {% else %}

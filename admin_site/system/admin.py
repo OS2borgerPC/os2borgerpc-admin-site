@@ -31,7 +31,7 @@ ar = admin.site.register
 
 class ConfigurationEntryInline(admin.TabularInline):
     model = ConfigurationEntry
-    extra = 3
+    extra = 0
 
 
 class SiteInlineForConfiguration(admin.TabularInline):
@@ -78,7 +78,7 @@ class JobInline(admin.TabularInline):
 
 class BatchParameterInline(admin.TabularInline):
     model = BatchParameter
-    extra = 1
+    extra = 0
 
 
 class BatchAdmin(admin.ModelAdmin):
@@ -88,14 +88,9 @@ class BatchAdmin(admin.ModelAdmin):
     inlines = [JobInline, BatchParameterInline]
 
 
-class AssociatedScriptParameterInline(admin.TabularInline):
-    model = AssociatedScriptParameter
-    extra = 1
-
-
 class InputInline(admin.TabularInline):
     model = Input
-    extra = 1
+    extra = 0
 
 
 class ScriptAdmin(admin.ModelAdmin):
@@ -278,9 +273,15 @@ class SecurityEventAdmin(admin.ModelAdmin):
         return obj.pc.site
 
 
+class AssociatedScriptParameterInline(admin.TabularInline):
+    model = AssociatedScriptParameter
+    extra = 0
+
+
 class AssociatedScriptAdmin(admin.ModelAdmin):
     list_display = ("script", "get_site", "group", "position")
     search_fields = ("script__name",)
+    inlines = [AssociatedScriptParameterInline]
 
     @admin.display(description="Site", ordering="group__site")
     def get_site(self, obj):
