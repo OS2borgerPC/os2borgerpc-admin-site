@@ -11,7 +11,7 @@
 
     <div id="pick-list-{{ submit_name }}{{ unique_id }}" class="pick-list">
 
-        <ul id="picked-{{ submit_name }}{{ unique_id }}"class="pick-list-selected list-group">
+        <ul class="pick-list-selected list-group">
             <li class="list-group-item list-group-item-action">
                 <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="material-icons">add</span>
@@ -101,6 +101,7 @@
                 var dom_ul = dom_el.querySelector('.pick-list-selected')
                 var dom_lis = dom_ul.querySelectorAll('.pick-list-item')
                 var is_empty = true
+                var total = 0
                 for (var li of dom_lis) {
                     li.remove()
                 }
@@ -108,14 +109,18 @@
                     if (list[item].selected) {
                         dom_ul.appendChild(renderListItem(list[item]))
                         is_empty = false
+                        total ++
                     }
                 }
                 if (is_empty) {
                     var empty_li = document.createElement('li')
-                    empty_li.id= 'empty-list'
                     empty_li.className = 'list-group-item pick-list-item'
                     empty_li.innerText = 'Ingen valgt'
                     dom_ul.appendChild(empty_li)
+                }
+                // Checks if the document has the element to display the total of elements
+                if (document.getElementById("total-{{ submit_name }}{{ unique_id }}")){
+                    document.getElementById("total-{{ submit_name }}{{ unique_id }}").innerHTML = total
                 }
             }
 
