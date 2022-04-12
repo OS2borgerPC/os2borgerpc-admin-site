@@ -101,6 +101,7 @@
                 var dom_ul = dom_el.querySelector('.pick-list-selected')
                 var dom_lis = dom_ul.querySelectorAll('.pick-list-item')
                 var is_empty = true
+                var total = 0
                 for (var li of dom_lis) {
                     li.remove()
                 }
@@ -108,6 +109,7 @@
                     if (list[item].selected) {
                         dom_ul.appendChild(renderListItem(list[item]))
                         is_empty = false
+                        total ++
                     }
                 }
                 if (is_empty) {
@@ -115,6 +117,10 @@
                     empty_li.className = 'list-group-item pick-list-item'
                     empty_li.innerText = 'Ingen valgt'
                     dom_ul.appendChild(empty_li)
+                }
+                // Checks if the document has the element to display the total of elements
+                if (document.getElementById("total-{{ submit_name }}{{ unique_id }}")){
+                    document.getElementById("total-{{ submit_name }}{{ unique_id }}").innerHTML = total
                 }
             }
 
