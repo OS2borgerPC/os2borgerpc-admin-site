@@ -27,7 +27,10 @@
       <tbody>
           {% for pc in ls_pcs %}
         <tr class="click-list--item">
-            <td><strong><a href="{% url 'computer' site_uid=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong></td>
+            <td>
+              <span style="display: none;">{{pc.name}}</span> <!-- Used to ensure sorting by pcname rather than uid -->
+              <strong><a href="{% url 'computer' site_uid=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong>
+            </td>
             {% if pc.is_activated %}
               <td><span class="badge bg-success">Aktiveret</span></td>
             {% else %}

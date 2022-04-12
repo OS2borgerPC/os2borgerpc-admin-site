@@ -50,20 +50,19 @@ Computere
     {% include 'notification.html' %}
 
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
-
-      <ul class="list-group list-group-horizontal mb-5 mx-4">
-        <li class="list-group-item">
+      <div class="basic-info">
+        <span class="badge bg-secondary">
           Oprettelsestidspunkt: {{ pc.created }}
-        </li>
-        <li class="list-group-item">
+        </span>
+        <span class="badge bg-secondary mx-3">
           Seneste tjek-ind:
           {% if selected_pc.last_seen %}
             {{ selected_pc.last_seen|timesince }} siden
           {% else %}
             Aldrig
           {% endif %}
-        </li>
-        <li class="list-group-item">
+        </span>
+        <span class="badge bg-secondary">
           <span class="ms-3">
             Seneste sikkerhedshændelse modtaget:
             {% if security_event %}
@@ -72,8 +71,8 @@ Computere
               Aldrig
             {% endif %}
           </span>
-        </li>
-      </ul>
+        </span>
+      </div>
 
       {% csrf_token %}
 
@@ -112,7 +111,13 @@ Computere
             <fieldset class="col-12 col-lg-6">
 
               {{ form.pc_groups.errors }}
-              <label class="mb-2">Grupper</label>
+              <div class="clearfix">
+                <label class="mb-2">Grupper computeren er medlem af</label>
+                <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
+                  <span class="material-icons px-1">queue</span>
+                  <span id="total-pc_groups"></span>
+                </span>
+              </div>
               {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til gruppe' remove_text='Fjern computer fra gruppe' site_url=site.uid target_section='groups' %}
 
             </fieldset>
