@@ -1,3 +1,11 @@
+Version 5.4.2, April 12, 2022
+----------------------------
+
+New in this version:
+
+- Fix sorting of computer name on Status page
+- Add totals above picklists in Computere and Grupper
+
 Version 5.4.1, April 1, 2022
 ----------------------------
 
