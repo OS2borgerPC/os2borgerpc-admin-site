@@ -744,6 +744,7 @@ class Input(models.Model):
     DATE = "DATE"
     FILE = "FILE"
     BOOLEAN = "BOOLEAN"
+    TIME = "TIME"
 
     VALUE_CHOICES = (
         (STRING, _("String")),
@@ -751,6 +752,7 @@ class Input(models.Model):
         (DATE, _("Date")),
         (FILE, _("File")),
         (BOOLEAN, _("Boolean")),
+        (TIME, _("Time")),
     )
 
     name = models.CharField(verbose_name=_("name"), max_length=255)

@@ -39,6 +39,8 @@
               return 'date'
             case 'BOOLEAN':
               return 'checkbox'
+            case 'TIME':
+              return 'time'
             default:
               return 'text'
           }
