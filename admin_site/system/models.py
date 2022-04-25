@@ -10,6 +10,9 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+from markdownx.utils import markdownify
+from markdownx.models import MarkdownxField
+
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
 
@@ -991,3 +994,52 @@ class Citizen(models.Model):
                 fields=["citizen_id", "site"], name="unique_citizen_per_site"
             ),
         ]
+
+
+# A model to sort Changelog entries into categories
+class ChangelogTag(models.Model):
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+# A model that represents one changelog entry, used to showcase changes/new features to users
+class Changelog(models.Model):
+
+    title = models.CharField(verbose_name=_("title"), max_length=255)
+    content = MarkdownxField(verbose_name=_("content"))
+    tags = models.ManyToManyField(ChangelogTag, related_name="changelogs", blank=True)
+    created = models.DateTimeField(
+        verbose_name=_("created"), editable=False, auto_now_add=True
+    )
+    updated = models.DateTimeField(
+        verbose_name=_("updated"), editable=False, auto_now=True
+    )
+    author = models.CharField(verbose_name=_("author"), max_length=255)
+    # This field should be used to denote the version number of the given product
+    # Ie 'admin-site version 1.2.3' or 'script name version 1.0'
+    version = models.CharField(verbose_name=_("version"), max_length=255)
+    site = models.ForeignKey(
+        Site, related_name="changelog", null=True, blank=True, on_delete=models.CASCADE
+    )
+
+    def get_tags(self):
+        # This returns a string of all tags associated with the object, seperated with commas
+        if self.tags:
+            return ", ".join(str(tag) for tag in self.tags.all())
+        else:
+            return None
+
+    def render_content(self):
+        # This method returns the markdown text of the 'content' field as html code.
+        return markdownify(self.content)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ["created"]

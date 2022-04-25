@@ -1,13 +1,17 @@
 from hashlib import md5
 
 from django.contrib import admin
+from django.db import models
 from django.db.models import Count
 from django.utils import timezone
 from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+from markdownx.widgets import AdminMarkdownxWidget
 
 from system.models import (
+    ChangelogTag,
+    Changelog,
     Configuration,
     ConfigurationEntry,
     Site,
@@ -337,11 +341,36 @@ class CitizenAdmin(admin.ModelAdmin):
     search_fields = ("citizen_id",)
 
 
+class ChangelogAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "author",
+        "version",
+        "created",
+    )
+    search_fields = (
+        "title",
+        "version",
+    )
+    readonly_fields = ("created", "updated")
+    filter_horizontal = ("tags",)
+
+    formfield_overrides = {
+        models.TextField: {"widget": AdminMarkdownxWidget},
+    }
+
+
+class ChangelogTagAdmin(admin.ModelAdmin):
+    pass
+
+
 ar(Configuration, ConfigurationAdmin)
 ar(Site, SiteAdmin)
 ar(PCGroup, PCGroupAdmin)
 ar(PC, PCAdmin)
 ar(ImageVersion, ImageVersionAdmin)
+ar(Changelog, ChangelogAdmin)
+ar(ChangelogTag, ChangelogTagAdmin)
 # Job related stuff
 ar(Script, ScriptAdmin)
 ar(ScriptTag, ScriptTagAdmin)

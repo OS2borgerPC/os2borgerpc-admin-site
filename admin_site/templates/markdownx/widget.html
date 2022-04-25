@@ -1,0 +1,75 @@
+<div class="markdownx-container">
+    <style scoped> 
+
+        .markdownx-container {
+            float: left;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }    
+        .tab button, .tab a {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 1em 1.5em;
+            transition: 0.3s;
+            color: black;
+            text-decoration: none;
+        }
+    
+        .tab button:hover, .tab a:hover {
+            background-color: #ccc
+        }
+    
+        .tab button:active, .tab a:active {
+            background-color: #ddd;
+        }
+    
+        .tabcontent {
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        #markdownx-preview {
+            background-color: #fbfbfb;
+            color: #031a20;
+            min-width: 10rem;
+            max-width: 70rem;
+            padding: 1em 1.5em;
+        }
+    </style>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'markdownx-edit')">Write</button>
+        <button class="tablinks" onclick="openTab(event, 'markdownx-preview')">Preview</button>
+        <a href="https://www.markdownguide.org/basic-syntax" target="_blank">Markdown guide</a>
+    </div>
+
+    <div class="markdownx">
+        <div id="markdownx-edit" class="tabcontent">
+            {% include 'django/forms/widgets/textarea.html' %}
+        </div>
+        <div id="markdownx-preview" class="tabcontent" style="display: none; ">
+            <div class="markdownx-preview"></div>
+        </div>
+    </div>
+</div>
+<script>
+    function openTab(event, tabname) {
+        event.preventDefault()
+        tabcontent = document.getElementsByClassName("tabcontent")
+        for ( i = 0; i < tabcontent.length; i++ ) {
+            tabcontent[i].style.display = "none"
+        }
+
+        tablinks = document.getElementsByClassName("tablinks")
+        for ( i = 0; i < tablinks.length; i++ ) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "")
+        }
+
+        document.getElementById(tabname).style.display = "block"
+        event.currentTarget.className += " active"
+    }
+</script>
