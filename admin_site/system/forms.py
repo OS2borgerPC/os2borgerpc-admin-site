@@ -1,5 +1,3 @@
-import datetime
-
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth.models import User
@@ -215,15 +213,17 @@ class ParameterForm(forms.Form):
             if inp.value_type == Input.FILE:
                 self.fields[name] = forms.FileField(**field_data)
             elif inp.value_type == Input.DATE:
-                field_data["initial"] = datetime.datetime.now
-                field_data["widget"] = forms.DateTimeInput(attrs={"class": "dateinput"})
-                self.fields[name] = forms.DateTimeField(**field_data)
+                field_data["widget"] = forms.DateInput(attrs={"type": "date"})
+                self.fields[name] = forms.DateField(**field_data)
             elif inp.value_type == Input.BOOLEAN:
                 self.fields[name] = forms.BooleanField(
                     **field_data, widget=forms.CheckboxInput()
                 )
             elif inp.value_type == Input.INT:
                 self.fields[name] = forms.IntegerField(**field_data)
+            elif inp.value_type == Input.TIME:
+                field_data["widget"] = forms.TimeInput(attrs={"type": "time"})
+                self.fields[name] = forms.CharField(**field_data)
             else:
                 self.fields[name] = forms.CharField(**field_data)
 
