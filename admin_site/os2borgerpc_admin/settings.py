@@ -225,6 +225,7 @@ THIRD_PARTY_APPS = (
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
+    "markdownx",
 )
 
 DJANGO_APPS = (
@@ -238,6 +239,7 @@ DJANGO_APPS = (
     "django.contrib.admin",
     # Uncomment the next line to enable admin documentation:
     "django.contrib.admindocs",
+    "django.forms",
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -312,3 +314,9 @@ CITIZEN_LOGIN_VALIDATOR = settings.get(
 CICERO_URL = settings.get("CICERO_URL")
 CICERO_USER = settings.get("CICERO_USER")
 CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
+
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    "markdown.extensions.extra",
+]
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"

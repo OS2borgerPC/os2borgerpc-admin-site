@@ -30,6 +30,12 @@ detailpage
       Status
     </a>
 
+    {% set_css_class_active request.resolver_match.url_name "changelog" as current_url_changelog %}
+    <a href="{% url 'changelog' slug=site.url %}" class="nav-link link-light {{ current_url_changelog }}">
+      <span class="material-icons">tips_and_updates</span>
+      Nyheder
+    </a>
+
     <hr>
     <h2 class="text-light">Sikkerhed</h3>
     

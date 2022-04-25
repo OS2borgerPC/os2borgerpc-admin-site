@@ -110,3 +110,17 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
   #site-status-table th:nth-of-type(3),  #site-status-table th:nth-of-type(4),
   #site-status-table td:nth-of-type(3), #site-status-table td:nth-of-type(4) { display: none; }
 }
+
+/* Changelog */
+.changelogitem {
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+  min-width: 10rem;
+  max-width: 60rem; 
+  border-top: solid 1px lightgray; 
+}
+
+.changelog-container {
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+}

@@ -1,0 +1,60 @@
+{% extends "site_with_navigation.html" %}
+
+
+{% block specific_title %}
+Nyheder
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/foundation.min.css">
+{% endblock %}
+
+{% block head_javascripts %}
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+    <script type="text/javascript">
+        const changelog_search_url = "{% url 'changelogsearch' site.uid %}"
+    </script>
+    <script type="text/javascript" src="/static/js/changelog_list.js"></script>
+{% endblock %}
+
+{% block specific_content %}
+
+<div class="changelog-container">
+    <strong class="text-muted">KATEGORIER</strong>
+    <form id="changelogsearch-filterform" name="filterform" action="./" method="post">
+        <input type="hidden" name="page" value="1">
+        <div id="changelogsearch-tag-selectors">
+            <button class="btn btn-lg tag-filter-btn" id="Alle" type="button" name="" onclick="BibOS.ChangelogList.reset()">Alle</button>
+            {% for tag in tag_choices %}
+                <button class="btn btn-lg tag-filter-btn" id="{{ tag.name }}" type="button" name="{{ tag.pk }}" onclick="BibOS.ChangelogList.search(this)">{{ tag.name }}</button>
+            {% endfor %}
+        </div>
+    </form>
+    
+    <div class="template-container">
+        <div id="changelogitem-template">
+            <div class="changelogitem" id="changelog-#PK#">
+                <strong class="text-muted">#CREATED#</strong>
+                <h2 class="card-title">#TITLE#</h2>
+                <p>#CONTENT#</p>
+                <p>Kategorier: #TAGS#</p>
+                <p>Version: #VERSION#</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
+        {% include 'notification.html' %}
+        <div>
+            <div id="changelog-list">
+                <div class="muted">
+                    <p>Loading data...</p>
+                </div>
+            </div>
+        </div>
+        <nav class="pagination-wrapper" aria-label="Changelog list page">
+            {% include 'widgets/pagination.html' %}
+        </nav>
+    </div>
+</div>
+{% endblock %}
