@@ -5,6 +5,8 @@ services:
             context: .
             dockerfile: docker/Dockerfile
             target: frontend
+        command:
+            npm run watch-sass
         volumes:
             - .:/code/
             # We do not want node_modules on the host machine, so we create an
