@@ -240,7 +240,7 @@ def push_security_events(pc_uid, csv_data):
             new_security_event.complete_log = csv_split[3]
             new_security_event.save()
         except IndexError:
-            return False
+            return 1
 
         # Notify subscribed users
         system.utils.notify_users(csv_split, security_problem, pc)
