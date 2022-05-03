@@ -1,3 +1,12 @@
+Version 5.5.1, May 3, 2022
+--------------------------
+
+New in this version:
+
+- Add time inputtype
+- Make date inputtype a date instead of date and time
+- Send script names to clients running them
+
 Version 5.4.2, April 12, 2022
 ----------------------------
 
