@@ -693,6 +693,7 @@ class Job(models.Model):
 
         return {
             "id": self.pk,
+            "name": self.batch.script.name,
             "status": self.status,
             "parameters": parameters,
             "executable_code": self.batch.script.executable_code.read().decode("utf8"),
@@ -744,6 +745,7 @@ class Input(models.Model):
     DATE = "DATE"
     FILE = "FILE"
     BOOLEAN = "BOOLEAN"
+    TIME = "TIME"
 
     VALUE_CHOICES = (
         (STRING, _("String")),
@@ -751,6 +753,7 @@ class Input(models.Model):
         (DATE, _("Date")),
         (FILE, _("File")),
         (BOOLEAN, _("Boolean")),
+        (TIME, _("Time")),
     )
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
