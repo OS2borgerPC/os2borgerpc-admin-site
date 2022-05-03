@@ -693,6 +693,7 @@ class Job(models.Model):
 
         return {
             "id": self.pk,
+            "name": self.batch.script.name,
             "status": self.status,
             "parameters": parameters,
             "executable_code": self.batch.script.executable_code.read().decode("utf8"),
