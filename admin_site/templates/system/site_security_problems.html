@@ -80,7 +80,7 @@ Sikkerhedsregler
 
                 <p>
                     <label>Overvågede grupper</label>
-                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til overvågning' remove_text='Fjern overvåget gruppe' site_url=site.uid target_section='computers' %}
+                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til overvågning' remove_text='Fjern overvåget gruppe' site_url=site.uid target_section='groups' %}
                 </p>
                 <p>
                     <label>Modtager(e) af e-mail-advarsel</label>
