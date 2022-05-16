@@ -491,7 +491,7 @@ class Script(AuditModelMixin):
         return self.name
 
     def run_on(self, site, pc_list, *args, user):
-        batch = Batch(site=site, script=self, name=self.id)
+        batch = Batch(site=site, script=self, name="")
         batch.save()
 
         # Add parameters
@@ -559,7 +559,7 @@ class AssociatedScript(models.Model):
         return Batch(
             site=self.group.site,
             script=self.script,
-            name=", ".join([str(self.script.id), self.group.name]),
+            name=f"{self.group.name}",
         )
 
     def make_parameters(self, batch):
@@ -714,11 +714,8 @@ class Job(models.Model):
         if not self.failed:
             raise Exception(_("Can only restart jobs with status %s") % (Job.FAILED))
         # Create a new batch
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         script = self.batch.script
-        new_batch = Batch(
-            site=self.batch.site, script=script, name=" ".join([script.name, now_str])
-        )
+        new_batch = Batch(site=self.batch.site, script=script, name="")
         new_batch.save()
         for p in self.batch.parameters.all():
             new_p = BatchParameter(
