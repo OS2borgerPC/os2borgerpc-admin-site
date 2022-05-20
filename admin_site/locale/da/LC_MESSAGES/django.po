@@ -303,11 +303,11 @@ msgstr "Løst"
 
 #: system/models.py:923
 msgid "occurred"
-msgstr "tidspunkt"
+msgstr "hændelsestidspunkt"
 
 #: system/models.py:925
 msgid "reported"
-msgstr "tidspunkt modtaget"
+msgstr "modtagelsestidspunkt"
 
 #: system/models.py:932
 msgid "assigned user"
