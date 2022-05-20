@@ -267,6 +267,14 @@ class SecurityEventAdmin(admin.ModelAdmin):
         "pc",
         "status",
     )
+    search_fields = ("pc__site", "problem__name", "pc__name", "status")
+    list_filter = (
+        ("problem__security_script", admin.RelatedOnlyFieldListFilter),
+        ("occurred_time", admin.DateFieldListFilter),
+        ("reported_time", admin.DateFieldListFilter),
+        "status",
+        "pc__site",
+    )
 
     @admin.display(description="Site", ordering="pc__site")
     def get_site(self, obj):
