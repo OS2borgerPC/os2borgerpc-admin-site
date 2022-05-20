@@ -23,10 +23,12 @@
         <div class="row">
             <div class="col">
                 <dl>
-                    <dt>Tid</dt>
+                    <dt>Hændelsestidspunkt</dt>
                     <dd>{{ securityevent.occurred_time }}</dd>
+                    <dt>Modtagelsestidspunkt</dt>
+                    <dd>{{ securityevent.reported_time }}</dd>
                     <dt>Computer</dt>
-                    <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a>, seneste tjek-ind {{ securityevent.pc.last_seen }}</dd>
+                    <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a> - seneste tjek-ind: {{ securityevent.pc.last_seen }}</dd>
                 </dl>
                 
                 {{ form.note|as_crispy_field }}
@@ -39,7 +41,9 @@
                     <dt>Log-output</dt>
                     <dd>
                         <p name="securityevent-log">
-                            <code>{{ securityevent.complete_log }}</code>
+                            <code>
+                                {{ securityevent.complete_log|default:"Intet log-output" }}
+                            </code>
                         </p>        
                     </dd>
                 </dl>

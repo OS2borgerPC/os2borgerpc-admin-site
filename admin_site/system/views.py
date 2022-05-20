@@ -1642,6 +1642,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "problem_name": event.problem.name,
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "reported": event.reported_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
                     "level": SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],
