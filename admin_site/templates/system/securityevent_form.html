@@ -24,9 +24,9 @@
             <div class="col">
                 <dl>
                     <dt>Hændelsestidspunkt</dt>
-                    <dd>{{ securityevent.occurred_time }}</dd>
+                    <dd>{{ securityevent.occurred_time|time:"H:i:s" }}</dd>
                     <dt>Modtagelsestidspunkt</dt>
-                    <dd>{{ securityevent.reported_time }}</dd>
+                    <dd>{{ securityevent.reported_time|time:"H:i:s" }}</dd>
                     <dt>Computer</dt>
                     <dd><a href="/site/{{ site.uid }}/computers/{{ securityevent.pc.uid }}">{{ securityevent.pc.name }}</a> - seneste tjek-ind: {{ securityevent.pc.last_seen }}</dd>
                 </dl>
