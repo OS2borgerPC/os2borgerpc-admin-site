@@ -1,3 +1,15 @@
+Version 5.6.0, May 23, 2022
+---------------------------
+
+New in this version:
+
+- Security events: The log will henceforth be empty: Indicate this 
+  better than a blank space
+- Security events: Show both occurred and received times
+- Security events: /admin/ improvements to security events
+- Fix batch names: Leave empty unless it's an associated script
+- Fix security problem links to its added groups
+
 Version 5.5.1, May 3, 2022
 --------------------------
 
@@ -8,7 +20,7 @@ New in this version:
 - Send script names to clients running them
 
 Version 5.4.2, April 12, 2022
-----------------------------
+-----------------------------
 
 New in this version:
 
