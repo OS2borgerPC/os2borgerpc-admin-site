@@ -859,7 +859,7 @@ class SecurityProblem(models.Model):
     }
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    uid = models.SlugField(verbose_name=_("UID"))
+    uid = models.SlugField(verbose_name=_("UID"), unique=True)
     description = models.TextField(verbose_name=_("description"), blank=True)
     level = models.CharField(
         verbose_name=_("level"), max_length=10, choices=LEVEL_CHOICES, default=HIGH
