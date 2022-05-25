@@ -223,27 +223,42 @@ def push_config_keys(pc_uid, config_dict):
     return True
 
 
-def push_security_events(pc_uid, csv_data):
+# TODO: Log events for SecurityProblems that don't exist
+# + events where the site's computer and rule's computer don't match
+# TODO: If we update all clients and stop using complete_log just
+# stop handling it here completely as it's null=True, blank=True
+def push_security_events(pc_uid, security_events_csv):
     pc = PC.objects.get(uid=pc_uid)
 
-    for data in csv_data:
-        csv_split = data.split(",")
+    for event in security_events_csv:
         try:
-            security_problem = SecurityProblem.objects.get(uid=csv_split[1])
+            event_date, event_uid, event_summary, event_complete_log = event.split(",")
+            try:
+                security_problem = SecurityProblem.objects.get(uid=event_uid)
 
-            new_security_event = SecurityEvent(problem=security_problem, pc=pc)
-            new_security_event.occurred_time = datetime.strptime(
-                csv_split[0], "%Y%m%d%H%M"
-            )
-            new_security_event.reported_time = datetime.now()
-            new_security_event.summary = csv_split[2]
-            new_security_event.complete_log = csv_split[3]
-            new_security_event.save()
+                if not security_problem.site == pc.site:
+                    # Ignore SecurityProblems matching a computer on a different site
+                    continue
+
+                new_security_event = SecurityEvent(problem=security_problem, pc=pc)
+                new_security_event.occurred_time = datetime.strptime(
+                    event_date, "%Y%m%d%H%M"
+                )
+                new_security_event.reported_time = datetime.now()
+                new_security_event.summary = event_summary
+                new_security_event.complete_log = event_complete_log
+                new_security_event.save()
+            except SecurityProblem.DoesNotExist:
+                continue  # Ignore UID's of SecurityProblems that don't exist
         except IndexError:
             return 1
 
         # Notify subscribed users
-        system.utils.notify_users(csv_split, security_problem, pc)
+        system.utils.notify_users(
+            [event_date, event_uid, event_summary, event_complete_log],
+            security_problem,
+            pc,
+        )
 
     return 0
 
