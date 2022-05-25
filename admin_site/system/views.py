@@ -915,7 +915,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class PCsView(SelectionMixin, SiteView):
+class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
 
     template_name = "system/site_pcs.html"
     selection_class = PC
@@ -937,7 +937,7 @@ class PCsView(SelectionMixin, SiteView):
             return super(PCsView, self).render_to_response(context)
 
 
-class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
+class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin):
     template_name = "system/pc_form.html"
     form_class = PCForm
     slug_field = "uid"
@@ -956,7 +956,8 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
 
     def get_object(self, queryset=None):
         try:
-            return PC.objects.get(uid=self.kwargs["pc_uid"])
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
             raise Http404(f"der findes ingen computer med id {self.kwargs['pc_uid']}")
 
