@@ -524,10 +524,12 @@ class ScriptMixin(object):
         # Add the global and local script lists
         self.scripts = Script.objects.filter(
             Q(site=self.site) | Q(site=None), is_security_script=self.is_security
-        ).exclude(site__name="system")
+        )
 
         if "script_pk" in kwargs:
             self.script = get_object_or_404(Script, pk=kwargs["script_pk"])
+            if self.script.site and self.script.site != self.site:
+                raise Http404(f"Du har intet script med id {self.kwargs['script_pk']}")
 
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
@@ -959,7 +961,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
             site_id = Site.objects.get(uid=self.kwargs["site_uid"])
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
-            raise Http404(f"der findes ingen computer med id {self.kwargs['pc_uid']}")
+            raise Http404(f"Du har ingen computer med id {self.kwargs['pc_uid']}")
 
     def get_context_data(self, **kwargs):
         context = super(PCUpdate, self).get_context_data(**kwargs)
@@ -1157,7 +1159,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
         except User.DoesNotExist:
-            raise Http404(f"der findes ingen bruger med id {self.kwargs['username']}")
+            raise Http404(f"Du har ingen bruger med id {self.kwargs['username']}")
         return self.selected_user
 
     def get_context_data(self, **kwargs):
@@ -1302,7 +1304,7 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         try:
             return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
         except PCGroup.DoesNotExist:
-            raise Http404(f"der findes ingen gruppe med id {self.kwargs['group_uid']}")
+            raise Http404(f"Du har ingen gruppe med id {self.kwargs['group_uid']}")
 
     def get_context_data(self, **kwargs):
         context = super(GroupUpdate, self).get_context_data(**kwargs)
@@ -1479,9 +1481,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                 uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
             )
         except SecurityProblem.DoesNotExist:
-            raise Http404(
-                f"der findes ingen sikkerhedsregel med id {self.kwargs['uid']}"
-            )
+            raise Http404(f"Du har ingen sikkerhedsregel med id {self.kwargs['uid']}")
 
     def get_context_data(self, **kwargs):
 
