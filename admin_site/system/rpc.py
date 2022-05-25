@@ -226,32 +226,36 @@ def push_config_keys(pc_uid, config_dict):
 # TODO: Log events for SecurityProblems that don't exist
 # + events where the site's computer and rule's computer don't match
 # TODO: If we update all clients and stop using complete_log just
-# stop handling it here completely as it's null=True, blank=True
-def push_security_events(pc_uid, security_events_csv):
+# stop handling it here completely as it's null=True
+def push_security_events(pc_uid, events_csv):
     pc = PC.objects.get(uid=pc_uid)
 
-    for event in security_events_csv:
+    for event in events_csv:
         try:
             event_date, event_uid, event_summary, event_complete_log = event.split(",")
-            try:
-                security_problem = SecurityProblem.objects.get(uid=event_uid)
-
-                if not security_problem.site == pc.site:
-                    # Ignore SecurityProblems matching a computer on a different site
-                    continue
-
-                new_security_event = SecurityEvent(problem=security_problem, pc=pc)
-                new_security_event.occurred_time = datetime.strptime(
-                    event_date, "%Y%m%d%H%M"
-                )
-                new_security_event.reported_time = datetime.now()
-                new_security_event.summary = event_summary
-                new_security_event.complete_log = event_complete_log
-                new_security_event.save()
-            except SecurityProblem.DoesNotExist:
-                continue  # Ignore UID's of SecurityProblems that don't exist
         except IndexError:
             return 1
+
+        security_problem = SecurityProblem.objects.filter(uid=event_uid).first()
+
+        if not security_problem:
+            # Ignore UID's of SecurityProblems that don't exist
+            continue
+
+        if not security_problem.site == pc.site:
+            # Ignore SecurityProblems matching a computer on a different site
+            continue
+
+        now = datetime.now()
+        event_occurred_time_object = datetime.strptime(event_date, "%Y%m%d%H%M")
+        SecurityEvent.objects.create(
+            problem=security_problem,
+            pc=pc,
+            occurred_time=event_occurred_time_object,
+            reported_time=now,
+            summary=event_summary,
+            complete_log=event_complete_log,
+        )
 
         # Notify subscribed users
         system.utils.notify_users(
