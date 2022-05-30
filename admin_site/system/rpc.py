@@ -237,7 +237,8 @@ def push_security_events(pc_uid, events_csv):
             event_date, event_uid, event_summary, event_complete_log = event.split(",")
         except ValueError:
             logger.exception(
-                "Security event generated ValueError", extra={"event": event, "pc": pc.uid}
+                "Security event generated ValueError",
+                extra={"event": event, "pc": pc.uid},
             )
             return 1
 
@@ -245,7 +246,11 @@ def push_security_events(pc_uid, events_csv):
 
         if not security_problem:
             # Ignore UID's of SecurityProblems that don't exist
-            logger.error("Security problem with UID %s could not be found", event_uid, extra={"event": event, "pc": pc.uid})
+            logger.error(
+                "Security problem with UID %s could not be found",
+                event_uid,
+                extra={"event": event, "pc": pc.uid},
+            )
             continue
 
         if not security_problem.site == pc.site:
