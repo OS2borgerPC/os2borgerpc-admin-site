@@ -248,7 +248,7 @@ def push_security_events(pc_uid, events_csv):
 
         now = datetime.now()
         event_occurred_time_object = datetime.strptime(event_date, "%Y%m%d%H%M")
-        SecurityEvent.objects.create(
+        security_event = SecurityEvent.objects.create(
             problem=security_problem,
             pc=pc,
             occurred_time=event_occurred_time_object,
@@ -258,7 +258,7 @@ def push_security_events(pc_uid, events_csv):
 
         # Notify subscribed users
         system.utils.notify_users(
-            [event_date, event_uid, event_summary, event_complete_log],
+            security_event,
             security_problem,
             pc,
         )
