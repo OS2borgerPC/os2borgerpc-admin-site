@@ -254,7 +254,6 @@ def push_security_events(pc_uid, events_csv):
             occurred_time=event_occurred_time_object,
             reported_time=now,
             summary=event_summary,
-            complete_log=event_complete_log,
         )
 
         # Notify subscribed users
