@@ -219,7 +219,7 @@ class PCGroup(models.Model):
     name = models.CharField(verbose_name=_("name"), max_length=255)
     uid = models.CharField(verbose_name=_("id"), max_length=255)
     description = models.TextField(
-        verbose_name=_("description"), max_length=1024, null=True, blank=True
+        verbose_name=_("description"), max_length=1024, blank=True
     )
     site = models.ForeignKey(Site, related_name="groups", on_delete=models.CASCADE)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
@@ -932,8 +932,8 @@ class SecurityEvent(models.Model):
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(verbose_name=_("reported"))
     pc = models.ForeignKey(PC, on_delete=models.CASCADE, related_name="security_events")
-    summary = models.CharField(max_length=4096, null=False, blank=False)
-    complete_log = models.TextField(null=True, blank=True)
+    summary = models.CharField(max_length=4096, blank=False)
+    complete_log = models.TextField(blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
     assigned_user = models.ForeignKey(
         User,
@@ -942,7 +942,7 @@ class SecurityEvent(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
     )
-    note = models.TextField(null=True, blank=True)
+    note = models.TextField(blank=True)
 
     def __str__(self):
         return "{0}: {1}".format(self.problem.name, self.id)
