@@ -14,6 +14,8 @@ from .models import Citizen
 
 from .utils import get_citizen_login_validator
 
+logger = logging.getLogger(__name__)
+
 
 def register_new_computer(mac, name, distribution, site, configuration):
     """Register a new computer with the admin system - after registration, the
@@ -234,16 +236,25 @@ def push_security_events(pc_uid, events_csv):
         try:
             event_date, event_uid, event_summary, event_complete_log = event.split(",")
         except IndexError:
+            logger.exception(
+                "Security event generated IndexError", extra={"event": event}
+            )
             return 1
 
         security_problem = SecurityProblem.objects.filter(uid=event_uid).first()
 
         if not security_problem:
             # Ignore UID's of SecurityProblems that don't exist
+            logger.error("Security problem with UID %s could not be found", event_uid)
             continue
 
         if not security_problem.site == pc.site:
             # Ignore SecurityProblems matching a computer on a different site
+            logger.error(
+                "Security problem with UID %s does not match site of PC with UID %s",
+                security_problem.uid,
+                pc.uid,
+            )
             continue
 
         now = datetime.now()
@@ -275,7 +286,6 @@ def citizen_login(username, password, site):
         r > 0: The user is allowed r minutes of login time.
     """
 
-    logger = logging.getLogger(__name__)
     time_allowed = 0
     try:
         site = Site.objects.get(uid=site)
