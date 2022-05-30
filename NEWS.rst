@@ -1,3 +1,20 @@
+Version 5.6.0, May 30, 2022
+---------------------------
+
+New in this version:
+
+- Security events: The log will henceforth be empty: Indicate this 
+  better than a blank space
+- Security events: Show both occurred and received times
+- Security events: /admin/ improvements to security events
+- Fix batch names: Leave empty unless it's an associated script
+- Fix security problem links to its added groups
+- Security issue: Deny access to viewing computers of other sites
+- Security issue: Deny access to viewing local scripts of other sites
+- push_security_events: ignore nonsensical events and log them
+- Make securityproblem UID globally unique
+- Remove null from TextFields and CharFields
+
 Version 5.5.1, May 3, 2022
 --------------------------
 
@@ -8,7 +25,7 @@ New in this version:
 - Send script names to clients running them
 
 Version 5.4.2, April 12, 2022
-----------------------------
+-----------------------------
 
 New in this version:
 

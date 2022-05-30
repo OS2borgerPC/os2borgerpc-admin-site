@@ -524,10 +524,12 @@ class ScriptMixin(object):
         # Add the global and local script lists
         self.scripts = Script.objects.filter(
             Q(site=self.site) | Q(site=None), is_security_script=self.is_security
-        ).exclude(site__name="system")
+        )
 
         if "script_pk" in kwargs:
             self.script = get_object_or_404(Script, pk=kwargs["script_pk"])
+            if self.script.site and self.script.site != self.site:
+                raise Http404(f"Du har intet script med id {self.kwargs['script_pk']}")
 
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
@@ -915,7 +917,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class PCsView(SelectionMixin, SiteView):
+class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
 
     template_name = "system/site_pcs.html"
     selection_class = PC
@@ -937,7 +939,7 @@ class PCsView(SelectionMixin, SiteView):
             return super(PCsView, self).render_to_response(context)
 
 
-class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
+class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin):
     template_name = "system/pc_form.html"
     form_class = PCForm
     slug_field = "uid"
@@ -956,9 +958,10 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin):
 
     def get_object(self, queryset=None):
         try:
-            return PC.objects.get(uid=self.kwargs["pc_uid"])
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
-            raise Http404(f"der findes ingen computer med id {self.kwargs['pc_uid']}")
+            raise Http404(f"Du har ingen computer med id {self.kwargs['pc_uid']}")
 
     def get_context_data(self, **kwargs):
         context = super(PCUpdate, self).get_context_data(**kwargs)
@@ -1156,7 +1159,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
         except User.DoesNotExist:
-            raise Http404(f"der findes ingen bruger med id {self.kwargs['username']}")
+            raise Http404(f"Du har ingen bruger med id {self.kwargs['username']}")
         return self.selected_user
 
     def get_context_data(self, **kwargs):
@@ -1301,7 +1304,7 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         try:
             return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
         except PCGroup.DoesNotExist:
-            raise Http404(f"der findes ingen gruppe med id {self.kwargs['group_uid']}")
+            raise Http404(f"Du har ingen gruppe med id {self.kwargs['group_uid']}")
 
     def get_context_data(self, **kwargs):
         context = super(GroupUpdate, self).get_context_data(**kwargs)
@@ -1478,9 +1481,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                 uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
             )
         except SecurityProblem.DoesNotExist:
-            raise Http404(
-                f"der findes ingen sikkerhedsregel med id {self.kwargs['uid']}"
-            )
+            raise Http404(f"Du har ingen sikkerhedsregel med id {self.kwargs['uid']}")
 
     def get_context_data(self, **kwargs):
 
@@ -1642,6 +1643,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "problem_name": event.problem.name,
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "reported": event.reported_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
                     "level": SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],

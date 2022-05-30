@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
 
-def notify_users(data, security_problem, pc):
+def notify_users(security_event, security_problem, pc):
     """Notify users about security event."""
 
     logger = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ def notify_users(data, security_problem, pc):
         email_list.append(User.objects.get(id=user.id).email)
 
     body = f"Beskrivelse af sikkerhedsadvarsel: {security_problem.description}\n"
-    body += f"Kort resume af data fra log filen : {data[2]}"
+    body += f"Kort resume af data fra log filen : {security_event.summary}"
     try:
         message = EmailMessage(
             f"Sikkerhedsadvarsel for PC : {pc.name}."

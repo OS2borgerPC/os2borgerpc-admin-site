@@ -14,6 +14,8 @@ from .models import Citizen
 
 from .utils import get_citizen_login_validator
 
+logger = logging.getLogger(__name__)
+
 
 def register_new_computer(mac, name, distribution, site, configuration):
     """Register a new computer with the admin system - after registration, the
@@ -223,27 +225,64 @@ def push_config_keys(pc_uid, config_dict):
     return True
 
 
-def push_security_events(pc_uid, csv_data):
+# TODO: Log events for SecurityProblems that don't exist
+# + events where the site's computer and rule's computer don't match
+# TODO: If we update all clients and stop using complete_log just
+# stop handling it here completely as it's null=True
+def push_security_events(pc_uid, events_csv):
     pc = PC.objects.get(uid=pc_uid)
 
-    for data in csv_data:
-        csv_split = data.split(",")
+    for event in events_csv:
         try:
-            security_problem = SecurityProblem.objects.get(uid=csv_split[1])
-
-            new_security_event = SecurityEvent(problem=security_problem, pc=pc)
-            new_security_event.occurred_time = datetime.strptime(
-                csv_split[0], "%Y%m%d%H%M"
+            event_date, event_uid, event_summary, event_complete_log = event.split(",")
+        except ValueError:
+            logger.exception(
+                "Security event generated ValueError, Event: %s, PC UID: %s",
+                event,
+                pc.uid,
             )
-            new_security_event.reported_time = datetime.now()
-            new_security_event.summary = csv_split[2]
-            new_security_event.complete_log = csv_split[3]
-            new_security_event.save()
-        except IndexError:
             return 1
 
+        security_problem = SecurityProblem.objects.filter(uid=event_uid).first()
+
+        if not security_problem:
+            # Ignore UID's of SecurityProblems that don't exist
+            logger.error(
+                "Security problem with UID %s could not be found, Event: %s, PC UID %s",
+                event,
+                pc.uid,
+            )
+            continue
+
+        if not security_problem.site == pc.site:
+            # Ignore SecurityProblems matching a computer on a different site
+            logger.error(
+                (
+                    "Security problem with UID %s does not "
+                    "match site of PC, Event: %s, PC UID %s"
+                ),
+                security_problem.uid,
+                event,
+                pc.uid,
+            )
+            continue
+
+        now = datetime.now()
+        event_occurred_time_object = datetime.strptime(event_date, "%Y%m%d%H%M")
+        security_event = SecurityEvent.objects.create(
+            problem=security_problem,
+            pc=pc,
+            occurred_time=event_occurred_time_object,
+            reported_time=now,
+            summary=event_summary,
+        )
+
         # Notify subscribed users
-        system.utils.notify_users(csv_split, security_problem, pc)
+        system.utils.notify_users(
+            security_event,
+            security_problem,
+            pc,
+        )
 
     return 0
 
@@ -257,7 +296,6 @@ def citizen_login(username, password, site):
         r > 0: The user is allowed r minutes of login time.
     """
 
-    logger = logging.getLogger(__name__)
     time_allowed = 0
     try:
         site = Site.objects.get(uid=site)

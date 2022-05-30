@@ -219,7 +219,7 @@ class PCGroup(models.Model):
     name = models.CharField(verbose_name=_("name"), max_length=255)
     uid = models.CharField(verbose_name=_("id"), max_length=255)
     description = models.TextField(
-        verbose_name=_("description"), max_length=1024, null=True, blank=True
+        verbose_name=_("description"), max_length=1024, blank=True
     )
     site = models.ForeignKey(Site, related_name="groups", on_delete=models.CASCADE)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
@@ -491,7 +491,7 @@ class Script(AuditModelMixin):
         return self.name
 
     def run_on(self, site, pc_list, *args, user):
-        batch = Batch(site=site, script=self, name=self.id)
+        batch = Batch(site=site, script=self, name="")
         batch.save()
 
         # Add parameters
@@ -559,7 +559,7 @@ class AssociatedScript(models.Model):
         return Batch(
             site=self.group.site,
             script=self.script,
-            name=", ".join([str(self.script.id), self.group.name]),
+            name=f"{self.group.name}",
         )
 
     def make_parameters(self, batch):
@@ -714,11 +714,8 @@ class Job(models.Model):
         if not self.failed:
             raise Exception(_("Can only restart jobs with status %s") % (Job.FAILED))
         # Create a new batch
-        now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         script = self.batch.script
-        new_batch = Batch(
-            site=self.batch.site, script=script, name=" ".join([script.name, now_str])
-        )
+        new_batch = Batch(site=self.batch.site, script=script, name="")
         new_batch.save()
         for p in self.batch.parameters.all():
             new_p = BatchParameter(
@@ -862,7 +859,7 @@ class SecurityProblem(models.Model):
     }
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    uid = models.SlugField(verbose_name=_("UID"))
+    uid = models.SlugField(verbose_name=_("UID"), unique=True)
     description = models.TextField(verbose_name=_("description"), blank=True)
     level = models.CharField(
         verbose_name=_("level"), max_length=10, choices=LEVEL_CHOICES, default=HIGH
@@ -935,8 +932,8 @@ class SecurityEvent(models.Model):
     # The time the problem was submitted to the system
     reported_time = models.DateTimeField(verbose_name=_("reported"))
     pc = models.ForeignKey(PC, on_delete=models.CASCADE, related_name="security_events")
-    summary = models.CharField(max_length=4096, null=False, blank=False)
-    complete_log = models.TextField(null=True, blank=True)
+    summary = models.CharField(max_length=4096, blank=False)
+    complete_log = models.TextField(blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW)
     assigned_user = models.ForeignKey(
         User,
@@ -945,7 +942,7 @@ class SecurityEvent(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
     )
-    note = models.TextField(null=True, blank=True)
+    note = models.TextField(blank=True)
 
     def __str__(self):
         return "{0}: {1}".format(self.problem.name, self.id)
