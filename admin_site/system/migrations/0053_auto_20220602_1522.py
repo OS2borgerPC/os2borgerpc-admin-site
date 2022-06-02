@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="pcgroup",
             name="uid",
-            field=models.CharField(max_length=255, unique=True, verbose_name="id"),
+            field=models.CharField(max_length=255, unique=True),
         ),
     ]
