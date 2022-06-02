@@ -1,10 +1,11 @@
+from hashlib import md5
+
 from django.contrib import admin
 from django.db.models import Count
 from django.utils import timezone
 from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
-from hashlib import md5
 
 from system.models import (
     Configuration,
@@ -218,6 +219,10 @@ class PCAdmin(admin.ModelAdmin):
         "last_seen",
         "created",
     )
+    list_filter = (
+        "site",
+        "is_activated",
+    )
     search_fields = ("name", "uid")
     readonly_fields = ("created",)
 
@@ -242,7 +247,16 @@ class PCAdmin(admin.ModelAdmin):
 
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "status", "user", "pc", "created", "started", "finished")
+    list_display = (
+        "__str__",
+        "status",
+        "user",
+        "pc",
+        "created",
+        "started",
+        "finished",
+    )
+    list_filter = ("status",)
     search_fields = ("batch__name", "user__username", "pc__name")
     readonly_fields = ("created", "started", "finished")
 
