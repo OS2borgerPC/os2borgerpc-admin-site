@@ -66,7 +66,8 @@ class PCInline(admin.TabularInline):
 
 
 class PCGroupAdmin(admin.ModelAdmin):
-    list_display = ["site", "name"]
+    list_display = ("name", "uid", "site")
+    list_filter = ("site",)
     inlines = [PCInline]
 
 
