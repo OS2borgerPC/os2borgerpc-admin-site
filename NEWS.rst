@@ -1,3 +1,11 @@
+Version 5.6.2, June 2, 2022
+---------------------------
+
+New in this version:
+
+- Make PCGroup uid unique
+- Make PCGroupAdmin nicer
+
 Version 5.6.1, June 2, 2022
 ---------------------------
 
