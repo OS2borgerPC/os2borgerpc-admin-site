@@ -9,7 +9,8 @@ from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext
 from django.contrib.auth.models import User
 from django.urls import reverse
 
@@ -1666,7 +1667,11 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     fields = ["assigned_user", "status", "note"]
 
     def get_object(self, queryset=None):
-        return SecurityEvent.objects.get(id=self.kwargs["pk"])
+        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        try:
+            return SecurityEvent.objects.get(id=self.kwargs["pk"], pc__site=site)
+        except SecurityEvent.DoesNotExist:
+            raise Http404(gettext("Security Event could not be found"))
 
     def get_context_data(self, **kwargs):
         context = super(SecurityEventUpdate, self).get_context_data(**kwargs)
