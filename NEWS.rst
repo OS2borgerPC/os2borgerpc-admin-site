@@ -1,3 +1,10 @@
+Version 5.6.1, June 2, 2022
+---------------------------
+
+New in this version:
+
+- Test release
+
 Version 5.6.0, May 30, 2022
 ---------------------------
 
