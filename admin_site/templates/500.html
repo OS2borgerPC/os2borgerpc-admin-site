@@ -1,0 +1,31 @@
+{% extends 'sitebase.html' %}
+
+{% block header_title %}
+  500 - Serverfejl
+{% endblock %}
+
+{% block page_type_class %}
+actionpage
+{% endblock %}
+
+{% block header_class %}
+detailpage
+{% endblock %}
+
+{% block globalnav %}
+<nav id="left-menu" class="nav nav-pills utils-global">
+  <h2 class="text-light">500 - Serverfejl</h2>
+  <a href="/" class="nav-link link-light d-flex align-items-center">
+    <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
+    Gå tilbage til OS2borgerPC-admin
+  </a>
+</nav>
+{% endblock %}
+
+{% block specific_content %}
+<div class="p-4">
+	<p>Der er sket en serverfejl og vi er blevet notificeret om fejlen.</p>
+  <p>Mvh.<br/>
+  <strong>OS2BorgerPC-Teamet</strong></p>
+</div>
+{% endblock %}
