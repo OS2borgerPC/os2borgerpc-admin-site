@@ -217,7 +217,7 @@ class PCGroup(models.Model):
     """Groups of PCs. Each PC may be in zero or many groups."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    uid = models.CharField(verbose_name=_("id"), max_length=255)
+    uid = models.CharField(max_length=255, unique=True)
     description = models.TextField(
         verbose_name=_("description"), max_length=1024, blank=True
     )
