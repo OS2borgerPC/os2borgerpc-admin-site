@@ -434,6 +434,8 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "pc_name": job.pc.name,
                     "batch_name": job.batch.name,
                     "user": "Magenta" if job.user.is_superuser else job.user.username,
+                    # for admin users the user_url is a redirect to our job docs
+                    # explaining scripts run as "Magenta"
                     "user_url": reverse("doc", kwargs={"name": "jobs"})
                     if job.user.is_superuser
                     else reverse("user", args=[site.uid, job.user.username]),
