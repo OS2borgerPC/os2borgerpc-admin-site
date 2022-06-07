@@ -26,9 +26,9 @@ class Command(BaseCommand):
             $ python manage.py run_maintenance_script <script> <site> --pcs
     Examples:
 
-            $ python manage.py run_maintenance_script 1 magenta --pcs 5 6 7 8
-            $ python manage.py run_maintenance_script 2 magenta --sites 1 2
-            $ python manage.py run_maintenance_script 3 magenta --groups 1 2
+        $ python manage.py run_maintenance_script shg 1 magenta --pcs 5 6 7 8
+        $ python manage.py run_maintenance_script shg 2 magenta --sites 1 2
+        $ python manage.py run_maintenance_script shg 3 magenta --groups 1 2
 
     """
 
@@ -52,7 +52,7 @@ class Command(BaseCommand):
         script_site_uid = options["script_site"]
         username = options["username"]
 
-        user = User.objects.filter(is_superuser=True, userame=username).first()
+        user = User.objects.filter(is_superuser=True, username=username).first()
         if not user:
             raise CommandError(f"User with username: {username} does not exist")
 
@@ -79,8 +79,8 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Are you sure you want to run {script} "
-                f"with {script_site} for {pcs.count()} PCs? (Y/y)"
+                f"Do you want to run {script} on site {script_site}"
+                f" as user {username} for {pcs.count()} PCs? (Y/y for yes)"
             )
         )
         confirmation = input()
