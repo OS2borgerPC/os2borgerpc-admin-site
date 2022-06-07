@@ -6,7 +6,7 @@ from django.core.management.base import (
     CommandError,
 )
 from django.db import transaction
-
+from django.contrib.auth import get_user_model
 from system.models import (
     Site,
     Script,
@@ -15,6 +15,8 @@ from system.models import (
     PCGroup,
     PC,
 )
+
+User = get_user_model()
 
 
 class Command(BaseCommand):
