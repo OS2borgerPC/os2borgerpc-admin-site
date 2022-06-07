@@ -1,43 +1,82 @@
 [
 {
     "model": "account.userprofile",
-    "pk": 34,
+    "pk": 1,
     "fields": {
         "user": 35
     }
 },
 {
     "model": "account.userprofile",
-    "pk": 35,
+    "pk": 2,
     "fields": {
         "user": 36
     }
 },
 {
+    "model": "account.userprofile",
+    "pk": 3,
+    "fields": {
+        "user": 37
+    }
+},
+{
+    "model": "account.userprofile",
+    "pk": 4,
+    "fields": {
+        "user": 38
+    }
+},
+{
+    "model": "account.userprofile",
+    "pk": 5,
+    "fields": {
+        "user": 39
+    }
+},
+{
     "model": "account.sitemembership",
-    "pk": 24,
+    "pk": 1,
     "fields": {
         "site_user_type": 2,
         "site": 1,
-        "user_profile": 34
+        "user_profile": 1
     }
 },
 {
     "model": "account.sitemembership",
-    "pk": 25,
+    "pk": 2,
     "fields": {
         "site_user_type": 1,
         "site": 1,
-        "user_profile": 35
+        "user_profile": 2 
     }
 },
 {
     "model": "account.sitemembership",
-    "pk": 26,
+    "pk": 3,
+    "fields": {
+        "site_user_type": 1,
+        "site": 1,
+        "user_profile": 3
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 4,
     "fields": {
         "site_user_type": 1,
         "site": 9,
-        "user_profile": 35
+        "user_profile": 4
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 5,
+    "fields": {
+        "site_user_type": 2,
+        "site": 9,
+        "user_profile": 5
     }
 }
 ]
