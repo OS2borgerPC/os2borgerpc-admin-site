@@ -22,8 +22,11 @@ User = get_user_model()
 class Command(BaseCommand):
     """
     Run a script on pcs, group or site as maintenance jobs.
+
+    NOTE: Only scripts without arguments are supported for now.
+
     Form:
-            $ python manage.py run_maintenance_script <script> <site> --pcs
+        $ python manage.py run_maintenance_script <username> <script> <site> --pcs
     Examples:
 
         $ python manage.py run_maintenance_script shg 1 magenta --pcs 5 6 7 8
