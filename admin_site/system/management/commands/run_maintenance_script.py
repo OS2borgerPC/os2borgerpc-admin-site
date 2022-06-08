@@ -23,15 +23,19 @@ class Command(BaseCommand):
     """
     Run a script on pcs, group or site as maintenance jobs.
 
-    NOTE: Only scripts without arguments are supported for now.
+    Notes: 
+    Only scripts without arguments are supported for now.
+    Sites and Groups arguments take UID's while the PC argument takes ID's.
+    The script does not validate that a given group, site or PC exists. In case one doesn't match, it's silently ignored.
 
     Form:
-        $ python manage.py run_maintenance_script <username> <script> <site> --pcs
+            $ python manage.py run_maintenance_script <script_uid_to_run> <batch_site_uid> {--pcs <target_pc_ids...> | --groups <target_group_uids...>| --sites <target_site_uids...>}
     Examples:
 
-        $ python manage.py run_maintenance_script shg 1 magenta --pcs 5 6 7 8
-        $ python manage.py run_maintenance_script shg 2 magenta --sites 1 2
-        $ python manage.py run_maintenance_script shg 3 magenta --groups 1 2
+        $ python manage.py run_maintenance_script shg 1 magenta --pcs 1 4
+        $ python manage.py run_maintenance_script jabbi 3 magenta-test --groups group1
+        $ python manage.py run_maintenance_script gitte 2 magenta --sites magenta mag test
+
 
     """
 
