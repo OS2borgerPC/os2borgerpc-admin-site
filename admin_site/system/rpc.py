@@ -146,22 +146,19 @@ def get_instructions(pc_uid, update_data=None):
     # security scripts covering groups the pc is a member of.
     security_problems = SecurityProblem.objects.filter(
         Q(site=pc.site, alert_groups__isnull=True) | Q(alert_groups__in=pc.pc_groups)
-    )
-    security_scripts = Script.objects.filter(
-        security_problems__in=security_problems, is_security_script=True
-    )
+    ).select_related("security_script")
 
     scripts = []
 
-    for script in security_scripts:
+    for security_problem in security_problems:
         # inject security problem uid into the script code.
-        script = {
-            "name": script.name,
-            "executable_code": script.executable_code.read()
+        script_dict = {
+            "name": security_problem.security_script.name,
+            "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
             .replace("%SECURITY_PROBLEM_UID%", securityproblem.uid),
         }
-        scripts.append(script)
+        scripts.append(script_dict)
 
     result = {
         "security_scripts": scripts,
