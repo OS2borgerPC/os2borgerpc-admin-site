@@ -24,8 +24,6 @@ parser.add_argument('HOST_PATH_TO_MEDIA_FILES',
                     help="The directory to the media files on the host.")
 parser.add_argument('CONTAINER_PATH_TO_DJANGO',
                     help="The path to the django project within the container")
-parser.add_argument('PYTHON_VERSION',
-                    help="The python version of the django project.")
 args = parser.parse_args()
 if args.dry_run:
     DRY_RUN = True
@@ -43,17 +41,11 @@ else:
 logging.basicConfig()
 
 # GET A LIST FILES IN THE DB
-# Copy in our custom cleanup file that only prints files in the DB
-subprocess.call(
-    (f"docker cp db_files.py {args.CONTAINER}:"
-     f"/usr/local/lib/python{args.PYTHON_VERSION}"
-     "/site-packages/django_extensions/management/commands/db_files.py"),
-    shell=True)
 
 # Convert bytes to a UTF-8 string to a list to a set
 # Convert between the path inside the container to the path outside
 referenced = set(subprocess.check_output(
-    f"docker exec -it {args.CONTAINER} ./manage.py db_files", shell=True)
+    f"docker exec -it {args.CONTAINER} ./manage.py print_db_files", shell=True)
     .decode('utf-8')
     .replace(args.CONTAINER_PATH_TO_DJANGO, args.HOST_PATH_TO_MEDIA_FILES)
     .splitlines())

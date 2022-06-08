@@ -957,7 +957,7 @@
     "model": "auth.user",
     "pk": 36,
     "fields": {
-        "password": "pbkdf2_sha256$260000$z8rYoYVV8tph25xGNrh2Tv$JDb6cToHlVmf3hsIuc4NTBWTFMLwkP+E4mEXp2dtXLA=",
+        "password": "pbkdf2_sha256$260000$SIRvs2xVZfaq6J5dTwprEA$utC5ILCA6UQAQtFIMFZNrKMFkoXajCUabC7ZAO3JLYA=",
         "last_login": "2022-04-01T15:51:10.748",
         "is_superuser": false,
         "username": "magenta-test",
@@ -967,6 +967,60 @@
         "is_staff": false,
         "is_active": true,
         "date_joined": "2022-01-26T15:17:37",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 37,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$SIRvs2xVZfaq6J5dTwprEA$utC5ILCA6UQAQtFIMFZNrKMFkoXajCUabC7ZAO3JLYA=",
+        "last_login": "2022-04-01T15:51:10.748",
+        "is_superuser": false,
+        "username": "magenta2",
+        "first_name": "",
+        "last_name": "",
+        "email": "test@user02.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-03-26T15:07:33",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 38,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$SIRvs2xVZfaq6J5dTwprEA$utC5ILCA6UQAQtFIMFZNrKMFkoXajCUabC7ZAO3JLYA=",
+        "last_login": "2022-04-01T15:51:10.748",
+        "is_superuser": true,
+        "username": "magenta3",
+        "first_name": "",
+        "last_name": "",
+        "email": "test@user02.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-03-26T15:07:33",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 39,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$SIRvs2xVZfaq6J5dTwprEA$utC5ILCA6UQAQtFIMFZNrKMFkoXajCUabC7ZAO3JLYA=",
+        "last_login": "2022-04-01T15:51:10.748",
+        "is_superuser": false,
+        "username": "magenta4",
+        "first_name": "",
+        "last_name": "",
+        "email": "test@user03.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-03-26T15:07:33",
         "groups": [],
         "user_permissions": []
     }
