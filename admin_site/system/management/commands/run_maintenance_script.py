@@ -23,7 +23,7 @@ class Command(BaseCommand):
     """
     Run a script on pcs, group or site as maintenance jobs.
 
-    Notes: 
+    Notes:
     Only scripts without arguments are supported for now.
     Sites and Groups arguments take UID's while the PC argument takes ID's.
     The script does not validate that a given group, site or PC exists. In case one doesn't match, it's silently ignored.
