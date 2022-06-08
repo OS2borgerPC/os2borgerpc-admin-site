@@ -172,18 +172,6 @@ def get_instructions(pc_uid, update_data=None):
     return result
 
 
-def insert_security_problem_uid(securityproblem):
-    script = Script.objects.get(security_problems=securityproblem)
-    code = script.executable_code.read().decode("utf8")
-    code = str(code).replace("%SECURITY_PROBLEM_UID%", securityproblem.uid)
-    s = {
-        "name": securityproblem.uid,
-        "executable_code": code,
-        "is_security_script": script.is_security_script,
-    }
-    return s
-
-
 def get_proxy_setup(pc_uid):
     pc = PC.objects.get(uid=pc_uid)
     if not pc.is_activated:
