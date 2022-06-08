@@ -1,3 +1,13 @@
+Version 5.6.3, June 8, 2022
+---------------------------
+
+New in this version:
+
+- Add maintenance script support (scripts run as superuser)
+- Add a database index on PC uid field
+- Move print_db_files management command to the correct place
+- Remove flake8 from linters
+
 Version 5.6.2, June 2, 2022
 ---------------------------
 
