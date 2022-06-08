@@ -53,7 +53,6 @@ Lint Python:
     script:
         - cd admin_site
         - black --check --diff --exclude=migrations .
-        - flake8 . --exclude=migrations
 
 Lint Dockerfiles:
       <<: *lint-default
