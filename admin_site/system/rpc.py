@@ -160,7 +160,6 @@ def get_instructions(pc_uid, update_data=None):
             "executable_code": script.executable_code.read()
             .decode("utf8")
             .replace("%SECURITY_PROBLEM_UID%", securityproblem.uid),
-            "is_security_script": script.is_security_script,
         }
         scripts.append(script)
 
