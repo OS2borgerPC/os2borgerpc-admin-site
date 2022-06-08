@@ -34,12 +34,14 @@ $(function(){
                 }
                 var script_link = '<a href="' + this.script_url + '">' + this.script_name + '</a>'
                 var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + '</a>'
+                var user_link = '<a href="' + this.user_url + '">' + this.user + '</a>'
                 var item = $(BibOS.expandTemplate(
                     'job-entry',
                     $.extend(this, {
                         'jobinfobutton': info_button,
                         'script_link' : script_link,
-                        'pc_link' : pc_link
+                        'pc_link' : pc_link,
+                        'user_link': user_link
                     })
                 ))
                 item.find('input:checkbox').on("click", function() {
