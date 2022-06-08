@@ -154,6 +154,7 @@ def get_instructions(pc_uid, update_data=None):
     scripts = []
 
     for script in security_scripts:
+        # inject security problem uid into the script code.
         script = {
             "name": script.name,
             "executable_code": script.executable_code.read()
