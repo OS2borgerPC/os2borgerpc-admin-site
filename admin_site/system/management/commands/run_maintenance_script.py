@@ -29,7 +29,7 @@ class Command(BaseCommand):
     The script does not validate that a given group, site or PC exists. In case one doesn't match, it's silently ignored.
 
     Form:
-            $ python manage.py run_maintenance_script <script_uid_to_run> <batch_site_uid> {--pcs <target_pc_ids...> | --groups <target_group_uids...>| --sites <target_site_uids...>}
+            $ python manage.py run_maintenance_script <user_username> <script_uid_to_run> <batch_site_uid> {--pcs <target_pc_ids...> | --groups <target_group_uids...>| --sites <target_site_uids...>}
     Examples:
 
         $ python manage.py run_maintenance_script shg 1 magenta --pcs 1 4
