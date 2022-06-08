@@ -154,14 +154,14 @@ def get_instructions(pc_uid, update_data=None):
     scripts = []
 
     for script in security_scripts:
-        s = {
+        script = {
             "name": script.name,
             "executable_code": script.executable_code.read()
             .decode("utf8")
             .replace("%SECURITY_PROBLEM_UID%", securityproblem.uid),
             "is_security_script": script.is_security_script,
         }
-        scripts.append(s)
+        scripts.append(script)
 
     result = {
         "security_scripts": scripts,
