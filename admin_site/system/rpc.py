@@ -5,14 +5,15 @@ import system.proxyconf
 import system.utils
 import hashlib
 import logging
-
 from datetime import datetime
 
-from .models import PC, Site, Configuration, ConfigurationEntry
-from .models import Job, Script, SecurityProblem, SecurityEvent
-from .models import Citizen
+from django.db.models import Q
 
-from .utils import get_citizen_login_validator
+from system.models import PC, Site, Configuration, ConfigurationEntry
+from system.models import Job, Script, SecurityProblem, SecurityEvent
+from system.models import Citizen
+
+from system.utils import get_citizen_login_validator
 
 logger = logging.getLogger(__name__)
 
@@ -140,23 +141,15 @@ def get_instructions(pc_uid, update_data=None):
         jobs.append(job.as_instruction)
 
     security_objects = []
-    # First check for security scripts covering the site
-    site_security_problems = SecurityProblem.objects.filter(site_id=pc.site).exclude(
-        alert_groups__isnull=False
+
+    # Check for security scripts covering the site and
+    # security scripts covering groups the pc is a member of.
+    site_security_problems = SecurityProblem.objects.filter(
+        Q(site=pc.site, alert_groups__isnull=True) | Q(alert_groups__in=pc.pc_groups)
     )
 
-    for security_problem in site_security_problems:
-        security_objects.append(insert_security_problem_uid(security_problem))
-
-    # Then check for security scripts covering groups the pc is a member of.
-    pc_groups = pc.pc_groups.all()
-    if len(pc_groups) > 0:
-
-        for group in pc_groups:
-            security_problems = SecurityProblem.objects.filter(alert_groups=group.id)
-            if len(security_problems) > 0:
-                for problem in security_problems:
-                    security_objects.append(insert_security_problem_uid(problem))
+    for problem in security_problems:
+        security_objects.append(insert_security_problem_uid(problem))
 
     scripts = []
 
