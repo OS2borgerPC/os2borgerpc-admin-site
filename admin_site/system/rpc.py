@@ -152,7 +152,7 @@ def get_instructions(pc_uid, update_data=None):
     for security_problem in security_problems:
         # inject security problem uid into the script code.
         script_dict = {
-            "name": security_problem.security_script.name,
+            "name": security_problem.uid,
             "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
             .replace("%SECURITY_PROBLEM_UID%", security_problem.uid),
