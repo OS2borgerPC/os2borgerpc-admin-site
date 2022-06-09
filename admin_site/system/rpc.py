@@ -10,7 +10,7 @@ from datetime import datetime
 from django.db.models import Q
 
 from system.models import PC, Site, Configuration, ConfigurationEntry
-from system.models import Job, Script, SecurityProblem, SecurityEvent
+from system.models import Job, SecurityProblem, SecurityEvent
 from system.models import Citizen
 
 from system.utils import get_citizen_login_validator
@@ -139,8 +139,6 @@ def get_instructions(pc_uid, update_data=None):
         job.status = Job.SUBMITTED
         job.save()
         jobs.append(job.as_instruction)
-
-    security_objects = []
 
     # Check for security scripts covering the site and
     # security scripts covering groups the pc is a member of.
