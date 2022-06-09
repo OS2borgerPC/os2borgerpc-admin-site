@@ -143,7 +143,8 @@ def get_instructions(pc_uid, update_data=None):
     # Check for security scripts covering the site and
     # security scripts covering groups the pc is a member of.
     security_problems = SecurityProblem.objects.filter(
-        Q(site=pc.site, alert_groups__isnull=True) | Q(alert_groups__in=pc.pc_groups)
+        Q(site=pc.site, alert_groups__isnull=True)
+        | Q(alert_groups__in=pc.pc_groups.all())
     ).select_related("security_script")
 
     scripts = []
@@ -154,7 +155,7 @@ def get_instructions(pc_uid, update_data=None):
             "name": security_problem.security_script.name,
             "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
-            .replace("%SECURITY_PROBLEM_UID%", securityproblem.uid),
+            .replace("%SECURITY_PROBLEM_UID%", security_problem.uid),
         }
         scripts.append(script_dict)
 
