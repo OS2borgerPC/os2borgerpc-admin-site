@@ -5,14 +5,15 @@ import system.proxyconf
 import system.utils
 import hashlib
 import logging
-
 from datetime import datetime
 
-from .models import PC, Site, Configuration, ConfigurationEntry
-from .models import Job, Script, SecurityProblem, SecurityEvent
-from .models import Citizen
+from django.db.models import Q
 
-from .utils import get_citizen_login_validator
+from system.models import PC, Site, Configuration, ConfigurationEntry
+from system.models import Job, SecurityProblem, SecurityEvent
+from system.models import Citizen
+
+from system.utils import get_citizen_login_validator
 
 logger = logging.getLogger(__name__)
 
@@ -131,7 +132,7 @@ def get_instructions(pc_uid, update_data=None):
 
     if not pc.is_activated:
         # Fail silently
-        return ([], False)
+        return {}
 
     jobs = []
     for job in pc.jobs.filter(status=Job.NEW).order_by("pk"):
@@ -139,51 +140,32 @@ def get_instructions(pc_uid, update_data=None):
         job.save()
         jobs.append(job.as_instruction)
 
-    security_objects = []
-    # First check for security scripts covering the site
-    site_security_problems = SecurityProblem.objects.filter(site_id=pc.site).exclude(
-        alert_groups__isnull=False
-    )
-
-    for security_problem in site_security_problems:
-        security_objects.append(insert_security_problem_uid(security_problem))
-
-    # Then check for security scripts covering groups the pc is a member of.
-    pc_groups = pc.pc_groups.all()
-    if len(pc_groups) > 0:
-
-        for group in pc_groups:
-            security_problems = SecurityProblem.objects.filter(alert_groups=group.id)
-            if len(security_problems) > 0:
-                for problem in security_problems:
-                    security_objects.append(insert_security_problem_uid(problem))
+    # Check for security scripts covering the site and
+    # security scripts covering groups the pc is a member of.
+    security_problems = SecurityProblem.objects.filter(
+        Q(site=pc.site, alert_groups__isnull=True)
+        | Q(alert_groups__in=pc.pc_groups.all())
+    ).select_related("security_script")
 
     scripts = []
 
-    for script in security_objects:
-        if script["is_security_script"] == 1:
-            s = {"name": script["name"], "executable_code": script["executable_code"]}
-            scripts.append(s)
+    for security_problem in security_problems:
+        # inject security problem uid into the script code.
+        script_dict = {
+            "name": security_problem.uid,
+            "executable_code": security_problem.security_script.executable_code.read()
+            .decode("utf8")
+            .replace("%SECURITY_PROBLEM_UID%", security_problem.uid),
+        }
+        scripts.append(script_dict)
 
-    result = {
+    instructions = {
         "security_scripts": scripts,
         "jobs": jobs,
         "configuration": pc.get_full_config(),
     }
 
-    return result
-
-
-def insert_security_problem_uid(securityproblem):
-    script = Script.objects.get(security_problems=securityproblem)
-    code = script.executable_code.read().decode("utf8")
-    code = str(code).replace("%SECURITY_PROBLEM_UID%", securityproblem.uid)
-    s = {
-        "name": securityproblem.uid,
-        "executable_code": code,
-        "is_security_script": script.is_security_script,
-    }
-    return s
+    return instructions
 
 
 def get_proxy_setup(pc_uid):
