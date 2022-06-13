@@ -159,13 +159,13 @@ def get_instructions(pc_uid, update_data=None):
         }
         scripts.append(script_dict)
 
-    result = {
+    instructions = {
         "security_scripts": scripts,
         "jobs": jobs,
         "configuration": pc.get_full_config(),
     }
 
-    return result
+    return instructions
 
 
 def get_proxy_setup(pc_uid):
