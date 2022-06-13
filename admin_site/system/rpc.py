@@ -132,7 +132,7 @@ def get_instructions(pc_uid, update_data=None):
 
     if not pc.is_activated:
         # Fail silently
-        return ([], False)
+        return {}
 
     jobs = []
     for job in pc.jobs.filter(status=Job.NEW).order_by("pk"):
