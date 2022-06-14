@@ -541,7 +541,7 @@ class Batch(models.Model):
     site = models.ForeignKey(Site, related_name="batches", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.script} - {self.site}"
 
 
 class AssociatedScript(models.Model):

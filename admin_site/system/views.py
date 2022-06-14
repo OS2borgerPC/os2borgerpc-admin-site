@@ -340,7 +340,7 @@ class JobsView(SiteView):
         return context
 
 
-class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
+class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSiteMixin):
     paginate_by = 20
     http_method_names = ["get"]
     VALID_ORDER_BY = []
@@ -433,7 +433,9 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "label": job.status_label,
                     "pc_name": job.pc.name,
                     "batch_name": job.batch.name,
-                    "user": "Magenta" if job.user.is_superuser else job.user.username,
+                    "user": "Magenta"
+                    if job.user and job.user.is_superuser
+                    else job.user.username,
                     # for admin users the user_url is a redirect to our job docs
                     # explaining scripts run as "Magenta"
                     "user_url": reverse("doc", kwargs={"name": "jobs"})
