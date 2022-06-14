@@ -128,15 +128,14 @@
               checked: (type === 'checkbox' && t.val() === 'True'),
               class: (type !== 'checkbox') ? 'form-control' : 'form-control form-check-input',
             })
-
-            if (newElement.attr('type') == "file") {
+            if (type == "file") {
               /* In principle, it'd be nice (for display purposes) to copy the
                  FileList from the hidden input into the modal dialog -- but
                  this confuses Firefox 65 enormously, and when we try to copy
                  the FileList back again, it gets cleared! */
 //              newElement[0].files = t[0].files
             } else {
-              if (newElement.attr('type') == 'checkbox') {
+              if (type == 'checkbox') {
                 newElement[0].checked = (t.val() === 'True') ? true : false
               }
               newElement[0].value = t.val()
@@ -208,12 +207,21 @@
             } else if (t.attr('type') == 'checkbox') {
               inputField.val((this.checked) ? 'True' : 'False')
               visibleValueField[0].innerHTML = '<input type="checkbox" disabled ' + ((this.checked) ? 'checked>' : '>')
-            } else if (t.attr('type') == 'password') {
-              inputField.val(t.val())
-              visibleValueField.text('•••••')
             } else if (t.val().trim().length != 0) {
-              inputField.val(t.val())
-              visibleValueField.text(t.val())
+              if (t.attr('type') == 'password') {
+                inputField.val(t.val())
+                visibleValueField.text('•••••')
+                
+                //This workaround prevents the browser from prompting to save a password 
+                t[0].setAttribute("type", "text")
+                t[0].setAttribute("style", "display: none;")
+                const clonedElement = t[0].cloneNode()
+                t[0].parentElement.appendChild(clonedElement)
+                t[0].remove()
+              } else {
+                inputField.val(t.val())
+                visibleValueField.text(t.val())
+              }
             }
           })
           $('#editpolicyscriptdialog').modal('hide')

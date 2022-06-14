@@ -231,6 +231,7 @@ class ParameterForm(forms.Form):
                         attrs={
                             "readonly": "",
                             "onfocus": "this.removeAttribute('readonly')",
+                            "class": "password-input",
                         }
                     )
                 )
