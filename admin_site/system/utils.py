@@ -3,6 +3,7 @@
 import requests
 import logging
 import traceback
+import re
 
 from importlib import import_module
 
@@ -64,9 +65,9 @@ def cicero_validate(loaner_number, pincode, agency_id):
     will return something falsey like None, 0 or ''.
     """
     logger = logging.getLogger(__name__)
-    try:
-        pincode = int(pincode)
-    except ValueError:
+
+    regex_match = re.fullmatch(f"^\d+$", pincode)
+    if not regex_match:
         # logger.warning("Pincode must be a number.")
         return 0
     if not agency_id:
