@@ -1,3 +1,13 @@
+Version 5.6.4, June 21, 2022
+---------------------------
+
+New in this version:
+
+- Add password input field for scripts
+- Refactor rpc.get_instructions for increased readability and performance
+- Fix Cicero pincode input to allow leading zeroes
+- Small fixes to Fixtures, Django admin and Job view
+
 Version 5.6.3, June 8, 2022
 ---------------------------
 
