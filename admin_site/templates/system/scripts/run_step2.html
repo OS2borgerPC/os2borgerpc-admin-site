@@ -37,6 +37,26 @@
   </button>
   <script>
     window.scriptStep2Submit = function() {
+      
+      //Checking if any of the parameters are passwords
+      for (const elem of document.getElementsByClassName("password-input")) {
+        /*
+        Cloning the input element is a workaround to prevent the browser to not
+        prompt to save a password input. As far as I can see if an input element 
+        has ever been type: password the prompt appears
+        -ENA 
+        */
+        elem.setAttribute("style", "display: none;")
+        elem.setAttribute("type", "text")
+        const clonedElem = elem.cloneNode()
+
+        //Appending the newly cloned input to the form 
+        elem.parentNode.appendChild(clonedElem)
+        
+        //Remove the original input element entirely
+        elem.remove()
+      }
+
       document.getElementById('run_script_form').submit()
     }
   </script>

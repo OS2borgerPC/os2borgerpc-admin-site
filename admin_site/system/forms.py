@@ -224,6 +224,17 @@ class ParameterForm(forms.Form):
             elif inp.value_type == Input.TIME:
                 field_data["widget"] = forms.TimeInput(attrs={"type": "time"})
                 self.fields[name] = forms.CharField(**field_data)
+            elif inp.value_type == Input.PASSWORD:
+                self.fields[name] = forms.CharField(
+                    **field_data,
+                    widget=forms.PasswordInput(
+                        attrs={
+                            "readonly": "",
+                            "onfocus": "this.removeAttribute('readonly')",
+                            "class": "password-input",
+                        }
+                    )
+                )
             else:
                 self.fields[name] = forms.CharField(**field_data)
 

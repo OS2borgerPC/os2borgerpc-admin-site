@@ -743,6 +743,7 @@ class Input(models.Model):
     FILE = "FILE"
     BOOLEAN = "BOOLEAN"
     TIME = "TIME"
+    PASSWORD = "PASSWORD"
 
     VALUE_CHOICES = (
         (STRING, _("String")),
@@ -751,6 +752,7 @@ class Input(models.Model):
         (FILE, _("File")),
         (BOOLEAN, _("Boolean")),
         (TIME, _("Time")),
+        (PASSWORD, _("Password")),
     )
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
