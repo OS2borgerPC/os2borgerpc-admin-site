@@ -273,6 +273,13 @@
     }
 },
 {
+    "model": "system.configuration",
+    "pk": 63,
+    "fields": {
+        "name": "magenta_mfm-bpc-64882837_da8310ac196539d8c0ec43b14edbb141"
+    }
+},
+{
     "model": "system.configurationentry",
     "pk": 1,
     "fields": {
@@ -3387,6 +3394,132 @@
     }
 },
 {
+    "model": "system.configurationentry",
+    "pk": 502,
+    "fields": {
+        "key": "_os2borgerpc.client_version",
+        "value": "1.3.0",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 503,
+    "fields": {
+        "key": "_os_name",
+        "value": "Ubuntu",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 504,
+    "fields": {
+        "key": "_os_release",
+        "value": "20.04",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 505,
+    "fields": {
+        "key": "admin_url",
+        "value": "http://10.0.2.2:9999",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 506,
+    "fields": {
+        "key": "distribution",
+        "value": "os2borgerpc20.04",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 507,
+    "fields": {
+        "key": "hostname",
+        "value": "mfm-bpc-64882837",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 508,
+    "fields": {
+        "key": "job_timeout",
+        "value": "900",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 509,
+    "fields": {
+        "key": "mac",
+        "value": "08:00:27:b7:59:c6",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 510,
+    "fields": {
+        "key": "os2_product",
+        "value": "os2borgerpc",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 511,
+    "fields": {
+        "key": "os2borgerpc_version",
+        "value": "3.1.1",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 512,
+    "fields": {
+        "key": "security_updates",
+        "value": "0",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 513,
+    "fields": {
+        "key": "site",
+        "value": "magenta",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 514,
+    "fields": {
+        "key": "uid",
+        "value": "da8310ac196539d8c0ec43b14edbb141",
+        "owner_configuration": 63
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 515,
+    "fields": {
+        "key": "updates",
+        "value": "43",
+        "owner_configuration": 63
+    }
+},
+{
     "model": "system.site",
     "pk": 1,
     "fields": {
@@ -3394,6 +3527,7 @@
         "uid": "magenta",
         "configuration": 1,
         "paid_for_access_until": "2022-04-02",
+        "created": null,
         "isil": "",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00"
@@ -3407,6 +3541,7 @@
         "uid": "magenta-test",
         "configuration": 60,
         "paid_for_access_until": "2025-01-17",
+        "created": null,
         "isil": "",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00"
@@ -3420,6 +3555,7 @@
         "uid": "site3",
         "configuration": 61,
         "paid_for_access_until": "2024-04-01",
+        "created": null,
         "isil": "",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00"
@@ -3535,8 +3671,7 @@
         "last_seen": "2021-01-21T09:05:02",
         "location": "",
         "pc_groups": [
-            10,
-            17
+            10
         ]
     }
 },
@@ -3557,7 +3692,7 @@
         "location": "beskrivelse 2",
         "pc_groups": [
             10,
-            17,
+            9,
             3
         ]
     }
@@ -3577,9 +3712,7 @@
         "created": "2021-01-29T12:52:58.793",
         "last_seen": "2021-01-29T14:14:32",
         "location": "",
-        "pc_groups": [
-            17
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3597,9 +3730,7 @@
         "created": "2021-08-25T10:01:37.352",
         "last_seen": "2021-08-25T15:30:08",
         "location": "",
-        "pc_groups": [
-            17
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3617,9 +3748,7 @@
         "created": "2021-09-11T13:33:02.398",
         "last_seen": null,
         "location": "",
-        "pc_groups": [
-            17
-        ]
+        "pc_groups": []
     }
 },
 {
@@ -3658,7 +3787,6 @@
         "last_seen": "2021-12-01T11:35:04",
         "location": "",
         "pc_groups": [
-            17,
             9
         ]
     }
@@ -3719,7 +3847,8 @@
         "last_seen": "2022-01-14T16:55:06",
         "location": "",
         "pc_groups": [
-            17
+            17,
+            9
         ]
     }
 },
@@ -3739,7 +3868,7 @@
         "last_seen": "2021-12-02T15:05:05",
         "location": "",
         "pc_groups": [
-            17
+            9
         ]
     }
 },
@@ -3782,6 +3911,24 @@
     }
 },
 {
+    "model": "system.pc",
+    "pk": 32,
+    "fields": {
+        "mac": "08:00:27:b7:59:c6",
+        "name": "mfm-bpc-64882837",
+        "uid": "da8310ac196539d8c0ec43b14edbb141",
+        "description": "",
+        "configuration": 63,
+        "site": 1,
+        "is_activated": false,
+        "is_update_required": false,
+        "created": "2022-06-09T14:49:46.018",
+        "last_seen": "2022-06-09T14:57:01.515",
+        "location": "",
+        "pc_groups": []
+    }
+},
+{
     "model": "system.scripttag",
     "pk": 1,
     "fields": {
@@ -3814,13 +3961,13 @@
     "pk": 1,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-07T10:24:34.194",
+        "modified": "2022-06-09T14:51:21.784",
         "user_created": "",
-        "user_modified": "",
-        "name": "Detect sudo event",
+        "user_modified": "magenta",
+        "name": "Detekter sudo-kørsel",
         "description": "Email: john@doe.comDette script alarmerer, hvis der bliver forsøgt at køre en sudo kommando på maskinen.\r\n\r\n \r\nUdarbejdet af john@doe.com",
         "site": null,
-        "executable_code": "script_uploads/sudoEvent_p1Nm05j.py",
+        "executable_code": "script_uploads/sudo_event.py",
         "is_security_script": true,
         "maintained_by_magenta": false,
         "tags": []
@@ -3831,13 +3978,13 @@
     "pk": 2,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-07T10:24:20.988",
+        "modified": "2022-06-09T14:51:07.103",
         "user_created": "",
-        "user_modified": "",
-        "name": "Detect new keyboard event",
+        "user_modified": "magenta",
+        "name": "Detekter nyt keyboard",
         "description": "Keyboard detect script som forsøger at finde keyboard inputs helt tilbage fra sidste gang systemet blev tjekket.",
         "site": null,
-        "executable_code": "script_uploads/keyboardEvent_3doAonF.py",
+        "executable_code": "script_uploads/keyboard_event.py",
         "is_security_script": true,
         "maintained_by_magenta": false,
         "tags": []
@@ -4730,6 +4877,23 @@
     }
 },
 {
+    "model": "system.script",
+    "pk": 81,
+    "fields": {
+        "created": "2022-06-09T14:51:56.693",
+        "modified": "2022-06-09T14:51:56.704",
+        "user_created": "magenta",
+        "user_modified": "",
+        "name": "Detekter låst/udløbet bruger",
+        "description": "f",
+        "site": null,
+        "executable_code": "script_uploads/detect_user_expired_event.py",
+        "is_security_script": true,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
     "model": "system.batch",
     "pk": 1,
     "fields": {
@@ -4991,12 +5155,273 @@
     }
 },
 {
+    "model": "system.batch",
+    "pk": 30,
+    "fields": {
+        "name": "",
+        "script": 77,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 31,
+    "fields": {
+        "name": "",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 32,
+    "fields": {
+        "name": "",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 33,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 34,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 35,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 36,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 37,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 38,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 39,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 40,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 41,
+    "fields": {
+        "name": "",
+        "script": 76,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 42,
+    "fields": {
+        "name": "Gruppe4",
+        "script": 8,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 43,
+    "fields": {
+        "name": "Gruppe4",
+        "script": 9,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 44,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 45,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 46,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 47,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 48,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 49,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 50,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 51,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 52,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 53,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 54,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 55,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 56,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 57,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 58,
+    "fields": {
+        "name": "Gruppe2",
+        "script": 3,
+        "site": 1
+    }
+},
+{
     "model": "system.associatedscript",
     "pk": 6,
     "fields": {
         "group": 9,
         "script": 8,
-        "position": 1
+        "position": 0
     }
 },
 {
@@ -5005,7 +5430,7 @@
     "fields": {
         "group": 9,
         "script": 9,
-        "position": 2
+        "position": 1
     }
 },
 {
@@ -5021,63 +5446,63 @@
     "model": "system.associatedscript",
     "pk": 12,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 8,
-        "position": 0
+        "position": 3
     }
 },
 {
     "model": "system.associatedscript",
     "pk": 13,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 6,
-        "position": 1
+        "position": 4
     }
 },
 {
     "model": "system.associatedscript",
     "pk": 14,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 7,
-        "position": 2
+        "position": 5
     }
 },
 {
     "model": "system.associatedscript",
     "pk": 15,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 10,
-        "position": 3
+        "position": 6
     }
 },
 {
     "model": "system.associatedscript",
     "pk": 16,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 9,
-        "position": 4
+        "position": 7
     }
 },
 {
     "model": "system.associatedscript",
     "pk": 17,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 27,
-        "position": 5
+        "position": 8
     }
 },
 {
     "model": "system.associatedscript",
     "pk": 18,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 31,
-        "position": 6
+        "position": 9
     }
 },
 {
@@ -5235,6 +5660,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 37,
@@ -5248,6 +5674,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 38,
@@ -5261,6 +5688,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 38,
@@ -5274,6 +5702,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 38,
@@ -5287,6 +5716,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 39,
@@ -5300,6 +5730,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 39,
@@ -5313,6 +5744,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 39,
@@ -5326,6 +5758,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 39,
@@ -5339,6 +5772,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5352,6 +5786,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 37,
@@ -5365,6 +5800,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5378,6 +5814,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5391,6 +5828,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5404,6 +5842,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5417,6 +5856,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5430,6 +5870,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5443,6 +5884,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5456,6 +5898,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5469,6 +5912,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5482,6 +5926,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5495,6 +5940,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5508,6 +5954,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5521,6 +5968,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5534,6 +5982,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5547,6 +5996,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5560,6 +6010,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5573,6 +6024,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5586,6 +6038,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5599,6 +6052,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5612,6 +6066,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5625,6 +6080,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5638,6 +6094,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5651,6 +6108,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5664,6 +6122,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5677,6 +6136,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5690,6 +6150,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5703,6 +6164,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5716,6 +6178,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5729,6 +6192,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5742,6 +6206,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5755,6 +6220,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5768,6 +6234,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5781,6 +6248,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5794,6 +6262,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5807,6 +6276,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5820,6 +6290,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5833,6 +6304,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5846,6 +6318,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5859,6 +6332,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5872,6 +6346,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5885,6 +6360,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5898,6 +6374,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5911,6 +6388,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5924,6 +6402,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5937,6 +6416,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5950,6 +6430,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5963,6 +6444,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5976,6 +6458,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -5989,6 +6472,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6002,6 +6486,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6015,6 +6500,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6028,6 +6514,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6041,6 +6528,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6054,6 +6542,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6067,6 +6556,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6080,6 +6570,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6093,6 +6584,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6106,6 +6598,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6119,6 +6612,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6132,6 +6626,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6145,6 +6640,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6158,6 +6654,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6171,6 +6668,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6184,6 +6682,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6197,6 +6696,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6210,6 +6710,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6223,6 +6724,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6236,6 +6738,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6249,6 +6752,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6262,6 +6766,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6275,6 +6780,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6288,6 +6794,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6301,6 +6808,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6314,6 +6822,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6327,6 +6836,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6340,6 +6850,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6353,6 +6864,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6366,6 +6878,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6379,6 +6892,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6392,6 +6906,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6405,6 +6920,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6418,6 +6934,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6431,6 +6948,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6444,6 +6962,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6457,6 +6976,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6470,6 +6990,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6483,6 +7004,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6496,6 +7018,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6509,6 +7032,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6522,6 +7046,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6535,6 +7060,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6548,6 +7074,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6561,6 +7088,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6574,6 +7102,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6587,6 +7116,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6600,6 +7130,7 @@
     "fields": {
         "status": "FAILED",
         "log_output": "oh no",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 38,
@@ -6613,6 +7144,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 37,
@@ -6626,6 +7158,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 39,
@@ -6639,6 +7172,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6652,6 +7186,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 39,
@@ -6665,6 +7200,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 35,
@@ -6678,6 +7214,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 38,
@@ -6691,6 +7228,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 38,
@@ -6704,6 +7242,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "testing",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 35,
@@ -6717,6 +7256,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 38,
@@ -6730,6 +7270,7 @@
     "fields": {
         "status": "SUBMITTED",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 37,
@@ -6743,6 +7284,7 @@
     "fields": {
         "status": "SUBMITTED",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 38,
@@ -6756,6 +7298,7 @@
     "fields": {
         "status": "DONE",
         "log_output": "test",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 39,
@@ -6769,6 +7312,7 @@
     "fields": {
         "status": "DONE",
         "log_output": "test",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 37,
@@ -6782,6 +7326,7 @@
     "fields": {
         "status": "FAILED",
         "log_output": "test",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 39,
@@ -6795,6 +7340,7 @@
     "fields": {
         "status": "SUBMITTED",
         "log_output": "",
+        "created": null,
         "started": null,
         "finished": null,
         "user": 38,
@@ -6808,6 +7354,7 @@
     "fields": {
         "status": "DONE",
         "log_output": "",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 37,
@@ -6821,6 +7368,7 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 37,
@@ -6834,11 +7382,1594 @@
     "fields": {
         "status": "NEW",
         "log_output": "",
+        "created": null,
         "started": "2020-11-30T18:15:43.997",
         "finished": "2020-11-30T18:15:45.997",
         "user": 35,
         "batch": 21,
         "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 126,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:03:21.425",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 30,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 127,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:04:38.636",
+        "started": null,
+        "finished": null,
+        "user": 37,
+        "batch": 31,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 128,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.155",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 8
+    }
+},
+{
+    "model": "system.job",
+    "pk": 129,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.157",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 130,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.159",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 18
+    }
+},
+{
+    "model": "system.job",
+    "pk": 131,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.161",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 132,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.162",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 12
+    }
+},
+{
+    "model": "system.job",
+    "pk": 133,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.164",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 16
+    }
+},
+{
+    "model": "system.job",
+    "pk": 134,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.166",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 135,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.167",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 136,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.168",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 137,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.169",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 138,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.170",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 139,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.171",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 140,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T15:45:40.172",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 32,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 141,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T16:04:24.315",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 39,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 142,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-07T16:04:24.319",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 39,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 143,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:55:31.369",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 42,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 144,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:55:31.370",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 42,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 145,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:55:31.371",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 42,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 146,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:55:31.379",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 43,
+        "pc": 9
+    }
+},
+{
+    "model": "system.job",
+    "pk": 147,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:55:31.380",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 43,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 148,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:55:31.381",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 43,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 149,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.656",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 44,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 150,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.657",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 44,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 151,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.657",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 44,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 152,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.658",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 44,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 153,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.658",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 44,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 154,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.659",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 44,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 155,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.661",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 45,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 156,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.662",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 45,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 157,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.663",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 45,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 158,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.663",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 45,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 159,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.664",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 45,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 160,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.664",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 45,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 161,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.667",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 46,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 162,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.667",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 46,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 163,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.668",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 46,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 164,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.668",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 46,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 165,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.669",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 46,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 166,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.669",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 46,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 167,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.672",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 47,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 168,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.672",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 47,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 169,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.672",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 47,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 170,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.673",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 47,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 171,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.673",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 47,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 172,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.674",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 47,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 173,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.676",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 48,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 174,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.677",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 48,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 175,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.677",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 48,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 176,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.678",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 48,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 177,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.678",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 48,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 178,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.679",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 48,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 179,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.681",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 49,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 180,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.682",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 49,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 181,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.682",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 49,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 182,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.683",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 49,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 183,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.683",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 49,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 184,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.684",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 49,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 185,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.686",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 50,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 186,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.687",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 50,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 187,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.687",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 50,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 188,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.688",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 50,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 189,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.688",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 50,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 190,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.689",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 50,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 191,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.691",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 51,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 192,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.691",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 51,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 193,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.692",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 51,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 194,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.692",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 51,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 195,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.693",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 51,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 196,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.693",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 51,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 197,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.696",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 52,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 198,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.697",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 52,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 199,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.697",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 52,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 200,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.698",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 52,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 201,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.698",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 52,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 202,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.699",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 52,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 203,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.701",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 53,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 204,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.701",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 53,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 205,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.702",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 53,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 206,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.702",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 53,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 207,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.703",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 53,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 208,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.703",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 53,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 209,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.705",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 54,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 210,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.705",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 54,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 211,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.706",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 54,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 212,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.706",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 54,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 213,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.707",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 54,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 214,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.707",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 54,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 215,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.709",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 55,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 216,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.709",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 55,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 217,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.710",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 55,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 218,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.710",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 55,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 219,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.711",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 55,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 220,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.711",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 55,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 221,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.714",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 56,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 222,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.715",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 56,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 223,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.716",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 56,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 224,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.716",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 56,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 225,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.717",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 56,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 226,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.718",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 56,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 227,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.720",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 57,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 228,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.721",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 57,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 229,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.721",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 57,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 230,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.722",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 57,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 231,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.722",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 57,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 232,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.723",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 57,
+        "pc": 31
+    }
+},
+{
+    "model": "system.job",
+    "pk": 233,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.725",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 58,
+        "pc": 1
+    }
+},
+{
+    "model": "system.job",
+    "pk": 234,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.725",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 58,
+        "pc": 22
+    }
+},
+{
+    "model": "system.job",
+    "pk": 235,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.726",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 58,
+        "pc": 24
+    }
+},
+{
+    "model": "system.job",
+    "pk": 236,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.726",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 58,
+        "pc": 25
+    }
+},
+{
+    "model": "system.job",
+    "pk": 237,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.727",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 58,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 238,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2022-06-09T14:58:25.727",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 58,
+        "pc": 31
     }
 },
 {
@@ -7410,6 +9541,26 @@
     }
 },
 {
+    "model": "system.batchparameter",
+    "pk": 5,
+    "fields": {
+        "string_value": "sfs",
+        "file_value": "",
+        "input": 68,
+        "batch": 30
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 6,
+    "fields": {
+        "string_value": "kk.dk",
+        "file_value": "",
+        "input": 2,
+        "batch": 43
+    }
+},
+{
     "model": "system.associatedscriptparameter",
     "pk": 5,
     "fields": {
@@ -7450,7 +9601,7 @@
         "site": 1,
         "security_script": 56,
         "alert_groups": [
-            3
+             1
         ],
         "alert_users": []
     }
@@ -7460,13 +9611,13 @@
     "pk": 4,
     "fields": {
         "name": "Sudo-advarsel",
-        "uid": "sa",
+        "uid": "sudo",
         "description": "a",
         "level": "High",
         "site": 1,
         "security_script": 1,
         "alert_groups": [
-            17
+            10
         ],
         "alert_users": []
     }
@@ -7476,13 +9627,29 @@
     "pk": 5,
     "fields": {
         "name": "Keyboard-advarsel",
-        "uid": "ka",
+        "uid": "keyboard",
         "description": "",
         "level": "High",
         "site": 1,
         "security_script": 2,
         "alert_groups": [
-            17
+            10
+        ],
+        "alert_users": []
+    }
+},
+{
+    "model": "system.securityproblem",
+    "pk": 6,
+    "fields": {
+        "name": "Detekter låst/udløbet bruger",
+        "uid": "locked",
+        "description": "abc",
+        "level": "High",
+        "site": 1,
+        "security_script": 81,
+        "alert_groups": [
+            10
         ],
         "alert_users": []
     }
