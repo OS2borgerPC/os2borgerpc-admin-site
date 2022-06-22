@@ -63,13 +63,18 @@ class ConfigurationAdmin(admin.ModelAdmin):
 
 class PCInline(admin.TabularInline):
     model = PC.pc_groups.through
-    extra = 3
+    extra = 0
+
+
+class AssociatedScriptInline(admin.TabularInline):
+    model = AssociatedScript
+    extra = 0
 
 
 class PCGroupAdmin(admin.ModelAdmin):
     list_display = ("name", "uid", "site")
     list_filter = ("site",)
-    inlines = [PCInline]
+    inlines = [PCInline, AssociatedScriptInline]
 
 
 class JobInline(admin.TabularInline):
