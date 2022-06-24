@@ -27,7 +27,6 @@ services:
             - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
         depends_on:
             - db
-            - postfix
         ports:
             - 9999:9999
         stdin_open: true
@@ -38,12 +37,5 @@ services:
             - dev-environment/db.env
         volumes:
             - postgres-data:/var/lib/postgresql/data
-    postfix:
-        image: catatnight/postfix
-        hostname: postfix
-        domainname: os2borgerpctest.magenta.example
-        environment:
-          - maildomain=magenta.example
-          - smtp_user=bpc:bpc
 volumes:
     postgres-data:
