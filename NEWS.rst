@@ -1,3 +1,11 @@
+Version 5.6.5, June 28, 2022
+---------------------------
+
+New in this version:
+
+- Allow pushing security events with different date formats (for example with or without seconds.)
+- Make associated scripts easily editable in Django Admin
+
 Version 5.6.4, June 21, 2022
 ---------------------------
 
