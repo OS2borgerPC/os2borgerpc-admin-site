@@ -20,14 +20,13 @@ services:
             target: os2borgerpc
         command:
             sh -c "python manage.py initialize_database &&
-                   gunicorn -b 0.0.0.0:9999 --reload --access-logfile - --timeout 0 os2borgerpc_admin.wsgi"
+                   gunicorn --reload --timeout 0 --config /code/docker/gunicorn-settings.py os2borgerpc_admin.wsgi"
         volumes:
             - .:/code/
             - ./dev-environment/dev-settings.ini:/user-settings.ini
             - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
         depends_on:
             - db
-            - postfix
         ports:
             - 9999:9999
         stdin_open: true
@@ -38,12 +37,5 @@ services:
             - dev-environment/db.env
         volumes:
             - postgres-data:/var/lib/postgresql/data
-    postfix:
-        image: catatnight/postfix
-        hostname: postfix
-        domainname: os2borgerpctest.magenta.example
-        environment:
-          - maildomain=magenta.example
-          - smtp_user=bpc:bpc
 volumes:
     postgres-data:
