@@ -324,11 +324,6 @@ class PCGroup(models.Model):
 
     class Meta:
         ordering = ["name"]
-        constraints = [
-            models.UniqueConstraint(
-                fields=["uid", "site"], name="unique_uid_per_group"
-            ),
-        ]
 
 
 class PC(models.Model):
@@ -336,7 +331,9 @@ class PC(models.Model):
 
     mac = models.CharField(verbose_name=_("MAC"), max_length=255, blank=True)
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    uid = models.CharField(verbose_name=_("UID"), max_length=255, db_index=True)
+    uid = models.CharField(
+        verbose_name=_("UID"), max_length=255, db_index=True, unique=True
+    )
     description = models.CharField(
         verbose_name=_("description"), max_length=1024, blank=True
     )
