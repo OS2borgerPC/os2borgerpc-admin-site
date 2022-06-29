@@ -81,11 +81,11 @@ class Command(BaseCommand):
         site_pcs_dict = defaultdict(list)
         for pc in pcs.order_by("site"):
             site_pcs_dict[pc.site].append(pc)
-        sites_print = [s.name for s in site_pcs_dict.keys()]
-        
+
         self.stdout.write(
             self.style.SUCCESS(
-                f"Do you want to run {script} on sites: {sites_print} "
+                f"Do you want to run {script} on sites: "
+                f"{', '.join([s.name for s in site_pcs_dict.keys()])}"
                 f" as user {username} for {pcs.count()} PCs? (Y/y for yes)"
             )
         )
