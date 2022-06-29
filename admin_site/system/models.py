@@ -324,6 +324,11 @@ class PCGroup(models.Model):
 
     class Meta:
         ordering = ["name"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["uid", "site"], name="unique_uid_per_group"
+            ),
+        ]
 
 
 class PC(models.Model):
