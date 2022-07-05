@@ -1030,7 +1030,10 @@ class Changelog(models.Model):
     def get_tags(self):
         # This returns a string of all tags associated with the object, seperated with commas
         if self.tags:
-            return ", ".join(str(tag) for tag in self.tags.all())
+            t = ""
+            for tag in self.tags.all():
+                t += f"<span class='tag badge bg-primary text-white'> {tag} </span>"
+            return t
         else:
             return None
 

@@ -6,6 +6,7 @@ Nyheder
 {% endblock %}
 
 {% block stylesheets %}
+    <link href="/static/css/changelog.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/foundation.min.css">
 {% endblock %}
 
@@ -19,26 +20,48 @@ Nyheder
 
 {% block specific_content %}
 
-<div class="changelog-container">
-    <strong class="text-muted">KATEGORIER</strong>
-    <form id="changelogsearch-filterform" name="filterform" action="./" method="post">
-        <input type="hidden" name="page" value="1">
-        <div id="changelogsearch-tag-selectors">
-            <button class="btn btn-lg tag-filter-btn" id="Alle" type="button" name="" onclick="BibOS.ChangelogList.reset()">Alle</button>
-            {% for tag in tag_choices %}
-                <button class="btn btn-lg tag-filter-btn" id="{{ tag.name }}" type="button" name="{{ tag.pk }}" onclick="BibOS.ChangelogList.search(this)">{{ tag.name }}</button>
-            {% endfor %}
-        </div>
-    </form>
-    
+<div id="changelog-container">
+    <header>
+        <strong id="tags-title" class="text-muted">Nyhedskategorier</strong>
+
+        <form id="changelogsearch-filterform" name="filterform" action="./" method="post">
+            <input type="hidden" name="page" value="1">
+            <div id="changelogsearch-tag-selectors">
+                <button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="Alle" type="button" name="" onclick="BibOS.ChangelogList.reset()">Alle</button>
+                {% for tag in tag_choices %}
+                    <button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="{{ tag.name }}" type="button" name="{{ tag.pk }}" onclick="BibOS.ChangelogList.search(this)">{{ tag.name }}</button>
+                {% endfor %}
+            </div>
+        </form>
+    </header>
+
     <div class="template-container">
         <div id="changelogitem-template">
             <div class="changelogitem" id="changelog-#PK#">
-                <strong class="text-muted">#CREATED#</strong>
-                <h2 class="card-title">#TITLE#</h2>
+                <div>
+                    <strong class="timestamp-created text-muted">#CREATED#</strong>
+                    <h2 class="card-title">
+                        #TITLE#
+                    </h2>
+                </div>
                 <p>#CONTENT#</p>
-                <p>Kategorier: #TAGS#</p>
-                <p>Version: #VERSION#</p>
+                <hr class="meta-data-separator">
+                <div class="meta-info">
+                    <p class="meta-header">
+                        <small><strong class="text-muted">
+                            Nyhedskategorier
+                        </strong></small>
+                    </p>
+                    <p class="meta-tags">
+                            #TAGS#
+                    </p>
+                    <p class="meta-header">
+                        <small>
+                            <strong class="text-muted">Relateret til version</strong><br/>
+                        </small>
+                        <span class="badge bg-primary">#VERSION#</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -52,6 +75,8 @@ Nyheder
                 </div>
             </div>
         </div>
+        <hr>
+
         <nav class="pagination-wrapper" aria-label="Changelog list page">
             {% include 'widgets/pagination.html' %}
         </nav>
