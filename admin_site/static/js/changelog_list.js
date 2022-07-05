@@ -86,7 +86,7 @@ $(function(){
 
         search: function(input = "") {
             let js = this
-            js.searchConditions = $('#changelogsearch-filterform').serialize() + ((input != "") ? "&tag=" + input.name : "") 
+            js.searchConditions = $('#changelogsearch-filterform').serialize() + ((input != "") ? "&tag=" + input.name : "")
             $.ajax({
                 type: "GET",
                 url: js.searchUrl,

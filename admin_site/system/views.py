@@ -362,7 +362,7 @@ class ChangelogSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "pk": changelog.pk,
                     "title": changelog.title,
                     "content": changelog.render_content(),
-                    "created": dateformat.format(changelog.created, "d M, Y").upper(),
+                    "created": dateformat.format(changelog.created, "d M, Y"),
                     "tags": changelog.get_tags(),
                     "author": changelog.author,
                     "version": changelog.version,
