@@ -4,7 +4,9 @@ import os
 import configparser
 import logging
 import django
+
 from google.oauth2 import service_account
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -318,5 +320,7 @@ CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
     "markdown.extensions.extra",
 ]
+
+MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
