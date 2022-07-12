@@ -288,7 +288,7 @@ class SecurityEventAdmin(admin.ModelAdmin):
         "pc",
         "status",
     )
-    search_fields = ("pc__site", "problem__name", "pc__name", "status")
+    search_fields = ("pc__site__name", "problem__name", "pc__name", "status")
     list_filter = (
         ("problem__security_script", admin.RelatedOnlyFieldListFilter),
         ("occurred_time", admin.DateFieldListFilter),

@@ -1,6 +1,8 @@
 # Copyright (C) 2021 Magenta ApS, https://magenta.dk.
 # Contact: info@magenta.dk.
 
+from collections import defaultdict
+
 from django.core.management.base import (
     BaseCommand,
     CommandError,
@@ -29,7 +31,7 @@ class Command(BaseCommand):
     The script does not validate that a given group, site or PC exists. In case one doesn't match, it's silently ignored.
 
     Form:
-            $ python manage.py run_maintenance_script <user_username> <script_uid_to_run> <batch_site_uid> {--pcs <target_pc_ids...> | --groups <target_group_uids...>| --sites <target_site_uids...>}
+            $ python manage.py run_maintenance_script <user_username> <script_uid_to_run> {--pcs <target_pc_ids...> | --groups <target_group_uids...>| --sites <target_site_uids...>}
     Examples:
 
         $ python manage.py run_maintenance_script shg 1 magenta --pcs 1 4
@@ -46,9 +48,6 @@ class Command(BaseCommand):
             "username", nargs="?", type=str, help="username of the user"
         )
         parser.add_argument("script", nargs="?", type=int, help="the id of the script")
-        parser.add_argument(
-            "script_site", nargs="?", type=str, help="the uid of the site"
-        )
         parser.add_argument("--pcs", nargs="*", type=int, help="a list of pc uids")
         parser.add_argument("--sites", nargs="*", type=str, help="the uid of a site")
         parser.add_argument("--groups", nargs="*", type=str, help="the uid of a group")
@@ -56,7 +55,6 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         script_id = options["script"]
-        script_site_uid = options["script_site"]
         username = options["username"]
 
         user = User.objects.filter(is_superuser=True, username=username).first()
@@ -66,10 +64,6 @@ class Command(BaseCommand):
         script = Script.objects.filter(id=script_id).first()
         if not script:
             raise CommandError(f"Script with ID: {script_id} does not exist")
-
-        script_site = Site.objects.filter(uid=script_site_uid).first()
-        if not script_site:
-            raise CommandError(f"Site with UID: {script_site_uid} does not exist")
 
         if options["pcs"]:
             pcs = PC.objects.filter(id__in=options["pcs"])
@@ -84,22 +78,28 @@ class Command(BaseCommand):
         else:
             raise CommandError("--pcs, --site or --group needs to be given")
 
+        site_pcs_dict = defaultdict(list)
+        for pc in pcs.order_by("site"):
+            site_pcs_dict[pc.site].append(pc)
+
         self.stdout.write(
             self.style.SUCCESS(
-                f"Do you want to run {script} on site {script_site}"
+                f"Do you want to run {script} on sites: "
+                f"{', '.join([s.name for s in site_pcs_dict.keys()])}"
                 f" as user {username} for {pcs.count()} PCs? (Y/y for yes)"
             )
         )
         confirmation = input()
         if confirmation in ["y", "Y"]:
-            batch = Batch.objects.create(site=script_site, script=script, name="")
-            for pc in pcs:
-                Job.objects.create(user=user, batch=batch, pc=pc)
-                self.stdout.write(
-                    self.style.SUCCESS(
-                        f"Maintenance job was created for pc: {pc}"
-                        f" for site: {script_site}"
+            for site, pcs_list in site_pcs_dict.items():
+                batch = Batch.objects.create(site=site, script=script, name="")
+                for pc in pcs_list:
+                    Job.objects.create(user=user, batch=batch, pc=pc)
+                    self.stdout.write(
+                        self.style.SUCCESS(
+                            f"Maintenance job was created for pc: {pc}"
+                            f" for site: {site}"
+                        )
                     )
-                )
         else:
             self.stdout.write(self.style.WARNING("Aborting"))

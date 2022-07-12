@@ -1,3 +1,14 @@
+Version 5.7.0, July 12, 2022
+---------------------------
+
+New in this version:
+
+- Add input type password, admin site now hides the value of passwords
+- Fix security events search in django admin
+- Show UID for PC in PC page and make UID unique
+- Add a batch per site when using the maintenance script maintenance command
+- Fix to remove redudant filename for policy scripts
+
 Version 5.6.5, June 28, 2022
 ---------------------------
 

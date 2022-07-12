@@ -242,11 +242,13 @@ class ParameterForm(forms.Form):
 class PCForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PCForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, "instance", None)
+        if instance and instance.pk:
+            self.fields["uid"].disabled = True
 
     class Meta:
         model = PC
         exclude = (
-            "uid",
             "configuration",
             "site",
             "is_update_required",
