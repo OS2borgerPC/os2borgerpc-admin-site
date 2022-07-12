@@ -24,17 +24,19 @@ Nyheder
     <header>
         <strong id="tags-title" class="text-muted">Nyhedskategorier</strong>
 
+       <!-- Here the tag filters are defined. Each is a clickable button that filters the entries to show entries with that tag -->
         <form id="changelogsearch-filterform" name="filterform" action="./" method="post">
             <input type="hidden" name="page" value="1">
             <div id="changelogsearch-tag-selectors">
                 <button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="Alle" type="button" name="" onclick="BibOS.ChangelogList.reset()">Alle</button>
                 {% for tag in tag_choices %}
-                    <button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="{{ tag.name }}" type="button" name="{{ tag.pk }}" onclick="BibOS.ChangelogList.search(this)">{{ tag.name }}</button>
+                    <button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="changelogtag-{{ tag.pk }}" type="button" name="{{ tag.id }}" onclick="BibOS.ChangelogList.search(this)">{{ tag.name }}</button>
                 {% endfor %}
             </div>
         </form>
     </header>
 
+    <!-- This template gets populated via the JS file. The variables are declared in the class ChangelogSearch found in views.py  -->
     <div class="template-container">
         <div id="changelogitem-template">
             <div class="changelogitem" id="changelog-#PK#">

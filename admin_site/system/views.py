@@ -344,6 +344,8 @@ class ChangelogSearch(SiteMixin, JSONResponseMixin, BaseListView):
             if n > 0 and n <= paginator.num_pages
         ]
 
+        # This object gets passed to the template where the JS populates the page
+        # with the entries
         result = {
             "count": paginator.count,
             "num_pages": paginator.num_pages,

@@ -11,21 +11,20 @@ $(function(){
     $.extend(ChangelogList.prototype, {
         init: function() {
             let changelogsearch = this
+            // Calls the search function any time a tag is selected/clicked
             $('#changelogsearch-tag-selectors input:checkbox').on("change", function(){
                 changelogsearch.search()
             })
             changelogsearch.search()
         },
 
+        // This function appends every changelog item passed to it to the container. 
         appendEntries: function(dataList) {
             let container = this.elem
             $.each(dataList.results, function() {
                 let item = $(BibOS.expandTemplate(
                     'changelog-entry',
                     $.extend(this, {})))
-                item.find('type:button').on("click", function() {
-                    $(this).parents('div').toggleClass('marked')
-                })
                 for (const code of item[0].getElementsByTagName("code")) {
                     hljs.highlightElement(code)
                 }
@@ -33,11 +32,13 @@ $(function(){
             })
         },
 
+        // This function resets the shown entries and replaces them with a new set
         replaceEntries: function(dataList) {
             this.elem.find("div").remove()
             this.appendEntries(dataList)
         },
 
+        // This function sets up how many entries are shown per page
         setUpPaginationCount: function(data) {
             $("div#pagination-count").text(calcPaginationRange(data, 5))
         },
@@ -47,6 +48,7 @@ $(function(){
             pagination.empty()
             let changelogsearch = this
 
+            // Defines the 'previous' button, and disables it if on the first page of entries
             let previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> Forrige</a></li>')
             if (data.has_previous) {
                 previous_item.removeClass("disabled")
@@ -58,11 +60,12 @@ $(function(){
             }
             previous_item.appendTo(pagination)
 
+            // Adds clickable page numbers to the template
             data.page_numbers.forEach(function(page) {
                 if (data.page == page) {
                     item = $('<li class="page-item active"><a class="page-link">' + page + '</a></li>')
                 } else {
-                    item = $('<li class="page-item"<a class="page-link">' + page + '</a></li>')
+                    item = $('<li class="page-item"><a class="page-link">' + page + '</a></li>')
                 }
                 item.find('a').on("click", function() {
                     let input = $('#changelogsearch-filterform input[name=page]')
@@ -72,6 +75,7 @@ $(function(){
                 item.appendTo(pagination)
             })
 
+            // Defines the 'next' button, and disables it if on the last page of entries
             let next_item = $('<li class="page-item disabled"><a class="page-link">Næste <span class="material-icons">navigate_next</span></a></li>')
             if (data.has_next) {
                 next_item.removeClass("disabled")
@@ -84,9 +88,12 @@ $(function(){
             next_item.appendTo(pagination)
         },
 
+        // This function makes an AJAX call to replace the entries on the page with a new set based on a chosen filter
         search: function(input = "") {
             let js = this
-            js.searchConditions = $('#changelogsearch-filterform').serialize() + ((input != "") ? "&tag=" + input.name : "")
+
+            // Here the filter is applied, if any is chosen
+            js.searchConditions = $('#changelogsearch-filterform').serialize() + ((input != "") ? "&tag=" + input.id : "")
             $.ajax({
                 type: "GET",
                 url: js.searchUrl,
@@ -100,6 +107,7 @@ $(function(){
             })
         },
 
+        // This resets the filter and selected page to the start 
         reset: function() {
             $('#changelogsearch-filterform')[0].reset()
             $('#changelogsearch-filterform li.selected').removeClass('selected')
