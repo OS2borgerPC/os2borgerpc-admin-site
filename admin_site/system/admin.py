@@ -10,6 +10,7 @@ from django.urls import reverse
 from markdownx.widgets import AdminMarkdownxWidget
 
 from system.models import (
+    ChangelogComment,
     ChangelogTag,
     Changelog,
     Configuration,
@@ -355,13 +356,24 @@ class ChangelogAdmin(admin.ModelAdmin):
     readonly_fields = ("created", "updated")
     filter_horizontal = ("tags",)
 
-    formfield_overrides = {
-        models.TextField: {"widget": AdminMarkdownxWidget},
-    }
-
 
 class ChangelogTagAdmin(admin.ModelAdmin):
     pass
+
+
+class ChangelogCommentAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "created",
+        "changelog",
+        "content",
+    )
+    readonly_fields = (
+        "created",
+        "user",
+        "parent_comment",
+        "changelog",
+    )
 
 
 ar(Configuration, ConfigurationAdmin)
@@ -371,6 +383,7 @@ ar(PC, PCAdmin)
 ar(ImageVersion, ImageVersionAdmin)
 ar(Changelog, ChangelogAdmin)
 ar(ChangelogTag, ChangelogTagAdmin)
+ar(ChangelogComment, ChangelogCommentAdmin)
 # Job related stuff
 ar(Script, ScriptAdmin)
 ar(ScriptTag, ScriptTagAdmin)
