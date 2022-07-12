@@ -40,9 +40,9 @@ from system.views import (
     SecurityEventsView,
     SecurityEventUpdate,
     SecurityEventSearch,
-    ChangelogView,
-    ChangelogSearch,
+    ChangelogListView,
 )
+
 
 urlpatterns = [
     # Security events UI
@@ -278,10 +278,14 @@ urlpatterns = [
         name="image-version-major",
     ),
     # Changelog
-    url(r"^site/(?P<slug>[^/]+)/changes/$", ChangelogView.as_view(), name="changelog"),
     url(
-        r"^site/(?P<site_uid>[^/]+)/changes/search/",
-        ChangelogSearch.as_view(),
-        name="changelogsearch",
+        r"^site/(?P<slug>[^/]+)/changes/",
+        ChangelogListView.as_view(),
+        name="global-changelogs",
+    ),
+    url(
+        r"^site/(?P<slug>[^/]+)/changes/",
+        ChangelogListView.as_view(),
+        name="changelogs",
     ),
 ]

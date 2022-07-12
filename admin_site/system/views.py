@@ -24,6 +24,8 @@ from django.db.models import Q, F
 from django.db.models.functions import Lower
 from django.conf import settings
 
+from django.core.paginator import Paginator
+
 from account.models import (
     UserProfile,
     SiteMembership,
@@ -45,6 +47,7 @@ from system.models import (
     ScriptTag,
     AssociatedScriptParameter,
     Changelog,
+    ChangelogComment,
 )
 
 # PC Status codes
@@ -57,6 +60,7 @@ from system.forms import (
     ParameterForm,
     PCForm,
     SecurityProblemForm,
+    ChangelogCommentForm,
 )
 
 
@@ -301,78 +305,6 @@ class SiteSettings(UpdateView, SiteView):
 
 class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
     template_name = "system/site_two_factor.html"
-
-
-class ChangelogView(SiteView):
-    template_name = "system/changelog.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(ChangelogView, self).get_context_data(**kwargs)
-
-        context["tag_choices"] = ChangelogTag.objects.values("name", "pk")
-
-        return context
-
-
-class ChangelogSearch(SiteMixin, JSONResponseMixin, BaseListView):
-    paginate_by = 5
-    http_method_name = ["get"]
-    context_object_name = "changelog_list"
-
-    def render_to_response(self, context, **response_kwargs):
-        return self.render_to_json_response(context, **response_kwargs)
-
-    def get_queryset(self):
-        # Filter the entries to only show site-specific or global entries
-        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
-        queryset = Changelog.objects.filter(Q(site=site) | Q(site=None))
-        params = self.request.GET
-        if "tag" in params:
-            tag = ChangelogTag.objects.get(id=params.get("tag"))
-            queryset = queryset.filter(tags=tag)
-        return queryset.order_by("-created")
-
-    def get_data(self, context):
-        page_obj = context["page_obj"]
-        paginator = context["paginator"]
-        adjacent_pages = 2
-        page_numbers = [
-            n
-            for n in range(
-                page_obj.number - adjacent_pages, page_obj.number + adjacent_pages + 1
-            )
-            if n > 0 and n <= paginator.num_pages
-        ]
-
-        # This object gets passed to the template where the JS populates the page
-        # with the entries
-        result = {
-            "count": paginator.count,
-            "num_pages": paginator.num_pages,
-            "page": page_obj.number,
-            "page_numbers": page_numbers,
-            "has_next": page_obj.has_next(),
-            "next_page_number": (
-                page_obj.next_page_number() if page_obj.has_next() else None
-            ),
-            "has_previous": page_obj.has_previous(),
-            "previous_page_number": (
-                page_obj.previous_page_number() if page_obj.has_previous() else None
-            ),
-            "results": [
-                {
-                    "pk": changelog.pk,
-                    "title": changelog.title,
-                    "content": changelog.render_content(),
-                    "created": dateformat.format(changelog.created, "d M, Y"),
-                    "tags": changelog.get_tags(),
-                    "author": changelog.author,
-                    "version": changelog.version,
-                }
-                for changelog in page_obj
-            ],
-        }
-        return result
 
 
 # Now follows all site-based views, i.e. subclasses
@@ -1987,3 +1919,73 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             context["platform_choices"] = dict(ImageVersion.platform_choices)
 
         return context
+
+
+class ChangelogListView(ListView):
+    template_name = "system/changelog/list.html"
+
+    def get_queryset(self):
+        return Changelog.objects.all().order_by("-created")
+
+    def get_paginated_queryset(self, queryset, page):
+
+        if not page:
+            page = 1
+
+        paginator = Paginator(queryset, 2)
+        page_obj = paginator.get_page(page)
+
+        return page_obj
+
+    def get_context_data(self, **kwargs):
+        context = super(ChangelogListView, self).get_context_data(**kwargs)
+
+        context["tag_choices"] = ChangelogTag.objects.values("name", "pk")
+
+        context["page"] = self.request.GET.get("page")
+
+        # Get all entries that are global or assigned to the specific site
+        queryset = self.get_queryset()
+        if context["view"].kwargs.get("slug") != "global":
+            context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
+            context["site_extension"] = "site_with_navigation.html"
+            context["global_view"] = False
+            queryset = queryset.filter(Q(site=context["site"]) | Q(site=None))
+        else:
+            context["site_extension"] = "sitebase.html"
+            context["global_view"] = True
+            queryset = queryset.filter(site=None)
+
+        # This checks if there's a filter applied
+        context["tag_filter"] = self.request.GET.get("tag")
+
+        if context["tag_filter"]:
+            context["tag_filter"] = ChangelogTag.objects.get(pk=context["tag_filter"])
+            queryset = queryset.filter(tags=context["tag_filter"])
+
+        # Paginate the queryset and add it to the context
+        context["entries"] = self.get_paginated_queryset(queryset, context["page"])
+
+        context["comments"] = ChangelogComment.objects.filter(
+            Q(changelog__in=context["entries"].object_list) & Q(parent_comment=None)
+        ).order_by("-created")
+        return context
+
+    def post(self, request, *args, **kwargs):
+        req = request.POST
+
+        response = self.get(request, *args, **kwargs)
+
+        comment = ChangelogComment()
+
+        comment.user = get_object_or_404(User, pk=req["user"])
+        comment.changelog = get_object_or_404(Changelog, pk=req["changelog"])
+        comment.content = req["content"]
+
+        if req["parent_comment"] != "None":
+            comment.parent_comment = get_object_or_404(
+                ChangelogComment, pk=req["parent_comment"]
+            )
+
+        comment.save()
+        return response

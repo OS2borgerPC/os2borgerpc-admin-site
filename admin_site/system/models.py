@@ -1,5 +1,6 @@
 import datetime
 import random
+from statistics import mode
 import string
 
 from dateutil.relativedelta import relativedelta
@@ -1010,7 +1011,8 @@ class ChangelogTag(models.Model):
 # A model that represents one changelog entry, used to showcase changes/new features to users
 class Changelog(models.Model):
 
-    title = models.CharField(verbose_name=_("title"), max_length=255)
+    title = models.CharField(verbose_name=_("title"), max_length=100)
+    description = models.TextField(verbose_name=_("description"), max_length=240)
     content = MarkdownxField(verbose_name=_("content"))
     tags = models.ManyToManyField(ChangelogTag, related_name="changelogs", blank=True)
     created = models.DateTimeField(
@@ -1024,18 +1026,15 @@ class Changelog(models.Model):
     # Ie 'admin-site version 1.2.3' or 'script name version 1.0'
     version = models.CharField(verbose_name=_("version"), max_length=255)
     site = models.ForeignKey(
-        Site, related_name="changelog", null=True, blank=True, on_delete=models.CASCADE
+        Site, related_name="changelogs", null=True, blank=True, on_delete=models.CASCADE
     )
 
+    def breakp(self):
+
+        breakpoint()
+
     def get_tags(self):
-        # This returns a string of all tags associated with the object, seperated with commas
-        if self.tags:
-            t = ""
-            for tag in self.tags.all():
-                t += f"<span class='tag badge bg-primary text-white'> {tag} </span>"
-            return t
-        else:
-            return None
+        return self.tags.values("name", "pk")
 
     def render_content(self):
         # This method returns the markdown text of the 'content' field as html code.
@@ -1043,6 +1042,33 @@ class Changelog(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ["created"]
+
+
+class ChangelogComment(models.Model):
+
+    content = models.TextField(verbose_name=_("content"), max_length=240)
+    created = models.DateTimeField(
+        verbose_name=_("created"), editable=False, auto_now_add=True
+    )
+    changelog = models.ForeignKey(
+        Changelog, related_name="comments", on_delete=models.CASCADE, null=True
+    )
+    user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+    parent_comment = models.ForeignKey(
+        "self",
+        default=None,
+        null=True,
+        blank=True,
+        related_name="comment_children",
+        on_delete=models.DO_NOTHING,
+    )
+
+    def get_user(self):
+        if self.user:
+            return User.objects.get(pk=self.user)
 
     class Meta:
         ordering = ["created"]
