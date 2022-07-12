@@ -317,10 +317,15 @@ CICERO_URL = settings.get("CICERO_URL")
 CICERO_USER = settings.get("CICERO_USER")
 CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
 
+# All Python Markdown's officially supported extensions can be added here without
+# any extra setup.
+# Third-party extensions can also be imported and used, asuming they (and their
+# dependencies) are installed.
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
     "markdown.extensions.extra",
 ]
 
+# This specifies where uploaded media (images) are stored
 MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
