@@ -266,13 +266,12 @@ class PCGroup(models.Model):
             old_params.update(asc.parameters.all())
             asc.delete()
 
-        for pk in req_params.getlist(submit_name, []):
+        for i, pk in enumerate(req_params.getlist(submit_name, [])):
             script_param = "%s_%s" % (submit_name, pk)
 
             script_pk = int(req_params.get(script_param, None))
             script = Script.objects.get(pk=script_pk)
-            position = req_params.get(script_param + "_position")
-            asc = AssociatedScript(group=self, script=script, position=position)
+            asc = AssociatedScript(group=self, script=script, position=i)
             if not pk.startswith("new_"):
                 asc.pk = pk
             asc.save()
