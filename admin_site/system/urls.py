@@ -38,7 +38,7 @@ from system.views import (
     SecurityProblemUpdate,
     SecurityProblemDelete,
     SecurityEventsView,
-    SecurityEventUpdate,
+    SecurityEventsUpdate,
     SecurityEventSearch,
     ChangelogListView,
 )
@@ -47,9 +47,9 @@ from system.views import (
 urlpatterns = [
     # Security events UI
     url(
-        r"^site/(?P<site_uid>[^/]+)/security_events/(?P<pk>\d+)/$",
-        SecurityEventUpdate.as_view(),
-        name="security_event_update",
+        r"^site/(?P<site_uid>[^/]+)/security_events/update/$",
+        SecurityEventsUpdate.as_view(),
+        name="security_events_update",
     ),
     url(
         r"^site/(?P<site_uid>[^/]+)/security_events/search/$",

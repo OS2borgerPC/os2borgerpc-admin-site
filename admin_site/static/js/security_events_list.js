@@ -1,7 +1,8 @@
 $(function(){
     var SecurityEventList = function(container_elem, template_container_id) {
         this.elem = $(container_elem)
-        this.searchUrl = window.bibos_security_event_search_url
+        this.searchUrl = window.security_event_search_url
+        this.updateUrl = window.security_events_update_url
         this.statusSelectors = []
         BibOS.addTemplate('securityevent-entry', template_container_id)
     }
@@ -15,6 +16,19 @@ $(function(){
                 securityeventsearch.search()
             })
             securityeventsearch.search()
+
+            $('#all_events_toggle').on("change", function() {
+                all_events_checked = this.checked
+                $("#securityevent-list input:checkbox").each(function() {
+                    this.checked = all_events_checked
+                })
+            })
+
+            $('#handle_events_save_button').on("click", function() {
+                securityeventsearch.update()
+                securityeventsearch.search()
+            })
+
         },
 
         appendEntries: function(dataList) {
@@ -25,6 +39,7 @@ $(function(){
                     $.extend(this, {})
                 ))
                 item.attr('onclick', "location.href = '/site/" + this.site_uid + "/security_events/" + this.pk + "/'")
+                item.attr('event-id', this.pk)
                 item.appendTo(container)
             })
         },
@@ -119,6 +134,20 @@ $(function(){
                 },
                 dataType: "json"
             })
+        },
+        update: function() {
+            checked_ids = []
+            $("#securityevent-list input:checkbox:checked").each(function() {
+                checked_ids.push($(this).parents("tr").attr('event-id'))
+            })
+            status = 'RESOLVED'
+            note = 'blabla'
+            assigned_user = 35
+            $.post({
+                url: this.updateUrl,
+                data: $.param({'ids': checked_ids, 'status': status, 'note':note, 'assigned_user':assigned_user}, true)
+            })
+
         },
 
         reset: function() {
