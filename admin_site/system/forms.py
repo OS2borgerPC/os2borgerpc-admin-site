@@ -57,12 +57,12 @@ class GroupForm(forms.ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
 
-        uid = cleaned_data.get("uid")
-        uid_exists = self.Meta.model.objects.filter(uid=uid).exists()
+        uid = cleaned_data.get("id")
+        uid_exists = self.Meta.model.objects.filter(id=uid).exists()
 
         # self.instance.pk will be set if it's an update form
         if not self.instance.pk and uid_exists:
-            raise ValidationError(_("A group with this UID already exists."))
+            raise ValidationError(_("A group with this ID already exists."))
         return cleaned_data
 
     def save(self, commit=True):

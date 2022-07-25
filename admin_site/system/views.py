@@ -990,12 +990,13 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
         group_set = site.groups.all()
 
         selected_group_ids = form["pc_groups"].value()
+        # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
         context["selected_groups"] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
 
         orderby = params.get("orderby", "-pk")
         if orderby not in JobSearch.VALID_ORDER_BY:
@@ -1312,9 +1313,9 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     def get_object(self, queryset=None):
         site = Site.objects.get(uid=self.kwargs["site_uid"])
         try:
-            return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
+            return PCGroup.objects.get(id=self.kwargs["group_id"], site=site)
         except PCGroup.DoesNotExist:
-            raise Http404(f"Du har ingen gruppe med id {self.kwargs['group_uid']}")
+            raise Http404(f"Du har ingen gruppe med id {self.kwargs['group_id']}")
 
     def get_context_data(self, **kwargs):
         context = super(GroupUpdate, self).get_context_data(**kwargs)
@@ -1413,7 +1414,7 @@ class GroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
     def get_object(self, queryset=None):
         site = Site.objects.get(uid=self.kwargs["site_uid"])
-        return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
+        return PCGroup.objects.get(id=self.kwargs["group_id"], site=site)
 
     def get_success_url(self):
         return "/site/{0}/groups/".format(self.kwargs["site_uid"])
