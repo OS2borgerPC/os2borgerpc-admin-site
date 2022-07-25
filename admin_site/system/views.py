@@ -6,8 +6,8 @@ from functools import cmp_to_key
 from re import search
 from urllib.parse import quote
 
-from django.http import HttpResponseRedirect, Http404, JsonResponse
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import dateformat
 from django.utils.decorators import method_decorator
@@ -1736,6 +1736,33 @@ class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         return reverse("security_events", args=[self.kwargs["site_uid"]])
+
+
+class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
+    http_method_names = ["post"]
+    model = SecurityEvent
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        params = self.request.POST
+        breakpoint()
+        ids = params.getlist("ids")
+        queryset = queryset.filter(id__in=ids, pc__site=site)
+
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        params = self.request.POST
+        breakpoint()
+        status = params.get("status")
+        assigned_user = params.get("assigned_user")
+        note = params.get("note")
+
+        queryset.update(status=status, assigned_user=assigned_user, note=note)
+
+        return HttpResponse("OK")
 
 
 documentation_menu_items = [
