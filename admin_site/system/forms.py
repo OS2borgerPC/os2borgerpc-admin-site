@@ -42,7 +42,7 @@ class SiteForm(forms.ModelForm):
         }
 
 
-class GroupForm(forms.ModelForm):
+class PCGroupForm(forms.ModelForm):
     # Need to set up this side of the many-to-many relation between groups
     # and PCs manually.
     pcs = forms.ModelMultipleChoiceField(queryset=PC.objects.all(), required=False)
@@ -57,11 +57,11 @@ class GroupForm(forms.ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
 
-        uid = cleaned_data.get("id")
-        uid_exists = self.Meta.model.objects.filter(id=uid).exists()
+        cleaned_data_id = cleaned_data.get("id")
+        id_exists = self.Meta.model.objects.filter(id=cleaned_data_id).exists()
 
         # self.instance.pk will be set if it's an update form
-        if not self.instance.pk and uid_exists:
+        if not self.instance.pk and id_exists:
             raise ValidationError(_("A group with this ID already exists."))
         return cleaned_data
 
