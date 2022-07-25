@@ -131,12 +131,12 @@ urlpatterns = [
         name="new_group",
     ),
     url(
-        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_uid>[^/]+)/$",
+        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_id>[^/]+)/$",
         GroupUpdate.as_view(),
         name="group",
     ),
     url(
-        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_uid>[^/]+)/delete/$",
+        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_id>[^/]+)/delete/$",
         GroupDelete.as_view(),
         name="group_delete",
     ),

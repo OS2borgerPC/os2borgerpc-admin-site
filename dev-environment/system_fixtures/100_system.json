@@ -3566,7 +3566,6 @@
     "pk": 1,
     "fields": {
         "name": "Gruppe3",
-        "uid": "gruppe3",
         "description": "",
         "site": 1,
         "configuration": 5
@@ -3577,7 +3576,6 @@
     "pk": 3,
     "fields": {
         "name": "Gruppe5",
-        "uid": "gruppe5",
         "description": "",
         "site": 1,
         "configuration": 21
@@ -3588,7 +3586,6 @@
     "pk": 9,
     "fields": {
         "name": "Gruppe4",
-        "uid": "gruppe4",
         "description": "",
         "site": 1,
         "configuration": 33
@@ -3599,7 +3596,6 @@
     "pk": 10,
     "fields": {
         "name": "Gruppe1",
-        "uid": "gruppe1",
         "description": "test",
         "site": 1,
         "configuration": 35
@@ -3610,7 +3606,6 @@
     "pk": 17,
     "fields": {
         "name": "Gruppe2",
-        "uid": "gruppe2",
         "description": "-",
         "site": 1,
         "configuration": 58
