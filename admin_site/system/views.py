@@ -1467,7 +1467,7 @@ class SecurityProblemsView(SelectionMixin, SiteView):
             # Pass users and groups to context
             # that are available for a 'new' security problem.
             context["alert_users"] = user_set.values_list("pk", "username", "username")
-            context["alert_groups"] = group_set.values_list("pk", "name", "uid")
+            context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
             return super(SecurityProblemsView, self).render_to_response(context)
 
@@ -1534,7 +1534,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         # Pass users and groups to context
         # that are available for a 'new' security problem.
         context["alert_users"] = user_set.values_list("pk", "username", "username")
-        context["alert_groups"] = group_set.values_list("pk", "name", "uid")
+        context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
         return context
 
