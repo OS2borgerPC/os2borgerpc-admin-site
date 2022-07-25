@@ -1502,12 +1502,13 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         form = context["form"]
         group_set = site.groups.all()
         selected_group_ids = form["alert_groups"].value()
+        # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
         context["selected_groups"] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
 
         user_set = User.objects.filter(bibos_profile__sites=site)
         selected_user_ids = form["alert_users"].value()
