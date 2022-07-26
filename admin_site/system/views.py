@@ -1621,7 +1621,10 @@ class SecurityEventsView(SiteView):
         if "pc_uid" in self.kwargs:
             context["pc_uid"] = self.kwargs["pc_uid"]
 
-        context["security_event_form"] = SecurityEventForm
+        context["form"] = SecurityEventForm()
+        qs = context["form"].fields["assigned_user"].queryset
+        qs = qs.filter(Q(bibos_profile__sites=self.get_object()) | Q(is_superuser=True))
+        context["form"].fields["assigned_user"].queryset = qs
 
         return context
 
@@ -1709,37 +1712,6 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         }
 
         return result
-
-
-class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    model = SecurityEvent
-    fields = ["assigned_user", "status", "note"]
-
-    def get_object(self, queryset=None):
-        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
-        try:
-            return SecurityEvent.objects.get(id=self.kwargs["pk"], pc__site=site)
-        except SecurityEvent.DoesNotExist:
-            raise Http404(gettext("Security Event could not be found"))
-
-    def get_context_data(self, **kwargs):
-        context = super(SecurityEventUpdate, self).get_context_data(**kwargs)
-
-        qs = context["form"].fields["assigned_user"].queryset
-        qs = qs.filter(
-            Q(bibos_profile__sites=self.get_object().pc.site) | Q(is_superuser=True)
-        )
-        context["form"].fields["assigned_user"].queryset = qs
-
-        # Set fields to read-only
-        return context
-
-    def post(self, request, *args, **kwargs):
-        result = super(SecurityEventUpdate, self).post(request, *args, **kwargs)
-        return result
-
-    def get_success_url(self):
-        return reverse("security_events", args=[self.kwargs["site_uid"]])
 
 
 class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
