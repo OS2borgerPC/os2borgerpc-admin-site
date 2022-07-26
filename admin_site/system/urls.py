@@ -38,9 +38,9 @@ from system.views import (
     SecurityProblemUpdate,
     SecurityProblemDelete,
     SecurityEventsView,
-    SecurityEventsUpdate,
     SecurityEventSearch,
     ChangelogListView,
+    SecurityEventsUpdate,
 )
 
 
