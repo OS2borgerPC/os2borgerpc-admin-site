@@ -37,16 +37,27 @@ $(function(){
         appendEntries: function(dataList) {
             var container = this.elem
             $.each(dataList.results, function() {
-                var log_output_link = '<button class="btn"><span class="material-icons fs-3">info</span></button>'
+                var log_info_button = '<button ' +
+                        'class="btn btn-secondary loginfobutton p-0" ' +
+                        'data-bs-title="Log Output" ' +
+                        'data-bs-toggle="popover" ' +
+                        'data-bs-content="' + this.summary + '"' +
+                        'data-bs-html=true ' +
+                        'data-bs-placement=left ' +
+                        'data-bs-trigger="click" ' +
+                        'data-bs-animation="true" ' +
+                        'data-pk="' + this.pk + '"' +
+                    '><span class="material-icons fs-3">info</span></button>'
                 var item = $(BibOS.expandTemplate(
                     'securityevent-entry',
                     $.extend(this, {
-                        "log_output_button": log_output_link
+                        "log_info_button": log_info_button
                     })
                 ))
                 item.attr('event-id', this.pk)
                 item.appendTo(container)
             })
+            BibOS.setupSecurityEventLogInfoButtons(container)
         },
 
         replaceEntries: function(dataList) {
