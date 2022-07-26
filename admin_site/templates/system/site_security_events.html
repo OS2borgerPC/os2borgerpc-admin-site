@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Sikkerhedshændelser
@@ -75,6 +76,7 @@ Sikkerhedshændelser
         <td>#REPORTED#</td>
         <td><span class="badge #STATUS_LABEL#">#STATUS#</span></td>
         <td>#ASSIGNED_USER#</td>
+        <td>#LOG_OUTPUT_BUTTON#</td>
       </tr>
     </tbody>
    </table>
@@ -89,7 +91,7 @@ Sikkerhedshændelser
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        {{ security_event_form|crispy }}
       </div>
       <div class="modal-footer">
         <button id="handle_events_save_button" type="button" class="btn btn-primary">Gem</button>
@@ -113,6 +115,7 @@ Sikkerhedshændelser
           <th>Modtagelsestidspunkt</th>
           <th>Status</th>
           {% include 'widgets/orderby_th_ajax.html' with label='Håndteres af' action="BibOS.SecurityEventList.orderby('assigned_user__username')" slug='handleby' %}
+          <th>Log-output</th>
         </tr>
       </thead>
       <tbody id="securityevent-list">

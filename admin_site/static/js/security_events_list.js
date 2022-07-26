@@ -8,14 +8,14 @@ $(function(){
     }
     $.extend(SecurityEventList.prototype, {
         init: function() {
-            var securityeventsearch = this
-            $('#securityeventsearch-status-selectors input:checkbox').on("change", function() {
-                securityeventsearch.search()
+            var securityeventlist = this
+            $('#securityeventlist-status-selectors input:checkbox').on("change", function() {
+                securityeventlist.search()
             })
-            $('#securityeventsearch-level-selectors input:checkbox').on("change", function() {
-                securityeventsearch.search()
+            $('#securityeventlist-level-selectors input:checkbox').on("change", function() {
+                securityeventlist.search()
             })
-            securityeventsearch.search()
+            securityeventlist.search()
 
             $('#all_events_toggle').on("change", function() {
                 all_events_checked = this.checked
@@ -25,8 +25,11 @@ $(function(){
             })
 
             $('#handle_events_save_button').on("click", function() {
-                securityeventsearch.update()
-                securityeventsearch.search()
+                securityeventlist.handle_events()
+
+                var modal_element = document.getElementById('handle_events_modal')
+                var handle_security_events_modal = bootstrap.Modal.getInstance(modal_element)
+                handle_security_events_modal.hide()
             })
 
         },
@@ -34,11 +37,13 @@ $(function(){
         appendEntries: function(dataList) {
             var container = this.elem
             $.each(dataList.results, function() {
+                var log_output_link = '<button class="btn"><span class="material-icons fs-3">info</span></button>'
                 var item = $(BibOS.expandTemplate(
                     'securityevent-entry',
-                    $.extend(this, {})
+                    $.extend(this, {
+                        "log_output_button": log_output_link
+                    })
                 ))
-                item.attr('onclick', "location.href = '/site/" + this.site_uid + "/security_events/" + this.pk + "/'")
                 item.attr('event-id', this.pk)
                 item.appendTo(container)
             })
@@ -58,7 +63,7 @@ $(function(){
                 e.parent().find('li').removeClass('selected')
                 e.addClass('selected')
             }
-            $('#securityeventsearch-filterform input[name=' + field + ']').val(val)
+            $('#securityeventlist-filterform input[name=' + field + ']').val(val)
             this.search()
         },
 
@@ -67,7 +72,7 @@ $(function(){
         },
 
         orderby: function(order) {
-            var input = $('#securityeventsearch-filterform input[name=orderby]')
+            var input = $('#securityeventlist-filterform input[name=orderby]')
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()
         },
@@ -83,7 +88,7 @@ $(function(){
             if (data.has_previous) {
                 previous_item.removeClass("disabled")
                 previous_item.find('a').on("click", function() {
-                    var input = $('#securityeventsearch-filterform input[name=page]')
+                    var input = $('#securityeventlist-filterform input[name=page]')
                     input.val(data.previous_page_number)
                     eventsearch.search()
                 })
@@ -98,7 +103,7 @@ $(function(){
                     item = $('<li class="page-item"><a class="page-link">' + page + '</a></li>')
                 }
                 item.find('a').on("click", function() {
-                    var input = $('#securityeventsearch-filterform input[name=page]')
+                    var input = $('#securityeventlist-filterform input[name=page]')
                     input.val(page)
                     eventsearch.search()
                 })
@@ -109,7 +114,7 @@ $(function(){
             if (data.has_next) {
                 next_item.removeClass("disabled")
                 next_item.find('a').on("click", function() {
-                    var input = $('#securityeventsearch-filterform input[name=page]')
+                    var input = $('#securityeventlist-filterform input[name=page]')
                     input.val(data.next_page_number)
                     eventsearch.search()
                 })
@@ -118,7 +123,7 @@ $(function(){
         },
         search: function() {
             var js = this
-            js.searchConditions = $('#securityeventsearch-filterform').serialize()
+            js.searchConditions = $('#securityeventlist-filterform').serialize()
 
             $.ajax({
                 type: "GET",
@@ -135,24 +140,28 @@ $(function(){
                 dataType: "json"
             })
         },
-        update: function() {
-            checked_ids = []
+        handle_events: function() {
+            var js = this
+            event_ids = []
             $("#securityevent-list input:checkbox:checked").each(function() {
-                checked_ids.push($(this).parents("tr").attr('event-id'))
+                event_ids.push($(this).parents("tr").attr('event-id'))
             })
-            status = 'RESOLVED'
-            note = 'blabla'
-            assigned_user = 35
+            status = $("[name='status']").find(":selected").val()
+            note = $("[name='note']").text()
+            assigned_user = $("[name='assigned_user']").find(":selected").val()
+
             $.post({
-                url: this.updateUrl,
-                data: $.param({'ids': checked_ids, 'status': status, 'note':note, 'assigned_user':assigned_user}, true)
+                type: "POST",
+                url: js.updateUrl,
+                data: $.param({'ids': event_ids, 'status': status, 'note':note, 'assigned_user':assigned_user}, true),
+                success: function() {
+                    js.search()
+                }
             })
-
         },
-
         reset: function() {
-            $('#securityeventsearch-filterform')[0].reset()
-            $('#securityeventsearch-filterform li.selected').removeClass('selected')
+            $('#securityeventlist-filterform')[0].reset()
+            $('#securityeventlist-filterform li.selected').removeClass('selected')
             $('#jobsearch-filterform input[name=pc]').val('')
             $('#jobsearch-filterform input[name=page]').val('1')
             this.search()

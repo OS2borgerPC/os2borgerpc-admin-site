@@ -7,7 +7,7 @@ from re import search
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import dateformat
 from django.utils.decorators import method_decorator
@@ -62,6 +62,7 @@ from system.forms import (
     PCForm,
     SecurityProblemForm,
     ChangelogCommentForm,
+    SecurityEventForm,
 )
 
 
@@ -1619,6 +1620,9 @@ class SecurityEventsView(SiteView):
 
         if "pc_uid" in self.kwargs:
             context["pc_uid"] = self.kwargs["pc_uid"]
+
+        context["security_event_form"] = SecurityEventForm
+
         return context
 
 
@@ -1746,7 +1750,6 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         queryset = super().get_queryset()
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
         params = self.request.POST
-        breakpoint()
         ids = params.getlist("ids")
         queryset = queryset.filter(id__in=ids, pc__site=site)
 
@@ -1755,7 +1758,7 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     def post(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         params = self.request.POST
-        breakpoint()
+
         status = params.get("status")
         assigned_user = params.get("assigned_user")
         note = params.get("note")
