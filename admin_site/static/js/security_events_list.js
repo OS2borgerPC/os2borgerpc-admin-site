@@ -9,10 +9,10 @@ $(function(){
     $.extend(SecurityEventList.prototype, {
         init: function() {
             var securityeventlist = this
-            $('#securityeventlist-status-selectors input:checkbox').on("change", function() {
+            $('#securityeventsearch-status-selectors input:checkbox').on("change", function() {
                 securityeventlist.search()
             })
-            $('#securityeventlist-level-selectors input:checkbox').on("change", function() {
+            $('#securityeventsearch-level-selectors input:checkbox').on("change", function() {
                 securityeventlist.search()
             })
             securityeventlist.search()
@@ -74,7 +74,7 @@ $(function(){
                 e.parent().find('li').removeClass('selected')
                 e.addClass('selected')
             }
-            $('#securityeventlist-filterform input[name=' + field + ']').val(val)
+            $('#securityeventsearch-filterform input[name=' + field + ']').val(val)
             this.search()
         },
 
@@ -83,7 +83,7 @@ $(function(){
         },
 
         orderby: function(order) {
-            var input = $('#securityeventlist-filterform input[name=orderby]')
+            var input = $('#securityeventsearch-filterform input[name=orderby]')
             input.val(BibOS.getOrderBy(input.val(), order))
             this.search()
         },
@@ -99,7 +99,7 @@ $(function(){
             if (data.has_previous) {
                 previous_item.removeClass("disabled")
                 previous_item.find('a').on("click", function() {
-                    var input = $('#securityeventlist-filterform input[name=page]')
+                    var input = $('#securityeventsearch-filterform input[name=page]')
                     input.val(data.previous_page_number)
                     eventsearch.search()
                 })
@@ -114,7 +114,7 @@ $(function(){
                     item = $('<li class="page-item"><a class="page-link">' + page + '</a></li>')
                 }
                 item.find('a').on("click", function() {
-                    var input = $('#securityeventlist-filterform input[name=page]')
+                    var input = $('#securityeventsearch-filterform input[name=page]')
                     input.val(page)
                     eventsearch.search()
                 })
@@ -125,7 +125,7 @@ $(function(){
             if (data.has_next) {
                 next_item.removeClass("disabled")
                 next_item.find('a').on("click", function() {
-                    var input = $('#securityeventlist-filterform input[name=page]')
+                    var input = $('#securityeventsearch-filterform input[name=page]')
                     input.val(data.next_page_number)
                     eventsearch.search()
                 })
@@ -134,7 +134,7 @@ $(function(){
         },
         search: function() {
             var js = this
-            js.searchConditions = $('#securityeventlist-filterform').serialize()
+            js.searchConditions = $('#securityeventsearch-filterform').serialize()
 
             $.ajax({
                 type: "GET",
@@ -171,8 +171,8 @@ $(function(){
             })
         },
         reset: function() {
-            $('#securityeventlist-filterform')[0].reset()
-            $('#securityeventlist-filterform li.selected').removeClass('selected')
+            $('#securityeventsearch-filterform')[0].reset()
+            $('#securityeventsearch-filterform li.selected').removeClass('selected')
             $('#jobsearch-filterform input[name=pc]').val('')
             $('#jobsearch-filterform input[name=page]').val('1')
             this.search()
