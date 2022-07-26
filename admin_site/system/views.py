@@ -1706,6 +1706,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "assigned_user": (
                         event.assigned_user.username if event.assigned_user else ""
                     ),
+                    "summary": event.summary,
                 }
                 for event in page_obj
             ],

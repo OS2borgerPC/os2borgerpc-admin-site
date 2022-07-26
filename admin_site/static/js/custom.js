@@ -256,6 +256,22 @@ var BibOS
         t.showJobInfo(this)
       })
     },
+    setupSecurityEventLogInfoButtons: function(rootElem) {
+      // initialize all popovers.
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+      })
+
+      var t = this
+
+      $(rootElem).find('.loginfobutton').on('show.bs.popover', function(e) {
+        // hide all popovers before a new popover is shown.
+        popoverTriggerList.map(function (popoverTriggerEl) {
+          $(popoverTriggerEl).popover('hide')
+        })
+      })
+    },
     showJobInfo: function(triggerElem) {
       var t = this
       var popover = bootstrap.Popover.getInstance(triggerElem)
