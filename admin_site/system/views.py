@@ -1534,6 +1534,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         # Pass users and groups to context
         # that are available for a 'new' security problem.
         context["alert_users"] = user_set.values_list("pk", "username", "username")
+        # template picklist requires the form pk, name, url (u)id.
         context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
         return context
