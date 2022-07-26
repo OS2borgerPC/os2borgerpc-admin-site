@@ -39,9 +39,9 @@ $(function(){
             $.each(dataList.results, function() {
                 var log_info_button = '<button ' +
                         'class="btn btn-secondary loginfobutton p-0" ' +
-                        'data-bs-title="Log Output" ' +
+                        'data-bs-title="Log-info" ' +
                         'data-bs-toggle="popover" ' +
-                        'data-bs-content="' + this.summary + '"' +
+                        'data-bs-content="' + '<span class=severity-high>' + this.problem_name + '</span>' + '<br>' + this.summary + '"' +
                         'data-bs-html=true ' +
                         'data-bs-placement=left ' +
                         'data-bs-trigger="click" ' +
