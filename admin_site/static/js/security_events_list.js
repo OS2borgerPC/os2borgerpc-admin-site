@@ -164,7 +164,7 @@ $(function(){
                 event_ids.push($(this).parents("tr").attr('event-id'))
             })
             status = $("[name='status']").find(":selected").val()
-            note = $("[name='note']").text()
+            note = $("[name='note']").val()
             assigned_user = $("[name='assigned_user']").find(":selected").val()
 
             $.post({
