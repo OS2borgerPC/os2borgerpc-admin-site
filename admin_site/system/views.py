@@ -1694,6 +1694,9 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "pk": event.pk,
                     "site_uid": site.uid,
                     "problem_name": event.problem.name,
+                    "problem_url": reverse(
+                        "security_problem", args=[site.uid, event.problem.uid]
+                    ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "reported": event.reported_time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -1703,8 +1706,14 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "level_label": SecurityProblem.LEVEL_TO_LABEL[event.problem.level]
                     + "",
                     "pc_name": event.pc.name,
+                    "pc_url": reverse("computer", args=[site.uid, event.pc.uid]),
                     "assigned_user": (
                         event.assigned_user.username if event.assigned_user else ""
+                    ),
+                    "assigned_user_url": (
+                        reverse("user", args=[site.uid, event.assigned_user.username])
+                        if event.assigned_user
+                        else ""
                     ),
                     "summary": event.summary,
                 }
