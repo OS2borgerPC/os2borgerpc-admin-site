@@ -48,10 +48,16 @@ $(function(){
                         'data-bs-animation="true" ' +
                         'data-pk="' + this.pk + '"' +
                     '><span class="material-icons fs-3">info</span></button>'
+                var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + '</a>'
+                var problem_link = '<a href="' + this.problem_url + '">' + this.problem_name + '</a>'
+                var assigned_user_link = '<a href="' + this.assigned_user_url + '">' + this.assigned_user + '</a>'
                 var item = $(BibOS.expandTemplate(
                     'securityevent-entry',
                     $.extend(this, {
-                        "log_info_button": log_info_button
+                        "log_info_button": log_info_button,
+                        'pc_link' : pc_link,
+                        'problem_link': problem_link,
+                        'assigned_user_link': assigned_user_link,
                     })
                 ))
                 item.attr('event-id', this.pk)
