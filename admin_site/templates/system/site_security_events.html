@@ -107,7 +107,7 @@ Sikkerhedshændelser
     <table class="table table-hover table-extendable" id="site_securityevents_table">
       <thead>
         <tr>
-          <th><input type="checkbox" value="" id="all_events_toggle"/></th>
+          <th><input type="checkbox" id="all_events_toggle" autocomplete="off"/></th>
           <th>Alvorlighedsgrad</th>
           {% include 'widgets/orderby_th_ajax.html' with label='Regel' action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
           <th>Maskine</th>
