@@ -1145,17 +1145,20 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
-        self.object = form.save()
-
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        user_profile = UserProfile.objects.create(user=self.object)
-        SiteMembership.objects.create(
-            user_profile=user_profile,
-            site=site,
-            site_user_type=form.cleaned_data["usertype"],
-        )
-        result = super(UserCreate, self).form_valid(form)
-        return result
+
+        if self.request.user.bibos_profile.sitemembership_set.get(site=site).site_user_type == 2 or self.request.user.is_superuser:
+            self.object = form.save()
+            user_profile = UserProfile.objects.create(user=self.object)
+            SiteMembership.objects.create(
+                user_profile=user_profile,
+                site=site,
+                site_user_type=form.cleaned_data["usertype"],
+            )
+            result = super(UserCreate, self).form_valid(form)
+            return result
+        else:
+            raise Exception("Not site-admin or superuser")
 
     def get_success_url(self):
         return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
@@ -1196,7 +1199,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         context["create_form"].setup_usertype_choices(
             loginusertype, request_user.is_superuser
         )
-
+        context["user_type_for_site"] = request_user.bibos_profile.sitemembership_set.get(site_id=site.id).site_user_type
         return context
 
     def get_form_kwargs(self):
