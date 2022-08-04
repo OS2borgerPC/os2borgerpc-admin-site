@@ -1716,6 +1716,7 @@ documentation_menu_items = [
     ("creating_security_problems", "Oprettelse af Sikkerhedsovervågning (PDF)"),
     ("", "OS2borgerPC"),
     ("os2borgerpc_installation_guide", "Installationsguide (PDF)"),
+    ("os2borgerpc_installation_guide_old", "Gammel installationsguide (PDF)"),
     ("", "OS2borgerPC Kiosk"),
     ("os2borgerpc_kiosk_installation_guide", "Installationsguide"),
     ("os2borgerpc_kiosk_wifi_guide", "Opdatering af Wi-Fi opsætning"),
