@@ -26,14 +26,7 @@ const renderList = function (list_el, script_list) {
                 ${ s.name }
             </a>
         `
-        if (s.id === current_id) {
-            item.className = 'active'
-            template += `
-                <a class="item-list-deletable material-icons" href="${ s.delete_url }" title="Slet script">
-                    clear
-                </a>
-            `
-        }
+
         item.innerHTML = template
         list_el.appendChild(item)
     }
