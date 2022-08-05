@@ -72,7 +72,7 @@ class AssociatedScriptInline(admin.TabularInline):
 
 
 class PCGroupAdmin(admin.ModelAdmin):
-    list_display = ("name", "uid", "site")
+    list_display = ("id", "name", "site")
     list_filter = ("site",)
     inlines = [PCInline, AssociatedScriptInline]
 

@@ -1,22 +1,46 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
-from .views import SiteList, TwoFactor
-from .views import AdminIndex, PCsView, GroupsView, UsersView, JobsView
-from .views import GroupCreate, GroupUpdate, GroupDelete, JobSearch, UserDelete
-from .views import SiteDetailView, UserCreate, UserUpdate, SiteSettings
-from .views import ScriptList, ScriptUpdate, ScriptCreate, ScriptDelete
-from .views import ScriptRun, PCUpdate, JobRestarter
-from .views import ConfigurationEntryCreate, ConfigurationEntryUpdate
-from .views import ConfigurationEntryDelete, JobInfo, DocView
-from .views import PCDelete, JSONSiteSummary
-from .views import ImageVersionsView
-
-# SecurityProblem and SecurityEvent related views
-from .views import SecurityProblemsView, SecurityProblemCreate
-from .views import SecurityProblemUpdate, SecurityProblemDelete
-from .views import SecurityEventsView, SecurityEventUpdate
-from .views import SecurityEventSearch
+from system.views import (
+    SiteList,
+    TwoFactor,
+    AdminIndex,
+    PCsView,
+    PCGroupsView,
+    UsersView,
+    JobsView,
+    PCGroupCreate,
+    PCGroupUpdate,
+    PCGroupDelete,
+    JobSearch,
+    UserDelete,
+    SiteDetailView,
+    UserCreate,
+    UserUpdate,
+    SiteSettings,
+    ScriptList,
+    ScriptUpdate,
+    ScriptCreate,
+    ScriptDelete,
+    ScriptRun,
+    PCUpdate,
+    JobRestarter,
+    ConfigurationEntryCreate,
+    ConfigurationEntryUpdate,
+    ConfigurationEntryDelete,
+    JobInfo,
+    DocView,
+    PCDelete,
+    JSONSiteSummary,
+    ImageVersionsView,
+    SecurityProblemsView,
+    SecurityProblemCreate,
+    SecurityProblemUpdate,
+    SecurityProblemDelete,
+    SecurityEventsView,
+    SecurityEventUpdate,
+    SecurityEventSearch,
+)
 
 
 urlpatterns = [
@@ -124,20 +148,20 @@ urlpatterns = [
         name="computer_delete",
     ),
     # Groups
-    url(r"^site/(?P<slug>[^/]+)/groups/$", GroupsView.as_view(), name="groups"),
+    url(r"^site/(?P<slug>[^/]+)/groups/$", PCGroupsView.as_view(), name="groups"),
     url(
         r"^site/(?P<site_uid>[^/]+)/groups/new/$",
-        GroupCreate.as_view(),
+        PCGroupCreate.as_view(),
         name="new_group",
     ),
     url(
-        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_uid>[^/]+)/$",
-        GroupUpdate.as_view(),
+        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_id>[^/]+)/$",
+        PCGroupUpdate.as_view(),
         name="group",
     ),
     url(
-        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_uid>[^/]+)/delete/$",
-        GroupDelete.as_view(),
+        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_id>[^/]+)/delete/$",
+        PCGroupDelete.as_view(),
         name="group_delete",
     ),
     # Jobs

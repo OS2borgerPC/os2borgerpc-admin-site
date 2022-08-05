@@ -47,7 +47,7 @@ from system.models import (
 # PC Status codes
 from system.forms import (
     SiteForm,
-    GroupForm,
+    PCGroupForm,
     ConfigurationEntryForm,
     ScriptForm,
     UserForm,
@@ -990,12 +990,13 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
         group_set = site.groups.all()
 
         selected_group_ids = form["pc_groups"].value()
+        # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
         context["selected_groups"] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
 
         orderby = params.get("orderby", "-pk")
         if orderby not in JobSearch.VALID_ORDER_BY:
@@ -1056,7 +1057,7 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
 
 
-class GroupsView(SelectionMixin, SiteView):
+class PCGroupsView(SelectionMixin, SiteView):
     template_name = "system/site_groups.html"
     selection_class = PCGroup
     class_display_name = "group"
@@ -1282,13 +1283,13 @@ class ConfigurationEntryDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin)
         return "/site/{0}/settings/".format(self.kwargs["site_uid"])
 
 
-class GroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
+class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
     model = PCGroup
-    form_class = GroupForm
+    form_class = PCGroupForm
     slug_field = "uid"
 
     def get_context_data(self, **kwargs):
-        context = super(GroupCreate, self).get_context_data(**kwargs)
+        context = super(PCGroupCreate, self).get_context_data(**kwargs)
 
         # We don't want to edit computers yet
         if "pcs" in context["form"].fields:
@@ -1301,23 +1302,23 @@ class GroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
         self.object = form.save(commit=False)
         self.object.site = site
 
-        return super(GroupCreate, self).form_valid(form)
+        return super(PCGroupCreate, self).form_valid(form)
 
 
-class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
+class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     template_name = "system/site_groups.html"
-    form_class = GroupForm
+    form_class = PCGroupForm
     model = PCGroup
 
     def get_object(self, queryset=None):
         site = Site.objects.get(uid=self.kwargs["site_uid"])
         try:
-            return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
+            return PCGroup.objects.get(id=self.kwargs["group_id"], site=site)
         except PCGroup.DoesNotExist:
-            raise Http404(f"Du har ingen gruppe med id {self.kwargs['group_uid']}")
+            raise Http404(f"Du har ingen gruppe med id {self.kwargs['group_id']}")
 
     def get_context_data(self, **kwargs):
-        context = super(GroupUpdate, self).get_context_data(**kwargs)
+        context = super(PCGroupUpdate, self).get_context_data(**kwargs)
 
         group = self.object
         form = context["form"]
@@ -1336,7 +1337,7 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
 
         context["selected_group"] = group
 
-        context["newform"] = GroupForm()
+        context["newform"] = PCGroupForm()
         del context["newform"].fields["pcs"]
 
         context["all_scripts"] = sorted(
@@ -1361,7 +1362,7 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 )
                 self.object.update_policy_from_request(self.request, "group_policies")
 
-                response = super(GroupUpdate, self).form_valid(form)
+                response = super(PCGroupUpdate, self).form_valid(form)
 
                 members_post = set(self.object.pcs.all())
                 policy_post = set(self.object.policy.all())
@@ -1405,22 +1406,22 @@ class GroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             return response
 
     def form_invalid(self, form):
-        return super(GroupUpdate, self).form_invalid(form)
+        return super(PCGroupUpdate, self).form_invalid(form)
 
 
-class GroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PCGroup
 
     def get_object(self, queryset=None):
         site = Site.objects.get(uid=self.kwargs["site_uid"])
-        return PCGroup.objects.get(uid=self.kwargs["group_uid"], site=site)
+        return PCGroup.objects.get(id=self.kwargs["group_id"], site=site)
 
     def get_success_url(self):
         return "/site/{0}/groups/".format(self.kwargs["site_uid"])
 
     def delete(self, request, *args, **kwargs):
         name = self.get_object().name
-        response = super(GroupDelete, self).delete(request, *args, **kwargs)
+        response = super(PCGroupDelete, self).delete(request, *args, **kwargs)
         set_notification_cookie(response, _("Group %s deleted") % name)
         return response
 
@@ -1466,7 +1467,7 @@ class SecurityProblemsView(SelectionMixin, SiteView):
             # Pass users and groups to context
             # that are available for a 'new' security problem.
             context["alert_users"] = user_set.values_list("pk", "username", "username")
-            context["alert_groups"] = group_set.values_list("pk", "name", "uid")
+            context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
             return super(SecurityProblemsView, self).render_to_response(context)
 
@@ -1501,12 +1502,13 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         form = context["form"]
         group_set = site.groups.all()
         selected_group_ids = form["alert_groups"].value()
+        # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = group_set.exclude(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
         context["selected_groups"] = group_set.filter(
             pk__in=selected_group_ids
-        ).values_list("pk", "name", "uid")
+        ).values_list("pk", "name", "pk")
 
         user_set = User.objects.filter(bibos_profile__sites=site)
         selected_user_ids = form["alert_users"].value()
@@ -1532,7 +1534,8 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         # Pass users and groups to context
         # that are available for a 'new' security problem.
         context["alert_users"] = user_set.values_list("pk", "username", "username")
-        context["alert_groups"] = group_set.values_list("pk", "name", "uid")
+        # template picklist requires the form pk, name, url (u)id.
+        context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
         return context
 
