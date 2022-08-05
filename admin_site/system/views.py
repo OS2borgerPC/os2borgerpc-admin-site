@@ -1147,7 +1147,13 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
 
-        if self.request.user.bibos_profile.sitemembership_set.get(site=site).site_user_type == 2 or self.request.user.is_superuser:
+        if (
+            self.request.user.bibos_profile.sitemembership_set.get(
+                site=site
+            ).site_user_type
+            == 2
+            or self.request.user.is_superuser
+        ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
             SiteMembership.objects.create(
@@ -1199,7 +1205,11 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         context["create_form"].setup_usertype_choices(
             loginusertype, request_user.is_superuser
         )
-        context["user_type_for_site"] = request_user.bibos_profile.sitemembership_set.get(site_id=site.id).site_user_type
+        context[
+            "user_type_for_site"
+        ] = request_user.bibos_profile.sitemembership_set.get(
+            site_id=site.id
+        ).site_user_type
         return context
 
     def get_form_kwargs(self):
