@@ -21,6 +21,7 @@ $(function(){
                 all_events_checked = this.checked
                 $("#securityevent-list input:checkbox").each(function() {
                     this.checked = all_events_checked
+                    selectEvent(this)
                 })
             })
 
@@ -63,6 +64,8 @@ $(function(){
                 item.attr('event-id', this.pk)
                 item.appendTo(container)
             })
+            document.getElementById("all_events_toggle").checked = false
+            updateCounter()
             BibOS.setupSecurityEventLogInfoButtons(container)
         },
 
@@ -187,3 +190,20 @@ $(function(){
     BibOS.SecurityEventList = new SecurityEventList('#securityevent-list', '#securityeventitem-template')
     $(function() { BibOS.SecurityEventList.init() })
 })
+
+function selectEvent(item) {
+    item.closest("tr").classList.toggle("selected", item.checked)
+    updateCounter()
+}
+
+function updateCounter() {
+    selectedEvents = document.getElementsByClassName("selected").length
+    totalEvents = document.getElementsByClassName("click-list--item").length - 1
+    handleButton = document.getElementById("handle-event-button")
+    
+    // Updates the text on the button to show how many (if any) events have been selected
+    handleButton.innerText = "Håndter " + ( selectedEvents > 0 ? selectedEvents + " ud af " + totalEvents : "") + " advarsler"
+    
+    // Disables the button when no elements are selected
+    document.getElementById("handle-event-button").disabled = ( selectedEvents == 0 )
+}
