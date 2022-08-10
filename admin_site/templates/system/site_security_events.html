@@ -68,7 +68,7 @@ Sikkerhedshændelser
    <table class="table">
     <tbody id="securityeventitem-template">
       <tr class="click-list--item">
-        <td><input type="checkbox"/></td>
+        <td><input type="checkbox" onchange="selectEvent(this)"/></td>
         <td><span class="badge badge-#LEVEL_LABEL#">#LEVEL#</span></td> 
         <td><strong>#PROBLEM_LINK#</strong></td>
         <td><strong>#PC_LINK#</strong></td>
@@ -103,7 +103,7 @@ Sikkerhedshændelser
 
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     {% include 'notification.html' %}
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#handle_events_modal">Håndter advarsler</button>
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#handle_events_modal" id="handle-event-button" disabled="true">Håndter advarsler</button>
     <table class="table table-extendable" id="site_securityevents_table">
       <thead>
         <tr>
