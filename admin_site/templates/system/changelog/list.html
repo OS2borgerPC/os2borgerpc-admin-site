@@ -26,6 +26,12 @@ Nyheder
                 <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
                 Tilbage til login
             </a>
+            <hr>
+            <h2 class="text-light">Dokumentation</h2>
+            <a href="{% url 'doc' 'changelogs' %}" class="nav-link link-light">
+                <span class="material-icons">help_outline</span>
+                Hjælp til nyhedssiden
+              </a>
         </nav>
     {% endif %}
     {{ block.super }}
