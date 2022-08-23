@@ -149,6 +149,11 @@ detailpage
         <span class='material-icons'>help_outline</span>
         Administration af brugere
       </a>
+    {% elif current_url_changelogs %}
+      <a href="{% url 'doc' 'changelogs' %}" class="nav-link link-light">
+        <span class="material-icons">help_outline</span>
+        Hjælp til nyhedssiden
+      </a>
     {% endif %}
 
     {% if current_url_scripts or current_url_jobs %}

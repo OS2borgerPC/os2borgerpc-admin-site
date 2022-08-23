@@ -1744,6 +1744,7 @@ documentation_menu_items = [
     ("users", "Brugere"),
     ("configuration", "Konfigurationer"),
     ("creating_security_problems", "Oprettelse af Sikkerhedsovervågning (PDF)"),
+    ("changelogs", "Nyhedssiden"),
     ("", "OS2borgerPC"),
     ("os2borgerpc_installation_guide", "Installationsguide (PDF)"),
     ("os2borgerpc_installation_guide_old", "Gammel installationsguide (PDF)"),
