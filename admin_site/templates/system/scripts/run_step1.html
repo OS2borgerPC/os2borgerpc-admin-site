@@ -15,6 +15,11 @@
       <div class="col-6">
         <h4>Computere</h4>
         <ul class="list-unstyled">
+            <li class="mb-3">
+              <input type="checkbox" onclick="toggle_checks(this, 'pcs')" id="pick-all-pcs"/>
+              <label for="pick-all-pcs"><strong>Vælg alle Computere</strong></label>
+              <br/>
+            </li>
             {% for pc in pcs %}
             {% if pc.is_activated %}
               <li>
@@ -28,6 +33,11 @@
       <div class="col-6">
         <h4>Grupper</h4>
         <ul class="list-unstyled">
+            <li class="mb-3">
+              <input type="checkbox" onclick="toggle_checks(this, 'groups')" id="pick-all-groups"/>
+              <label for="pick-all-groups"><strong>Vælg alle Grupper</strong></label>
+              <br/>
+            </li>
           {% for group in groups %}
             <li>
               <input type="checkbox" name="groups" id="check-group-{{group.pk}}" value="{{group.pk}}">
@@ -37,6 +47,16 @@
         </ul>
       </div>
     </div>
+
+    <!-- Function for selecting all checkboxes: -->
+    <script>
+      function toggle_checks(source, checkboxes_name) {
+        checkboxes = document.getElementsByName(checkboxes_name);
+        for(var i=0, n=checkboxes.length;i<n; i++) {
+          checkboxes[i].checked = source.checked;
+        }
+      }
+    </script>
   
 {% endblock %}
 
