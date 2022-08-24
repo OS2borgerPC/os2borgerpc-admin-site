@@ -85,8 +85,6 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
     If no updates, these will be None. In that
     case, this function really works as an "I'm alive" signal."""
 
-    # TODO: Code this
-
     # 1. Lookup PC, update "last_seen" field
     pc = PC.objects.get(uid=pc_uid)
 
@@ -104,8 +102,11 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
             if not job:
                 continue
             job.status = jd["status"]
-            job.started = jd["started"]
-            job.finished = jd["finished"]
+            # Empty strings might be sent in rare cases, which otherwise cause validation errors
+            if jd["started"]:
+                job.started = jd["started"]
+            if jd["finished"]:
+                job.finished = jd["finished"]
             job.log_output = jd["log_output"]
             job.save()
 
