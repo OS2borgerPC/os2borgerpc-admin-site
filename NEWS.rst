@@ -1,3 +1,26 @@
+Version 5.8.0, August 25, 2022
+------------------------------
+
+New in this version:
+
+- Make it possible for everyone to set mandatory or not for script parameters
+- Fix a bug so mandatory isn't re-enabled every time "Gem ændringer" is 
+  pressed.
+- Update django dependencies
+- Small updates to the documentation
+- RPC: Accept empty 'started' and 'finished' from clients, so machines with 
+  such jobs in their backlog check in correctly again
+- Fix to /admin such as batch search and set a proper Batch.__str__.
+- Make JobSearch available only to users belonging to the site or superusers
+- Add "Check all" checkboxes when running scripts on PC's or PCGroups
+- Restrict "Site Users'" privileges: They can't add, edit, or delete other 
+  users, or delete scripts any more.
+  Only "Site Admins" can do those now.
+- PCGroups no longer have an UID but use ID instead. This also changes their 
+  URL's.
+- Fix server error when in some cases you both add and delete scripts from 
+  a policy
+
 Version 5.7.0, July 12, 2022
 ---------------------------
 
@@ -14,7 +37,8 @@ Version 5.6.5, June 28, 2022
 
 New in this version:
 
-- Allow pushing security events with different date formats (for example with or without seconds.)
+- Allow pushing security events with different date formats 
+  (for example with or without seconds.)
 - Make associated scripts easily editable in Django Admin
 
 Version 5.6.4, June 21, 2022
