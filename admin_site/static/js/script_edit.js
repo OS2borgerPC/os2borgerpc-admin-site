@@ -51,6 +51,7 @@
                     position: count || 0,
                     name: '',
                     value_type: 'STRING',
+                    mandatory: true,
                     name_error: '',
                     type_error: ''
                 },
@@ -77,6 +78,7 @@
                 elem.find('input.pk-input').attr('name', 'script-input-' + i + '-pk')
                 elem.find('input.name-input').attr('name', 'script-input-' + i + '-name')
                 elem.find('select.type-input').attr('name', 'script-input-' + i + '-type')
+                elem.find('input.mandatory-input').attr('name', 'script-input-' + i + '-mandatory')
             })
             container.find('input.script-number-of-inputs').val(inputs.length)
         }
@@ -89,3 +91,37 @@
 /* Syntax highlighting */
 const code = document.getElementById("script-code")
 hljs.highlightElement(code)
+
+$("#parameters-tab").on("click", function() {
+    /* This function is called when the tab "Inputparametre" is clicked. It ensures that the correct mandatory
+    checkboxes are checked in advance and sets up the event listeners for changes in the input types. */
+    checkboxes = document.getElementsByClassName("mandatory-input")
+    input_types = document.getElementsByClassName("type-input")
+    for (const [index, input_type] of Object.entries(input_types)) {
+        input_type.addEventListener("change", type_check)
+        if (input_type.value == "BOOLEAN") {
+            checkboxes[index].disabled = true
+        }
+    }
+    for (const checkbox of checkboxes) {
+        checkbox.checked = checkbox.value != "false"
+    }
+})
+
+function type_check(event) {
+    /* The index of the relevant input line is extracted from the name of the triggering event,
+     which has the form "script-input-i-type," where i is the index.
+     The desired index for this function is 1 greater than the index of the input line because
+     the list of all checkboxes also contains the checkbox template at index 0. */
+    index = event.target.name.slice(13, -5), ++index
+    checkboxes = document.getElementsByClassName("mandatory-input")
+    if (event.target.value == "BOOLEAN") {
+        checkboxes[index].checked = false
+        checkboxes[index].disabled = true
+        checkboxes[index].value = "false"
+    } else {
+        checkboxes[index].disabled = false
+        checkboxes[index].checked = true
+        checkboxes[index].value = "true"
+    }
+}

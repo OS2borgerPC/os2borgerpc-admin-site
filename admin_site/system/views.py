@@ -598,7 +598,12 @@ class ScriptMixin(object):
                 context["global_selected"] = True
             if not context["script_inputs"]:
                 context["script_inputs"] = [
-                    {"pk": input.pk, "name": input.name, "value_type": input.value_type}
+                    {
+                        "pk": input.pk,
+                        "name": input.name,
+                        "value_type": input.value_type,
+                        "mandatory": input.mandatory,
+                    }
                     for input in self.script.ordered_inputs
                 ]
         elif not context["script_inputs"]:
@@ -625,6 +630,9 @@ class ScriptMixin(object):
                     "name": params.get("script-input-%d-name" % i, ""),
                     "value_type": params.get("script-input-%d-type" % i, ""),
                     "position": i,
+                    "mandatory": params.get(
+                        "script-input-%d-mandatory" % i, "unchecked"
+                    ),
                 }
 
                 if data["name"] is None or data["name"] == "":
@@ -636,6 +644,8 @@ class ScriptMixin(object):
                 ]:
                     data["type_error"] = "Fejl: Du skal angive en korrekt type"
                     success = False
+
+                data["mandatory"] = data["mandatory"] != "unchecked"
 
                 inputs.append(data)
 
@@ -654,10 +664,6 @@ class ScriptMixin(object):
 
         for input_data in self.script_inputs:
             input_data["script"] = self.script
-
-            input_data["mandatory"] = (
-                True if input_data["value_type"] != "BOOLEAN" else False
-            )
 
             if "pk" in input_data and not input_data["pk"]:
                 del input_data["pk"]
