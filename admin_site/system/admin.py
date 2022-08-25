@@ -72,7 +72,7 @@ class AssociatedScriptInline(admin.TabularInline):
 
 
 class PCGroupAdmin(admin.ModelAdmin):
-    list_display = ("name", "uid", "site")
+    list_display = ("id", "name", "site")
     list_filter = ("site",)
     inlines = [PCInline, AssociatedScriptInline]
 
@@ -92,7 +92,7 @@ class BatchAdmin(admin.ModelAdmin):
     list_display = ("site", "name", "script")
     fields = ("site", "name", "script")
     list_filter = ("site",)
-    search_fields = ("name", "site", "script")
+    search_fields = ("name", "site__name", "script__name")
     inlines = [JobInline, BatchParameterInline]
 
 

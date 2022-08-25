@@ -32,7 +32,7 @@
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
-                {% ifequal script selected_script %}
+                {% if script == selected_script and user_type_for_site == 2 or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
                   <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
                     clear
@@ -42,8 +42,8 @@
                     clear
                   </a>
                   {% endif %}
-                {% endifequal %}
-                </li>
+                {% endif %}
+              </li>
             {% endfor %}
           </ul>
         {% endif %}
@@ -56,7 +56,7 @@
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
-                {% ifequal script selected_script %}
+                {% if script == selected_script and user_type_for_site == 2 or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
                   <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
                     clear
@@ -66,7 +66,7 @@
                     clear
                   </a>
                   {% endif %}
-                {% endifequal %}
+                {% endif %}
               </li>
           {% endfor %}
         </ul>

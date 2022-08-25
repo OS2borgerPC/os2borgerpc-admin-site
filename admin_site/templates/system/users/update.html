@@ -7,24 +7,27 @@ Brugere
 {% block subnav %}
 <div class="sublevelnav">
 
-  <div class="listutils">
-    <button class="btn btn-link" data-bs-target="#addNewUser" type="button" data-bs-toggle="modal">
-      <span class="material-icons">add</span>
-      Tilføj ny bruger
-    </button>
-  </div>
+  {% if user_type_for_site == 2 or user.is_superuser %}
+    <div class="listutils">
+      <button class="btn btn-link" data-bs-target="#addNewUser" type="button" data-bs-toggle="modal">
+        <span class="material-icons">add</span>
+        Tilføj ny bruger
+      </button>
+    </div>
+  {% endif %}
+
 
   <ul class="item-list">
-    {% for user in user_list %}
-      <li class="{% ifequal user selected_user %}active{% endifequal %}">
-        <a class="item-list-link" href="/site/{{ site.url }}/users/{{ user.username }}">
-          {{ user.username }}
+    {% for listed_user in user_list %}
+      <li class="{% ifequal listed_user selected_user %}active{% endifequal %}">
+        <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
+          {{ listed_user.username }}
         </a>
-        {% ifequal user selected_user %}
+        {% if listed_user == selected_user and user_type_for_site == 2 or listed_user == selected_user and user.is_superuser %}
           <a class="item-list-deletable material-icons" href="{% url 'delete_user' site.uid selected_user.username %}" title="Slet bruger">
             clear
           </a>
-        {% endifequal %}
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
@@ -37,21 +40,25 @@ Brugere
       <h2 class="divideheader">Profil: <em>{{ selected_user.username }}</em></h2>
       {% include 'notification.html' %}
       <div>
-        <form action="{% url 'user' site.uid selected_user.username %}" 
-          name="update_user_form" 
-          id="update_user_form" 
-          method="post"
-          class="gray-box">
-          {% csrf_token %}
+        {% if user_type_for_site != 2 and not user.is_superuser and not user == selected_user %}
+            <p> Site-brugere har ikke adgang til at ændre andre brugere. Bed en site-admin eller Magenta om hjælp.</p>
+        {% else %}
+            <form action="{% url 'user' site.uid selected_user.username %}"
+              name="update_user_form"
+              id="update_user_form"
+              method="post"
+              class="gray-box">
+              {% csrf_token %}
 
-          {% include 'system/users/form.html' with form_id='update_user_form' %}
+              {% include 'system/users/form.html' with form_id='update_user_form' %}
 
-          <fieldset class="mt-3">
-            <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
-            <button type="reset" class="btn btn-secondary">Annuller</button>
-          </fieldset>
+              <fieldset class="mt-3">
+                <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
+                <button type="reset" class="btn btn-secondary">Annuller</button>
+              </fieldset>
 
-        </form>
+            </form>
+        {% endif %}
       </div>
     </div>
   </div>
