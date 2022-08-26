@@ -24,7 +24,7 @@ Sikkerhedsregler
                         {{ sp.name }}
                     </a>
                     {% ifequal sp selected_security_problem %}
-                        {% if selected_security_problem.is_delete_allowed %}
+                        {% if user.is_superuser or user_type_for_site == 2 %}
                             <a class="item-list-deletable material-icons"
                                href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/"
                                title="Slet sikkerhedsregel">

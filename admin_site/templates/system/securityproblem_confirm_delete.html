@@ -1,0 +1,37 @@
+{% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
+
+{% block specific_title %}
+Slet sikkerhedsregel: {{ securityproblem.name }}
+{% endblock %}
+
+{% block specific_content %}
+  <div class="container-fluid main">
+    <div class="alert alert-danger">
+      <h3>Bemærk</h3>
+      <ul>
+        <li>
+          Hvis en <strong>Sikkerhedsregel</strong> slettes, vil de relaterede <strong>Sikkerhedshændelser</strong>
+          også blive slettet.
+        </li>
+        <li>
+          Tilknyttede <strong>Grupper</strong>, <strong>Sikkerhedsscript</strong> og <strong>E-mail-modtagere</strong>
+          vil blive fjernet fra <strong>Sikkerhedsreglen</strong>.
+        </li>
+        <li>
+          Selve <strong>Grupperne</strong>, <strong>Sikkerhedsscriptet</strong> og <strong>E-mail-modtagerne</strong>
+          vil <strong>IKKE</strong> blive slettet.
+        </li>
+      </ul>
+    </div>
+    <p>Er du sikker på, du ønsker at slette Sikkerhedsreglen
+    <strong style="font-size: 1.25em;">{{ securityproblem.name }}</strong>?</p>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input class="btn btn-danger" type="submit" value="Bekræft sletning">
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annullér</a>
+    </form>
+  </div>
+{% endblock %}
