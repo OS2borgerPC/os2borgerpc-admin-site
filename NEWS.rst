@@ -3,7 +3,7 @@ Version 5.8.1, August 26, 2022
 
 New in this version:
 
-- Make it possible to delete SecurityProblem's / SecurityRules
+- Make it possible to delete SecurityProblems / SecurityRules
 - Fix a small bug when adding a new checkbox parameter, so it starts with
   mandatory off, as otherwise the checkbox won't accept not being "checked"
   (it will only have one state)
