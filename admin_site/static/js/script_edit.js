@@ -62,6 +62,7 @@
                 data
             ))
             elem.find('select').val(data['value_type'])
+            elem.find('select')[0].addEventListener("change", type_check)
             elem.insertBefore(container.find('tr.script-input-add').first())
             this.updateInputNames(id)
         },
@@ -98,7 +99,6 @@ $("#parameters-tab").on("click", function() {
     checkboxes = document.getElementsByClassName("mandatory-input")
     input_types = document.getElementsByClassName("type-input")
     for (const [index, input_type] of Object.entries(input_types)) {
-        input_type.addEventListener("change", type_check)
         if (input_type.value == "BOOLEAN") {
             checkboxes[index].disabled = true
         }
