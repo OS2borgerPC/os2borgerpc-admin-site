@@ -1211,11 +1211,12 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         context["create_form"].setup_usertype_choices(
             loginusertype, request_user.is_superuser
         )
-        context[
-            "user_type_for_site"
-        ] = request_user.bibos_profile.sitemembership_set.get(
-            site_id=site.id
-        ).site_user_type
+        if not request_user.is_superuser:
+            context[
+                "user_type_for_site"
+            ] = request_user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
         return context
 
     def get_form_kwargs(self):
