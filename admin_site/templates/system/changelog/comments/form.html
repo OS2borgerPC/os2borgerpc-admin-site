@@ -3,7 +3,12 @@
     <input type="hidden" name="changelog" value="{{ entry.pk }}">
     <input type="hidden" name="user" value="{{ user.pk }}">
     <input type="hidden" name="parent_comment" value="{{ parent }}">
-    <input id="comment-content-{{ entry.pk }}" name="content" class="form-control" placeholder="{% if parent %}Skriv et svar{% else %}Skriv en kommentar{% endif %}" required type="text" style="margin-bottom: 0.5rem;">
-    <input class="btn btn-primary" type="submit" value="Tilføj kommentar">
-    <input class="btn btn-secondary" type="reset" value="Annuller" {% if parent %}onclick="toggleCommentForm({{ parent }})"{% endif %}>
-</form>
+    {% if user.username %}
+        <input id="comment-content-{{ entry.pk }}" name="content" class="form-control" placeholder="{% if parent %}Svar til {{ comment.parent_comment.user }}{% else %}Skriv en kommentar{% endif %}" required type="text" style="margin-bottom: 0.5rem;">
+        <input class="btn btn-primary" type="submit" value="Tilføj kommentar">
+        <input class="btn btn-secondary" type="reset" value="Annuller" {% if parent %}onclick="toggleCommentForm({{ parent }})"{% endif %}>
+    </form>
+    {% else %}
+    </form>
+    <a href="/?next=changes"><button class="btn btn-primary">Log venligst ind for at kommentere</button> </a>
+    {% endif %}

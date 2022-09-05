@@ -8,7 +8,7 @@
         {% if comment.parent_comment %}
             <!-- if a comment IS a reply to another comment, hide it's children with a toggle button. 
                 This should make it so that only root comments and the first reply to them are displayed -->
-            <button onclick="toggleCommentChildren({{ comment.pk }}, {{ comment.comment_children.count }})" class="btn" id="comment-children-toggle-button-{{ comment.pk }}">
+            <button style="width: 10rem; display: inline;;" onclick="toggleCommentChildren({{ comment.pk }}, {{ comment.comment_children.count }})" class="btn" id="comment-children-toggle-button-{{ comment.pk }}">
                 Vis {{ comment.comment_children.count }} svar
             </button>
             <div style="display: none;" id="comment-children-{{ comment.pk }}">
@@ -20,7 +20,7 @@
     {% endif %}
     <!-- Have the reply form be hid unless the toggle button is clicked -->
     {% if user.username %}
-    <button id="reply-toggle-button-{{ comment.pk }}" class="btn btn-primary" onclick="toggleCommentForm({{ comment.pk }})">Svar på kommentar</button>
+    <button id="reply-toggle-button-{{ comment.pk }}" class="btn btn-primary" style="width: 5rem;" onclick="toggleCommentForm({{ comment.pk }})">Svar</button>
     <div style="display: none;" id="reply-form-{{ comment.pk }}">
         {% include 'system/changelog/comments/form.html' with parent=comment.pk %}
     </div>

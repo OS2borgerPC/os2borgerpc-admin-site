@@ -325,6 +325,8 @@ MARKDOWNX_MARKDOWN_EXTENSIONS = [
     "markdown.extensions.extra",
 ]
 
+MARKDOWNX_IMAGE_MAX_SIZE = {"size": (800, 800), "quality": 90}
+
 # This specifies where uploaded media (images) are stored
 MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 

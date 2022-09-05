@@ -86,3 +86,7 @@ nav.pagination-wrapper {
 .page-item.active > .page-link{
   background-color: rgb(0,0,0,0.3);
 }
+
+.filtersearch {
+  margin: 1.5rem;
+}

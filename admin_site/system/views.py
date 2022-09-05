@@ -3,6 +3,7 @@ import os
 import json
 from datetime import datetime
 from functools import cmp_to_key
+from re import search
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse
@@ -1925,7 +1926,15 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 class ChangelogListView(ListView):
     template_name = "system/changelog/list.html"
 
-    def get_queryset(self):
+    def get_queryset(self, filter=None):
+        if filter:
+            return Changelog.objects.filter(
+                Q(author__icontains=filter)
+                | Q(title__icontains=filter)
+                | Q(content__icontains=filter)
+                | Q(description__icontains=filter)
+                | Q(version__icontains=filter)
+            ).order_by("-created")
         return Changelog.objects.all().order_by("-created")
 
     def get_paginated_queryset(self, queryset, page):
@@ -1933,7 +1942,7 @@ class ChangelogListView(ListView):
         if not page:
             page = 1
 
-        paginator = Paginator(queryset, 2)
+        paginator = Paginator(queryset, 5)
         page_obj = paginator.get_page(page)
 
         return page_obj
@@ -1945,8 +1954,17 @@ class ChangelogListView(ListView):
 
         context["page"] = self.request.GET.get("page")
 
-        # Get all entries that are global or assigned to the specific site
-        queryset = self.get_queryset()
+        # Get the search query (if any) and filter the queryset based on that
+        search_query = self.request.GET.get("search")
+
+        if search_query:
+            queryset = self.get_queryset(search_query)
+        else:
+            queryset = self.get_queryset()
+
+        # Filter the queryset based on which site is viewing the site if the slug is
+        # 'global' it means the user is not logged in and therefore needs a different
+        # context
         if context["view"].kwargs.get("slug") != "global":
             context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
             context["site_extension"] = "site_with_navigation.html"
@@ -1957,7 +1975,7 @@ class ChangelogListView(ListView):
             context["global_view"] = True
             queryset = queryset.filter(site=None)
 
-        # This checks if there's a filter applied
+        # Get the tag filter (if any) and filter the queryset accordingly
         context["tag_filter"] = self.request.GET.get("tag")
 
         if context["tag_filter"]:
@@ -1967,9 +1985,12 @@ class ChangelogListView(ListView):
         # Paginate the queryset and add it to the context
         context["entries"] = self.get_paginated_queryset(queryset, context["page"])
 
+        # Add all comments that belong to the entries on the current page to the
+        # context
         context["comments"] = ChangelogComment.objects.filter(
             Q(changelog__in=context["entries"].object_list) & Q(parent_comment=None)
         ).order_by("-created")
+
         return context
 
     def post(self, request, *args, **kwargs):
