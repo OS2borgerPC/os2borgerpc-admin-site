@@ -10,29 +10,39 @@
                 <hr class="meta-data-separator">
                 <div class="meta-info">
                     <p class="meta-header">
-                    <small><strong class="text-muted">
-                        Nyhedskategorier
-                    </strong></small>
+                        <small><strong class="text-muted">
+                            Nyhedskategorier
+                        </strong></small>
                     </p>
                     <p class="meta-tags">
                     {% for tag in entry.get_tags %}
-                        <span class='tag badge bg-primary text-white'> {{ tag.name }} </span>
+                    <a href="?tag={{ tag.pk }}">
+                        <button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="{{ tag.pk }}" name="{{ tag.id }}">{{ tag.name }}</button>
+                    </a>
                     {% endfor %}
                     </p>
                     <p class="meta-header">
-                    <small>
-                    <strong class="text-muted">Relateret til version</strong><br/>
-                    </small>
-                    <span class="badge bg-primary">{{ entry.version }}</span>
+                        <small>
+                            <strong class="text-muted">Relateret til version</strong><br/>
+                        </small>
+                        <a href="?search={{ entry.version }}">
+                            <span class="badge bg-primary">{{ entry.version }}</span>
+                        </a>
+                    </p>
+                    <p class="meta-header">
+                        <small>
+                            <strong class="text-muted">Skrevet af</strong><br/>
+                        </small>
+                        <a href="?search={{ entry.author }}">
+                            <span class="badge bg-primary">{{ entry.author }}</span>
+                        </a>
                     </p>
                 </div>
             </div>
 
             <div class="comment-container">
                 <h3 class="text-muted">Kommentarer</h3>
-                {% if user.username %}
                     {% include 'system/changelog/comments/form.html' with parent=None %}
-                {% endif %}
                 
                 {% include 'system/changelog/comments/list.html' with comments=comments %}
             </div>

@@ -1029,10 +1029,6 @@ class Changelog(models.Model):
         Site, related_name="changelogs", null=True, blank=True, on_delete=models.CASCADE
     )
 
-    def breakp(self):
-
-        breakpoint()
-
     def get_tags(self):
         return self.tags.values("name", "pk")
 
@@ -1063,7 +1059,7 @@ class ChangelogComment(models.Model):
         null=True,
         blank=True,
         related_name="comment_children",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
     )
 
     def get_user(self):
