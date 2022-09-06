@@ -61,7 +61,11 @@
                 'script-input',
                 data
             ))
+            elem.find('input.mandatory-input')[0].checked = elem.find('input.mandatory-input')[0].value != "false"
             elem.find('select').val(data['value_type'])
+            if (elem.find('select')[0].value == "BOOLEAN") {
+                elem.find('input.mandatory-input')[0].disabled = true
+            }
             elem.find('select')[0].addEventListener("change", type_check)
             elem.insertBefore(container.find('tr.script-input-add').first())
             this.updateInputNames(id)
@@ -92,21 +96,6 @@
 /* Syntax highlighting */
 const code = document.getElementById("script-code")
 hljs.highlightElement(code)
-
-$("#parameters-tab").on("click", function() {
-    /* This function is called when the tab "Inputparametre" is clicked. It ensures that the correct mandatory
-    checkboxes are checked in advance and sets up the event listeners for changes in the input types. */
-    checkboxes = document.getElementsByClassName("mandatory-input")
-    input_types = document.getElementsByClassName("type-input")
-    for (const [index, input_type] of Object.entries(input_types)) {
-        if (input_type.value == "BOOLEAN") {
-            checkboxes[index].disabled = true
-        }
-    }
-    for (const checkbox of checkboxes) {
-        checkbox.checked = checkbox.value != "false"
-    }
-})
 
 function type_check(event) {
     /* The index of the relevant input line is extracted from the name of the triggering event,
