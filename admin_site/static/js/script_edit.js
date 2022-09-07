@@ -107,10 +107,19 @@ function type_check(event) {
     if (event.target.value == "BOOLEAN") {
         checkboxes[index].checked = false
         checkboxes[index].disabled = true
-        checkboxes[index].value = "false"
     } else {
         checkboxes[index].disabled = false
         checkboxes[index].checked = true
-        checkboxes[index].value = "true"
     }
+}
+
+function script_refresh(saved_script_inputs) {
+    const active_script_inputs = document.getElementsByClassName("script-input")
+    $( "#details" ).load(window.location.href + " #details")
+    document.getElementById( "id_executable_code" ).value = ""
+    while ( active_script_inputs.length > 1 ) {
+        $(active_script_inputs[1]).remove()
+    }
+    $.each( saved_script_inputs, function() {
+      BibOS.ScriptEdit.addInput('#script-inputs', this)})
 }
