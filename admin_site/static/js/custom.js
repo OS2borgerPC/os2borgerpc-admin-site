@@ -245,6 +245,7 @@ var BibOS
 
       var t = this
 
+      // JOBINFOBUTTON
       $(rootElem).find('.jobinfobutton').on('show.bs.popover', function(e) {
         // hide all popovers before a new popover is shown.
         popoverTriggerList.map(function (popoverTriggerEl) {
@@ -291,6 +292,18 @@ var BibOS
           // set content from backend data and redraw popover.
           triggerElem.attr("data-bs-content", data)
           popover.setContent()
+
+          const parser = new DOMParser();
+          const dataHTML = parser.parseFromString(data, 'text/html');
+
+          const jobLog = dataHTML.getElementById("preTagWithJobLogOutput").innerText
+
+          addEventListenerForOneClipBoardButton('clipboardButtonTop', jobLog)
+          addEventListenerForOneClipBoardButton('clipboardButton', jobLog)
+
+          addEventListenerForCloseButton()
+
+          addEventListenerForRestartButton()
         },
         'error': function() {
         }
@@ -303,7 +316,7 @@ var BibOS
   b.init()
   $(function() { b.onDOMReady() })
 
-  // Setup support for CSRFToken in ajax calls
+  //(Setup support for CSRFToken in ajax calls
   $.ajaxSetup({
     beforeSend: function(xhr, settings) {
       if (!b.csrfSafeMethod(settings.type) && b.sameOrigin(settings.url)) {
@@ -353,4 +366,151 @@ function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function addEventListenerForOneClipBoardButton(buttonId, log) {
+  const btn = document.getElementById(buttonId)
+
+  btn.addEventListener('click', () => {
+    navigator.clipboard.writeText(log)
+
+    let openPopoversList = document.getElementsByClassName('popover bs-popover-start')
+
+    let popoverIsClosed = openPopoversList.length < 1
+
+    if (popoverIsClosed) {
+      // TODO: Kunne måske laves om til en popover med besked om at joblog er kopieret og som selv lukker efter 2 sekunder
+      document.getElementById('messageForUserSpan' + buttonId).innerText = 'Log kopieret'
+
+      setTimeout(() => {
+        document.getElementById('messageForUserSpan' + buttonId).innerText = ''
+      }, 1500)
+    }
+    else {
+      // Det her er kun til når der er en popover og der trykkes på kopier log knappen
+      document.getElementById('spanTagWithTextDisplayedWhenLogIsCopied').setAttribute("style", "visibility: visible;")
+      document.getElementById('spanTagWithTextDisplayedWhenLogIsCopied').setAttribute("class", "fade-in ps-3")
+      setTimeout(() => {
+        if (document.getElementById('spanTagWithTextDisplayedWhenLogIsCopied') != null) {
+          document.getElementById('spanTagWithTextDisplayedWhenLogIsCopied').setAttribute("class", "fade-out ps-3")
+        }
+      }, 2000)
+
+    }
+
+  })
+
+}
+
+
+// ClipboardCopyButtons er kopier joblog knapperne i jobs oversigten og ikke dem i popover'en
+// Skal først køre når listen er indlæst, kan jeg lave en callback fra den funktion der indlæser listen?
+async function addEventListenersToAllClipboardCopyButtons() {
+  setTimeout(async () => {
+    let clipboardCopyButtons = document.getElementsByClassName('clipboardCopyButtons')
+
+    for (let i = 0; i < clipboardCopyButtons.length; i++) {
+      const element = clipboardCopyButtons[i]
+
+      let id = parseInt( element.getAttribute("id") )
+
+      await getLogForJob(id)
+    }
+
+  }, 500)  // skal af med denne setTimeout, så snart jeg ved hvor jeg skal kalde funktionen fra, listen er printet til siden
+}
+
+// For at alle ClipboardCopyButtons, kopier joblog knapperne i jobs oversigten, virker på den første side
+addEventListenersToAllClipboardCopyButtons()
+
+async function getLogForJob(id) {
+
+  let url = location.href.match(/^(https?:\/\/[^\/]+\/site\/[^\/]+\/)/)
+  if (url) {
+    url = url[1] + 'jobs/' + id + '/info/'
+
+    // er det okay at den kommer ind i if betingelsen eller bør den være udenfor ligesom ajax'en???
+    fetch(url)
+    .then((response) => response.text())
+    .then((data) => {
+
+      const parser = new DOMParser();
+      const dataHTML = parser.parseFromString(data, 'text/html');
+
+      const jobLog = dataHTML.getElementById("preTagWithJobLogOutput").innerText
+
+      addEventListenerForOneClipBoardButton(id, jobLog)
+
+      return jobLog
+
+    });
+
+
+  } else {
+    return false
+  }
+}
+
+
+
+function addEventListenerForCloseButton () {
+
+  const btn = document.getElementById('closePopoverButton')
+
+  btn.addEventListener('click', () => {
+    closePopover()
+  })
+
+
+}
+
+
+function closePopover() {
+
+  let openPopoversList = document.getElementsByClassName('popover bs-popover-start') // denne giver kun den popover der er åben
+
+  $(openPopoversList[0]).popover('hide') // der er kun en popover, derfor kan jeg bruge det første element i listen
+}
+
+
+function addEventListenerForRestartButton() {
+
+  const buttonList = document.getElementsByClassName('restartJobButton') // buttonList har kun en restart knap i sig, da der kun er en popover ad gangen
+
+  // Der tjekkes om der overhovedet er en restart knap, for hvis der ikke er det har man jo ikke brug for en eventListener
+  if (buttonList.length > 0) {
+    const btn = buttonList[0]
+
+    let id = parseInt( btn.getAttribute("id") ) / 100 // dividér med 100 mht id'et. Skal forbedres *******
+
+    const link = makeLinkForRestartJobButton(id)
+
+    btn.addEventListener('click', () => {
+      window.location.assign(link)
+    })
+  }
+
+}
+
+
+
+function makeLinkForRestartJobButton(id) {
+  let url = location.href.match(/^(https?:\/\/[^\/]+\/site\/[^\/]+\/)/)
+  if (url) {
+    url = url[1] + 'jobs/' + id + '/restart/'
+    return url
+  }
+}
+
+
+function makeRestartButtonIfJobFailed(jobObject) {
+
+  // Det her bør nok laves på en anden måde
+  if (jobObject.status === 'Fejlet') {
+    return `<span id='${jobObject.pk * 100}' title='Genstart job' class='restartJobButton material-icons fs-3'>refresh</span>`
+  }
+  else {
+  return ""
+  }
+
 }
