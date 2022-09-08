@@ -1,8 +1,7 @@
 {% load i18n %}
 
 {% if job.failed %}
-    <div>
-        <a class="btn btn-primary" href="{% url 'restart_job' site.uid job.pk %}">
+        <a class="btn btn-primary me-3" href="{% url 'restart_job' site.uid job.pk %}">
             <span class="d-flex align-items-center">
                 <span class="material-icons">
                     refresh
@@ -10,11 +9,19 @@
                 {% translate "Restart job" %}
             </span>
         </a>
-    </div>
+        <br>
 {% endif %}
 {% if job.log_output %}
+    <span title='Kopier til udklipsholderen' id='clipboardButton' class="d-flex justify-content-center btn btn-primary">
+        <span class='d-flex align-items-left material-icons'>content_copy</span>
+        <span id='clipboardButtonText' class="d-flex align-items-right">
+       Kopier til udklipsholderen
+      </span>
+   </span>
+   <span id="spanTagWithTextDisplayedWhenLogIsCopied" class="ps-3">Log kopieret til udklipsholderen</span>
   <div class="job-output">
     <p class="mt-3">{% translate "Log output" %}</p>
-    <pre class='bg-light job-output-pre'>{{job.log_output|escape}}</pre>
+    <pre id="preTagWithJobLogOutput" class='bg-light job-output-pre'>{{job.log_output|escape}}</pre>
   </div>
+
 {% endif %}

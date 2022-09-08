@@ -6353,7 +6353,7 @@
     "pk": 1,
     "fields": {
         "status": "NEW",
-        "log_output": "",
+        "log_output": "I found my drill",
         "created": "2020-11-30T18:15:43.997",
         "started": null,
         "finished": null,
@@ -6367,7 +6367,7 @@
     "pk": 2,
     "fields": {
         "status": "NEW",
-        "log_output": "",
+        "log_output": "On Blueberry Hill",
         "created": null,
         "started": null,
         "finished": null,
@@ -6381,7 +6381,7 @@
     "pk": 3,
     "fields": {
         "status": "NEW",
-        "log_output": "",
+        "log_output": "The moon stands still.\n on blueberry hill",
         "created": null,
         "started": null,
         "finished": null,
@@ -6409,7 +6409,7 @@
     "pk": 5,
     "fields": {
         "status": "NEW",
-        "log_output": "",
+        "log_output": "qwertyuiopåäsdfghjklæø'zxcvbnm,.-wertyuiopsdfghjklxcvbnm,dcnjdsnkjsdnckjcnncjkdsnckjndskcjdskjnckjdsncjkdsnckjdsckscndskjcnjkdscksnjdcsnsdnjcnjskdnjcnjcs sdkjcndsdscndsnckjdsnckjnds ndskdsjncksnkcdsnc",
         "created": null,
         "started": null,
         "finished": null,
@@ -9559,7 +9559,7 @@
     "pk": 238,
     "fields": {
         "status": "NEW",
-        "log_output": "",
+        "log_output": "Job imported at 2023-02-22 09:56:36.453980\n>>> Starting process '/var/lib/os2borgerpc/jobs/255106/executable' with arguments [True, True] at 2023-02-22 09:56:36.465927\n+ KIOSK=True\n+ INCOG=True\n+ LAUNCH_FILE=/usr/share/os2borgerpc/bin/start_chromium.sh\n+ POLICY_FILE=/var/snap/chromium/current/policies/managed/os2borgerpc-defaults.json\n+ POLICY_NAME_INCOG=IncognitoModeAvailability\n+ sed --in-place s/--kiosk//g /usr/share/os2borgerpc/bin/start_chromium.sh\n+ [ True = True ]\n+ sed --in-place s/KIOSK=''/KIOSK='--kiosk'/ /usr/share/os2borgerpc/bin/start_chromium.sh\n+ sed --in-place /IncognitoModeAvailability/d /var/snap/chromium/current/policies/managed/os2borgerpc-defaults.json\n+ [ True = True ]\n+ sed --in-place\n2i'IncognitoModeAvailability': 2, /var/snap/chromium/current/policies/managed/os2borgerpc-defaults.json\n>>> Succeeded at 2023-02-22 09:56:36.539923",
         "created": "2022-06-09T14:58:25.727",
         "started": null,
         "finished": null,

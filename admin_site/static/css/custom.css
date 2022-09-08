@@ -100,6 +100,62 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 /* Layout helpers */
 .inline {display: inline}
 
+.clipboardCopyButtonsDiv {
+  cursor: pointer;
+}
+
+.restartJobButton {
+  cursor: pointer;
+}
+
+#closePopoverButton {
+  cursor: pointer;
+}
+
+#buttonDiv {
+  float: right; 
+}
+
+.spanDiv {
+  cursor: pointer;
+}
+
+#jobInfoCloseButton {
+  float: right; 
+}
+
+#spanTagWithTextDisplayedWhenLogIsCopied {
+  visibility: hidden;
+}
+
+.fade-in {
+  animation: fadeIn ease 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut ease 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 
 @media screen and (max-width: 1535px) {
   /* Make jobs and computer -> jobs look decent down until around 1080px width */
