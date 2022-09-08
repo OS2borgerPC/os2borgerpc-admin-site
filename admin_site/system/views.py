@@ -1716,6 +1716,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                         else ""
                     ),
                     "summary": event.summary,
+                    "note": event.note,
                 }
                 for event in page_obj
             ],

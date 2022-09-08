@@ -38,11 +38,11 @@ $(function(){
         appendEntries: function(dataList) {
             var container = this.elem
             $.each(dataList.results, function() {
-                var log_info_button = '<button ' +
+                var info_button = '<button ' + 
                         'class="btn btn-secondary loginfobutton p-0" ' +
                         'data-bs-title="Log-info" ' +
                         'data-bs-toggle="popover" ' +
-                        'data-bs-content="' + '<span class=severity-high>' + this.problem_name + '</span>' + '<br>' + this.summary + '"' +
+                        'data-bs-content="' + '<strong>Note: </strong><br>' + this.note + '<br><strong>Log output: </strong><br><span class=severity-high>' + this.problem_name + '</span>' + '<br>' + this.summary + '"' + 
                         'data-bs-html=true ' +
                         'data-bs-placement=left ' +
                         'data-bs-trigger="click" ' +
@@ -55,10 +55,10 @@ $(function(){
                 var item = $(BibOS.expandTemplate(
                     'securityevent-entry',
                     $.extend(this, {
-                        "log_info_button": log_info_button,
                         'pc_link' : pc_link,
                         'problem_link': problem_link,
                         'assigned_user_link': assigned_user_link,
+                        'info_button': info_button,
                     })
                 ))
                 item.attr('event-id', this.pk)
