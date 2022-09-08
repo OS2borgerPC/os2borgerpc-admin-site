@@ -1,7 +1,12 @@
 {% extends site_extension %}
 
-{% block specific_title %}
-Nyheder
+{% block header_title %}
+
+{% if site %}
+{{site}}: Nyheder
+{% else %}
+OS2borgerPC: Nyheder
+{% endif %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -14,9 +19,6 @@ Nyheder
     <script type="text/javascript" src="/static/js/changelog_list.js"></script>
 {% endblock %}
 
-{% block header_title %}
-    OS2borgerPC nyhedsopslag
-{% endblock %}
 
 {% block globalnav %}
     {% if global_view %}
