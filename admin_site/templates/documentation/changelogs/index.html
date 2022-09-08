@@ -1,0 +1,52 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+    <h1>Nyhedssiden</h1>
+    
+    <p>
+        Nyhedssiden har til formål at samle og fremvise indholdet af nye opdateringer i OS2borgerPC. <br>
+        På siden er det muligt at: <br>
+        <ul>
+            <li>Se en liste over opslag, med en kort forklaring</li>
+            <li>Sortere opslag efter kategori</li>
+            <li>Søge efter opslag</li>
+            <li>Læse opslag</li>
+            <li>Kommentere på hvert opslag med den bruger man er registreret på adminsitet som</li>
+        </ul>
+    </p>
+
+    <hr>
+    <h2>Liste af opslag</h2>
+    <p>
+        Når man går ind på nyhedssiden vil man blive præsenteret med en liste af opslag sorteret med de nyeste opslag først. <br>
+        Hvert opslag på listen har en kort opsummering af opdateringens indhold, samt en dato for hvornår det er blevet slået op.
+    </p>
+    <hr>
+    <h2>Sortering af opslag</h2>
+    <p>
+        Hvert opslag har en eller flere kategorier som listen kan sorteres efter. Dette gøres ved at vælge den relevante kategori ud
+        fra de muligheder præsenteret i toppen af siden.
+    </p>
+    <hr>
+    <h2>Søgning efter opslag</h2>
+    <p>
+        Søgefeltet i toppen af siden kan bruges til at søge i opslagene.
+    </p>
+    <hr>
+    <h2>Detaljeret visning af et opslag</h2>
+    <p>
+        Hvert opslag kan udvides hvilket viser en mere detaljeret forklaring af opdateringen. <br>
+        <img height="500px" src="/static/docs/img/changelogs/1.png"><br>
+        <img height="500px" src="/static/docs/img/changelogs/2.png"><br>
+    </p>
+    <hr>
+    <h2>Kommentarer på opslag</h2>
+    <p>
+        Såfremt man er logget ind på sitet, vil man kunne tilføje kommentarer på et opslag. <br>
+        <img src="/static/docs/img/changelogs/3.png"><br>
+        Når man tilføjer en kommentar vil ens brugernavn fremgå over kommentaren <br>
+        <img src="/static/docs/img/changelogs/4.png"><br>
+        Kommentarer kan også blive besvaret både af Magentas ansatte samt alle brugere tilmeldt et site. <br>
+        <img src="/static/docs/img/changelogs/5.png"><br>
+    </p>
+{% endblock %}

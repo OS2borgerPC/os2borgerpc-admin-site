@@ -4,7 +4,9 @@ import os
 import configparser
 import logging
 import django
+
 from google.oauth2 import service_account
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -225,6 +227,7 @@ THIRD_PARTY_APPS = (
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
+    "markdownx",
 )
 
 DJANGO_APPS = (
@@ -238,6 +241,7 @@ DJANGO_APPS = (
     "django.contrib.admin",
     # Uncomment the next line to enable admin documentation:
     "django.contrib.admindocs",
+    "django.forms",
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -312,3 +316,18 @@ CITIZEN_LOGIN_VALIDATOR = settings.get(
 CICERO_URL = settings.get("CICERO_URL")
 CICERO_USER = settings.get("CICERO_USER")
 CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
+
+# All Python Markdown's officially supported extensions can be added here without
+# any extra setup.
+# Third-party extensions can also be imported and used, asuming they (and their
+# dependencies) are installed.
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    "markdown.extensions.extra",
+]
+
+MARKDOWNX_IMAGE_MAX_SIZE = {"size": (800, 800), "quality": 90}
+
+# This specifies where uploaded media (images) are stored
+MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"

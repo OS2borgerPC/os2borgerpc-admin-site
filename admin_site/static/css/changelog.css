@@ -1,0 +1,92 @@
+/* Changelog */
+.changelogitem {
+  min-width: 10rem;
+  max-width: 60rem;
+  border-top: solid 1px #aaa;
+  padding-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.changelog-detail {
+  padding: 1.5rem;
+}
+
+.changelog-container {
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+}
+
+.meta-info {
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.meta-data-separator {
+  border-color: #ccc;
+  width: 20%;
+}
+
+nav.pagination-wrapper {
+  margin-top: 35px!important;
+  background: transparent;
+}
+
+.meta-spacing {
+  padding: 12px;
+}
+
+.news-icon {
+  font-size: 2.0rem;
+}
+
+.comment-container {
+  padding: 1.5rem;
+}
+
+.comment-card {
+  min-height: 4rem;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.comment-children {
+  display: none;
+}
+
+/* Search */
+#changelog-container header {
+  padding-top: 2rem;
+  padding-left: 1.5rem;
+}
+
+.badge {
+  font-size: 0.9em;
+}
+
+.tag:not(:first-of-type) {
+  margin-left: 5px;
+}
+
+.timestamp-created, #tags-title {
+  text-transform: uppercase;
+}
+
+#changelogsearch-filterform {
+  padding-top: 1.0rem;
+}
+
+.meta-header {
+  margin-bottom: 0.2rem;
+}
+
+.meta-tags {
+  margin-bottom: 0.5rem;
+}
+
+.page-item.active > .page-link{
+  background-color: rgb(0,0,0,0.3);
+}
+
+.filtersearch {
+  margin: 1.5rem;
+}

@@ -302,9 +302,9 @@ var BibOS
 })($)
 
 /* Utility function to calculate some pagination numbers */
-function calcPaginationRange(pag_data) {
-  const first = ((pag_data.page - 1) * 20 ) + 1
-  const last = ((pag_data.page - 1) * 20 ) + pag_data.results.length
+function calcPaginationRange(pag_data, obj_per_page) {
+  const first = ((pag_data.page - 1) * obj_per_page ) + 1
+  const last = ((pag_data.page - 1) * obj_per_page ) + pag_data.results.length
   const range = first + "-" + last + " af " + pag_data.count
   return range
 }

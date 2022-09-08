@@ -9,6 +9,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
+from markdownx import urls as markdownx
+
 admin.autodiscover()
 
 urlpatterns = [
@@ -22,6 +24,7 @@ urlpatterns = [
     url("admin/doc/", include("django.contrib.admindocs.urls")),
     # Uncomment the next line to enable the admin:
     url(r"^admin/", admin.site.urls),
+    url("markdownx/", include(markdownx)),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
