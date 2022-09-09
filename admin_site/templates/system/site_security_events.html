@@ -71,12 +71,12 @@ Sikkerhedshændelser
         <td><input type="checkbox" onchange="selectEvent(this)"/></td>
         <td><span class="badge badge-#LEVEL_LABEL#">#LEVEL#</span></td> 
         <td><strong>#PROBLEM_LINK#</strong></td>
+        <td>#INFO_BUTTON#</td>
         <td><strong>#PC_LINK#</strong></td>
         <td>#OCCURRED#</td>
         <td>#REPORTED#</td>
         <td><span class="badge #STATUS_LABEL#">#STATUS#</span></td>
         <td>#ASSIGNED_USER_LINK#</td>
-        <td>#INFO_BUTTON#</td>
       </tr>
     </tbody>
    </table>
@@ -110,12 +110,12 @@ Sikkerhedshændelser
           <th><input type="checkbox" id="all_events_toggle" autocomplete="off"/></th>
           <th>Alvorlighedsgrad</th>
           {% include 'widgets/orderby_th_ajax.html' with label='Regel' action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
+          <th>Info</th>
           <th>Maskine</th>
           <th>Hændelsestidspunkt</th>
           <th>Modtagelsestidspunkt</th>
           <th>Status</th>
           {% include 'widgets/orderby_th_ajax.html' with label='Håndteres af' action="BibOS.SecurityEventList.orderby('assigned_user__username')" slug='handleby' %}
-          <th>Info</th>
         </tr>
       </thead>
       <tbody id="securityevent-list">

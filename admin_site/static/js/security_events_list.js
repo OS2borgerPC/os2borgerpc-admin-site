@@ -38,17 +38,18 @@ $(function(){
         appendEntries: function(dataList) {
             var container = this.elem
             $.each(dataList.results, function() {
-                var info_button = '<button ' + 
+                const maybe_note = this.note? '<strong>Note sat ved håndtering: </strong><br>' + this.note : ''
+                var info_button = '<button ' +
                         'class="btn btn-secondary loginfobutton p-0" ' +
-                        'data-bs-title="Log-info" ' +
+                        'data-bs-title="Info om hændelsen" ' +
                         'data-bs-toggle="popover" ' +
-                        'data-bs-content="' + '<strong>Note: </strong><br>' + this.note + '<br><strong>Log output: </strong><br><span class=severity-high>' + this.problem_name + '</span>' + '<br>' + this.summary + '"' + 
+                        'data-bs-content="' + '<strong>Log-output fra hændelsen:</strong><br/><br/><pre class=\'p-3 bg-light\'>' + this.summary + '</pre><br/>' + maybe_note + '"' +
                         'data-bs-html=true ' +
                         'data-bs-placement=left ' +
                         'data-bs-trigger="click" ' +
                         'data-bs-animation="true" ' +
                         'data-pk="' + this.pk + '"' +
-                    '><span class="material-icons fs-3">info</span></button>'
+                    '><span class="material-icons fs-2">info</span></button>'
                 var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + '</a>'
                 var problem_link = '<a href="' + this.problem_url + '">' + this.problem_name + '</a>'
                 var assigned_user_link = '<a href="' + this.assigned_user_url + '">' + this.assigned_user + '</a>'
@@ -200,10 +201,10 @@ function updateCounter() {
     selectedEvents = document.getElementsByClassName("selected").length
     totalEvents = document.getElementsByClassName("click-list--item").length - 1
     handleButton = document.getElementById("handle-event-button")
-    
+
     // Updates the text on the button to show how many (if any) events have been selected
     handleButton.innerText = "Håndter " + ( selectedEvents > 0 ? selectedEvents + " ud af " + totalEvents : "") + " advarsler"
-    
+
     // Disables the button when no elements are selected
     document.getElementById("handle-event-button").disabled = ( selectedEvents == 0 )
 }
