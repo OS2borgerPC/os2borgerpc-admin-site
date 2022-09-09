@@ -36,7 +36,7 @@ ul.nav li ul li.active { font-style: italic; }
 .accordion-group {border: none; padding: 0;}
 .accordion-toggle {text-align: left;}
 .searchfilter .btn {display: block; text-align: left;}
-.popover {max-width: 65em;}
+.popover {max-width: 75em;}
 .job-output-pre {overflow: scroll; max-height: 450px;}
 .popover.bottom .arrow {left: auto; right: 30px;}
 .popover.bottom {margin: 5px 20px 0 0;}
