@@ -6,7 +6,7 @@ from functools import cmp_to_key
 from re import search
 from urllib.parse import quote
 
-from django.http import HttpResponseRedirect, Http404, JsonResponse
+from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import dateformat
@@ -62,6 +62,7 @@ from system.forms import (
     PCForm,
     SecurityProblemForm,
     ChangelogCommentForm,
+    SecurityEventForm,
 )
 
 
@@ -1619,6 +1620,12 @@ class SecurityEventsView(SiteView):
 
         if "pc_uid" in self.kwargs:
             context["pc_uid"] = self.kwargs["pc_uid"]
+
+        context["form"] = SecurityEventForm()
+        qs = context["form"].fields["assigned_user"].queryset
+        qs = qs.filter(Q(bibos_profile__sites=self.get_object()) | Q(is_superuser=True))
+        context["form"].fields["assigned_user"].queryset = qs
+
         return context
 
 
@@ -1687,6 +1694,9 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "pk": event.pk,
                     "site_uid": site.uid,
                     "problem_name": event.problem.name,
+                    "problem_url": reverse(
+                        "security_problem", args=[site.uid, event.problem.uid]
+                    ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "reported": event.reported_time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -1696,9 +1706,17 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "level_label": SecurityProblem.LEVEL_TO_LABEL[event.problem.level]
                     + "",
                     "pc_name": event.pc.name,
+                    "pc_url": reverse("computer", args=[site.uid, event.pc.uid]),
                     "assigned_user": (
                         event.assigned_user.username if event.assigned_user else ""
                     ),
+                    "assigned_user_url": (
+                        reverse("user", args=[site.uid, event.assigned_user.username])
+                        if event.assigned_user
+                        else ""
+                    ),
+                    "summary": event.summary,
+                    "note": event.note,
                 }
                 for event in page_obj
             ],
@@ -1707,35 +1725,30 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         return result
 
 
-class SecurityEventUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
+class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
+    http_method_names = ["post"]
     model = SecurityEvent
-    fields = ["assigned_user", "status", "note"]
 
-    def get_object(self, queryset=None):
+    def get_queryset(self):
+        queryset = super().get_queryset()
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
-        try:
-            return SecurityEvent.objects.get(id=self.kwargs["pk"], pc__site=site)
-        except SecurityEvent.DoesNotExist:
-            raise Http404(gettext("Security Event could not be found"))
+        params = self.request.POST
+        ids = params.getlist("ids")
+        queryset = queryset.filter(id__in=ids, pc__site=site)
 
-    def get_context_data(self, **kwargs):
-        context = super(SecurityEventUpdate, self).get_context_data(**kwargs)
-
-        qs = context["form"].fields["assigned_user"].queryset
-        qs = qs.filter(
-            Q(bibos_profile__sites=self.get_object().pc.site) | Q(is_superuser=True)
-        )
-        context["form"].fields["assigned_user"].queryset = qs
-
-        # Set fields to read-only
-        return context
+        return queryset
 
     def post(self, request, *args, **kwargs):
-        result = super(SecurityEventUpdate, self).post(request, *args, **kwargs)
-        return result
+        queryset = self.get_queryset()
+        params = self.request.POST
 
-    def get_success_url(self):
-        return reverse("security_events", args=[self.kwargs["site_uid"]])
+        status = params.get("status")
+        assigned_user = params.get("assigned_user")
+        note = params.get("note")
+
+        queryset.update(status=status, assigned_user=assigned_user, note=note)
+
+        return HttpResponse("OK")
 
 
 documentation_menu_items = [

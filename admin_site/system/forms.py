@@ -3,8 +3,17 @@ from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
-from .models import ChangelogComment, Site, PCGroup, ConfigurationEntry, PC
-from .models import Script, Input, SecurityProblem
+from system.models import (
+    Site,
+    PCGroup,
+    ConfigurationEntry,
+    PC,
+    Script,
+    Input,
+    SecurityProblem,
+    SecurityEvent,
+    ChangelogComment,
+)
 from account.models import SiteMembership
 
 
@@ -270,3 +279,9 @@ class ChangelogCommentForm(forms.ModelForm):
     class Meta:
         model = ChangelogComment
         fields = ["content"]
+
+
+class SecurityEventForm(forms.ModelForm):
+    class Meta:
+        model = SecurityEvent
+        fields = ("status", "assigned_user", "note")
