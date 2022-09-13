@@ -882,7 +882,12 @@ class ScriptRun(SiteView):
         else:
             args = []
             for i in range(0, context["script"].inputs.count()):
-                args.append(form.cleaned_data["parameter_%s" % i])
+                # Non-mandatory Integer and Date fields send "None", which causes an IntegrityError since string_value isn't null=True
+                args.append(
+                    ""
+                    if form.cleaned_data[f"parameter_{i}"] is None
+                    else form.cleaned_data[f"parameter_{i}"]
+                )
 
             context["batch"] = context["script"].run_on(
                 context["site"],
