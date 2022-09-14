@@ -39,6 +39,10 @@ table {
         }
     }
 
+    tfoot td {
+        background-color: $gray-400 !important;
+    }
+
     &.table-extendable {
         tbody tr:last-child td {
             border-radius: 0;
