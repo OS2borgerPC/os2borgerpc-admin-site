@@ -108,12 +108,12 @@ Sikkerhedshændelser
       <thead>
         <tr>
           <th><input type="checkbox" id="all_events_toggle" autocomplete="off"/></th>
-          <th>Alvorlighedsgrad</th>
+          <th>Alvorlig-<br/>hedsgrad</th>
           {% include 'widgets/orderby_th_ajax.html' with label='Regel' action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
           <th>Info</th>
           <th>Maskine</th>
-          <th>Hændelsestidspunkt</th>
-          <th>Modtagelsestidspunkt</th>
+          <th>Hændelses-<br/>tidspunkt</th>
+          <th>Modtagelses-<br/>tidspunkt</th>
           <th>Status</th>
           {% include 'widgets/orderby_th_ajax.html' with label='Håndteres af' action="BibOS.SecurityEventList.orderby('assigned_user__username')" slug='handleby' %}
         </tr>
