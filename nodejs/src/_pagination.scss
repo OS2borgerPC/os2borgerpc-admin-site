@@ -1,9 +1,17 @@
+
+
+// denne supplerer eller overskriver muligvis noget fra bootstrap
 .pagination-wrapper {
+    // background-color: $gray-200;
+    // padding: 1rem 1rem 1rem 2rem;
+    // margin: 0 0 2.5rem !important;
+
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     border-radius: 0 0 .33rem .33rem;
+    // den ovenstående linje gør vist ikke noget, pagination-wrapper'en er kommet ind i en <tr> og en <tfoot>
 
     .pagination {
         margin: 0;
@@ -21,7 +29,18 @@
     cursor: pointer;
 }
 
+.page-item.active .page-link {
+    z-index: 3;
+    color: #222;
+    background-color: transparent;
+    border-color: #ddd;
+}
+
+  li.page-item.disabled {
+    visibility: hidden;
+  }
+
 .page-link {
-    background: $gray-400!important;
-    color: $black!important;
+    background: $gray-400;
+    color: $black;
 }

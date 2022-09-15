@@ -159,7 +159,11 @@ OS2borgerPC: Nyheder
                 {% if entries.number == i %}
                     <li class="page-item active" aria-current="page">
                         <span class="page-link">
-                            {{ i }}
+                            <strong>
+                                <u>
+                                    {{ i }}
+                                </u>
+                            </strong>
                         </span>
                     </li>
                 {% elif i > entries.number|add:'-5' and i < entries.number|add:'5' %}

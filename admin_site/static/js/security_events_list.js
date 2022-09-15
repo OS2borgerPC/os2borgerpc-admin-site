@@ -118,7 +118,7 @@ $(function(){
 
             data.page_numbers.forEach(function(page) {
                 if (data.page == page) {
-                    item = $('<li class="page-item active"><a class="page-link">' + page + '</a></li>')
+                    item = $('<li class="page-item active"><a class="page-link"><strong><u>' + page + '</u></strong></a></li>')
                 }
                 else {
                     item = $('<li class="page-item"><a class="page-link">' + page + '</a></li>')
