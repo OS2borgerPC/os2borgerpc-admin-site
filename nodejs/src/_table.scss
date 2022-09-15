@@ -21,7 +21,7 @@ table {
             }
 
             &:hover {
-                background-color: $orange !important; 
+                background-color: $orange !important;
                 color: $white;
             }
         }
@@ -41,6 +41,7 @@ table {
 
     tfoot td {
         background-color: $gray-400 !important;
+        border-radius: 0 0 .33rem .33rem;
     }
 
     &.table-extendable {
