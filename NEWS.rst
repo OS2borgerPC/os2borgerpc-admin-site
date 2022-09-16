@@ -1,4 +1,4 @@
-Version 5.9.0, September 13, 2022
+Version 5.9.0, September 16, 2022
 ---------------------------------
 
 New in this version:
@@ -9,6 +9,7 @@ New in this version:
 - Fix bug where input parameters were set back to mandatory unintentionally
 - Fix bug where a date or an integer input parameters couldn't be set to 
   optional as it caused a server error
+- Globals scripts page is now loaded by default instead of local scripts
 
 Version 5.8.1, August 26, 2022
 ------------------------------
