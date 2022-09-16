@@ -36,7 +36,7 @@ ul.nav li ul li.active { font-style: italic; }
 .accordion-group {border: none; padding: 0;}
 .accordion-toggle {text-align: left;}
 .searchfilter .btn {display: block; text-align: left;}
-.popover {max-width: 65em;}
+.popover {max-width: 75em;}
 .job-output-pre {overflow: scroll; max-height: 450px;}
 .popover.bottom .arrow {left: auto; right: 30px;}
 .popover.bottom {margin: 5px 20px 0 0;}
@@ -50,12 +50,16 @@ ul.nav li ul li.active { font-style: italic; }
 .script-list { list-style-type:none; margin-left:0; }
 .script-list li:hover { cursor:pointer; background-color: var(--bs-gray); }
 
+.selected > td{ background-color: var(--bs-cyan); }
+
 /* Forms */
 
 input.phantom { display: none; }
 input.invalid { border: 1px solid var(--bs-danger); }
 #job-list .btn-secondary { border: none; background: none; }
 #job-list tr { vertical-align: middle; }
+#securityevent-list .btn-secondary { border: none; background: none; }
+#securityevent-list tr { vertical-align: middle; }
 
 /* Lists */
 

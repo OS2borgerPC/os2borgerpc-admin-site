@@ -1,8 +1,9 @@
 crispy-bootstrap5==0.6
-Django==3.2.14
+Django==3.2.15
 django-crispy-forms==1.14.0
 django-extensions==3.2.0
 ipython==8.4.0
+django-markdownx==3.0.1
 django-storages==1.12.3
 django-xmlrpc==0.1.8
 google-api-core==2.8.2

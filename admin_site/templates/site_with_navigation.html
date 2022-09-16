@@ -30,6 +30,12 @@ detailpage
       Status
     </a>
 
+    {% set_css_class_active request.resolver_match.url_name "changelogs" as current_url_changelogs %}
+    <a href="{% url 'changelogs' slug=site.url %}" class="nav-link link-light {{ current_url_changelogs }}">
+      <span class="material-icons">tips_and_updates</span>
+      Nyheder
+    </a>
+
     <hr>
     <h2 class="text-light">Sikkerhed</h3>
     
@@ -142,6 +148,11 @@ detailpage
       <a href="{% url 'doc' 'users' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         Administration af brugere
+      </a>
+    {% elif current_url_changelogs %}
+      <a href="{% url 'doc' 'changelogs' %}" class="nav-link link-light">
+        <span class="material-icons">help_outline</span>
+        Hjælp til nyhedssiden
       </a>
     {% endif %}
 

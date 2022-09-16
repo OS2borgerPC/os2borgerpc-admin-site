@@ -1,3 +1,16 @@
+Version 5.9.0, September 16, 2022
+---------------------------------
+
+New in this version:
+
+- Add News page where customers can be informed of new additions, 
+  changes or identified bugs in adminsite, images, client or scripts
+- You can now handle multiple security events at the same time
+- Fix bug where input parameters were set back to mandatory unintentionally
+- Fix bug where a date or an integer input parameters couldn't be set to 
+  optional as it caused a server error
+- Globals scripts page is now loaded by default instead of local scripts
+
 Version 5.8.1, August 26, 2022
 ------------------------------
 
