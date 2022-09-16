@@ -3,10 +3,10 @@
   <!-- The two tabs in the submenu: -->
   <ul class="nav nav-tabs scripttabs" role="tab-list">
     <li class="nav-item" role="presentation">
-      <a id="localscripts-tab" class='nav-link {% if global_selected %} active {% endif %}' href="#localscripts" data-bs-toggle="tab" role="tab" aria-controls="localscripts" aria-selected="false">Lokale scripts</a>
+      <a id="localscripts-tab" class='nav-link {% if not global_selected %} active {% endif %}' href="#localscripts" data-bs-toggle="tab" role="tab" aria-controls="localscripts" aria-selected="true">Lokale scripts</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a id="globalscripts-tab" class='nav-link {% if not global_selected %} active {% endif %}' href="#globalscripts" data-bs-toggle="tab" role="tab" aria-controls="globalscripts" aria-selected="true">Globale scripts</a>
+      <a id="globalscripts-tab" class='nav-link {% if global_selected %} active {% endif %}' href="#globalscripts" data-bs-toggle="tab" role="tab" aria-controls="globalscripts" aria-selected="false">Globale scripts</a>
     </li>
   </ul>
 
