@@ -40,9 +40,13 @@
             </strong>
             <span class="policy-script-print-value">
               {% if param.input.value_type == 'FILE' %}
-              <a href="{{param.file_value.url}}" target="_blank">
-                {{ param.file_value|file_basename }}
-              </a>
+                {% if param.file_value %}
+                  <a href="{{param.file_value.url}}" target="_blank">
+                    {{ param.file_value|file_basename }}
+                  </a>
+                {% else %}
+                  Ingen valgt
+                {% endif %}
               {% elif param.input.value_type == 'PASSWORD' %}
                 •••••
               {% elif param.input.value_type == 'BOOLEAN' %}
