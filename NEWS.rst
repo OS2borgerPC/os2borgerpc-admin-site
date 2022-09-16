@@ -1,3 +1,9 @@
+Version 5.9.1, September 16, 2022
+---------------------------------
+
+- Revert global scripts as default as it didn't quite work as intended yet.
+  To be continued!
+
 Version 5.9.0, September 16, 2022
 ---------------------------------
 
