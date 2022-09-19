@@ -34,7 +34,7 @@ $(function(){
                 }
                 var script_link = '<a href="' + this.script_url + '">' + this.script_name + '</a>'
                 var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + '</a>'
-                var user_link = '<a href="' + this.user_url + '">' + this.user + '</a>'
+                var user_link = this.user != ''? '<a href="' + this.user_url + '">' + this.user + '</a>' : 'Ingen bruger'
                 var item = $(BibOS.expandTemplate(
                     'job-entry',
                     $.extend(this, {
