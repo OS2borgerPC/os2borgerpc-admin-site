@@ -348,6 +348,7 @@ class ChangelogAdmin(admin.ModelAdmin):
         "author",
         "version",
         "created",
+        "updated",
     )
     search_fields = (
         "title",
