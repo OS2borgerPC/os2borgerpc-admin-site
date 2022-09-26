@@ -74,7 +74,7 @@
         {% if selected_script.is_global is False or user.is_superuser %}
           <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
         {% endif %}
-        <button type="reset" class="btn btn-secondary">Annuller</button>
+        <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">Annuller</button>
       </fieldset>
 
     </form>
