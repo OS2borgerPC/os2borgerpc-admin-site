@@ -354,7 +354,6 @@ class ChangelogAdmin(admin.ModelAdmin):
         "title",
         "version",
     )
-    readonly_fields = ("created", "updated")
     filter_horizontal = ("tags",)
 
 
