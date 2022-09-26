@@ -1,19 +1,18 @@
 /* Changelog */
-.changelogitem {
+.changelog-item {
   min-width: 10rem;
-  max-width: 60rem;
   border-top: solid 1px #aaa;
-  padding-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 1.5rem;
 }
 
 .changelog-detail {
   padding: 1.5rem;
 }
 
-.changelog-container {
-  padding-top: 1rem;
-  padding-left: 1.5rem;
+#changelog-container {
+  padding: 1rem 2rem;
+  margin: 0 auto;
+  max-width: 80rem;
 }
 
 .meta-info {
@@ -54,9 +53,22 @@ nav.pagination-wrapper {
 }
 
 /* Search */
-#changelog-container header {
+#changelog-container > header {
   padding-top: 2rem;
-  padding-left: 1.5rem;
+}
+
+.changelog-tags {
+  float: left;
+}
+
+.changelog-tags h3 {
+  font-size: 1.400rem;
+  padding-top: 1.3rem;
+  padding-bottom: 0.5rem;
+}
+
+.changelog-tags ul {
+  list-style-type: none;
 }
 
 .badge {
@@ -71,7 +83,12 @@ nav.pagination-wrapper {
   text-transform: uppercase;
 }
 
-#changelogsearch-filterform {
+.timestamp-created {
+  text-align: right;
+  padding-bottom: 1.5rem;
+}
+
+#changelog-search-filterform {
   padding-top: 1.0rem;
 }
 
@@ -87,6 +104,44 @@ nav.pagination-wrapper {
   background-color: rgb(0,0,0,0.3);
 }
 
-.filtersearch {
-  margin: 1.5rem;
+#filter-search {
+  float: left;
+}
+#filter-tags {
+  float: right;
+}
+
+#changelog-container .card {
+  cursor: pointer;
+  padding: 2rem;
+}
+
+.changelog-comment-info {
+  text-align: right;
+  font-size:  1.8em;
+  float: right;
+  position: relative;
+  bottom: -50px;
+}
+
+h2.card-title {
+  padding-bottom: 0.5em;
+  color: black;
+}
+
+.card header {
+  display: flex;
+}
+
+.changelog-item-title {
+  flex-grow: 5;
+}
+
+.changelog-item-timestamp {
+  flex-grow: 1;
+  text-align: right;
+}
+
+#adm-body {
+  background: #f1f1f1; /* AKA $gray-100 */
 }
