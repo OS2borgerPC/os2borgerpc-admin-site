@@ -44,7 +44,6 @@ OS2borgerPC: Nyheder
 
 <div id="changelog-container">
     <header>
-
     <div id="filter-search">
         <form action="">
             <div class="input-group">
@@ -80,9 +79,13 @@ OS2borgerPC: Nyheder
     <div class="changelog-container">
         <h3>
             {% if tag_filter %}
-                Viser {{ tag_filter.name }} opdateringer
+                Viser nyheder i kategorien <strong>{{ tag_filter.name }}</strong>
             {% else %}
-                Viser alle opdateringer
+                Viser <strong>alle</strong> nyheder
+            {% endif %}
+            {# Note: Currently you can only search all changelogs, not based on tags #}
+            {% if search_query %}
+                der matcher søgeordet <strong>{{ search_query }}</strong>
             {% endif %}
         </h3>
         {% for entry in entries %}

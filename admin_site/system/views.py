@@ -1989,6 +1989,7 @@ class ChangelogListView(ListView):
 
         if search_query:
             queryset = self.get_queryset(search_query)
+            context["search_query"] = search_query
         else:
             queryset = self.get_queryset()
 
