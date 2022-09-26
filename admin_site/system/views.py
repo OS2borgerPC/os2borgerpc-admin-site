@@ -399,6 +399,26 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
         return queryset
 
+    # for admin users the user_url is a redirect to our job docs
+    # explaining scripts run as "Magenta"
+    def get_username(self, user):
+        if user:
+            if user and user.is_superuser:
+                return "Magenta"
+            else:
+                return user.username
+        else:
+            return ""
+
+    def get_user_url(self, user, uid):
+        if user:
+            if user.is_superuser:
+                return reverse("doc", kwargs={"name": "jobs"})
+            else:
+                return (reverse("user", args=[uid, user.username]),)
+        else:
+            return ""
+
     def get_data(self, context):
         site = context["site"]
         page_obj = context["page_obj"]
@@ -412,7 +432,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             if n > 0 and n <= paginator.num_pages
         ]
 
-        result = {
+        page = {
             "count": paginator.count,
             "num_pages": paginator.num_pages,
             "page": page_obj.number,
@@ -442,16 +462,8 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
                     "label": job.status_label,
                     "pc_name": job.pc.name,
                     "batch_name": job.batch.name,
-                    "user": "Magenta"
-                    if job.user and job.user.is_superuser
-                    else job.user.username,
-                    # for admin users the user_url is a redirect to our job docs
-                    # explaining scripts run as "Magenta"
-                    "user_url": reverse("doc", kwargs={"name": "jobs"})
-                    if job.user.is_superuser
-                    else reverse("user", args=[site.uid, job.user.username]),
-                    # Yep, it's meant to be double-escaped - it's HTML-escaped
-                    # content that will be stored in an HTML attribute
+                    "user": self.get_username(job.user),
+                    "user_url": self.get_user_url(job.user, site.uid),
                     "has_info": job.has_info,
                     "script_url": reverse(
                         "script", args=[site.uid, job.batch.script.id]
@@ -463,7 +475,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
             ],
         }
 
-        return result
+        return page
 
 
 class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
@@ -1977,6 +1989,7 @@ class ChangelogListView(ListView):
 
         if search_query:
             queryset = self.get_queryset(search_query)
+            context["search_query"] = search_query
         else:
             queryset = self.get_queryset()
 

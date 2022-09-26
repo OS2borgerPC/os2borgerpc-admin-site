@@ -348,12 +348,12 @@ class ChangelogAdmin(admin.ModelAdmin):
         "author",
         "version",
         "created",
+        "updated",
     )
     search_fields = (
         "title",
         "version",
     )
-    readonly_fields = ("created", "updated")
     filter_horizontal = ("tags",)
 
 

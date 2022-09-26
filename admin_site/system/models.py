@@ -1015,12 +1015,8 @@ class Changelog(models.Model):
     description = models.TextField(verbose_name=_("description"), max_length=240)
     content = MarkdownxField(verbose_name=_("content"))
     tags = models.ManyToManyField(ChangelogTag, related_name="changelogs", blank=True)
-    created = models.DateTimeField(
-        verbose_name=_("created"), editable=False, auto_now_add=True
-    )
-    updated = models.DateTimeField(
-        verbose_name=_("updated"), editable=False, auto_now=True
-    )
+    created = models.DateTimeField(verbose_name=_("created"), default=timezone.now)
+    updated = models.DateTimeField(verbose_name=_("updated"), default=timezone.now)
     author = models.CharField(verbose_name=_("author"), max_length=255)
     # This field should be used to denote the version number of the given product
     # Ie 'admin-site version 1.2.3' or 'script name version 1.0'
