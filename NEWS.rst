@@ -1,3 +1,10 @@
+Version 5.9.2, September 26, 2022
+---------------------------------
+
+- Changelog: Redesign the list/overview page somewhat
+- Jobs list: Handle deleted users so they don't cause server errors
+- Fix script annull button so it doesn't rather arbitrarily reset things it shouldn't
+
 Version 5.9.1, September 16, 2022
 ---------------------------------
 
