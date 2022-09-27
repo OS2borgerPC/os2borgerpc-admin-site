@@ -1036,7 +1036,7 @@ class Changelog(models.Model):
         return self.title
 
     class Meta:
-        ordering = ["created"]
+        ordering = ["-created"]
 
 
 class ChangelogComment(models.Model):
