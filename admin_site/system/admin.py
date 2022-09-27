@@ -83,9 +83,12 @@ class PCGroupAdmin(admin.ModelAdmin):
 
 
 class JobInline(admin.TabularInline):
-    fields = ["pc"]
+    fields = ("id", "pc", "status", "user", "created", "started", "finished")
+    readonly_fields = ("id", "pc", "status", "user", "created", "started", "finished")
     model = Job
-    extra = 1
+    extra = 0
+    can_delete = False
+    show_change_link = True
 
 
 class BatchParameterInline(admin.TabularInline):
@@ -94,7 +97,7 @@ class BatchParameterInline(admin.TabularInline):
 
 
 class BatchAdmin(admin.ModelAdmin):
-    list_display = ("site", "name", "script")
+    list_display = ("id", "site", "name", "script")
     fields = ("site", "name", "script")
     list_filter = ("site",)
     search_fields = ("name", "site__name", "script__name")
@@ -268,7 +271,7 @@ class JobAdmin(admin.ModelAdmin):
         "finished",
     )
     list_filter = ("status",)
-    search_fields = ("batch__name", "user__username", "pc__name")
+    search_fields = ("batch__script__name", "user__username", "pc__name")
     readonly_fields = ("created", "started", "finished")
 
 
