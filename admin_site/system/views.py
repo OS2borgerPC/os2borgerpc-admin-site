@@ -1964,8 +1964,8 @@ class ChangelogListView(ListView):
                 | Q(content__icontains=filter)
                 | Q(description__icontains=filter)
                 | Q(version__icontains=filter)
-            ).order_by("-created")
-        return Changelog.objects.all().order_by("-created")
+            )
+        return Changelog.objects.all()
 
     def get_paginated_queryset(self, queryset, page):
 
