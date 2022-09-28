@@ -706,31 +706,21 @@ class ScriptMixin(object):
 
 class ScriptList(ScriptMixin, SiteView):
     def get(self, request, *args, **kwargs):
-        self.setup_script_editing(**kwargs)
-        try:
-            # Sort by -site followed by lowercased name
-            def sort_by(a, b):
-                if a.site == b.site:
-                    # cmp deprecated: cmp(a, b) has been changed to
-                    # the ((a > b) - (a < b)) formats
-                    return (a.name.lower() > b.name.lower()) - (
-                        a.name.lower() < b.name.lower()
-                    )
-                else:
-                    if b.site is not None:
-                        return 1
-                    else:
-                        return -1
+        site = get_object_or_404(Site, uid=kwargs["slug"])
 
-            # cmp deprecated: cmp converted to key function
-            script = sorted(self.scripts, key=cmp_to_key(sort_by))[0]
-            return HttpResponseRedirect(script.get_absolute_url(site_uid=self.site.uid))
+        # Scripts are sorted with "-site" to ensure global scripts are ordered first in the queryset.
+        scripts = Script.objects.filter(
+            Q(site=site) | Q(site=None), is_security_script=self.is_security
+        ).order_by("-site", "name")
 
-        except IndexError:
+        if scripts.exists():
+            script = scripts.first()
+            return HttpResponseRedirect(script.get_absolute_url(site_uid=site.uid))
+        else:
             return HttpResponseRedirect(
-                reverse("new_security_script", args=[self.site.uid])
+                reverse("new_security_script", args=[site.uid])
                 if self.is_security
-                else reverse("new_script", args=[self.site.uid])
+                else reverse("new_script", args=[site.uid])
             )
 
 
