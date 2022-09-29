@@ -54,7 +54,7 @@ Computere
         <span class="badge bg-secondary">
           Oprettelsestidspunkt: {{ pc.created }}
         </span>
-        <span class="badge bg-secondary mx-3">
+        <span class="badge bg-secondary ms-3">
           Seneste tjek-ind:
           {% if selected_pc.last_seen %}
             {{ selected_pc.last_seen|timesince }} siden
@@ -62,15 +62,13 @@ Computere
             Aldrig
           {% endif %}
         </span>
-        <span class="badge bg-secondary">
-          <span class="ms-3">
-            Seneste sikkerhedshændelse modtaget:
-            {% if security_event %}
-              {{ security_event.reported_time|timesince }} siden
-            {% else %}
-              Aldrig
-            {% endif %}
-          </span>
+        <span class="badge bg-secondary ms-3">
+          Seneste sikkerhedshændelse modtaget:
+          {% if security_event %}
+            {{ security_event.reported_time|timesince }} siden
+          {% else %}
+            Aldrig
+          {% endif %}
         </span>
       </div>
 
