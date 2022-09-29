@@ -1,7 +1,6 @@
 // Run highlight js on all code tags
 $(window).on("load", function() {
     for (const code of document.getElementsByTagName("code")) {
-        document.gete
         hljs.highlightElement(code)
     }
 })

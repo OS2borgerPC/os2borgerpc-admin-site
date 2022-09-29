@@ -1,10 +1,10 @@
 <div id="changelogDetails-{{ entry.pk }}" class="modal fade" role="dialog" aria-labelledby="myModalLabel" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" style="width: 70rem; max-width: 90vw; min-width: 10rem;">
         <div class="modal-content">
-            <div class="changelog-detail" id="entry-{{ entry.pk }}">   
+            <div class="changelog-detail" id="entry-{{ entry.pk }}">
                 <div class="modal-header">
                     <h2 class="card-title">{{ entry.title }}</h2>
-                    <strong class="timestamp-created text-muted">{{ entry.created }}</strong>                    
+                    <strong class="timestamp-created text-muted">{{ entry.created }}</strong>
                 </div>
                 <p>{{ entry.render_content | safe }}</p>
                 <hr class="meta-data-separator">
@@ -16,8 +16,8 @@
                     </p>
                     <p class="meta-tags">
                     {% for tag in entry.get_tags %}
-                    <a href="?tag={{ tag.pk }}">
-                        <button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="{{ tag.pk }}" name="{{ tag.id }}">{{ tag.name }}</button>
+                    <a class="btn btn-md tag-filter-btn bg-primary text-white me-2" href="?tag={{ tag.pk }}">
+                        {{ tag.name }}
                     </a>
                     {% endfor %}
                     </p>
