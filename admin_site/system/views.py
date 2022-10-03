@@ -796,6 +796,14 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form = ScriptForm()
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
+        request_user = self.request.user
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        if not request_user.is_superuser:
+            context[
+                "user_type_for_site"
+            ] = request_user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
         return context
 
     def get_object(self, queryset=None):
