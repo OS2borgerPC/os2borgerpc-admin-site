@@ -7,7 +7,7 @@ from re import search
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import dateformat
 from django.utils.decorators import method_decorator
@@ -2025,8 +2025,6 @@ class ChangelogListView(ListView):
     def post(self, request, *args, **kwargs):
         req = request.POST
 
-        response = self.get(request, *args, **kwargs)
-
         comment = ChangelogComment()
 
         comment.user = get_object_or_404(User, pk=req["user"])
@@ -2039,4 +2037,4 @@ class ChangelogListView(ListView):
             )
 
         comment.save()
-        return response
+        return redirect("changelogs", slug=kwargs["slug"])
