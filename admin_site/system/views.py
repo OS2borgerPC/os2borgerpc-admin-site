@@ -14,7 +14,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.urls import resolve, reverse
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
@@ -33,36 +33,36 @@ from account.models import (
 )
 
 from system.models import (
-    ChangelogTag,
-    Site,
-    PC,
-    PCGroup,
-    ConfigurationEntry,
-    Job,
-    Script,
-    Input,
-    SecurityProblem,
-    SecurityEvent,
-    MandatoryParameterMissingError,
-    ImageVersion,
-    ScriptTag,
     AssociatedScriptParameter,
     Changelog,
     ChangelogComment,
+    ChangelogTag,
+    ConfigurationEntry,
+    ImageVersion,
+    Input,
+    Job,
+    MandatoryParameterMissingError,
+    PC,
+    PCGroup,
+    Script,
+    ScriptTag,
+    SecurityEvent,
+    SecurityProblem,
+    Site,
 )
 
 # PC Status codes
 from system.forms import (
-    SiteForm,
-    PCGroupForm,
-    ConfigurationEntryForm,
-    ScriptForm,
-    UserForm,
-    ParameterForm,
-    PCForm,
-    SecurityProblemForm,
     ChangelogCommentForm,
+    ConfigurationEntryForm,
+    PCForm,
+    PCGroupForm,
+    ParameterForm,
+    ScriptForm,
     SecurityEventForm,
+    SecurityProblemForm,
+    SiteForm,
+    UserForm,
 )
 
 
@@ -312,7 +312,7 @@ class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
 # Now follows all site-based views, i.e. subclasses
 # of SiteView.
 class JobsView(SiteView):
-    template_name = "system/site_jobs.html"
+    template_name = "system/jobs/site_jobs.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -704,22 +704,25 @@ class ScriptMixin(object):
                     par.save()
 
 
-class ScriptList(ScriptMixin, SiteView):
-    def get(self, request, *args, **kwargs):
+class ScriptRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+    def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
+        is_security = (
+            True if resolve(self.request.path).url_name == "security_scripts" else False
+        )
 
         # Scripts are sorted with "-site" to ensure global scripts are ordered first in the queryset.
         scripts = Script.objects.filter(
-            Q(site=site) | Q(site=None), is_security_script=self.is_security
+            Q(site=site) | Q(site=None), is_security_script=is_security
         ).order_by("-site", "name")
 
         if scripts.exists():
             script = scripts.first()
-            return HttpResponseRedirect(script.get_absolute_url(site_uid=site.uid))
+            return script.get_absolute_url(site_uid=site.uid)
         else:
-            return HttpResponseRedirect(
+            return (
                 reverse("new_security_script", args=[site.uid])
-                if self.is_security
+                if is_security
                 else reverse("new_script", args=[site.uid])
             )
 
@@ -958,8 +961,10 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
 
 class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
+    """If a site ha no computers it shows a page indicating that.
+    If the site has at least one computer it redirects to that."""
 
-    template_name = "system/site_pcs.html"
+    template_name = "system/pcs/site_pcs.html"
     selection_class = PC
 
     def get_list(self):
@@ -980,7 +985,7 @@ class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
 
 
 class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin):
-    template_name = "system/pc_form.html"
+    template_name = "system/pcs/form.html"
     form_class = PCForm
     slug_field = "uid"
 
@@ -1079,6 +1084,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
 
 class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PC
+    template_name = "system/pcs/confirm_delete.html"
 
     def get_object(self, queryset=None):
         return PC.objects.get(uid=self.kwargs["pc_uid"])
@@ -1087,55 +1093,25 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
 
 
-class PCGroupsView(SelectionMixin, SiteView):
-    template_name = "system/site_groups.html"
-    selection_class = PCGroup
-    class_display_name = "group"
+class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+    """Redirects to either an existing user if one exists, or to the create user page"""
 
-    def get_list(self):
-        return (
-            self.object.groups.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+        users_on_site = site.users
+        if users_on_site.exists():
 
-    def render_to_response(self, context):
-        if "selected_group" in context:
-            return HttpResponseRedirect(
-                "/site/%s/groups/%s/"
-                % (context["site"].uid, context["selected_group"].url)
+            if self.request.user in users_on_site:
+                destination_user = self.request.user.username
+            else:  # for superusers just go to the first user in the list
+                destination_user = users_on_site.first().username
+
+            return reverse(
+                "user", kwargs={"site_uid": site.uid, "username": destination_user}
             )
+
         else:
-            return HttpResponseRedirect(
-                "/site/%s/groups/new/" % context["site"].uid,
-            )
-
-
-class UsersView(SelectionMixin, SiteView):
-
-    template_name = "system/site_users.html"
-    selection_class = User
-    lookup_field = "username"
-
-    def get_list(self):
-        return self.object.users
-
-    def render_to_response(self, context):
-        if "selected_user" in context:
-            # Select your own user by default if you have a UserProfile on the site
-            # Fx. relevant to password changes
-
-            if context["site"] in self.request.user.bibos_profile.sites.all():
-                user = self.request.user.username
-            else:
-                user = context["selected_user"].username
-            return HttpResponseRedirect(
-                "/site/%s/users/%s/" % (context["site"].uid, user)
-            )
-        else:
-            return HttpResponseRedirect(
-                "/site/%s/new_user/" % context["site"].uid,
-            )
+            return reverse("new_user", args=[site.uid])
 
 
 class UsersMixin(object):
@@ -1272,7 +1248,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
 class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
-    template_name = "system/users/delete.html"
+    template_name = "system/users/confirm_delete.html"
 
     def get_object(self, queryset=None):
         self.selected_user = User.objects.get(username=self.kwargs["username"])
@@ -1327,10 +1303,24 @@ class ConfigurationEntryDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin)
         return "/site/{0}/settings/".format(self.kwargs["site_uid"])
 
 
+class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+
+        pc_groups = PCGroup.objects.filter(site=site)
+
+        if pc_groups.exists():
+            group = pc_groups.first()
+            return group.get_absolute_url()
+        else:
+            return reverse("new_group", args=[site.uid])
+
+
 class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    model = PCGroup
     form_class = PCGroupForm
+    model = PCGroup
     slug_field = "uid"
+    template_name = "system/pcgroups/form.html"
 
     def get_context_data(self, **kwargs):
         context = super(PCGroupCreate, self).get_context_data(**kwargs)
@@ -1350,7 +1340,7 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
 
 class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
-    template_name = "system/site_groups.html"
+    template_name = "system/pcgroups/site_groups.html"
     form_class = PCGroupForm
     model = PCGroup
 
@@ -1454,6 +1444,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
 
 
 class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+    template_name = "system/pcgroups/confirm_delete.html"
     model = PCGroup
 
     def get_object(self, queryset=None):
@@ -1472,7 +1463,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
 class SecurityProblemsView(SelectionMixin, SiteView):
 
-    template_name = "system/site_security_problems.html"
+    template_name = "system/security_problems/site_security_problems.html"
     selection_class = SecurityProblem
     class_display_name = "security_problem"
 
@@ -1517,7 +1508,7 @@ class SecurityProblemsView(SelectionMixin, SiteView):
 
 
 class SecurityProblemCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/site_security_problems.html"
+    template_name = "system/security_problems/site_security_problems.html"
     model = SecurityProblem
     fields = "__all__"
 
@@ -1526,7 +1517,7 @@ class SecurityProblemCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
 
 class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/site_security_problems.html"
+    template_name = "system/security_problems/site_security_problems.html"
     model = SecurityProblem
     form_class = SecurityProblemForm
 
@@ -1588,6 +1579,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
+    template_name = "system/security_problems/confirm_delete.html"
     model = SecurityProblem
     # form_class = <hopefully_not_necessary>
 
@@ -1601,7 +1593,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
 
 class SecurityEventsView(SiteView):
-    template_name = "system/site_security_events.html"
+    template_name = "system/security_events/site_security_events.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass

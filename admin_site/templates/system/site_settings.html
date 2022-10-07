@@ -48,10 +48,10 @@ Site-indstillinger
 
             {% csrf_token %}
 
-            {% include 'system/configlist/list.html' with entries=site_configs cnf_id='site_configs' %}
+            {% include 'system/configs/list.html' with entries=site_configs cnf_id='site_configs' %}
             
             <!-- TODO: This include will put a form within a form. Not great.-->
-            {% include 'system/configlist/templates.html' %}
+            {% include 'system/configs/templates.html' %}
 
         </div>
         <fieldset class="mt-4">

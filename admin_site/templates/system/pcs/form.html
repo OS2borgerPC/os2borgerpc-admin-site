@@ -129,7 +129,7 @@ Computere
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
           <fieldset>
-            {% include 'system/configlist/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
+            {% include 'system/configs/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
           </fieldset>
           <fieldset class="mt-5">
             <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
@@ -199,6 +199,6 @@ Computere
       </script>
     </form>
 
-    {% include 'system/configlist/templates.html' %}
+    {% include 'system/configs/templates.html' %}
   </div>
 {% endblock %}

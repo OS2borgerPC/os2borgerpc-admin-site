@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       {% for entry in entries %}
-        {% include 'system/configlist/item.html' with pk=entry.pk key=entry.key value=entry.value submit_name=cnf_id %}
+        {% include 'system/configs/item.html' with pk=entry.pk key=entry.key value=entry.value submit_name=cnf_id %}
       {% endfor %}
       <tr>
         <td colspan="3">
