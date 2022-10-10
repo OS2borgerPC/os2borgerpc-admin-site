@@ -2,6 +2,8 @@ from django.conf.urls import url
 from django.views.generic import RedirectView
 
 from system.views import (
+    # PCWakeEvent
+    # PCWakeWeekPlanCreate
     AdminIndex,
     ChangelogListView,
     ConfigurationEntryCreate,
@@ -20,6 +22,10 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCUpdate,
+    PCWakeWeekPlanCreate,
+    PCWakeWeekPlanDelete,
+    PCWakeWeekPlanRedirect,
+    PCWakeWeekPlanUpdate,
     PCsView,
     ScriptCreate,
     ScriptDelete,
@@ -164,6 +170,27 @@ urlpatterns = [
         r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_id>[^/]+)/delete/$",
         PCGroupDelete.as_view(),
         name="group_delete",
+    ),
+    # Power Plans
+    url(
+        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plans/$",
+        PCWakeWeekPlanRedirect.as_view(),
+        name="pc_wake_week_plans",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/(?P<pc_wake_week_plan_id>[^/]+)/$",
+        PCWakeWeekPlanUpdate.as_view(),
+        name="pc_wake_week_plan",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/new/$",
+        PCWakeWeekPlanCreate.as_view(),
+        name="pc_wake_week_plan_new",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/(?P<pc_wake_week_plan_id>[^/]+)/delete/$",
+        PCWakeWeekPlanDelete.as_view(),
+        name="pc_wake_week_plan_delete",
     ),
     # Jobs
     url(

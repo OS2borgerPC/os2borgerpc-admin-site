@@ -44,6 +44,8 @@ from system.models import (
     MandatoryParameterMissingError,
     PC,
     PCGroup,
+    PCWakeWeekPlan,
+    PCWakeEvent,
     Script,
     ScriptTag,
     SecurityEvent,
@@ -1074,7 +1076,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
         return response
 
 
-class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
     model = PC
     template_name = "system/pcs/confirm_delete.html"
 
@@ -1083,6 +1085,122 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
     def get_success_url(self):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
+
+
+class PCWakeWeekPlanRedirect(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["site_uid"])
+
+        pc_wake_week_plans = PCWakeWeekPlan.objects.filter(site=site)
+
+        if pc_wake_week_plans.exists():
+            pc_wake_week_plan = pc_wake_week_plans.first()
+            return pc_wake_week_plan.get_absolute_url()
+        else:
+            return reverse("pc_wake_week_plan_new", args=[site.uid])  # }}}
+
+
+class PCWakeWeekPlanCreate(
+    CreateView, SiteMixin, LoginRequiredMixin, SuperAdminOrThisSiteMixin
+):
+    model = PCWakeWeekPlan
+    # form_class = PCWakeWeekPlanForm
+    slug_field = "site_uid"
+    template_name = "system/pc_wake_plan/form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(PCWakeWeekPlanCreate, self).get_context_data(**kwargs)
+
+        return context
+
+    # def form_valid(self, form):
+    #    site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+    #    self.object = form.save(commit=False)
+    #    self.object.site = site
+
+    #    return super(PCWakeWeekPlanCreate, self).form_valid(form)
+
+
+class PCWakeWeekPlanUpdate(  # {{{
+    SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin
+):
+    template_name = "system/pc_wake_plan/pc_wake_plan.html"
+    # form_class = PCForm
+    slug_field = "site_uid"
+    fields = "__all__"
+
+    def get_object(self, queryset=None):
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return PCWakeWeekPlan.objects.get(
+                id=self.kwargs["pc_wake_week_plan_id"], site=site_id
+            )
+        except PCWakeWeekPlan.DoesNotExist:
+            raise Http404(
+                f"Du har ingen strømplan med id {self.kwargs['pc_wake_week_plan_id']}"
+            )
+
+    def get_context_data(self, **kwargs):
+        context = super(PCWakeWeekPlanUpdate, self).get_context_data(**kwargs)
+
+        plan = self.object
+
+        site = context["site"]
+
+        pc_wake_week_plans = PCWakeWeekPlan.objects.filter(site=site)
+
+        context["pc_wake_week_plans_list"] = pc_wake_week_plans
+        context["selected_plan"] = plan
+
+        # form = context["form"]
+        # params = self.request.GET or self.request.POST
+
+        # group_set = site.groups.all()
+
+        # selected_group_ids = form["pc_groups"].value()
+        ## template picklist requires the form pk, name, url (u)id.
+        # context["available_groups"] = group_set.exclude(
+        #    pk__in=selected_group_ids
+        # ).values_list("pk", "name", "pk")
+        # context["selected_groups"] = group_set.filter(
+        #    pk__in=selected_group_ids
+        # ).values_list("pk", "name", "pk")
+
+        return context
+
+    # def form_valid(self, form):
+    #    pc = self.object
+    #    groups_pre = set(pc.pc_groups.all())
+
+    #    with transaction.atomic():
+    #        pc.configuration.update_from_request(self.request.POST, "pc_config")
+    #        response = super(PCUpdate, self).form_valid(form)
+
+    #        # If this PC has joined any groups that have policies attached
+    #        # to them, then run their scripts (first making sure that this
+    #        # PC is capable of doing so!)
+    #        groups_post = set(pc.pc_groups.all())
+    #        new_groups = groups_post.difference(groups_pre)
+    #        for g in new_groups:
+    #            policy = g.ordered_policy
+    #            if policy:
+    #                for asc in policy:
+    #                    asc.run_on(self.request.user, [pc])
+
+    #    set_notification_cookie(response, _("Computer %s updated") % pc.name)
+    #    return response
+
+
+class PCWakeWeekPlanDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+    model = PCWakeWeekPlan
+    template_name = "system/pc_wake_plan/pc_wake_plan_confirm_delete.html"
+
+    def get_object(self, queryset=None):
+        return PCWakeWeekPlan.objects.get(id=self.kwargs["pc_wake_week_plan_id"])
+
+    def get_success_url(self):
+        # I wonder if one could just call the PCWakeWeekPlanRedirectView directly?
+        return reverse("pc_wake_week_plans", args=self.kwargs["site_uid"])
 
 
 class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
@@ -1314,7 +1432,7 @@ class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
             group = pc_groups.first()
             return group.get_absolute_url()
         else:
-            return reverse("new_group", args=[site.uid])
+            return reverse("new_group", args=[site.uid])  # }}}
 
 
 class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):

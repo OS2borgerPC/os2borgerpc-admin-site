@@ -217,6 +217,72 @@ class MandatoryParameterMissingError(Error):
     pass
 
 
+class PCWakeWeekPlan(models.Model):
+    default_open = datetime.time(8, 0, 0, 0)
+    default_close = datetime.time(20, 0, 0, 0)
+
+    name = models.CharField(verbose_name=_("name"), max_length=60)
+    enabled = models.BooleanField(verbose_name=_("enabled"), default=False)
+    site = models.ForeignKey(
+        Site, related_name="pc_wake_week_plans", on_delete=models.CASCADE
+    )
+    monday_on = models.TimeField(
+        verbose_name=_("monday on"), null=True, blank=True, default=default_open
+    )
+    monday_off = models.TimeField(
+        verbose_name=_("monday off"), null=True, blank=True, default=default_close
+    )
+    tuesday_on = models.TimeField(
+        verbose_name=_("tuesday on"), null=True, blank=True, default=default_open
+    )
+    tuesday_off = models.TimeField(
+        verbose_name=_("tuesday off"), null=True, blank=True, default=default_close
+    )
+    wednesday_on = models.TimeField(
+        verbose_name=_("wednesday on"), null=True, blank=True, default=default_open
+    )
+    wednesday_off = models.TimeField(
+        verbose_name=_("wednesday off"), null=True, blank=True, default=default_close
+    )
+    thursday_on = models.TimeField(
+        verbose_name=_("thursday on"), null=True, blank=True, default=default_open
+    )
+    thursday_off = models.TimeField(
+        verbose_name=_("thursday off"), null=True, blank=True, default=default_close
+    )
+    friday_on = models.TimeField(
+        verbose_name=_("friday on"), null=True, blank=True, default=default_open
+    )
+    friday_off = models.TimeField(
+        verbose_name=_("friday off"), null=True, blank=True, default=default_close
+    )
+    saturday_on = models.TimeField(
+        verbose_name=_("saturday on"), null=True, blank=True, default=default_open
+    )
+    saturday_off = models.TimeField(
+        verbose_name=_("saturday off"), null=True, blank=True, default=default_close
+    )
+    sunday_on = models.TimeField(
+        verbose_name=_("sunday on"), null=True, blank=True, default=default_open
+    )
+    sunday_off = models.TimeField(
+        verbose_name=_("sunday off"), null=True, blank=True, default=default_close
+    )
+
+    def get_absolute_url(self):
+        return reverse("pc_wake_week_plan", args=(self.site.uid, self.id))
+
+
+class PCWakeEvent(models.Model):
+    on_datetime = models.DateTimeField(verbose_name=_("datetime on"))
+    end_datetime = models.DateTimeField(verbose_name=_("datetime off"))
+    pc_wake_week_plans = models.ManyToManyField(
+        PCWakeWeekPlan,
+        related_name="pc_wake_week_plans",
+        verbose_name=_("pc wake week plans"),
+    )
+
+
 class PCGroup(models.Model):
     """Groups of PCs. Each PC may be in zero or many groups."""
 
@@ -226,6 +292,9 @@ class PCGroup(models.Model):
     )
     site = models.ForeignKey(Site, related_name="groups", on_delete=models.CASCADE)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
+    pc_wake_week_plan = models.ForeignKey(
+        PCWakeWeekPlan, on_delete=models.SET_NULL, null=True
+    )
 
     def __str__(self):
         return self.name
