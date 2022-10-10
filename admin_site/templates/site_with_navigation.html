@@ -78,6 +78,11 @@ detailpage
     <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">
       <span class="material-icons">queue</span> Grupper
     </a>
+
+    {% set_css_class_active request.resolver_match.url_name "pc_wake_week_plans" as current_url_pc_wake_week_plans %}
+    <a class="nav-link link-light {{current_url_pc_wake_week_plans}}" href="{% url 'pc_wake_week_plans' site_uid=site.url %}">
+      <span class="material-icons">bolt</span> Tænd/Sluk tidsplan
+    </a>
     
     {% set_css_class_active request.resolver_match.url_name "settings" as current_url_site_settings %}
     <a class="nav-link link-light {{ current_url_site_settings  }}" href="{% url 'settings' slug=site.url %}">

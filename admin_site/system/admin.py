@@ -23,6 +23,7 @@ from system.models import (
     Job,
     PC,
     PCGroup,
+    PCWakeWeekPlan,
     Script,
     ScriptTag,
     SecurityEvent,
@@ -43,7 +44,7 @@ class SiteInlineForConfiguration(admin.TabularInline):
     extra = 0
 
 
-class PCGroupInlineForConfiguration(admin.TabularInline):
+class PCGroupInline(admin.TabularInline):
     model = PCGroup
     extra = 0
 
@@ -59,7 +60,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
     inlines = [
         ConfigurationEntryInline,
         SiteInlineForConfiguration,
-        PCGroupInlineForConfiguration,
+        PCGroupInline,
         PCInlineForConfiguration,
     ]
 
@@ -379,22 +380,31 @@ class ChangelogCommentAdmin(admin.ModelAdmin):
     )
 
 
-ar(Configuration, ConfigurationAdmin)
-ar(Site, SiteAdmin)
-ar(PCGroup, PCGroupAdmin)
-ar(PC, PCAdmin)
-ar(ImageVersion, ImageVersionAdmin)
-ar(Changelog, ChangelogAdmin)
-ar(ChangelogTag, ChangelogTagAdmin)
-ar(ChangelogComment, ChangelogCommentAdmin)
-# Job related stuff
-ar(Script, ScriptAdmin)
-ar(ScriptTag, ScriptTagAdmin)
-ar(Batch, BatchAdmin)
-ar(Job, JobAdmin)
-ar(BatchParameter)
+class PCWakeWeekPlanAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "enabled",
+        "site",
+    )
+    inlines = [PCGroupInline]
+
+
 ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter, AssociatedScriptParameterAdmin)
+ar(Batch, BatchAdmin)
+ar(BatchParameter)
+ar(Changelog, ChangelogAdmin)
+ar(ChangelogComment, ChangelogCommentAdmin)
+ar(ChangelogTag, ChangelogTagAdmin)
+ar(Citizen, CitizenAdmin)
+ar(Configuration, ConfigurationAdmin)
+ar(ImageVersion, ImageVersionAdmin)
+ar(Job, JobAdmin)
+ar(PC, PCAdmin)
+ar(PCGroup, PCGroupAdmin)
+ar(PCWakeWeekPlan, PCWakeWeekPlanAdmin)
+ar(Script, ScriptAdmin)
+ar(ScriptTag, ScriptTagAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
-ar(Citizen, CitizenAdmin)
+ar(Site, SiteAdmin)
