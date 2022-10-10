@@ -1,0 +1,10 @@
+{% extends "system/pc_wake_plan/pc_wake_plan_base.html" %}
+
+{% block specific_content %}
+  <h1>{{selected_plan.name}}</h1>
+
+  <ul>
+    <li>Mandag: {{selected_plan.monday_on}} - {{selected_plan.monday_off}}</li>
+    <li>Tirsdag: {{selected_plan.tuesday_on}} - {{selected_plan.tuesday_off}}</li>
+  </ul>
+{% endblock %}
