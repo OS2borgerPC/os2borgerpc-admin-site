@@ -1,17 +1,17 @@
 {% extends "site_with_navigation.html" %}
 
 {% block specific_title %}
-Opret tænd- / Sluk-tidsplan
+Tænd- / Sluk-tidsplan
 {% endblock %}
 
 {% block subnav %}
 <div class="sublevelnav">
   <div class="listutils">
 
-    <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
+    <a class="btn btn-link" href="{% url 'pc_wake_week_plan_new' site.uid %}">
         <span class="material-icons">add</span>
         Tilføj ny tænd/sluk tidsplan
-    </button>
+    </a>
   </div>
 
   <ul class="item-list">

@@ -2,8 +2,6 @@ from django.conf.urls import url
 from django.views.generic import RedirectView
 
 from system.views import (
-    # PCWakeEvent
-    # PCWakeWeekPlanCreate
     AdminIndex,
     ChangelogListView,
     ConfigurationEntryCreate,
@@ -22,6 +20,8 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCUpdate,
+    # PCWakeEvent
+    # PCWakeWeekPlanCreate
     PCWakeWeekPlanCreate,
     PCWakeWeekPlanDelete,
     PCWakeWeekPlanRedirect,
