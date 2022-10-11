@@ -15,7 +15,7 @@ Tænd- / Sluk-tidsplan
   </div>
 
   <ul class="item-list">
-    {% if pc_wake_week_plans_list.all%}
+    {% if pc_wake_week_plans_list.all %}
       {% for plan in pc_wake_week_plans_list %}
         <li class="{% ifequal plan selected_plan %}active{% endifequal %}">
           <a class="item-list-link" id="{{plan.id}}" href="{% url 'pc_wake_week_plan' site.uid plan.id %}">
@@ -25,7 +25,7 @@ Tænd- / Sluk-tidsplan
               <span class="badge bg-danger">Ikke aktiveret</span>
             {% endif %}
           {% ifequal plan selected_plan %}
-          <a class="item-list-deletable material-icons" href="{% url 'pc_wake_week_plan_delete' site.uid plan.id %}" title="Slet tænd-sluk-tidsplan">
+            <a class="item-list-deletable material-icons" href="{% url 'pc_wake_week_plan_delete' site.uid plan.id %}" title="Slet tænd-sluk-tidsplan">
               clear
             </a>
           {% endifequal %}
