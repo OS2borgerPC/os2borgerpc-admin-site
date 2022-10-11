@@ -272,6 +272,9 @@ class PCWakeWeekPlan(models.Model):
     def get_absolute_url(self):
         return reverse("pc_wake_week_plan", args=(self.site.uid, self.id))
 
+    class Meta:
+        ordering = ["name"]
+
 
 class PCWakeEvent(models.Model):
     on_datetime = models.DateTimeField(verbose_name=_("datetime on"))
@@ -281,6 +284,9 @@ class PCWakeEvent(models.Model):
         related_name="pc_wake_week_plans",
         verbose_name=_("pc wake week plans"),
     )
+
+    class Meta:
+        ordering = ["on_datetime"]
 
 
 class PCGroup(models.Model):
