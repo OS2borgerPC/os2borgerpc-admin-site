@@ -22,7 +22,7 @@ Tænd- / Sluk-tidsplan
             {{ plan.name }}
           </a>
             {% if not plan.enabled %}
-              <span class="badge bg-danger">Ikke aktiveret</span>
+              <span class="badge bg-danger">Inaktiv</span>
             {% endif %}
           {% ifequal plan selected_plan %}
             <a class="item-list-deletable material-icons" href="{% url 'pc_wake_week_plan_delete' site.uid plan.id %}" title="Slet tænd-sluk-tidsplan">
