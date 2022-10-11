@@ -1110,7 +1110,13 @@ class PCWakeWeekPlanCreate(
 
     def get_context_data(self, **kwargs):
         context = super(PCWakeWeekPlanCreate, self).get_context_data(**kwargs)
+
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        plan = self.object
+        context["selected_plan"] = plan
+        context["pc_wake_week_plans_list"] = PCWakeWeekPlan.objects.filter(
+            site=context["site"]
+        )
 
         return context
 
@@ -1144,14 +1150,12 @@ class PCWakeWeekPlanUpdate(  # {{{
     def get_context_data(self, **kwargs):
         context = super(PCWakeWeekPlanUpdate, self).get_context_data(**kwargs)
 
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
-
-        site = context["site"]
-
-        pc_wake_week_plans = PCWakeWeekPlan.objects.filter(site=site)
-
-        context["pc_wake_week_plans_list"] = pc_wake_week_plans
         context["selected_plan"] = plan
+        context["pc_wake_week_plans_list"] = PCWakeWeekPlan.objects.filter(
+            site=context["site"]
+        )
 
         # form = context["form"]
         # params = self.request.GET or self.request.POST
@@ -1192,9 +1196,22 @@ class PCWakeWeekPlanUpdate(  # {{{
     #    return response
 
 
-class PCWakeWeekPlanDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+class PCWakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = PCWakeWeekPlan
+    slug_field = "site_uid"
     template_name = "system/pc_wake_plan/pc_wake_plan_confirm_delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(PCWakeWeekPlanDelete, self).get_context_data(**kwargs)
+
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        plan = self.object
+        context["selected_plan"] = plan
+        context["pc_wake_week_plans_list"] = PCWakeWeekPlan.objects.filter(
+            site=context["site"]
+        )
+
+        return context
 
     def get_object(self, queryset=None):
         return PCWakeWeekPlan.objects.get(id=self.kwargs["pc_wake_week_plan_id"])
@@ -1202,6 +1219,13 @@ class PCWakeWeekPlanDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     def get_success_url(self):
         # I wonder if one could just call the PCWakeWeekPlanRedirectView directly?
         return reverse("pc_wake_week_plans", args=self.kwargs["site_uid"])
+
+    def delete(self, request, *args, **kwargs):
+        response = super(PCWakeWeekPlanDelete, self).delete(request, *args, **kwargs)
+        set_notification_cookie(
+            response, _("PC Wake Week Plan %s deleted") % self.kwargs["plan.name"]
+        )
+        return response
 
 
 class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
