@@ -177,15 +177,16 @@ urlpatterns = [
         PCWakeWeekPlanRedirect.as_view(),
         name="pc_wake_week_plans",
     ),
-    url(
-        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/(?P<pc_wake_week_plan_id>[^/]+)/$",
-        PCWakeWeekPlanUpdate.as_view(),
-        name="pc_wake_week_plan",
-    ),
+    # This needs to be above PCWakeWeekPlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
     url(
         r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/new/$",
         PCWakeWeekPlanCreate.as_view(),
         name="pc_wake_week_plan_new",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/(?P<pc_wake_week_plan_id>[^/]+)/$",
+        PCWakeWeekPlanUpdate.as_view(),
+        name="pc_wake_week_plan",
     ),
     url(
         r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/(?P<pc_wake_week_plan_id>[^/]+)/delete/$",

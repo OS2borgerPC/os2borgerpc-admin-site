@@ -1102,6 +1102,7 @@ class PCWakeWeekPlanRedirect(RedirectView):
 class PCWakeWeekPlanCreate(
     CreateView, SiteMixin, LoginRequiredMixin, SuperAdminOrThisSiteMixin
 ):
+    fields = "__all__"
     model = PCWakeWeekPlan
     # form_class = PCWakeWeekPlanForm
     slug_field = "site_uid"
@@ -1109,6 +1110,7 @@ class PCWakeWeekPlanCreate(
 
     def get_context_data(self, **kwargs):
         context = super(PCWakeWeekPlanCreate, self).get_context_data(**kwargs)
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
 
         return context
 
