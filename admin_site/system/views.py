@@ -1096,7 +1096,7 @@ class PCWakeWeekPlanRedirect(RedirectView):
             pc_wake_week_plan = pc_wake_week_plans.first()
             return pc_wake_week_plan.get_absolute_url()
         else:
-            return reverse("pc_wake_week_plan_new", args=[site.uid])  # }}}
+            return reverse("pc_wake_week_plan_new", args=[site.uid])
 
 
 class PCWakeWeekPlanCreate(
@@ -1128,7 +1128,7 @@ class PCWakeWeekPlanCreate(
     #    return super(PCWakeWeekPlanCreate, self).form_valid(form)
 
 
-class PCWakeWeekPlanUpdate(  # {{{
+class PCWakeWeekPlanUpdate(
     SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin
 ):
     template_name = "system/pc_wake_plan/pc_wake_plan.html"
@@ -1198,12 +1198,13 @@ class PCWakeWeekPlanUpdate(  # {{{
 
 class PCWakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = PCWakeWeekPlan
-    slug_field = "site_uid"
+    # slug_field = "site_uid"
     template_name = "system/pc_wake_plan/pc_wake_plan_confirm_delete.html"
 
     def get_context_data(self, **kwargs):
         context = super(PCWakeWeekPlanDelete, self).get_context_data(**kwargs)
 
+        # Basically common for both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
@@ -1218,12 +1219,16 @@ class PCWakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         # I wonder if one could just call the PCWakeWeekPlanRedirectView directly?
-        return reverse("pc_wake_week_plans", args=self.kwargs["site_uid"])
+        return reverse("pc_wake_week_plans", args=[self.kwargs["site_uid"]])
 
     def delete(self, request, *args, **kwargs):
+        deleted_plan_name = PCWakeWeekPlan.objects.get(
+            id=self.kwargs["pc_wake_week_plan_id"]
+        ).name
         response = super(PCWakeWeekPlanDelete, self).delete(request, *args, **kwargs)
+        # Not seeing this have any effect?:
         set_notification_cookie(
-            response, _("PC Wake Week Plan %s deleted") % self.kwargs["plan.name"]
+            response, _("Tænd/Sluk tidsplan %s slettet") % deleted_plan_name
         )
         return response
 
@@ -1448,7 +1453,7 @@ class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
             group = pc_groups.first()
             return group.get_absolute_url()
         else:
-            return reverse("new_group", args=[site.uid])  # }}}
+            return reverse("new_group", args=[site.uid])
 
 
 class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):

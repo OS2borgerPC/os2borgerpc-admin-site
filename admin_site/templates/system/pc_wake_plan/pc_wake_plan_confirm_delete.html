@@ -1,5 +1,26 @@
 {% extends "system/pc_wake_plan/pc_wake_plan_base.html" %}
 
+{% block specific_title %}
+Slet Tænd/Sluk tidsplan?: {{selected_plan.name}}
+{% endblock %}
+
 {% block specific_content %}
-Testing 123 confirm delete?
+  <div class="container-fluid main">
+    <div class="alert alert-danger">
+      <h3>Bemærk</h3>
+      <ul>
+        <li>Fare! Pas på!</li>
+      </ul>
+    </div>
+    <p>
+      Er du sikker på, du ønsker at slette Tænd/Sluk tidsplanen:
+      <strong style="font-size: 1.25em;">{{ selected_plan.name }}</strong>
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">Annuller</button>
+    </form>
+  </div>
 {% endblock %}
