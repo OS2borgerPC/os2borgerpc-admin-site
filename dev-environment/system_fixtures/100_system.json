@@ -3773,7 +3773,7 @@
     "pk": 1,
     "fields": {
         "name": "Vinterferie",
-        "on_datetime": "2022-10-12T12:03:35",
+        "start_datetime": "2022-10-12T12:03:35",
         "end_datetime": "2022-12-12T20:03:36",
         "wake_week_plans": [
             9
@@ -3785,7 +3785,7 @@
     "pk": 2,
     "fields": {
         "name": "Helligdag",
-        "on_datetime": "2022-10-12T12:04:06",
+        "start_datetime": "2022-10-12T12:04:06",
         "end_datetime": "2022-10-12T17:04:07",
         "wake_week_plans": [
             9
@@ -3797,7 +3797,7 @@
     "pk": 3,
     "fields": {
         "name": "Efterårsferie",
-        "on_datetime": "2022-09-12T12:04:15",
+        "start_datetime": "2022-09-12T12:04:15",
         "end_datetime": "2022-10-12T20:04:16",
         "wake_week_plans": [
             9
@@ -3809,7 +3809,7 @@
     "pk": 4,
     "fields": {
         "name": "Hellidag2",
-        "on_datetime": "2022-10-12T12:04:30",
+        "start_datetime": "2022-10-12T12:04:30",
         "end_datetime": "2022-10-12T18:04:34",
         "wake_week_plans": [
             8
