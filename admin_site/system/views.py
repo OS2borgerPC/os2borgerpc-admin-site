@@ -1014,7 +1014,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
 
         context["pc_list"] = site.pcs.all()
 
-        # Picklist related:
+        # Group picklist related:
         group_set = site.groups.all()
         selected_group_ids = form["pc_groups"].value()
         # template picklist requires the form pk, name, url (u)id.
@@ -1159,17 +1159,18 @@ class WakeWeekPlanUpdate(
         # params = self.request.GET or self.request.POST
         context["context"] = context
 
-        # Picklist related:
-        group_set = context["site"].groups.all()
+        # Group picklist related:
+        all_groups_set = context["site"].groups.all()
         # TODO: This line currently returns None!
-        # selected_group_ids = form["groups"].value()
+        selected_group_ids = form["groups"].value()
+        # selected_group_ids = [group.id for group in plan.groups.all()]
         # template picklist requires the form pk, name, url (u)id.
-        # context["available_groups"] = group_set.exclude(
-        #    pk__in=selected_group_ids
-        # ).values_list("pk", "name", "pk")
-        # context["selected_groups"] = group_set.filter(
-        #    pk__in=selected_group_ids
-        # ).values_list("pk", "name", "pk")
+        context["available_groups"] = all_groups_set.exclude(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+        context["selected_groups"] = all_groups_set.filter(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
 
         return context
 
@@ -1498,6 +1499,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context["form"]
         site = context["site"]
 
+        # PC picklist related
         pc_queryset = site.pcs.filter(is_activated=True)
         form.fields["pcs"].queryset = pc_queryset
 
