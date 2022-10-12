@@ -4,15 +4,16 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 from system.models import (
-    Site,
-    PCGroup,
-    ConfigurationEntry,
-    PC,
-    Script,
-    Input,
-    SecurityProblem,
-    SecurityEvent,
     ChangelogComment,
+    ConfigurationEntry,
+    Input,
+    PC,
+    PCGroup,
+    WakeWeekPlan,
+    Script,
+    SecurityEvent,
+    SecurityProblem,
+    Site,
 )
 from account.models import SiteMembership
 
@@ -285,3 +286,13 @@ class SecurityEventForm(forms.ModelForm):
     class Meta:
         model = SecurityEvent
         fields = ("status", "assigned_user", "note")
+
+
+class WakePlanForm(forms.ModelForm):
+    groups = forms.ModelMultipleChoiceField(
+        queryset=PCGroup.objects.all(), required=False
+    )
+
+    class Meta:
+        model = WakeWeekPlan
+        fields = "__all__"
