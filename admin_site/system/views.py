@@ -2,8 +2,6 @@
 import os
 import json
 from datetime import datetime
-from functools import cmp_to_key
-from re import search
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
@@ -44,8 +42,8 @@ from system.models import (
     MandatoryParameterMissingError,
     PC,
     PCGroup,
-    PCWakeWeekPlan,
-    PCWakeEvent,
+    WakeWeekPlan,
+    WakeChangeEvent,
     Script,
     ScriptTag,
     SecurityEvent,
@@ -59,6 +57,7 @@ from system.forms import (
     ConfigurationEntryForm,
     PCForm,
     PCGroupForm,
+    WakePlanForm,
     ParameterForm,
     ScriptForm,
     SecurityEventForm,
@@ -1016,8 +1015,8 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
 
         context["pc_list"] = site.pcs.all()
 
+        # Picklist related:
         group_set = site.groups.all()
-
         selected_group_ids = form["pc_groups"].value()
         # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = group_set.exclude(
@@ -1087,35 +1086,35 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
 
 
-class PCWakeWeekPlanRedirect(RedirectView):
+class WakeWeekPlanRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["site_uid"])
 
-        pc_wake_week_plans = PCWakeWeekPlan.objects.filter(site=site)
+        wake_week_plans = WakeWeekPlan.objects.filter(site=site)
 
-        if pc_wake_week_plans.exists():
-            pc_wake_week_plan = pc_wake_week_plans.first()
-            return pc_wake_week_plan.get_absolute_url()
+        if wake_week_plans.exists():
+            wake_week_plan = wake_week_plans.first()
+            return wake_week_plan.get_absolute_url()
         else:
-            return reverse("pc_wake_week_plan_new", args=[site.uid])
+            return reverse("wake_week_plan_new", args=[site.uid])
 
 
-class PCWakeWeekPlanCreate(
+class WakeWeekPlanCreate(
     CreateView, SiteMixin, LoginRequiredMixin, SuperAdminOrThisSiteMixin
 ):
     fields = "__all__"
-    model = PCWakeWeekPlan
-    # form_class = PCWakeWeekPlanForm
+    model = WakeWeekPlan
+    # form_class = WakeWeekPlanForm
     slug_field = "site_uid"
-    template_name = "system/pc_wake_plan/form.html"
+    template_name = "system/wake_plan/form.html"
 
     def get_context_data(self, **kwargs):
-        context = super(PCWakeWeekPlanCreate, self).get_context_data(**kwargs)
+        context = super(WakeWeekPlanCreate, self).get_context_data(**kwargs)
 
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
-        context["pc_wake_week_plans_list"] = PCWakeWeekPlan.objects.filter(
+        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
             site=context["site"]
         )
 
@@ -1126,45 +1125,46 @@ class PCWakeWeekPlanCreate(
     #    self.object = form.save(commit=False)
     #    self.object.site = site
 
-    #    return super(PCWakeWeekPlanCreate, self).form_valid(form)
+    #    return super(WakeWeekPlanCreate, self).form_valid(form)
 
 
-class PCWakeWeekPlanUpdate(
+class WakeWeekPlanUpdate(
     SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin
 ):
-    template_name = "system/pc_wake_plan/pc_wake_plan.html"
-    # form_class = PCForm
+    template_name = "system/wake_plan/wake_plan.html"
+    form_class = WakePlanForm
     slug_field = "site_uid"
-    fields = "__all__"
 
     def get_object(self, queryset=None):
         try:
             site_id = Site.objects.get(uid=self.kwargs["site_uid"])
-            return PCWakeWeekPlan.objects.get(
-                id=self.kwargs["pc_wake_week_plan_id"], site=site_id
+            return WakeWeekPlan.objects.get(
+                id=self.kwargs["wake_week_plan_id"], site=site_id
             )
-        except PCWakeWeekPlan.DoesNotExist:
+        except WakeWeekPlan.DoesNotExist:
             raise Http404(
-                f"Du har ingen strømplan med id {self.kwargs['pc_wake_week_plan_id']}"
+                f"Du har ingen strømplan med id {self.kwargs['wake_week_plan_id']}"
             )
 
     def get_context_data(self, **kwargs):
-        context = super(PCWakeWeekPlanUpdate, self).get_context_data(**kwargs)
+        context = super(WakeWeekPlanUpdate, self).get_context_data(**kwargs)
 
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
-        context["pc_wake_week_plans_list"] = PCWakeWeekPlan.objects.filter(
+        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
             site=context["site"]
         )
 
-        # form = context["form"]
+        form = context["form"]
         # params = self.request.GET or self.request.POST
+        context["context"] = context
 
-        # group_set = site.groups.all()
-
-        # selected_group_ids = form["pc_groups"].value()
-        ## template picklist requires the form pk, name, url (u)id.
+        # Picklist related:
+        group_set = context["site"].groups.all()
+        # TODO: This line currently returns None!
+        # selected_group_ids = form["groups"].value()
+        # template picklist requires the form pk, name, url (u)id.
         # context["available_groups"] = group_set.exclude(
         #    pk__in=selected_group_ids
         # ).values_list("pk", "name", "pk")
@@ -1197,36 +1197,36 @@ class PCWakeWeekPlanUpdate(
     #    return response
 
 
-class PCWakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
-    model = PCWakeWeekPlan
+class WakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
+    model = WakeWeekPlan
     # slug_field = "site_uid"
-    template_name = "system/pc_wake_plan/pc_wake_plan_confirm_delete.html"
+    template_name = "system/wake_plan/confirm_delete.html"
 
     def get_context_data(self, **kwargs):
-        context = super(PCWakeWeekPlanDelete, self).get_context_data(**kwargs)
+        context = super(WakeWeekPlanDelete, self).get_context_data(**kwargs)
 
         # Basically common for both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
-        context["pc_wake_week_plans_list"] = PCWakeWeekPlan.objects.filter(
+        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
             site=context["site"]
         )
 
         return context
 
     def get_object(self, queryset=None):
-        return PCWakeWeekPlan.objects.get(id=self.kwargs["pc_wake_week_plan_id"])
+        return WakeWeekPlan.objects.get(id=self.kwargs["wake_week_plan_id"])
 
     def get_success_url(self):
-        # I wonder if one could just call the PCWakeWeekPlanRedirectView directly?
-        return reverse("pc_wake_week_plans", args=[self.kwargs["site_uid"]])
+        # I wonder if one could just call the WakeWeekPlanRedirectView directly?
+        return reverse("wake_week_plans", args=[self.kwargs["site_uid"]])
 
     def delete(self, request, *args, **kwargs):
-        deleted_plan_name = PCWakeWeekPlan.objects.get(
-            id=self.kwargs["pc_wake_week_plan_id"]
+        deleted_plan_name = WakeWeekPlan.objects.get(
+            id=self.kwargs["wake_week_plan_id"]
         ).name
-        response = super(PCWakeWeekPlanDelete, self).delete(request, *args, **kwargs)
+        response = super(WakeWeekPlanDelete, self).delete(request, *args, **kwargs)
         # Not seeing this have any effect?:
         set_notification_cookie(
             response, _("Tænd/Sluk tidsplan %s slettet") % deleted_plan_name

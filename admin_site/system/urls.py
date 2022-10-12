@@ -20,12 +20,11 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCUpdate,
-    # PCWakeEvent
-    # PCWakeWeekPlanCreate
-    PCWakeWeekPlanCreate,
-    PCWakeWeekPlanDelete,
-    PCWakeWeekPlanRedirect,
-    PCWakeWeekPlanUpdate,
+    # WakeChangeEvent
+    WakeWeekPlanCreate,
+    WakeWeekPlanDelete,
+    WakeWeekPlanRedirect,
+    WakeWeekPlanUpdate,
     PCsView,
     ScriptCreate,
     ScriptDelete,
@@ -171,27 +170,27 @@ urlpatterns = [
         PCGroupDelete.as_view(),
         name="group_delete",
     ),
-    # Power Plans
+    # Wake Plans
     url(
-        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plans/$",
-        PCWakeWeekPlanRedirect.as_view(),
-        name="pc_wake_week_plans",
+        r"^site/(?P<site_uid>[^/]+)/wake_week_plans/$",
+        WakeWeekPlanRedirect.as_view(),
+        name="wake_week_plans",
     ),
-    # This needs to be above PCWakeWeekPlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
+    # This URL needs to be above WakeWeekPlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
     url(
-        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/new/$",
-        PCWakeWeekPlanCreate.as_view(),
-        name="pc_wake_week_plan_new",
-    ),
-    url(
-        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/(?P<pc_wake_week_plan_id>[^/]+)/$",
-        PCWakeWeekPlanUpdate.as_view(),
-        name="pc_wake_week_plan",
+        r"^site/(?P<site_uid>[^/]+)/wake_week_plan/new/$",
+        WakeWeekPlanCreate.as_view(),
+        name="wake_week_plan_new",
     ),
     url(
-        r"^site/(?P<site_uid>[^/]+)/pc_wake_week_plan/(?P<pc_wake_week_plan_id>[^/]+)/delete/$",
-        PCWakeWeekPlanDelete.as_view(),
-        name="pc_wake_week_plan_delete",
+        r"^site/(?P<site_uid>[^/]+)/wake_week_plan/(?P<wake_week_plan_id>[^/]+)/$",
+        WakeWeekPlanUpdate.as_view(),
+        name="wake_week_plan",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_week_plan/(?P<wake_week_plan_id>[^/]+)/delete/$",
+        WakeWeekPlanDelete.as_view(),
+        name="wake_week_plan_delete",
     ),
     # Jobs
     url(

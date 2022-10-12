@@ -3562,7 +3562,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 1,
     "fields": {
         "name": "Stuen",
@@ -3585,7 +3585,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 2,
     "fields": {
         "name": "Første sal",
@@ -3608,7 +3608,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 3,
     "fields": {
         "name": "Salen",
@@ -3631,7 +3631,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 4,
     "fields": {
         "name": "Kontoret",
@@ -3654,7 +3654,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 5,
     "fields": {
         "name": "Vinterhaven",
@@ -3677,30 +3677,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
-    "pk": 6,
-    "fields": {
-        "name": "true",
-        "enabled": false,
-        "site": 1,
-        "monday_on": "01:00:00",
-        "monday_off": "23:00:00",
-        "tuesday_on": "08:00:00",
-        "tuesday_off": "20:00:00",
-        "wednesday_on": "08:00:00",
-        "wednesday_off": "20:00:00",
-        "thursday_on": "08:00:00",
-        "thursday_off": "20:00:00",
-        "friday_on": "08:00:00",
-        "friday_off": "20:00:00",
-        "saturday_on": "08:00:00",
-        "saturday_off": "20:00:00",
-        "sunday_on": "08:00:00",
-        "sunday_off": "20:00:00"
-    }
-},
-{
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 6,
     "fields": {
         "name": "Tårnet",
@@ -3723,7 +3700,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 7,
     "fields": {
         "name": "Gyden",
@@ -3746,7 +3723,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 8,
     "fields": {
         "name": "Entréen",
@@ -3769,7 +3746,7 @@
     }
 },
 {
-    "model": "system.pcwakeweekplan",
+    "model": "system.wakeweekplan",
     "pk": 9,
     "fields": {
         "name": "Æblehaven",
@@ -3792,13 +3769,62 @@
     }
 },
 {
+    "model": "system.wakechangeevent",
+    "pk": 1,
+    "fields": {
+        "name": "Vinterferie",
+        "on_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "wake_week_plans": [
+            9
+        ]
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 2,
+    "fields": {
+        "name": "Helligdag",
+        "on_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "wake_week_plans": [
+            9
+        ]
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 3,
+    "fields": {
+        "name": "Efterårsferie",
+        "on_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "wake_week_plans": [
+            9
+        ]
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 4,
+    "fields": {
+        "name": "Hellidag2",
+        "on_datetime": "2022-10-12T12:04:30",
+        "end_datetime": "2022-10-12T18:04:34",
+        "wake_week_plans": [
+            8
+        ]
+    }
+},
+{
     "model": "system.pcgroup",
     "pk": 1,
     "fields": {
         "name": "Gruppe3",
         "description": "",
         "site": 1,
-        "configuration": 5
+        "configuration": 5,
+        "wake_week_plan": 1
     }
 },
 {
@@ -3808,7 +3834,8 @@
         "name": "Gruppe5",
         "description": "",
         "site": 1,
-        "configuration": 21
+        "configuration": 21,
+        "wake_week_plan": 3
     }
 },
 {
@@ -3818,7 +3845,8 @@
         "name": "Gruppe4",
         "description": "",
         "site": 1,
-        "configuration": 33
+        "configuration": 33,
+        "wake_week_plan": 1
     }
 },
 {
@@ -3828,7 +3856,8 @@
         "name": "Gruppe1",
         "description": "test",
         "site": 1,
-        "configuration": 35
+        "configuration": 35,
+        "wake_week_plan": null
     }
 },
 {
@@ -3838,7 +3867,8 @@
         "name": "Gruppe2",
         "description": "-",
         "site": 1,
-        "configuration": 58
+        "configuration": 58,
+        "wake_week_plan": null
     }
 },
 {
