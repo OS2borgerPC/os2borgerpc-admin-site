@@ -289,6 +289,14 @@ class SecurityEventForm(forms.ModelForm):
 
 
 class WakePlanForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        # Setup for the group picklist, so we have access to the groups for the form
+        if "instance" in kwargs and kwargs["instance"] is not None:
+            initial = kwargs.setdefault("initial", {})
+            initial["groups"] = [group.pk for group in kwargs["instance"].groups.all()]
+
+        forms.ModelForm.__init__(self, *args, **kwargs)
+
     groups = forms.ModelMultipleChoiceField(
         queryset=PCGroup.objects.all(), required=False
     )
