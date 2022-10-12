@@ -23,15 +23,14 @@ from system.models import (
     Job,
     PC,
     PCGroup,
-    PCWakeWeekPlan,
+    WakeWeekPlan,
+    WakeChangeEvent,
     Script,
     ScriptTag,
     SecurityEvent,
     SecurityProblem,
     Site,
 )
-
-ar = admin.site.register
 
 
 class ConfigurationEntryInline(admin.TabularInline):
@@ -380,14 +379,28 @@ class ChangelogCommentAdmin(admin.ModelAdmin):
     )
 
 
-class PCWakeWeekPlanAdmin(admin.ModelAdmin):
+class WakeChangeEventInline(admin.TabularInline):
+    model = WakeChangeEvent.wake_week_plans.through
+    extra = 0
+
+
+class WakeWeekPlanAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "enabled",
         "site",
     )
-    inlines = [PCGroupInline]
+    inlines = [PCGroupInline, WakeChangeEventInline]
 
+
+class WakeChangeEventAdmin(admin.ModelAdmin):
+    list_display = (
+        "start_datetime",
+        "end_datetime",
+    )
+
+
+ar = admin.site.register
 
 ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter, AssociatedScriptParameterAdmin)
@@ -402,7 +415,8 @@ ar(ImageVersion, ImageVersionAdmin)
 ar(Job, JobAdmin)
 ar(PC, PCAdmin)
 ar(PCGroup, PCGroupAdmin)
-ar(PCWakeWeekPlan, PCWakeWeekPlanAdmin)
+ar(WakeChangeEvent, WakeChangeEventAdmin)
+ar(WakeWeekPlan, WakeWeekPlanAdmin)
 ar(Script, ScriptAdmin)
 ar(ScriptTag, ScriptTagAdmin)
 ar(SecurityEvent, SecurityEventAdmin)

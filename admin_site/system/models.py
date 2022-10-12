@@ -217,14 +217,14 @@ class MandatoryParameterMissingError(Error):
     pass
 
 
-class PCWakeWeekPlan(models.Model):
+class WakeWeekPlan(models.Model):
     default_open = datetime.time(8, 0, 0, 0)
     default_close = datetime.time(20, 0, 0, 0)
 
     name = models.CharField(verbose_name=_("name"), max_length=60)
     enabled = models.BooleanField(verbose_name=_("enabled"), default=False)
     site = models.ForeignKey(
-        Site, related_name="pc_wake_week_plans", on_delete=models.CASCADE
+        Site, related_name="wake_week_plans", on_delete=models.CASCADE
     )
     monday_on = models.TimeField(
         verbose_name=_("monday on"), null=True, blank=True, default=default_open
@@ -270,23 +270,31 @@ class PCWakeWeekPlan(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse("pc_wake_week_plan", args=(self.site.uid, self.id))
+        return reverse("wake_week_plan", args=(self.site.uid, self.id))
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         ordering = ["name"]
 
 
-class PCWakeEvent(models.Model):
-    on_datetime = models.DateTimeField(verbose_name=_("datetime on"))
-    end_datetime = models.DateTimeField(verbose_name=_("datetime off"))
-    pc_wake_week_plans = models.ManyToManyField(
-        PCWakeWeekPlan,
-        related_name="pc_wake_week_plans",
-        verbose_name=_("pc wake week plans"),
+class WakeChangeEvent(models.Model):
+    name = models.CharField(verbose_name=_("name"), max_length=60)
+    start_datetime = models.DateTimeField(verbose_name=_("datetime start"))
+    end_datetime = models.DateTimeField(verbose_name=_("datetime end"))
+    on = models.BooleanField(verbose_name=_("on"), default=False)
+    wake_week_plans = models.ManyToManyField(
+        WakeWeekPlan,
+        related_name="wake_events",
+        verbose_name=_("wake week plans"),
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
-        ordering = ["on_datetime"]
+        ordering = ["start_datetime"]
 
 
 class PCGroup(models.Model):
@@ -298,8 +306,8 @@ class PCGroup(models.Model):
     )
     site = models.ForeignKey(Site, related_name="groups", on_delete=models.CASCADE)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    pc_wake_week_plan = models.ForeignKey(
-        PCWakeWeekPlan, on_delete=models.SET_NULL, null=True
+    wake_week_plan = models.ForeignKey(
+        WakeWeekPlan, related_name="groups", on_delete=models.SET_NULL, null=True
     )
 
     def __str__(self):
