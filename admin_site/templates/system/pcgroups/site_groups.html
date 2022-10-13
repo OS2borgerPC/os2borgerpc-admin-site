@@ -92,14 +92,14 @@ active
               {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' site_url=site.uid target_section='computers' %}
 
             {# SecurityProblem #}
-            {% if selected_group.security_problems.all %}
+            {% if security_problems_incl_site %}
               <div class="mt-3">
                 <p>Tilknyttede Sikkerhedsregler</p>
-                {% for problem in selected_group.security_problems.all %}
-                  <p class="mt-2">
-                    <a href="{% url 'security_problem' site.uid problem.uid %}">{{ problem }}</a>
-                  </p>
-                {% endfor %}
+                <ul class="mt-2 list-group">
+                  {% for problem in security_problems_incl_site %}
+                    <li class="list-group-item"><a href="{% url 'security_problem' site.uid problem.uid %}">{{ problem }}</a></li>
+                  {% endfor %}
+                </ul>
               </div>
             {% endif %}
 

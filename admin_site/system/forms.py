@@ -97,7 +97,7 @@ class PCGroupForm(forms.ModelForm):
 
     class Meta:
         model = PCGroup
-        exclude = ["site", "configuration"]
+        exclude = ["site", "configuration", "wake_week_plan"]
 
 
 class ScriptForm(forms.ModelForm):
@@ -303,4 +303,4 @@ class WakePlanForm(forms.ModelForm):
 
     class Meta:
         model = WakeWeekPlan
-        fields = "__all__"
+        exclude = ("site",)

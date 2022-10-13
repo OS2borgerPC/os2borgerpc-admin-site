@@ -1499,6 +1499,12 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context["form"]
         site = context["site"]
 
+        # Manually create a list of security problems to not only include those attached but also those
+        # unattached which currently apply to all groups
+        context["security_problems_incl_site"] = group.security_problems.all().union(
+            SecurityProblem.objects.filter(alert_groups=None)
+        )
+
         # PC picklist related
         pc_queryset = site.pcs.filter(is_activated=True)
         form.fields["pcs"].queryset = pc_queryset
