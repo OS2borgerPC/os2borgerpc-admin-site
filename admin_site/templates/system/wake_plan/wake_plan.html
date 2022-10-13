@@ -1,4 +1,5 @@
 {% extends "system/wake_plan/wake_plan_base.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_content %}
   <h1>{{selected_plan.name}}</h1>
@@ -8,6 +9,8 @@
     <li>Mandag: {{selected_plan.monday_on}} - {{selected_plan.monday_off}}</li>
     <li>Tirsdag: {{selected_plan.tuesday_on}} - {{selected_plan.tuesday_off}}</li>
   </ul>
+
+  {{form|crispy}}
 
   {# Wake events #}
   {% for event in selected_plan.wake_events.all %}
