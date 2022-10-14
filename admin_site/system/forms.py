@@ -303,4 +303,4 @@ class WakePlanForm(forms.ModelForm):
 
     class Meta:
         model = WakeWeekPlan
-        exclude = ("site",)
+        exclude = ("site", )
