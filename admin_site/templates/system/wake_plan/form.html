@@ -1,9 +1,23 @@
 {% extends "system/wake_plan/wake_plan_base.html" %}
+{% load crispy_forms_tags %}
 
 {% block specific_title %}
 Opret Tænd- / Sluk-tidsplan
 {% endblock %}
 
 {% block specific_content %}
-  Formular!
+<div class="container-flud main sublevelmain">
+
+  <h2 class="divideheader">Opret ny Tænd/Sluk tidsplan</h2>
+  
+  <form method="post">
+    {{form|crispy}}
+
+    {% csrf_token %}
+
+    <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
+    <input class="btn btn-secondary" type="reset" name="cancel" value="Annuller">
+  </form>
+
+</div>
 {% endblock %}

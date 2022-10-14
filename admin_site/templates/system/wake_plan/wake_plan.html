@@ -2,34 +2,50 @@
 {% load crispy_forms_tags %}
 
 {% block specific_content %}
-  <h1>{{selected_plan.name}}</h1>
 
-  {# Wake plan #}
-  <ul>
-    <li>Mandag: {{selected_plan.monday_on}} - {{selected_plan.monday_off}}</li>
-    <li>Tirsdag: {{selected_plan.tuesday_on}} - {{selected_plan.tuesday_off}}</li>
-  </ul>
+<div class="container-flud main sublevelmain">
 
-  {{form|crispy}}
+  <h1 class="divideheader">{{selected_plan.name}}</h1>
+  
+  <form method="post">
 
-  {# Wake events #}
-  {% for event in selected_plan.wake_events.all %}
-    {{event}}
-  {% endfor %}
+    {% csrf_token %}
 
-  {# PCGroup picklist #}
-  <fieldset class="col-12 col-lg-6">
+    {# Wake plan #}
+    <ul>
+      <li>Mandag: {{selected_plan.monday_on}} - {{selected_plan.monday_off}}</li>
+      <li>Tirsdag: {{selected_plan.tuesday_on}} - {{selected_plan.tuesday_off}}</li>
+    </ul>
 
-    {{ form.groups.errors }}
-    <div class="clearfix">
-      <label class="mb-2">Grupper der er medlem af tidsplanen</label>
-      <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
-        <span class="material-icons px-1">queue</span>
-        <span id="total-pc_groups"></span>
-      </span>
-    </div>
-    {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til tidsplan' remove_text='Fjern computer fra tidsplan' site_url=site.uid target_section='groups' %}
+    {# Wake events #}
+    {% for event in selected_plan.wake_events.all %}
+      {{event}}
+    {% endfor %}
 
-  </fieldset>
+    {# PCGroup picklist #}
+    <fieldset class="col-12 col-lg-6">
+
+      {{ form.groups.errors }}
+      <div class="clearfix">
+        <label class="mb-2">Grupper der er medlem af tidsplanen</label>
+        <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
+          <span class="material-icons px-1">queue</span>
+          <span id="total-pc_groups"></span>
+        </span>
+      </div>
+      {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til tidsplan' remove_text='Fjern computer fra tidsplan' site_url=site.uid target_section='groups' %}
+
+    </fieldset>
+
+    <hr>
+
+    {{form|crispy}}
+
+    <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
+    <input class="btn btn-secondary" type="reset" name="cancel" value="Annuller">
+
+  </form>
+
+</div>
 
 {% endblock %}
