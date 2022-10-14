@@ -1101,9 +1101,8 @@ class WakeWeekPlanRedirect(RedirectView):
 class WakeWeekPlanCreate(
     CreateView, SiteMixin, LoginRequiredMixin, SuperAdminOrThisSiteMixin
 ):
-    fields = "__all__"
     model = WakeWeekPlan
-    # form_class = WakeWeekPlanForm
+    form_class = WakePlanForm
     slug_field = "site_uid"
     template_name = "system/wake_plan/form.html"
 
@@ -1119,12 +1118,13 @@ class WakeWeekPlanCreate(
 
         return context
 
-    # def form_valid(self, form):
-    #    site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-    #    self.object = form.save(commit=False)
-    #    self.object.site = site
+    def form_valid(self, form):
+        # The form does not allow setting the site yourself, so we insert that here
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        self.object = form.save(commit=False)
+        self.object.site = site
 
-    #    return super(WakeWeekPlanCreate, self).form_valid(form)
+        return super(WakeWeekPlanCreate, self).form_valid(form)
 
 
 class WakeWeekPlanUpdate(
