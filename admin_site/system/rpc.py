@@ -26,6 +26,12 @@ def register_new_computer(mac, name, distribution, site, configuration):
     # Hash our uid
     uid = hashlib.md5(mac.encode("utf-8")).hexdigest()
 
+    if PC.objects.filter(uid=uid).count():
+        raise Exception(
+            "Denne maskine er allerede registreret på det angivne admin-site. "
+            "Slet først maskinen fra computerlisten på admin-sitet, "
+            "og registrer den så igen."
+        )
     try:
         new_pc = PC.objects.get(uid=uid)
     except PC.DoesNotExist:
