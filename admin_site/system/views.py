@@ -1572,6 +1572,13 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         # template picklist requires the form pk, name, url (u)id.
         context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
+        if not self.request.user.is_superuser:
+            context[
+                "user_type_for_site"
+            ] = self.request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
+
         return context
 
     def get_success_url(self):
