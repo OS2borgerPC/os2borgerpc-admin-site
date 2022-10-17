@@ -9,6 +9,7 @@ from system.models import (
     Input,
     PC,
     PCGroup,
+    WakeChangeEvent,
     WakeWeekPlan,
     Script,
     SecurityEvent,
@@ -288,6 +289,7 @@ class SecurityEventForm(forms.ModelForm):
         fields = ("status", "assigned_user", "note")
 
 
+# Used on the Create and Update views
 class WakePlanForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # Setup for the group picklist, so we have access to the groups for the form
@@ -303,4 +305,10 @@ class WakePlanForm(forms.ModelForm):
 
     class Meta:
         model = WakeWeekPlan
-        exclude = ("site", )
+        exclude = ("site",)
+
+
+class WakeChangeEventForm(forms.ModelForm):
+    class Meta:
+        model = WakeChangeEvent
+        exclude = ("wake_week_plans",)
