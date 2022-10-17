@@ -995,7 +995,7 @@
     "fields": {
         "password": "pbkdf2_sha256$260000$SIRvs2xVZfaq6J5dTwprEA$utC5ILCA6UQAQtFIMFZNrKMFkoXajCUabC7ZAO3JLYA=",
         "last_login": "2022-04-01T15:51:10.748",
-        "is_superuser": true,
+        "is_superuser": false,
         "username": "magenta3",
         "first_name": "",
         "last_name": "",

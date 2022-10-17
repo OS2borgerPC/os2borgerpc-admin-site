@@ -1154,11 +1154,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
 
         if (
-            self.request.user.bibos_profile.sitemembership_set.get(
+            self.request.user.is_superuser
+            or self.request.user.bibos_profile.sitemembership_set.get(
                 site=site
             ).site_user_type
             == 2
-            or self.request.user.is_superuser
         ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
