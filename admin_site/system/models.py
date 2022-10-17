@@ -218,13 +218,26 @@ class MandatoryParameterMissingError(Error):
 
 
 class WakeWeekPlan(models.Model):
+
+    # Sleep state choices for the field below - and their translations
+    # These are based on what "rtcwake" supports
+    SLEEP_STATE_CHOICES = (
+        ("STANDBY", _("sleep_state:Standby")),
+        ("FREEZE", _("sleep_state:Freeze")),
+        ("MEM", _("sleep_state:Mem")),
+        ("OFF", _("sleep_state:Off")),
+    )
+
     default_open = datetime.time(8, 0, 0, 0)
     default_close = datetime.time(20, 0, 0, 0)
 
     name = models.CharField(verbose_name=_("name"), max_length=60)
     enabled = models.BooleanField(verbose_name=_("enabled"), default=False)
-    site = models.ForeignKey(
-        Site, related_name="wake_week_plans", on_delete=models.CASCADE
+    sleep_state = models.CharField(
+        verbose_name=_("sleep state"),
+        max_length=10,
+        choices=SLEEP_STATE_CHOICES,
+        default=SLEEP_STATE_CHOICES[3][0],
     )
     monday_on = models.TimeField(
         verbose_name=_("monday on"), null=True, blank=True, default=default_open
@@ -267,6 +280,9 @@ class WakeWeekPlan(models.Model):
     )
     sunday_off = models.TimeField(
         verbose_name=_("sunday off"), null=True, blank=True, default=default_close
+    )
+    site = models.ForeignKey(
+        Site, related_name="wake_week_plans", on_delete=models.CASCADE
     )
 
     def get_absolute_url(self):
