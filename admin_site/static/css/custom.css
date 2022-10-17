@@ -106,12 +106,10 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
   #jobsearchnav { width: 9rem; }
   .jobtable th, .jobtable td { padding: .75rem .75rem!important; }
 
-  /* Hide "batch" at lower resolutions on both jobs and computer>jobs */
-  .container-fluid > .jobtable th#order-batch, .container-fluid > .jobtable td.batch { display: none; }
-  /* TODO: When fixing column sorting on this table, rewrite the th part to use ID (or class) as well */
-  .tab-content .jobtable th:nth-of-type(6), .tab-content .jobtable td.batch { display: none; }
-
   /* Hide computer description from status page at lower resolution */
   #site-status-table th:nth-of-type(3),  #site-status-table th:nth-of-type(4),
   #site-status-table td:nth-of-type(3), #site-status-table td:nth-of-type(4) { display: none; }
 }
+
+.batch:not(:empty)::before { content: "(" }
+.batch:not(:empty)::after { content: ")" }

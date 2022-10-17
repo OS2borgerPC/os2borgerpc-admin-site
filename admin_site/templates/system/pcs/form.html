@@ -146,7 +146,6 @@ Computere
                 {% include 'widgets/orderby_th_reload.html' with key='started' label='Startet' anchor='#jobs' %}
                 {% include 'widgets/orderby_th_reload.html' with key='finished' label='Sluttet' anchor='#jobs' %}
                 {% include 'widgets/orderby_th_reload.html' with key='status' label='Status' anchor='#jobs' %}
-                {% include 'widgets/orderby_th_reload.html' with key='batch__name' label='Batch' anchor='#jobs' %}
                 <th></th> {# Job-info-button #}
               </tr>
             </thead>
@@ -154,12 +153,12 @@ Computere
             <tr class="muted">
               <td class="{% ifequal orderby_key 'batch__script__name' %}orderby-highligt{% endifequal %}">
                   <a href="{% url 'script' site.uid job.batch.script.pk %}"><strong>{{job.batch.script.name}}</strong></a>
+                  <span class="batch">{{job.batch.name}}</span>
               </td>
               <td class="{% ifequal orderby_key 'created' %}orderby-highligt{% endifequal %}">{{job.created|default:'-'}}</td>
               <td class="{% ifequal orderby_key 'started' %}orderby-highligt{% endifequal %}">{{job.started|default:'-'}}</td>
               <td class="{% ifequal orderby_key 'finished' %}orderby-highligt{% endifequal %}">{{job.finished|default:'-'}}</td>
               <td class="{% ifequal orderby_key 'status' %}orderby-highligt{% endifequal %}"><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
-              <td class="batch {% ifequal orderby_key 'batch__name' %}orderby-highligt{% endifequal %}">{{job.batch.name}}</td>
               <td>
                 {% if job.has_info %}
                   <button type="button" class="btn jobinfobutton p-0" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="click" data-bs-animation="true">

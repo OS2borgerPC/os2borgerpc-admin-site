@@ -531,6 +531,7 @@ class Batch(models.Model):
 
     class Meta:
         verbose_name_plural = "Batches"
+        ordering = ["-id"]
 
     # TODO: The name should probably be generated automatically from ID and
     # script and date, etc.
