@@ -15,8 +15,12 @@ Opret Tænd- / Sluk-tidsplan
 
     {% csrf_token %}
 
+    <h2>Undtagelser</h2>
+    {{wake_change_event_form|crispy}}
+
     <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
     <input class="btn btn-secondary" type="reset" name="cancel" value="Annuller">
+
   </form>
 
 </div>
