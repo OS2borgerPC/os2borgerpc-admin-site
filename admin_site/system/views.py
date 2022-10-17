@@ -57,13 +57,14 @@ from system.forms import (
     ConfigurationEntryForm,
     PCForm,
     PCGroupForm,
-    WakePlanForm,
     ParameterForm,
     ScriptForm,
     SecurityEventForm,
     SecurityProblemForm,
     SiteForm,
     UserForm,
+    WakeChangeEventForm,
+    WakePlanForm,
 )
 
 
@@ -1117,6 +1118,8 @@ class WakeWeekPlanCreate(
             site=context["site"]
         )
 
+        context["wake_change_event_form"] = WakeChangeEventForm
+
         return context
 
     def form_valid(self, form):
@@ -1230,7 +1233,7 @@ class WakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
         response = super(WakeWeekPlanDelete, self).delete(request, *args, **kwargs)
         # Not seeing this have any effect?:
         set_notification_cookie(
-            response, _("Tænd/Sluk tidsplan %s slettet") % deleted_plan_name
+            response, _("Wake Week Plan %s deleted") % deleted_plan_name
         )
         return response
 
