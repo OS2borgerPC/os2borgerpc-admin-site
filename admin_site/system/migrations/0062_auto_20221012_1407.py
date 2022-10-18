@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0060_alter_changelog_options'),
+        ('system', '0061_alter_batch_options'),
     ]
 
     operations = [
