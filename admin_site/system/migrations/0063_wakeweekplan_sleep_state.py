@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0062_alter_batch_options'),
+        ('system', '0062_auto_20221012_1407'),
     ]
 
     operations = [
