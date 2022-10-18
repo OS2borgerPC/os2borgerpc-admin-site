@@ -1177,27 +1177,37 @@ class WakeWeekPlanUpdate(
 
         return context
 
-    # def form_valid(self, form):
-    #    pc = self.object
-    #    groups_pre = set(pc.pc_groups.all())
+    def form_valid(self, form):
+        # Capture a view of the group's PCs and policy scripts before the
+        # update
+        #groups_pre = set(self.object.groups.all())
 
-    #    with transaction.atomic():
-    #        pc.configuration.update_from_request(self.request.POST, "pc_config")
-    #        response = super(PCUpdate, self).form_valid(form)
+        with transaction.atomic():
 
-    #        # If this PC has joined any groups that have policies attached
-    #        # to them, then run their scripts (first making sure that this
-    #        # PC is capable of doing so!)
-    #        groups_post = set(pc.pc_groups.all())
-    #        new_groups = groups_post.difference(groups_pre)
-    #        for g in new_groups:
-    #            policy = g.ordered_policy
-    #            if policy:
-    #                for asc in policy:
-    #                    asc.run_on(self.request.user, [pc])
+            response = super(WakeWeekPlanUpdate, self).form_valid(form)
 
-    #    set_notification_cookie(response, _("Computer %s updated") % pc.name)
-    #    return response
+            #members_post = set(self.object.groups.all())
+
+            ## Work out which PCs and policy scripts have come and gone
+            #surviving_groups = members_post.intersection(groups_pre)
+            #new_groups = members_post.difference(groups_pre)
+            ## deleted_members =
+
+            ## Run all policy scripts on new PCs...
+            #if new_groups:
+            #    pass
+
+            #set_notification_cookie(
+            #    response, _("Group %s updated") % self.object.name
+            #)
+
+            group_ids = self.request.POST.getlist('groups')
+            groups = PCGroup.objects.filter(id__in=group_ids)
+            for g in groups:
+                g.wake_week_plan = self.object
+                g.save()
+
+            return response
 
 
 class WakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
