@@ -11,16 +11,25 @@
 
     {% csrf_token %}
 
-    {# Wake plan #}
+    <h1>Ugeplan</h1>
     <ul>
       <li>Mandag: {{selected_plan.monday_on}} - {{selected_plan.monday_off}}</li>
       <li>Tirsdag: {{selected_plan.tuesday_on}} - {{selected_plan.tuesday_off}}</li>
     </ul>
 
+    <h1>Lukkedage og undtagelser</h1>
+    <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
+
     {# Wake events #}
     {% for event in selected_plan.wake_events.all %}
       {{event}}
+      <span class="material-icons delete">trash</span>
     {% endfor %}
+
+    <button>Tilføj periode</button>
+    <button>Tilføj dato</button>
+
+    <<h1>Grupper i denne tidsplan</h1>
 
     {# PCGroup picklist #}
     <fieldset class="col-12 col-lg-6">
@@ -43,6 +52,7 @@
 
     <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
     <input class="btn btn-secondary" type="reset" name="cancel" value="Annuller">
+    <input class="btn btn-secondary" type="submit" name="copy" value="Kopiér tidsplan">
 
   </form>
 
