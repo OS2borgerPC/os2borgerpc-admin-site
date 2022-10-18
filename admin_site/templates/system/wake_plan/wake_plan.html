@@ -31,6 +31,10 @@
 
     <<h1>Grupper i denne tidsplan</h1>
 
+    <hr>
+
+    {{form|crispy}}
+
     {# PCGroup picklist #}
     <fieldset class="col-12 col-lg-6">
 
@@ -45,10 +49,6 @@
       {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til tidsplan' remove_text='Fjern computer fra tidsplan' site_url=site.uid target_section='groups' %}
 
     </fieldset>
-
-    <hr>
-
-    {{form|crispy}}
 
     <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
     <input class="btn btn-secondary" type="reset" name="cancel" value="Annuller">
