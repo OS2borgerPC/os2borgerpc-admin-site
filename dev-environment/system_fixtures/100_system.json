@@ -273,13 +273,6 @@
     }
 },
 {
-    "model": "system.configuration",
-    "pk": 63,
-    "fields": {
-        "name": "magenta_mfm-bpc-64882837_da8310ac196539d8c0ec43b14edbb141"
-    }
-},
-{
     "model": "system.configurationentry",
     "pk": 1,
     "fields": {
@@ -3394,132 +3387,6 @@
     }
 },
 {
-    "model": "system.configurationentry",
-    "pk": 502,
-    "fields": {
-        "key": "_os2borgerpc.client_version",
-        "value": "1.3.0",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 503,
-    "fields": {
-        "key": "_os_name",
-        "value": "Ubuntu",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 504,
-    "fields": {
-        "key": "_os_release",
-        "value": "20.04",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 505,
-    "fields": {
-        "key": "admin_url",
-        "value": "http://10.0.2.2:9999",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 506,
-    "fields": {
-        "key": "distribution",
-        "value": "os2borgerpc20.04",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 507,
-    "fields": {
-        "key": "hostname",
-        "value": "mfm-bpc-64882837",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 508,
-    "fields": {
-        "key": "job_timeout",
-        "value": "900",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 509,
-    "fields": {
-        "key": "mac",
-        "value": "08:00:27:b7:59:c6",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 510,
-    "fields": {
-        "key": "os2_product",
-        "value": "os2borgerpc",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 511,
-    "fields": {
-        "key": "os2borgerpc_version",
-        "value": "3.1.1",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 512,
-    "fields": {
-        "key": "security_updates",
-        "value": "0",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 513,
-    "fields": {
-        "key": "site",
-        "value": "magenta",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 514,
-    "fields": {
-        "key": "uid",
-        "value": "da8310ac196539d8c0ec43b14edbb141",
-        "owner_configuration": 63
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 515,
-    "fields": {
-        "key": "updates",
-        "value": "43",
-        "owner_configuration": 63
-    }
-},
-{
     "model": "system.site",
     "pk": 1,
     "fields": {
@@ -3736,7 +3603,6 @@
         "name": "Entréen",
         "enabled": false,
         "sleep_state": "FREEZE",
-        "site": 1,
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
         "tuesday_on": "08:00:00",
@@ -3750,7 +3616,8 @@
         "saturday_on": null,
         "saturday_off": null,
         "sunday_on": "08:00:00",
-        "sunday_off": "20:00:00"
+        "sunday_off": "20:00:00",
+        "site": 1
     }
 },
 {
@@ -3784,6 +3651,7 @@
         "name": "Vinterferie",
         "start_datetime": "2022-10-12T12:03:35",
         "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
         "wake_week_plans": [
             9
         ]
@@ -3796,6 +3664,7 @@
         "name": "Helligdag",
         "start_datetime": "2022-10-12T12:04:06",
         "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
         "wake_week_plans": [
             9
         ]
@@ -3808,6 +3677,7 @@
         "name": "Efterårsferie",
         "start_datetime": "2022-09-12T12:04:15",
         "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
         "wake_week_plans": [
             9
         ]
@@ -3820,9 +3690,241 @@
         "name": "Hellidag2",
         "start_datetime": "2022-10-12T12:04:30",
         "end_datetime": "2022-10-12T18:04:34",
+        "on": false,
         "wake_week_plans": [
             8
         ]
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 5,
+    "fields": {
+        "name": "Efterårsferie",
+        "start_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 6,
+    "fields": {
+        "name": "Vinterferie",
+        "start_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 7,
+    "fields": {
+        "name": "Helligdag",
+        "start_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 8,
+    "fields": {
+        "name": "Efterårsferie",
+        "start_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 9,
+    "fields": {
+        "name": "Vinterferie",
+        "start_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 10,
+    "fields": {
+        "name": "Helligdag",
+        "start_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 11,
+    "fields": {
+        "name": "Efterårsferie",
+        "start_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 12,
+    "fields": {
+        "name": "Vinterferie",
+        "start_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 13,
+    "fields": {
+        "name": "Helligdag",
+        "start_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 14,
+    "fields": {
+        "name": "Efterårsferie",
+        "start_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 15,
+    "fields": {
+        "name": "Vinterferie",
+        "start_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 16,
+    "fields": {
+        "name": "Helligdag",
+        "start_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 17,
+    "fields": {
+        "name": "Efterårsferie",
+        "start_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 18,
+    "fields": {
+        "name": "Vinterferie",
+        "start_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 19,
+    "fields": {
+        "name": "Helligdag",
+        "start_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 20,
+    "fields": {
+        "name": "Efterårsferie",
+        "start_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 21,
+    "fields": {
+        "name": "Vinterferie",
+        "start_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 22,
+    "fields": {
+        "name": "Helligdag",
+        "start_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 23,
+    "fields": {
+        "name": "Efterårsferie",
+        "start_datetime": "2022-09-12T12:04:15",
+        "end_datetime": "2022-10-12T20:04:16",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 24,
+    "fields": {
+        "name": "Vinterferie",
+        "start_datetime": "2022-10-12T12:03:35",
+        "end_datetime": "2022-12-12T20:03:36",
+        "on": false,
+        "wake_week_plans": []
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 25,
+    "fields": {
+        "name": "Helligdag",
+        "start_datetime": "2022-10-12T12:04:06",
+        "end_datetime": "2022-10-12T17:04:07",
+        "on": false,
+        "wake_week_plans": []
     }
 },
 {
@@ -4171,24 +4273,6 @@
         "pc_groups": [
             17
         ]
-    }
-},
-{
-    "model": "system.pc",
-    "pk": 32,
-    "fields": {
-        "mac": "08:00:27:b7:59:c6",
-        "name": "mfm-bpc-64882837",
-        "uid": "da8310ac196539d8c0ec43b14edbb141",
-        "description": "",
-        "configuration": 63,
-        "site": 1,
-        "is_activated": false,
-        "is_update_required": false,
-        "created": "2022-06-09T14:49:46.018",
-        "last_seen": "2022-06-09T14:57:01.515",
-        "location": "",
-        "pc_groups": []
     }
 },
 {
