@@ -1106,12 +1106,12 @@ class WakePlanCreate(
     model = WakeWeekPlan
     form_class = WakePlanForm
     slug_field = "site_uid"
-    template_name = "system/wake_plan/form.html"
+    template_name = "system/wake_plan/wake_plan.html"
 
     def get_context_data(self, **kwargs):
         context = super(WakePlanCreate, self).get_context_data(**kwargs)
 
-        context["site"] = Site.objects.get(uid=kwargs["site_uid"])
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
         context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
