@@ -380,6 +380,8 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
         params = self.request.GET
 
         query = {"batch__site": site}
+        if not self.request.user.is_superuser:
+            query["batch__script__is_hidden"] = False
 
         if "status" in params:
             query["status__in"] = params.getlist("status")
@@ -578,9 +580,10 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        local_scripts = self.scripts.filter(site=self.site).order_by("name")
+        scripts = self.scripts.filter(is_hidden=False)
+        local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
-        global_scripts = self.scripts.filter(site=None).order_by("name")
+        global_scripts = scripts.filter(site=None)
         context["global_scripts"] = global_scripts
 
         # Create a tag->scripts dict for tags that has local scripts.
@@ -791,6 +794,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form = ScriptForm()
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
+        context["is_hidden"] = self.script.is_hidden
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         if not request_user.is_superuser:
@@ -802,6 +806,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return context
 
     def get_object(self, queryset=None):
+        if self.script.is_hidden and not self.request.user.is_superuser:
+            raise PermissionDenied
         return self.script
 
     def form_valid(self, form):
@@ -1359,6 +1365,20 @@ class WakePlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
         deleted_plan_name = WakeWeekPlan.objects.get(
             id=self.kwargs["wake_week_plan_id"]
         ).name
+        if self.get_object().enabled:
+            groups = self.get_object().groups.all()
+            pcs_in_groups = PC.object.none()
+            for g in groups:
+                pcs_in_groups = pcs_in_groups.union(g.pcs.all())
+            remove_script = Script.objects.get(pk=83)
+            # The actual script takes no inputs, this is just for testing
+            args_remove = ["a", "b", "c", "d"]
+            batch = remove_script.run_on(
+                self.get_object().site,
+                pcs_in_groups,
+                *args_remove,
+                user=request.user,
+            )
         response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
         # Not seeing this have any effect?:
         set_notification_cookie(
@@ -1697,8 +1717,8 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         del context["newform"].fields["pcs"]
 
         context["all_scripts"] = Script.objects.filter(
-            Q(site=site) | Q(site=None), is_security_script=False
-        ).order_by("name")
+            Q(site=site) | Q(site=None), is_security_script=False, is_hidden=False
+        )
 
         return context
 
