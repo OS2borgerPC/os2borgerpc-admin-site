@@ -286,7 +286,7 @@ class WakeWeekPlan(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse("wake_week_plan", args=(self.site.uid, self.id))
+        return reverse("wake_plan", args=(self.site.uid, self.id))
 
     def __str__(self):
         return self.name

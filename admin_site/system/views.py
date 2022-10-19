@@ -1087,7 +1087,7 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
 
 
-class WakeWeekPlanRedirect(RedirectView):
+class WakePlanRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["site_uid"])
 
@@ -1097,10 +1097,10 @@ class WakeWeekPlanRedirect(RedirectView):
             wake_week_plan = wake_week_plans.first()
             return wake_week_plan.get_absolute_url()
         else:
-            return reverse("wake_week_plan_new", args=[site.uid])
+            return reverse("wake_plan_new", args=[site.uid])
 
 
-class WakeWeekPlanCreate(
+class WakePlanCreate(
     CreateView, SiteMixin, LoginRequiredMixin, SuperAdminOrThisSiteMixin
 ):
     model = WakeWeekPlan
@@ -1109,9 +1109,9 @@ class WakeWeekPlanCreate(
     template_name = "system/wake_plan/form.html"
 
     def get_context_data(self, **kwargs):
-        context = super(WakeWeekPlanCreate, self).get_context_data(**kwargs)
+        context = super(WakePlanCreate, self).get_context_data(**kwargs)
 
-        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        context["site"] = Site.objects.get(uid=kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
         context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
@@ -1128,10 +1128,10 @@ class WakeWeekPlanCreate(
         self.object = form.save(commit=False)
         self.object.site = site
 
-        return super(WakeWeekPlanCreate, self).form_valid(form)
+        return super(WakePlanCreate, self).form_valid(form)
 
 
-class WakeWeekPlanUpdate(
+class WakePlanUpdate(
     SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin
 ):
     template_name = "system/wake_plan/wake_plan.html"
@@ -1150,7 +1150,7 @@ class WakeWeekPlanUpdate(
             )
 
     def get_context_data(self, **kwargs):
-        context = super(WakeWeekPlanUpdate, self).get_context_data(**kwargs)
+        context = super(WakePlanUpdate, self).get_context_data(**kwargs)
 
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
@@ -1184,7 +1184,7 @@ class WakeWeekPlanUpdate(
 
         with transaction.atomic():
 
-            response = super(WakeWeekPlanUpdate, self).form_valid(form)
+            response = super(WakePlanUpdate, self).form_valid(form)
 
             # members_post = set(self.object.groups.all())
 
@@ -1210,13 +1210,13 @@ class WakeWeekPlanUpdate(
             return response
 
 
-class WakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
+class WakePlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = WakeWeekPlan
     # slug_field = "site_uid"
     template_name = "system/wake_plan/confirm_delete.html"
 
     def get_context_data(self, **kwargs):
-        context = super(WakeWeekPlanDelete, self).get_context_data(**kwargs)
+        context = super(WakePlanDelete, self).get_context_data(**kwargs)
 
         # Basically common for both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
@@ -1233,18 +1233,50 @@ class WakeWeekPlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         # I wonder if one could just call the WakeWeekPlanRedirectView directly?
-        return reverse("wake_week_plans", args=[self.kwargs["site_uid"]])
+        return reverse("wake_plans", args=[self.kwargs["site_uid"]])
 
     def delete(self, request, *args, **kwargs):
         deleted_plan_name = WakeWeekPlan.objects.get(
             id=self.kwargs["wake_week_plan_id"]
         ).name
-        response = super(WakeWeekPlanDelete, self).delete(request, *args, **kwargs)
+        response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
         # Not seeing this have any effect?:
         set_notification_cookie(
             response, _("Wake Week Plan %s deleted") % deleted_plan_name
         )
         return response
+
+
+class WakePlanCopy(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
+    model = WakeWeekPlan
+
+    def get_redirect_url(self, **kwargs):
+        object_to_copy = WakeWeekPlan.objects.get(id=kwargs["wake_week_plan_id"])
+
+        # Before we remove the pk we duplicate all the associated events, as they're precisely related through the pk
+        # TODO: For now we actually duplicate the events rather than refer to the same ones
+        # Which we'd like to change in the future, so WakeWeekPlans can generally share events
+        # ...and not only through copying
+        events = []
+        for event in object_to_copy.wake_events.all():
+            event.id = None
+            event.save()
+            events.append(event)
+
+        object_to_copy.pk = (
+            None  # Remove its current pk so it gets a new one when saving
+        )
+        object_to_copy.name = f"Kopi af {object_to_copy.name}"
+        # Now save the copied object to get a new ID, which is also required to bind the duplicated events to it
+        object_to_copy.save()
+
+        object_to_copy.wake_events.set(events)
+
+        new_id = object_to_copy.pk
+        return reverse(
+            "wake_plan",
+            kwargs={"site_uid": kwargs["site_uid"], "wake_week_plan_id": new_id},
+        )
 
 
 class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):

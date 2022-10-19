@@ -21,10 +21,11 @@ from system.views import (
     PCGroupUpdate,
     PCUpdate,
     # WakeChangeEvent
-    WakeWeekPlanCreate,
-    WakeWeekPlanDelete,
-    WakeWeekPlanRedirect,
-    WakeWeekPlanUpdate,
+    WakePlanCreate,
+    WakePlanCopy,
+    WakePlanDelete,
+    WakePlanRedirect,
+    WakePlanUpdate,
     PCsView,
     ScriptCreate,
     ScriptDelete,
@@ -172,25 +173,30 @@ urlpatterns = [
     ),
     # Wake Plans
     url(
-        r"^site/(?P<site_uid>[^/]+)/wake_week_plans/$",
-        WakeWeekPlanRedirect.as_view(),
-        name="wake_week_plans",
+        r"^site/(?P<site_uid>[^/]+)/wake_plans/$",
+        WakePlanRedirect.as_view(),
+        name="wake_plans",
     ),
-    # This URL needs to be above WakeWeekPlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
+    # This URL needs to be above WakePlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
     url(
-        r"^site/(?P<site_uid>[^/]+)/wake_week_plan/new/$",
-        WakeWeekPlanCreate.as_view(),
-        name="wake_week_plan_new",
-    ),
-    url(
-        r"^site/(?P<site_uid>[^/]+)/wake_week_plan/(?P<wake_week_plan_id>[^/]+)/$",
-        WakeWeekPlanUpdate.as_view(),
-        name="wake_week_plan",
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/new/$",
+        WakePlanCreate.as_view(),
+        name="wake_plan_new",
     ),
     url(
-        r"^site/(?P<site_uid>[^/]+)/wake_week_plan/(?P<wake_week_plan_id>[^/]+)/delete/$",
-        WakeWeekPlanDelete.as_view(),
-        name="wake_week_plan_delete",
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/$",
+        WakePlanUpdate.as_view(),
+        name="wake_plan",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/delete/$",
+        WakePlanDelete.as_view(),
+        name="wake_plan_delete",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/copy/$",
+        WakePlanCopy.as_view(),
+        name="wake_plan_copy",
     ),
     # Jobs
     url(
