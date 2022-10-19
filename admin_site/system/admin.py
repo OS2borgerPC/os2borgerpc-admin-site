@@ -113,6 +113,7 @@ class ScriptAdmin(admin.ModelAdmin):
         "name",
         "is_global",
         "is_security_script",
+        "is_hidden",
         "site",
         "jobs_per_site",
         "jobs_per_site_for_the_last_year",
