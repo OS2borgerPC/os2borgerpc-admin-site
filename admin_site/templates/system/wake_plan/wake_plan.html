@@ -5,7 +5,7 @@
 
 <div class="container-flud main sublevelmain">
 
-  <h1 class="divideheader">{{selected_plan.name}}</h1>
+  <h1 class="divideheader">{{selected_plan.name|default:"Ny Tænd/Sluk tidsplan"}}</h1>
 
   <form method="post" class="gray-box">
 
@@ -50,25 +50,24 @@
 
           {# Wake events #}
           <ul class="list-group">
-          {% for event in selected_plan.wake_events.all %}
-            <li class="list-group-item d-flex">
-              <p class="flex-grow-1">{{event}}</p>
-              <span class="material-icons delete">delete_outline</span>
-            </li>
+            {% for event in selected_plan.wake_events.all %}
+              <li class="list-group-item d-flex">
+                <p class="flex-grow-1">{{event}}</p>
+                <span class="material-icons delete">delete_outline</span>
+              </li>
+            {% endfor %}
           </ul>
-          {% endfor %}
 
           <button class="btn"><span class="material-icons">date_range</span></span>Tilføj periode</button>
           <button class="btn"><span class="material-icons">today</span>Tilføj dato</button>
 
-          <p class="mt-4"><strong>Grupper i denne tidsplan</strong></p>
+          <p class="mt-4"><strong>Grupper der følger tidsplanen</strong></p>
 
           {# PCGroup picklist #}
           <fieldset class="col-12 col-lg-6">
 
             {{ form.groups.errors }}
             <div class="clearfix">
-              <label class="mb-2">Grupper der er medlem af tidsplanen</label>
               <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
                 <span class="material-icons px-1">queue</span>
                 <span id="total-groups"></span>
@@ -83,7 +82,10 @@
     </div>
         <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
         <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Nulstil">
-        <a class="btn btn-secondary" href="{% url 'wake_plan_copy' site.uid selected_plan.id %}">Kopier tidsplan</a>
+        {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
+        {% if selected_plan.id %}
+          <a class="btn btn-secondary" href="{% url 'wake_plan_copy' site.uid selected_plan.id %}">Kopier tidsplan</a>
+        {% endif %}
 
   </form>
 
