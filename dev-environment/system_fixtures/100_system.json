@@ -3741,14 +3741,14 @@
         "monday_off": "23:00:00",
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
-        "wednesday_on": "08:00:00",
-        "wednesday_off": "20:00:00",
-        "thursday_on": "08:00:00",
-        "thursday_off": "20:00:00",
+        "wednesday_on": null,
+        "wednesday_off": null,
+        "thursday_on": null,
+        "thursday_off": null,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
-        "saturday_on": "08:00:00",
-        "saturday_off": "20:00:00",
+        "saturday_on": null,
+        "saturday_off": null,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00"
     }
@@ -3956,7 +3956,6 @@
         "location": "beskrivelse 2",
         "pc_groups": [
             10,
-            9,
             3
         ]
     }

@@ -1,7 +1,12 @@
 {% extends "site_with_navigation.html" %}
+{% load static %}
 
 {% block specific_title %}
 Tænd- / Sluk-tidsplan
+{% endblock %}
+
+{% block stylesheets %}
+  <link href="{% static 'css/wake_plan.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block subnav %}
