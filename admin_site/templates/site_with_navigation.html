@@ -79,8 +79,8 @@ detailpage
       <span class="material-icons">queue</span> Grupper
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "wake_week_plans" as current_url_wake_week_plans %}
-    <a class="nav-link link-light {{current_url_wake_week_plans}}" href="{% url 'wake_week_plans' site_uid=site.url %}">
+    {% set_css_class_active request.resolver_match.url_name "wake_plans" as current_url_wake_plans %}
+    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' site_uid=site.url %}">
       <span class="material-icons">bolt</span> Tænd/Sluk tidsplan
     </a>
     

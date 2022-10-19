@@ -295,7 +295,7 @@ class SecurityEventForm(forms.ModelForm):
 class WakePlanForm(forms.ModelForm):
 
     groups = forms.ModelMultipleChoiceField(
-       queryset=PCGroup.objects.all(), required=False
+        queryset=PCGroup.objects.all(), required=False
     )
 
     def __init__(self, *args, **kwargs):

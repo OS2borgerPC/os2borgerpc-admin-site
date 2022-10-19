@@ -13,7 +13,7 @@ Tænd- / Sluk-tidsplan
 <div class="sublevelnav">
   <div class="listutils">
 
-    <a class="btn btn-link" href="{% url 'wake_week_plan_new' site.uid %}">
+    <a class="btn btn-link" href="{% url 'wake_plan_new' site.uid %}">
         <span class="material-icons">add</span>
         Tilføj ny tænd/sluk tidsplan
     </a>
@@ -23,14 +23,14 @@ Tænd- / Sluk-tidsplan
     {% if wake_week_plans_list.all %}
       {% for plan in wake_week_plans_list %}
         <li class="{% ifequal plan selected_plan %}active{% endifequal %}">
-          <a class="item-list-link" id="{{plan.id}}" href="{% url 'wake_week_plan' site.uid plan.id %}">
+          <a class="item-list-link" id="{{plan.id}}" href="{% url 'wake_plan' site.uid plan.id %}">
             {{ plan.name }}
           </a>
             {% if not plan.enabled %}
               <span class="badge bg-danger">Inaktiv</span>
             {% endif %}
           {% ifequal plan selected_plan %}
-            <a class="item-list-deletable material-icons" href="{% url 'wake_week_plan_delete' site.uid plan.id %}" title="Slet tænd-sluk-tidsplan">
+            <a class="item-list-deletable material-icons" href="{% url 'wake_plan_delete' site.uid plan.id %}" title="Slet tænd-sluk-tidsplan">
               clear
             </a>
           {% endifequal %}
