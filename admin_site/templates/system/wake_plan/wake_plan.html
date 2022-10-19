@@ -82,8 +82,8 @@
       </div>
     </div>
         <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
-        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
-        <input class="btn btn-secondary" type="submit" name="copy" value="Kopiér tidsplan">
+        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Nulstil">
+        <a class="btn btn-secondary" href="{% url 'wake_plan_copy' site.uid selected_plan.id %}">Kopier tidsplan</a>
 
   </form>
 
