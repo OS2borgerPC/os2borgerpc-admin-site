@@ -1164,9 +1164,8 @@ class WakeWeekPlanUpdate(
 
         # Group picklist related:
         all_groups_set = context["site"].groups.all()
-        # TODO: This line currently returns None!
         selected_group_ids = form["groups"].value()
-        # selected_group_ids = [group.id for group in plan.groups.all()]
+        selected_group_ids = [group.id for group in plan.groups.all()]
         # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = all_groups_set.exclude(
             pk__in=selected_group_ids
@@ -1180,28 +1179,28 @@ class WakeWeekPlanUpdate(
     def form_valid(self, form):
         # Capture a view of the group's PCs and policy scripts before the
         # update
-        #groups_pre = set(self.object.groups.all())
+        # groups_pre = set(self.object.groups.all())
 
         with transaction.atomic():
 
             response = super(WakeWeekPlanUpdate, self).form_valid(form)
 
-            #members_post = set(self.object.groups.all())
+            # members_post = set(self.object.groups.all())
 
             ## Work out which PCs and policy scripts have come and gone
-            #surviving_groups = members_post.intersection(groups_pre)
-            #new_groups = members_post.difference(groups_pre)
+            # surviving_groups = members_post.intersection(groups_pre)
+            # new_groups = members_post.difference(groups_pre)
             ## deleted_members =
 
             ## Run all policy scripts on new PCs...
-            #if new_groups:
+            # if new_groups:
             #    pass
 
-            #set_notification_cookie(
+            # set_notification_cookie(
             #    response, _("Group %s updated") % self.object.name
-            #)
+            # )
 
-            group_ids = self.request.POST.getlist('groups')
+            group_ids = self.request.POST.getlist("groups")
             groups = PCGroup.objects.filter(id__in=group_ids)
             for g in groups:
                 g.wake_week_plan = self.object

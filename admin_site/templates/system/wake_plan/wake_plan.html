@@ -6,53 +6,84 @@
 <div class="container-flud main sublevelmain">
 
   <h1 class="divideheader">{{selected_plan.name}}</h1>
-  
-  <form method="post">
+
+  <form method="post" class="gray-box">
 
     {% csrf_token %}
 
-    <h1>Ugeplan</h1>
-    <ul>
-      <li>Mandag: {{selected_plan.monday_on}} - {{selected_plan.monday_off}}</li>
-      <li>Tirsdag: {{selected_plan.tuesday_on}} - {{selected_plan.tuesday_off}}</li>
-    </ul>
+    <div class="container-fluid">
 
-    <h1>Lukkedage og undtagelser</h1>
-    <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
+      <div class="row">
 
-    {# Wake events #}
-    {% for event in selected_plan.wake_events.all %}
-      {{event}}
-      <span class="material-icons delete">trash</span>
-    {% endfor %}
+        <article class="col-lg-6">
 
-    <button>Tilføj periode</button>
-    <button>Tilføj dato</button>
+          {{form.name|as_crispy_field}}
 
-    <<h1>Grupper i denne tidsplan</h1>
+          {{form.sleep_state|as_crispy_field}}
 
-    <hr>
+          <p class="mt-4"><strong>Ugeplan</strong></p>
+          <p>Konfigurer tænd og sluk for den faste ugeplan</p>
+          <table class="form-switch table">
+            <tr>
+              <td>
+                <strong>Mandag</strong>
+              </td>
+              <td>
+                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckChecked" {% if form.monday_on and form.monday_off %}checked{% endif %}>
+                <label class="form-check-label" for="flexSwitchCheckDefault">{% if not form.monday_on and not form.monday_off %}Slukket{% else %}Tændt{% endif %}</label>
+              </td>
+              <td>
+                {{form.monday_on}}
+              </td>
+              <td>-</td>
+              <td>
+                {{form.monday_off}}
+              </td>
+            </tr>
+          </table>
 
-    {{form|crispy}}
+        </article>
 
-    {# PCGroup picklist #}
-    <fieldset class="col-12 col-lg-6">
+        <aside class="col-lg-6">
+          <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
+          <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
-      {{ form.groups.errors }}
-      <div class="clearfix">
-        <label class="mb-2">Grupper der er medlem af tidsplanen</label>
-        <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
-          <span class="material-icons px-1">queue</span>
-          <span id="total-pc_groups"></span>
-        </span>
+          {# Wake events #}
+          <ul class="list-group">
+          {% for event in selected_plan.wake_events.all %}
+            <li class="list-group-item d-flex">
+              <p class="flex-grow-1">{{event}}</p>
+              <span class="material-icons delete">delete_outline</span>
+            </li>
+          </ul>
+          {% endfor %}
+
+          <button class="btn"><span class="material-icons">date_range</span></span>Tilføj periode</button>
+          <button class="btn"><span class="material-icons">today</span>Tilføj dato</button>
+
+          <p class="mt-4"><strong>Grupper i denne tidsplan</strong></p>
+
+          {# PCGroup picklist #}
+          <fieldset class="col-12 col-lg-6">
+
+            {{ form.groups.errors }}
+            <div class="clearfix">
+              <label class="mb-2">Grupper der er medlem af tidsplanen</label>
+              <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
+                <span class="material-icons px-1">queue</span>
+                <span id="total-groups"></span>
+              </span>
+            </div>
+            {% include 'widgets/picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til tidsplan' remove_text='Fjern computer fra tidsplan' site_url=site.uid target_section='groups' %}
+
+          </fieldset>
+
+        </aside>
       </div>
-      {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til tidsplan' remove_text='Fjern computer fra tidsplan' site_url=site.uid target_section='groups' %}
-
-    </fieldset>
-
-    <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
-    <input class="btn btn-secondary" type="reset" name="cancel" value="Annuller">
-    <input class="btn btn-secondary" type="submit" name="copy" value="Kopiér tidsplan">
+    </div>
+        <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
+        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
+        <input class="btn btn-secondary" type="submit" name="copy" value="Kopiér tidsplan">
 
   </form>
 
