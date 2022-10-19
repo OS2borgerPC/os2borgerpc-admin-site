@@ -2,6 +2,8 @@ from django import forms
 from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, Submit
 
 from system.models import (
     ChangelogComment,
@@ -63,7 +65,7 @@ class PCGroupForm(forms.ModelForm):
             initial = kwargs.setdefault("initial", {})
             initial["pcs"] = [pc.pk for pc in kwargs["instance"].pcs.all()]
 
-        forms.ModelForm.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -77,7 +79,7 @@ class PCGroupForm(forms.ModelForm):
         return cleaned_data
 
     def save(self, commit=True):
-        instance = forms.ModelForm.save(self, False)
+        instance = super().save(False)
 
         old_save_m2m = self.save_m2m
 
@@ -291,21 +293,32 @@ class SecurityEventForm(forms.ModelForm):
 
 # Used on the Create and Update views
 class WakePlanForm(forms.ModelForm):
+
+    groups = forms.ModelMultipleChoiceField(
+       queryset=PCGroup.objects.all(), required=False
+    )
+
     def __init__(self, *args, **kwargs):
         # Setup for the group picklist, so we have access to the groups for the form
         if "instance" in kwargs and kwargs["instance"] is not None:
             initial = kwargs.setdefault("initial", {})
             initial["groups"] = [group.pk for group in kwargs["instance"].groups.all()]
 
-        forms.ModelForm.__init__(self, *args, **kwargs)
-
-    groups = forms.ModelMultipleChoiceField(
-        queryset=PCGroup.objects.all(), required=False
-    )
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = WakeWeekPlan
         exclude = ("site",)
+
+        time_format = forms.TimeInput(
+            attrs={"type": "time", "max": "23:59"}, format="%H:%M"
+        )
+
+        widgets = {
+            "monday_on": time_format,
+            "monday_off": time_format,
+            "sleep_state": forms.Select(attrs={"class": "form-control"}),
+        }
 
 
 class WakeChangeEventForm(forms.ModelForm):
