@@ -1,3 +1,7 @@
 .form-switch .form-check-input {
   margin-left: 0;
 }
+
+.form-switch {
+  padding-left: 0px;
+}

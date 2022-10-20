@@ -318,7 +318,7 @@ class WakeChangeEvent(models.Model):
     end_time = models.TimeField(verbose_name=_("time end"), null=True, blank=True)
     # Represented by an on-off switch in the frontend
     event_type = models.CharField(
-        verbose_name=_("sleep state"),
+        verbose_name=_("event type"),
         max_length=15,
         choices=EVENT_TYPE_CHOICES,
         default=EVENT_TYPE_CHOICES[0][0],
