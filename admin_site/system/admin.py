@@ -18,6 +18,7 @@ from system.models import (
     Citizen,
     Configuration,
     ConfigurationEntry,
+    FeaturePermission,
     ImageVersion,
     Input,
     Job,
@@ -187,6 +188,11 @@ class PCInlineForSiteAdmin(admin.TabularInline):
         return False
 
 
+class FeaturePermissionInlineForSiteAdmin(admin.TabularInline):
+    model = FeaturePermission.sites.through
+    extra = 0
+
+
 class SiteAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -196,7 +202,10 @@ class SiteAdmin(admin.ModelAdmin):
         "number_of_kioskpc_computers",
     )
     search_fields = ("name",)
-    inlines = (PCInlineForSiteAdmin,)
+    inlines = (
+        FeaturePermissionInlineForSiteAdmin,
+        PCInlineForSiteAdmin,
+    )
     readonly_fields = ("created",)
 
     def number_of_borgerpc_computers(self, obj):
@@ -223,6 +232,15 @@ class SiteAdmin(admin.ModelAdmin):
     number_of_computers.short_description = _("Number of computers")
     number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
     number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
+
+
+class FeaturePermissionAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "uid",
+    )
+    list_filter = ("name",)
+    search_fields = ("name", "uid")
 
 
 class PCAdmin(admin.ModelAdmin):
@@ -428,3 +446,4 @@ ar(ScriptTag, ScriptTagAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
 ar(Site, SiteAdmin)
+ar(FeaturePermission, FeaturePermissionAdmin)
