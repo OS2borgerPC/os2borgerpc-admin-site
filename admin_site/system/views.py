@@ -1177,28 +1177,33 @@ class WakePlanUpdate(
         return context
 
     def form_valid(self, form):
-        # Capture a view of the group's PCs and policy scripts before the
-        # update
+        # Capture a view of the group's PCs and policy scripts before the update
         # groups_pre = set(self.object.groups.all())
+
+        # Ensure that if a start time has been set, so has the end time - or vice versa
+        f = self.request.POST
+        if (
+            (f.get("monday_on") and not f.get("monday_off"))
+            or (not f.get("monday_on") and f.get("monday_off"))
+            or (f.get("tuesday_on") and not f.get("tuesday_off"))
+            or (not f.get("tuesday_on") and f.get("tuesday_off"))
+        ):
+            return self.form_invalid(form)
 
         with transaction.atomic():
 
             response = super(WakePlanUpdate, self).form_valid(form)
 
-            # members_post = set(self.object.groups.all())
+            # groups_post = set(self.object.groups.all())
 
             ## Work out which PCs and policy scripts have come and gone
             # surviving_groups = members_post.intersection(groups_pre)
-            # new_groups = members_post.difference(groups_pre)
-            ## deleted_members =
+            # new_groups = groups_post.difference(groups_pre)
+            ## removed_groups =
 
             ## Run all policy scripts on new PCs...
             # if new_groups:
             #    pass
-
-            # set_notification_cookie(
-            #    response, _("Group %s updated") % self.object.name
-            # )
 
             group_ids = self.request.POST.getlist("groups")
             groups = PCGroup.objects.filter(id__in=group_ids)
@@ -1206,7 +1211,14 @@ class WakePlanUpdate(
                 g.wake_week_plan = self.object
                 g.save()
 
+            set_notification_cookie(
+                response, _("PCWakePlan %s updated") % self.object.name
+            )
+
             return response
+
+    def form_invalid(self, form):
+        return super(WakePlanUpdate, self).form_invalid(form)
 
 
 class WakePlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
