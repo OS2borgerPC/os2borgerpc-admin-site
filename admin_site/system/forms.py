@@ -309,7 +309,7 @@ class WakePlanForm(forms.ModelForm):
         exclude = ("site",)
 
         time_format = forms.TimeInput(
-            attrs={"type": "time", "max": "23:59"}, format="%H:%M"
+            attrs={"type": "time", "max": "23:59", "class": "p-2"}, format="%H:%M"
         )
         switch_input = forms.CheckboxInput(
             attrs={"class": "form-check-input fs-5", "role": "switch"}
@@ -318,6 +318,18 @@ class WakePlanForm(forms.ModelForm):
         widgets = {
             "monday_on": time_format,
             "monday_off": time_format,
+            "tuesday_on": time_format,
+            "tuesday_off": time_format,
+            "wednesday_on": time_format,
+            "wednesday_off": time_format,
+            "thursday_on": time_format,
+            "thursday_off": time_format,
+            "friday_on": time_format,
+            "friday_off": time_format,
+            "saturday_on": time_format,
+            "saturday_off": time_format,
+            "sunday_on": time_format,
+            "sunday_off": time_format,
             "sleep_state": forms.Select(attrs={"class": "form-control"}),
             "enabled": switch_input,
         }
