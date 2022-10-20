@@ -3437,18 +3437,25 @@
         "sleep_state": "OFF",
         "monday_on": "08:00:00",
         "monday_off": "20:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": true,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3461,18 +3468,25 @@
         "sleep_state": "STANDBY",
         "monday_on": "08:00:00",
         "monday_off": "20:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": true,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 9
     }
 },
@@ -3485,18 +3499,25 @@
         "sleep_state": "MEM",
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": true,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3509,18 +3530,25 @@
         "sleep_state": "FREEZE",
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": true,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3533,18 +3561,25 @@
         "sleep_state": "OFF",
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": true,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3557,18 +3592,25 @@
         "sleep_state": "MEM",
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": true,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3581,18 +3623,25 @@
         "sleep_state": "MEM",
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": true,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3605,18 +3654,25 @@
         "sleep_state": "FREEZE",
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": null,
         "wednesday_off": null,
+        "wednesday_open": true,
         "thursday_on": null,
         "thursday_off": null,
+        "thursday_open": false,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": null,
         "saturday_off": null,
+        "saturday_open": false,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3629,18 +3685,25 @@
         "sleep_state": "STANDBY",
         "monday_on": "01:00:00",
         "monday_off": "23:00:00",
+        "monday_open": true,
         "tuesday_on": "08:00:00",
         "tuesday_off": "20:00:00",
+        "tuesday_open": false,
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
+        "wednesday_open": true,
         "thursday_on": "08:00:00",
         "thursday_off": "20:00:00",
+        "thursday_open": true,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
+        "friday_open": true,
         "saturday_on": "08:00:00",
         "saturday_off": "20:00:00",
+        "saturday_open": false,
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
+        "sunday_open": true,
         "site": 1
     }
 },
@@ -3649,9 +3712,11 @@
     "pk": 1,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "start_time": "12:03:35",
+        "end_date": "2022-12-12",
+        "end_time": "12:03:35",
+        "event_type": "CLOSED",
         "wake_week_plans": [
             9
         ]
@@ -3662,9 +3727,11 @@
     "pk": 2,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": [
             9
         ]
@@ -3675,9 +3742,11 @@
     "pk": 3,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": [
             9
         ]
@@ -3688,9 +3757,11 @@
     "pk": 4,
     "fields": {
         "name": "Hellidag2",
-        "start_datetime": "2022-10-12T12:04:30",
-        "end_datetime": "2022-10-12T18:04:34",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:30",
+        "end_time": "18:04:34",
+        "event_type": "CLOSED",
         "wake_week_plans": [
             8
         ]
@@ -3701,9 +3772,11 @@
     "pk": 5,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3712,9 +3785,11 @@
     "pk": 6,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-12-12",
+        "start_time": "12:03:35",
+        "end_time": "20:03:36",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3723,9 +3798,11 @@
     "pk": 7,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3734,9 +3811,11 @@
     "pk": 8,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3745,9 +3824,11 @@
     "pk": 9,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-12-12",
+        "start_time": "12:03:35",
+        "end_time": "20:03:36",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3756,9 +3837,11 @@
     "pk": 10,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3767,9 +3850,11 @@
     "pk": 11,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3778,9 +3863,11 @@
     "pk": 12,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-12-12",
+        "start_time": "12:03:35",
+        "end_time": "20:03:36",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3789,9 +3876,11 @@
     "pk": 13,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3800,9 +3889,11 @@
     "pk": 14,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3811,9 +3902,11 @@
     "pk": 15,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-12-12",
+        "start_time": "12:03:35",
+        "end_time": "20:03:36",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3822,9 +3915,11 @@
     "pk": 16,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3833,9 +3928,11 @@
     "pk": 17,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3844,9 +3941,11 @@
     "pk": 18,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-12-12",
+        "start_time": "12:03:35",
+        "end_time": "20:03:36",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3855,9 +3954,11 @@
     "pk": 19,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3866,9 +3967,11 @@
     "pk": 20,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3877,9 +3980,11 @@
     "pk": 21,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-12-12",
+        "start_time": "12:03:35",
+        "end_time": "20:03:36",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3888,9 +3993,11 @@
     "pk": 22,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3899,9 +4006,11 @@
     "pk": 23,
     "fields": {
         "name": "Efterårsferie",
-        "start_datetime": "2022-09-12T12:04:15",
-        "end_datetime": "2022-10-12T20:04:16",
-        "on": false,
+        "start_date": "2022-09-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:15",
+        "end_time": "20:04:16",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3910,9 +4019,11 @@
     "pk": 24,
     "fields": {
         "name": "Vinterferie",
-        "start_datetime": "2022-10-12T12:03:35",
-        "end_datetime": "2022-12-12T20:03:36",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-12-12",
+        "start_time": "12:03:35",
+        "end_time": "20:03:36",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3921,9 +4032,11 @@
     "pk": 25,
     "fields": {
         "name": "Helligdag",
-        "start_datetime": "2022-10-12T12:04:06",
-        "end_datetime": "2022-10-12T17:04:07",
-        "on": false,
+        "start_date": "2022-10-12",
+        "end_date": "2022-10-12",
+        "start_time": "12:04:06",
+        "end_time": "17:04:07",
+        "event_type": "CLOSED",
         "wake_week_plans": []
     }
 },

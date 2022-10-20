@@ -1111,6 +1111,7 @@ class WakePlanCreate(
     def get_context_data(self, **kwargs):
         context = super(WakePlanCreate, self).get_context_data(**kwargs)
 
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
@@ -1152,6 +1153,7 @@ class WakePlanUpdate(
     def get_context_data(self, **kwargs):
         context = super(WakePlanUpdate, self).get_context_data(**kwargs)
 
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
@@ -1230,7 +1232,7 @@ class WakePlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
         context = super(WakePlanDelete, self).get_context_data(**kwargs)
 
-        # Basically common for both Create, Update and Delete, so consider refactoring out to a Mixin
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
