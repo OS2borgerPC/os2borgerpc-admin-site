@@ -250,12 +250,12 @@
 
         </aside>
       </div>
-      <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
-      <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Nulstil ændringer">
-      {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
-      {% if selected_plan.id %}
-        <a class="btn btn-secondary" href="{% url 'wake_plan_copy' site.uid selected_plan.id %}">Kopier tidsplan</a>
-      {% endif %}
+        <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
+        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Nulstil ændringer">
+        {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
+        {% if selected_plan.id %}
+          <a class="btn btn-secondary" {% if wake_plan_access %} href="{% url 'wake_plan_copy' site.uid selected_plan.id %}" {% endif %}>Kopier tidsplan</a>
+        {% endif %}
     </div>
 
   </form>

@@ -323,7 +323,7 @@ class JobsView(SiteView):
         # First, get basic context from superclass
         context = super(JobsView, self).get_context_data(**kwargs)
         site = context["site"]
-        context["batches"] = site.batches.all()[:100]
+        context["batches"] = site.batches.exclude(name="")[:100]
         context["pcs"] = site.pcs.all()
         context["groups"] = site.groups.all()
         preselected = set(
@@ -1121,6 +1121,12 @@ class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
             site=context["site"]
         )
 
+        context["wake_plan_access"] = (
+            True
+            if context["site"].feature_permission.filter(uid="wake_plan")
+            else False
+        )
+
         return context
 
 
@@ -1211,8 +1217,6 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             )
 
     def form_valid(self, form):
-        # Capture a view of the group's PCs and policy scripts before the update
-        # groups_pre = set(self.object.groups.all())
 
         # Ensure that if a start time has been set, so has the end time - or vice versa
         f = self.request.POST
@@ -1224,6 +1228,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         ):
             return self.form_invalid(form)
 
+        # Capture a view of the groups and settings before the update
         groups_pre = set(self.object.groups.all())
         plan_pre = self.get_object()
         enabled_pre = plan_pre.enabled
@@ -1248,9 +1253,9 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 g.wake_week_plan = None
                 g.save()
 
-            set_script = Script.objects.get(pk=82)
+            set_script = Script.objects.get(uid="wake_plan_set")
             args_set = self.get_script_arguments()
-            remove_script = Script.objects.get(pk=83)
+            remove_script = Script.objects.get(uid="wake_plan_remove")
             args_remove = ["ha", "he", "hi", "ho"]
 
             enabled_post = self.object.enabled
@@ -1366,6 +1371,25 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
     # slug_field = "site_uid"
     template_name = "system/wake_plan/confirm_delete.html"
 
+    # def get_context_data(self, **kwargs):
+    #     context = super(WakePlanDelete, self).get_context_data(**kwargs)
+    #
+    #     # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
+    #     context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+    #     plan = self.object
+    #     context["selected_plan"] = plan
+    #     context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
+    #         site=context["site"]
+    #     )
+    #
+    #     context["wake_plan_access"] = (
+    #         True
+    #         if context["site"].feature_permission.filter(uid="wake_plan")
+    #         else False
+    #     )
+    #
+    #     return context
+
     def get_object(self, queryset=None):
         return WakeWeekPlan.objects.get(id=self.kwargs["wake_week_plan_id"])
 
@@ -1377,16 +1401,18 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
         deleted_plan_name = WakeWeekPlan.objects.get(
             id=self.kwargs["wake_week_plan_id"]
         ).name
-        if self.get_object().enabled:
-            groups = self.get_object().groups.all()
-            pcs_in_groups = PC.object.none()
+
+        plan = self.get_object()
+        groups = plan.groups.all()
+        if plan.enabled and groups:
+            pcs_in_groups = PC.objects.none()
             for g in groups:
                 pcs_in_groups = pcs_in_groups.union(g.pcs.all())
-            remove_script = Script.objects.get(pk=83)
+            remove_script = Script.objects.get(uid="wake_plan_remove")
             # The actual script takes no inputs, this is just for testing
             args_remove = ["a", "b", "c", "d"]
             batch = remove_script.run_on(
-                self.get_object().site,
+                plan.site,
                 pcs_in_groups,
                 *args_remove,
                 user=request.user,
@@ -1778,7 +1804,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                             if member not in pcs_in_other_wake_plan_groups:
                                 new_wake_plan_members.append(member.pk)
                         if new_wake_plan_members:
-                            set_script = Script.objects.get(pk=82)
+                            set_script = Script.objects.get(uid="wake_plan_set")
                             # TODO Fix the way the arguments are retrieved
                             args_set = ["1", "2", "3", "4"]
                             pcs_to_be_set = PC.objects.filter(
@@ -1796,7 +1822,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                             if member not in pcs_in_other_wake_plan_groups:
                                 removed_wake_plan_members.append(member.pk)
                         if removed_wake_plan_members:
-                            remove_script = Script.objects.get(pk=83)
+                            remove_script = Script.objects.get(uid="wake_plan_remove")
                             # The actual script needs no parameters, this is just for testing
                             args_remove = ["do", "re", "mi", "fa"]
                             pcs_to_be_reset = PC.objects.filter(
@@ -1860,7 +1886,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
                 )
             pcs_to_be_reset = members.difference(pcs_in_other_wake_plan_groups)
             if pcs_to_be_reset:
-                remove_script = Script.objects.get(pk=83)
+                remove_script = Script.objects.get(uid="wake_plan_remove")
                 # The actual script needs no parameters, this is just for testing
                 args_remove = ["do", "re", "mi", "fa"]
                 batch = remove_script.run_on(
