@@ -10,10 +10,51 @@
   <form method="post" class="gray-box">
 
     {% csrf_token %}
-
     <div class="container-fluid">
 
+      <div class="alert alert-info">
+        <h3>Bemærk</h3>
+        <ul>
+          <li>
+            En <strong>Gruppe</strong> kan kun være i én <strong>Tidsplan</strong>.
+          </li>
+          <li>
+            Hvis der en given dag er åbent, skal både start- og sluttidspunkt være udfyldt. (IDÉ: kan dette punkt måske udelades
+            hvis formularen bare sørger for det?)
+          </li>
+          <li>
+            En <strong>Computer</strong> kan kun modtage en opdateret <strong>Tidsplan</strong>, når den er tændt.<br/>
+            Dvs. at hvis <strong>Computeren</strong> er lukket ned for en given
+          </li>
+          <li>
+            Hvis en <strong>Tidsplan</strong> ikke har nogen tilføjede <strong>Grupper</strong>, eller er sat til
+            <strong>inaktiv</strong>, vil den ikke have nogen effekt.
+          </li>
+          <li>
+            Hvis <strong>Computeren</strong> slukkes på knappen, via menuen eller via et <strong>Script</strong> eller strømmen går, vil den <em>IKKE</em> vågne op og følge sin
+            tidsplan.<br>
+            Dvs. <strong>Computeren</strong> <em>SKAL</em> lukke ned af sig selv, som resultat af tidsplanen.<br/>
+            Vi anbefaler derfor at scriptet <a href="TODO">Fjern "Luk ned" og "Genstart" fra sessionmenuen og blokér for
+              nedlukning via systempolitik</a> køres på <strong>Computerne</strong>, så maskinen ikke længere kan lukkes ned fra menuen.
+          </li>
+          <li>
+            Tidsplanen vil ikke længere fungere korrekt, hvis du samtidig benyttes <strong>Scriptet</strong> <a href"TODO">Luk ned og
+              vågn dagligt</a>. (IDÉ: Bør vi slette det script, når vi ruller dette ud?)
+          </li>
+          <li>
+            Andet?
+          </li>
+          <li>
+            TODO: Overvej om noget af dette kan være i dokumentationen i stedet, om det kan formuleres kortere, eller om vi
+            kan løse nogle af problemerne, så de ikke kan lade sig gøre/ikke er problemer længere.
+          </li>
+        </ul>
+      </div>
+
       <div class="row">
+
+        {# TODO: Verify that it works with the form errors #}
+        {{form.errors}}
 
         <article class="col-lg-6">
 
@@ -24,13 +65,22 @@
           <p class="mt-4"><strong>Ugeplan</strong></p>
           <p>Konfigurer tænd og sluk for den faste ugeplan</p>
           <table class="form-switch table">
+            <thead>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>Opstart</td>
+                <td></td>
+                <td>Nedlukning</td>
+              </tr>
+            </thead>
             <tr>
               <td>
                 <strong>Mandag</strong>
               </td>
               <td>
-                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckChecked" {% if form.monday_on and form.monday_off %}checked{% endif %}>
-                <label class="form-check-label" for="flexSwitchCheckDefault">{% if not form.monday_on and not form.monday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                <input class="form-check-input fs-5" type="checkbox" role="switch" id="monday-open" {% if form.monday_on and form.monday_off %}checked{% endif %}>
+                <label class="form-check-label" for="monday-open">{% if not form.monday_on and not form.monday_off %}Slukket{% else %}Tændt{% endif %}</label>
               </td>
               <td>
                 {{form.monday_on}}
@@ -61,7 +111,7 @@
           <button class="btn"><span class="material-icons">date_range</span></span>Tilføj periode</button>
           <button class="btn"><span class="material-icons">today</span>Tilføj dato</button>
 
-          <p class="mt-4"><strong>Grupper der følger tidsplanen</strong></p>
+          <p class="mt-4 mb-0"><strong>Grupper der følger tidsplanen</strong></p>
 
           {# PCGroup picklist #}
           <fieldset class="col-12 col-lg-12">
@@ -81,7 +131,7 @@
       </div>
     </div>
         <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
-        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Nulstil">
+        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Nulstil ændringer">
         {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
         {% if selected_plan.id %}
           <a class="btn btn-secondary" href="{% url 'wake_plan_copy' site.uid selected_plan.id %}">Kopier tidsplan</a>
