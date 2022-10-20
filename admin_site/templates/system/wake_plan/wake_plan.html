@@ -24,7 +24,8 @@
           </li>
           <li>
             En <strong>Computer</strong> kan kun modtage en opdateret <strong>Tidsplan</strong>, når den er tændt.<br/>
-            Dvs. at hvis <strong>Computeren</strong> er lukket ned for en given
+            Dvs. at hvis <strong>Computeren</strong> er lukket ned for en given dag, og den derefter - fra adminsitet -
+            gives en ny tidsplan, vil dette ikke tage effekt, før den tænder efter den oprindelige plan.
           </li>
           <li>
             Hvis en <strong>Tidsplan</strong> ikke har nogen tilføjede <strong>Grupper</strong>, eller er sat til
@@ -42,6 +43,10 @@
               vågn dagligt</a>. (IDÉ: Bør vi slette det script, når vi ruller dette ud?)
           </li>
           <li>
+            En <strong>Computer</strong> vil til enhver tid kunne tændes manuelt, hvis den ved en fejl er blevet lukket
+            ned af Tænd/Sluk tidsplanen.
+          </li>
+          <li>
             Andet?
           </li>
           <li>
@@ -56,11 +61,13 @@
         {# TODO: Verify that it works with the form errors #}
         {{form.errors}}
 
-        <article class="col-lg-6">
+        <article class="col-lg-5 form-switch">
 
           {{form.name|as_crispy_field}}
 
           {{form.sleep_state|as_crispy_field}}
+
+          {{form.enabled|as_crispy_field}}
 
           <p class="mt-4"><strong>Ugeplan</strong></p>
           <p>Konfigurer tænd og sluk for den faste ugeplan</p>
@@ -94,7 +101,7 @@
 
         </article>
 
-        <aside class="col-lg-6">
+        <aside class="col-lg-7">
           <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
