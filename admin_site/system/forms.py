@@ -2,8 +2,6 @@ from django import forms
 from django.forms import ValidationError
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit
 
 from system.models import (
     ChangelogComment,
@@ -313,11 +311,15 @@ class WakePlanForm(forms.ModelForm):
         time_format = forms.TimeInput(
             attrs={"type": "time", "max": "23:59"}, format="%H:%M"
         )
+        switch_input = forms.CheckboxInput(
+            attrs={"class": "form-check-input fs-5", "role": "switch"}
+        )
 
         widgets = {
             "monday_on": time_format,
             "monday_off": time_format,
             "sleep_state": forms.Select(attrs={"class": "form-control"}),
+            "enabled": switch_input,
         }
 
 
