@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0063_wakeweekplan_sleep_state'),
+        ('system', '0064_auto_20221019_1527'),
     ]
 
     operations = [
