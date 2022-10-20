@@ -54,7 +54,7 @@
         {# TODO: Verify that it works with the form errors #}
         {{form.errors}}
 
-        <article class="col-lg-5 form-switch">
+        <article class="col-lg-4 form-switch">
 
           {{form.name|as_crispy_field}}
 
@@ -69,32 +69,130 @@
               <tr>
                 <td></td>
                 <td></td>
-                <td>Opstart</td>
-                <td></td>
-                <td>Nedlukning</td>
+                <td class="before-dash">Opstart</td>
+                <td class="dash"></td>
+                <td class="after-dash">Nedlukning</td>
               </tr>
             </thead>
-            <tr>
-              <td>
-                <strong>Mandag</strong>
-              </td>
-              <td>
-                <input class="form-check-input fs-5" type="checkbox" role="switch" id="monday-open" {% if form.monday_on and form.monday_off %}checked{% endif %}>
-                <label class="form-check-label" for="monday-open">{% if not form.monday_on and not form.monday_off %}Slukket{% else %}Tændt{% endif %}</label>
-              </td>
-              <td>
-                {{form.monday_on}}
-              </td>
-              <td>-</td>
-              <td>
-                {{form.monday_off}}
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Mandag</strong>
+                </td>
+                <td>
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" id="monday-open" {% if form.monday_on and form.monday_off %}checked{% endif %}>
+                  <label class="form-check-label" for="monday-open">{% if not form.monday_on and not form.monday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.monday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.monday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Tirsdag</strong>
+                </td>
+                <td>
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" id="tuesday-open" {% if form.tuesday_on and form.tuesday_off %}checked{% endif %}>
+                  <label class="form-check-label" for="tuesday-open">{% if not form.tuesday_on and not form.tuesday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.tuesday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.tuesday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Onsdag</strong>
+                </td>
+                <td>
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" id="wednesday-open" {% if form.wednesday_on and form.wednesday_off %}checked{% endif %}>
+                  <label class="form-check-label" for="wednesday-open">{% if not form.wednesday_on and not form.wednesday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.wednesday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.wednesday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Torsdag</strong>
+                </td>
+                <td>
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" id="thursday-open" {% if form.thursday_on and form.thursday_off %}checked{% endif %}>
+                  <label class="form-check-label" for="thursday-open">{% if not form.thursday_on and not form.thursday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.thursday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.thursday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Fredag</strong>
+                </td>
+                <td>
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" id="friday-open" {% if form.friday_on and form.friday_off %}checked{% endif %}>
+                  <label class="form-check-label" for="friday-open">{% if not form.friday_on and not form.friday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.friday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.friday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Lørdag</strong>
+                </td>
+                <td>
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" id="saturday-open" {% if form.saturday_on and form.saturday_off %}checked{% endif %}>
+                  <label class="form-check-label" for="saturday-open">{% if not form.saturday_on and not form.saturday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.saturday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.saturday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Søndag</strong>
+                </td>
+                <td>
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" id="sunday-open" {% if form.sunday_on and form.sunday_off %}checked{% endif %}>
+                  <label class="form-check-label" for="sunday-open">{% if not form.sunday_on and not form.sunday_off %}Slukket{% else %}Tændt{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.sunday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.sunday_off}}
+                </td>
+              </tr>
+            </tbody>
           </table>
 
         </article>
 
-        <aside class="col-lg-6 offset-lg-1">
+        <aside class="col-lg-7 offset-lg-1">
           <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 

@@ -5,3 +5,24 @@
 .form-switch {
   padding-left: 0px;
 }
+
+.dash {
+  width: 0;
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
+
+.table {
+  --bs-table-bg: transparent;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.1em;
+}
+
+td.before-dash {
+  padding-right: 0;
+}
+
+td.after-dash {
+  padding-left: 0;
+}
