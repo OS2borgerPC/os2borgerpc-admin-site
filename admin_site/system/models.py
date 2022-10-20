@@ -209,6 +209,23 @@ class Site(models.Model):
         return "/site/{0}".format(self.url)
 
 
+class FeaturePermission(models.Model):
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
+    sites = models.ManyToManyField(
+        Site,
+        related_name="feature_permission",
+        verbose_name=_("sites with access"),
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
+
 class Error(Exception):
     pass
 
@@ -580,6 +597,9 @@ class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
+    uid = models.CharField(
+        verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
+    )
     description = models.TextField(verbose_name=_("description"), max_length=4096)
     site = models.ForeignKey(
         Site, related_name="scripts", null=True, blank=True, on_delete=models.CASCADE
