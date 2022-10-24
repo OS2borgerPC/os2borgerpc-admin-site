@@ -458,6 +458,16 @@ msgstr "Du skal angive mindst en pc eller gruppe"
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
+#: system/views.py: 1324
+#, python-format
+msgid "PCWakePlan %s updated"
+msgstr "Tænd/sluk tidsplan %s opdateret"
+
+#: system/views.py: 1324
+#, python-format
+msgid "The group(s) %s could not be added because the pc(s) %s already belong to other plans"
+msgstr "Grupperne %s kunne ikke tilføjes, da computerne %s allerede er tilknyttet andre tidsplaner"
+
 #: system/views.py:1244
 #, fuzzy, python-format
 msgid "Wake Week Plan %s deleted"
