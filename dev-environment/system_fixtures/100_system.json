@@ -3429,6 +3429,15 @@
     }
 },
 {
+    "model": "system.featurepermission",
+    "pk": 1,
+    "fields": {
+        "name": "Tidsplan",
+        "uid": "wake_plan",
+        "sites": [1]
+    }
+},
+{
     "model": "system.wakeweekplan",
     "pk": 1,
     "fields": {
@@ -4467,6 +4476,44 @@
         "site": 1,
         "executable_code": "script_uploads/remove_bluetooth_applet_GFCSe0M.sh",
         "is_security_script": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 82,
+    "fields": {
+        "created": "2022-10-25T10:48:10.835",
+        "modified": "2022-10-25T10:48:10.835",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Tænd/sluk tidsplan - Tilføj tidsplan",
+        "uid": "wake_plan_set",
+        "description": "Dette script tilføjer en tænd/sluk tidsplan til en pc.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/on_off_schedule_set.sh",
+        "is_security_script": false,
+        "is_hidden": true,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 83,
+    "fields": {
+        "created": "2022-10-25T10:48:10.835",
+        "modified": "2022-10-25T10:48:10.835",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Tænd/sluk tidsplan - Fjern tidsplan",
+        "uid": "wake_plan_remove",
+        "description": "Dette script fjerner en tænd/sluk tidsplan fra en pc.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/on_off_schedule_remove.sh",
+        "is_security_script": false,
+        "is_hidden": true,
         "maintained_by_magenta": false,
         "tags": []
     }
