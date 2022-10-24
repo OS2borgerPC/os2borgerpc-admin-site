@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0065_auto_20221020_1334'),
+        ('system', '0066_alter_wakechangeevent_event_type'),
     ]
 
     operations = [
