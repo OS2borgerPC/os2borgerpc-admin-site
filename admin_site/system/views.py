@@ -1241,10 +1241,39 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             pcs_in_added_groups = PC.objects.none()
             groups_added = groups_selected.difference(groups_pre)
+            groups_added_pk = []
             for g in groups_added:
                 pcs_in_added_groups = pcs_in_added_groups.union(g.pcs.all())
+                groups_added_pk.append(g.pk)
+
+            pcs_with_other_plans = []
+            for pc in pcs_in_added_groups:
+                other_group_relations = pc.pc_groups.exclude(pk__in=groups_added_pk)
+                for group in other_group_relations:
+                    if group.wake_week_plan and group.wake_week_plan != self.object:
+                        pcs_with_other_plans.append(pc.pk)
+
+            pcs_with_other_plans = PC.objects.filter(pk__in=pcs_with_other_plans)
+            verified_groups_added_pk = []
+            for g in groups_added:
+                if not pcs_with_other_plans.intersection(g.pcs.all()):
+                    verified_groups_added_pk.append(g.pk)
+
+            verified_groups_added = PCGroup.objects.filter(
+                pk__in=verified_groups_added_pk
+            )
+            pcs_in_verified_added_groups = PC.objects.none()
+            for g in verified_groups_added:
+                pcs_in_verified_added_groups = pcs_in_verified_added_groups.union(
+                    g.pcs.all()
+                )
                 g.wake_week_plan = self.object
                 g.save()
+
+            invalid_groups_names = []
+            for g in groups_added.difference(verified_groups_added):
+                invalid_groups_names.append(g.name)
+            invalid_groups_string = ", ".join(invalid_groups_names)
 
             pcs_in_removed_groups = PC.objects.none()
             groups_removed = groups_pre.difference(groups_selected)
@@ -1256,12 +1285,13 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             set_script = Script.objects.get(uid="wake_plan_set")
             args_set = self.get_script_arguments()
             remove_script = Script.objects.get(uid="wake_plan_remove")
-            args_remove = ["ha", "he", "hi", "ho"]
 
             enabled_post = self.object.enabled
 
             pcs_all = PC.objects.none()
-            for g in groups_selected:
+            for g in groups_pre.union(set(verified_groups_added)).difference(
+                set(groups_removed)
+            ):
                 pcs_all = pcs_all.union(g.pcs.all())
 
             if enabled_pre and enabled_post:
@@ -1270,14 +1300,14 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 for g in groups_pre:
                     pcs_pre = pcs_pre.union(g.pcs.all())
 
-                pcs_to_be_set = pcs_in_added_groups.difference(pcs_pre)
+                pcs_to_be_set = pcs_in_verified_added_groups.difference(pcs_pre)
                 pcs_to_be_reset = pcs_in_removed_groups.difference(pcs_all)
 
                 if pcs_to_be_reset:
                     batch = remove_script.run_on(
                         self.object.site,
                         pcs_to_be_reset,
-                        *args_remove,
+                        [],
                         user=self.request.user,
                     )
 
@@ -1298,7 +1328,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             elif enabled_pre and not enabled_post:
                 if pcs_all:
                     batch = remove_script.run_on(
-                        self.object.site, pcs_all, *args_set, user=self.request.user
+                        self.object.site, pcs_all, [], user=self.request.user
                     )
 
             elif not enabled_pre and enabled_post:
@@ -1309,6 +1339,20 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             else:
                 pass
+
+            if invalid_groups_names:
+                pcs_with_other_plans_names = []
+                for pc in pcs_with_other_plans:
+                    pcs_with_other_plans_names.append(pc.name)
+                pcs_with_other_plans_string = ", ".join(pcs_with_other_plans_names)
+                set_notification_cookie(
+                    response,
+                    _(
+                        "The group(s) %s could not be added "
+                        "because the pc(s) %s already belong to other plans"
+                    )
+                    % (invalid_groups_string, pcs_with_other_plans_string),
+                )
 
             set_notification_cookie(
                 response, _("PCWakePlan %s updated") % self.object.name
@@ -1409,12 +1453,10 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
             for g in groups:
                 pcs_in_groups = pcs_in_groups.union(g.pcs.all())
             remove_script = Script.objects.get(uid="wake_plan_remove")
-            # The actual script takes no inputs, this is just for testing
-            args_remove = ["a", "b", "c", "d"]
             batch = remove_script.run_on(
                 plan.site,
                 pcs_in_groups,
-                *args_remove,
+                [],
                 user=request.user,
             )
         response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
@@ -1797,7 +1839,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 for asc in new_policy:
                     asc.run_on(self.request.user, surviving_members)
 
-                if self.object.wake_week_plan:
+                if self.object.wake_week_plan and self.object.wake_week_plan.enabled:
                     if new_members or removed_members:
                         other_wake_plan_groups = (
                             self.object.wake_week_plan.groups.exclude(pk=self.object.pk)
@@ -1832,15 +1874,13 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                                 removed_wake_plan_members.append(member.pk)
                         if removed_wake_plan_members:
                             remove_script = Script.objects.get(uid="wake_plan_remove")
-                            # The actual script needs no parameters, this is just for testing
-                            args_remove = ["do", "re", "mi", "fa"]
                             pcs_to_be_reset = PC.objects.filter(
                                 pk__in=removed_wake_plan_members
                             )
                             batch = remove_script.run_on(
                                 self.object.site,
                                 pcs_to_be_reset,
-                                *args_remove,
+                                [],
                                 user=self.request.user,
                             )
 
@@ -1896,12 +1936,10 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
             pcs_to_be_reset = members.difference(pcs_in_other_wake_plan_groups)
             if pcs_to_be_reset:
                 remove_script = Script.objects.get(uid="wake_plan_remove")
-                # The actual script needs no parameters, this is just for testing
-                args_remove = ["do", "re", "mi", "fa"]
                 batch = remove_script.run_on(
                     self_object.site,
                     pcs_to_be_reset,
-                    *args_remove,
+                    [],
                     user=self.request.user,
                 )
 
