@@ -3456,7 +3456,8 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": []
     }
 },
 {
@@ -3487,7 +3488,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 9
+        "site": 9,
+        "wake_change_events": [
+            1
+        ]
     }
 },
 {
@@ -3518,7 +3522,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": [
+            2
+        ]
     }
 },
 {
@@ -3549,7 +3556,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": [
+            3
+        ]
     }
 },
 {
@@ -3580,7 +3590,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": [
+            4
+        ]
     }
 },
 {
@@ -3611,7 +3624,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": [
+            5
+        ]
     }
 },
 {
@@ -3642,7 +3658,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": [
+            6
+        ]
     }
 },
 {
@@ -3660,7 +3679,7 @@
         "tuesday_open": false,
         "wednesday_on": null,
         "wednesday_off": null,
-        "wednesday_open": true,
+        "wednesday_open": false,
         "thursday_on": null,
         "thursday_off": null,
         "thursday_open": false,
@@ -3673,7 +3692,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": [
+            7
+        ]
     }
 },
 {
@@ -3692,9 +3714,9 @@
         "wednesday_on": "08:00:00",
         "wednesday_off": "20:00:00",
         "wednesday_open": true,
-        "thursday_on": "08:00:00",
-        "thursday_off": "20:00:00",
-        "thursday_open": true,
+        "thursday_on": null,
+        "thursday_off": null,
+        "thursday_open": false,
         "friday_on": "08:00:00",
         "friday_off": "20:00:00",
         "friday_open": true,
@@ -3704,7 +3726,10 @@
         "sunday_on": "08:00:00",
         "sunday_off": "20:00:00",
         "sunday_open": true,
-        "site": 1
+        "site": 1,
+        "wake_change_events": [
+            8
+        ]
     }
 },
 {
@@ -3716,10 +3741,7 @@
         "time_start": "12:03:35",
         "date_end": "2022-12-12",
         "time_end": "12:03:35",
-        "type": "CLOSED",
-        "wake_week_plans": [
-            9
-        ]
+        "type": "CLOSED"
     }
 },
 {
@@ -3731,10 +3753,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": [
-            9
-        ]
+        "type": "CLOSED"
     }
 },
 {
@@ -3746,10 +3765,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": [
-            9
-        ]
+        "type": "CLOSED"
     }
 },
 {
@@ -3761,10 +3777,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:30",
         "time_end": "18:04:34",
-        "type": "CLOSED",
-        "wake_week_plans": [
-            8
-        ]
+        "type": "CLOSED"
     }
 },
 {
@@ -3776,8 +3789,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3789,8 +3801,7 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3802,8 +3813,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3815,8 +3825,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3828,8 +3837,7 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3841,8 +3849,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3854,8 +3861,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3867,8 +3873,7 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3880,8 +3885,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3893,8 +3897,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3906,8 +3909,7 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3919,8 +3921,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3932,8 +3933,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3945,8 +3945,7 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3958,8 +3957,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3971,8 +3969,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3984,8 +3981,7 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -3997,8 +3993,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -4010,8 +4005,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -4023,8 +4017,7 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {
@@ -4036,8 +4029,7 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED",
-        "wake_week_plans": []
+        "type": "CLOSED"
     }
 },
 {

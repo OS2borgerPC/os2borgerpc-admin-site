@@ -380,18 +380,18 @@ class ChangelogCommentAdmin(admin.ModelAdmin):
     )
 
 
-class WakeChangeEventInline(admin.TabularInline):
-    model = WakeChangeEvent.wake_week_plans.through
-    extra = 0
-
-
 class WakeWeekPlanAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "enabled",
         "site",
     )
-    inlines = [PCGroupInline, WakeChangeEventInline]
+    inlines = [PCGroupInline]
+
+
+class WakeWeekPlanInline(admin.TabularInline):
+    model = WakeWeekPlan.wake_change_events.through
+    extra = 0
 
 
 class WakeChangeEventAdmin(admin.ModelAdmin):
@@ -403,6 +403,7 @@ class WakeChangeEventAdmin(admin.ModelAdmin):
         "time_start",
         "time_end",
     )
+    inlines = [WakeWeekPlanInline]
 
 
 ar = admin.site.register
