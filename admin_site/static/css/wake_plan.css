@@ -26,3 +26,12 @@ td.before-dash {
 td.after-dash {
   padding-left: 0;
 }
+
+.form-check-label {
+  user-select: none;
+  margin-left: 5px;
+}
+
+article {
+  min-width: 480px;
+}

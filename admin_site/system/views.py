@@ -83,7 +83,7 @@ class LoginRequiredMixin(View):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
-class SuperAdminOnlyMixin(View):
+class SuperAdminOnlyMixin(LoginRequiredMixin):
     """Only allows access to super admins."""
 
     check_function = user_passes_test(lambda u: u.is_superuser, login_url="/")
@@ -94,7 +94,7 @@ class SuperAdminOnlyMixin(View):
         return super(SuperAdminOnlyMixin, self).dispatch(*args, **kwargs)
 
 
-class SuperAdminOrThisSiteMixin(View):
+class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """Limit access to super users or users belonging to THIS site."""
@@ -531,7 +531,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         return "/site/%s/jobs/" % self.kwargs["site_uid"]
 
 
-class JobInfo(DetailView, LoginRequiredMixin):
+class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
     template_name = "system/jobs/info.html"
     model = Job
 
@@ -988,7 +988,7 @@ class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
             return super(PCsView, self).render_to_response(context)
 
 
-class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin):
+class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = "system/pcs/form.html"
     form_class = PCForm
     slug_field = "uid"
@@ -1106,16 +1106,9 @@ class WakePlanRedirect(RedirectView):
             return reverse("wake_plan_new", args=[site.uid])
 
 
-class WakePlanCreate(
-    CreateView, SiteMixin, LoginRequiredMixin, SuperAdminOrThisSiteMixin
-):
-    model = WakeWeekPlan
-    form_class = WakePlanForm
-    slug_field = "site_uid"
-    template_name = "system/wake_plan/wake_plan.html"
-
+class WakePlanBaseMixin(SiteMixin):
     def get_context_data(self, **kwargs):
-        context = super(WakePlanCreate, self).get_context_data(**kwargs)
+        context = super(WakePlanBaseMixin, self).get_context_data(**kwargs)
 
         # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
@@ -1125,9 +1118,52 @@ class WakePlanCreate(
             site=context["site"]
         )
 
-        context["wake_change_event_form"] = WakeChangeEventForm
+        return context
+
+
+class WakePlanExtendedMixin(WakePlanBaseMixin):
+    def get_context_data(self, **kwargs):
+
+        context = super(WakePlanExtendedMixin, self).get_context_data(**kwargs)
+
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        plan = self.object
+        context["selected_plan"] = plan
+        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
+            site=context["site"]
+        )
+
+        wake_change_event_forms = []
+        for ev in plan.wake_change_events.all():
+            wake_change_event_forms.append(WakeChangeEventForm(ev))
+        context["wake_change_event_forms"] = wake_change_event_forms
+
+        form = context["form"]
+        # params = self.request.GET or self.request.POST
+
+        # Group picklist related:
+        all_groups_set = context["site"].groups.all()
+        selected_group_ids = form["groups"].value()
+        # selected_group_ids = [group.id for group in plan.groups.all()]
+        if not selected_group_ids:
+            selected_group_ids = []
+        # template picklist requires the form pk, name, url (u)id.
+        context["available_groups"] = all_groups_set.exclude(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+        context["selected_groups"] = all_groups_set.filter(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
 
         return context
+
+
+class WakePlanCreate(WakePlanExtendedMixin, CreateView, SuperAdminOrThisSiteMixin):
+    model = WakeWeekPlan
+    form_class = WakePlanForm
+    slug_field = "site_uid"
+    template_name = "system/wake_plan/wake_plan.html"
 
     def form_valid(self, form):
         # The form does not allow setting the site yourself, so we insert that here
@@ -1138,9 +1174,7 @@ class WakePlanCreate(
         return super(WakePlanCreate, self).form_valid(form)
 
 
-class WakePlanUpdate(
-    SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin
-):
+class WakePlanUpdate(WakePlanExtendedMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = "system/wake_plan/wake_plan.html"
     form_class = WakePlanForm
     slug_field = "site_uid"
@@ -1155,35 +1189,6 @@ class WakePlanUpdate(
             raise Http404(
                 f"Du har ingen strømplan med id {self.kwargs['wake_week_plan_id']}"
             )
-
-    def get_context_data(self, **kwargs):
-        context = super(WakePlanUpdate, self).get_context_data(**kwargs)
-
-        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
-        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
-        plan = self.object
-        context["selected_plan"] = plan
-        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
-            site=context["site"]
-        )
-
-        form = context["form"]
-        # params = self.request.GET or self.request.POST
-        context["context"] = context
-
-        # Group picklist related:
-        all_groups_set = context["site"].groups.all()
-        selected_group_ids = form["groups"].value()
-        selected_group_ids = [group.id for group in plan.groups.all()]
-        # template picklist requires the form pk, name, url (u)id.
-        context["available_groups"] = all_groups_set.exclude(
-            pk__in=selected_group_ids
-        ).values_list("pk", "name", "pk")
-        context["selected_groups"] = all_groups_set.filter(
-            pk__in=selected_group_ids
-        ).values_list("pk", "name", "pk")
-
-        return context
 
     def form_valid(self, form):
         # Capture a view of the group's PCs and policy scripts before the update
@@ -1336,23 +1341,10 @@ class WakePlanUpdate(
             return False
 
 
-class WakePlanDelete(DeleteView, SiteMixin, SuperAdminOrThisSiteMixin):
+class WakePlanDelete(WakePlanBaseMixin, DeleteView, SuperAdminOrThisSiteMixin):
     model = WakeWeekPlan
     # slug_field = "site_uid"
     template_name = "system/wake_plan/confirm_delete.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(WakePlanDelete, self).get_context_data(**kwargs)
-
-        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
-        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
-        plan = self.object
-        context["selected_plan"] = plan
-        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
-            site=context["site"]
-        )
-
-        return context
 
     def get_object(self, queryset=None):
         return WakeWeekPlan.objects.get(id=self.kwargs["wake_week_plan_id"])
@@ -1398,7 +1390,7 @@ class WakePlanCopy(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
         # Which we'd like to change in the future, so WakeWeekPlans can generally share events
         # ...and not only through copying
         events = []
-        for event in object_to_copy.wake_events.all():
+        for event in object_to_copy.wake_change_events.all():
             event.id = None
             event.save()
             events.append(event)
@@ -1410,7 +1402,7 @@ class WakePlanCopy(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
         # Now save the copied object to get a new ID, which is also required to bind the duplicated events to it
         object_to_copy.save()
 
-        object_to_copy.wake_events.set(events)
+        object_to_copy.wake_change_events.set(events)
 
         new_id = object_to_copy.pk
         return reverse(
