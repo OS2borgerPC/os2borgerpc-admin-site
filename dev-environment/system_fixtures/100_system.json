@@ -3712,11 +3712,11 @@
     "pk": 1,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "start_time": "12:03:35",
-        "end_date": "2022-12-12",
-        "end_time": "12:03:35",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "time_start": "12:03:35",
+        "date_end": "2022-12-12",
+        "time_end": "12:03:35",
+        "type": "CLOSED",
         "wake_week_plans": [
             9
         ]
@@ -3727,11 +3727,11 @@
     "pk": 2,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": [
             9
         ]
@@ -3742,11 +3742,11 @@
     "pk": 3,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": [
             9
         ]
@@ -3757,11 +3757,11 @@
     "pk": 4,
     "fields": {
         "name": "Hellidag2",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:30",
-        "end_time": "18:04:34",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:30",
+        "time_end": "18:04:34",
+        "type": "CLOSED",
         "wake_week_plans": [
             8
         ]
@@ -3772,11 +3772,11 @@
     "pk": 5,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3785,11 +3785,11 @@
     "pk": 6,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "end_date": "2022-12-12",
-        "start_time": "12:03:35",
-        "end_time": "20:03:36",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-12-12",
+        "time_start": "12:03:35",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3798,11 +3798,11 @@
     "pk": 7,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3811,11 +3811,11 @@
     "pk": 8,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3824,11 +3824,11 @@
     "pk": 9,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "end_date": "2022-12-12",
-        "start_time": "12:03:35",
-        "end_time": "20:03:36",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-12-12",
+        "time_start": "12:03:35",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3837,11 +3837,11 @@
     "pk": 10,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3850,11 +3850,11 @@
     "pk": 11,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3863,11 +3863,11 @@
     "pk": 12,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "end_date": "2022-12-12",
-        "start_time": "12:03:35",
-        "end_time": "20:03:36",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-12-12",
+        "time_start": "12:03:35",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3876,11 +3876,11 @@
     "pk": 13,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3889,11 +3889,11 @@
     "pk": 14,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3902,11 +3902,11 @@
     "pk": 15,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "end_date": "2022-12-12",
-        "start_time": "12:03:35",
-        "end_time": "20:03:36",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-12-12",
+        "time_start": "12:03:35",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3915,11 +3915,11 @@
     "pk": 16,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3928,11 +3928,11 @@
     "pk": 17,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3941,11 +3941,11 @@
     "pk": 18,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "end_date": "2022-12-12",
-        "start_time": "12:03:35",
-        "end_time": "20:03:36",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-12-12",
+        "time_start": "12:03:35",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3954,11 +3954,11 @@
     "pk": 19,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3967,11 +3967,11 @@
     "pk": 20,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3980,11 +3980,11 @@
     "pk": 21,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "end_date": "2022-12-12",
-        "start_time": "12:03:35",
-        "end_time": "20:03:36",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-12-12",
+        "time_start": "12:03:35",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -3993,11 +3993,11 @@
     "pk": 22,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -4006,11 +4006,11 @@
     "pk": 23,
     "fields": {
         "name": "Efterårsferie",
-        "start_date": "2022-09-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:15",
-        "end_time": "20:04:16",
-        "event_type": "CLOSED",
+        "date_start": "2022-09-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:15",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -4019,11 +4019,11 @@
     "pk": 24,
     "fields": {
         "name": "Vinterferie",
-        "start_date": "2022-10-12",
-        "end_date": "2022-12-12",
-        "start_time": "12:03:35",
-        "end_time": "20:03:36",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-12-12",
+        "time_start": "12:03:35",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
@@ -4032,11 +4032,11 @@
     "pk": 25,
     "fields": {
         "name": "Helligdag",
-        "start_date": "2022-10-12",
-        "end_date": "2022-10-12",
-        "start_time": "12:04:06",
-        "end_time": "17:04:07",
-        "event_type": "CLOSED",
+        "date_start": "2022-10-12",
+        "date_end": "2022-10-12",
+        "time_start": "12:04:06",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
         "wake_week_plans": []
     }
 },
