@@ -397,10 +397,11 @@ class WakeWeekPlanAdmin(admin.ModelAdmin):
 class WakeChangeEventAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "start_date",
-        "start_time",
-        "end_date",
-        "end_time",
+        "type",
+        "date_start",
+        "date_end",
+        "time_start",
+        "time_end",
     )
 
 

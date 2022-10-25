@@ -245,37 +245,35 @@ class WakeWeekPlan(models.Model):
     monday_off = models.TimeField(
         verbose_name=_("monday off"), null=True, blank=True, default=default_close
     )
-    monday_open = models.BooleanField(verbose_name=_("monday open"), default=False)
+    monday_open = models.BooleanField(verbose_name=_("monday open"), default=True)
     tuesday_on = models.TimeField(
         verbose_name=_("tuesday on"), null=True, blank=True, default=default_open
     )
     tuesday_off = models.TimeField(
         verbose_name=_("tuesday off"), null=True, blank=True, default=default_close
     )
-    tuesday_open = models.BooleanField(verbose_name=_("tuesday open"), default=False)
+    tuesday_open = models.BooleanField(verbose_name=_("tuesday open"), default=True)
     wednesday_on = models.TimeField(
         verbose_name=_("wednesday on"), null=True, blank=True, default=default_open
     )
     wednesday_off = models.TimeField(
         verbose_name=_("wednesday off"), null=True, blank=True, default=default_close
     )
-    wednesday_open = models.BooleanField(
-        verbose_name=_("wednesday open"), default=False
-    )
+    wednesday_open = models.BooleanField(verbose_name=_("wednesday open"), default=True)
     thursday_on = models.TimeField(
         verbose_name=_("thursday on"), null=True, blank=True, default=default_open
     )
     thursday_off = models.TimeField(
         verbose_name=_("thursday off"), null=True, blank=True, default=default_close
     )
-    thursday_open = models.BooleanField(verbose_name=_("thursday open"), default=False)
+    thursday_open = models.BooleanField(verbose_name=_("thursday open"), default=True)
     friday_on = models.TimeField(
         verbose_name=_("friday on"), null=True, blank=True, default=default_open
     )
     friday_off = models.TimeField(
         verbose_name=_("friday off"), null=True, blank=True, default=default_close
     )
-    friday_open = models.BooleanField(verbose_name=_("friday open"), default=False)
+    friday_open = models.BooleanField(verbose_name=_("friday open"), default=True)
     saturday_on = models.TimeField(
         verbose_name=_("saturday on"), null=True, blank=True, default=default_open
     )
@@ -312,20 +310,20 @@ class WakeChangeEvent(models.Model):
     )
 
     name = models.CharField(verbose_name=_("name"), max_length=60)
-    start_date = models.DateField(verbose_name=_("date start"))
-    start_time = models.TimeField(verbose_name=_("time start"), null=True, blank=True)
-    end_date = models.DateField(verbose_name=_("date end"))
-    end_time = models.TimeField(verbose_name=_("time end"), null=True, blank=True)
+    date_start = models.DateField(verbose_name=_("date start"))
+    time_start = models.TimeField(verbose_name=_("time start"), null=True, blank=True)
+    date_end = models.DateField(verbose_name=_("date end"))
+    time_end = models.TimeField(verbose_name=_("time end"), null=True, blank=True)
     # Represented by an on-off switch in the frontend
-    event_type = models.CharField(
-        verbose_name=_("event type"),
+    type = models.CharField(
+        verbose_name=_("type"),
         max_length=15,
         choices=EVENT_TYPE_CHOICES,
         default=EVENT_TYPE_CHOICES[0][0],
     )
     wake_week_plans = models.ManyToManyField(
         WakeWeekPlan,
-        related_name="wake_events",
+        related_name="wake_change_events",
         verbose_name=_("wake week plans"),
     )
 
@@ -333,7 +331,7 @@ class WakeChangeEvent(models.Model):
         return self.name
 
     class Meta:
-        ordering = ["start_date"]
+        ordering = ["date_start"]
 
 
 class PCGroup(models.Model):
