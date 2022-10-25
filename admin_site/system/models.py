@@ -217,6 +217,33 @@ class MandatoryParameterMissingError(Error):
     pass
 
 
+class WakeChangeEvent(models.Model):
+
+    EVENT_TYPE_CHOICES = (
+        ("ALTERED_HOURS", _("event_type:Altered Hours")),
+        ("CLOSED", _("event_type:Closed")),
+    )
+
+    name = models.CharField(verbose_name=_("name"), max_length=60)
+    date_start = models.DateField(verbose_name=_("date start"))
+    time_start = models.TimeField(verbose_name=_("time start"), null=True, blank=True)
+    date_end = models.DateField(verbose_name=_("date end"))
+    time_end = models.TimeField(verbose_name=_("time end"), null=True, blank=True)
+    # Represented by an on-off switch in the frontend
+    type = models.CharField(
+        verbose_name=_("type"),
+        max_length=15,
+        choices=EVENT_TYPE_CHOICES,
+        default=EVENT_TYPE_CHOICES[0][0],
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["date_start"]
+
+
 class WakeWeekPlan(models.Model):
 
     # Sleep state choices for the field below - and their translations
@@ -291,6 +318,11 @@ class WakeWeekPlan(models.Model):
     site = models.ForeignKey(
         Site, related_name="wake_week_plans", on_delete=models.CASCADE
     )
+    wake_change_events = models.ManyToManyField(
+        WakeChangeEvent,
+        related_name="wake_week_plans",
+        verbose_name=_("wake change events"),
+    )
 
     def get_absolute_url(self):
         return reverse("wake_plan", args=(self.site.uid, self.id))
@@ -300,38 +332,6 @@ class WakeWeekPlan(models.Model):
 
     class Meta:
         ordering = ["name"]
-
-
-class WakeChangeEvent(models.Model):
-
-    EVENT_TYPE_CHOICES = (
-        ("ALTERED_HOURS", _("event_type:Altered Hours")),
-        ("CLOSED", _("event_type:Closed")),
-    )
-
-    name = models.CharField(verbose_name=_("name"), max_length=60)
-    date_start = models.DateField(verbose_name=_("date start"))
-    time_start = models.TimeField(verbose_name=_("time start"), null=True, blank=True)
-    date_end = models.DateField(verbose_name=_("date end"))
-    time_end = models.TimeField(verbose_name=_("time end"), null=True, blank=True)
-    # Represented by an on-off switch in the frontend
-    type = models.CharField(
-        verbose_name=_("type"),
-        max_length=15,
-        choices=EVENT_TYPE_CHOICES,
-        default=EVENT_TYPE_CHOICES[0][0],
-    )
-    wake_week_plans = models.ManyToManyField(
-        WakeWeekPlan,
-        related_name="wake_change_events",
-        verbose_name=_("wake week plans"),
-    )
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ["date_start"]
 
 
 class PCGroup(models.Model):
