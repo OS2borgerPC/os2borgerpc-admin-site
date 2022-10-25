@@ -89,7 +89,7 @@ recreate-db:
 
 # Start the admin-site stack
 run:
-  sudo docker-compose up {{compose_django_service}} {{compose_db_service}}
+  sudo docker-compose up
   printf '%s' "If permissions fail, verify umask and/or manually check if the permissions differ on the file mentioned, e.g. initialize.py"
 
 # Start the admin-site stack in the background and attach specifically to the django container - so python breakpoints work
