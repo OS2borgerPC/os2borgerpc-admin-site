@@ -1,5 +1,5 @@
 Introduction
-------------
+============
 
 This directory contains the OS2borgerPC Admin system, which is a remote
 administration system for Debian-based GNU/Linux-systems, especially
@@ -22,3 +22,9 @@ The system was prepared by Magenta: See http://www.magenta.dk
 
 All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
+
+Models / Database visualized
+============================
+
+.. image:: models_graphed.png
+   :target: /models_graphed.png
