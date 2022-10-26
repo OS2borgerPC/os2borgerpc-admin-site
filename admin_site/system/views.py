@@ -22,7 +22,6 @@ from django.views.generic.list import BaseListView
 
 from django.db import transaction
 from django.db.models import Q, F
-from django.db.models.functions import Lower
 from django.conf import settings
 
 from django.core.paginator import Paginator
@@ -576,9 +575,9 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        local_scripts = self.scripts.filter(site=self.site).order_by(Lower("name"))
+        local_scripts = self.scripts.filter(site=self.site).order_by("name")
         context["local_scripts"] = local_scripts
-        global_scripts = self.scripts.filter(site=None).order_by(Lower("name"))
+        global_scripts = self.scripts.filter(site=None).order_by("name")
         context["global_scripts"] = global_scripts
 
         # Create a tag->scripts dict for tags that has local scripts.
@@ -968,11 +967,7 @@ class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
     selection_class = PC
 
     def get_list(self):
-        return (
-            self.object.pcs.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+        return self.object.pcs.all()
 
     def render_to_response(self, context):
         if "selected_pc" in context:
@@ -1016,11 +1011,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
         pc = self.object
         params = self.request.GET or self.request.POST
 
-        context["pc_list"] = (
-            site.pcs.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+        context["pc_list"] = site.pcs.all()
 
         group_set = site.groups.all()
 
@@ -1374,12 +1365,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         context["newform"] = PCGroupForm()
         del context["newform"].fields["pcs"]
 
-        context["all_scripts"] = sorted(
-            Script.objects.filter(
-                Q(site=site) | Q(site=None), is_security_script=False
-            ),
-            key=lambda s: s.name.lower(),
-        )
+        context["all_scripts"] = Script.objects.filter(
+            Q(site=site) | Q(site=None), is_security_script=False
+        ).order_by("name")
 
         return context
 
@@ -1468,11 +1456,7 @@ class SecurityProblemsView(SelectionMixin, SiteView):
     class_display_name = "security_problem"
 
     def get_list(self):
-        return (
-            self.object.security_problems.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+        return self.object.security_problems.all()
 
     def render_to_response(self, context):
         if "selected_security_problem" in context:
