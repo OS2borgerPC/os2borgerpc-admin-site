@@ -259,7 +259,7 @@ class WakeWeekPlan(models.Model):
     default_close = datetime.time(20, 0, 0, 0)
 
     name = models.CharField(verbose_name=_("name"), max_length=60)
-    enabled = models.BooleanField(verbose_name=_("enabled"), default=False)
+    enabled = models.BooleanField(verbose_name=_("enabled"), default=True)
     sleep_state = models.CharField(
         verbose_name=_("sleep state"),
         max_length=10,

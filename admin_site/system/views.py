@@ -18,6 +18,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
 
+from django.forms.models import model_to_dict
+
 from django.db import transaction
 from django.db.models import Q, F
 from django.conf import settings
@@ -63,7 +65,8 @@ from system.forms import (
     SecurityProblemForm,
     SiteForm,
     UserForm,
-    WakeChangeEventForm,
+    WakeChangeEventAlteredHoursForm,
+    WakeChangeEventClosedForm,
     WakePlanForm,
 )
 
@@ -1106,7 +1109,7 @@ class WakePlanRedirect(RedirectView):
             return reverse("wake_plan_new", args=[site.uid])
 
 
-class WakePlanBaseMixin(SiteMixin):
+class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
         context = super(WakePlanBaseMixin, self).get_context_data(**kwargs)
 
@@ -1134,9 +1137,26 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             site=context["site"]
         )
 
+        # TESTING:
+        # context["context"] = context
+
+        # Form for creating new WakeChangeEvents - not sure if these are really needed or
+        # if it can already be obtained from within the template in another way
+        context[
+            "wake_change_event_altered_hours_form"
+        ] = WakeChangeEventAlteredHoursForm
+        context["wake_change_event_closed_form"] = WakeChangeEventClosedForm
+        # Creating bound (populated) forms of the related WakeChangeEvents
+        # - Specifically a tuple of the element (for logic) and the form representation (for viewing)
         wake_change_event_forms = []
         for ev in plan.wake_change_events.all():
-            wake_change_event_forms.append(WakeChangeEventForm(ev))
+            ev_dict = model_to_dict(ev)
+            if ev.type == "ALTERED_HOURS":
+                wake_change_event_forms.append(
+                    (ev, WakeChangeEventAlteredHoursForm(ev_dict))
+                )
+            elif ev.type == "CLOSED":
+                wake_change_event_forms.append((ev, WakeChangeEventClosedForm(ev_dict)))
         context["wake_change_event_forms"] = wake_change_event_forms
 
         form = context["form"]
@@ -1159,7 +1179,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         return context
 
 
-class WakePlanCreate(WakePlanExtendedMixin, CreateView, SuperAdminOrThisSiteMixin):
+class WakePlanCreate(WakePlanExtendedMixin, CreateView):
     model = WakeWeekPlan
     form_class = WakePlanForm
     slug_field = "site_uid"
@@ -1174,7 +1194,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView, SuperAdminOrThisSiteMixi
         return super(WakePlanCreate, self).form_valid(form)
 
 
-class WakePlanUpdate(WakePlanExtendedMixin, UpdateView, SuperAdminOrThisSiteMixin):
+class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
     template_name = "system/wake_plan/wake_plan.html"
     form_class = WakePlanForm
     slug_field = "site_uid"
@@ -1341,7 +1361,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView, SuperAdminOrThisSiteMixi
             return False
 
 
-class WakePlanDelete(WakePlanBaseMixin, DeleteView, SuperAdminOrThisSiteMixin):
+class WakePlanDelete(WakePlanBaseMixin, DeleteView):
     model = WakeWeekPlan
     # slug_field = "site_uid"
     template_name = "system/wake_plan/confirm_delete.html"
