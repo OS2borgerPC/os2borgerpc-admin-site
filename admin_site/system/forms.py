@@ -306,7 +306,10 @@ class WakePlanForm(forms.ModelForm):
 
     class Meta:
         model = WakeWeekPlan
-        exclude = ("site",)
+        exclude = (
+            "site",
+            "wake_change_events",
+        )  # We load in wake_change_events manually to generate their forms too
 
         time_format = forms.TimeInput(
             attrs={"type": "time", "max": "23:59", "class": "p-2"}, format="%H:%M"
@@ -335,7 +338,13 @@ class WakePlanForm(forms.ModelForm):
         }
 
 
-class WakeChangeEventForm(forms.ModelForm):
+class WakeChangeEventAlteredHoursForm(forms.ModelForm):
     class Meta:
         model = WakeChangeEvent
-        exclude = ("wake_week_plans",)
+        exclude = ("type",)
+
+
+class WakeChangeEventClosedForm(forms.ModelForm):
+    class Meta:
+        model = WakeChangeEvent
+        exclude = ("type", "time_start", "time_end")

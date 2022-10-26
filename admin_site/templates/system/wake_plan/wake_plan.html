@@ -46,6 +46,13 @@
             En Computer vil til enhver tid kunne tændes manuelt, hvis den ved en fejl er blevet lukket
             ned af Tænd/Sluk tidsplanen.
           </li>
+          <li>
+            Tidsplanen følger tiden <strong>på den individuelle maskine</strong>. Dvs. hvis uret på en maskine er ude af
+            sync, så vil maskinen også opstarte og nedlukke ude af sync. Hvis I har en firewall der blokerer udadgående trafik, foreslår vi I
+            åbner for <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" target="_blank">NTP</a> på port 123
+            UDP, da det bruges til tidssynkronisering.
+          </li>
+          TODO: Tilføj info omkring dvale-scriptet!
         </ul>
       </div>
 
@@ -56,11 +63,11 @@
 
         <article class="col-lg-4 form-switch">
 
+          {{form.enabled|as_crispy_field}}
+
           {{form.name|as_crispy_field}}
 
           {{form.sleep_state|as_crispy_field}}
-
-          {{form.enabled|as_crispy_field}}
 
           <p class="mt-4"><strong>Ugeplan</strong></p>
           <p>Konfigurer tænd og sluk for den faste ugeplan</p>
@@ -190,35 +197,40 @@
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
           {# Wake events #}
+          {# Here we insert templates for the two types of wake change events that javascript can then copy when the buttons to add them are clicked #}
+          <div id="wake-change-event-altered-hours-form" class="d-none">{{wake_change_event_altered_hours_form}}</div>
+          <div id="wake-change-event-closed-form" class="d-none">{{wake_change_event_closed_form}}</div>
+
           <ul class="list-group form-switch">
-            {% for ev_form in wake_change_event_form %}
+            {#{% for ev_form in selected_plan.wake_change_events.all %}#}
+            {% for ev, ev_form in wake_change_event_forms %}
               <li class="list-group-item d-flex">
                 <p class="flex-grow-1">{{ev_form.name}}</p>
                 {{ev_form.date_start}}
 
-                {% if event.type == "CLOSED" %}
+                {% if ev.date_end %} {# "If it's a period" #}
                   {{ev_form.date_end}}
                 {% endif %}
 
                 <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="event-{{event.id}}" {% if event.time_start %}checked{% endif %}>
                 <label class="form-check-label" for="event-{{event.id}}">Tændt</label>
 
-                {% if event.type == "OPEN" %}
-                <span class="before-dash">
-                  {{ev_form.time_start}}
-                </span>
-                <span class="dash">—</span>
-                <span class="after-dash">
-                  {{ev_form.time_end}}
-                </span>
+                {% if ev.type == "ALTERED_HOURS" %}
+                  <span class="before-dash">
+                    {{ev_form.time_start}}
+                  </span>
+                  <span class="dash">—</span>
+                  <span class="after-dash">
+                    {{ev_form.time_end}}
+                  </span>
                 {% endif %}
                 <span class="material-icons delete">delete_outline</span>
               </li>
             {% endfor %}
           </ul>
 
-          <button class="btn"><span class="material-icons">date_range</span></span>Tilføj periode</button>
-          <button class="btn"><span class="material-icons">today</span>Tilføj dato</button>
+          <button class="btn" type="button"><span class="material-icons">date_range</span></span>Tilføj periode</button>
+          <button class="btn" type="button"><span class="material-icons">today</span>Tilføj dato</button>
 
           <p class="mt-4 mb-0"><strong>Grupper der følger tidsplanen</strong></p>
 
