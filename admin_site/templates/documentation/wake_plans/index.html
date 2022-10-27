@@ -1,0 +1,39 @@
+{% extends 'documentation/index.html' %}
+
+{% block admin_groups_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  <h1>Tænd/Sluk tidsplaner</h1>
+  <p>
+    En Tænd/Sluk tidsplan er et redskab til at planlægge og administrere
+    tænd- og sluk-tidspunkter for computerne i en eller flere grupper.
+  </p>
+  <p>
+    Tænd/Sluk tidsplaner kan kun anvendes af de kunder, som har tilkøbt sig adgang.
+    Alle kunder, som var med til at finansiere redskabet, har automatisk adgang.
+    Andre kunder kan kontakte Magenta, hvis de er interesserede.
+  </p>
+  <p>
+    Når man klikker på Tænd/Sluk tidsplan i venstremenuen, vil man til højre for
+    venstremenuen få vist en liste af tidsplaner for det site, man er under. Man
+    kan klikke på navnet for den enkelte tidsplan for at redigere tidsplanen.
+  </p>
+  <p>
+    Til højre vises redigeringsinterfacet for den valgte tidsplan. Hvis ikke der
+    er oprettet nogen tidsplaner for det site, man er under, vises interfacet til
+    oprettelse af tidsplaner.
+  </p>
+  <p>
+    Når man klikker ind på en tidsplan, får man mulighed for at redigere følgende:
+    {% include 'documentation/wake_plans/__submenu__.html' %}
+  </p>
+  <p>
+    Hvis man ønsker at oprette en ny tidsplan, skal man klikke på "tilføj ny
+    tænd/sluk tidsplan" oven over listen med tidsplaner. Dette åbner et interface, hvor
+    man skal udfylde navn for tidsplanen og har mulighed for at redigere i indstillingerne
+    eller indmelde grupper. Når man klikker på
+    gem, vil man blive viderestillet til redigeringssiden for den nyoprettede
+    tidsplan, hvor man kan fortsætte med at ændre i indstillingerne eller indmelde grupper.
+    Hvis tidsplanen er sat til "aktiv," vil den også tage effekt, så snart man klikker på gem.
+  </p>
+{% endblock %}

@@ -1,0 +1,8 @@
+<ul class="docsubnav">
+    <li {% ifequal submenu_active 'edit_groups' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'wake_plans/edit_groups' %}"> Tilknyttede Grupper</a>
+    </li>
+    <li {% ifequal submenu_active 'edit_settings' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'wake_plans/edit_settings' %}"> Indstillinger</a>
+    </li>
+</ul>
