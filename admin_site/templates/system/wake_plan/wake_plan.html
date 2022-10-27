@@ -67,7 +67,7 @@
         {# TODO: Verify that it works with the form errors #}
         {{form.errors}}
 
-        <article class="col-lg-4 form-switch">
+        <article class="col-lg-3 form-switch">
 
           {{form.enabled|as_crispy_field}}
 
@@ -82,6 +82,7 @@
               <tr>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td class="before-dash">Tænd</td>
                 <td class="dash"></td>
                 <td class="after-dash">Sluk</td>
@@ -92,9 +93,18 @@
                 <td>
                   <strong>Mandag</strong>
                 </td>
-                <td>
-                  <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="monday-open" {% if selected_plan.monday_open %}checked{% endif %}><label class="form-check-label" for="monday-open">Tændt</label>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input  fs-5 checkbox" type="checkbox" role="switch" id="monday-open" {% if selected_plan.monday_open %}checked{% endif %}>
                 </td>
+                <td class="checkbox-text" style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="monday-open">{% if selected_plan.monday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <!-- <td class="checkbox-switch" style="padding: 0.75rem 0rem 0.75rem 2rem;">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="monday-open" {% if selected_plan.monday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text" style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="monday-open">{% if selected_plan.monday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td> -->
                 <td  class="before-dash">
                   {{form.monday_on}}
                 </td>
@@ -107,8 +117,11 @@
                 <td>
                   <strong>Tirsdag</strong>
                 </td>
-                <td>
-                  <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="tuesday-open" {% if selected_plan.tuesday_open %}checked{% endif %}><label class="form-check-label" for="tuesday-open">Tændt</label>
+                <td style="padding: 0.75rem 0rem 0.75rem 2rem;">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="tuesday-open" {% if selected_plan.tuesday_open %}checked{% endif %}>
+                </td>
+                <td style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="tuesday-open">{% if selected_plan.tuesday_open %}Tændt{% else %}Slukket{% endif %}</label>
                 </td>
                 <td  class="before-dash">
                   {{form.tuesday_on}}
@@ -122,8 +135,11 @@
                 <td>
                   <strong>Onsdag</strong>
                 </td>
-                <td>
-                  <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="wednesday-open" {% if selected_plan.wednesday_open %}checked{% endif %}><label class="form-check-label" for="wednesday-open">Tændt</label>
+                <td style="padding: 0.75rem 0rem 0.75rem 2rem;">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="wednesday-open" {% if selected_plan.wednesday_open %}checked{% endif %}>
+                </td>
+                <td style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="wednesday-open">{% if selected_plan.wednesday_open %}Tændt{% else %}Slukket{% endif %}</label>
                 </td>
                 <td  class="before-dash">
                   {{form.wednesday_on}}
@@ -137,8 +153,11 @@
                 <td>
                   <strong>Torsdag</strong>
                 </td>
-                <td>
-                  <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="thursday-open" {% if selected_plan.thursday_open %}checked{% endif %}><label class="form-check-label" for="thursday-open">Tændt</label>
+                <td style="padding: 0.75rem 0rem 0.75rem 2rem;">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="thursday-open" {% if selected_plan.thursday_open %}checked{% endif %}>
+                </td>
+                <td style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="thursday-open">{% if selected_plan.thursday_open %}Tændt{% else %}Slukket{% endif %}</label>
                 </td>
                 <td  class="before-dash">
                   {{form.thursday_on}}
@@ -152,8 +171,11 @@
                 <td>
                   <strong>Fredag</strong>
                 </td>
-                <td>
-                  <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="friday-open" {% if selected_plan.friday_open %}checked{% endif %}><label class="form-check-label" for="friday-open">Tændt</label>
+                <td style="padding: 0.75rem 0rem 0.75rem 2rem;">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="friday-open" {% if selected_plan.friday_open %}checked{% endif %}>
+                </td>
+                <td style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="friday-open">{% if selected_plan.friday_open %}Tændt{% else %}Slukket{% endif %}</label>
                 </td>
                 <td  class="before-dash">
                   {{form.friday_on}}
@@ -167,8 +189,11 @@
                 <td>
                   <strong>Lørdag</strong>
                 </td>
-                <td>
-                  <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="saturday-open" {% if selected_plan.saturday_open %}checked{% endif %}><label class="form-check-label" for="saturday-open">Tændt</label>
+                <td style="padding: 0.75rem 0rem 0.75rem 2rem;">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="saturday-open" {% if selected_plan.saturday_open %}checked{% endif %}>
+                </td>
+                <td style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="saturday-open">{% if selected_plan.saturday_open %}Tændt{% else %}Slukket{% endif %}</label>
                 </td>
                 <td  class="before-dash">
                   {{form.saturday_on}}
@@ -182,8 +207,11 @@
                 <td>
                   <strong>Søndag</strong>
                 </td>
-                <td>
-                  <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="sunday-open" {% if selected_plan.sunday_open %}checked{% endif %}><label class="form-check-label" for="sunday-open">Tændt</label>
+                <td style="padding: 0.75rem 0rem 0.75rem 2rem;">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="sunday-open" {% if selected_plan.sunday_open %}checked{% endif %}>
+                </td>
+                <td style="padding: 0.75rem 2rem 0.75rem 0rem;">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="sunday-open">{% if selected_plan.sunday_open %}Tændt{% else %}Slukket{% endif %}</label>
                 </td>
                 <td  class="before-dash">
                   {{form.sunday_on}}
@@ -198,7 +226,7 @@
 
         </article>
 
-        <aside class="col-lg-8">
+        <aside class="col-lg-9">
           <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
@@ -221,17 +249,25 @@
                   <td><input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="event-{{ev.id}}" {% if ev.time_start %}checked{% endif %}></td>
                   <td><label class="form-check-label" for="event-{{ev.id}}">Tændt</label></td>
 
-                  <td>
-                    {% if ev.type == "ALTERED_HOURS" %}
+                  {% if ev.type == "ALTERED_HOURS" %}
+                    <td>
                       <span class="before-dash">
                         {{ev_form.time_start}}
                       </span>
+                    </td>
+                    <td>
                       <span class="dash">—</span>
+                    </td>
+                    <td>
                       <span class="after-dash">
                         {{ev_form.time_end}}
                       </span>
-                    {% endif %}
-                  </td>
+                    </td>
+                  {% else %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  {% endif %}
                   <td>
                     <span class="material-icons delete">delete_outline</span>
                   </td>
