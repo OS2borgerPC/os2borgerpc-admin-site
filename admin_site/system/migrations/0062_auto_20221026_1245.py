@@ -27,11 +27,6 @@ class Migration(migrations.Migration):
                 'ordering': ['date_start'],
             },
         ),
-        migrations.AddField(
-            model_name='script',
-            name='is_hidden',
-            field=models.BooleanField(default=False, verbose_name='hidden script'),
-        ),
         migrations.CreateModel(
             name='WakeWeekPlan',
             fields=[
