@@ -79,7 +79,7 @@ detailpage
       <span class="material-icons">queue</span> Grupper
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "wake_plans" as current_url_wake_plans %}
+    {% set_css_class_active request.resolver_match.url_name "wake_plan" as current_url_wake_plans %}
     <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' site_uid=site.url %}">
       <span class="material-icons">bolt</span> Tænd/Sluk tidsplan
     </a>
@@ -141,6 +141,11 @@ detailpage
       <a href="{% url 'doc' 'groups' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         Administration af grupper
+      </a>
+    {% elif current_url_wake_plans %}
+      <a href="{% url 'doc' 'wake_plans' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        Administration af tidsplaner
       </a>
     {% elif current_url_image_versions %}
       {% comment %} Versions currently has no documentation! {% endcomment %}

@@ -1,0 +1,50 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Tidsplans-redigering: Grupper</h1>
+  <p>
+    Som standard når du klikker dig ind på en tidsplan, vil du få vist
+    tidsplanens indstillinger, og hvilke grupper der er med i tidsplanen. Her kan du
+    ændre tidsplanens navn, status, dvaletilstand og indstillinger
+    for den faste ugeplan eller undtagelser, samt tilføje eller fjerne grupper
+    fra tidsplanen. Ændringer foretaget på siden træder ikke i kraft, før du
+    klikker på "Gem ændringer"-knappen i bunden af skærmbilledet.
+  </p>
+  <h2>Tilføj/fjern grupper</h2>
+  <p>
+    Til højre i skærmbilledet vises en liste over grupper, der er med i
+    tidsplanen. Du kan redigere medlemmerne af tidsplanen som beskrevet herunder.
+  </p>
+  <h3>Tilføj gruppe</h3>
+  <p>
+    Du tilføjer grupper ved at føre musen hen over "tilføj gruppe til tidsplan". Hvis
+    der findes grupper, som endnu ikke er medlem af tidsplanen, vil de dukke op i
+    en liste under muse-markøren. Klik på en gruppe for at knytte gruppen
+    til tidsplanen.
+  </p>
+  <p>
+    Bemærk at en given gruppe/computer ikke kan være knyttet til mere end en tidsplan ad gangen.
+    Hvis du tilføjer en gruppe, som allerede er med i en anden tidsplan, vil den blive fjernet
+    fra den forrige tidsplan.
+  </p>
+  <p>
+    Hvis du forsøger at tilføje en gruppe, som indeholder en eller flere computere,
+    der er knyttet til en anden tidsplan via en anden gruppe, vil den valgte gruppe blive
+    afvist i forbindelse med opdateringen af tidsplanen, når der klikkes på "Gem ændringer."
+    Gyldige grupper vil stadig blive tilføjet. Hvis en eller flere grupper afvises, vil
+    siden oplyse om dette samt begrundelsen.
+  </p>
+  <h3>Fjern gruppe</h3>
+  <p>
+    For at fjerne en gruppe skal du klikke på krydset ud for gruppen i listen over
+    tilknyttede grupper.
+  </p>
+  <p>
+    Husk at ændringer til listen over grupper ikke bliver permanente, før du
+    har klikket på "Gem ændringer" nederst i skærmbilledet.
+  </p>
+  <p>
+    Bemærk at hvis der senere tilføjes computere til en gruppe, som er medlem af en tidsplan,
+    vil disse computere også blive knyttet til tidsplanen.
+  </p>
+{% endblock %}
