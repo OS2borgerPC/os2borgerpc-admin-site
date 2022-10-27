@@ -2458,6 +2458,7 @@ documentation_menu_items = [
     ("status", "Status"),
     ("computers", "Computere"),
     ("groups", "Grupper"),
+    ("wake_plans", "Tænd/sluk tidsplaner"),
     ("jobs", "Jobs"),
     ("scripts", "Scripts"),
     ("security_scripts", "Sikkerhedsscripts"),
