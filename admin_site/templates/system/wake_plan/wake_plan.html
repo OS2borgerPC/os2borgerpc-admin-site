@@ -8,6 +8,11 @@
   <h1 class="divideheader">{{selected_plan.name|default:"Ny Tænd/Sluk tidsplan"}}</h1>
   {% include 'notification.html' %}
 
+  {# Here we insert templates for the two types of wake change events that javascript can then copy when the buttons to add them are clicked #}
+  {# We add them outside the form, because otherwise the webpage tries to validate their contents and it fails #}
+  <div id="wake-change-event-altered-hours-form" class="d-none">{{wake_change_event_altered_hours_form}}</div>
+  <div id="wake-change-event-closed-form" class="d-none">{{wake_change_event_closed_form}}</div>
+
   <form method="post" class="gray-box">
 
     {% csrf_token %}
@@ -40,8 +45,8 @@
               nedlukning via systempolitik</a> køres på Computerne, så maskinen ikke længere kan lukkes ned fra menuen.
           </li>
           <li>
-            Tidsplanen vil ikke længere fungere korrekt, hvis du samtidig benyttes Scriptet <a href"TODO">Luk ned og
-              vågn dagligt</a>. (IDÉ: Bør vi slette det script, når vi ruller dette ud?)
+            Tidsplanen vil ikke længere fungere korrekt, hvis du samtidig benytter Scriptet <a href"TODO">Luk ned og
+              vågn dagligt</a>.
           </li>
           <li>
             En Computer vil til enhver tid kunne tændes manuelt, hvis den ved en fejl er blevet lukket
@@ -193,42 +198,47 @@
 
         </article>
 
-        <aside class="col-lg-7 offset-lg-1">
+        <aside class="col-lg-8">
           <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
           {# Wake events #}
-          {# Here we insert templates for the two types of wake change events that javascript can then copy when the buttons to add them are clicked #}
-          <div id="wake-change-event-altered-hours-form" class="d-none">{{wake_change_event_altered_hours_form}}</div>
-          <div id="wake-change-event-closed-form" class="d-none">{{wake_change_event_closed_form}}</div>
 
-          <ul class="list-group form-switch">
-            {#{% for ev_form in selected_plan.wake_change_events.all %}#}
-            {% for ev, ev_form in wake_change_event_forms %}
-              <li class="list-group-item d-flex">
-                <p class="flex-grow-1">{{ev_form.name}}</p>
-                {{ev_form.date_start}}
+          <table id="wake-change-events" class="table form-switch">
+            <tbody>
+              {#{% for ev_form in selected_plan.wake_change_events.all %}#}
+              {% for ev, ev_form in wake_change_event_forms %}
+                <tr>
+                  <td>{{ev_form.name}}</td>
+                  <td>{{ev_form.date_start}}</td>
 
-                {% if ev.date_end %} {# "If it's a period" #}
-                  {{ev_form.date_end}}
-                {% endif %}
+                  <td>
+                  {% if not ev.date_start == ev.date_end %} {# Used if it's a "period" #}
+                    {{ev_form.date_end}}
+                  {% endif %}
+                  </td>
 
-                <input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="event-{{event.id}}" {% if event.time_start %}checked{% endif %}>
-                <label class="form-check-label" for="event-{{event.id}}">Tændt</label>
+                  <td><input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="event-{{ev.id}}" {% if ev.time_start %}checked{% endif %}></td>
+                  <td><label class="form-check-label" for="event-{{ev.id}}">Tændt</label></td>
 
-                {% if ev.type == "ALTERED_HOURS" %}
-                  <span class="before-dash">
-                    {{ev_form.time_start}}
-                  </span>
-                  <span class="dash">—</span>
-                  <span class="after-dash">
-                    {{ev_form.time_end}}
-                  </span>
-                {% endif %}
-                <span class="material-icons delete">delete_outline</span>
-              </li>
-            {% endfor %}
-          </ul>
+                  <td>
+                    {% if ev.type == "ALTERED_HOURS" %}
+                      <span class="before-dash">
+                        {{ev_form.time_start}}
+                      </span>
+                      <span class="dash">—</span>
+                      <span class="after-dash">
+                        {{ev_form.time_end}}
+                      </span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <span class="material-icons delete">delete_outline</span>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
 
           <button class="btn" type="button"><span class="material-icons">date_range</span></span>Tilføj periode</button>
           <button class="btn" type="button"><span class="material-icons">today</span>Tilføj dato</button>

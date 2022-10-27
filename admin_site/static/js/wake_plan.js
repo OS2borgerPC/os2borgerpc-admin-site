@@ -1,4 +1,5 @@
 const week_plan = document.getElementById("week-plan")
+const wake_change_events = document.getElementById("wake-change-events")
 
 function week_day_on(el, on) {
   const start_time = el.parentElement.parentElement.children[2]
@@ -36,11 +37,21 @@ function handle_click(event) {
 }
 
 week_plan.addEventListener("click", handle_click)
+wake_change_events.addEventListener("click", handle_click)
 
-// By default all dates are seen as "on" - this toggles those off to off
+// By default all dates are seen as "on" - this toggles those off to off for the week plan
 for (let day of week_plan.tBodies[0].children) {
   const checkbox = day.getElementsByClassName('checkbox')[0]
   if (! checkbox.checked) {
     week_day_on(checkbox, false)
+  }
+}
+
+// Do the same for events
+for (let event of wake_change_events.tBodies[0].children) {
+  const checkbox = event.getElementsByClassName('checkbox')[0]
+  if (! checkbox.checked) {
+    // TODO: This doesn't work currently:
+    //week_day_on(checkbox, false)
   }
 }

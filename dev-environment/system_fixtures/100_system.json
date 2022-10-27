@@ -3759,9 +3759,9 @@
     "fields": {
         "name": "Vinterferie",
         "date_start": "2022-10-12",
-        "time_start": "12:03:35",
         "date_end": "2022-12-12",
-        "time_end": "12:03:35",
+        "time_start": null,
+        "time_end": null,
         "type": "CLOSED"
     }
 },
@@ -3784,8 +3784,8 @@
         "name": "Efterårsferie",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
+        "time_start": null,
+        "time_end": null,
         "type": "CLOSED"
     }
 },
@@ -3805,11 +3805,11 @@
     "model": "system.wakechangeevent",
     "pk": 5,
     "fields": {
-        "name": "Efterårsferie",
+        "name": "Efterårsferie2",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
+        "time_start": null,
+        "time_end": null,
         "type": "CLOSED"
     }
 },
@@ -3817,7 +3817,7 @@
     "model": "system.wakechangeevent",
     "pk": 6,
     "fields": {
-        "name": "Vinterferie",
+        "name": "Vinterferie2",
         "date_start": "2022-10-12",
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
@@ -3829,11 +3829,11 @@
     "model": "system.wakechangeevent",
     "pk": 7,
     "fields": {
-        "name": "Helligdag",
+        "name": "Helligdag3",
         "date_start": "2022-10-12",
         "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
+        "time_start": null,
+        "time_end": null,
         "type": "CLOSED"
     }
 },
@@ -3841,7 +3841,7 @@
     "model": "system.wakechangeevent",
     "pk": 8,
     "fields": {
-        "name": "Efterårsferie",
+        "name": "Efterårsferie3",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
@@ -3853,11 +3853,11 @@
     "model": "system.wakechangeevent",
     "pk": 9,
     "fields": {
-        "name": "Vinterferie",
+        "name": "Vinterferie3",
         "date_start": "2022-10-12",
         "date_end": "2022-12-12",
-        "time_start": "12:03:35",
-        "time_end": "20:03:36",
+        "time_start": null,
+        "time_end": null,
         "type": "CLOSED"
     }
 },
@@ -3865,7 +3865,7 @@
     "model": "system.wakechangeevent",
     "pk": 10,
     "fields": {
-        "name": "Helligdag",
+        "name": "Helligdag4",
         "date_start": "2022-10-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
@@ -3877,11 +3877,11 @@
     "model": "system.wakechangeevent",
     "pk": 11,
     "fields": {
-        "name": "Efterårsferie",
+        "name": "Efterårsferie4",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
+        "time_start": null,
+        "time_end": null,
         "type": "CLOSED"
     }
 },
@@ -3889,7 +3889,7 @@
     "model": "system.wakechangeevent",
     "pk": 12,
     "fields": {
-        "name": "Vinterferie",
+        "name": "Vinterferie4",
         "date_start": "2022-10-12",
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
@@ -3901,7 +3901,7 @@
     "model": "system.wakechangeevent",
     "pk": 13,
     "fields": {
-        "name": "Helligdag",
+        "name": "Helligdag5",
         "date_start": "2022-10-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
@@ -3913,7 +3913,7 @@
     "model": "system.wakechangeevent",
     "pk": 14,
     "fields": {
-        "name": "Efterårsferie",
+        "name": "Efterårsferie5",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
@@ -3925,7 +3925,7 @@
     "model": "system.wakechangeevent",
     "pk": 15,
     "fields": {
-        "name": "Vinterferie",
+        "name": "Vinterferie5",
         "date_start": "2022-10-12",
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
@@ -3937,7 +3937,7 @@
     "model": "system.wakechangeevent",
     "pk": 16,
     "fields": {
-        "name": "Helligdag",
+        "name": "Helligdag6",
         "date_start": "2022-10-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
@@ -3949,7 +3949,7 @@
     "model": "system.wakechangeevent",
     "pk": 17,
     "fields": {
-        "name": "Efterårsferie",
+        "name": "Efterårsferie6",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
@@ -3961,7 +3961,7 @@
     "model": "system.wakechangeevent",
     "pk": 18,
     "fields": {
-        "name": "Vinterferie",
+        "name": "Vinterferie6",
         "date_start": "2022-10-12",
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
@@ -3973,7 +3973,7 @@
     "model": "system.wakechangeevent",
     "pk": 19,
     "fields": {
-        "name": "Helligdag",
+        "name": "Helligdag7",
         "date_start": "2022-10-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
@@ -3985,7 +3985,7 @@
     "model": "system.wakechangeevent",
     "pk": 20,
     "fields": {
-        "name": "Efterårsferie",
+        "name": "Efterårsferie7",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
@@ -3997,7 +3997,7 @@
     "model": "system.wakechangeevent",
     "pk": 21,
     "fields": {
-        "name": "Vinterferie",
+        "name": "Vinterferie7",
         "date_start": "2022-10-12",
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
@@ -4009,7 +4009,7 @@
     "model": "system.wakechangeevent",
     "pk": 22,
     "fields": {
-        "name": "Helligdag",
+        "name": "Helligdag8",
         "date_start": "2022-10-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
@@ -4021,7 +4021,7 @@
     "model": "system.wakechangeevent",
     "pk": 23,
     "fields": {
-        "name": "Efterårsferie",
+        "name": "Efterårsferie8",
         "date_start": "2022-09-12",
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
@@ -4033,7 +4033,7 @@
     "model": "system.wakechangeevent",
     "pk": 24,
     "fields": {
-        "name": "Vinterferie",
+        "name": "Vinterferie8",
         "date_start": "2022-10-12",
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
@@ -4045,11 +4045,11 @@
     "model": "system.wakechangeevent",
     "pk": 25,
     "fields": {
-        "name": "Helligdag",
+        "name": "Helligdag9",
         "date_start": "2022-10-12",
         "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
+        "time_start": null,
+        "time_end": null,
         "type": "CLOSED"
     }
 },
