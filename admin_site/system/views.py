@@ -1418,30 +1418,28 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
     # Så behøver den ikke at være defineret to steder
     def get_script_arguments(self):
         args = []
-        args.append(f"{self.object.monday_on.hour}:{self.object.monday_on.minute}")
-        args.append(f"{self.object.monday_off.hour}:{self.object.monday_off.minute}")
-        args.append(f"{self.object.tuesday_on.hour}:{self.object.tuesday_on.minute}")
-        args.append(f"{self.object.tuesday_off.hour}:{self.object.tuesday_off.minute}")
-        args.append(
-            f"{self.object.wednesday_on.hour}:{self.object.wednesday_on.minute}"
-        )
-        args.append(
-            f"{self.object.wednesday_off.hour}:{self.object.wednesday_off.minute}"
-        )
-        args.append(f"{self.object.thursday_on.hour}:{self.object.thursday_on.minute}")
-        args.append(
-            f"{self.object.thursday_off.hour}:{self.object.thursday_off.minute}"
-        )
-        args.append(f"{self.object.friday_on.hour}:{self.object.friday_on.minute}")
-        args.append(f"{self.object.friday_off.hour}:{self.object.friday_off.minute}")
-        args.append(f"{self.object.saturday_on.hour}:{self.object.saturday_on.minute}")
-        args.append(
-            f"{self.object.saturday_off.hour}:{self.object.saturday_off.minute}"
-        )
-        args.append(f"{self.object.sunday_on.hour}:{self.object.sunday_on.minute}")
-        args.append(f"{self.object.sunday_off.hour}:{self.object.sunday_off.minute}")
+        args.append(self.get_script_argument(self.object.monday_on))
+        args.append(self.get_script_argument(self.object.monday_off))
+        args.append(self.get_script_argument(self.object.tuesday_on))
+        args.append(self.get_script_argument(self.object.tuesday_off))
+        args.append(self.get_script_argument(self.object.wednesday_on))
+        args.append(self.get_script_argument(self.object.wednesday_off))
+        args.append(self.get_script_argument(self.object.thursday_on))
+        args.append(self.get_script_argument(self.object.thursday_off))
+        args.append(self.get_script_argument(self.object.friday_on))
+        args.append(self.get_script_argument(self.object.friday_off))
+        args.append(self.get_script_argument(self.object.saturday_on))
+        args.append(self.get_script_argument(self.object.saturday_off))
+        args.append(self.get_script_argument(self.object.sunday_on))
+        args.append(self.get_script_argument(self.object.sunday_off))
 
         return args[:4]
+
+    def get_script_argument(self, on_or_off_time):
+        if on_or_off_time is None:
+            return "None"
+        else:
+            return f"{on_or_off_time.hour}:{on_or_off_time.minute}"
 
     def check_settings_updates(self, plan_pre):
         """Helper function used to check if the plan settings have changed."""
