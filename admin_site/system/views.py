@@ -77,6 +77,14 @@ def set_notification_cookie(response, message, error=False):
     response.set_cookie("bibos-notification", quote(json.dumps(descriptor), safe=""))
 
 
+def run_wake_plan_script(site, pcs, args, user, type="remove"):
+    if type == "set":
+        script = Script.objects.get(uid="wake_plan_set")
+    else:
+        script = Script.objects.get(uid="wake_plan_remove")
+    batch = script.run_on(site, pcs, *args, user=user)
+
+
 # Mixin class to require login
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""
@@ -1163,6 +1171,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                         (ev, WakeChangeEventAlteredHoursForm(ev_dict))
                     )
                 elif ev.type == "CLOSED":
+
                     wake_change_events_tuple.append(
                         (ev, WakeChangeEventClosedForm(ev_dict))
                     )
@@ -1174,6 +1183,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             #             (ev, WakeChangeEventClosedForm(ev_dict))
             #         )
             # context["wake_change_event_forms"] = wake_change_event_forms
+
 
         form = context["form"]
         # params = self.request.GET or self.request.POST
@@ -1194,6 +1204,61 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
 
         return context
 
+    def verify_and_add_groups(self, groups_pk):
+        groups = PCGroup.objects.filter(pk__in=groups_pk)
+        # Find the pcs in the groups
+        pcs_in_groups_pk = list(set(groups.values_list("pcs", flat=True)))
+        pcs_in_groups = PC.objects.filter(pk__in=pcs_in_groups_pk)
+        # Find the pcs in the groups that belong to different wake plans
+        pcs_with_other_plans = []
+        pcs_with_other_plans_names = []
+        other_plans_names = []
+        for pc in pcs_in_groups:
+            other_group_relations = pc.pc_groups.exclude(pk__in=groups_pk)
+            for group in other_group_relations:
+                if group.wake_week_plan and group.wake_week_plan != self.object:
+                    pcs_with_other_plans.append(pc.pk)
+                    pcs_with_other_plans_names.append(pc.name)
+                    other_plans_names.append(group.wake_week_plan.name)
+                    break
+        pcs_with_other_plans = PC.objects.filter(pk__in=pcs_with_other_plans)
+        # Verify the groups that do not include pcs belonging to a different wake plan
+        # and get the names of the groups that could not be verified
+        verified_groups_pk = []
+        invalid_groups_names = []
+        for group in groups:
+            if not pcs_with_other_plans.intersection(group.pcs.all()):
+                verified_groups_pk.append(group.pk)
+            else:
+                invalid_groups_names.append(group.name)
+        verified_groups = PCGroup.objects.filter(pk__in=verified_groups_pk)
+        # Add the verified groups to the plan
+        for g in verified_groups:
+            g.wake_week_plan = self.object
+            g.save()
+        # Get the pcs in the verified groups
+        pcs_in_verified_groups_pk = list(
+            set(verified_groups.values_list("pcs", flat=True))
+        )
+        pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
+        return (
+            pcs_in_verified_groups,
+            invalid_groups_names,
+            pcs_with_other_plans_names,
+            other_plans_names,
+        )
+
+    def get_notification_string(self, names, conjunction="og"):
+        """Helper function used to generate strings for the notification displayed
+        when selected groups could not be verified."""
+        names = list(set(names))
+        if len(names) > 1:
+            string = ", ".join(names[:-1])
+            string = " ".join([string, conjunction, names[-1]])
+        else:
+            string = names[0]
+        return string
+
 
 class WakePlanCreate(WakePlanExtendedMixin, CreateView):
     model = WakeWeekPlan
@@ -1209,7 +1274,57 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.site = site
 
-        return super(WakePlanCreate, self).form_valid(form)
+        response = super(WakePlanCreate, self).form_valid(form)
+
+        # Verify and add the selected groups
+        selected_groups_pk = form["groups"].value()
+        (
+            pcs_in_verified_groups,
+            invalid_groups_names,
+            pcs_with_other_plans_names,
+            other_plans_names,
+        ) = self.verify_and_add_groups(selected_groups_pk)
+
+        # If pcs were added and the plan is enabled
+        if pcs_in_verified_groups and self.object.enabled:
+            args = []
+            run_wake_plan_script(
+                self.object.site,
+                pcs_in_verified_groups,
+                args,
+                self.request.user,
+                type="set",
+            )
+
+        # If some groups could not be verified, display this and the reason
+        if invalid_groups_names:
+            invalid_groups_string = self.get_notification_string(invalid_groups_names)
+            pcs_with_other_plans_string = self.get_notification_string(
+                pcs_with_other_plans_names
+            )
+            other_plans_string = self.get_notification_string(
+                other_plans_names, conjunction="eller"
+            )
+            set_notification_cookie(
+                response,
+                _(
+                    "PCWakePlan %s created, but the group(s) %s could not be added "
+                    "because the pc(s) %s already belong to the plan(s) %s"
+                )
+                % (
+                    self.object.name,
+                    invalid_groups_string,
+                    pcs_with_other_plans_string,
+                    other_plans_string,
+                ),
+                error=True,
+            )
+        else:
+            set_notification_cookie(
+                response, _("PCWakePlan %s created") % self.object.name
+            )
+
+        return response
 
 
 class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
@@ -1253,49 +1368,12 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             response = super(WakePlanUpdate, self).form_valid(form)
 
-            # Find the pc objects in the groups that are being added and the pk values of those groups
-            pcs_in_added_groups = PC.objects.none()
-            groups_added = groups_selected.difference(groups_pre)
-            groups_added_pk = []
-            for g in groups_added:
-                # Using union prevents duplicates
-                pcs_in_added_groups = pcs_in_added_groups.union(g.pcs.all())
-                groups_added_pk.append(g.pk)
-
-            # Find the pcs being added that belong to a different wake plan
-            pcs_with_other_plans = []
-            pcs_with_other_plans_names = []
-            other_plans_names = []
-            for pc in pcs_in_added_groups:
-                other_group_relations = pc.pc_groups.exclude(pk__in=groups_added_pk)
-                for group in other_group_relations:
-                    if group.wake_week_plan and group.wake_week_plan != self.object:
-                        pcs_with_other_plans.append(pc.pk)
-                        pcs_with_other_plans_names.append(pc.name)
-                        other_plans_names.append(group.wake_week_plan.name)
-                        break
-
-            # Verify the groups being added that do not include pcs belonging to a different wake plan
-            # and disregard the rest
-            pcs_with_other_plans = PC.objects.filter(pk__in=pcs_with_other_plans)
-            verified_groups_pk = []
-            for g in groups_added:
-                if not pcs_with_other_plans.intersection(g.pcs.all()):
-                    verified_groups_pk.append(g.pk)
-
-            # Add the verified groups to the wake plan and find the pc objects in those groups
-            verified_groups = PCGroup.objects.filter(pk__in=verified_groups_pk)
-            pcs_in_verified_groups = PC.objects.none()
-            for g in verified_groups:
-                # Using union prevents duplicates
-                pcs_in_verified_groups = pcs_in_verified_groups.union(g.pcs.all())
-                g.wake_week_plan = self.object
-                g.save()
-
-            # Get the names of the groups that could not be verified
-            invalid_groups_names = []
-            for g in groups_added.difference(verified_groups):
-                invalid_groups_names.append(g.name)
+            (
+                pcs_in_verified_groups,
+                invalid_groups_names,
+                pcs_with_other_plans_names,
+                other_plans_names,
+            ) = self.verify_and_add_groups(group_ids)
 
             # Remove the deselected groups from the wake plan and find the pc objects in those groups
             pcs_in_removed_groups = PC.objects.none()
@@ -1305,19 +1383,12 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 g.wake_week_plan = None
                 g.save()
 
-            # Get the scripts and arguments for setting/removing the wake plan on a pc
-            set_script = Script.objects.get(uid="wake_plan_set")
-            args_set = self.get_script_arguments()
-            remove_script = Script.objects.get(uid="wake_plan_remove")
-
             # Get the status of the wake plan after the update
             enabled_post = self.object.enabled
 
             # Find all pc objects belonging to the wake plan after the update
             pcs_all = PC.objects.none()
-            for g in groups_pre.union(set(verified_groups)).difference(
-                set(groups_removed)
-            ):
+            for g in self.object.groups.all():
                 pcs_all = pcs_all.union(g.pcs.all())
 
             # If the wake plan was active before and after the update
@@ -1334,43 +1405,46 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
                 # Remove the wake plan from the pcs that have been removed
                 if pcs_to_be_reset:
-                    batch = remove_script.run_on(
-                        self.object.site,
-                        pcs_to_be_reset,
-                        [],
-                        user=self.request.user,
+                    run_wake_plan_script(
+                        self.object.site, pcs_to_be_reset, [], self.request.user
                     )
 
-                # Set the wake plan on the pcs that have been added
+                # If the wake plan settings have changed, update the wake plan on all members
+                if self.check_settings_updates(plan_pre):
+                    pcs_to_be_set = pcs_all
+
+                # Set the wake plan on the pcs that need to have it updated
                 if pcs_to_be_set:
-                    batch = set_script.run_on(
+                    # Get the arguments for setting the wake plan on a pc
+                    args_set = self.get_script_arguments()
+                    run_wake_plan_script(
                         self.object.site,
                         pcs_to_be_set,
-                        *args_set,
-                        user=self.request.user,
-                    )
-
-                # If the wake plan settings have changed, update the wake plan on the old members
-                if self.check_settings_updates(plan_pre):
-                    old_pcs = pcs_all.difference(pcs_to_be_set)
-                    batch = set_script.run_on(
-                        self.object.site, old_pcs, *args_set, user=self.request.user
+                        args_set,
+                        self.request.user,
+                        type="set",
                     )
 
             # If the wake plan status was changed from active to inactive,
             # remove the wake plan from all members
             elif enabled_pre and not enabled_post:
                 if pcs_all:
-                    batch = remove_script.run_on(
-                        self.object.site, pcs_all, [], user=self.request.user
+                    run_wake_plan_script(
+                        self.object.site, pcs_all, [], self.request.user
                     )
 
             # If the wake plan status was changed from inactive to active,
             # set the wake plan on all members
             elif not enabled_pre and enabled_post:
                 if pcs_all:
-                    batch = set_script.run_on(
-                        self.object.site, pcs_all, *args_set, user=self.request.user
+                    # Get the arguments for setting the wake plan on a pc
+                    args_set = self.get_script_arguments()
+                    run_wake_plan_script(
+                        self.object.site,
+                        pcs_all,
+                        args_set,
+                        self.request.user,
+                        type="set",
                     )
 
             # If the wake plan status was inactive before and after the update
@@ -1408,17 +1482,6 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 )
 
             return response
-
-    def get_notification_string(self, names, conjunction="og"):
-        """Helper function used to generate strings for the notification displayed
-        when selected groups could not be verified."""
-        names = list(set(names))
-        if len(names) > 1:
-            string = ", ".join(names[:-1])
-            string = " ".join([string, conjunction, names[-1]])
-        else:
-            string = names[0]
-        return string
 
     def form_invalid(self, form):
         return super(WakePlanUpdate, self).form_invalid(form)
@@ -1492,25 +1555,6 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
     # slug_field = "site_uid"
     template_name = "system/wake_plan/confirm_delete.html"
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(WakePlanDelete, self).get_context_data(**kwargs)
-    #
-    #     # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
-    #     context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
-    #     plan = self.object
-    #     context["selected_plan"] = plan
-    #     context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
-    #         site=context["site"]
-    #     )
-    #
-    #     context["wake_plan_access"] = (
-    #         True
-    #         if context["site"].feature_permission.filter(uid="wake_plan")
-    #         else False
-    #     )
-    #
-    #     return context
-
     def get_object(self, queryset=None):
         plan = WakeWeekPlan.objects.get(id=self.kwargs["wake_week_plan_id"])
         if not plan.site.feature_permission.filter(uid="wake_plan"):
@@ -1533,13 +1577,8 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
             pcs_in_groups = PC.objects.none()
             for g in groups:
                 pcs_in_groups = pcs_in_groups.union(g.pcs.all())
-            remove_script = Script.objects.get(uid="wake_plan_remove")
-            batch = remove_script.run_on(
-                plan.site,
-                pcs_in_groups,
-                [],
-                user=request.user,
-            )
+            run_wake_plan_script(plan.site, pcs_in_groups, [], request.user)
+
         response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
 
         set_notification_cookie(
@@ -1967,18 +2006,19 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                             if member not in pcs_in_other_wake_plan_groups:
                                 new_wake_plan_members.append(member.pk)
                         if new_wake_plan_members:
-                            set_script = Script.objects.get(uid="wake_plan_set")
                             # TODO Fix the way the arguments are retrieved
                             args_set = ["1", "2", "3", "4"]
                             pcs_to_be_set = PC.objects.filter(
                                 pk__in=new_wake_plan_members
                             )
-                            batch = set_script.run_on(
+                            run_wake_plan_script(
                                 self.object.site,
                                 pcs_to_be_set,
-                                *args_set,
-                                user=self.request.user,
+                                args_set,
+                                self.request.user,
+                                type="set",
                             )
+
                     # If pcs have been removed from the group that do not still belong to the wake plan
                     # via a different group, remove the wake plan from those pcs
                     if removed_members:
@@ -1987,16 +2027,13 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                             if member not in pcs_in_other_wake_plan_groups:
                                 removed_wake_plan_members.append(member.pk)
                         if removed_wake_plan_members:
-                            remove_script = Script.objects.get(uid="wake_plan_remove")
                             pcs_to_be_reset = PC.objects.filter(
                                 pk__in=removed_wake_plan_members
                             )
-                            batch = remove_script.run_on(
-                                self.object.site,
-                                pcs_to_be_reset,
-                                [],
-                                user=self.request.user,
+                            run_wake_plan_script(
+                                self.object.site, pcs_to_be_reset, [], self.request.user
                             )
+
                 # If some pcs could not be added due to belonging to a different wake plan,
                 # display this and the reason
                 if pcs_with_other_plans_names:
@@ -2078,8 +2115,12 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         name = self_object.name
         # wake_week_plan-related
         members = self_object.pcs.all()
-        # If this group had a wake plan and members
-        if self_object.wake_week_plan and members:
+        # If this group had an active wake plan and members
+        if (
+            self_object.wake_week_plan
+            and self_object.wake_week_plan.enabled
+            and members
+        ):
             # Find the other groups belonging to the same wake plan as this group
             other_wake_plan_groups = self_object.wake_week_plan.groups.exclude(
                 pk=self_object.pk
@@ -2094,12 +2135,8 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
             # via a different group, remove the wake plan from those members
             pcs_to_be_reset = members.difference(pcs_in_other_wake_plan_groups)
             if pcs_to_be_reset:
-                remove_script = Script.objects.get(uid="wake_plan_remove")
-                batch = remove_script.run_on(
-                    self_object.site,
-                    pcs_to_be_reset,
-                    [],
-                    user=self.request.user,
+                run_wake_plan_script(
+                    self_object.site, pcs_to_be_reset, [], self.request.user
                 )
 
         response = super(PCGroupDelete, self).delete(request, *args, **kwargs)
