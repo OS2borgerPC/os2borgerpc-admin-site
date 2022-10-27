@@ -1421,14 +1421,22 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         args.append(f"{self.object.monday_off.hour}:{self.object.monday_off.minute}")
         args.append(f"{self.object.tuesday_on.hour}:{self.object.tuesday_on.minute}")
         args.append(f"{self.object.tuesday_off.hour}:{self.object.tuesday_off.minute}")
-        args.append(f"{self.object.wednesday_on.hour}:{self.object.wednesday_on.minute}")
-        args.append(f"{self.object.wednesday_off.hour}:{self.object.wednesday_off.minute}")
+        args.append(
+            f"{self.object.wednesday_on.hour}:{self.object.wednesday_on.minute}"
+        )
+        args.append(
+            f"{self.object.wednesday_off.hour}:{self.object.wednesday_off.minute}"
+        )
         args.append(f"{self.object.thursday_on.hour}:{self.object.thursday_on.minute}")
-        args.append(f"{self.object.thursday_off.hour}:{self.object.thursday_off.minute}")
+        args.append(
+            f"{self.object.thursday_off.hour}:{self.object.thursday_off.minute}"
+        )
         args.append(f"{self.object.friday_on.hour}:{self.object.friday_on.minute}")
         args.append(f"{self.object.friday_off.hour}:{self.object.friday_off.minute}")
         args.append(f"{self.object.saturday_on.hour}:{self.object.saturday_on.minute}")
-        args.append(f"{self.object.saturday_off.hour}:{self.object.saturday_off.minute}")
+        args.append(
+            f"{self.object.saturday_off.hour}:{self.object.saturday_off.minute}"
+        )
         args.append(f"{self.object.sunday_on.hour}:{self.object.sunday_on.minute}")
         args.append(f"{self.object.sunday_off.hour}:{self.object.sunday_off.minute}")
 

@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('system', '0066_alter_wakechangeevent_event_type'),
+        ('system', '0062_auto_20221026_1245'),
     ]
 
     operations = [
@@ -14,6 +14,11 @@ class Migration(migrations.Migration):
             model_name='script',
             name='uid',
             field=models.CharField(blank=True, max_length=255, null=True, unique=True, verbose_name='UID'),
+        ),
+        migrations.AddField(
+            model_name='script',
+            name='is_hidden',
+            field=models.BooleanField(default=False, verbose_name='hidden script'),
         ),
         migrations.CreateModel(
             name='FeaturePermission',
