@@ -30,8 +30,19 @@ td.after-dash {
 .form-check-label {
   user-select: none;
   margin-left: 5px;
+  padding-top: 0.5rem;
+  float:left;
+}
+
+.checkbox-switch {
+  padding: 0.75rem 0rem 0.75rem 2rem!important;
+}
+
+.checkbox-text {
+  padding: 0.75rem 2rem 0.75rem 0rem;
 }
 
 article {
   min-width: 480px;
 }
+
