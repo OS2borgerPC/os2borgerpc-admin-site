@@ -1163,7 +1163,9 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                         (ev, WakeChangeEventAlteredHoursForm(ev_dict))
                     )
                 elif ev.type == "CLOSED":
-                    wake_change_event_forms.append((ev, WakeChangeEventClosedForm(ev_dict)))
+                    wake_change_event_forms.append(
+                        (ev, WakeChangeEventClosedForm(ev_dict))
+                    )
             context["wake_change_event_forms"] = wake_change_event_forms
 
         form = context["form"]
