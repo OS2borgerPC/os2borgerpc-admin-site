@@ -235,7 +235,7 @@
           <table id="wake-change-events" class="table form-switch">
             <tbody>
               {#{% for ev_form in selected_plan.wake_change_events.all %}#}
-              {% for ev, ev_form in wake_change_event_forms %}
+              {% for ev, ev_form in wake_change_events_tuple %}
                 <tr>
                   <td>{{ev_form.name}}</td>
                   <td>{{ev_form.date_start}}</td>
@@ -305,13 +305,6 @@
         {% endif %}
     </div>
     <hr>
-
-    {{form|crispy}}
-    <!-- {{form}} -->
-
-    <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
-    <input class="btn btn-secondary" type="reset" name="cancel" value="Annuller">
-    <input class="btn btn-secondary" type="submit" name="copy" value="Kopiér tidsplan">
 
   </form>
 
