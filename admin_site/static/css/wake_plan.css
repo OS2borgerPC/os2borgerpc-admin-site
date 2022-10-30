@@ -39,7 +39,7 @@ td.after-dash {
 }
 
 .checkbox-text {
-  padding: 0.75rem 2rem 0.75rem 0rem;
+  padding: 0.75rem 2rem 0.75rem 0rem!important;
 }
 
 article {

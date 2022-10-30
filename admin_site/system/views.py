@@ -1168,6 +1168,13 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                     )
             context["wake_change_events_tuple"] = wake_change_events_tuple
 
+            # Hvilken én er den rigtige af de her to???
+
+            #         wake_change_event_forms.append(
+            #             (ev, WakeChangeEventClosedForm(ev_dict))
+            #         )
+            # context["wake_change_event_forms"] = wake_change_event_forms
+
         form = context["form"]
         # params = self.request.GET or self.request.POST
 
