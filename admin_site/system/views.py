@@ -862,8 +862,8 @@ class ScriptRun(SiteView):
 
     def step1(self, context):
         self.template_name = "system/scripts/run_step1.html"
-        context["pcs"] = self.object.pcs.all().order_by("name")
-        all_groups = self.object.groups.all().order_by("name")
+        context["pcs"] = self.object.pcs.all()
+        all_groups = self.object.groups.all()
         context["groups"] = [group for group in all_groups if group.pcs.count() > 0]
 
         if len(context["script"].ordered_inputs) > 0:
