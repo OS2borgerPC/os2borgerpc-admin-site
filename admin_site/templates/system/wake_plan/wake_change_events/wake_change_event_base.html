@@ -1,0 +1,38 @@
+{% extends "site_with_navigation.html" %}
+{% load static %}
+
+{% block specific_title %}
+Tænd- / Sluk-tidsplan
+{% endblock %}
+
+{% block stylesheets %}
+  <link href="{% static 'css/wake_plan.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block subnav %}
+<div class="sublevelnav">
+  <div class="listutils">
+
+    <a class="btn btn-link" {% if wake_plan_access %} href="{% url 'wake_plan_new' site.uid %}" {% endif %}>
+        <span class="material-icons">add</span>
+        Tilføj ny undtagelse
+    </a>
+  </div>
+
+  <ul class="item-list">
+    {% if wake_change_events.all %}
+      {% for ev in wake_change_events_list %}
+        <li class="{% ifequal plan selected_plan %}active{% endifequal %}">
+          <a class="item-list-link" id="{{ev.id}}" href="{% url 'wake_change_event' site.uid ev.id %}">
+            {{ ev.name }}
+          </a>
+        </li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{% static 'js/wake_plan.js' %}"></script>
+{% endblock %}

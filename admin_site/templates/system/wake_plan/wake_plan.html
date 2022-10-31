@@ -226,44 +226,14 @@
 
           {# Wake events #}
 
-          {{wake_change_events_tuple}} {# testing #}
+          <a href="{% url 'wake_change_events' site.uid %}" target="_blank">Håndter undtagelser</a>
 
-          <table id="wake-change-events" class="table form-switch">
-            <tbody>
-              {#{% for ev_form in selected_plan.wake_change_events.all %}#}
-              {% for ev, ev_form in wake_change_events_tuple %}
-              {#{{ev_form|get_fields}}#}
-                <tr>
-                  <td>{{ev_form.name}}</td>
-                  <td>{{ev_form.date_start}}</td>
-
-                  <td>
-                  {% if not ev.date_start == ev.date_end %} {# Used if it's a "period" #}
-                    {{ev_form.date_end}}
-                  {% endif %}
-                  </td>
-
-                  <td class="checkbox-switch"><input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="event-{{ev.id}}" {% if ev.time_start %}checked{% endif %}></td>
-                  <td class="checkbox-text"><label class="form-check-label" for="event-{{ev.id}}">Tændt</label></td>
-
-                  <td class="before-dash">
-                    {{ev_form.time_start}}
-                  </td>
-                  <td class="dash">—</td>
-                  <td class="after-dash">
-                    {{ev_form.time_end}}
-                  </td>
-
-                  <td>
-                    <span class="material-icons delete">delete_outline</span>
-                  </td>
-                </tr>
+              {% for ev in selected_plan.wake_change_events.all %}
+                {{ev}}
               {% endfor %}
-            </tbody>
-          </table>
 
-          <button class="btn" type="button"><span class="material-icons">date_range</span></span>Tilføj periode</button>
-          <button class="btn" type="button"><span class="material-icons">today</span>Tilføj dato</button>
+          <button class="btn" type="button"><span class="material-icons">date_range</span></span>Tilføj ny periode</button>
+          <button class="btn" type="button"><span class="material-icons">today</span>Tilføj ny dato</button>
 
           <p class="mt-4 mb-0"><strong>Grupper der følger tidsplanen</strong></p>
 

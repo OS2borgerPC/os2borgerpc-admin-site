@@ -3499,8 +3499,7 @@
         "sunday_open": true,
         "site": 9,
         "wake_change_events": [
-            1,
-            2
+            1
         ]
     }
 },
@@ -3762,7 +3761,8 @@
         "date_end": "2022-12-12",
         "time_start": null,
         "time_end": null,
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 9
     }
 },
 {
@@ -3774,7 +3774,8 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
     }
 },
 {
@@ -3786,7 +3787,9 @@
         "date_end": "2022-10-12",
         "time_start": null,
         "time_end": null,
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3798,7 +3801,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:30",
         "time_end": "18:04:34",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3810,7 +3815,9 @@
         "date_end": "2022-10-12",
         "time_start": null,
         "time_end": null,
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3822,7 +3829,9 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3834,7 +3843,9 @@
         "date_end": "2022-10-12",
         "time_start": null,
         "time_end": null,
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3846,7 +3857,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3858,7 +3871,9 @@
         "date_end": "2022-12-12",
         "time_start": null,
         "time_end": null,
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3870,7 +3885,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3882,7 +3899,9 @@
         "date_end": "2022-10-12",
         "time_start": null,
         "time_end": null,
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3894,7 +3913,9 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3906,7 +3927,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3918,7 +3941,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3930,7 +3955,9 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3942,7 +3969,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3954,7 +3983,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3966,7 +3997,9 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -3978,7 +4011,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -3990,7 +4025,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -4002,7 +4039,9 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -4014,7 +4053,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:06",
         "time_end": "17:04:07",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -4026,7 +4067,9 @@
         "date_end": "2022-10-12",
         "time_start": "12:04:15",
         "time_end": "20:04:16",
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
@@ -4038,7 +4081,9 @@
         "date_end": "2022-12-12",
         "time_start": "12:03:35",
         "time_end": "20:03:36",
-        "type": "ALTERED_HOURS"
+        "type": "ALTERED_HOURS",
+        "site": 1
+
     }
 },
 {
@@ -4050,7 +4095,9 @@
         "date_end": "2022-10-12",
         "time_start": null,
         "time_end": null,
-        "type": "CLOSED"
+        "type": "CLOSED",
+        "site": 1
+
     }
 },
 {
