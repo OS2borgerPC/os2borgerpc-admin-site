@@ -20,12 +20,15 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCUpdate,
-    # WakeChangeEvent
     WakePlanCreate,
     WakePlanCopy,
     WakePlanDelete,
     WakePlanRedirect,
     WakePlanUpdate,
+    WakeChangeEventCreate,
+    WakeChangeEventDelete,
+    WakeChangeEventRedirect,
+    WakeChangeEventUpdate,
     PCsView,
     ScriptCreate,
     ScriptDelete,
@@ -197,6 +200,28 @@ urlpatterns = [
         r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/copy/$",
         WakePlanCopy.as_view(),
         name="wake_plan_copy",
+    ),
+    # Wake Change Events
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_events/$",
+        WakeChangeEventRedirect.as_view(),
+        name="wake_change_events",
+    ),
+    # This URL needs to be above WakePlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_event/new/$",
+        WakeChangeEventCreate.as_view(),
+        name="wake_change_event_new",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/$",
+        WakeChangeEventUpdate.as_view(),
+        name="wake_change_event",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/delete/$",
+        WakeChangeEventDelete.as_view(),
+        name="wake_change_event_delete",
     ),
     # Jobs
     url(

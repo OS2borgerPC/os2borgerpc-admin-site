@@ -338,7 +338,14 @@ class WakePlanForm(forms.ModelForm):
         }
 
 
+# TODO: Clean these up depending on which we decide to use
 class WakeChangeEventAlteredHoursForm(forms.ModelForm):
+    class Meta:
+        model = WakeChangeEvent
+        exclude = ("type",)
+
+
+class WakeChangeEventForm(forms.ModelForm):
     class Meta:
         model = WakeChangeEvent
         exclude = ("type",)
@@ -347,4 +354,4 @@ class WakeChangeEventAlteredHoursForm(forms.ModelForm):
 class WakeChangeEventClosedForm(forms.ModelForm):
     class Meta:
         model = WakeChangeEvent
-        exclude = ("type",)  # , "time_start", "time_end")
+        exclude = ("type", "time_start", "time_end")
