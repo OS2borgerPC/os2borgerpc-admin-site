@@ -5,8 +5,6 @@ const wake_change_events_offset = 2
 
 function week_day_on(el, on, wake_change_event=false) {
   const offset = wake_change_event? wake_change_events_offset : 0
-  
-  console.log("offset " + offset)
 
   const start_time = el.parentElement.parentElement.children[3 + offset]
   const start_time_input = el.parentElement.parentElement.children[3 + offset].firstElementChild
@@ -22,7 +20,7 @@ function week_day_on(el, on, wake_change_event=false) {
     end_time.style.visibility = "visible"
     end_time_input.setAttribute('required',true)
     on_off_text.innerText = "Tændt"
-    
+
   }
   else {
     start_time.style.visibility = "hidden"
@@ -78,7 +76,7 @@ for (let day of week_plan.tBodies[0].children) {
   else {
     week_day_on(checkbox, true)
   }
-  
+
 }
 
 // Do the same for events
