@@ -37,7 +37,7 @@ detailpage
     </a>
 
     <hr>
-    <h2 class="text-light">Sikkerhed</h3>
+    <h2 class="text-light">Sikkerhed</h2>
     
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
@@ -67,7 +67,7 @@ detailpage
     </a>
     
     <hr>
-    <h2 class="text-light">Organisering</h3>
+    <h2 class="text-light">Organisering</h2>
   
     {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
     <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}">
@@ -90,7 +90,7 @@ detailpage
     </a>
     
     <hr>
-    <h2 class="text-light">Scripting</h3>
+    <h2 class="text-light">Scripting</h2>
     
     {% set_css_class_active request.resolver_match.url_name "job" as current_url_jobs %}
     <a class="nav-link link-light {{ current_url_jobs }}" href="{% url 'jobs' slug=site.url %}">
@@ -103,7 +103,7 @@ detailpage
     </a>
   
     <hr>
-    <h2 class="text-light">Brugere & Versioner</h3>
+    <h2 class="text-light">Brugere & Versioner</h2>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
     <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
       <span class="material-icons">person</span> Brugere
@@ -115,7 +115,7 @@ detailpage
     </a>
     <hr>
 
-    <h2 class="text-light">Dokumentation</h3>
+    <h2 class="text-light">Dokumentation</h2>
 
     {% if current_url_site %}
       {% comment %} Status currently has no documentation! {% endcomment %}
