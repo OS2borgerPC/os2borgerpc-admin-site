@@ -67,6 +67,7 @@ from system.forms import (
     UserForm,
     WakeChangeEventAlteredHoursForm,
     WakeChangeEventClosedForm,
+    WakeChangeEventForm,
     WakePlanForm,
 )
 
@@ -1151,32 +1152,6 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             site=context["site"]
         )
 
-        # TESTING:
-        # context["context"] = context
-
-        # Form for creating new WakeChangeEvents - not sure if these are really needed or
-        # if it can already be obtained from within the template in another way
-        context[
-            "wake_change_event_altered_hours_form"
-        ] = WakeChangeEventAlteredHoursForm
-        context["wake_change_event_closed_form"] = WakeChangeEventClosedForm
-        # Creating bound (populated) forms of the related WakeChangeEvents
-        # - Specifically a tuple of the element (for logic) and the form representation (for viewing)
-        wake_change_events_tuple = []
-        if plan: # WakePlanCreate won't have a Plan
-            for i, ev in enumerate(plan.wake_change_events.all()):
-                ev_dict = model_to_dict(ev)
-                if ev.type == "ALTERED_HOURS":
-                    wake_change_events_tuple.append(
-                        (ev, WakeChangeEventAlteredHoursForm(ev_dict, prefix=i))
-                    )
-                elif ev.type == "CLOSED":
-
-                    wake_change_events_tuple.append(
-                        (ev, WakeChangeEventClosedForm(ev_dict, prefix=i))
-                    )
-            context["wake_change_events_tuple"] = wake_change_events_tuple
-
         form = context["form"]
         # params = self.request.GET or self.request.POST
 
@@ -1332,7 +1307,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             )
         except WakeWeekPlan.DoesNotExist:
             raise Http404(
-                f"Du har ingen strømplan med id {self.kwargs['wake_week_plan_id']}"
+                _(f"You have no Wake Week Plan with the ID {self.kwargs['wake_week_plan_id']}")
             )
 
     def form_valid(self, form):
@@ -1611,6 +1586,77 @@ class WakePlanCopy(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
             "wake_plan",
             kwargs={"site_uid": kwargs["site_uid"], "wake_week_plan_id": new_id},
         )
+
+
+class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+    def get_context_data(self, **kwargs):
+        context = super(WakeChangeEventBaseMixin, self).get_context_data(**kwargs)
+
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        event = self.object
+        context["selected_event"] = event
+        context["wake_change_events__list"] = WakeChangeEvent.objects.filter(
+            site=context["site"]
+        )
+
+        return context
+
+
+class WakeChangeEventRedirect(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["site_uid"])
+
+        wake_change_events = WakeChangeEvent.objects.filter(site=site)
+
+        if wake_change_events.exists():
+            wake_change_event = wake_change_events.first()
+            return wake_change_event.get_absolute_url()
+        else:
+            return reverse("wake_change_event_new", args=[site.uid])
+
+
+class WakeChangeEventUpdate(WakePlanBaseMixin, UpdateView):
+    template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
+    form_class = WakeChangeEventForm
+    slug_field = "site_uid"
+
+    def get_object(self, queryset=None):
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return WakeChangeEvent.objects.get(
+                id=self.kwargs["wake_change_event_id"], site=site_id
+            )
+        except WakeChangeEvent.DoesNotExist:
+            raise Http404(
+                _(f"You have no Wake Change Event with the ID {self.kwargs['wake_change_event_id']}")
+            )
+
+    def form_valid(self, form):
+        return True
+
+
+class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
+    model = WakeChangeEvent
+    form_class = WakeChangeEventForm
+    slug_field = "site_uid"
+    template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
+
+    def form_valid(self, form):
+        # The form does not allow setting the site yourself, so we insert that here
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if not site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        self.object = form.save(commit=False)
+        self.object.site = site
+
+        return super(WakePlanCreate, self).form_valid(form)
+
+
+class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
+    model = WakeChangeEvent
+    # slug_field = "site_uid"
+    template_name = "system/wake_plan/wake_change_events/confirm_delete.html"
 
 
 class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):

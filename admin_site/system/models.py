@@ -258,9 +258,18 @@ class WakeChangeEvent(models.Model):
         choices=EVENT_TYPE_CHOICES,
         default=EVENT_TYPE_CHOICES[0][0],
     )
+    site = models.ForeignKey(
+        Site, related_name="wake_change_events", on_delete=models.CASCADE
+    )
 
     def __str__(self):
-        return self.name
+        if self.time_start:
+            return f"{self.name}: {self.date_start}-{self.date_end} {self.time_start}-{self.time_end}"
+        else:
+            return f"{self.name}: {self.date_start}-{self.date_end}"
+
+    def get_absolute_url(self):
+        return reverse("wake_change_event", args=(self.site.uid, self.id))
 
     class Meta:
         ordering = ["date_start"]
