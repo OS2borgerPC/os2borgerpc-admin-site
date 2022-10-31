@@ -1307,7 +1307,9 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             )
         except WakeWeekPlan.DoesNotExist:
             raise Http404(
-                _(f"You have no Wake Week Plan with the ID {self.kwargs['wake_week_plan_id']}")
+                _(
+                    f"You have no Wake Week Plan with the ID {self.kwargs['wake_week_plan_id']}"
+                )
             )
 
     def form_valid(self, form):
@@ -1629,7 +1631,9 @@ class WakeChangeEventUpdate(WakePlanBaseMixin, UpdateView):
             )
         except WakeChangeEvent.DoesNotExist:
             raise Http404(
-                _(f"You have no Wake Change Event with the ID {self.kwargs['wake_change_event_id']}")
+                _(
+                    f"You have no Wake Change Event with the ID {self.kwargs['wake_change_event_id']}"
+                )
             )
 
     def form_valid(self, form):
