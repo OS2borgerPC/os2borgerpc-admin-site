@@ -1163,27 +1163,19 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # Creating bound (populated) forms of the related WakeChangeEvents
         # - Specifically a tuple of the element (for logic) and the form representation (for viewing)
         wake_change_events_tuple = []
-        if plan:  # WakePlanCreate won't have a Plan
-            for ev in plan.wake_change_events.all():
+        if plan: # WakePlanCreate won't have a Plan
+            for i, ev in enumerate(plan.wake_change_events.all()):
                 ev_dict = model_to_dict(ev)
                 if ev.type == "ALTERED_HOURS":
                     wake_change_events_tuple.append(
-                        (ev, WakeChangeEventAlteredHoursForm(ev_dict))
+                        (ev, WakeChangeEventAlteredHoursForm(ev_dict, prefix=i))
                     )
                 elif ev.type == "CLOSED":
 
                     wake_change_events_tuple.append(
-                        (ev, WakeChangeEventClosedForm(ev_dict))
+                        (ev, WakeChangeEventClosedForm(ev_dict, prefix=i))
                     )
             context["wake_change_events_tuple"] = wake_change_events_tuple
-
-            # Hvilken én er den rigtige af de her to???
-
-            #         wake_change_event_forms.append(
-            #             (ev, WakeChangeEventClosedForm(ev_dict))
-            #         )
-            # context["wake_change_event_forms"] = wake_change_event_forms
-
 
         form = context["form"]
         # params = self.request.GET or self.request.POST
