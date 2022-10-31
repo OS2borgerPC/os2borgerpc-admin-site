@@ -244,13 +244,9 @@ class WakeChangeEvent(models.Model):
 
     name = models.CharField(verbose_name=_("name"), max_length=60)
     date_start = models.DateField(verbose_name=_("date start"))
-    time_start = models.TimeField(
-        verbose_name=_("time start"), null=True, blank=True
-    )
+    time_start = models.TimeField(verbose_name=_("time start"), null=True, blank=True)
     date_end = models.DateField(verbose_name=_("date end"))
-    time_end = models.TimeField(
-        verbose_name=_("time end"), null=True, blank=True
-    )
+    time_end = models.TimeField(verbose_name=_("time end"), null=True, blank=True)
     # Represented by an on-off switch in the frontend
     type = models.CharField(
         verbose_name=_("type"),
