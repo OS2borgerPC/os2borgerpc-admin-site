@@ -226,10 +226,13 @@
 
           {# Wake events #}
 
+          {{wake_change_events_tuple}} {# testing #}
+
           <table id="wake-change-events" class="table form-switch">
             <tbody>
               {#{% for ev_form in selected_plan.wake_change_events.all %}#}
               {% for ev, ev_form in wake_change_events_tuple %}
+              {#{{ev_form|get_fields}}#}
                 <tr>
                   <td>{{ev_form.name}}</td>
                   <td>{{ev_form.date_start}}</td>
@@ -242,39 +245,6 @@
 
                   <td class="checkbox-switch"><input class="form-check-input fs-5 checkbox" type="checkbox" role="switch" id="event-{{ev.id}}" {% if ev.time_start %}checked{% endif %}></td>
                   <td class="checkbox-text"><label class="form-check-label" for="event-{{ev.id}}">Tændt</label></td>
-
-                  <!-- {% if ev.type == "ALTERED_HOURS" %}
-                    <td>
-                      <span class="before-dash">
-                        {{ev_form.time_start}}
-                      </span>
-                    </td>
-                    <td>
-                      <span class="dash">—</span>
-                    </td>
-                    <td>
-                      <span class="after-dash">
-                        {{ev_form.time_end}}
-                      </span>
-                    </td>
-                  {% else %}
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  {% endif %} -->
-                  <!-- <td>
-                    <span class="before-dash">
-                      {{ev_form.time_start}}
-                    </span>
-                  </td>
-                  <td>
-                    <span class="dash">—</span>
-                  </td>
-                  <td>
-                    <span class="after-dash">
-                      {{ev_form.time_end}}
-                    </span>
-                  </td> -->
 
                   <td class="before-dash">
                     {{ev_form.time_start}}
