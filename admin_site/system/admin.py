@@ -405,6 +405,7 @@ class WakeWeekPlanAdmin(admin.ModelAdmin):
         "site",
     )
     inlines = [PCGroupInline]
+    filter_horizontal = ("wake_change_events",)
 
 
 class WakeWeekPlanInline(admin.TabularInline):
@@ -420,6 +421,7 @@ class WakeChangeEventAdmin(admin.ModelAdmin):
         "date_end",
         "time_start",
         "time_end",
+        "site",
     )
     inlines = [WakeWeekPlanInline]
 
