@@ -1252,6 +1252,13 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             other_plans_names,
         ) = self.verify_and_add_groups(selected_groups_pk)
 
+        # Add the selected wake change events
+        # The string currently set to "exceptions" must match the submit name
+        # chosen for the pick list used to add wake change events
+        exception_ids = form["exceptions"].value()
+        exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
+        self.object.wake_change_events.set(exceptions_selected)
+
         # If pcs were added and the plan is enabled
         if pcs_in_verified_groups and self.object.enabled:
             args = []
@@ -1332,8 +1339,14 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
         with transaction.atomic():
             # Groups that were selected
-            group_ids = self.request.POST.getlist("groups", [])
+            group_ids = f.getlist("groups", [])
             groups_selected = set(PCGroup.objects.filter(id__in=group_ids))
+
+            # Wake change events that were selected
+            # The string currently set to "exceptions" must match the submit name
+            # chosen for the pick list used to add wake change events
+            exception_ids = f.getlist("exceptions", [])
+            exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
 
             response = super(WakePlanUpdate, self).form_valid(form)
 
@@ -1343,6 +1356,9 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 pcs_with_other_plans_names,
                 other_plans_names,
             ) = self.verify_and_add_groups(group_ids)
+
+            # Update the related wake change events
+            self.object.wake_change_events.set(exceptions_selected)
 
             # Remove the deselected groups from the wake plan and find the pc objects in those groups
             pcs_in_removed_groups = PC.objects.none()
@@ -1637,7 +1653,54 @@ class WakeChangeEventUpdate(WakePlanBaseMixin, UpdateView):
             )
 
     def form_valid(self, form):
-        return True
+        # Capture a view of the event before the update
+        event_pre = self.get_object()
+
+        response = super(WakeChangeEventUpdate, self).form_valid(form)
+
+        # If the settings have changed and the wake change event is used
+        # by active wake plans, update the pcs connected to those plans
+        if self.check_settings_updates(event_pre):
+            for plan in self.object.wake_week_plans.all():
+                if plan.enabled:
+                    pcs_to_be_set_pk = list(
+                        set(plan.groups.all().values_list("pcs", flat=True))
+                    )
+                    pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
+                    # TODO Fix the way the arguments are retrieved
+                    args_set = [1, 2, 3, 4]
+                    run_wake_plan_script(
+                        self.object.site,
+                        pcs_to_be_set,
+                        args_set,
+                        self.request.user,
+                        type="set",
+                    )
+
+        return response
+
+    def check_settings_updates(self, event_pre):
+        """Helper function used to check if the settings have changed
+        and the event is used by an active wake plan"""
+        event_post = self.object
+        wake_plans = event_post.wake_week_plans.all()
+        active_plans = False
+        for plan in wake_plans:
+            if plan.enabled:
+                active_plans = True
+                break
+        if not active_plans:
+            return False
+        if event_pre.date_start != event_post.date_start:
+            return True
+        elif event_pre.date_end != event_post.date_end:
+            return True
+        elif event_pre.time_start != event_post.time_start:
+            return True
+        elif event_pre.time_end != event_post.time_end:
+            return True
+        else:
+            return False
 
 
 class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
@@ -1654,7 +1717,7 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.site = site
 
-        return super(WakePlanCreate, self).form_valid(form)
+        return super(WakeChangeEventCreate, self).form_valid(form)
 
 
 class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
