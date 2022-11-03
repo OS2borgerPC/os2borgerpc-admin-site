@@ -1,3 +1,23 @@
+Version 5.9.3, November 3, 2022
+---------------------------------
+
+- Prevent computers from being re-registered - print an error message if it already exists on the adminsite
+- Site admins: Fix it so site admins can delete their own scripts and security problems again
+- Scripts: Select global scripts by default instead of local
+- Changelog: UI refinements
+- Changelog: Fix bug so refreshing after writing a comment doesn't re-post the comment
+- Jobs: Fix bug where "Status" was hidden at lower resolutions instead of "Batch"
+- Jobs: Don't show batches with empty names in the collapse
+- Jobs: Fix bath sorting
+- Jobs: Show batch name as part of the link column to save on space for lower resolutions
+- Jobs: Fix batch sorting
+- Add a justfile for a better/faster development workflow, containing common commands
+- Images: Fix the links to download older images so they work again
+- Views consistency, use RedirectView instead of redirecting in a function, more consistent template directory
+  structure, delete unused template
+- /admin improvements
+
+
 Version 5.9.2, September 26, 2022
 ---------------------------------
 
