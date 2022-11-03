@@ -13,22 +13,20 @@ Tænd- / Sluk-tidsplan
 <div class="sublevelnav">
   <div class="listutils">
 
-    <a class="btn btn-link" {% if wake_plan_access %} href="{% url 'wake_plan_new' site.uid %}" {% endif %}>
+    <a class="btn btn-link" href="{% url 'wake_change_event_new' site.uid %}">
         <span class="material-icons">add</span>
         Tilføj ny undtagelse
     </a>
   </div>
 
   <ul class="item-list">
-    {% if wake_change_events.all %}
-      {% for ev in wake_change_events_list %}
-        <li class="{% ifequal plan selected_plan %}active{% endifequal %}">
-          <a class="item-list-link" id="{{ev.id}}" href="{% url 'wake_change_event' site.uid ev.id %}">
-            {{ ev.name }}
+      {% for event in wake_change_events_list %}
+        <li class="{% ifequal event selected_event %}active{% endifequal %}">
+          <a class="item-list-link" id="{{event.id}}" href="{% url 'wake_change_event' site.uid event.id %}">
+            {{ event.name }}
           </a>
         </li>
       {% endfor %}
-    {% endif %}
   </ul>
 </div>
 {% endblock %}
