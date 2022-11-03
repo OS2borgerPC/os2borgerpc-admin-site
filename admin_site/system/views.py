@@ -1607,6 +1607,7 @@ class WakePlanCopy(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
 
 
 class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+
     def get_context_data(self, **kwargs):
         context = super(WakeChangeEventBaseMixin, self).get_context_data(**kwargs)
 
@@ -1614,7 +1615,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         event = self.object
         context["selected_event"] = event
-        context["wake_change_events__list"] = WakeChangeEvent.objects.filter(
+        context["wake_change_events_list"] = WakeChangeEvent.objects.filter(
             site=context["site"]
         )
 
@@ -1622,6 +1623,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
 
 class WakeChangeEventRedirect(RedirectView):
+
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["site_uid"])
 
@@ -1634,7 +1636,7 @@ class WakeChangeEventRedirect(RedirectView):
             return reverse("wake_change_event_new", args=[site.uid])
 
 
-class WakeChangeEventUpdate(WakePlanBaseMixin, UpdateView):
+class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
     template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
     form_class = WakeChangeEventForm
     slug_field = "site_uid"
