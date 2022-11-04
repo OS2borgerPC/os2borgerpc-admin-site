@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block specific_title %}
-Tænd- / Sluk-tidsplan
+Tænd- / Sluk-tidsplan: Undtagelser
 {% endblock %}
 
 {% block stylesheets %}
@@ -13,9 +13,13 @@ Tænd- / Sluk-tidsplan
 <div class="sublevelnav">
   <div class="listutils">
 
-    <a class="btn btn-link" href="{% url 'wake_change_event_new' site.uid %}">
+    <a class="btn btn-link" href="{% url 'wake_change_event_new_altered_hours' site.uid %}">
         <span class="material-icons">add</span>
-        Tilføj ny undtagelse
+        Tilføj ændrede åbningstider
+    </a>
+    <a class="btn btn-link" href="{% url 'wake_change_event_new_closed' site.uid %}">
+        <span class="material-icons">add</span>
+        Tilføj lukkeperiode
     </a>
   </div>
 
@@ -23,7 +27,7 @@ Tænd- / Sluk-tidsplan
       {% for event in wake_change_events_list %}
         <li class="{% ifequal event selected_event %}active{% endifequal %}">
           <a class="item-list-link" id="{{event.id}}" href="{% url 'wake_change_event' site.uid event.id %}">
-            {{ event.name }}
+            {{event}}
           </a>
         </li>
       {% endfor %}
