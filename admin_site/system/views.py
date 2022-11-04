@@ -1155,6 +1155,19 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         form = context["form"]
         # params = self.request.GET or self.request.POST
 
+        # WakeChangeEvent picklist related:
+        all_wake_change_events_set = context["site"].wake_change_events.all()
+        selected_wake_change_event_ids = form["wake_change_events"].value()
+        if not selected_wake_change_event_ids:
+            selected_wake_change_event_ids = []
+        # template picklist requires the form pk, name, url (u)id.
+        context["available_wake_change_events"] = all_wake_change_events_set.exclude(
+            pk__in=selected_wake_change_event_ids
+        ).values_list("pk", "name", "pk")
+        context["selected_wake_change_events"] = all_wake_change_events_set.filter(
+            pk__in=selected_wake_change_event_ids
+        ).values_list("pk", "name", "pk")
+
         # Group picklist related:
         all_groups_set = context["site"].groups.all()
         selected_group_ids = form["groups"].value()
@@ -1607,7 +1620,6 @@ class WakePlanCopy(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
 
 
 class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
-
     def get_context_data(self, **kwargs):
         context = super(WakeChangeEventBaseMixin, self).get_context_data(**kwargs)
 
@@ -1617,17 +1629,18 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected_event"] = event
         context["wake_change_events_list"] = WakeChangeEvent.objects.filter(
             site=context["site"]
-        )
+        ).order_by("-date_start")
 
         return context
 
 
 class WakeChangeEventRedirect(RedirectView):
-
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["site_uid"])
 
-        wake_change_events = WakeChangeEvent.objects.filter(site=site)
+        wake_change_events = WakeChangeEvent.objects.filter(site=site).order_by(
+            "-date_start"
+        )
 
         if wake_change_events.exists():
             wake_change_event = wake_change_events.first()
@@ -1705,9 +1718,26 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
             return False
 
 
-class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
+class WakeChangeEventCreateAlteredHours(WakeChangeEventBaseMixin, CreateView):
     model = WakeChangeEvent
-    form_class = WakeChangeEventForm
+    form_class = WakeChangeEventAlteredHoursForm
+    slug_field = "site_uid"
+    template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
+
+    def form_valid(self, form):
+        # The form does not allow setting the site yourself, so we insert that here
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if not site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        self.object = form.save(commit=False)
+        self.object.site = site
+
+        return super(WakeChangeEventCreate, self).form_valid(form)
+
+
+class WakeChangeEventCreateClosed(WakeChangeEventBaseMixin, CreateView):
+    model = WakeChangeEvent
+    form_class = WakeChangeEventClosedForm
     slug_field = "site_uid"
     template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
 
