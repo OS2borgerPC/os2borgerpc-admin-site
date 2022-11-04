@@ -67,7 +67,7 @@
         {# TODO: Verify that it works with the form errors #}
         {{form.errors}}
 
-        <article class="col-lg-3 form-switch">
+        <article class="col-lg-4 form-switch">
 
           {{form.enabled|as_crispy_field}}
 
@@ -220,20 +220,27 @@
 
         </article>
 
-        <aside class="col-lg-9">
+        <aside class="col-lg-8">
           <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
           {# Wake events #}
 
-          <a href="{% url 'wake_change_events' site.uid %}" target="_blank">Håndter undtagelser</a>
 
-              {% for ev in selected_plan.wake_change_events.all %}
-                {{ev}}
-              {% endfor %}
+          <a class="btn" href="{% url 'wake_change_events' site.uid %}" target="_blank"><span class="material-icons">today</span>Håndter undtagelser</a>
 
-          <button class="btn" type="button"><span class="material-icons">date_range</span></span>Tilføj ny periode</button>
-          <button class="btn" type="button"><span class="material-icons">today</span>Tilføj ny dato</button>
+          <fieldset class="col-12 col-lg-12">
+
+            {{ form.events.errors }}
+            <div class="clearfix">
+              <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
+                <span class="material-icons px-1">queue</span>
+                <span id="total-groups"></span>
+              </span>
+            </div>
+            {% include 'widgets/picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text='Tilføj undtagelse til tidsplan' remove_text='Fjern undtagelse fra tidsplan' site_url=site.uid target_section='wake_change_events' %}
+
+          </fieldset>
 
           <p class="mt-4 mb-0"><strong>Grupper der følger tidsplanen</strong></p>
 
@@ -247,14 +254,14 @@
                 <span id="total-groups"></span>
               </span>
             </div>
-            {% include 'widgets/picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til tidsplan' remove_text='Fjern computer fra tidsplan' site_url=site.uid target_section='groups' %}
+            {% include 'widgets/picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til tidsplan' remove_text='Fjern gruppe fra tidsplan' site_url=site.uid target_section='groups' %}
 
           </fieldset>
 
         </aside>
       </div>
         <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
-        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Nulstil ændringer">
+        <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
         {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
         {% if selected_plan.id %}
           <a class="btn btn-secondary" {% if wake_plan_access %} href="{% url 'wake_plan_copy' site.uid selected_plan.id %}" {% endif %}>Kopier tidsplan</a>

@@ -292,15 +292,22 @@ class SecurityEventForm(forms.ModelForm):
 # Used on the Create and Update views
 class WakePlanForm(forms.ModelForm):
 
+    # Picklist related
     groups = forms.ModelMultipleChoiceField(
         queryset=PCGroup.objects.all(), required=False
     )
+    wake_change_events = forms.ModelMultipleChoiceField(
+        queryset=WakeChangeEvent.objects.all(), required=False
+    )
 
     def __init__(self, *args, **kwargs):
-        # Setup for the group picklist, so we have access to the groups for the form
+        # Setup for the picklists, so we have access to the groups and wake_change_events for the form
         if "instance" in kwargs and kwargs["instance"] is not None:
             initial = kwargs.setdefault("initial", {})
             initial["groups"] = [group.pk for group in kwargs["instance"].groups.all()]
+            initial["wake_change_events"] = [
+                event.pk for event in kwargs["instance"].wake_change_events.all()
+            ]
 
         super().__init__(*args, **kwargs)
 
@@ -309,7 +316,7 @@ class WakePlanForm(forms.ModelForm):
         exclude = (
             "site",
             "wake_change_events",
-        )  # We load in wake_change_events manually to generate their forms too
+        )
 
         time_format = forms.TimeInput(
             attrs={"type": "time", "max": "23:59", "class": "p-2"}, format="%H:%M"

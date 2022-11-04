@@ -259,10 +259,11 @@ class WakeChangeEvent(models.Model):
     )
 
     def __str__(self):
-        if self.time_start:
-            return f"{self.name}: {self.date_start}-{self.date_end} {self.time_start}-{self.time_end}"
-        else:
-            return f"{self.name}: {self.date_start}-{self.date_end}"
+        return f"{self.name}: {self.date_start.day}/{self.date_start.month}" + (
+            f" - {self.date_end.day}/{self.date_end.month}"
+            if self.date_start != self.date_end
+            else ""
+        )
 
     def get_absolute_url(self):
         return reverse("wake_change_event", args=(self.site.uid, self.id))
