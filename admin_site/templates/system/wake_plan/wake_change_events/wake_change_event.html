@@ -3,14 +3,14 @@
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
+    <h2 class="mt-4 divideheader"><strong>{{selected_event.name|default:"Ny undtagelse"}}</strong></h2>
 
-      <form method="post" accept-charset="utf-8">
+        <form method="post" accept-charset="utf-8">
 
         {% csrf_token %}
 
-        <aside class="col-lg-9">
-          <h2 class="mt-4 divideheader"><strong>{{selected_event.name|default:"Ny undtagelse"}}</strong></h2>
 
+          {# Probably change to not be crispy either, but use for reference to make nicer input fields manually #}
           {{form.name|as_crispy_field}}
 
           <table>
@@ -27,30 +27,17 @@
                 <td> {{form.date_start}}—</td>
                 <td> {{form.date_end}}</td>
               </tr>
-            </tbody>
-          </table>
 
           {# The second case is for handling the form for creating new altered hours, which doesn't yet have a type #}
           {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
-          <table>
-            <thead>
-              <tr>
-                <td></td>
-                <td>Fra</td>
-                <td>Til</td>
-              </tr>
-            </thead>
-            <tbody>
               <tr>
                 <td>Tidspunkt</td>
                 <td> {{form.time_start}}—</td>
                 <td> {{form.time_end}}</td>
               </tr>
+          {% endif %}
             </tbody>
           </table>
-          {% endif %}
-
-        </aside>
 
         <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
         <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
