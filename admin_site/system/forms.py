@@ -21,9 +21,7 @@ from account.models import SiteMembership
 time_format = forms.TimeInput(
     attrs={"type": "time", "max": "23:59", "class": "p-2"}, format="%H:%M"
 )
-date_format = forms.DateInput(
-    attrs={"type": "date", "class": "p-2"}
-)
+date_format = forms.DateInput(attrs={"type": "date", "class": "p-2"})
 
 
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
@@ -349,38 +347,16 @@ class WakePlanForm(forms.ModelForm):
         }
 
 
-# TODO: Clean these up depending on which we decide to use
-class WakeChangeEventAlteredHoursForm(forms.ModelForm):
-    class Meta:
-        model = WakeChangeEvent
-        exclude = ("type",)
-        widets = {
-            "date_start": date_format,
-            "time_start": time_format,
-            "date_end": date_format,
-            "time_end": time_format
-        }
-
-
-
-
-class WakeChangeEventClosedForm(forms.ModelForm):
-    class Meta:
-        model = WakeChangeEvent
-        exclude = ("type", "time_start", "time_end")
-        widets = {
-            "date_start": date_format,
-            "date_end": date_format
-        }
-
 # This should be deleteable later on:
 class WakeChangeEventForm(forms.ModelForm):
     class Meta:
         model = WakeChangeEvent
-        exclude = ("site", )
-        widets = {
+        exclude = ("site",)
+        # While testing:
+        # fields = "__all__"
+        widgets = {
             "date_start": date_format,
             "time_start": time_format,
             "date_end": date_format,
-            "time_end": time_format
+            "time_end": time_format,
         }

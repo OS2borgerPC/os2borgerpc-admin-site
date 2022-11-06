@@ -14,12 +14,12 @@ Tænd- / Sluk-tidsplan: Undtagelser
   <div class="listutils">
 
     <a class="btn btn-link" href="{% url 'wake_change_event_new_altered_hours' site.uid %}">
-        <span class="material-icons">add</span>
+        <span class="material-icons">change_circle</span>
         Tilføj ændrede åbningstider
     </a>
     <a class="btn btn-link" href="{% url 'wake_change_event_new_closed' site.uid %}">
-        <span class="material-icons">add</span>
-        Tilføj lukkeperiode
+        <span class="material-icons">vertical_shades_closed</span>
+        Tilføj lukning
     </a>
   </div>
 
@@ -27,6 +27,11 @@ Tænd- / Sluk-tidsplan: Undtagelser
       {% for event in wake_change_events_list %}
         <li class="{% ifequal event selected_event %}active{% endifequal %}">
           <a class="item-list-link" id="{{event.id}}" href="{% url 'wake_change_event' site.uid event.id %}">
+            {% if event.type == "ALTERED_HOURS" %}
+              <span class="material-icons">change_circle</span>
+            {% else %}
+              <span class="material-icons">vertical_shades_closed</span>
+            {% endif %}
             {{event}}
           </a>
         </li>

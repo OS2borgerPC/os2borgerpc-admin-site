@@ -46,3 +46,6 @@ article {
   min-width: 480px;
 }
 
+tr {
+  border-top: 0!important;
+}
