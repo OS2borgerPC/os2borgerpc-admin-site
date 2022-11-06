@@ -66,8 +66,6 @@ from system.forms import (
     SiteForm,
     UserForm,
     WakeChangeEventForm,
-    WakeChangeEventAlteredHoursForm,
-    WakeChangeEventClosedForm,
     WakePlanForm,
 )
 
@@ -1721,40 +1719,6 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
 class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
     model = WakeChangeEvent
     form_class = WakeChangeEventForm
-    slug_field = "site_uid"
-    template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
-
-    def form_valid(self, form):
-        # The form does not allow setting the site yourself, so we insert that here
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        if not site.feature_permission.filter(uid="wake_plan"):
-            raise PermissionDenied
-        self.object = form.save(commit=False)
-        self.object.site = site
-
-        return super(WakeChangeEventCreate, self).form_valid(form)
-
-
-class WakeChangeEventCreateAlteredHours(WakeChangeEventBaseMixin, CreateView):
-    model = WakeChangeEvent
-    form_class = WakeChangeEventAlteredHoursForm
-    slug_field = "site_uid"
-    template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
-
-    def form_valid(self, form):
-        # The form does not allow setting the site yourself, so we insert that here
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        if not site.feature_permission.filter(uid="wake_plan"):
-            raise PermissionDenied
-        self.object = form.save(commit=False)
-        self.object.site = site
-
-        return super(WakeChangeEventCreate, self).form_valid(form)
-
-
-class WakeChangeEventCreateClosed(WakeChangeEventBaseMixin, CreateView):
-    model = WakeChangeEvent
-    form_class = WakeChangeEventClosedForm
     slug_field = "site_uid"
     template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
 
