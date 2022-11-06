@@ -25,8 +25,7 @@ from system.views import (
     WakePlanDelete,
     WakePlanRedirect,
     WakePlanUpdate,
-    WakeChangeEventCreateAlteredHours,
-    WakeChangeEventCreateClosed,
+    WakeChangeEventCreate,
     WakeChangeEventDelete,
     WakeChangeEventRedirect,
     WakeChangeEventUpdate,
@@ -211,12 +210,12 @@ urlpatterns = [
     # This URL needs to be above WakeChangeEventUpdate, as otherwise that regex tries to parse the word "new" as an ID
     url(
         r"^site/(?P<site_uid>[^/]+)/wake_change_event/new_altered_hours/$",
-        WakeChangeEventCreateAlteredHours.as_view(),
+        WakeChangeEventCreate.as_view(),
         name="wake_change_event_new_altered_hours",
     ),
     url(
         r"^site/(?P<site_uid>[^/]+)/wake_change_event/new_closed/$",
-        WakeChangeEventCreateClosed.as_view(),
+        WakeChangeEventCreate.as_view(),
         name="wake_change_event_new_closed",
     ),
     url(

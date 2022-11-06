@@ -32,21 +32,6 @@ function week_day_on(el, on, wake_change_event=false) {
   }
 }
 
-// Handling altered hours or closed switches
-function handle_click_altered_hours_or_closed(event) {  // eller deviations_from_regular_week_plan
-  const tg = event.target
-
-  if (tg.type == "checkbox") {
-
-    if (tg.checked) {
-      week_day_on(tg, true, true)
-    }
-    else if (!tg.checked) {
-      week_day_on(tg, false, true)
-    }
-  }
-}
-
 // Handling the week plan switches
 // Den her håndterer da også undtagelsernes switches/toggles
 function handle_click(event) {
@@ -64,8 +49,6 @@ function handle_click(event) {
 }
 
 week_plan.addEventListener("click", handle_click)
-//wake_change_events.addEventListener("click", handle_click)
-wake_change_events.addEventListener("click", handle_click_altered_hours_or_closed)
 
 // By default all dates are seen as "on" - this toggles those off to off for the week plan
 for (let day of week_plan.tBodies[0].children) {
@@ -76,7 +59,6 @@ for (let day of week_plan.tBodies[0].children) {
   else {
     week_day_on(checkbox, true)
   }
-
 }
 
 // Do the same for events
@@ -90,3 +72,5 @@ for (let event of wake_change_events.tBodies[0].children) {
     week_day_on(checkbox, true, true)
   }
 }
+
+# TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
