@@ -24,10 +24,10 @@ function week_day_on(el, on, wake_change_event=false) {
   }
   else {
     start_time.style.visibility = "hidden"
-    start_time_input.setAttribute('required',false)
+    start_time_input.removeAttribute('required')
     separator.style.visibility = "hidden"
     end_time.style.visibility = "hidden"
-    end_time_input.setAttribute('required',false)
+    end_time_input.removeAttribute('required')
     on_off_text.innerText = "Slukket"
   }
 }
