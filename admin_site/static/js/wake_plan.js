@@ -73,4 +73,4 @@ for (let event of wake_change_events.tBodies[0].children) {
   }
 }
 
-# TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
+// TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
