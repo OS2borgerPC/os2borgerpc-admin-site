@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block specific_content %}
-  <div class="container-fluid main sublevelmain">
+  <div class="container-fluid main sublevelmain" id="wake-change-plan">
     <h2 class="divideheader">
 
           {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
@@ -40,8 +40,8 @@
           {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
               <tr>
                 <td>Tidspunkt</td>
-                <td> {{form.time_start}}—</td>
-                <td> {{form.time_end}}</td>
+                <td class="wake-change-event-time"> {{form.time_start}}—</td>
+                <td class="wake-change-event-time"> {{form.time_end}}</td>
               </tr>
           {% endif %}
             </tbody>
