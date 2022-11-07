@@ -1,4 +1,3 @@
-const week_plan = document.getElementById("week-plan")
 const wake_change_events = document.getElementById("wake-change-events")
 const week_plan_offset = 0
 const wake_change_events_offset = 2
@@ -48,17 +47,11 @@ function handle_click(event) {
   }
 }
 
-week_plan.addEventListener("click", handle_click)
-
-// By default all dates are seen as "on" - this toggles those off to off for the week plan
-for (let day of week_plan.tBodies[0].children) {
-  const checkbox = day.getElementsByClassName('checkbox')[0]
-  if (! checkbox.checked) {
-    week_day_on(checkbox, false)
-  }
-  else {
-    week_day_on(checkbox, true)
-  }
-}
 
 // TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
+
+// Set all times required for altered hours wake change events
+const times = document.getElementsByClassName("wake-change-event-time")
+for (let time of times) {
+  time.firstElementChild.setAttribute('required',true)
+}
