@@ -3,20 +3,33 @@
 {% block admin_groups_active %}class="active"{% endblock %}
 
 {% block specific_content %}
-  <h1>Tænd/Sluk tidsplaner</h1>
+  <h1>Strømbesparende funktioner</h1>
+  <p>
+    De strømbesparende funktioner består af et dvale-script og tænd/sluk-tidsplaner.
+    Disse funktioner kan kun anvendes af de kunder, som har tilkøbt sig adgang.
+    Alle kunder, som var med til at finansiere funktionerne, har automatisk adgang.
+    Andre kunder kan kontakte Magenta, hvis de er interesserede.
+  </p>
+  <h2>Dvale-script</h2>
+  <p>
+    (Ikke tilgængeligt på nuværende tidspunkt)
+    Dvale-scriptet kan bruges til at indstille computere til at gå i dvale efter
+    et antal minutters inaktivitet. Scriptet tager to argumenter: hvorvidt funktionen
+    skal aktiveres, og antallet af minutter med inaktivitet før maskinen går i dvale.
+    Scriptet logger automatisk borgeren ud, inden maskinen går i dvale.
+  </p>
+  <p>
+    Bemærk at USB-overvågning ikke kan være aktiv, mens en computer er i dvale.
+  </p>
+  <h2>Tænd/Sluk tidsplaner</h2>
   <p>
     En Tænd/Sluk tidsplan er et redskab til at planlægge og administrere
     tænd- og sluk-tidspunkter for computerne i en eller flere grupper.
   </p>
   <p>
     Brugen af Tænd/Sluk tidsplaner overflødiggør scriptsene
-    <a href="{% url 'script' 'magenta' 12 %}">OS2BorgerPC - Luk ned dagligt</a> og
-    <a href="{% url 'script' 'magenta' 422 %}">OS2BorgerPC - Luk ned og vågn op dagligt</a>.
-  </p>
-  <p>
-    Tænd/Sluk tidsplaner kan kun anvendes af de kunder, som har tilkøbt sig adgang.
-    Alle kunder, som var med til at finansiere redskabet, har automatisk adgang.
-    Andre kunder kan kontakte Magenta, hvis de er interesserede.
+    <a>OS2BorgerPC - Luk ned dagligt</a> og
+    <a>OS2BorgerPC - Luk ned og vågn op dagligt</a>.
   </p>
   <p>
     Når man klikker på Tænd/Sluk tidsplan i venstremenuen, vil man til højre for
@@ -29,16 +42,28 @@
     oprettelse af tidsplaner.
   </p>
   <p>
-    Når man klikker ind på en tidsplan, får man mulighed for at redigere følgende:
+    Som standard når man klikker sig ind på en tidsplan, vil man få vist
+    tidsplanens indstillinger samt hvilke undtagelser og grupper, der er knyttet til tidsplanen.
+    Her kan man ændre tidsplanens navn, status, dvaletilstand og indstillinger
+    for den faste ugeplan, samt tilføje/fjerne grupper eller undtagelser
+    fra tidsplanen. Ændringer foretaget på siden træder ikke i kraft, før du
+    klikker på "Gem ændringer"-knappen i bunden af skærmbilledet.
+  </p>
+  <p>
+    Hvis man trykker på "Håndter undtagelser" omdirigeres man til en ny side, hvor man kan oprette nye undtagelser
+    og redigere eller slette eksisterende undtagelser.
+  </p>
+  <p>
+    De forskellige redigeringsmuligheder beskrives nærmere under disse punkter:
     {% include 'documentation/wake_plans/__submenu__.html' %}
   </p>
   <p>
     Hvis man ønsker at oprette en ny tidsplan, skal man klikke på "tilføj ny
     tænd/sluk tidsplan" oven over listen med tidsplaner. Dette åbner et interface, hvor
-    man skal udfylde navn for tidsplanen og har mulighed for at redigere i indstillingerne
-    eller indmelde grupper. Når man klikker på
+    man skal udfylde navn for tidsplanen og har mulighed for at redigere i indstillingerne,
+    tilføje undtagelser eller indmelde grupper. Når man klikker på
     gem, vil man blive viderestillet til redigeringssiden for den nyoprettede
-    tidsplan, hvor man kan fortsætte med at ændre i indstillingerne eller indmelde grupper.
-    Hvis tidsplanen er sat til "aktiv," vil den også tage effekt, så snart man klikker på gem.
+    tidsplan, hvor man kan fortsætte med at ændre i indstillingerne, tilføje undtagelser eller indmelde grupper.
+    Hvis tidsplanen er sat til "aktiv," vil den også tage effekt, når man klikker på gem.
   </p>
 {% endblock %}

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
@@ -805,6 +805,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
         context["is_hidden"] = self.script.is_hidden
+        context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         if not request_user.is_superuser:
@@ -1267,7 +1268,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
         # Add the selected wake change events
         # The string currently set to "exceptions" must match the submit name
         # chosen for the pick list used to add wake change events
-        exception_ids = form["exceptions"].value()
+        exception_ids = form["wake_change_events"].value()
         exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
         self.object.wake_change_events.set(exceptions_selected)
 
@@ -1349,6 +1350,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         groups_pre = set(self.object.groups.all())
         plan_pre = self.get_object()
         enabled_pre = plan_pre.enabled
+        events_pre = set(self.object.wake_change_events.all())
 
         with transaction.atomic():
             # Groups that were selected
@@ -1408,13 +1410,13 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                     )
 
                 # If the wake plan settings have changed, update the wake plan on all members
-                if self.check_settings_updates(plan_pre):
+                if self.check_settings_updates(plan_pre, events_pre):
                     pcs_to_be_set = pcs_all
 
                 # Set the wake plan on the pcs that need to have it updated
                 if pcs_to_be_set:
                     # Get the arguments for setting the wake plan on a pc
-                    args_set = self.get_script_arguments()
+                    args_set = self.object.get_script_arguments()
                     run_wake_plan_script(
                         self.object.site,
                         pcs_to_be_set,
@@ -1436,7 +1438,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             elif not enabled_pre and enabled_post:
                 if pcs_all:
                     # Get the arguments for setting the wake plan on a pc
-                    args_set = self.get_script_arguments()
+                    args_set = self.object.get_script_arguments()
                     run_wake_plan_script(
                         self.object.site,
                         pcs_all,
@@ -1484,65 +1486,64 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
     def form_invalid(self, form):
         return super(WakePlanUpdate, self).form_invalid(form)
 
-    # Flyt denne funktion til models, når vi kender dens endelige udseende
-    # Så behøver den ikke at være defineret to steder
-    def get_script_arguments(self):
-        args = []
-        args.append(self.get_script_argument(self.object.monday_on))
-        args.append(self.get_script_argument(self.object.monday_off))
-        args.append(self.get_script_argument(self.object.tuesday_on))
-        args.append(self.get_script_argument(self.object.tuesday_off))
-        args.append(self.get_script_argument(self.object.wednesday_on))
-        args.append(self.get_script_argument(self.object.wednesday_off))
-        args.append(self.get_script_argument(self.object.thursday_on))
-        args.append(self.get_script_argument(self.object.thursday_off))
-        args.append(self.get_script_argument(self.object.friday_on))
-        args.append(self.get_script_argument(self.object.friday_off))
-        args.append(self.get_script_argument(self.object.saturday_on))
-        args.append(self.get_script_argument(self.object.saturday_off))
-        args.append(self.get_script_argument(self.object.sunday_on))
-        args.append(self.get_script_argument(self.object.sunday_off))
-
-        return args[:4]
-
-    def get_script_argument(self, on_or_off_time):
-        if on_or_off_time is None:
-            return "None"
-        else:
-            return f"{on_or_off_time.hour}:{on_or_off_time.minute}"
-
-    def check_settings_updates(self, plan_pre):
+    def check_settings_updates(self, plan_pre, events_pre):
         """Helper function used to check if the plan settings have changed."""
         plan_post = self.object
-        if plan_pre.sleep_state != plan_post.sleep_state:
+        if (
+            plan_pre.sleep_state != plan_post.sleep_state
+            or plan_pre.monday_open != plan_post.monday_open
+            or (plan_post.monday_open and plan_pre.monday_on != plan_post.monday_on)
+            or (plan_post.monday_open and plan_pre.monday_off != plan_post.monday_off)
+        ):
             return True
-        elif plan_pre.monday_on != plan_post.monday_on:
+        elif plan_post.monday_open and plan_pre.monday_off != plan_post.monday_off:
             return True
-        elif plan_pre.monday_off != plan_post.monday_off:
+        elif plan_pre.tuesday_open != plan_post.tuesday_open:
             return True
-        elif plan_pre.tuesday_on != plan_post.tuesday_on:
+        elif plan_post.tuesday_open and plan_pre.tuesday_on != plan_post.tuesday_on:
             return True
-        elif plan_pre.tuesday_off != plan_post.tuesday_off:
+        elif plan_post.tuesday_open and plan_pre.tuesday_off != plan_post.tuesday_off:
             return True
-        elif plan_pre.wednesday_on != plan_post.wednesday_on:
+        elif plan_pre.wednesday_open != plan_post.wednesday_open:
             return True
-        elif plan_pre.wednesday_off != plan_post.wednesday_off:
+        elif (
+            plan_post.wednesday_open and plan_pre.wednesday_on != plan_post.wednesday_on
+        ):
             return True
-        elif plan_pre.thursday_on != plan_post.thursday_on:
+        elif (
+            plan_post.wednesday_open
+            and plan_pre.wednesday_off != plan_post.wednesday_off
+        ):
             return True
-        elif plan_pre.thursday_off != plan_post.thursday_off:
+        elif plan_pre.thursday_open != plan_post.thursday_open:
             return True
-        elif plan_pre.friday_on != plan_post.friday_on:
+        elif plan_post.thursday_open and plan_pre.thursday_on != plan_post.thursday_on:
             return True
-        elif plan_pre.friday_off != plan_post.friday_off:
+        elif (
+            plan_post.thursday_open and plan_pre.thursday_off != plan_post.thursday_off
+        ):
             return True
-        elif plan_pre.saturday_on != plan_post.saturday_on:
+        elif plan_pre.friday_open != plan_post.friday_open:
             return True
-        elif plan_pre.saturday_off != plan_post.saturday_off:
+        elif plan_post.friday_open and plan_pre.friday_on != plan_post.friday_on:
             return True
-        elif plan_pre.sunday_on != plan_post.sunday_on:
+        elif plan_post.friday_open and plan_pre.friday_off != plan_post.friday_off:
             return True
-        elif plan_pre.sunday_off != plan_post.sunday_off:
+        elif plan_pre.saturday_open != plan_post.saturday_open:
+            return True
+        elif plan_post.saturday_open and plan_pre.saturday_on != plan_post.saturday_on:
+            return True
+        elif (
+            plan_post.saturday_open and plan_pre.saturday_off != plan_post.saturday_off
+        ):
+            return True
+        elif plan_pre.sunday_open != plan_post.sunday_open:
+            return True
+        elif plan_post.sunday_open and plan_pre.sunday_on != plan_post.sunday_on:
+            return True
+        elif plan_post.sunday_open and plan_pre.sunday_off != plan_post.sunday_off:
+            return True
+        elif events_pre != set(plan_post.wake_change_events.all()):
             return True
         else:
             return False
@@ -1646,7 +1647,7 @@ class WakeChangeEventRedirect(RedirectView):
             wake_change_event = wake_change_events.first()
             return wake_change_event.get_absolute_url()
         else:
-            return reverse("wake_change_event_new", args=[site.uid])
+            return reverse("wake_change_event_new_altered_hours", args=[site.uid])
 
 
 class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
@@ -1681,16 +1682,17 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                     pcs_to_be_set_pk = list(
                         set(plan.groups.all().values_list("pcs", flat=True))
                     )
-                    pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
-                    # TODO Fix the way the arguments are retrieved
-                    args_set = [1, 2, 3, 4]
-                    run_wake_plan_script(
-                        self.object.site,
-                        pcs_to_be_set,
-                        args_set,
-                        self.request.user,
-                        type="set",
-                    )
+                    if pcs_to_be_set_pk:
+                        pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
+                        args_set = plan.get_script_arguments()
+
+                        run_wake_plan_script(
+                            self.object.site,
+                            pcs_to_be_set,
+                            args_set,
+                            self.request.user,
+                            type="set",
+                        )
 
         return response
 
@@ -1746,6 +1748,28 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("wake_change_events", args=[self.kwargs["site_uid"]])
+
+    def delete(self, request, *args, **kwargs):
+
+        # Update all pcs belonging to active plans that used this event
+        event = self.get_object()
+        plans = set(event.wake_week_plans.all())
+
+        response = super(WakeChangeEventDelete, self).delete(request, *args, **kwargs)
+
+        for plan in plans:
+            pcs_in_groups = PC.objects.none()
+            groups = plan.groups.all()
+            if plan.enabled and groups:
+                for g in groups:
+                    pcs_in_groups = pcs_in_groups.union(g.pcs.all())
+                if pcs_in_groups:
+                    args_set = plan.get_script_arguments()
+                    run_wake_plan_script(
+                        plan.site, pcs_in_groups, args_set, request.user, type="set"
+                    )
+
+        return response
 
 
 class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
@@ -2133,8 +2157,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                             if member not in pcs_in_other_wake_plan_groups:
                                 new_wake_plan_members.append(member.pk)
                         if new_wake_plan_members:
-                            # TODO Fix the way the arguments are retrieved
-                            args_set = ["1", "2", "3", "4"]
+                            args_set = self.object.wake_week_plan.get_script_arguments()
                             pcs_to_be_set = PC.objects.filter(
                                 pk__in=new_wake_plan_members
                             )
