@@ -1102,6 +1102,7 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
     def get_success_url(self):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
 
+
 # TODO: Rename all of these to WakeWeekPlan* now they no longer handle WakeChangeEvents.
 class WakePlanRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
