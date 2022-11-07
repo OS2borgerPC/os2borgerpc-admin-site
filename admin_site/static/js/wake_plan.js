@@ -1,16 +1,16 @@
+const week_plan = document.getElementById("week-plan")
 const wake_change_events = document.getElementById("wake-change-events")
 const week_plan_offset = 0
 const wake_change_events_offset = 2
 
-function week_day_on(el, on, wake_change_event=false) {
-  const offset = wake_change_event? wake_change_events_offset : 0
+function week_day_on(el, on) {
 
-  const start_time = el.parentElement.parentElement.children[3 + offset]
-  const start_time_input = el.parentElement.parentElement.children[3 + offset].firstElementChild
-  const separator = el.parentElement.parentElement.children[4 + offset]
-  const end_time = el.parentElement.parentElement.children[5 + offset]
-  const end_time_input = el.parentElement.parentElement.children[5 + offset].firstElementChild
-  const on_off_text = el.parentElement.parentElement.children[2 + offset].firstElementChild
+  const start_time = el.parentElement.parentElement.children[3]
+  const start_time_input = el.parentElement.parentElement.children[3].firstElementChild
+  const separator = el.parentElement.parentElement.children[4]
+  const end_time = el.parentElement.parentElement.children[5]
+  const end_time_input = el.parentElement.parentElement.children[5].firstElementChild
+  const on_off_text = el.parentElement.parentElement.children[2].firstElementChild
 
   if (on) {
     start_time.style.visibility = "visible"
@@ -47,11 +47,30 @@ function handle_click(event) {
   }
 }
 
+// Week plan page
+if (week_plan) {
+  week_plan.addEventListener("click", handle_click)
+
+  // By default all dates are seen as "on" - this toggles those off to off for the week plan
+  for (let day of week_plan.tBodies[0].children) {
+    const checkbox = day.getElementsByClassName('checkbox')[0]
+    if (! checkbox.checked) {
+      week_day_on(checkbox, false)
+    }
+    else {
+      week_day_on(checkbox, true)
+    }
+  }
+}
 
 // TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
+//
 
-// Set all times required for altered hours wake change events
-const times = document.getElementsByClassName("wake-change-event-time")
-for (let time of times) {
-  time.firstElementChild.setAttribute('required',true)
+if (document.getElementById("wake-change-plan")) {
+
+  // Set all times required for altered hours wake change events
+  const times = document.getElementsByClassName("wake-change-event-time")
+  for (let time of times) {
+    time.firstElementChild.setAttribute('required',true)
+  }
 }
