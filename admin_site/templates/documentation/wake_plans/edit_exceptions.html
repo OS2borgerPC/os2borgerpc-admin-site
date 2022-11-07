@@ -1,0 +1,43 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Håndter undtagelser</h1>
+  <p>
+    På fanen til håndtering af tidsplans-undtagelser vil man til højre for
+    venstremenuen få vist en liste af tidsplans-undtagelser for det site, man er under. Man
+    kan klikke på navnet for den enkelte undtagelse for at redigere undtagelsen.
+  </p>
+  <p>
+    Der findes to typer af undtagelser: Ændrede åbningstider og lukkedage.
+    De to typer har forskellige ikoner i listen over undtagelser. En undtagelse
+    med ændrede åbningstider ændrer tænd- og sluk-tidspunkterne for den valgte dato
+    eller periode. Ikonet er en åben dør. En undtagelse med lukkedage sætter de
+    tilknyttede maskiner til at være konstant slukkede den valgte dato eller periode.
+    Ikonet er en lukket dør.
+  </p>
+  <p>
+    Til højre vises redigeringsinterfacet for den valgte undtagelse. Hvis ikke der
+    er oprettet nogen undtagelser for det site, man er under, vises interfacet til
+    oprettelse af en undtagelse med ændrede åbningstider.
+  </p>
+  <p>
+    Som standard når man klikker sig ind på en undtagelse, vil man få vist
+    undtagelsens indstillinger. Her kan man ændre undtagelsens navn og den periode, hvor den er gældende.
+    En enkelt dato vælges ved at vælge samme fra og til dato. Hvis undtagelsen er af typen
+    ændrede åbningstider, vil man også kunne ændre tænd- og sluk-tidspunkterne, der er gældende
+    for undtagelsen. Ændringer foretaget på siden træder ikke i kraft, før du
+    klikker på "Gem ændringer"-knappen i bunden af skærmbilledet.
+  </p>
+  <p>
+    Bemærk at hvis man ændrer indstillingerne for en undtagelse, der benyttes af en flere aktive
+    tidsplaner, vil tidsplanerne også blive opdateret, når man trykker på "Gem ændringer."
+  </p>
+  <p>
+    Hvis man ønsker at oprette en ny undtagelse, skal man klikke på "tilføj ændrede åbningstider"
+    eller "tilføj lukning" oven over listen med tidsplaner. Dette åbner et interface, hvor
+    man skal udfylde navn og indstillinger for den valgte type undtagelse. Når man klikker på
+    gem, vil man blive viderestillet til redigeringssiden for den nyoprettede
+    undtagelse, hvor man kan fortsætte med at ændre i indstillingerne.
+  </p>
+
+{% endblock %}

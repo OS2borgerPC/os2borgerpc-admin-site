@@ -355,6 +355,81 @@ class WakeWeekPlan(models.Model):
     def get_absolute_url(self):
         return reverse("wake_plan", args=(self.site.uid, self.id))
 
+    def get_script_arguments(self):
+        args = []
+        if self.monday_open:
+            args.append(self.get_script_argument(self.monday_on))
+            args.append(self.get_script_argument(self.monday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.tuesday_open:
+            args.append(self.get_script_argument(self.tuesday_on))
+            args.append(self.get_script_argument(self.tuesday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.wednesday_open:
+            args.append(self.get_script_argument(self.wednesday_on))
+            args.append(self.get_script_argument(self.wednesday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.thursday_open:
+            args.append(self.get_script_argument(self.thursday_on))
+            args.append(self.get_script_argument(self.thursday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.friday_open:
+            args.append(self.get_script_argument(self.friday_on))
+            args.append(self.get_script_argument(self.friday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.saturday_open:
+            args.append(self.get_script_argument(self.saturday_on))
+            args.append(self.get_script_argument(self.saturday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.sunday_open:
+            args.append(self.get_script_argument(self.sunday_on))
+            args.append(self.get_script_argument(self.sunday_off))
+        else:
+            args.extend(["None", "None"])
+        custom_string = ""
+        today = datetime.date.today()
+        for event in self.wake_change_events.all():
+            if event.type == "CLOSED" and event.date_end >= today:
+                custom_string += (
+                    ";".join(
+                        [
+                            event.date_start.strftime("%d-%m-%Y"),
+                            event.date_end.strftime("%d-%m-%Y"),
+                            "None",
+                            "None",
+                        ]
+                    )
+                    + "|"
+                )
+            elif event.type == "ALTERED_HOURS" and event.date_end >= today:
+                custom_string += (
+                    ";".join(
+                        [
+                            event.date_start.strftime("%d-%m-%Y"),
+                            event.date_end.strftime("%d-%m-%Y"),
+                            self.get_script_argument(event.time_start),
+                            self.get_script_argument(event.time_end),
+                        ]
+                    )
+                    + "|"
+                )
+        args.append(custom_string[:-1])
+        args.append(self.sleep_state)
+
+        return args
+
+    def get_script_argument(self, on_or_off_time):
+        if on_or_off_time is None:
+            return "None"
+        else:
+            return f"{on_or_off_time.hour}:{on_or_off_time.minute}"
+
     def __str__(self):
         return self.name
 

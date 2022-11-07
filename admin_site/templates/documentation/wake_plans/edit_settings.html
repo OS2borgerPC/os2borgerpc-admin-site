@@ -3,19 +3,15 @@
 {% block specific_content %}
   <h1>Tidsplans-redigering: Indstillinger</h1>
   <p>
-    Som standard når du klikker dig ind på en tidsplan, vil du få vist
-    tidsplanens indstillinger, og hvilke grupper der er med i tidsplanen. Her kan du
-    ændre tidsplanens navn, status, dvaletilstand og indstillinger
-    for den faste ugeplan eller undtagelser, samt tilføje eller fjerne grupper
-    fra tidsplanen. Ændringer foretaget på siden træder ikke i kraft, før du
-    klikker på "Gem ændringer"-knappen i bunden af skærmbilledet.
+    Redigeringsinterfacet for en tidsplan viser tidsplanens indstillinger til venstre i skærmbilledet,
+    og en liste over undtagelser, der er knyttet til tidsplanen til højre i skærmbilledet.
   </p>
-  <h3>Status</h3>
+  <h2>Status</h2>
   <p>
     En tidsplan kan være aktiv eller inaktiv. Den har kun effekt på de indmeldte grupper,
     hvis den er aktiv.
   </p>
-  <h3>Dvaletilstand</h3>
+  <h2>Dvaletilstand</h2>
   <p>
     Den valgte dvaletilstand bestemmer, hvilken tilstand medlemmerne af tidsplanen lukker ned i,
     når de slukker efter tidsplanen. I rækkefølge fra mindste til største strømbesparing er
@@ -23,7 +19,7 @@
     dvaletilstanden off for størst mulig strømbesparing, men det er ikke alt hardware,
     der understøtter denne dvaletilstand.
   </p>
-  <h3>Indstillinger: Ugeplan</h3>
+  <h2>Indstillinger: Ugeplan</h2>
   <p>
     I ugeplanen kan man vælge tænd- og sluk-tidspunkter for hver enkelt ugedag, eller om der
     skal være slukket hele den pågældende dag. Indstillingerne i ugeplanen er som udgangspunkt
@@ -32,11 +28,12 @@
   </p>
   <h3>Indstillinger: Lukkedage og undtagelser</h3>
   <p>
-    Under punktet "Lukkedage og undtagelser" kan man oprette og redigere undtagelser til
+    Under punktet "Lukkedage og undtagelser" kan man tilføje eller fjerne undtagelser til
     ugeplanen for specifikke datoer eller perioder.
-    Disse undtagelser har altid præcedens for den generelle ugeplan.
+    Hvis der findes en undtagelse for en given dato, vil undtagelsens indstillinger benyttes i stedet
+    for ugeplanens indstillinger.
     En undtagelse kan være en ændring i tænd- og sluk-tidspunkterne eller en konstant nedlukning
     for en specifik dato eller periode.
-    Der kan oprettes et vilkårligt antal undtagelser.
+    Undtagelser oprettes, slettes og redigeres i den fane som åbnes, når man trykker på "Håndter undtagelser."
   </p>
 {% endblock %}
