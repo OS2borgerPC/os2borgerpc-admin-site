@@ -36,6 +36,11 @@ Tænd- / Sluk-tidsplan: Undtagelser
             {% endif %}
             {{event}}
           </a>
+          {% ifequal event selected_event %}
+            <a class="item-list-deletable material-icons"href="{% url 'wake_change_event_delete' site.uid event.id %}" title="Slet undtagelse">
+              clear
+            </a>
+          {% endifequal %}
         </li>
       {% endfor %}
   </ul>
