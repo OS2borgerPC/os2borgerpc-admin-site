@@ -1354,9 +1354,9 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             groups_selected = set(PCGroup.objects.filter(id__in=group_ids))
 
             # Wake change events that were selected
-            # The string currently set to "exceptions" must match the submit name
+            # The string currently set to "wake_change_events" must match the form submit name
             # chosen for the pick list used to add wake change events
-            exception_ids = f.getlist("exceptions", [])
+            exception_ids = f.getlist("wake_change_events", [])
             exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
 
             response = super(WakePlanUpdate, self).form_valid(form)
