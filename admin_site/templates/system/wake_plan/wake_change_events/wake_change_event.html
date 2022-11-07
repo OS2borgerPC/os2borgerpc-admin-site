@@ -47,11 +47,19 @@
             </tbody>
           </table>
 
+          {# Insert the wake change "type" based on the URL for Create or from the current value for Update #}
+          {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
+            <input type="hidden" name="type" value="ALTERED_HOURS"/>
+          {% else %}
+            <input type="hidden" name="type" value="CLOSED"/>
+          {% endif %}
+
+
           <fieldset class="mt-3">
             <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
             <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
           </fieldset>
-        
+
       </form>
 
   </div>

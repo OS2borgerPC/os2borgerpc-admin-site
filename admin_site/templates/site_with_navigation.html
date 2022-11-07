@@ -15,7 +15,7 @@ detailpage
 {% block globalnav %}
 
   <nav id="left-menu" class="nav nav-pills utils-global">
-    
+
     {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
       <a href="/sites/" class="nav-link link-light" style="display: flex; flex-flow: row nowrap; align-items: center;">
         <span class="material-icons">arrow_back</span>
@@ -38,7 +38,7 @@ detailpage
 
     <hr>
     <h2 class="text-light">Sikkerhed</h2>
-    
+
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
       <span class="material-icons">whatshot</span>
@@ -47,33 +47,33 @@ detailpage
         <span class="float-end badge badge-danger sec-warn-blink">{{ sec_events }}</span>
       {% endif %}
     </a>
-  
+
     {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
     <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
       <span class="material-icons">gpp_maybe</span>
       Sikkerhedsregler
     </a>
-    
+
     {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
     <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
-      <span class="material-icons">code</span> 
+      <span class="material-icons">code</span>
       Sikkerhedsscripts
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}
     <a class="nav-link link-light {{ current_url_two_factor  }}" href="{% url 'two_factor' slug=site.url %}">
-      <span class="material-icons">pin</span> 
+      <span class="material-icons">pin</span>
       Totrinsbekræftelse
     </a>
-    
+
     <hr>
     <h2 class="text-light">Organisering</h2>
-  
+
     {% set_css_class_active request.resolver_match.url_name "computer" as current_url_computers %}
     <a class="nav-link link-light {{ current_url_computers  }}" href="{% url 'computers' slug=site.url %}">
       <span class="material-icons">computer</span> Computere
     </a>
-  
+
     {% set_css_class_active request.resolver_match.url_name "group" as current_url_groups %}
     <a class="nav-link link-light {{current_url_groups}}" href="{% url 'groups' slug=site.url %}">
       <span class="material-icons">queue</span> Grupper
@@ -83,25 +83,25 @@ detailpage
     <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' site_uid=site.url %}">
       <span class="material-icons">bolt</span> Tænd/Sluk tidsplan
     </a>
-    
+
     {% set_css_class_active request.resolver_match.url_name "settings" as current_url_site_settings %}
     <a class="nav-link link-light {{ current_url_site_settings  }}" href="{% url 'settings' slug=site.url %}">
       <span class="material-icons">settings</span> Site-indstillinger
     </a>
-    
+
     <hr>
     <h2 class="text-light">Scripting</h2>
-    
+
     {% set_css_class_active request.resolver_match.url_name "job" as current_url_jobs %}
     <a class="nav-link link-light {{ current_url_jobs }}" href="{% url 'jobs' slug=site.url %}">
       <span class="material-icons">task</span> Jobs
     </a>
-  
+
     {% set_css_class_active request.resolver_match.url_name "script" as current_url_scripts %}
     <a class="nav-link link-light {{ current_url_scripts }}" href="{% url 'scripts' slug=site.url %}">
       <span class="material-icons">code</span> Scripts
     </a>
-  
+
     <hr>
     <h2 class="text-light">Brugere & Versioner</h2>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
@@ -188,7 +188,7 @@ detailpage
       <span class='material-icons'>help_outline</span>
       Læs dokumentation ...
     </a>
-    
+
   </nav>
 
 {% endblock %}

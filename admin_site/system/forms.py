@@ -21,7 +21,7 @@ from account.models import SiteMembership
 time_format = forms.TimeInput(
     attrs={"type": "time", "max": "23:59", "class": "p-2"}, format="%H:%M"
 )
-date_format = forms.DateInput(attrs={"type": "date", "class": "p-2"})
+date_format = forms.DateInput(attrs={"type": "date", "class": "p-2"}, format="%Y-%m-%d")
 
 
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
