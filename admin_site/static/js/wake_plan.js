@@ -61,16 +61,4 @@ for (let day of week_plan.tBodies[0].children) {
   }
 }
 
-// Do the same for events
-for (let event of wake_change_events.tBodies[0].children) {
-  const checkbox = event.getElementsByClassName('checkbox')[0]
-  if (! checkbox.checked) {
-    // TODO: This doesn't work currently:
-    week_day_on(checkbox, false, true)
-  }
-  else {
-    week_day_on(checkbox, true, true)
-  }
-}
-
 // TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
