@@ -8,9 +8,7 @@ Version 5.9.3, November 3, 2022
 - Changelog: Fix bug so refreshing after writing a comment doesn't re-post the comment
 - Jobs: Fix bug where "Status" was hidden at lower resolutions instead of "Batch"
 - Jobs: Don't show batches with empty names in the collapse
-- Jobs: Fix bath sorting
 - Jobs: Show batch name as part of the link column to save on space for lower resolutions
-- Jobs: Fix batch sorting
 - Add a justfile for a better/faster development workflow, containing common commands
 - Images: Fix the links to download older images so they work again
 - Views consistency, use RedirectView instead of redirecting in a function, more consistent template directory
@@ -36,11 +34,11 @@ Version 5.9.0, September 16, 2022
 
 New in this version:
 
-- Add News page where customers can be informed of new additions, 
+- Add News page where customers can be informed of new additions,
   changes or identified bugs in adminsite, images, client or scripts
 - You can now handle multiple security events at the same time
 - Fix bug where input parameters were set back to mandatory unintentionally
-- Fix bug where a date or an integer input parameters couldn't be set to 
+- Fix bug where a date or an integer input parameters couldn't be set to
   optional as it caused a server error
 - Globals scripts page is now loaded by default instead of local scripts
 
@@ -60,21 +58,21 @@ Version 5.8.0, August 25, 2022
 New in this version:
 
 - Make it possible for everyone to set script parameters as mandatory or not.
-- Fix a bug so mandatory isn't re-enabled every time "Gem ændringer" is 
+- Fix a bug so mandatory isn't re-enabled every time "Gem ændringer" is
   pressed
 - Update django dependencies
 - Small updates to the documentation
-- RPC: Accept empty 'started' and 'finished' from clients, so machines with 
+- RPC: Accept empty 'started' and 'finished' from clients, so machines with
   such jobs in their backlog check in correctly again
 - Minor improvements to /admin
 - Make JobSearch available only to users belonging to the site or superusers
 - Add "Check all" checkboxes when running scripts on PC's or PCGroups
-- Restrict "Site Users'" privileges: They can't add, edit, or delete other 
+- Restrict "Site Users'" privileges: They can't add, edit, or delete other
   users, or delete scripts any more
   Only "Site Admins" can do those now
-- PCGroups no longer have an UID but use ID instead. This also changes their 
+- PCGroups no longer have an UID but use ID instead. This also changes their
   URL's
-- Fix server error when in some cases you both add and delete scripts from 
+- Fix server error when in some cases you both add and delete scripts from
   a policy
 
 Version 5.7.0, July 12, 2022
@@ -93,7 +91,7 @@ Version 5.6.5, June 28, 2022
 
 New in this version:
 
-- Allow pushing security events with different date formats 
+- Allow pushing security events with different date formats
   (for example with or without seconds.)
 - Make associated scripts easily editable in Django Admin
 
@@ -137,7 +135,7 @@ Version 5.6.0, May 30, 2022
 
 New in this version:
 
-- Security events: The log will henceforth be empty: Indicate this 
+- Security events: The log will henceforth be empty: Indicate this
   better than a blank space
 - Security events: Show both occurred and received times
 - Security events: /admin/ improvements to security events
@@ -275,9 +273,9 @@ Version 4.3.2, June 30, 2021
 
 New in this version:
 
-- Fixed bug allowing users to be deleted even if they've 
+- Fixed bug allowing users to be deleted even if they've
   run a script or have been assigned a security issue.
-- Add reference in README to Read the Docs documentation 
+- Add reference in README to Read the Docs documentation
 
 Version 4.3.1, June 21, 2021
 ----------------------------
@@ -403,7 +401,7 @@ Bugfix release. Fixed in this version:
 - #27486: Policy scripts are now executed when a borgerpc is added to a group through the computer-view.
 - #30173: Scripts parameters are now being saved in the right order, to avoid integrityerror.
 - #30520: All documentation pages are accessible again.
-- #31066: Forward slashes in group names are now supported. 
+- #31066: Forward slashes in group names are now supported.
 
 
 Version 3.1.2.1, June 27, 2019
@@ -440,7 +438,7 @@ Version 3.1.0, February 25, 2019
 Version 3.0.1, January 16, 2019
 -------------------------------
 
-- json data exposing existing computers on a given site can now be reached from %domain%/%site_id%/computers/json/ 
+- json data exposing existing computers on a given site can now be reached from %domain%/%site_id%/computers/json/
 
 
 Version 3.0.0.3, Juli 02, 2018
@@ -497,10 +495,10 @@ Version 2.3.2, October 24, 2016
 -------------------------------
 
 - If no network connection, lock for jobmanager is released.
-- Documentation has been added, describing that the system is not 
-  showing security events until after the computer package list 
+- Documentation has been added, describing that the system is not
+  showing security events until after the computer package list
   has been uploaded.
-- Lokationsfeldt er blevet tilføjet til computerne, og dato format 
+- Lokationsfeldt er blevet tilføjet til computerne, og dato format
   ændret til dansk.
 
 
@@ -527,7 +525,7 @@ Version 2.3.0, June 30, 2016
   to wrong purposes.
 - Bug in date format is fixed.
 - System is upgraded to Django 1.8.
-- The version number for the bibos_client is bumped to 0.0.3.0. It now 
+- The version number for the bibos_client is bumped to 0.0.3.0. It now
   supports the security warning subsystem.
 
 
@@ -684,7 +682,7 @@ New in this version:
 Version 2.1.1, November 25, 2013
 --------------------------------
 
-New in this version: 
+New in this version:
 
 - File parameters were renamed when running scripts more than once, #9100.
 - User interface bug would hide group list if a group had many computers in it,
@@ -699,11 +697,11 @@ Version 2.1.0, October 11, 2013
 New in this version:
 
 A lot of bugs have been fixed, and the design has been thoroughly
-polished. 
+polished.
 
 A brief summary:
 
-- Spaces and other special characters are now allowed (though discouraged, 
+- Spaces and other special characters are now allowed (though discouraged,
   in the case of spaces *strongly* discouraged) in URLs.
 - JQuery is hosted locally and not loaded from another host.
 - "System" site is added to host system scripts.
