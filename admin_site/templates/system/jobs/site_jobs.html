@@ -61,6 +61,7 @@ Jobs
       <div id="batches" class="collapse collapse-content {% if selected_batch %}show{% endif %}">
         <ul class="item-list">
           {% for batch in batches %}
+          {% if batch.name != "" %}
           <li>
             <button 
               type="button" 
@@ -69,6 +70,7 @@ Jobs
               {{ batch.name }}
             </button>
           </li>
+          {% endif %}
           {% endfor %}
         </ul>
       </div>
@@ -126,18 +128,19 @@ Jobs
 {% endblock %}
 
 {% block specific_content %}
+  {# Note: This is the table body, and the table header is below. Please rewrite to HTMX in the future. #}
   <div class="template-container">
    <table class="table">
     <tbody id="jobitem-template">
       <tr>
-        <td><strong>#SCRIPT_LINK#</strong></td>
+        <td><strong>#SCRIPT_LINK# <span class="batch">#BATCH_NAME#</span></strong></td>
         <td>#USER_LINK#</td>
         <td>#CREATED#</td>
         <td>#STARTED#</td>
         <td>#FINISHED#</td>
         <td><span class="badge #LABEL#">#STATUS#</span></td>
         <td><strong>#PC_LINK#</strong></td>
-        <td>#BATCH_NAME#</td>
+        
         <td>#JOBINFOBUTTON#</td>
       </tr>
     </tbody>
@@ -156,8 +159,7 @@ Jobs
           {% include 'widgets/orderby_th_ajax.html' with label='Sluttet' action="BibOS.JobList.orderby('finished')" slug='finished' %}
           {% include 'widgets/orderby_th_ajax.html' with label='Status' action="BibOS.JobList.orderby('status')" slug='status' %}
           {% include 'widgets/orderby_th_ajax.html' with label='Computer' action="BibOS.JobList.orderby('pc__name')" slug='computer' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Batch' action="BibOS.JobList.orderby('batch__name')" slug='batch' %}
-          <th></th>
+          <th></th> {# Job-info-button #}
         </tr>
       </thead>
       <tbody id="job-list">

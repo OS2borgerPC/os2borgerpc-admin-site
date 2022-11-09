@@ -31,11 +31,14 @@ services:
             - 9999:9999
         stdin_open: true
         tty: true
+        container_name: bpc_admin_site_django
+        privileged: true
     db:
         image: magentaaps/postgres-os2bos:1-10.14-test
         env_file:
             - dev-environment/db.env
         volumes:
             - postgres-data:/var/lib/postgresql/data
+        container_name: bpc_admin_site_db
 volumes:
     postgres-data:

@@ -101,11 +101,11 @@ active
             Redigering af inputparametre medfører ikke, at et script køres på ny.<br/>
             Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-tilføjede Computere til Gruppen kører hele listen af scripts.
           </p>
-          {% include 'system/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
+          {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
 
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
-          {% include 'system/configlist/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
+          {% include 'system/configs/list.html' with entries=selected_group.configuration.entries.all cnf_id='group_configuration' %}
         </div>
 
       </div>
@@ -158,8 +158,8 @@ active
       </div>
     </div>
 
-    {% include 'system/configlist/templates.html' %}
-    {% include 'system/policy_list/templates.html' with policy_id='group_policies' %}
+    {% include 'system/configs/templates.html' %}
+    {% include 'system/pcgroups/policy_list/templates.html' with policy_id='group_policies' %}
 
   </div>
 {% endblock %}

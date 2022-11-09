@@ -44,32 +44,36 @@ OS2borgerPC: Nyheder
 
 <div id="changelog-container">
     <header>
-    <div id="filter-search">
-        <form action="">
-            <div class="input-group">
-                <span class="input-group-text bg-white">
-                    <span class="material-icons">search</span>
-                    <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="Søg...">
-                </span>
+        <div class="container">
+            <div class="row">
+              <div class="col-3">
+                <div id="filter-search">
+                    <form action="">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <span class="material-icons">search</span>
+                                <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="Søg...">
+                            </span>
+                        </div>
+                    </form>
+                </div>
+              </div>
+              <div class="col-9">
+                <div id="filter-tags">
+                    <strong id="tags-title" class="text-muted">Nyhedskategorier</strong>
+                <!-- Here the tag filters are defined. Each is a clickable button that filters the entries to show entries with that tag -->
+                    <form method="GET" class="mt-2">
+                        <div id="changelog-search-tag-selectors">
+                            <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="" id="Alle">Alle</a>
+                            {% for tag in tag_choices %}
+                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" id="{{ tag.pk }}" href="?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}">{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+              </div>
             </div>
-        </form>
-    </div>
-
-    <div id="filter-tags" class="ms-5">
-
-        <strong id="tags-title" class="text-muted">Nyhedskategorier</strong>
-
-       <!-- Here the tag filters are defined. Each is a clickable button that filters the entries to show entries with that tag -->
-        <form method="GET" class="mt-2">
-            <div id="changelog-search-tag-selectors">
-                <a href=""><button class="btn btn-md tag-filter-btn bg-primary text-white me-2" id="Alle" type="submit">Alle</button></a>
-                {% for tag in tag_choices %}
-                    <a href="?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}"><button class="btn btn-md
-                    tag-filter-btn bg-primary text-white {% if not forloop.last %}me-2{% endif %}" id="{{ tag.pk }}" type="button" name="{{ tag.id }}">{{ tag.name }}</button></a>
-                {% endfor %}
-            </div>
-        </form>
-    </div>
+          </div>
     </header>
 
     <div class="clearfix"></div>

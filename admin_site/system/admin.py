@@ -1,35 +1,33 @@
 from hashlib import md5
 
 from django.contrib import admin
-from django.db import models
 from django.db.models import Count
 from django.utils import timezone
 from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
-from markdownx.widgets import AdminMarkdownxWidget
 
 from system.models import (
-    ChangelogComment,
-    ChangelogTag,
-    Changelog,
-    Configuration,
-    ConfigurationEntry,
-    Site,
-    PCGroup,
-    PC,
-    ImageVersion,
-    SecurityEvent,
-    SecurityProblem,
-    Script,
-    Batch,
-    Job,
-    Input,
-    BatchParameter,
     AssociatedScript,
     AssociatedScriptParameter,
-    ScriptTag,
+    Batch,
+    BatchParameter,
+    Changelog,
+    ChangelogComment,
+    ChangelogTag,
     Citizen,
+    Configuration,
+    ConfigurationEntry,
+    ImageVersion,
+    Input,
+    Job,
+    PC,
+    PCGroup,
+    Script,
+    ScriptTag,
+    SecurityEvent,
+    SecurityProblem,
+    Site,
 )
 
 ar = admin.site.register
@@ -83,9 +81,12 @@ class PCGroupAdmin(admin.ModelAdmin):
 
 
 class JobInline(admin.TabularInline):
-    fields = ["pc"]
+    fields = ("id", "pc", "status", "user", "created", "started", "finished")
+    readonly_fields = ("id", "pc", "status", "user", "created", "started", "finished")
     model = Job
-    extra = 1
+    extra = 0
+    can_delete = False
+    show_change_link = True
 
 
 class BatchParameterInline(admin.TabularInline):
@@ -94,7 +95,7 @@ class BatchParameterInline(admin.TabularInline):
 
 
 class BatchAdmin(admin.ModelAdmin):
-    list_display = ("site", "name", "script")
+    list_display = ("id", "site", "name", "script")
     fields = ("site", "name", "script")
     list_filter = ("site",)
     search_fields = ("name", "site__name", "script__name")
@@ -107,6 +108,7 @@ class InputInline(admin.TabularInline):
 
 
 class ScriptAdmin(admin.ModelAdmin):
+
     list_display = (
         "name",
         "is_global",
@@ -115,10 +117,11 @@ class ScriptAdmin(admin.ModelAdmin):
         "jobs_per_site",
         "jobs_per_site_for_the_last_year",
         "associations_to_groups_per_site",
+        "executable_code",
     )
     filter_horizontal = ("tags",)
     readonly_fields = ("user_created", "user_modified")
-    search_fields = ("name",)
+    search_fields = ("name", "executable_code")
     inlines = [InputInline]
 
     def is_global(self, obj):
@@ -268,7 +271,7 @@ class JobAdmin(admin.ModelAdmin):
         "finished",
     )
     list_filter = ("status",)
-    search_fields = ("batch__name", "user__username", "pc__name")
+    search_fields = ("batch__script__name", "user__username", "pc__name")
     readonly_fields = ("created", "started", "finished")
 
 

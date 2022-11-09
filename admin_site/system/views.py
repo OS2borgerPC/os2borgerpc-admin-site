@@ -7,14 +7,14 @@ from re import search
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import dateformat
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.urls import resolve, reverse
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
@@ -22,10 +22,10 @@ from django.views.generic.list import BaseListView
 
 from django.db import transaction
 from django.db.models import Q, F
-from django.db.models.functions import Lower
 from django.conf import settings
 
 from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
 
 from account.models import (
     UserProfile,
@@ -33,36 +33,36 @@ from account.models import (
 )
 
 from system.models import (
-    ChangelogTag,
-    Site,
-    PC,
-    PCGroup,
-    ConfigurationEntry,
-    Job,
-    Script,
-    Input,
-    SecurityProblem,
-    SecurityEvent,
-    MandatoryParameterMissingError,
-    ImageVersion,
-    ScriptTag,
     AssociatedScriptParameter,
     Changelog,
     ChangelogComment,
+    ChangelogTag,
+    ConfigurationEntry,
+    ImageVersion,
+    Input,
+    Job,
+    MandatoryParameterMissingError,
+    PC,
+    PCGroup,
+    Script,
+    ScriptTag,
+    SecurityEvent,
+    SecurityProblem,
+    Site,
 )
 
 # PC Status codes
 from system.forms import (
-    SiteForm,
-    PCGroupForm,
-    ConfigurationEntryForm,
-    ScriptForm,
-    UserForm,
-    ParameterForm,
-    PCForm,
-    SecurityProblemForm,
     ChangelogCommentForm,
+    ConfigurationEntryForm,
+    PCForm,
+    PCGroupForm,
+    ParameterForm,
+    ScriptForm,
     SecurityEventForm,
+    SecurityProblemForm,
+    SiteForm,
+    UserForm,
 )
 
 
@@ -312,7 +312,7 @@ class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
 # Now follows all site-based views, i.e. subclasses
 # of SiteView.
 class JobsView(SiteView):
-    template_name = "system/site_jobs.html"
+    template_name = "system/jobs/site_jobs.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -576,9 +576,9 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        local_scripts = self.scripts.filter(site=self.site).order_by(Lower("name"))
+        local_scripts = self.scripts.filter(site=self.site).order_by("name")
         context["local_scripts"] = local_scripts
-        global_scripts = self.scripts.filter(site=None).order_by(Lower("name"))
+        global_scripts = self.scripts.filter(site=None).order_by("name")
         context["global_scripts"] = global_scripts
 
         # Create a tag->scripts dict for tags that has local scripts.
@@ -704,33 +704,26 @@ class ScriptMixin(object):
                     par.save()
 
 
-class ScriptList(ScriptMixin, SiteView):
-    def get(self, request, *args, **kwargs):
-        self.setup_script_editing(**kwargs)
-        try:
-            # Sort by -site followed by lowercased name
-            def sort_by(a, b):
-                if a.site == b.site:
-                    # cmp deprecated: cmp(a, b) has been changed to
-                    # the ((a > b) - (a < b)) formats
-                    return (a.name.lower() > b.name.lower()) - (
-                        a.name.lower() < b.name.lower()
-                    )
-                else:
-                    if b.site is not None:
-                        return 1
-                    else:
-                        return -1
+class ScriptRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+        is_security = (
+            True if resolve(self.request.path).url_name == "security_scripts" else False
+        )
 
-            # cmp deprecated: cmp converted to key function
-            script = sorted(self.scripts, key=cmp_to_key(sort_by))[0]
-            return HttpResponseRedirect(script.get_absolute_url(site_uid=self.site.uid))
+        # Scripts are sorted with "-site" to ensure global scripts are ordered first in the queryset.
+        scripts = Script.objects.filter(
+            Q(site=site) | Q(site=None), is_security_script=is_security
+        ).order_by("-site", "name")
 
-        except IndexError:
-            return HttpResponseRedirect(
-                reverse("new_security_script", args=[self.site.uid])
-                if self.is_security
-                else reverse("new_script", args=[self.site.uid])
+        if scripts.exists():
+            script = scripts.first()
+            return script.get_absolute_url(site_uid=site.uid)
+        else:
+            return (
+                reverse("new_security_script", args=[site.uid])
+                if is_security
+                else reverse("new_script", args=[site.uid])
             )
 
 
@@ -796,6 +789,14 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form = ScriptForm()
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
+        request_user = self.request.user
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        if not request_user.is_superuser:
+            context[
+                "user_type_for_site"
+            ] = request_user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
         return context
 
     def get_object(self, queryset=None):
@@ -960,16 +961,14 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
 
 class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
+    """If a site ha no computers it shows a page indicating that.
+    If the site has at least one computer it redirects to that."""
 
-    template_name = "system/site_pcs.html"
+    template_name = "system/pcs/site_pcs.html"
     selection_class = PC
 
     def get_list(self):
-        return (
-            self.object.pcs.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+        return self.object.pcs.all()
 
     def render_to_response(self, context):
         if "selected_pc" in context:
@@ -982,7 +981,7 @@ class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
 
 
 class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin):
-    template_name = "system/pc_form.html"
+    template_name = "system/pcs/form.html"
     form_class = PCForm
     slug_field = "uid"
 
@@ -1013,11 +1012,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
         pc = self.object
         params = self.request.GET or self.request.POST
 
-        context["pc_list"] = (
-            site.pcs.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+        context["pc_list"] = site.pcs.all()
 
         group_set = site.groups.all()
 
@@ -1081,6 +1076,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
 
 class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PC
+    template_name = "system/pcs/confirm_delete.html"
 
     def get_object(self, queryset=None):
         return PC.objects.get(uid=self.kwargs["pc_uid"])
@@ -1089,55 +1085,25 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
 
 
-class PCGroupsView(SelectionMixin, SiteView):
-    template_name = "system/site_groups.html"
-    selection_class = PCGroup
-    class_display_name = "group"
+class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+    """Redirects to either an existing user if one exists, or to the create user page"""
 
-    def get_list(self):
-        return (
-            self.object.groups.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+        users_on_site = site.users
+        if users_on_site.exists():
 
-    def render_to_response(self, context):
-        if "selected_group" in context:
-            return HttpResponseRedirect(
-                "/site/%s/groups/%s/"
-                % (context["site"].uid, context["selected_group"].url)
+            if self.request.user in users_on_site:
+                destination_user = self.request.user.username
+            else:  # for superusers just go to the first user in the list
+                destination_user = users_on_site.first().username
+
+            return reverse(
+                "user", kwargs={"site_uid": site.uid, "username": destination_user}
             )
+
         else:
-            return HttpResponseRedirect(
-                "/site/%s/groups/new/" % context["site"].uid,
-            )
-
-
-class UsersView(SelectionMixin, SiteView):
-
-    template_name = "system/site_users.html"
-    selection_class = User
-    lookup_field = "username"
-
-    def get_list(self):
-        return self.object.users
-
-    def render_to_response(self, context):
-        if "selected_user" in context:
-            # Select your own user by default if you have a UserProfile on the site
-            # Fx. relevant to password changes
-
-            if context["site"] in self.request.user.bibos_profile.sites.all():
-                user = self.request.user.username
-            else:
-                user = context["selected_user"].username
-            return HttpResponseRedirect(
-                "/site/%s/users/%s/" % (context["site"].uid, user)
-            )
-        else:
-            return HttpResponseRedirect(
-                "/site/%s/new_user/" % context["site"].uid,
-            )
+            return reverse("new_user", args=[site.uid])
 
 
 class UsersMixin(object):
@@ -1180,11 +1146,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
 
         if (
-            self.request.user.bibos_profile.sitemembership_set.get(
+            self.request.user.is_superuser
+            or self.request.user.bibos_profile.sitemembership_set.get(
                 site=site
             ).site_user_type
             == 2
-            or self.request.user.is_superuser
         ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
@@ -1274,7 +1240,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
 class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
-    template_name = "system/users/delete.html"
+    template_name = "system/users/confirm_delete.html"
 
     def get_object(self, queryset=None):
         self.selected_user = User.objects.get(username=self.kwargs["username"])
@@ -1292,6 +1258,15 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         return "/site/%s/users/" % self.kwargs["site_uid"]
 
     def delete(self, request, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if (
+            not self.request.user.is_superuser
+            and self.request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
+            != 2
+        ):
+            raise PermissionDenied
         response = super(UserDelete, self).delete(request, *args, **kwargs)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
@@ -1329,10 +1304,24 @@ class ConfigurationEntryDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin)
         return "/site/{0}/settings/".format(self.kwargs["site_uid"])
 
 
+class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+
+        pc_groups = PCGroup.objects.filter(site=site)
+
+        if pc_groups.exists():
+            group = pc_groups.first()
+            return group.get_absolute_url()
+        else:
+            return reverse("new_group", args=[site.uid])
+
+
 class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    model = PCGroup
     form_class = PCGroupForm
+    model = PCGroup
     slug_field = "uid"
+    template_name = "system/pcgroups/form.html"
 
     def get_context_data(self, **kwargs):
         context = super(PCGroupCreate, self).get_context_data(**kwargs)
@@ -1352,7 +1341,7 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
 
 class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
-    template_name = "system/site_groups.html"
+    template_name = "system/pcgroups/site_groups.html"
     form_class = PCGroupForm
     model = PCGroup
 
@@ -1386,12 +1375,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         context["newform"] = PCGroupForm()
         del context["newform"].fields["pcs"]
 
-        context["all_scripts"] = sorted(
-            Script.objects.filter(
-                Q(site=site) | Q(site=None), is_security_script=False
-            ),
-            key=lambda s: s.name.lower(),
-        )
+        context["all_scripts"] = Script.objects.filter(
+            Q(site=site) | Q(site=None), is_security_script=False
+        ).order_by("name")
 
         return context
 
@@ -1456,6 +1442,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
 
 
 class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+    template_name = "system/pcgroups/confirm_delete.html"
     model = PCGroup
 
     def get_object(self, queryset=None):
@@ -1474,16 +1461,12 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
 class SecurityProblemsView(SelectionMixin, SiteView):
 
-    template_name = "system/site_security_problems.html"
+    template_name = "system/security_problems/site_security_problems.html"
     selection_class = SecurityProblem
     class_display_name = "security_problem"
 
     def get_list(self):
-        return (
-            self.object.security_problems.all()
-            .extra(select={"lower_name": "lower(name)"})
-            .order_by("lower_name")
-        )
+        return self.object.security_problems.all()
 
     def render_to_response(self, context):
         if "selected_security_problem" in context:
@@ -1519,7 +1502,7 @@ class SecurityProblemsView(SelectionMixin, SiteView):
 
 
 class SecurityProblemCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/site_security_problems.html"
+    template_name = "system/security_problems/site_security_problems.html"
     model = SecurityProblem
     fields = "__all__"
 
@@ -1528,7 +1511,7 @@ class SecurityProblemCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
 
 class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/site_security_problems.html"
+    template_name = "system/security_problems/site_security_problems.html"
     model = SecurityProblem
     form_class = SecurityProblemForm
 
@@ -1583,6 +1566,13 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         # template picklist requires the form pk, name, url (u)id.
         context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
+        if not self.request.user.is_superuser:
+            context[
+                "user_type_for_site"
+            ] = self.request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
+
         return context
 
     def get_success_url(self):
@@ -1590,6 +1580,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
+    template_name = "system/security_problems/confirm_delete.html"
     model = SecurityProblem
     # form_class = <hopefully_not_necessary>
 
@@ -1601,9 +1592,22 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
         return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
 
+    def delete(self, request, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if (
+            not self.request.user.is_superuser
+            and self.request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
+            != 2
+        ):
+            raise PermissionDenied
+        response = super(SecurityProblemDelete, self).delete(request, *args, **kwargs)
+        return response
+
 
 class SecurityEventsView(SiteView):
-    template_name = "system/site_security_events.html"
+    template_name = "system/security_events/site_security_events.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -1964,8 +1968,8 @@ class ChangelogListView(ListView):
                 | Q(content__icontains=filter)
                 | Q(description__icontains=filter)
                 | Q(version__icontains=filter)
-            ).order_by("-created")
-        return Changelog.objects.all().order_by("-created")
+            )
+        return Changelog.objects.all()
 
     def get_paginated_queryset(self, queryset, page):
 
@@ -2027,8 +2031,6 @@ class ChangelogListView(ListView):
     def post(self, request, *args, **kwargs):
         req = request.POST
 
-        response = self.get(request, *args, **kwargs)
-
         comment = ChangelogComment()
 
         comment.user = get_object_or_404(User, pk=req["user"])
@@ -2041,4 +2043,4 @@ class ChangelogListView(ListView):
             )
 
         comment.save()
-        return response
+        return redirect("changelogs", slug=kwargs["slug"])
