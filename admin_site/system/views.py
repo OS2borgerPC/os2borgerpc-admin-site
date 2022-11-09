@@ -25,6 +25,7 @@ from django.db.models import Q, F
 from django.conf import settings
 
 from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
 
 from account.models import (
     UserProfile,
@@ -1257,6 +1258,11 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         return "/site/%s/users/" % self.kwargs["site_uid"]
 
     def delete(self, request, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if not self.request.user.is_superuser and self.request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+        ).site_user_type != 2:
+            raise PermissionDenied
         response = super(UserDelete, self).delete(request, *args, **kwargs)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
@@ -1581,6 +1587,15 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def get_success_url(self):
         return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
+
+    def delete(self, request, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if not self.request.user.is_superuser and self.request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+        ).site_user_type != 2:
+            raise PermissionDenied
+        response = super(SecurityProblemDelete, self).delete(request, *args, **kwargs)
+        return response
 
 
 class SecurityEventsView(SiteView):
