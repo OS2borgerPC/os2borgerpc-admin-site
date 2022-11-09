@@ -1259,9 +1259,13 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def delete(self, request, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        if not self.request.user.is_superuser and self.request.user.bibos_profile.sitemembership_set.get(
+        if (
+            not self.request.user.is_superuser
+            and self.request.user.bibos_profile.sitemembership_set.get(
                 site_id=site.id
-        ).site_user_type != 2:
+            ).site_user_type
+            != 2
+        ):
             raise PermissionDenied
         response = super(UserDelete, self).delete(request, *args, **kwargs)
         set_notification_cookie(
@@ -1590,9 +1594,13 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def delete(self, request, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        if not self.request.user.is_superuser and self.request.user.bibos_profile.sitemembership_set.get(
+        if (
+            not self.request.user.is_superuser
+            and self.request.user.bibos_profile.sitemembership_set.get(
                 site_id=site.id
-        ).site_user_type != 2:
+            ).site_user_type
+            != 2
+        ):
             raise PermissionDenied
         response = super(SecurityProblemDelete, self).delete(request, *args, **kwargs)
         return response
