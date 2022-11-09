@@ -1337,6 +1337,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         # Ensure that if a start time has been set, so has the end time - or vice versa
         f = self.request.POST
         if (
+            # TODO: Add additional days
             (f.get("monday_on") and not f.get("monday_off"))
             or (not f.get("monday_on") and f.get("monday_off"))
             or (f.get("tuesday_on") and not f.get("tuesday_off"))
