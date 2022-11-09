@@ -147,7 +147,7 @@ Release master:
 # Deploy stage
 ##############
 
-Update os2borgerpc-test version salt:
+TESTING update version salt:
   extends:
     - .rules:semver-all
     - .config:endpoint-with-tag
@@ -157,11 +157,11 @@ Update os2borgerpc-test version salt:
     ENDPOINT: os2bpc/salt/update-test
     CONFIG_UPDATER_USERNAME: os2bpc
 
-Trigger salt deployment os2borgerpc-test server:
+TESTING trigger salt deployment:
   extends:
     - .rules:semver-all
     - .saltbert
-  needs: ["Update os2borgerpc-test version salt"]
+  needs: ["TESTING update version salt"]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.test
@@ -171,21 +171,21 @@ Trigger salt deployment os2borgerpc-test server:
     name: os2borgerpc-test
     url: https://os2borgerpc-test.magenta.dk
 
-Update os2borgerpc-admin version salt:
+PROD update version salt:
   extends:
     - .rules:semver-core
     - .config:endpoint-with-tag
-  needs: ["Release master"]
+  needs: ["Release master", "TESTING trigger salt deployment"]
   when: manual
   variables:
     ENDPOINT: os2bpc/salt/update-production
     CONFIG_UPDATER_USERNAME: os2bpc
 
-Trigger salt deployment os2borgerpc-admin server:
+PROD trigger salt deployment:
   extends:
     - .rules:semver-core
     - .saltbert
-  needs: ["Update os2borgerpc-admin version salt"]
+  needs: ["PROD update version salt"]
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.production

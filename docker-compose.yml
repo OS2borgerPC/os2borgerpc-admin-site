@@ -32,6 +32,7 @@ services:
         stdin_open: true
         tty: true
         container_name: bpc_admin_site_django
+        privileged: true
     db:
         image: magentaaps/postgres-os2bos:1-10.14-test
         env_file:

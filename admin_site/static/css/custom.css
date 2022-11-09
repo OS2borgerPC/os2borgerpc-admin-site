@@ -113,3 +113,8 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 
 .batch:not(:empty)::before { content: "(" }
 .batch:not(:empty)::after { content: ")" }
+
+#scriptform textarea {
+  min-width: 90vh;
+  height: 40vh;
+}
