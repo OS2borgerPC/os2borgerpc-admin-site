@@ -1,4 +1,4 @@
-Version 5.9.3, November 3, 2022
+Version 5.9.3, November 9, 2022
 ---------------------------------
 
 - Prevent computers from being re-registered - print an error message if it already exists on the adminsite
