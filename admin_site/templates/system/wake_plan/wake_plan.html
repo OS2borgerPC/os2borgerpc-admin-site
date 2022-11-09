@@ -25,10 +25,6 @@
             En Gruppe kan kun være i én Tidsplan.
           </li>
           <li>
-            Hvis der en given dag er åbent, skal både start- og sluttidspunkt være udfyldt. (IDÉ: kan dette punkt måske udelades
-            hvis formularen bare sørger for det?)
-          </li>
-          <li>
             En Computer kan kun modtage en opdateret Tidsplan, når den er tændt.<br/>
             Dvs. at hvis Computeren er lukket ned for en given dag, og den derefter - fra adminsitet -
             gives en ny tidsplan, vil dette ikke tage effekt, før den tænder efter den oprindelige plan.
@@ -69,7 +65,12 @@
 
         <article class="col-lg-4 form-switch">
 
-          {{form.enabled|as_crispy_field}}
+          <label>Tidsplan status*</label><br/>
+          <div class="d-table-cell">
+            {{form.enabled}}
+            <label id="id_enabled_label" style="vertical-align: middle;">{% if selected_plan.enabled %}Aktiv{% else %}Inaktiv{% endif %}</label>
+          </div>
+          <br/>
 
           {{form.name|as_crispy_field}}
 
@@ -235,10 +236,10 @@
             <div class="clearfix">
               <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
                 <span class="material-icons px-1">queue</span>
-                <span id="total-groups"></span>
+                <span id="total-wake_change_events"></span>
               </span>
             </div>
-            {% include 'widgets/picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text='Tilføj undtagelse til tidsplan' remove_text='Fjern undtagelse fra tidsplan' site_url=site.uid target_section='wake_change_events' %}
+            {% include 'widgets/picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text='Tilføj undtagelse til tidsplan' remove_text='Fjern undtagelse fra tidsplan' site_url=site.uid target_section='wake_change_event' %}
 
           </fieldset>
 

@@ -18,10 +18,8 @@ from system.models import (
 )
 from account.models import SiteMembership
 
-time_format = forms.TimeInput(
-    attrs={"type": "time", "max": "23:59", "class": "p-2"}, format="%H:%M"
-)
-date_format = forms.DateInput(attrs={"type": "date", "class": "p-2"}, format="%Y-%m-%d")
+time_format = forms.TimeInput(attrs={"type": "time", "max": "23:59"}, format="%H:%M")
+date_format = forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d")
 
 
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
@@ -352,9 +350,8 @@ class WakeChangeEventForm(forms.ModelForm):
     class Meta:
         model = WakeChangeEvent
         exclude = ("site",)
-        # While testing:
-        # fields = "__all__"
         widgets = {
+            "name": forms.TextInput(attrs={"id": "wake-change-event-name"}),
             "date_start": date_format,
             "time_start": time_format,
             "date_end": date_format,

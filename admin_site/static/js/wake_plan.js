@@ -33,7 +33,7 @@ function week_day_on(el, on) {
 
 // Handling the week plan switches
 // Den her håndterer da også undtagelsernes switches/toggles
-function handle_click(event) {
+function checkbox_open_close_handler(event) {
   const tg = event.target
 
   if (tg.type == "checkbox") {
@@ -47,9 +47,9 @@ function handle_click(event) {
   }
 }
 
-// Week plan page
+// Week plan page specific
 if (week_plan) {
-  week_plan.addEventListener("click", handle_click)
+  week_plan.addEventListener("click", checkbox_open_close_handler)
 
   // By default all dates are seen as "on" - this toggles those off to off for the week plan
   for (let day of week_plan.tBodies[0].children) {
@@ -63,9 +63,23 @@ if (week_plan) {
   }
 }
 
-// TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
-//
+const checkbox_enabled = document.getElementById("id_enabled")
+const checkbox_enabled_label = document.getElementById("id_enabled_label")
+if (checkbox_enabled) { // Don't attempt to set this listener if we're on a subpage where this doesn't exist
+  function set_plan_state_text(on) {
+    if (on) {
+      checkbox_enabled_label.innerText = "Aktiv"
+    }
+    else checkbox_enabled_label.innerText = "Inaktiv"
+  }
 
+  checkbox_enabled.addEventListener('click', function() {
+    if (checkbox_enabled.checked) set_plan_state_text(true)
+    else set_plan_state_text(false)
+  })
+}
+
+// Wake change event specific
 if (document.getElementById("wake-change-plan")) {
 
   // Set all times required for altered hours wake change events
@@ -73,4 +87,20 @@ if (document.getElementById("wake-change-plan")) {
   for (let time of times) {
     time.firstElementChild.setAttribute('required',true)
   }
+
+  // Set the end date to the start date by default, if end date is empty, to make it faster to make intervals and
+  // especially individual days
+  const start_el = document.getElementById("id_date_start")
+  const end_el = document.getElementById("id_date_end")
+
+  if (start_el) {
+    start_el.addEventListener('change', function() {
+      if (end_el.value == "") {
+        end_el.value = start_el.value
+      }
+    })
+  }
 }
+
+// TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
+
