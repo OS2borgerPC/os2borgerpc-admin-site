@@ -50,6 +50,17 @@ tr {
   border-top: 0!important;
 }
 
-#wake-change-plan input {
-  width: 175px!important;
+#wake-change-plan .wake-change-event-form input {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 130px;
+}
+
+#wake-change-plan tbody td input {
+  margin-top: 20px
+  vertical-align: middle;
+}
+
+#wake-change-event-name {
+  width: 360px!important;
 }
