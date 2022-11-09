@@ -7,7 +7,7 @@
         "identifier" - String. Selection box title. Not to be confused with `identifier` property of available_list items
         "selected_list" - List [optional]. List of prior selected choices
         "unique_id" - String [optional]. A unique string ID postfix for this widget (if you use more widgets in the same template)
-    {% endcomment %} 
+    {% endcomment %}
 
     <div id="pick-list-{{ submit_name }}{{ unique_id }}" class="pick-list">
 
@@ -25,7 +25,7 @@
     <script type="text/javascript">
 
         (function() {
-            
+
             var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
             var text_add = '{{ add_text }}'
             var text_remove = '{{ remove_text }}'
@@ -148,7 +148,7 @@
             }
 
             // Initial setup
-            
+
             // Render the list of selected items and the dropdown list of available items
             renderPickList()
             // Add whatever string you chose as readable_identifier to the "Tilføj ny" dropbox button

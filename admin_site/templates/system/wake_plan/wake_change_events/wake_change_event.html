@@ -17,31 +17,35 @@
 
         {% csrf_token %}
 
+        <fieldset class="wake-change-event-form">
 
-          {# Probably change to not be crispy either, but use for reference to make nicer input fields manually #}
-          {{form.name|as_crispy_field}}
+          <label>Navn</label><br/>
+          {{form.name}}
 
-          <table>
+          <table class="mt-4">
             <thead>
               <tr>
-                <td></td>
+                <td class="pe-2"></td>
                 <td>Fra</td>
+                <td></td> <!-- Visual date/time separator -->
                 <td>Til</td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Dato</td>
-                <td> {{form.date_start}}—</td>
-                <td> {{form.date_end}}</td>
+                <td class="pe-2">Dato</td>
+                <td class="pe-2"> {{form.date_start}}</td>
+                <td>—</td>
+                <td class="ps-2"> {{form.date_end}}</td>
               </tr>
 
           {# The second case is for handling the form for creating new altered hours, which doesn't yet have a type #}
           {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
               <tr>
-                <td>Tidspunkt</td>
-                <td class="wake-change-event-time"> {{form.time_start}}—</td>
-                <td class="wake-change-event-time"> {{form.time_end}}</td>
+                <td class="pe-2 pt-2">Tidspunkt</td>
+                <td class="wake-change-event-time pt-2 pe-2"> {{form.time_start}}</td>
+                <td>—</td>
+                <td class="wake-change-event-time pt-2 ps-2"> {{form.time_end}}</td>
               </tr>
           {% endif %}
             </tbody>
@@ -54,11 +58,12 @@
             <input type="hidden" name="type" value="CLOSED"/>
           {% endif %}
 
+        </fieldset>
 
-          <fieldset class="mt-3">
-            <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
-            <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
-          </fieldset>
+        <fieldset class="mt-3">
+          <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
+          <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
+        </fieldset>
 
       </form>
 
