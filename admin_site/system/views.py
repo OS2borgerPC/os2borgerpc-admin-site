@@ -1494,56 +1494,46 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             or plan_pre.monday_open != plan_post.monday_open
             or (plan_post.monday_open and plan_pre.monday_on != plan_post.monday_on)
             or (plan_post.monday_open and plan_pre.monday_off != plan_post.monday_off)
+            or plan_pre.tuesday_open != plan_post.tuesday_open
+            or (plan_post.tuesday_open and plan_pre.tuesday_on != plan_post.tuesday_on)
+            or (
+                plan_post.tuesday_open and plan_pre.tuesday_off != plan_post.tuesday_off
+            )
+            or plan_pre.wednesday_open != plan_post.wednesday_open
+            or (
+                plan_post.wednesday_open
+                and plan_pre.wednesday_on != plan_post.wednesday_on
+            )
+            or (
+                plan_post.wednesday_open
+                and plan_pre.wednesday_off != plan_post.wednesday_off
+            )
+            or plan_pre.thursday_open != plan_post.thursday_open
+            or (
+                plan_post.thursday_open
+                and plan_pre.thursday_on != plan_post.thursday_on
+            )
+            or (
+                plan_post.thursday_open
+                and plan_pre.thursday_off != plan_post.thursday_off
+            )
+            or plan_pre.friday_open != plan_post.friday_open
+            or (plan_post.friday_open and plan_pre.friday_on != plan_post.friday_on)
+            or (plan_post.friday_open and plan_pre.friday_off != plan_post.friday_off)
+            or plan_pre.saturday_open != plan_post.saturday_open
+            or (
+                plan_post.saturday_open
+                and plan_pre.saturday_on != plan_post.saturday_on
+            )
+            or (
+                plan_post.saturday_open
+                and plan_pre.saturday_off != plan_post.saturday_off
+            )
+            or plan_pre.sunday_open != plan_post.sunday_open
+            or (plan_post.sunday_open and plan_pre.sunday_on != plan_post.sunday_on)
+            or (plan_post.sunday_open and plan_pre.sunday_off != plan_post.sunday_off)
+            or events_pre != set(plan_post.wake_change_events.all())
         ):
-            return True
-        elif plan_post.monday_open and plan_pre.monday_off != plan_post.monday_off:
-            return True
-        elif plan_pre.tuesday_open != plan_post.tuesday_open:
-            return True
-        elif plan_post.tuesday_open and plan_pre.tuesday_on != plan_post.tuesday_on:
-            return True
-        elif plan_post.tuesday_open and plan_pre.tuesday_off != plan_post.tuesday_off:
-            return True
-        elif plan_pre.wednesday_open != plan_post.wednesday_open:
-            return True
-        elif (
-            plan_post.wednesday_open and plan_pre.wednesday_on != plan_post.wednesday_on
-        ):
-            return True
-        elif (
-            plan_post.wednesday_open
-            and plan_pre.wednesday_off != plan_post.wednesday_off
-        ):
-            return True
-        elif plan_pre.thursday_open != plan_post.thursday_open:
-            return True
-        elif plan_post.thursday_open and plan_pre.thursday_on != plan_post.thursday_on:
-            return True
-        elif (
-            plan_post.thursday_open and plan_pre.thursday_off != plan_post.thursday_off
-        ):
-            return True
-        elif plan_pre.friday_open != plan_post.friday_open:
-            return True
-        elif plan_post.friday_open and plan_pre.friday_on != plan_post.friday_on:
-            return True
-        elif plan_post.friday_open and plan_pre.friday_off != plan_post.friday_off:
-            return True
-        elif plan_pre.saturday_open != plan_post.saturday_open:
-            return True
-        elif plan_post.saturday_open and plan_pre.saturday_on != plan_post.saturday_on:
-            return True
-        elif (
-            plan_post.saturday_open and plan_pre.saturday_off != plan_post.saturday_off
-        ):
-            return True
-        elif plan_pre.sunday_open != plan_post.sunday_open:
-            return True
-        elif plan_post.sunday_open and plan_pre.sunday_on != plan_post.sunday_on:
-            return True
-        elif plan_post.sunday_open and plan_pre.sunday_off != plan_post.sunday_off:
-            return True
-        elif events_pre != set(plan_post.wake_change_events.all()):
             return True
         else:
             return False
@@ -1708,13 +1698,12 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                 break
         if not active_plans:
             return False
-        if event_pre.date_start != event_post.date_start:
-            return True
-        elif event_pre.date_end != event_post.date_end:
-            return True
-        elif event_pre.time_start != event_post.time_start:
-            return True
-        elif event_pre.time_end != event_post.time_end:
+        if (
+            event_pre.date_start != event_post.date_start
+            or event_pre.date_end != event_post.date_end
+            or event_pre.time_start != event_post.time_start
+            or event_pre.time_end != event_post.time_end
+        ):
             return True
         else:
             return False
