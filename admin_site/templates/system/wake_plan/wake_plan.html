@@ -63,7 +63,7 @@
           <label>Tidsplan status*</label><br/>
           <div class="d-table-cell">
             {{form.enabled}}
-            <label id="id_enabled_label" style="vertical-align: middle;">{% if selected_plan.enabled %}Aktiv{% else %}Inaktiv{% endif %}</label>
+            <label id="id_enabled_label" style="vertical-align: middle;">{% if selected_plan.enabled or not selected_plan %}Aktiv{% else %}Inaktiv{% endif %}</label>
           </div>
           <br/>
 
