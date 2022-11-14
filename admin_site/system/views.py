@@ -805,7 +805,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
         context["is_hidden"] = self.script.is_hidden
-        context["uid"] = self.script.uid
+        if self.script.uid:
+            context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         if not request_user.is_superuser:
@@ -1274,11 +1275,11 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
 
         # If pcs were added and the plan is enabled
         if pcs_in_verified_groups and self.object.enabled:
-            args = []
+            args_set = self.object.get_script_arguments()
             run_wake_plan_script(
                 self.object.site,
                 pcs_in_verified_groups,
-                args,
+                args_set,
                 self.request.user,
                 type="set",
             )
@@ -1338,11 +1339,20 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         # Ensure that if a start time has been set, so has the end time - or vice versa
         f = self.request.POST
         if (
-            # TODO: Add additional days
             (f.get("monday_on") and not f.get("monday_off"))
             or (not f.get("monday_on") and f.get("monday_off"))
             or (f.get("tuesday_on") and not f.get("tuesday_off"))
             or (not f.get("tuesday_on") and f.get("tuesday_off"))
+            or (f.get("wednesday_on") and not f.get("wednesday_off"))
+            or (not f.get("wednesday_on") and f.get("wednesday_off"))
+            or (f.get("thursday_on") and not f.get("thursday_off"))
+            or (not f.get("thursday_on") and f.get("thursday_off"))
+            or (f.get("friday_on") and not f.get("friday_off"))
+            or (not f.get("friday_on") and f.get("friday_off"))
+            or (f.get("saturday_on") and not f.get("saturday_off"))
+            or (not f.get("saturday_on") and f.get("saturday_off"))
+            or (f.get("sunday_on") and not f.get("sunday_off"))
+            or (not f.get("sunday_on") and f.get("sunday_off"))
         ):
             return self.form_invalid(form)
 
@@ -1624,6 +1634,13 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
         return context
 
+    def validate_dates(self):
+        event = self.object
+        if event.date_end >= event.date_start:
+            return True
+        else:
+            return False
+
 
 class WakeChangeEventRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
@@ -1662,29 +1679,38 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
         # Capture a view of the event before the update
         event_pre = self.get_object()
 
-        response = super(WakeChangeEventUpdate, self).form_valid(form)
+        if self.validate_dates():
+            response = super(WakeChangeEventUpdate, self).form_valid(form)
 
-        # If the settings have changed and the wake change event is used
-        # by active wake plans, update the pcs connected to those plans
-        if self.check_settings_updates(event_pre):
-            for plan in self.object.wake_week_plans.all():
-                if plan.enabled:
-                    pcs_to_be_set_pk = list(
-                        set(plan.groups.all().values_list("pcs", flat=True))
-                    )
-                    if pcs_to_be_set_pk:
-                        pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
-                        args_set = plan.get_script_arguments()
-
-                        run_wake_plan_script(
-                            self.object.site,
-                            pcs_to_be_set,
-                            args_set,
-                            self.request.user,
-                            type="set",
+            # If the settings have changed and the wake change event is used
+            # by active wake plans, update the pcs connected to those plans
+            if self.check_settings_updates(event_pre):
+                for plan in self.object.wake_week_plans.all():
+                    if plan.enabled:
+                        pcs_to_be_set_pk = list(
+                            set(plan.groups.all().values_list("pcs", flat=True))
                         )
+                        if pcs_to_be_set_pk:
+                            pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
+                            args_set = plan.get_script_arguments()
+
+                            run_wake_plan_script(
+                                self.object.site,
+                                pcs_to_be_set,
+                                args_set,
+                                self.request.user,
+                                type="set",
+                            )
+        else:
+            response = self.form_invalid(form)
+            set_notification_cookie(
+                response, ("The end date cannot be before the start date"), error=True
+            )
 
         return response
+
+    def form_invalid(self, form):
+        return super(WakeChangeEventUpdate, self).form_invalid(form)
 
     def check_settings_updates(self, event_pre):
         """Helper function used to check if the settings have changed
@@ -1723,7 +1749,18 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.site = site
 
-        return super(WakeChangeEventCreate, self).form_valid(form)
+        if self.validate_dates():
+            response = super(WakeChangeEventCreate, self).form_valid(form)
+        else:
+            response = self.form_invalid(form)
+            set_notification_cookie(
+                response, ("The end date cannot be before the start date"), error=True
+            )
+
+        return response
+
+    def form_invalid(self, form):
+        return super(WakeChangeEventCreate, self).form_invalid(form)
 
 
 class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):

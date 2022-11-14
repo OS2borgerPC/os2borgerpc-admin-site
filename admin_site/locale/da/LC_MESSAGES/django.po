@@ -550,6 +550,11 @@ msgstr "Tænd/sluk tidsplan %s opdateret"
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
+#: system/views.py: 1706
+#, python-format
+msgid "The end date cannot be before the start date"
+msgstr "Til-datoen kan ikke være før fra-datoen"
+
 #: system/views.py:1635
 #, python-format
 msgid "User %s updated"
