@@ -12,7 +12,7 @@
           {% endif %}
       {{selected_event.name|default:"Ny undtagelse"}}
     </h2>
-
+        {% include 'notification.html' %}
         <form method="post" accept-charset="utf-8">
 
         {% csrf_token %}
