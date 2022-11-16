@@ -37,7 +37,7 @@ Tænd- / Sluk-tidsplan: Undtagelser
             {{event}}
           </a>
           {% ifequal event selected_event %}
-            <a class="item-list-deletable material-icons"href="{% url 'wake_change_event_delete' site.uid event.id %}" title="Slet undtagelse">
+            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="Slet undtagelse">
               clear
             </a>
           {% endifequal %}
@@ -49,4 +49,18 @@ Tænd- / Sluk-tidsplan: Undtagelser
 
 {% block javascripts %}
   <script src="{% static 'js/wake_plan.js' %}"></script>
+  <script type="text/javascript">
+    $(function() {
+        /* If the site does not have permission to use wake_plans,
+        disable all wake_plan inputs*/
+        var permission = "{{wake_plan_access|safe}}"
+        if ( permission != 'True') {
+          inputs = document.querySelectorAll("input, button, select")
+          /* The starting index is 1 to avoid disabling the logout button*/
+          for (index = 1; index < inputs.length; index++) {
+            inputs[index].disabled = true
+          }
+        }
+    })
+</script>
 {% endblock %}

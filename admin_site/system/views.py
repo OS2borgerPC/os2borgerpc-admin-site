@@ -1185,7 +1185,16 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
 
         return context
 
-    def verify_and_add_groups(self, groups_pk):
+    def verify_and_add_groups(self, form):
+        # Add the selected wake change events
+        # The string currently set to "wake_change_events" must match the submit name
+        # chosen for the pick list used to add wake change events
+        exception_ids = form["wake_change_events"].value()
+        exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
+        self.object.wake_change_events.set(exceptions_selected)
+        # The string currently set to "groups" must match the submit name
+        # chosen for the pick list used to add groups
+        groups_pk = form["groups"].value()
         groups = PCGroup.objects.filter(pk__in=groups_pk)
         # Find the pcs in the groups
         pcs_in_groups_pk = list(set(groups.values_list("pcs", flat=True)))
@@ -1222,11 +1231,22 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             set(verified_groups.values_list("pcs", flat=True))
         )
         pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
+        # Generate the notification strings
+        invalid_groups_string = self.get_notification_string(
+            invalid_groups_names
+        )
+        pcs_with_other_plans_string = self.get_notification_string(
+            pcs_with_other_plans_names
+        )
+        other_plans_string = self.get_notification_string(
+            other_plans_names, conjunction="eller"
+        )
         return (
             pcs_in_verified_groups,
-            invalid_groups_names,
-            pcs_with_other_plans_names,
-            other_plans_names,
+            invalid_groups_string,
+            pcs_with_other_plans_string,
+            other_plans_string,
+            set(groups),
         )
 
     def get_notification_string(self, names, conjunction="og"):
@@ -1236,8 +1256,10 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         if len(names) > 1:
             string = ", ".join(names[:-1])
             string = " ".join([string, conjunction, names[-1]])
-        else:
+        elif len(names) == 1:
             string = names[0]
+        else:
+            string = ""
         return string
 
 
@@ -1258,20 +1280,14 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
         response = super(WakePlanCreate, self).form_valid(form)
 
         # Verify and add the selected groups
-        selected_groups_pk = form["groups"].value()
+        # Also add the selected exceptions (no verification needed)
         (
             pcs_in_verified_groups,
-            invalid_groups_names,
-            pcs_with_other_plans_names,
-            other_plans_names,
-        ) = self.verify_and_add_groups(selected_groups_pk)
-
-        # Add the selected wake change events
-        # The string currently set to "exceptions" must match the submit name
-        # chosen for the pick list used to add wake change events
-        exception_ids = form["wake_change_events"].value()
-        exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
-        self.object.wake_change_events.set(exceptions_selected)
+            invalid_groups_string,
+            pcs_with_other_plans_string,
+            other_plans_string,
+            groups_selected,
+        ) = self.verify_and_add_groups(form)
 
         # If pcs were added and the plan is enabled
         if pcs_in_verified_groups and self.object.enabled:
@@ -1285,14 +1301,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             )
 
         # If some groups could not be verified, display this and the reason
-        if invalid_groups_names:
-            invalid_groups_string = self.get_notification_string(invalid_groups_names)
-            pcs_with_other_plans_string = self.get_notification_string(
-                pcs_with_other_plans_names
-            )
-            other_plans_string = self.get_notification_string(
-                other_plans_names, conjunction="eller"
-            )
+        if invalid_groups_string:
             set_notification_cookie(
                 response,
                 _(
@@ -1363,27 +1372,16 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         events_pre = set(self.object.wake_change_events.all())
 
         with transaction.atomic():
-            # Groups that were selected
-            group_ids = f.getlist("groups", [])
-            groups_selected = set(PCGroup.objects.filter(id__in=group_ids))
-
-            # Wake change events that were selected
-            # The string currently set to "wake_change_events" must match the form submit name
-            # chosen for the pick list used to add wake change events
-            exception_ids = f.getlist("wake_change_events", [])
-            exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
 
             response = super(WakePlanUpdate, self).form_valid(form)
 
             (
                 pcs_in_verified_groups,
-                invalid_groups_names,
-                pcs_with_other_plans_names,
-                other_plans_names,
-            ) = self.verify_and_add_groups(group_ids)
-
-            # Update the related wake change events
-            self.object.wake_change_events.set(exceptions_selected)
+                invalid_groups_string,
+                pcs_with_other_plans_string,
+                other_plans_string,
+                groups_selected,
+            ) = self.verify_and_add_groups(form)
 
             # Remove the deselected groups from the wake plan and find the pc objects in those groups
             pcs_in_removed_groups = PC.objects.none()
@@ -1462,16 +1460,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 pass
 
             # If some groups could not be verified, display this and the reason
-            if invalid_groups_names:
-                invalid_groups_string = self.get_notification_string(
-                    invalid_groups_names
-                )
-                pcs_with_other_plans_string = self.get_notification_string(
-                    pcs_with_other_plans_names
-                )
-                other_plans_string = self.get_notification_string(
-                    other_plans_names, conjunction="eller"
-                )
+            if invalid_groups_string:
                 set_notification_cookie(
                     response,
                     _(
@@ -1632,6 +1621,12 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
             site=context["site"]
         ).order_by("-date_start")
 
+        context["wake_plan_access"] = (
+            True
+            if context["site"].feature_permission.filter(uid="wake_plan")
+            else False
+        )
+
         return context
 
     def validate_dates(self):
@@ -1676,6 +1671,8 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
             )
 
     def form_valid(self, form):
+        if not self.object.site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
         # Capture a view of the event before the update
         event_pre = self.get_object()
 
@@ -1770,6 +1767,8 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
 
     def get_object(self, queryset=None):
         event = WakeChangeEvent.objects.get(id=self.kwargs["wake_change_event_id"])
+        if not event.site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
         return event
 
     def get_success_url(self):
