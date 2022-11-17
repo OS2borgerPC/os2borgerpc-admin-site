@@ -531,6 +531,17 @@ msgstr "Du skal angive mindst en pc eller gruppe"
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
+#: system/views.py:1347
+#, python-format
+msgid ""
+"PCWakePlan %s created, but the group(s) %s could not be added "
+"because the pc(s) %s already belong to the plan(s) %s and "
+"the WakeChangeEvents %s could not be added due to overlap"
+msgstr ""
+"Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, "
+"da computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og "
+"undtagelse(rne) %s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
+
 #: system/views.py:1308
 #, python-format
 msgid ""
@@ -540,10 +551,30 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, "
 "da computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
+#: system/views.py:1379
+#, python-format
+msgid ""
+"PCWakePlan %s created, but the WakeChangeEvents %s could not be added "
+"due to overlap"
+msgstr ""
+"Tænd/sluk tidsplan %s oprettet, men undtagelse(rne) %s kunne ikke tilføjes "
+"grundet overlap med andre valgte undtagelser"
+
 #: system/views.py:1321
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
+
+#: system/views.py:1347
+#, python-format
+msgid ""
+"PCWakePlan %s updated, but the group(s) %s could not be added "
+"because the pc(s) %s already belong to the plan(s) %s and "
+"the WakeChangeEvents %s could not be added due to overlap"
+msgstr ""
+"Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, "
+"da computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og "
+"undtagelse(rne) %s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
 #: system/views.py:1338
 #, python-format
@@ -553,6 +584,15 @@ msgid ""
 msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, "
 "da computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
+
+#: system/views.py:1379
+#, python-format
+msgid ""
+"PCWakePlan %s updated, but the WakeChangeEvents %s could not be added "
+"due to overlap"
+msgstr ""
+"Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
+"grundet overlap med andre valgte undtagelser"
 
 #: system/views.py:1345
 #, python-format
