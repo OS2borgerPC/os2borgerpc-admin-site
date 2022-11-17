@@ -1162,12 +1162,16 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         if not selected_wake_change_event_ids:
             selected_wake_change_event_ids = []
         # template picklist requires the form pk, name, url (u)id.
-        context["available_wake_change_events"] = all_wake_change_events_set.exclude(
-            pk__in=selected_wake_change_event_ids
-        ).values_list("pk", "name", "pk")
-        context["selected_wake_change_events"] = all_wake_change_events_set.filter(
-            pk__in=selected_wake_change_event_ids
-        ).values_list("pk", "name", "pk")
+        context["available_wake_change_events"] = (
+            all_wake_change_events_set.exclude(pk__in=selected_wake_change_event_ids)
+            .order_by("-date_start", "name")
+            .values_list("pk", "name", "pk")
+        )
+        context["selected_wake_change_events"] = (
+            all_wake_change_events_set.filter(pk__in=selected_wake_change_event_ids)
+            .order_by("-date_start", "name")
+            .values_list("pk", "name", "pk")
+        )
 
         # Group picklist related:
         all_groups_set = context["site"].groups.all()
@@ -1185,13 +1189,47 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
 
         return context
 
-    def verify_and_add_groups(self, form):
-        # Add the selected wake change events
+    def verify_and_add_groups_and_exceptions(self, form):
+        # Adding wake change events
         # The string currently set to "wake_change_events" must match the submit name
         # chosen for the pick list used to add wake change events
-        exception_ids = form["wake_change_events"].value()
-        exceptions_selected = WakeChangeEvent.objects.filter(id__in=exception_ids)
-        self.object.wake_change_events.set(exceptions_selected)
+        exceptions_pk = form["wake_change_events"].value()
+        exceptions_selected = WakeChangeEvent.objects.filter(pk__in=exceptions_pk)
+        # Get the related wake change events before the update
+        exceptions_pre = self.object.wake_change_events.all()
+        # Verify the pre-existing events that are still selected
+        verified_exceptions = exceptions_pre.intersection(exceptions_selected)
+        # Newly selected events must be verified
+        unverified_exceptions = exceptions_selected.difference(exceptions_pre).order_by(
+            "-date_start", "name"
+        )
+        invalid_exceptions_names = []
+        # Using the same ordering as the list of events,
+        # check if each newly selected event overlaps with any verified event.
+        # If there is no overlap, verify the checked event. Each subsequently checked event
+        # will thus also be checked for overlap with previously verified events.
+        # Also get the names of the events that could not be verified.
+        for exception in unverified_exceptions:
+            exception_is_valid = True
+            for valid_exception in verified_exceptions:
+                if (
+                    valid_exception.date_start
+                    <= exception.date_start
+                    <= valid_exception.date_end
+                    or valid_exception.date_start
+                    <= exception.date_end
+                    <= valid_exception.date_end
+                ):
+                    exception_is_valid = False
+                    invalid_exceptions_names.append(exception.name)
+                    break
+            if exception_is_valid:
+                verified_exceptions = verified_exceptions.union(
+                    WakeChangeEvent.objects.filter(pk=exception.pk)
+                )
+        # Add the verified events to the plan
+        self.object.wake_change_events.set(verified_exceptions)
+        # Adding groups
         # The string currently set to "groups" must match the submit name
         # chosen for the pick list used to add groups
         groups_pk = form["groups"].value()
@@ -1232,20 +1270,20 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         )
         pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
         # Generate the notification strings
-        invalid_groups_string = self.get_notification_string(
-            invalid_groups_names
-        )
+        invalid_groups_string = self.get_notification_string(invalid_groups_names)
         pcs_with_other_plans_string = self.get_notification_string(
             pcs_with_other_plans_names
         )
         other_plans_string = self.get_notification_string(
             other_plans_names, conjunction="eller"
         )
+        invalid_events_string = self.get_notification_string(invalid_exceptions_names)
         return (
             pcs_in_verified_groups,
             invalid_groups_string,
             pcs_with_other_plans_string,
             other_plans_string,
+            invalid_events_string,
             set(groups),
         )
 
@@ -1286,8 +1324,9 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             invalid_groups_string,
             pcs_with_other_plans_string,
             other_plans_string,
+            invalid_events_string,
             groups_selected,
-        ) = self.verify_and_add_groups(form)
+        ) = self.verify_and_add_groups_and_exceptions(form)
 
         # If pcs were added and the plan is enabled
         if pcs_in_verified_groups and self.object.enabled:
@@ -1300,8 +1339,25 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
                 type="set",
             )
 
-        # If some groups could not be verified, display this and the reason
-        if invalid_groups_string:
+        # If some groups or exceptions could not be verified, display this and the reason
+        if invalid_groups_string and invalid_events_string:
+            set_notification_cookie(
+                response,
+                _(
+                    "PCWakePlan %s created, but the group(s) %s could not be added "
+                    "because the pc(s) %s already belong to the plan(s) %s and "
+                    "the WakeChangeEvents %s could not be added due to overlap"
+                )
+                % (
+                    self.object.name,
+                    invalid_groups_string,
+                    pcs_with_other_plans_string,
+                    other_plans_string,
+                    invalid_events_string,
+                ),
+                error=True,
+            )
+        elif invalid_groups_string and not invalid_events_string:
             set_notification_cookie(
                 response,
                 _(
@@ -1313,6 +1369,19 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
                     invalid_groups_string,
                     pcs_with_other_plans_string,
                     other_plans_string,
+                ),
+                error=True,
+            )
+        elif not invalid_groups_string and invalid_events_string:
+            set_notification_cookie(
+                response,
+                _(
+                    "PCWakePlan %s created, but the WakeChangeEvents %s could not be added "
+                    "due to overlap"
+                )
+                % (
+                    self.object.name,
+                    invalid_events_string,
                 ),
                 error=True,
             )
@@ -1380,8 +1449,9 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 invalid_groups_string,
                 pcs_with_other_plans_string,
                 other_plans_string,
+                invalid_events_string,
                 groups_selected,
-            ) = self.verify_and_add_groups(form)
+            ) = self.verify_and_add_groups_and_exceptions(form)
 
             # Remove the deselected groups from the wake plan and find the pc objects in those groups
             pcs_in_removed_groups = PC.objects.none()
@@ -1459,8 +1529,25 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             else:
                 pass
 
-            # If some groups could not be verified, display this and the reason
-            if invalid_groups_string:
+            # If some groups or exceptions could not be verified, display this and the reason
+            if invalid_groups_string and invalid_events_string:
+                set_notification_cookie(
+                    response,
+                    _(
+                        "PCWakePlan %s updated, but the group(s) %s could not be added "
+                        "because the pc(s) %s already belong to the plan(s) %s and "
+                        "the WakeChangeEvents %s could not be added due to overlap"
+                    )
+                    % (
+                        self.object.name,
+                        invalid_groups_string,
+                        pcs_with_other_plans_string,
+                        other_plans_string,
+                        invalid_events_string,
+                    ),
+                    error=True,
+                )
+            elif invalid_groups_string and not invalid_events_string:
                 set_notification_cookie(
                     response,
                     _(
@@ -1472,6 +1559,19 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                         invalid_groups_string,
                         pcs_with_other_plans_string,
                         other_plans_string,
+                    ),
+                    error=True,
+                )
+            elif not invalid_groups_string and invalid_events_string:
+                set_notification_cookie(
+                    response,
+                    _(
+                        "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added "
+                        "due to overlap"
+                    )
+                    % (
+                        self.object.name,
+                        invalid_events_string,
                     ),
                     error=True,
                 )
@@ -1619,7 +1719,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected_event"] = event
         context["wake_change_events_list"] = WakeChangeEvent.objects.filter(
             site=context["site"]
-        ).order_by("-date_start")
+        ).order_by("-date_start", "name")
 
         context["wake_plan_access"] = (
             True
