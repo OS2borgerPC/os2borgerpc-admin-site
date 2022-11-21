@@ -590,7 +590,12 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        scripts = self.scripts.filter(is_hidden=False)
+        if self.site.feature_permission.filter(uid="wake_plan"):
+            scripts = self.scripts.filter(
+                Q(is_hidden=False) | Q(uid="suspend_after_time")
+            )
+        else:
+            scripts = self.scripts.filter(is_hidden=False)
         local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
         global_scripts = scripts.filter(site=None)
@@ -818,7 +823,12 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return context
 
     def get_object(self, queryset=None):
-        if self.script.is_hidden and not self.request.user.is_superuser:
+        if (
+            self.script.is_hidden
+            and not self.request.user.is_superuser
+            and not (self.site.feature_permission.filter(uid="wake_plan")
+                     and self.script.uid == "suspend_after_time")
+        ):
             raise PermissionDenied
         return self.script
 
@@ -1731,10 +1741,30 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
     def validate_dates(self):
         event = self.object
-        if event.date_end >= event.date_start:
-            return True
-        else:
-            return False
+        valid = True
+        overlapping_event = ""
+        plan_with_overlap = ""
+        if event.date_end < event.date_start:
+            valid = False
+        if valid and event.wake_week_plans.all():
+            for plan in event.wake_week_plans.all():
+                other_events = plan.wake_change_events.exclude(pk=event.pk)
+                for other_event in other_events:
+                    if (
+                        other_event.date_start
+                        <= event.date_start
+                        <= other_event.date_end
+                        or other_event.date_start
+                        <= event.date_end
+                        <= other_event.date_end
+                    ):
+                        valid = False
+                        overlapping_event = other_event.name
+                        plan_with_overlap = plan.name
+                        break
+                if not valid:
+                    break
+        return valid, overlapping_event, plan_with_overlap
 
 
 class WakeChangeEventRedirect(RedirectView):
@@ -1776,7 +1806,8 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
         # Capture a view of the event before the update
         event_pre = self.get_object()
 
-        if self.validate_dates():
+        valid, overlapping_event, plan_with_overlap = self.validate_dates()
+        if valid:
             response = super(WakeChangeEventUpdate, self).form_valid(form)
 
             # If the settings have changed and the wake change event is used
@@ -1800,9 +1831,19 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                             )
         else:
             response = self.form_invalid(form)
-            set_notification_cookie(
-                response, ("The end date cannot be before the start date"), error=True
-            )
+            if overlapping_event:
+                set_notification_cookie(
+                    response,
+                    _("The chosen dates would cause overlap with event %s in plan %s")
+                    % (overlapping_event, plan_with_overlap),
+                    error=True,
+                )
+            else:
+                set_notification_cookie(
+                    response,
+                    _("The end date cannot be before the start date %s") % "",
+                    error=True,
+                )
 
         return response
 
@@ -1846,12 +1887,15 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.site = site
 
-        if self.validate_dates():
+        valid, overlapping_event, plan_with_overlap = self.validate_dates()
+        if valid:
             response = super(WakeChangeEventCreate, self).form_valid(form)
         else:
             response = self.form_invalid(form)
             set_notification_cookie(
-                response, ("The end date cannot be before the start date"), error=True
+                response,
+                _("The end date cannot be before the start date %s") % "",
+                error=True,
             )
 
         return response
