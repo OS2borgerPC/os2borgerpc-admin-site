@@ -1204,9 +1204,6 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             site=context["site"]
         )
 
-        # Get the pk for the suspend script to use in a href
-        context["suspend_pk"] = Script.objects.get(uid="wake_plan_set").pk
-
         form = context["form"]
         # params = self.request.GET or self.request.POST
 
