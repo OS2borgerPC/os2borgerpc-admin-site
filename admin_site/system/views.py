@@ -1165,6 +1165,9 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             site=context["site"]
         )
 
+        # Get the pk for the suspend script to use in a href
+        context["suspend_pk"] = Script.objects.get(uid="wake_plan_set").pk
+
         form = context["form"]
         # params = self.request.GET or self.request.POST
 
@@ -1246,6 +1249,14 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # chosen for the pick list used to add groups
         groups_pk = form["groups"].value()
         groups = PCGroup.objects.filter(pk__in=groups_pk)
+        # groups_with_other_plans_names = []
+        # groups_without_other_plans_pk = []
+        # for group in groups:
+        #     if group.wake_week_plan and group.wake_week_plan != self.object:
+        #         groups_with_other_plans_names.append(group.name)
+        #     else:
+        #         groups_without_other_plans_pk.append(group.pk)
+        # groups = PCGroup.objects.filter(pk__in=groups_without_other_plans_pk)
         # Find the pcs in the groups
         pcs_in_groups_pk = list(set(groups.values_list("pcs", flat=True)))
         pcs_in_groups = PC.objects.filter(pk__in=pcs_in_groups_pk)
