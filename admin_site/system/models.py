@@ -683,6 +683,7 @@ class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
+    # To have a consistent, unique reference to a script locally and across servers
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
     )

@@ -860,6 +860,45 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return reverse("script", args=[self.site.uid, self.script.pk])
 
 
+class GlobalScriptRedirectID(RedirectView):
+    permanent = True
+    query_string = True
+    pattern_name = "script"
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+
+        script = get_object_or_404(Script, pk=kwargs["script_pk"])
+        # No need to support this for local scripts
+        if script.site:
+            return "/"
+        else:  # If the script is global
+            user_sites = user.bibos_profile.sites.all()
+
+            # If a user is a member of multiple sites, just randomly pick the first one
+            kwargs["slug"] = user_sites.first().uid
+
+            return super().get_redirect_url(*args, **kwargs)
+
+
+class GlobalScriptRedirectUID(RedirectView):
+    permanent = True
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+
+        script = get_object_or_404(Script, uid=kwargs["script_uid"])
+        # No need to support this for local scripts
+        if script.site:
+            return "/"
+        else:  # If the script is global
+            # If a user is a member of multiple sites, just randomly pick the first one
+            first_site_uid = user.bibos_profile.sites.all().first().uid
+
+            return reverse("script", args=[first_site_uid, script.pk])
+
+
 class ScriptRun(SiteView):
     action = None
     form = None

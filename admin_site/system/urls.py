@@ -35,6 +35,8 @@ from system.views import (
     ScriptRedirect,
     ScriptRun,
     ScriptUpdate,
+    GlobalScriptRedirectID,
+    GlobalScriptRedirectUID,
     SecurityEventSearch,
     SecurityEventsUpdate,
     SecurityEventsView,
@@ -263,6 +265,16 @@ urlpatterns = [
         r"^site/(?P<slug>[^/]+)/scripts/new/", ScriptCreate.as_view(), name="new_script"
     ),
     url(r"^site/(?P<slug>[^/]+)/scripts/", ScriptRedirect.as_view(), name="scripts"),
+    url(
+        r"^scripts/(?P<script_pk>\d+)/",
+        GlobalScriptRedirectID.as_view(),
+        name="script_redirect_id",
+    ),
+    url(
+        r"^scripts/uid/(?P<script_uid>[^/]+)/",
+        GlobalScriptRedirectUID.as_view(),
+        name="script_redirect_uid",
+    ),
     # Users
     url(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
     url(r"^site/(?P<site_uid>[^/]+)/new_user/$", UserCreate.as_view(), name="new_user"),
