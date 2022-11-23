@@ -119,6 +119,7 @@ class ScriptAdmin(admin.ModelAdmin):
         "jobs_per_site",
         "jobs_per_site_for_the_last_year",
         "associations_to_groups_per_site",
+        "uid",
         "executable_code",
     )
     filter_horizontal = ("tags",)
