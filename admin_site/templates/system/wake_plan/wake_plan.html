@@ -22,13 +22,24 @@
         <p><strong>Bemærk</strong></p>
         <ul>
           <li>
-            Hvis en dag har sluk-tidspunkt før start-tidspunktet, fortolkes det som nedlukning dagen efter.
-            Dette kan bruges til at planlægge nedlukning efter midnat.
+            En gruppe kan kun være tilmeldt en tidsplan.
+          </li>
+          <li>
+            En tidsplan er gældende for alle computere i de <strong>Grupper</strong>,
+            som er tilmeldt tidsplanen.
+          </li>
+          <li>
+            En computer kan kun modtage en ny eller opdateret tidsplan,
+            hvis den er tændt.
+          </li>
+          <li>
+            Tidsplanen anvender tidsindstillingerne på <strong>de individuelle maskiner</strong>.
           </li>
           <li>
             Se guiden til brug af tænd/sluk tidsplaner for yderligere information.
           </li>
         </ul>
+          {# <a href="{% url 'script' site.uid suspend_pk %}">Dvale-scriptet kan findes her.</a> #}
       </div>
 
       <div class="row" style="margin-left: 0;">
