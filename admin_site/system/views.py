@@ -386,12 +386,16 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
     def get_queryset(self):
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
-        queryset = Job.objects.all()
+        if not self.request.user.is_superuser:
+            queryset = Job.objects.filter(
+                Q(batch__script__is_hidden=False)
+                | Q(batch__script__uid="suspend_after_time")
+            )
+        else:
+            queryset = Job.objects.all()
         params = self.request.GET
 
         query = {"batch__site": site}
-        if not self.request.user.is_superuser:
-            query["batch__script__is_hidden"] = False
 
         if "status" in params:
             query["status__in"] = params.getlist("status")
@@ -1795,7 +1799,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         plan_with_overlap = ""
         if event.date_end < event.date_start:
             valid = False
-        if valid and event.wake_week_plans.all():
+        if valid and event.id and event.wake_week_plans.all():
             for plan in event.wake_week_plans.all():
                 other_events = plan.wake_change_events.exclude(pk=event.pk)
                 for other_event in other_events:
