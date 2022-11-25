@@ -21,7 +21,7 @@ from system.views import (
     PCGroupUpdate,
     PCUpdate,
     WakePlanCreate,
-    WakePlanCopy,
+    WakePlanDuplicate,
     WakePlanDelete,
     WakePlanRedirect,
     WakePlanUpdate,
@@ -200,8 +200,8 @@ urlpatterns = [
     ),
     url(
         r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/copy/$",
-        WakePlanCopy.as_view(),
-        name="wake_plan_copy",
+        WakePlanDuplicate.as_view(),
+        name="wake_plan_duplicate",
     ),
     # Wake Change Events
     url(
