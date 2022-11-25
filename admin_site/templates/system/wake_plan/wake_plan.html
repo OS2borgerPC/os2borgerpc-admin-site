@@ -22,15 +22,13 @@
         <p><strong>Bemærk</strong></p>
         <ul>
           <li>
-            En gruppe kan kun være tilmeldt en tidsplan.
+            En gruppe kan kun være tilmeldt én tidsplan.
           </li>
           <li>
-            En tidsplan er gældende for alle computere i de <strong>Grupper</strong>,
-            som er tilmeldt tidsplanen.
+            En tidsplan er gældende for alle computere i de <strong>Grupper</strong>, som er tilmeldt tidsplanen.
           </li>
           <li>
-            En computer kan kun modtage en ny eller opdateret tidsplan,
-            hvis den er tændt.
+            En computer kan kun modtage en ny eller opdateret tidsplan, hvis den er tændt.
           </li>
           <li>
             Tidsplanen anvender tidsindstillingerne på <strong>de individuelle maskiner</strong>.
@@ -59,6 +57,10 @@
           {{form.name|as_crispy_field}}
 
           {{form.sleep_state|as_crispy_field}}
+
+          <button type="button" class="material-icons btn d-table-cell align-middle" data-container="body" title='Nogle dvaletilstande er mere strømbesparende end andre, men noget hardware understøtter ikke de mest strømbesparende tilstande. Vi foreslår at starte med "Off" (den mest strømbesparende), og hvis det ikke virker så prøv dem i rækkefølgen: mem, freeze, standby' data-toggle="popover" data-placement="right">
+            help_outline
+          </button>
 
           <p class="mt-4"><strong>Ugeplan</strong></p>
           <p>Konfigurer tænd og sluk for den faste ugeplan</p>
@@ -250,7 +252,7 @@
         <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
         {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
         {% if selected_plan.id %}
-          <a class="btn btn-secondary" {% if wake_plan_access %} href="{% url 'wake_plan_copy' site.uid selected_plan.id %}" {% endif %}>Kopier tidsplan</a>
+          <a class="btn btn-secondary" {% if wake_plan_access %} href="{% url 'wake_plan_duplicate' site.uid selected_plan.id %}" {% endif %}>Duplikér tidsplan</a>
         {% endif %}
       </fieldset>
     </div>

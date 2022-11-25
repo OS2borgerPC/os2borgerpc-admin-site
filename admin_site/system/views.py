@@ -1738,7 +1738,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
         return response
 
 
-class WakePlanCopy(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
+class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = WakeWeekPlan
 
     def get_redirect_url(self, **kwargs):
