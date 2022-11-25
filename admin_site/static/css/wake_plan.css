@@ -73,3 +73,7 @@ tr {
 #div_id_sleep_state label {
   display: block;
 }
+
+#id_sleep_state {
+  width: 85%;
+}
