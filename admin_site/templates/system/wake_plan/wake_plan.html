@@ -36,8 +36,10 @@
           <li>
             Se guiden til brug af tænd/sluk tidsplaner for yderligere information.
           </li>
+          <li>
+            <a href="{% url 'script_redirect_uid' 'suspend_after_time' %}">Dvale-scriptet kan findes her.</a>
+          </li>
         </ul>
-          <a href="{% url 'script_redirect_uid' 'suspend_after_time' %}">Dvale-scriptet kan findes her.</a>
       </div>
 
       <div class="row" style="margin-left: 0;">
@@ -211,9 +213,7 @@
           <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
-          {# Wake events #}
-
-
+          {# Wake change events #}
           <a class="btn" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">today</span>Håndter undtagelser</a>
 
           <fieldset class="col-12 col-lg-12">

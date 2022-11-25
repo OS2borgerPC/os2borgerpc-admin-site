@@ -1216,17 +1216,20 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         selected_wake_change_event_ids = form["wake_change_events"].value()
         if not selected_wake_change_event_ids:
             selected_wake_change_event_ids = []
+        # Fetching the entire object for this picklist so we can change the name for the event to include date/time info
         # template picklist requires the form pk, name, url (u)id.
-        context["available_wake_change_events"] = (
-            all_wake_change_events_set.exclude(pk__in=selected_wake_change_event_ids)
-            .order_by("-date_start", "name")
-            .values_list("pk", "name", "pk")
-        )
-        context["selected_wake_change_events"] = (
-            all_wake_change_events_set.filter(pk__in=selected_wake_change_event_ids)
-            .order_by("-date_start", "name")
-            .values_list("pk", "name", "pk")
-        )
+        available_wake_change_events = all_wake_change_events_set.exclude(
+            pk__in=selected_wake_change_event_ids
+        ).order_by("-date_start", "name")
+        context["available_wake_change_events"] = [
+            (a.pk, a, a.pk) for a in available_wake_change_events
+        ]
+        selected_wake_change_events = all_wake_change_events_set.filter(
+            pk__in=selected_wake_change_event_ids
+        ).order_by("-date_start", "name")
+        context["selected_wake_change_events"] = [
+            (s.pk, s, s.pk) for s in selected_wake_change_events
+        ]
 
         # Group picklist related:
         all_groups_set = context["site"].groups.all()
