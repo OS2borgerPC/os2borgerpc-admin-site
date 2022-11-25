@@ -103,4 +103,7 @@ if (document.getElementById("wake-change-plan")) {
 }
 
 // TODO: If a new wakechangeevent is saved, set a cookie with its ID and name, and then this page could have a focus listener that add it to the picklist as an option?
-
+// Activate the info button popover
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});

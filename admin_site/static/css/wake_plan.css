@@ -64,3 +64,12 @@ tr {
 #wake-change-event-name {
   width: 360px!important;
 }
+
+/* Sleep state info button */
+#div_id_sleep_state, #id_sleep_state {
+  display: inline;
+}
+
+#div_id_sleep_state label {
+  display: block;
+}
