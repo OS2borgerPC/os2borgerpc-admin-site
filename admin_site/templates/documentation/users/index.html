@@ -38,20 +38,10 @@
       <li>
         <strong>Brugertype</strong>:
         Valgmulighederne i dette felt afhænger af hvilken type bruger man selv
-        er logget ind som:
-        <ul>
-          <li>
-            <strong>Site-bruger</strong>:
-            Almindelig bruger uden specielle rettigheder.
-          </li>
-          <li>
-            <strong>Site-admin</strong>:
-            Bruger med adgang til at tilpasse Scripts og brugere for et site.
-          </li>
-        </ul>
-        Som site-admin får man kun mulighed for at vælge mellem site-bruger
-        og site-admin og som site-bruger får man ikke mulighed for at redigere
-        værdien i feltet.
+        er logget ind som:<br>
+        Kun site-admins har mulighed for at redigere <em>brugertyper</em>.
+        <br/>
+        Se informationer om de forskellige <em>Brugertyper</em> længere nede.
       </li>
     </ul>
   </p>
@@ -74,4 +64,35 @@
     bedt om at bekræfte sletningen og hvis man gør det vil brugeren blive
     slettet.
   </p>
+  <h2>Brugertyper</h2>
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <td>Brugertype</td>
+        <td>Brugere</td>
+        <td>Scripts</td>
+        <td>Sikkerhedsregler</td>
+        <td>Grupper</td>
+        <td>Computere</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Site-Admin</td>
+        <td>Alle rettigheder</td>
+        <td>Alle rettigheder</td>
+        <td>Alle rettigheder</td>
+        <td>Alle rettigheder</td>
+        <td>Alle rettigheder</td>
+      </tr>
+      <tr>
+        <td>Site-Bruger</td>
+        <td>Kan redigere egen bruger, bortset fra at ændre brugertype. Kan hverken oprette, redigere eller slette andre brugere.</td>
+        <td>Kan køre og oprette scripts. Kan ikke redigere eller slette dem.</td>
+        <td>Kan oprette og redigere sikkerhedsregler. Kan ikke slette dem.</td>
+        <td>Alle rettigheder</td>
+        <td>Alle rettigheder</td>
+      </tr>
+    </tbody>
+  </table>
 {% endblock %}
