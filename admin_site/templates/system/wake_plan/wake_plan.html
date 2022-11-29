@@ -49,7 +49,7 @@
 
         <article class="col-lg-4 form-switch" id="week-plan-container">
 
-          <label>Tidsplan status*</label><br/>
+          <label class="mb-2">Tidsplan status*</label><br/>
           <div class="d-table-cell">
             {{form.enabled}}
             <label id="id_enabled_label" style="vertical-align: middle;">{% if selected_plan.enabled or not selected_plan %}Aktiv{% else %}Inaktiv{% endif %}</label>
@@ -64,7 +64,7 @@
             help_outline
           </button>
 
-          <p class="mt-4"><strong>Ugeplan</strong></p>
+          <h2 class="mt-4"><strong>Ugeplan</strong></h2>
           <p>Konfigurer tænd og sluk for den faste ugeplan</p>
           <table id="week-plan" class="form-switch table">
             <thead>
@@ -210,11 +210,11 @@
         </article>
 
         <aside class="col-lg-8 col-xl-4 flex-grow-1">
-          <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
+          <h2 class="mt-4"><strong>Lukkedage og undtagelser</strong></h2>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
           {# Wake change events #}
-          <a class="btn" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">today</span>Håndter undtagelser</a>
+          <a class="btn btn-secondary" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">today</span>Håndter undtagelser</a>
 
           <fieldset class="col-12 col-lg-12">
 
@@ -229,7 +229,7 @@
 
           </fieldset>
 
-          <p class="mt-4 mb-0"><strong>Grupper der følger tidsplanen</strong></p>
+          <h2 class="mt-4 mb-0"><strong>Grupper der følger tidsplanen</strong></h2>
 
           {# PCGroup picklist #}
           <fieldset class="col-12 col-lg-12">
