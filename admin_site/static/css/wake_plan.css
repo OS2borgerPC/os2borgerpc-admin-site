@@ -1,3 +1,17 @@
+article {
+  min-width: 480px;
+  min-width: 600px;
+}
+
+tr {
+  border-top: 0!important;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: 100;
+}
+
 .form-switch .form-check-input {
   margin-left: 0;
 }
@@ -8,8 +22,8 @@
 
 .dash {
   width: 0;
-  padding-left: 0!important;
-  padding-right: 0!important;
+  padding-left: 10px!important;
+  padding-right: 10px!important;
 }
 
 .table {
@@ -40,18 +54,6 @@ td.after-dash {
 
 .checkbox-text {
   padding: 0.75rem 2rem 0.75rem 0rem!important;
-}
-
-article {
-  min-width: 480px;
-}
-
-tr {
-  border-top: 0!important;
-}
-
-#week-plan-container {
-  min-width: 600px;
 }
 
 /* Sleep state info button */
