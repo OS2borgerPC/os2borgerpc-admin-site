@@ -22,22 +22,23 @@
         <p><strong>Bemærk</strong></p>
         <ul>
           <li>
-            En gruppe kan kun være tilmeldt én tidsplan.
+            Tidsplaner skal knyttes til <strong>Grupper</strong>, og en <strong>Gruppe</strong> kan kun være tilmeldt én tidsplan.
           </li>
           <li>
-            En tidsplan er gældende for alle computere i de <strong>Grupper</strong>, som er tilmeldt tidsplanen.
+            En tidsplan er gældende for alle <strong>Computere</strong> i de <strong>Grupper</strong>, som er tilmeldt tidsplanen.
           </li>
           <li>
-            En computer kan kun modtage en ny eller opdateret tidsplan, hvis den er tændt.
+            En <strong>Computer</strong> kan kun modtage en ny eller opdateret tidsplan, hvis den er tændt.
           </li>
           <li>
-            Tidsplanen anvender tidsindstillingerne på <strong>de individuelle maskiner</strong>.
+            Tidsplanen anvender tidsindstillingerne på <strong>de individuelle Computere</strong>.
           </li>
           <li>
             Se guiden til brug af tænd/sluk tidsplaner for yderligere information.
           </li>
           <li>
-            <a href="{% url 'script_redirect_uid' 'suspend_after_time' %}">Dvale-scriptet kan findes her.</a>
+            Om nogle af <strong>Computerne</strong> også skal gå i dvale ved inaktivitet styres ikke herfra, men i stedet ved at køre
+            <a href="{% url 'script_redirect_uid' 'suspend_after_time' %}">Dvale-scriptet.</a>
           </li>
         </ul>
       </div>
