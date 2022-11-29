@@ -1783,9 +1783,10 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         event = self.object
         context["selected_event"] = event
+        # Note: The sorting here needs to be the same in WakeChangeEventRedirect
         context["wake_change_events_list"] = WakeChangeEvent.objects.filter(
             site=context["site"]
-        ).order_by("-date_start", "name")
+        ).order_by("-date_start", "name", "pk")
 
         context["wake_plan_access"] = (
             True
@@ -1827,8 +1828,9 @@ class WakeChangeEventRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["site_uid"])
 
+        # Note: The sorting here needs to be the same in WakeChangeEventBaseMixin
         wake_change_events = WakeChangeEvent.objects.filter(site=site).order_by(
-            "-date_start"
+            "-date_start", "name", "pk"
         )
 
         if wake_change_events.exists():
