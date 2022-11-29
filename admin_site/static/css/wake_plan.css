@@ -50,19 +50,8 @@ tr {
   border-top: 0!important;
 }
 
-#wake-change-plan .wake-change-event-form input {
-  border: 1px solid #ccc;
-  padding: 10px;
-  width: 130px;
-}
-
-#wake-change-plan tbody td input {
-  margin-top: 20px
-  vertical-align: middle;
-}
-
-#wake-change-event-name {
-  width: 360px!important;
+#week-plan-container {
+  min-width: 600px;
 }
 
 /* Sleep state info button */
@@ -76,4 +65,21 @@ tr {
 
 #id_sleep_state {
   width: 85%;
+}
+
+/* Wake change events */
+
+#wake-change-plan .wake-change-event-form input {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 130px;
+}
+
+#wake-change-plan tbody td input {
+  margin-top: 20px
+  vertical-align: middle;
+}
+
+#wake-change-event-name {
+  width: 360px!important;
 }
