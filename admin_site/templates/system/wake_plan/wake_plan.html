@@ -44,10 +44,10 @@
 
       <div class="row" style="margin-left: 0;">
 
-        {# TODO: Verify that it works with the form errors #}
+        {# TODO: Make it work with the form errors #}
         {{form.errors}}
 
-        <article class="col-lg-4 form-switch">
+        <article class="col-lg-4 form-switch" id="week-plan-container">
 
           <label>Tidsplan status*</label><br/>
           <div class="d-table-cell">
@@ -209,7 +209,7 @@
 
         </article>
 
-        <aside class="col-lg-8">
+        <aside class="col-lg-8 col-xl-4 flex-grow-1">
           <p class="mt-4"><strong>Lukkedage og undtagelser</strong></p>
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
 
