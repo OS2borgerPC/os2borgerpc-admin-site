@@ -1,102 +1,100 @@
-const week_plan = document.getElementById("week-plan")
-const wake_change_events = document.getElementById("wake-change-events")
-const week_plan_offset = 0
-const wake_change_events_offset = 2
+const WEEK_PLAN = document.getElementById("week-plan")
+const WAKE_PLAN_FROM_URL_KEY = "last_plan_id"
 
-function week_day_on(el, on) {
+function weekDayOn(el, on) {
 
-  const start_time = el.parentElement.parentElement.children[3]
-  const start_time_input = el.parentElement.parentElement.children[3].firstElementChild
-  const separator = el.parentElement.parentElement.children[4]
-  const end_time = el.parentElement.parentElement.children[5]
-  const end_time_input = el.parentElement.parentElement.children[5].firstElementChild
-  const on_off_text = el.parentElement.parentElement.children[2].firstElementChild
+  const START_TIME = el.parentElement.parentElement.children[3]
+  const START_TIME_INPUT = el.parentElement.parentElement.children[3].firstElementChild
+  const SEPARATOR = el.parentElement.parentElement.children[4]
+  const END_TIME = el.parentElement.parentElement.children[5]
+  const END_TIME_INPUT = el.parentElement.parentElement.children[5].firstElementChild
+  const ON_OFF_TEXT = el.parentElement.parentElement.children[2].firstElementChild
 
   if (on) {
-    start_time.style.visibility = "visible"
-    start_time_input.setAttribute('required',true)
-    separator.style.visibility = "visible"
-    end_time.style.visibility = "visible"
-    end_time_input.setAttribute('required',true)
-    on_off_text.innerText = "Tændt"
+    START_TIME.style.visibility = "visible"
+    START_TIME_INPUT.setAttribute('required',true)
+    SEPARATOR.style.visibility = "visible"
+    END_TIME.style.visibility = "visible"
+    END_TIME_INPUT.setAttribute('required',true)
+    ON_OFF_TEXT.innerText = "Tændt"
 
   }
   else {
-    start_time.style.visibility = "hidden"
-    start_time_input.removeAttribute('required')
-    separator.style.visibility = "hidden"
-    end_time.style.visibility = "hidden"
-    end_time_input.removeAttribute('required')
-    on_off_text.innerText = "Slukket"
+    START_TIME.style.visibility = "hidden"
+    START_TIME_INPUT.removeAttribute('required')
+    SEPARATOR.style.visibility = "hidden"
+    END_TIME.style.visibility = "hidden"
+    END_TIME_INPUT.removeAttribute('required')
+    ON_OFF_TEXT.innerText = "Slukket"
   }
 }
 
 // Handling the week plan switches
 // Den her håndterer da også undtagelsernes switches/toggles
-function checkbox_open_close_handler(event) {
-  const tg = event.target
+function checkboxOpenCloseHandler(event) {
+  const TG = event.target
 
-  if (tg.type == "checkbox") {
+  if (TG.type == "checkbox") {
 
-    if (tg.checked) {
-      week_day_on(tg, true)
+    if (TG.checked) {
+      weekDayOn(TG, true)
     }
-    else if (!tg.checked) {
-      week_day_on(tg, false)
+    else if (!TG.checked) {
+      weekDayOn(TG, false)
     }
   }
 }
 
 // Week plan page specific
-if (week_plan) {
-  week_plan.addEventListener("click", checkbox_open_close_handler)
+if (WEEK_PLAN) {
+  WEEK_PLAN.addEventListener("click", checkboxOpenCloseHandler)
 
   // By default all dates are seen as "on" - this toggles those off to off for the week plan
-  for (let day of week_plan.tBodies[0].children) {
+  for (let day of WEEK_PLAN.tBodies[0].children) {
     const checkbox = day.getElementsByClassName('checkbox')[0]
     if (! checkbox.checked) {
-      week_day_on(checkbox, false)
+      weekDayOn(checkbox, false)
     }
     else {
-      week_day_on(checkbox, true)
+      weekDayOn(checkbox, true)
     }
   }
 }
 
-const checkbox_enabled = document.getElementById("id_enabled")
-const checkbox_enabled_label = document.getElementById("id_enabled_label")
-if (checkbox_enabled) { // Don't attempt to set this listener if we're on a subpage where this doesn't exist
-  function set_plan_state_text(on) {
+const CHECKBOX_ENABLED = document.getElementById("id_enabled")
+const CHECKBOX_ENABLED_LABEL = document.getElementById("id_enabled_label")
+if (CHECKBOX_ENABLED) { // Don't attempt to set this listener if we're on a subpage where this doesn't exist
+  function setPlanStateText(on) {
     if (on) {
-      checkbox_enabled_label.innerText = "Aktiv"
+      CHECKBOX_ENABLED_LABEL.innerText = "Aktiv"
     }
-    else checkbox_enabled_label.innerText = "Inaktiv"
+    else CHECKBOX_ENABLED_LABEL.innerText = "Inaktiv"
   }
 
-  checkbox_enabled.addEventListener('click', function() {
-    if (checkbox_enabled.checked) set_plan_state_text(true)
-    else set_plan_state_text(false)
+  CHECKBOX_ENABLED.addEventListener('click', function() {
+    if (CHECKBOX_ENABLED.checked) setPlanStateText(true)
+    else setPlanStateText(false)
   })
 }
 
 // Wake change event specific
 if (document.getElementById("wake-change-plan")) {
 
-  // Set all times required for altered hours wake change events
-  const times = document.getElementsByClassName("wake-change-event-time")
-  for (let time of times) {
+  // Set all TIMES required for altered hours wake change events
+  const TIMES = document.getElementsByClassName("wake-change-event-time")
+  for (let time of TIMES) {
     time.firstElementChild.setAttribute('required',true)
   }
 
   // Set the end date to the start date by default, if end date is empty, to make it faster to make intervals and
   // especially individual days
-  const start_el = document.getElementById("id_date_start")
-  const end_el = document.getElementById("id_date_end")
+  const START_EL = document.getElementById("id_date_start")
+  const END_EL = document.getElementById("id_date_end")
 
-  if (start_el) {
-    start_el.addEventListener('change', function() {
-      if (end_el.value == "") {
-        end_el.value = start_el.value
+  if (START_EL) {
+    START_EL.addEventListener('change', function() {
+      if (END_EL.value == "") {
+        END_EL.value = START_EL.value
       }
     })
   }
@@ -107,3 +105,17 @@ if (document.getElementById("wake-change-plan")) {
 $(document).ready(function(){
   $('[data-toggle="popover"]').popover();
 });
+
+// Store current plan_id in SessionStorage
+$("#custom_wake_plans").click(function(){
+  sessionStorage.setItem(
+    WAKE_PLAN_FROM_URL_KEY,
+    $(location).attr('href')
+    )
+});
+
+function ReturnToLastVisitedWakePlan() {
+  location.assign(
+    sessionStorage.getItem(WAKE_PLAN_FROM_URL_KEY)
+    )
+}
