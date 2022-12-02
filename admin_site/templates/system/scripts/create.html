@@ -10,7 +10,7 @@
 
   <div class="container-fluid main sublevelmain">
     <h2 class="divideheader">
-      Opret script
+      Opret {% if is_security %}sikkerheds{% endif %}script
     </h2>
 
     <form method="post"
@@ -27,16 +27,16 @@
         {% include 'notification.html' %}
       </div>
 
-      <input type="submit" class="btn btn-primary" value="Opret script">
+      <input type="submit" class="btn btn-primary" value="Opret {% if is_security %}sikkerheds{% endif %}script">
       {% if is_security %}
         <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
       {% else %}
         <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
       {% endif %}
-      
+
       {% include 'system/scripts/form.html' %}
     </form>
-  </div>  
+  </div>
 
 {% endblock %}
 

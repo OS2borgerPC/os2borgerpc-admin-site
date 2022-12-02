@@ -1897,6 +1897,10 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                                 self.request.user,
                                 type="set",
                             )
+
+            set_notification_cookie(
+                response, _("Wake Change Event %s updated") % self.object.name
+            )
         else:
             response = self.form_invalid(form)
             if overlapping_event:
