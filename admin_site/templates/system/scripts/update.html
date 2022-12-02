@@ -3,11 +3,11 @@
 {% block subnav %}
 <div class="sublevelnav">
   <div class="listutils">
-    <button 
-      class="btn btn-link" 
-      data-bs-target="#addNewScript" 
-      type="button" 
-      data-bs-toggle="modal" 
+    <button
+      class="btn btn-link"
+      data-bs-target="#addNewScript"
+      type="button"
+      data-bs-toggle="modal"
       title="Tilføj nyt script">
       <span class="material-icons">add</span>
       Tilføj nyt
@@ -17,7 +17,7 @@
       Script
       {% endif %}
     </button>
-  
+
     <!-- Search box -->
     <div class="mx-3 my-2">
       <div class="input-group">
@@ -29,10 +29,10 @@
         </span>
       </div>
     </div>
-    
+
     {% include 'system/scripts/navigation.html' %}
     {% include 'system/scripts/search_result.html' %}
-    
+
   </div>
 </div>
 {% endblock %}
@@ -52,8 +52,8 @@
       <em>{{ selected_script.name }}</em>
     </h2>
 
-    <form method="post" 
-          name="scriptform" 
+    <form method="post"
+          name="scriptform"
           id="scriptform"
           action="{% url script_url site.uid selected_script.pk %}"
           enctype="multipart/form-data">
@@ -96,14 +96,14 @@
     </script>
     {% endif %}
 
-  </div>  
+  </div>
 
   <!-- MODAL WINDOW FOR NEW SCRIPT REGISTRATION: -->
-  
+
   <div id="addNewScript" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form 
+        <form
           {% if is_security %}
           action="{% url 'new_security_script' site.uid %}"
           {% else %}
@@ -113,14 +113,14 @@
           id="create_script_form" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="modal-header">
-            <h3>Tilføj nyt script</h3>
+            <h3>Tilføj nyt {% if is_security %}sikkerheds{% endif %}script</h3>
             <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
             {% include 'system/scripts/form.html' with form=create_form disable_inputs="yes" %}
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Gem">
+            <input type="submit" class="btn btn-primary" value="Opret {% if is_security %}sikkerheds{% endif %}script">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuller</button>
           </div>
         </form>

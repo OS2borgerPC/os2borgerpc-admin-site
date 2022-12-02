@@ -211,7 +211,9 @@
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugentlige tidsplan</p>
 
           {# Wake change events #}
-          <a id="custom_wake_plans" class="btn btn-secondary" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">today</span>Håndter undtagelser</a>
+          <a id="custom_wake_plans" class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-icons">door_front</span>Opret lukkedag</a>
+          <a id="custom_wake_plans" class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-icons">meeting_room</span>Opret ændrede åbningstider</a>
+          <a id="custom_wake_plans" class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">edit</span>Rediger undtagelser</a>
 
           <fieldset class="col-12 col-lg-12">
 
@@ -222,7 +224,7 @@
                 <span id="total-wake_change_events"></span>
               </span>
             </div>
-            {% include 'widgets/picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text='Tilføj undtagelse til tidsplan' remove_text='Fjern undtagelse fra tidsplan' site_url=site.uid target_section='wake_change_event' %}
+            {% include 'widgets/picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text='Tilknyt undtagelse til tidsplan' remove_text='Fjern undtagelse fra tidsplan' site_url=site.uid target_section='wake_change_event' %}
 
           </fieldset>
 
@@ -238,7 +240,7 @@
                 <span id="total-groups"></span>
               </span>
             </div>
-            {% include 'widgets/picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til tidsplan' remove_text='Fjern gruppe fra tidsplan' site_url=site.uid target_section='groups' %}
+            {% include 'widgets/picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilknyt gruppe til tidsplan' remove_text='Fjern gruppe fra tidsplan' site_url=site.uid target_section='groups' %}
 
           </fieldset>
 
