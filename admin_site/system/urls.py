@@ -317,6 +317,14 @@ urlpatterns = [
         ),
     ),
     url(
+        r"^documentation/wake_plan_user_guide/",
+        RedirectView.as_view(
+            url="https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Guide_til_brug_af_strømbesparingsfunktioner.pdf"
+        ),
+        name="wake_plan_user_guide",
+    ),
+    url(
         r"^documentation/creating_security_problems/",
         RedirectView.as_view(
             url="https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"

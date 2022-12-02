@@ -22,7 +22,11 @@
         <p><strong>Bemærk</strong></p>
         <ul>
           <li>
-            Tidsplaner skal knyttes til <strong>Grupper</strong>, og en <strong>Gruppe</strong> kan kun være tilmeldt én tidsplan.
+            Hvis du er ubekendt med Tænd/Sluk tidsplan-funktionaliteten, vil vi foreslå at starte med at læse vores
+            <a href="{% url 'wake_plan_user_guide' %}" target="_blank">Brugerguide til strømsparefunktioner i OS2borgerPC</a>.
+          </li>
+          <li>
+            Tidsplaner skal knyttes til <strong>Grupper</strong> før de tager effekt, og en <strong>Gruppe</strong> kan kun være tilmeldt én tidsplan.
           </li>
           <li>
             En tidsplan er gældende for alle <strong>Computere</strong> i de <strong>Grupper</strong>, som er tilmeldt tidsplanen.
@@ -32,9 +36,6 @@
           </li>
           <li>
             Tidsplanen anvender tidsindstillingerne på <strong>de individuelle Computere</strong>.
-          </li>
-          <li>
-            Se guiden til brug af tænd/sluk tidsplaner for yderligere information.
           </li>
           <li>
             Om nogle af <strong>Computerne</strong> også skal gå i dvale ved inaktivitet styres ikke herfra, men i stedet ved at køre
@@ -212,7 +213,7 @@
 
         <aside class="col-lg-8 col-xl-4 flex-grow-1">
           <h2 class="mt-4"><strong>Lukkedage og undtagelser</strong></h2>
-          <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugeplan</p>
+          <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugentlige tidsplan</p>
 
           {# Wake change events #}
           <a id="custom_wake_plans" class="btn btn-secondary" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">today</span>Håndter undtagelser</a>
