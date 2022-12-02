@@ -45,7 +45,7 @@ var BibOS
           if (descriptor["type"] == "error") {
             notification.addClass("alert-danger")
           } else {
-            notification.addClass("alert-warning")
+            notification.addClass("alert-success")
           }
           notification.toggleClass(["d-block", "d-none"])
           notification.html(descriptor["message"]).fadeIn()
