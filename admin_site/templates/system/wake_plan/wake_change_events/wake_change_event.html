@@ -12,7 +12,7 @@
           {% endif %}
       {{selected_event.name|default:"Ny undtagelse"}}
     </h2>
-        <button class="btn btn-secondary me-3 mt-3 mb-3" onClick="ReturnToLastVisitedWakePlan()">
+        <button class="btn btn-secondary me-3 mt-3 mb-3" onClick="window.history.back()">
           <span class="material-icons">
           arrow_back
           </span>
