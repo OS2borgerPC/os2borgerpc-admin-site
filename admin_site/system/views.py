@@ -865,7 +865,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
 
 class GlobalScriptRedirectID(RedirectView):
-    permanent = True
+    permanent = False
     query_string = True
     pattern_name = "script"
 
@@ -886,7 +886,7 @@ class GlobalScriptRedirectID(RedirectView):
 
 
 class GlobalScriptRedirectUID(RedirectView):
-    permanent = True
+    permanent = False
     query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
