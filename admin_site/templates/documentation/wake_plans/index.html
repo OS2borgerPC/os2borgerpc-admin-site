@@ -16,11 +16,20 @@
   </p>
   <h2>Dvale-script</h2>
   <p>
-    (Ikke tilgængeligt på nuværende tidspunkt)
     Dvale-scriptet kan bruges til at indstille computere til at gå i dvale efter
-    et antal minutters inaktivitet. Scriptet tager to argumenter: hvorvidt funktionen
-    skal aktiveres, og antallet af minutter med inaktivitet før maskinen går i dvale.
+    et antal minutters inaktivitet. Der vises en valgfri advarsel, inden computeren går i dvale.
+    Scriptet tager fem argumenter: hvorvidt funktionen
+    skal aktiveres, antal minutter med inaktivitet før advarslen vises,
+    antal minutter med inaktivitet før maskinen går i dvale,
+    teksten i advarslen og teksten på knappen i advarslen.
+    Hvis de to sidste tekst-relaterede input ikke angives, benyttes standardtekster.
     Scriptet logger automatisk borgeren ud, inden maskinen går i dvale.
+  </p>
+  <p>
+    Dvale-scriptet kan også sætte maskinen i dvale, hvis den står inaktiv på login-skærmen.
+    Dette kræver dog, at scriptkørsel ved login er blevet slået til via
+    scriptet <a href="{% url 'script_redirect_id' '1064' %}">Login - Slå scriptkørsel ved login til/fra</a>.
+    Advarslen vises ikke på login-skærmen.
   </p>
   <p>
     Bemærk at USB-overvågning ikke kan være aktiv, mens en computer er i dvale.
