@@ -1798,6 +1798,9 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
             site=context["site"]
         ).order_by("-date_start", "name", "pk")
 
+        if event is not None:
+            context["wake_plan_list_for_event"] = event.wake_week_plans.all()
+
         context["wake_plan_access"] = (
             True
             if context["site"].feature_permission.filter(uid="wake_plan")
