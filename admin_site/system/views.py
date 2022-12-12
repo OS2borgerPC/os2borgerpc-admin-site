@@ -1021,6 +1021,16 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         script = self.get_object()
 
+        site = script.site
+        if (
+            not request.user.is_superuser
+            and request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
+            != 2
+        ):
+            raise PermissionDenied
+
         # Fetch the PCGroups for which it's an AssociatedScript before
         # we delete it from them
         # We create a list as the next command would change it
