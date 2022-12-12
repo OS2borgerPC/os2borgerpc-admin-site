@@ -43,18 +43,18 @@ Tænd- / Sluk-tidsplan
 
 {% block javascripts %}
   <script src="{% static 'js/wake_plan.js' %}"></script>
-  <script type="text/javascript">
-    $(function() {
-        /* If the site does not have permission to use wake_plans,
-        disable all wake_plan inputs*/
-        var permission = "{{wake_plan_access|safe}}"
-        if ( permission != 'True') {
-          inputs = document.querySelectorAll("input, button, select")
-          /* The starting index is 1 to avoid disabling the logout button*/
-          for (index = 1; index < inputs.length; index++) {
-            inputs[index].disabled = true
-          }
+  {# Function to check for permissions toa access wake plans
+     It's in here instead of the js file above to have access to djangos context #}
+  $(function() {
+      /* If the site does not have permission to use wake_plans,
+      disable all wake_plan inputs*/
+      var permission = "{{wake_plan_access|safe}}"
+      if ( permission != 'True') {
+        inputs = document.querySelectorAll("input, button, select")
+        /* The starting index is 1 to avoid disabling the logout button*/
+        for (index = 1; index < inputs.length; index++) {
+          inputs[index].disabled = true
         }
-    })
-</script>
+      }
+  })
 {% endblock %}
