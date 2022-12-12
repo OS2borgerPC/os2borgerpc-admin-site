@@ -12,12 +12,35 @@
           {% endif %}
       {{selected_event.name|default:"Ny undtagelse"}}
     </h2>
+        <button class="btn btn-secondary me-3 mt-3 mb-3" onClick="ReturnToLastVisitedWakePlan()">
+          <span class="material-icons">
+          arrow_back
+          </span>
+          Tilbage til tidsplan
+        </button>
         {% include 'notification.html' %}
-        <form method="post" accept-charset="utf-8">
+        <form method="post" accept-charset="utf-8" class="gray-box">
+
+      <div class="alert alert-info">
+        <p><strong>Info</strong></p>
+        <ul>
+          <li>
+            Herinde kan du oprette undtagelser til den faste tidsplan, og disse undtagelser tager præcedens.
+          </li>
+          <li>
+          {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
+            Ændrede åbningstider betyder at den i de angivne dage tænder og slukket på de for undtagelsen valgte
+            tidspunkter, fremfor de tidspunkter der står i den faste tidsplan.
+          {% else %}
+            Lukket betyder at computeren slet ikke tænder den eller de dage.
+          {% endif %}
+          </li>
+        </ul>
+      </div>
 
         {% csrf_token %}
-
-        <fieldset class="wake-change-event-form">
+        <div class="row gx-5">
+        <fieldset class="wake-change-event-form col-12 col-lg-3">
 
           <label>Navn</label><br/>
           {{form.name}}
@@ -60,9 +83,25 @@
 
         </fieldset>
 
-        <fieldset class="mt-3">
-          <input class="btn btn-primary me-3" type="submit" name="submit" value="Gem">
-          <input class="btn btn-secondary me-3" type="button" alt="Tilbage til " name="back_to_plan" value="Tilbage" onClick="ReturnToLastVisitedWakePlan()">
+        <fieldset class="col-12 col-lg-3">
+          {# WakeWeekPlan(s) #}
+          {% if wake_plan_list_for_event %}
+            <div class="mt-3">
+              <p>Tænd/sluk tidsplaner der anvender denne undtagelse</p>
+              <ul class="mt-2 list-group">
+                {% for plan in wake_plan_list_for_event %}
+                  <li class="list-group-item"><a href="{% url 'wake_plan' site.uid plan.pk %}">{{ plan }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </fieldset>
+        </div>
+
+        <fieldset class="mt-4">
+          {# TODO: Lav knap der både opretter den, tilføjer den til picklisten og automatisk går tilbage til wake plan #}
+          <input class="btn btn-primary me-3" id="submit-button" type="submit" name="submit" value="{% if "new" in request.resolver_match.url_name %}Opret{% else %}Gem ændringer {% endif %}">
+          <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
         </fieldset>
 
       </form>

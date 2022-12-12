@@ -69,15 +69,7 @@ class PCGroupForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     def clean(self):
-        cleaned_data = self.cleaned_data
-
-        cleaned_data_id = cleaned_data.get("id")
-        id_exists = self.Meta.model.objects.filter(id=cleaned_data_id).exists()
-
-        # self.instance.pk will be set if it's an update form
-        if not self.instance.pk and id_exists:
-            raise ValidationError(_("A group with this ID already exists."))
-        return cleaned_data
+        return self.cleaned_data
 
     def save(self, commit=True):
         instance = super().save(False)

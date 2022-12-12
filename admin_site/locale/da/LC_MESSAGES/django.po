@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-21 10:55+0100\n"
+"POT-Creation-Date: 2022-12-12 12:10+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -23,45 +23,43 @@ msgstr "Site-bruger"
 msgid "Site Admin"
 msgstr "Site-admin"
 
-#: system/admin.py:133
+#: system/admin.py:134
 msgid "Global"
 msgstr "Global"
 
-#: system/admin.py:145
+#: system/admin.py:146
 msgid "Jobs per site"
 msgstr "Jobs per site"
 
-#: system/admin.py:160
+#: system/admin.py:161
 msgid "Jobs per Site for the last year"
 msgstr "Jobs per site i det sidste år"
 
-#: system/admin.py:232
+#: system/admin.py:233
 msgid "Number of computers"
 msgstr "Antal computere"
 
-#: system/admin.py:233
+#: system/admin.py:234
 msgid "Number of KioskPC computers"
 msgstr "Antal KioskPC computere"
 
-#: system/admin.py:234
+#: system/admin.py:235
 msgid "Number of BorgerPC computers"
 msgstr "Antal BorgerPC computere"
 
-#: system/admin.py:266
+#: system/admin.py:267
 msgid "Site"
 msgstr "Site"
 
 #: system/forms.py:79
-#, fuzzy
-#| msgid "A group with this UID already exists."
 msgid "A group with this ID already exists."
-msgstr "En gruppe med dette UID eksisterer allerede."
+msgstr "En gruppe med dette ID eksisterer allerede."
 
 #: system/forms.py:134
 msgid "Usertype"
 msgstr "Brugertype"
 
-#: system/forms.py:138 system/models.py:984
+#: system/forms.py:138 system/models.py:988
 msgid "Password"
 msgstr "Adgangskode"
 
@@ -77,8 +75,8 @@ msgstr "De to adgangskoder skal være ens"
 msgid "A user with this username already exists."
 msgstr "En bruger med det brugernavn eksisterer allerede."
 
-#: system/mixins.py:9 system/models.py:134 system/models.py:572
-#: system/models.py:881 system/models.py:1249 system/models.py:1277
+#: system/mixins.py:9 system/models.py:134 system/models.py:575
+#: system/models.py:885 system/models.py:1253 system/models.py:1281
 msgid "created"
 msgstr "oprettet"
 
@@ -111,14 +109,14 @@ msgid "owner configuration"
 msgstr "ejer-konfiguration"
 
 #: system/models.py:127 system/models.py:214 system/models.py:245
-#: system/models.py:289 system/models.py:443 system/models.py:557
-#: system/models.py:673 system/models.py:685 system/models.py:768
-#: system/models.py:987 system/models.py:1092 system/models.py:1233
+#: system/models.py:292 system/models.py:446 system/models.py:560
+#: system/models.py:676 system/models.py:688 system/models.py:772
+#: system/models.py:991 system/models.py:1096 system/models.py:1237
 msgid "name"
 msgstr "navn"
 
-#: system/models.py:128 system/models.py:215 system/models.py:559
-#: system/models.py:687 system/models.py:1093
+#: system/models.py:128 system/models.py:215 system/models.py:562
+#: system/models.py:691 system/models.py:1097
 msgid "UID"
 msgstr "UID"
 
@@ -179,355 +177,337 @@ msgstr ""
 msgid "type"
 msgstr ""
 
-#: system/models.py:280
+#: system/models.py:283
 msgid "sleep_state:Standby"
 msgstr "Standby"
 
-#: system/models.py:281
+#: system/models.py:284
 msgid "sleep_state:Freeze"
 msgstr "Freeze"
 
-#: system/models.py:282
+#: system/models.py:285
 msgid "sleep_state:Mem"
 msgstr "Mem"
 
-#: system/models.py:283
+#: system/models.py:286
 msgid "sleep_state:Off"
 msgstr "Off"
 
-#: system/models.py:290
+#: system/models.py:293
 msgid "enabled"
 msgstr "aktiv"
 
-#: system/models.py:292
+#: system/models.py:295
 msgid "sleep state"
 msgstr "dvaletilstand"
 
-#: system/models.py:298
+#: system/models.py:301
 msgid "monday on"
 msgstr "mandag tænd"
 
-#: system/models.py:301
+#: system/models.py:304
 msgid "monday off"
 msgstr "mandag sluk"
 
-#: system/models.py:303
-#, fuzzy
-#| msgid "monday on"
+#: system/models.py:306
 msgid "monday open"
 msgstr "mandag tænd"
 
-#: system/models.py:305
+#: system/models.py:308
 msgid "tuesday on"
 msgstr "tirsdag tænd"
 
-#: system/models.py:308
+#: system/models.py:311
 msgid "tuesday off"
 msgstr "tirsdags luk"
 
-#: system/models.py:310
-#, fuzzy
-#| msgid "tuesday on"
+#: system/models.py:313
 msgid "tuesday open"
 msgstr "tirsdag tænd"
 
-#: system/models.py:312
+#: system/models.py:315
 msgid "wednesday on"
 msgstr "onsdag tænd"
 
-#: system/models.py:315
+#: system/models.py:318
 msgid "wednesday off"
 msgstr "onsdag sluk"
 
-#: system/models.py:317
-#, fuzzy
-#| msgid "wednesday on"
+#: system/models.py:320
 msgid "wednesday open"
 msgstr "onsdag tænd"
 
-#: system/models.py:319
+#: system/models.py:322
 msgid "thursday on"
 msgstr "torsdag tænd"
 
-#: system/models.py:322
+#: system/models.py:325
 msgid "thursday off"
 msgstr "torsdag sluk"
 
-#: system/models.py:324
-#, fuzzy
-#| msgid "thursday on"
+#: system/models.py:327
 msgid "thursday open"
 msgstr "torsdag tænd"
 
-#: system/models.py:326
+#: system/models.py:329
 msgid "friday on"
 msgstr "fredag tænd"
 
-#: system/models.py:329
+#: system/models.py:332
 msgid "friday off"
 msgstr "fredag sluk"
 
-#: system/models.py:331
-#, fuzzy
-#| msgid "friday on"
+#: system/models.py:334
 msgid "friday open"
 msgstr "fredag tænd"
 
-#: system/models.py:333
+#: system/models.py:336
 msgid "saturday on"
 msgstr "lørdag tænd"
 
-#: system/models.py:336
+#: system/models.py:339
 msgid "saturday off"
 msgstr "lørdag sluk"
 
-#: system/models.py:338
-#, fuzzy
-#| msgid "saturday on"
+#: system/models.py:341
 msgid "saturday open"
 msgstr "lørdag tænd"
 
-#: system/models.py:340
+#: system/models.py:343
 msgid "sunday on"
 msgstr "søndag tænd"
 
-#: system/models.py:343
+#: system/models.py:346
 msgid "sunday off"
 msgstr "søndag sluk"
 
-#: system/models.py:345
-#, fuzzy
-#| msgid "sunday on"
+#: system/models.py:348
 msgid "sunday open"
 msgstr "søndag tænd"
 
-#: system/models.py:352
+#: system/models.py:355
 msgid "wake change events"
-msgstr ""
+msgstr "undtagelser"
 
-#: system/models.py:445 system/models.py:562 system/models.py:689
-#: system/models.py:1094 system/models.py:1246
+#: system/models.py:448 system/models.py:565 system/models.py:693
+#: system/models.py:1098 system/models.py:1250
 msgid "description"
 msgstr "beskrivelse"
 
-#: system/models.py:556
+#: system/models.py:559
 msgid "MAC"
 msgstr "MAC"
 
-#: system/models.py:567
+#: system/models.py:570
 msgid "activated"
 msgstr "aktiveret"
 
-#: system/models.py:569
+#: system/models.py:572
 msgid "update required"
 msgstr "opdatering påkrævet"
 
-#: system/models.py:574
+#: system/models.py:577
 msgid "last seen"
 msgstr "seneste tjek-ind"
 
-#: system/models.py:576
+#: system/models.py:579
 msgid "location"
 msgstr "placering"
 
-#: system/models.py:697
+#: system/models.py:701
 msgid "executable code"
 msgstr "eksekverbar kode"
 
-#: system/models.py:700 system/models.py:1103
+#: system/models.py:704 system/models.py:1107
 msgid "security script"
 msgstr "sikkerhedsscript"
 
-#: system/models.py:704
-#, fuzzy
-#| msgid "description"
-msgid "hidden script"
-msgstr "beskrivelse"
-
 #: system/models.py:708
+msgid "hidden script"
+msgstr "skjult script"
+
+#: system/models.py:712
 msgid "maintained by Magenta"
 msgstr "vedligeholdt af Magenta"
 
-#: system/models.py:785 system/models.py:991
+#: system/models.py:789 system/models.py:995
 msgid "position"
 msgstr "position"
 
-#: system/models.py:847
+#: system/models.py:851
 msgid "jobstatus:New"
 msgstr "Nyt"
 
-#: system/models.py:848
+#: system/models.py:852
 msgid "jobstatus:Submitted"
 msgstr "Afsendt"
 
-#: system/models.py:849
+#: system/models.py:853
 msgid "jobstatus:Running"
 msgstr "Kører"
 
-#: system/models.py:850
+#: system/models.py:854
 msgid "jobstatus:Failed"
 msgstr "Fejlet"
 
-#: system/models.py:851
+#: system/models.py:855
 msgid "jobstatus:Done"
 msgstr "Udført"
 
-#: system/models.py:852
+#: system/models.py:856
 msgid "jobstatus:Resolved"
 msgstr "Genstartet"
 
-#: system/models.py:878
+#: system/models.py:882
 msgid "log output"
 msgstr "log output"
 
-#: system/models.py:883
+#: system/models.py:887
 msgid "started"
 msgstr "påbegyndt"
 
-#: system/models.py:884
+#: system/models.py:888
 msgid "finished"
 msgstr "afsluttet"
 
-#: system/models.py:937
+#: system/models.py:941
 #, python-brace-format
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:944 system/views.py:502
+#: system/models.py:948 system/views.py:506
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
 
-#: system/models.py:978
+#: system/models.py:982
 msgid "String"
 msgstr "Streng"
 
-#: system/models.py:979
+#: system/models.py:983
 msgid "Integer"
 msgstr "Heltal"
 
-#: system/models.py:980
+#: system/models.py:984
 msgid "Date"
 msgstr "Dato"
 
-#: system/models.py:981
+#: system/models.py:985
 msgid "File"
 msgstr "Fil"
 
-#: system/models.py:982
+#: system/models.py:986
 msgid "Boolean"
 msgstr "Afkrydsningsfelt"
 
-#: system/models.py:983
+#: system/models.py:987
 msgid "Time"
 msgstr ""
 
-#: system/models.py:989
+#: system/models.py:993
 msgid "value type"
 msgstr "værdi-type"
 
-#: system/models.py:992
+#: system/models.py:996
 msgid "mandatory"
 msgstr "påkrævet"
 
 # SecurityProblem class
-#: system/models.py:1075
+#: system/models.py:1079
 msgid "securitylevel:Normal"
 msgstr "Normal"
 
-#: system/models.py:1076
+#: system/models.py:1080
 msgid "securitylevel:High"
 msgstr "Høj"
 
-#: system/models.py:1077
+#: system/models.py:1081
 msgid "securitylevel:Critical"
 msgstr "Kritisk"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: system/models.py:1096
+#: system/models.py:1100
 msgid "level"
 msgstr "alvorlighedsgrad"
 
-#: system/models.py:1110
+#: system/models.py:1114
 msgid "alert groups"
 msgstr "overvågede grupper"
 
-#: system/models.py:1116
+#: system/models.py:1120
 msgid "alert users"
 msgstr "modtager(e) af e-mail-advarsel"
 
 # SecurityEvent class
-#: system/models.py:1144
+#: system/models.py:1148
 msgid "eventstatus:New"
 msgstr "Ny"
 
-#: system/models.py:1145
+#: system/models.py:1149
 msgid "eventstatus:Assigned"
 msgstr "Tildelt"
 
-#: system/models.py:1146
+#: system/models.py:1150
 msgid "eventstatus:Resolved"
 msgstr "Løst"
 
-#: system/models.py:1162
+#: system/models.py:1166
 msgid "occurred"
 msgstr "hændelsestidspunkt"
 
-#: system/models.py:1164
+#: system/models.py:1168
 msgid "reported"
 msgstr "modtagelsestidspunkt"
 
-#: system/models.py:1171
+#: system/models.py:1175
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py:1245
+#: system/models.py:1249
 msgid "title"
 msgstr "titel"
 
-#: system/models.py:1247 system/models.py:1275
+#: system/models.py:1251 system/models.py:1279
 msgid "content"
 msgstr "indhold"
 
-#: system/models.py:1250
-#, fuzzy
-#| msgid "User %s updated"
+#: system/models.py:1254
 msgid "updated"
-msgstr "Bruger %s opdateret"
+msgstr "opdateret"
 
-#: system/models.py:1251
+#: system/models.py:1255
 msgid "author"
 msgstr "forfatter"
 
-#: system/models.py:1254
+#: system/models.py:1258
 msgid "version"
 msgstr "version"
 
 #: system/views.py:316
-#, fuzzy, python-format
+#, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
-#: system/views.py:535
+#: system/views.py:539
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
-#: system/views.py:832
+#: system/views.py:848
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:888 system/views.py:910
+#: system/views.py:943 system/views.py:965
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1093
+#: system/views.py:1158
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
-#: system/views.py:1347
+#: system/views.py:1423
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -538,7 +518,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1364
+#: system/views.py:1440
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -547,7 +527,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1379
+#: system/views.py:1455
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -556,17 +536,17 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1390
+#: system/views.py:1466
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
 
-#: system/views.py:1410
+#: system/views.py:1486
 msgid ""
 "You have no Wake Week Plan with the ID {self.kwargs['wake_week_plan_id']}"
 msgstr "Du har ingen tidsplan med ID {self.kwargs['wake_week_plan_id']}"
 
-#: system/views.py:1537
+#: system/views.py:1613
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -577,7 +557,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1554
+#: system/views.py:1630
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -586,7 +566,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1569
+#: system/views.py:1645
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -595,44 +575,49 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1580
+#: system/views.py:1656
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Tænd/sluk tidsplan %s opdateret"
 
-#: system/views.py:1673
+#: system/views.py:1749
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
-#: system/views.py:1789
+#: system/views.py:1867
 msgid ""
 "You have no Wake Change Event with the ID {self."
 "kwargs['wake_change_event_id']}"
-msgstr "Du har ingen undtagelse med ID {self."
-"kwargs['wake_change_event_id']}"
+msgstr "Du har ingen undtagelse med ID {self.kwargs['wake_change_event_id']}"
 
-#: system/views.py:1827
+#: system/views.py:1902
+#, python-format
+msgid "Wake Change Event %s updated"
+msgstr "Undtagelse %s opdateret"
+
+#: system/views.py:1909
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
-msgstr "De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
+msgstr ""
+"De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
 
-#: system/views.py:1834 system/views.py:1887
+#: system/views.py:1916 system/views.py:1969
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
-#: system/views.py:2080
+#: system/views.py:2162
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:2118
+#: system/views.py:2200
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:2358
+#: system/views.py:2440
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -641,37 +626,18 @@ msgstr ""
 "Gruppe %s opdateret, men computer(ne) %s kunne ikke tilføjes, da de(n) "
 "allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:2370
+#: system/views.py:2452
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:2382
+#: system/views.py:2464
 #, python-brace-format
 msgid ""
 "No value was specified for the mandatory input \"{0}\" of script \"{1}\""
 msgstr "Den obligatoriske parameterværdi \"{0}\" for script \"{1}\" mangler"
 
-#: system/views.py:2452
+#: system/views.py:2534
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
-
-#, fuzzy
-#~| msgid "value type"
-#~ msgid "event type"
-#~ msgstr "værdi-type"
-
-#~ msgid "Security Event could not be found"
-#~ msgstr "Sikkerhedshændelsen kunne ikke findes"
-
-#~ msgid "id"
-#~ msgstr "ID"
-
-#, fuzzy
-#~| msgid "id"
-#~ msgid "uid"
-#~ msgstr "ID"
-
-#~ msgid "security_problems"
-#~ msgstr "sikkerhedsregler"
