@@ -123,9 +123,15 @@ Sikkerhedshændelser
           <td colspan="5">Loading data...</td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">
+            <nav class="pagination-wrapper" aria-label="Security event list page">
+              {% include 'widgets/pagination.html' %}
+            </nav>
+          </td>
+        </tr>
+      </tfoot>
     </table>
-    <nav class="pagination-wrapper" aria-label="Security event list page">
-      {% include 'widgets/pagination.html' %}
-    </nav>
   </div>
 {% endblock %}
