@@ -211,9 +211,9 @@
           <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugentlige tidsplan</p>
 
           {# Wake change events #}
-          <a id="custom_wake_plans" class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-icons">door_front</span>Opret lukkedag</a>
-          <a id="custom_wake_plans" class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-icons">meeting_room</span>Opret ændrede åbningstider</a>
-          <a id="custom_wake_plans" class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">edit</span>Rediger undtagelser</a>
+          <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-icons">door_front</span>Opret lukkedag</a>
+          <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-icons">meeting_room</span>Opret ændrede åbningstider</a>
+          <a class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">edit</span>Rediger undtagelser</a>
 
           <fieldset class="col-12 col-lg-12">
 
