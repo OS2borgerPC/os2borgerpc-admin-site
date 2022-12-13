@@ -24,6 +24,11 @@ if (document.getElementById("wake-change-plan")) {
 }
 
 function ReturnToLastVisitedWakePlan() {
+
+  sessionStorage.setItem(
+    'going_back_to_wake_plan',
+    'true')
+
   location.assign(
     sessionStorage.getItem(WAKE_PLAN_FROM_URL_KEY)
     )
