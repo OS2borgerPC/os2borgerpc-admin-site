@@ -2313,9 +2313,16 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         context["newform"] = PCGroupForm()
         del context["newform"].fields["pcs"]
 
-        context["all_scripts"] = Script.objects.filter(
-            Q(site=site) | Q(site=None), is_security_script=False, is_hidden=False
-        )
+        if site.feature_permission.filter(uid="wake_plan"):
+            context["all_scripts"] = Script.objects.filter(
+                Q(site=site) | Q(site=None),
+                Q(is_hidden=False) | Q(uid="suspend_after_time"),
+                is_security_script=False,
+            )
+        else:
+            context["all_scripts"] = Script.objects.filter(
+                Q(site=site) | Q(site=None), is_security_script=False, is_hidden=False
+            )
 
         return context
 
