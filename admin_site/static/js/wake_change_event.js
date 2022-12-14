@@ -15,7 +15,7 @@ if (document.getElementById("wake-change-plan")) {
   const END_EL = document.getElementById("id_date_end")
 
   if (START_EL) {
-    START_EL.addEventListener('change', function() {
+    START_EL.addEventListener('focusout', function() {
       if (END_EL.value == "") {
         END_EL.value = START_EL.value
       }

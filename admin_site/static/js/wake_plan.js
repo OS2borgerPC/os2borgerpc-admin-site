@@ -87,10 +87,12 @@ sessionStorage.setItem(
   $(location).attr('href')
 )
 
+// Store the state of the wake plan if clicking any of the wake change events buttons (except the picklist which isn't handled here)
 $("#custom-wake-plans").click(function(){
   saveInputStates()
 });
 
+// Serialize current wake plan, save it to session storage
 function saveInputStates() {
   sessionStorage.setItem(
     'wake_plan_settings',
@@ -99,7 +101,8 @@ function saveInputStates() {
   sessionStorage.setItem('going_to_wake_change_events','true')
 }
 
-// function that makes a JSON with input states
+// Serialise the current week plan state to JSON (relevant if there are unsaved changes), done before saving it to session storage
+// This does not handle saving the picklists
 function getWakePlanSettingsAsJSON() {
   const wakePlanSettingsAsJSON = {}
   wakePlanSettingsAsJSON.activated = document.getElementById('id_enabled').checked
@@ -131,12 +134,7 @@ function getWakePlanSettingsAsJSON() {
   return wakePlanSettingsAsJSON
 }
 
-function ReturnToLastVisitedWakePlan() {
-  location.assign(
-    sessionStorage.getItem(WAKE_PLAN_FROM_URL_KEY)
-    )
-}
-
+// Restore a wake plan after returning from wake change event
 function runWhenReturnedToPage() {
 
   console.log('runWhenReturnedToPage')
@@ -178,10 +176,12 @@ function runWhenReturnedToPage() {
 }
 
 
+// ???
 let going_back_to_wake_plan_string = sessionStorage.getItem('going_back_to_wake_plan')
 
 let going_back_to_wake_plan_boolean = going_back_to_wake_plan_string === 'true'
 
+// When returning to the wake plan restore the state and ...?
 if (going_back_to_wake_plan_boolean) {
   sessionStorage.setItem('going_back_to_wake_plan','false')
   runWhenReturnedToPage()
@@ -204,6 +204,7 @@ addEventListener('click', evt => {
 })
 
 
+// ???
 addEventListener('beforeunload', evt => {
   let going_to_wake_change_events_string = sessionStorage.getItem('going_to_wake_change_events')
 
@@ -215,6 +216,7 @@ addEventListener('beforeunload', evt => {
 });
 
 
+// When pressing F5 please clear the stored wake plan
 // Even with reload it remembers the toggle switches settings state even though it should be reset to what it is from the database
 // TODO: fix the above
 addEventListener('keydown', evt => {
@@ -224,6 +226,8 @@ addEventListener('keydown', evt => {
   }
 })
 
+// A function to clear the session storage storing what a wake plan looks like to be able to navigate to wake
+// change events from a wake plan without losing wake plan state
 function removeDataFromSessionStorage() {
 
   sessionStorage.setItem('going_to_wake_change_events', 'false')
