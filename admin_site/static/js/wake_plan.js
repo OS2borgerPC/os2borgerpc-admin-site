@@ -137,8 +137,6 @@ function getWakePlanSettingsAsJSON() {
 // Restore a wake plan after returning from wake change event
 function runWhenReturnedToPage() {
 
-  console.log('runWhenReturnedToPage')
-
   const wakePlanSettingsAsJSON = JSON.parse(sessionStorage.getItem('wake_plan_settings'))
 
   document.getElementById('id_enabled').checked = wakePlanSettingsAsJSON.activated
@@ -191,12 +189,9 @@ sessionStorage.setItem('going_to_wake_change_events','false')
 
 // When a link is clicked in the wake_change_event picklist it must save the wake plan state
 addEventListener('click', evt => {
-  console.log('klikket på siden generelt')
   let classString = evt.target.getAttribute("class")
   if (!(classString === null)) {
-    console.log(classString)
     let wake_change_events_link_clicked = classString.includes('wake_change_events_link')
-    console.log('wake_change_events_link_clicked: ' + wake_change_events_link_clicked)
     if (wake_change_events_link_clicked) {
       saveInputStates()
     }
@@ -218,6 +213,7 @@ addEventListener('beforeunload', evt => {
 
 // When pressing F5 please clear the stored wake plan
 // Even with reload it remembers the toggle switches settings state even though it should be reset to what it is from the database
+// Another limitation is that the user can refresh with Ctrl-f5 or pressing the button to refresh
 // TODO: fix the above
 addEventListener('keydown', evt => {
   if (evt.key === 'F5') {
