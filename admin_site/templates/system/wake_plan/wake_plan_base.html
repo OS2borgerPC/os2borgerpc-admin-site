@@ -43,8 +43,8 @@ Tænd- / Sluk-tidsplan
 
 {% block javascripts %}
   <script src="{% static 'js/wake_plan.js' %}"></script>
-  /* Function to check for permission to access wake plans
-     It's in here instead of the js file above to have access to djangos context */
+  {# Function to check for permission to access wake plans #}
+  {# It's in here instead of the js file above to have access to djangos context #}
   <script type="text/javascript">
   $(function() {
       /* If the site does not have permission to use wake_plans,
