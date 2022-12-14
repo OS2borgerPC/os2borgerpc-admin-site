@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from datetime import datetime
-from functools import cmp_to_key
-from re import search
+from datetime import datetime, timedelta
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
@@ -19,6 +17,8 @@ from django.urls import resolve, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
+
+from django.forms.models import model_to_dict
 
 from django.db import transaction
 from django.db.models import Q, F
@@ -44,6 +44,8 @@ from system.models import (
     MandatoryParameterMissingError,
     PC,
     PCGroup,
+    WakeWeekPlan,
+    WakeChangeEvent,
     Script,
     ScriptTag,
     SecurityEvent,
@@ -63,6 +65,8 @@ from system.forms import (
     SecurityProblemForm,
     SiteForm,
     UserForm,
+    WakeChangeEventForm,
+    WakePlanForm,
 )
 
 
@@ -70,6 +74,14 @@ def set_notification_cookie(response, message, error=False):
     descriptor = {"message": message, "type": "success" if not error else "error"}
 
     response.set_cookie("bibos-notification", quote(json.dumps(descriptor), safe=""))
+
+
+def run_wake_plan_script(site, pcs, args, user, type="remove"):
+    if type == "set":
+        script = Script.objects.get(uid="wake_plan_set")
+    else:
+        script = Script.objects.get(uid="wake_plan_remove")
+    batch = script.run_on(site, pcs, *args, user=user)
 
 
 # Mixin class to require login
@@ -81,7 +93,7 @@ class LoginRequiredMixin(View):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
-class SuperAdminOnlyMixin(View):
+class SuperAdminOnlyMixin(LoginRequiredMixin):
     """Only allows access to super admins."""
 
     check_function = user_passes_test(lambda u: u.is_superuser, login_url="/")
@@ -92,7 +104,7 @@ class SuperAdminOnlyMixin(View):
         return super(SuperAdminOnlyMixin, self).dispatch(*args, **kwargs)
 
 
-class SuperAdminOrThisSiteMixin(View):
+class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         """Limit access to super users or users belonging to THIS site."""
@@ -318,7 +330,7 @@ class JobsView(SiteView):
         # First, get basic context from superclass
         context = super(JobsView, self).get_context_data(**kwargs)
         site = context["site"]
-        context["batches"] = site.batches.all()[:100]
+        context["batches"] = site.batches.exclude(name="")[:100]
         context["pcs"] = site.pcs.all()
         context["groups"] = site.groups.all()
         preselected = set(
@@ -374,7 +386,13 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
 
     def get_queryset(self):
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
-        queryset = Job.objects.all()
+        if not self.request.user.is_superuser:
+            queryset = Job.objects.filter(
+                Q(batch__script__is_hidden=False)
+                | Q(batch__script__uid="suspend_after_time")
+            )
+        else:
+            queryset = Job.objects.all()
         params = self.request.GET
 
         query = {"batch__site": site}
@@ -527,7 +545,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         return "/site/%s/jobs/" % self.kwargs["site_uid"]
 
 
-class JobInfo(DetailView, LoginRequiredMixin):
+class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
     template_name = "system/jobs/info.html"
     model = Job
 
@@ -576,9 +594,15 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        local_scripts = self.scripts.filter(site=self.site).order_by("name")
+        if self.site.feature_permission.filter(uid="wake_plan"):
+            scripts = self.scripts.filter(
+                Q(is_hidden=False) | Q(uid="suspend_after_time")
+            )
+        else:
+            scripts = self.scripts.filter(is_hidden=False)
+        local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
-        global_scripts = self.scripts.filter(site=None).order_by("name")
+        global_scripts = scripts.filter(site=None)
         context["global_scripts"] = global_scripts
 
         # Create a tag->scripts dict for tags that has local scripts.
@@ -789,6 +813,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         self.create_form = ScriptForm()
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
+        context["is_hidden"] = self.script.is_hidden
+        if self.script.uid:
+            context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         if not request_user.is_superuser:
@@ -800,6 +827,15 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return context
 
     def get_object(self, queryset=None):
+        if (
+            self.script.is_hidden
+            and not self.request.user.is_superuser
+            and not (
+                self.site.feature_permission.filter(uid="wake_plan")
+                and self.script.uid == "suspend_after_time"
+            )
+        ):
+            raise PermissionDenied
         return self.script
 
     def form_valid(self, form):
@@ -828,6 +864,45 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return reverse("script", args=[self.site.uid, self.script.pk])
 
 
+class GlobalScriptRedirectID(RedirectView):
+    permanent = False
+    query_string = True
+    pattern_name = "script"
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+
+        script = get_object_or_404(Script, pk=kwargs["script_pk"])
+        # No need to support this for local scripts
+        if script.site:
+            return "/"
+        else:  # If the script is global
+            user_sites = user.bibos_profile.sites.all()
+
+            # If a user is a member of multiple sites, just randomly pick the first one
+            kwargs["slug"] = user_sites.first().uid
+
+            return super().get_redirect_url(*args, **kwargs)
+
+
+class GlobalScriptRedirectUID(RedirectView):
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+
+        script = get_object_or_404(Script, uid=kwargs["script_uid"])
+        # No need to support this for local scripts
+        if script.site:
+            return "/"
+        else:  # If the script is global
+            # If a user is a member of multiple sites, just randomly pick the first one
+            first_site_uid = user.bibos_profile.sites.all().first().uid
+
+            return reverse("script", args=[first_site_uid, script.pk])
+
+
 class ScriptRun(SiteView):
     action = None
     form = None
@@ -851,8 +926,8 @@ class ScriptRun(SiteView):
 
     def step1(self, context):
         self.template_name = "system/scripts/run_step1.html"
-        context["pcs"] = self.object.pcs.all().order_by("name")
-        all_groups = self.object.groups.all().order_by("name")
+        context["pcs"] = self.object.pcs.all()
+        all_groups = self.object.groups.all()
         context["groups"] = [group for group in all_groups if group.pcs.count() > 0]
 
         if len(context["script"].ordered_inputs) > 0:
@@ -946,6 +1021,16 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         script = self.get_object()
 
+        site = script.site
+        if (
+            not request.user.is_superuser
+            and request.user.bibos_profile.sitemembership_set.get(
+                site_id=site.id
+            ).site_user_type
+            != 2
+        ):
+            raise PermissionDenied
+
         # Fetch the PCGroups for which it's an AssociatedScript before
         # we delete it from them
         # We create a list as the next command would change it
@@ -980,7 +1065,7 @@ class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
             return super(PCsView, self).render_to_response(context)
 
 
-class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMixin):
+class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = "system/pcs/form.html"
     form_class = PCForm
     slug_field = "uid"
@@ -1014,8 +1099,8 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
 
         context["pc_list"] = site.pcs.all()
 
+        # Group picklist related:
         group_set = site.groups.all()
-
         selected_group_ids = form["pc_groups"].value()
         # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = group_set.exclude(
@@ -1074,7 +1159,7 @@ class PCUpdate(SiteMixin, UpdateView, LoginRequiredMixin, SuperAdminOrThisSiteMi
         return response
 
 
-class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
+class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
     model = PC
     template_name = "system/pcs/confirm_delete.html"
 
@@ -1083,6 +1168,852 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
     def get_success_url(self):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
+
+
+# TODO: Rename all of these to WakeWeekPlan* now they no longer handle WakeChangeEvents.
+class WakePlanRedirect(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["site_uid"])
+
+        wake_week_plans = WakeWeekPlan.objects.filter(site=site)
+
+        if wake_week_plans.exists():
+            wake_week_plan = wake_week_plans.first()
+            return wake_week_plan.get_absolute_url()
+        else:
+            return reverse("wake_plan_new", args=[site.uid])
+
+
+class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+    def get_context_data(self, **kwargs):
+        context = super(WakePlanBaseMixin, self).get_context_data(**kwargs)
+
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        plan = self.object
+        context["selected_plan"] = plan
+        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
+            site=context["site"]
+        )
+
+        context["wake_plan_access"] = (
+            True
+            if context["site"].feature_permission.filter(uid="wake_plan")
+            else False
+        )
+
+        return context
+
+
+class WakePlanExtendedMixin(WakePlanBaseMixin):
+    def get_context_data(self, **kwargs):
+
+        context = super(WakePlanExtendedMixin, self).get_context_data(**kwargs)
+
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        plan = self.object
+        context["selected_plan"] = plan
+        context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
+            site=context["site"]
+        )
+
+        form = context["form"]
+        # params = self.request.GET or self.request.POST
+
+        # WakeChangeEvent picklist related:
+        all_wake_change_events_set = context["site"].wake_change_events.all()
+        selected_wake_change_event_ids = form["wake_change_events"].value()
+        if not selected_wake_change_event_ids:
+            selected_wake_change_event_ids = []
+        # Fetching the entire object for this picklist so we can change the name for the event to include date/time info
+        # template picklist requires the form pk, name, url (u)id.
+        available_wake_change_events = all_wake_change_events_set.exclude(
+            pk__in=selected_wake_change_event_ids
+        ).order_by("-date_start", "name")
+        context["available_wake_change_events"] = [
+            (a.pk, a, a.pk) for a in available_wake_change_events
+        ]
+        selected_wake_change_events = all_wake_change_events_set.filter(
+            pk__in=selected_wake_change_event_ids
+        ).order_by("-date_start", "name")
+        context["selected_wake_change_events"] = [
+            (s.pk, s, s.pk) for s in selected_wake_change_events
+        ]
+
+        # Group picklist related:
+        all_groups_set = context["site"].groups.all()
+        selected_group_ids = form["groups"].value()
+        # selected_group_ids = [group.id for group in plan.groups.all()]
+        if not selected_group_ids:
+            selected_group_ids = []
+        # template picklist requires the form pk, name, url (u)id.
+        context["available_groups"] = all_groups_set.exclude(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+        context["selected_groups"] = all_groups_set.filter(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+
+        return context
+
+    def verify_and_add_groups_and_exceptions(self, form):
+        # Adding wake change events
+        # The string currently set to "wake_change_events" must match the submit name
+        # chosen for the pick list used to add wake change events
+        exceptions_pk = form["wake_change_events"].value()
+        exceptions_selected = WakeChangeEvent.objects.filter(pk__in=exceptions_pk)
+        # Get the related wake change events before the update
+        exceptions_pre = self.object.wake_change_events.all()
+        # Verify the pre-existing events that are still selected
+        verified_exceptions = exceptions_pre.intersection(exceptions_selected)
+        # Newly selected events must be verified
+        unverified_exceptions = exceptions_selected.difference(exceptions_pre).order_by(
+            "-date_start", "name"
+        )
+        invalid_exceptions_names = []
+        # Using the same ordering as the list of events,
+        # check if each newly selected event overlaps with any verified event.
+        # If there is no overlap, verify the checked event. Each subsequently checked event
+        # will thus also be checked for overlap with previously verified events.
+        # Also get the names of the events that could not be verified.
+        for exception in unverified_exceptions:
+            exception_is_valid = True
+            for valid_exception in verified_exceptions:
+                if (
+                    valid_exception.date_start
+                    <= exception.date_start
+                    <= valid_exception.date_end
+                    or valid_exception.date_start
+                    <= exception.date_end
+                    <= valid_exception.date_end
+                ):
+                    exception_is_valid = False
+                    invalid_exceptions_names.append(exception.name)
+                    break
+            if exception_is_valid:
+                verified_exceptions = verified_exceptions.union(
+                    WakeChangeEvent.objects.filter(pk=exception.pk)
+                )
+        # Add the verified events to the plan
+        self.object.wake_change_events.set(verified_exceptions)
+        # Adding groups
+        # The string currently set to "groups" must match the submit name
+        # chosen for the pick list used to add groups
+        groups_pk = form["groups"].value()
+        groups = PCGroup.objects.filter(pk__in=groups_pk)
+        # groups_with_other_plans_names = []
+        # groups_without_other_plans_pk = []
+        # for group in groups:
+        #     if group.wake_week_plan and group.wake_week_plan != self.object:
+        #         groups_with_other_plans_names.append(group.name)
+        #     else:
+        #         groups_without_other_plans_pk.append(group.pk)
+        # groups = PCGroup.objects.filter(pk__in=groups_without_other_plans_pk)
+        # Find the pcs in the groups
+        pcs_in_groups_pk = list(set(groups.values_list("pcs", flat=True)))
+        pcs_in_groups = PC.objects.filter(pk__in=pcs_in_groups_pk)
+        # Find the pcs in the groups that belong to different wake plans
+        pcs_with_other_plans = []
+        pcs_with_other_plans_names = []
+        other_plans_names = []
+        for pc in pcs_in_groups:
+            other_group_relations = pc.pc_groups.exclude(pk__in=groups_pk)
+            for group in other_group_relations:
+                if group.wake_week_plan and group.wake_week_plan != self.object:
+                    pcs_with_other_plans.append(pc.pk)
+                    pcs_with_other_plans_names.append(pc.name)
+                    other_plans_names.append(group.wake_week_plan.name)
+                    break
+        pcs_with_other_plans = PC.objects.filter(pk__in=pcs_with_other_plans)
+        # Verify the groups that do not include pcs belonging to a different wake plan
+        # and get the names of the groups that could not be verified
+        verified_groups_pk = []
+        invalid_groups_names = []
+        for group in groups:
+            if not pcs_with_other_plans.intersection(group.pcs.all()):
+                verified_groups_pk.append(group.pk)
+            else:
+                invalid_groups_names.append(group.name)
+        verified_groups = PCGroup.objects.filter(pk__in=verified_groups_pk)
+        # Add the verified groups to the plan
+        for g in verified_groups:
+            g.wake_week_plan = self.object
+            g.save()
+        # Get the pcs in the verified groups
+        pcs_in_verified_groups_pk = list(
+            set(verified_groups.values_list("pcs", flat=True))
+        )
+        pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
+        # Generate the notification strings
+        invalid_groups_string = self.get_notification_string(invalid_groups_names)
+        pcs_with_other_plans_string = self.get_notification_string(
+            pcs_with_other_plans_names
+        )
+        other_plans_string = self.get_notification_string(
+            other_plans_names, conjunction="eller"
+        )
+        invalid_events_string = self.get_notification_string(invalid_exceptions_names)
+        return (
+            pcs_in_verified_groups,
+            invalid_groups_string,
+            pcs_with_other_plans_string,
+            other_plans_string,
+            invalid_events_string,
+            set(groups),
+        )
+
+    def get_notification_string(self, names, conjunction="og"):
+        """Helper function used to generate strings for the notification displayed
+        when selected groups could not be verified."""
+        names = list(set(names))
+        if len(names) > 1:
+            string = ", ".join(names[:-1])
+            string = " ".join([string, conjunction, names[-1]])
+        elif len(names) == 1:
+            string = names[0]
+        else:
+            string = ""
+        return string
+
+
+class WakePlanCreate(WakePlanExtendedMixin, CreateView):
+    model = WakeWeekPlan
+    form_class = WakePlanForm
+    slug_field = "site_uid"
+    template_name = "system/wake_plan/wake_plan.html"
+
+    def form_valid(self, form):
+        # The form does not allow setting the site yourself, so we insert that here
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if not site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        self.object = form.save(commit=False)
+        self.object.site = site
+
+        response = super(WakePlanCreate, self).form_valid(form)
+
+        # Verify and add the selected groups
+        # Also add the selected exceptions (no verification needed)
+        (
+            pcs_in_verified_groups,
+            invalid_groups_string,
+            pcs_with_other_plans_string,
+            other_plans_string,
+            invalid_events_string,
+            groups_selected,
+        ) = self.verify_and_add_groups_and_exceptions(form)
+
+        # If pcs were added and the plan is enabled
+        if pcs_in_verified_groups and self.object.enabled:
+            args_set = self.object.get_script_arguments()
+            run_wake_plan_script(
+                self.object.site,
+                pcs_in_verified_groups,
+                args_set,
+                self.request.user,
+                type="set",
+            )
+
+        # If some groups or exceptions could not be verified, display this and the reason
+        if invalid_groups_string and invalid_events_string:
+            set_notification_cookie(
+                response,
+                _(
+                    "PCWakePlan %s created, but the group(s) %s could not be added "
+                    "because the pc(s) %s already belong to the plan(s) %s and "
+                    "the WakeChangeEvents %s could not be added due to overlap"
+                )
+                % (
+                    self.object.name,
+                    invalid_groups_string,
+                    pcs_with_other_plans_string,
+                    other_plans_string,
+                    invalid_events_string,
+                ),
+                error=True,
+            )
+        elif invalid_groups_string and not invalid_events_string:
+            set_notification_cookie(
+                response,
+                _(
+                    "PCWakePlan %s created, but the group(s) %s could not be added "
+                    "because the pc(s) %s already belong to the plan(s) %s"
+                )
+                % (
+                    self.object.name,
+                    invalid_groups_string,
+                    pcs_with_other_plans_string,
+                    other_plans_string,
+                ),
+                error=True,
+            )
+        elif not invalid_groups_string and invalid_events_string:
+            set_notification_cookie(
+                response,
+                _(
+                    "PCWakePlan %s created, but the WakeChangeEvents %s could not be added "
+                    "due to overlap"
+                )
+                % (
+                    self.object.name,
+                    invalid_events_string,
+                ),
+                error=True,
+            )
+        else:
+            set_notification_cookie(
+                response, _("PCWakePlan %s created") % self.object.name
+            )
+
+        return response
+
+
+class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
+    template_name = "system/wake_plan/wake_plan.html"
+    form_class = WakePlanForm
+    slug_field = "site_uid"
+
+    def get_object(self, queryset=None):
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return WakeWeekPlan.objects.get(
+                id=self.kwargs["wake_week_plan_id"], site=site_id
+            )
+        except WakeWeekPlan.DoesNotExist:
+            raise Http404(
+                _(
+                    f"You have no Wake Week Plan with the ID {self.kwargs['wake_week_plan_id']}"
+                )
+            )
+
+    def form_valid(self, form):
+        if not self.object.site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        # Ensure that if a start time has been set, so has the end time - or vice versa
+        f = self.request.POST
+        if (
+            (f.get("monday_on") and not f.get("monday_off"))
+            or (not f.get("monday_on") and f.get("monday_off"))
+            or (f.get("tuesday_on") and not f.get("tuesday_off"))
+            or (not f.get("tuesday_on") and f.get("tuesday_off"))
+            or (f.get("wednesday_on") and not f.get("wednesday_off"))
+            or (not f.get("wednesday_on") and f.get("wednesday_off"))
+            or (f.get("thursday_on") and not f.get("thursday_off"))
+            or (not f.get("thursday_on") and f.get("thursday_off"))
+            or (f.get("friday_on") and not f.get("friday_off"))
+            or (not f.get("friday_on") and f.get("friday_off"))
+            or (f.get("saturday_on") and not f.get("saturday_off"))
+            or (not f.get("saturday_on") and f.get("saturday_off"))
+            or (f.get("sunday_on") and not f.get("sunday_off"))
+            or (not f.get("sunday_on") and f.get("sunday_off"))
+        ):
+            return self.form_invalid(form)
+
+        # Capture a view of the groups and settings before the update
+        groups_pre = set(self.object.groups.all())
+        plan_pre = self.get_object()
+        enabled_pre = plan_pre.enabled
+        events_pre = set(self.object.wake_change_events.all())
+
+        with transaction.atomic():
+
+            response = super(WakePlanUpdate, self).form_valid(form)
+
+            (
+                pcs_in_verified_groups,
+                invalid_groups_string,
+                pcs_with_other_plans_string,
+                other_plans_string,
+                invalid_events_string,
+                groups_selected,
+            ) = self.verify_and_add_groups_and_exceptions(form)
+
+            # Remove the deselected groups from the wake plan and find the pc objects in those groups
+            pcs_in_removed_groups = PC.objects.none()
+            groups_removed = groups_pre.difference(groups_selected)
+            for g in groups_removed:
+                pcs_in_removed_groups = pcs_in_removed_groups.union(g.pcs.all())
+                g.wake_week_plan = None
+                g.save()
+
+            # Get the status of the wake plan after the update
+            enabled_post = self.object.enabled
+
+            # Find all pc objects belonging to the wake plan after the update
+            pcs_all = PC.objects.none()
+            for g in self.object.groups.all():
+                pcs_all = pcs_all.union(g.pcs.all())
+
+            # If the wake plan was active before and after the update
+            if enabled_pre and enabled_post:
+
+                # Find the pc objects that belonged to the wake plan before the update
+                pcs_pre = PC.objects.none()
+                for g in groups_pre:
+                    pcs_pre = pcs_pre.union(g.pcs.all())
+
+                # Find the pcs that have been added or removed from the wake plan
+                pcs_to_be_set = pcs_in_verified_groups.difference(pcs_pre)
+                pcs_to_be_reset = pcs_in_removed_groups.difference(pcs_all)
+
+                # Remove the wake plan from the pcs that have been removed
+                if pcs_to_be_reset:
+                    run_wake_plan_script(
+                        self.object.site, pcs_to_be_reset, [], self.request.user
+                    )
+
+                # If the wake plan settings have changed, update the wake plan on all members
+                if self.check_settings_updates(plan_pre, events_pre):
+                    pcs_to_be_set = pcs_all
+
+                # Set the wake plan on the pcs that need to have it updated
+                if pcs_to_be_set:
+                    # Get the arguments for setting the wake plan on a pc
+                    args_set = self.object.get_script_arguments()
+                    run_wake_plan_script(
+                        self.object.site,
+                        pcs_to_be_set,
+                        args_set,
+                        self.request.user,
+                        type="set",
+                    )
+
+            # If the wake plan status was changed from active to inactive,
+            # remove the wake plan from all members
+            elif enabled_pre and not enabled_post:
+                if pcs_all:
+                    run_wake_plan_script(
+                        self.object.site, pcs_all, [], self.request.user
+                    )
+
+            # If the wake plan status was changed from inactive to active,
+            # set the wake plan on all members
+            elif not enabled_pre and enabled_post:
+                if pcs_all:
+                    # Get the arguments for setting the wake plan on a pc
+                    args_set = self.object.get_script_arguments()
+                    run_wake_plan_script(
+                        self.object.site,
+                        pcs_all,
+                        args_set,
+                        self.request.user,
+                        type="set",
+                    )
+
+            # If the wake plan status was inactive before and after the update
+            else:
+                pass
+
+            # If some groups or exceptions could not be verified, display this and the reason
+            if invalid_groups_string and invalid_events_string:
+                set_notification_cookie(
+                    response,
+                    _(
+                        "PCWakePlan %s updated, but the group(s) %s could not be added "
+                        "because the pc(s) %s already belong to the plan(s) %s and "
+                        "the WakeChangeEvents %s could not be added due to overlap"
+                    )
+                    % (
+                        self.object.name,
+                        invalid_groups_string,
+                        pcs_with_other_plans_string,
+                        other_plans_string,
+                        invalid_events_string,
+                    ),
+                    error=True,
+                )
+            elif invalid_groups_string and not invalid_events_string:
+                set_notification_cookie(
+                    response,
+                    _(
+                        "PCWakePlan %s updated, but the group(s) %s could not be added "
+                        "because the pc(s) %s already belong to the plan(s) %s"
+                    )
+                    % (
+                        self.object.name,
+                        invalid_groups_string,
+                        pcs_with_other_plans_string,
+                        other_plans_string,
+                    ),
+                    error=True,
+                )
+            elif not invalid_groups_string and invalid_events_string:
+                set_notification_cookie(
+                    response,
+                    _(
+                        "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added "
+                        "due to overlap"
+                    )
+                    % (
+                        self.object.name,
+                        invalid_events_string,
+                    ),
+                    error=True,
+                )
+            else:
+                set_notification_cookie(
+                    response, _("PCWakePlan %s updated") % self.object.name
+                )
+
+            return response
+
+    def form_invalid(self, form):
+        return super(WakePlanUpdate, self).form_invalid(form)
+
+    def check_settings_updates(self, plan_pre, events_pre):
+        """Helper function used to check if the plan settings have changed."""
+        plan_post = self.object
+        if (
+            plan_pre.sleep_state != plan_post.sleep_state
+            or plan_pre.monday_open != plan_post.monday_open
+            or (plan_post.monday_open and plan_pre.monday_on != plan_post.monday_on)
+            or (plan_post.monday_open and plan_pre.monday_off != plan_post.monday_off)
+            or plan_pre.tuesday_open != plan_post.tuesday_open
+            or (plan_post.tuesday_open and plan_pre.tuesday_on != plan_post.tuesday_on)
+            or (
+                plan_post.tuesday_open and plan_pre.tuesday_off != plan_post.tuesday_off
+            )
+            or plan_pre.wednesday_open != plan_post.wednesday_open
+            or (
+                plan_post.wednesday_open
+                and plan_pre.wednesday_on != plan_post.wednesday_on
+            )
+            or (
+                plan_post.wednesday_open
+                and plan_pre.wednesday_off != plan_post.wednesday_off
+            )
+            or plan_pre.thursday_open != plan_post.thursday_open
+            or (
+                plan_post.thursday_open
+                and plan_pre.thursday_on != plan_post.thursday_on
+            )
+            or (
+                plan_post.thursday_open
+                and plan_pre.thursday_off != plan_post.thursday_off
+            )
+            or plan_pre.friday_open != plan_post.friday_open
+            or (plan_post.friday_open and plan_pre.friday_on != plan_post.friday_on)
+            or (plan_post.friday_open and plan_pre.friday_off != plan_post.friday_off)
+            or plan_pre.saturday_open != plan_post.saturday_open
+            or (
+                plan_post.saturday_open
+                and plan_pre.saturday_on != plan_post.saturday_on
+            )
+            or (
+                plan_post.saturday_open
+                and plan_pre.saturday_off != plan_post.saturday_off
+            )
+            or plan_pre.sunday_open != plan_post.sunday_open
+            or (plan_post.sunday_open and plan_pre.sunday_on != plan_post.sunday_on)
+            or (plan_post.sunday_open and plan_pre.sunday_off != plan_post.sunday_off)
+            or events_pre != set(plan_post.wake_change_events.all())
+        ):
+            return True
+        else:
+            return False
+
+
+class WakePlanDelete(WakePlanBaseMixin, DeleteView):
+    model = WakeWeekPlan
+    # slug_field = "site_uid"
+    template_name = "system/wake_plan/confirm_delete.html"
+
+    def get_object(self, queryset=None):
+        plan = WakeWeekPlan.objects.get(id=self.kwargs["wake_week_plan_id"])
+        if not plan.site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        return plan
+
+    def get_success_url(self):
+        # I wonder if one could just call the WakeWeekPlanRedirectView directly?
+        return reverse("wake_plans", args=[self.kwargs["site_uid"]])
+
+    def delete(self, request, *args, **kwargs):
+        deleted_plan_name = WakeWeekPlan.objects.get(
+            id=self.kwargs["wake_week_plan_id"]
+        ).name
+
+        # Remove the wake plan from all pcs that belonged to it
+        plan = self.get_object()
+        groups = plan.groups.all()
+        if plan.enabled and groups:
+            pcs_in_groups = PC.objects.none()
+            for g in groups:
+                pcs_in_groups = pcs_in_groups.union(g.pcs.all())
+            run_wake_plan_script(plan.site, pcs_in_groups, [], request.user)
+
+        response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
+
+        set_notification_cookie(
+            response, _("Wake Week Plan %s deleted") % deleted_plan_name
+        )
+        return response
+
+
+class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
+    model = WakeWeekPlan
+
+    def get_redirect_url(self, **kwargs):
+        object_to_copy = WakeWeekPlan.objects.get(id=kwargs["wake_week_plan_id"])
+        if not object_to_copy.site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+
+        # Before we remove the pk we duplicate all the associated events, as they're precisely related through the pk
+        # TODO: For now we actually duplicate the events rather than refer to the same ones
+        # Which we'd like to change in the future, so WakeWeekPlans can generally share events
+        # ...and not only through copying
+        events = []
+        for event in object_to_copy.wake_change_events.all():
+            event.id = None
+            event.save()
+            events.append(event)
+
+        object_to_copy.pk = (
+            None  # Remove its current pk so it gets a new one when saving
+        )
+        object_to_copy.name = f"Kopi af {object_to_copy.name}"
+        # Now save the copied object to get a new ID, which is also required to bind the duplicated events to it
+        object_to_copy.save()
+
+        object_to_copy.wake_change_events.set(events)
+
+        new_id = object_to_copy.pk
+        return reverse(
+            "wake_plan",
+            kwargs={"site_uid": kwargs["site_uid"], "wake_week_plan_id": new_id},
+        )
+
+
+class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+    def get_context_data(self, **kwargs):
+        context = super(WakeChangeEventBaseMixin, self).get_context_data(**kwargs)
+
+        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
+        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        event = self.object
+        context["selected_event"] = event
+        # Note: The sorting here needs to be the same in WakeChangeEventRedirect
+        context["wake_change_events_list"] = WakeChangeEvent.objects.filter(
+            site=context["site"]
+        ).order_by("-date_start", "name", "pk")
+
+        if event is not None:
+            context["wake_plan_list_for_event"] = event.wake_week_plans.all()
+
+        context["wake_plan_access"] = (
+            True
+            if context["site"].feature_permission.filter(uid="wake_plan")
+            else False
+        )
+
+        return context
+
+    def validate_dates(self):
+        event = self.object
+        valid = True
+        overlapping_event = ""
+        plan_with_overlap = ""
+        if event.date_end < event.date_start:
+            valid = False
+        if valid and event.id and event.wake_week_plans.all():
+            for plan in event.wake_week_plans.all():
+                other_events = plan.wake_change_events.exclude(pk=event.pk)
+                for other_event in other_events:
+                    if (
+                        other_event.date_start
+                        <= event.date_start
+                        <= other_event.date_end
+                        or other_event.date_start
+                        <= event.date_end
+                        <= other_event.date_end
+                    ):
+                        valid = False
+                        overlapping_event = other_event.name
+                        plan_with_overlap = plan.name
+                        break
+                if not valid:
+                    break
+        return valid, overlapping_event, plan_with_overlap
+
+
+class WakeChangeEventRedirect(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["site_uid"])
+
+        # Note: The sorting here needs to be the same in WakeChangeEventBaseMixin
+        wake_change_events = WakeChangeEvent.objects.filter(site=site).order_by(
+            "-date_start", "name", "pk"
+        )
+
+        if wake_change_events.exists():
+            wake_change_event = wake_change_events.first()
+            return wake_change_event.get_absolute_url()
+        else:
+            return reverse("wake_change_event_new_altered_hours", args=[site.uid])
+
+
+class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
+    template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
+    form_class = WakeChangeEventForm
+    slug_field = "site_uid"
+
+    def get_object(self, queryset=None):
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return WakeChangeEvent.objects.get(
+                id=self.kwargs["wake_change_event_id"], site=site_id
+            )
+        except WakeChangeEvent.DoesNotExist:
+            raise Http404(
+                _(
+                    f"You have no Wake Change Event with the ID {self.kwargs['wake_change_event_id']}"
+                )
+            )
+
+    def form_valid(self, form):
+        if not self.object.site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        # Capture a view of the event before the update
+        event_pre = self.get_object()
+
+        valid, overlapping_event, plan_with_overlap = self.validate_dates()
+        if valid:
+            response = super(WakeChangeEventUpdate, self).form_valid(form)
+
+            # If the settings have changed and the wake change event is used
+            # by active wake plans, update the pcs connected to those plans
+            if self.check_settings_updates(event_pre):
+                for plan in self.object.wake_week_plans.all():
+                    if plan.enabled:
+                        pcs_to_be_set_pk = list(
+                            set(plan.groups.all().values_list("pcs", flat=True))
+                        )
+                        if pcs_to_be_set_pk:
+                            pcs_to_be_set = PC.objects.filter(pk__in=pcs_to_be_set_pk)
+                            args_set = plan.get_script_arguments()
+
+                            run_wake_plan_script(
+                                self.object.site,
+                                pcs_to_be_set,
+                                args_set,
+                                self.request.user,
+                                type="set",
+                            )
+
+            set_notification_cookie(
+                response, _("Wake Change Event %s updated") % self.object.name
+            )
+        else:
+            response = self.form_invalid(form)
+            if overlapping_event:
+                set_notification_cookie(
+                    response,
+                    _("The chosen dates would cause overlap with event %s in plan %s")
+                    % (overlapping_event, plan_with_overlap),
+                    error=True,
+                )
+            else:
+                set_notification_cookie(
+                    response,
+                    _("The end date cannot be before the start date %s") % "",
+                    error=True,
+                )
+
+        return response
+
+    def form_invalid(self, form):
+        return super(WakeChangeEventUpdate, self).form_invalid(form)
+
+    def check_settings_updates(self, event_pre):
+        """Helper function used to check if the settings have changed
+        and the event is used by an active wake plan"""
+        event_post = self.object
+        wake_plans = event_post.wake_week_plans.all()
+        active_plans = False
+        for plan in wake_plans:
+            if plan.enabled:
+                active_plans = True
+                break
+        if not active_plans:
+            return False
+        if (
+            event_pre.date_start != event_post.date_start
+            or event_pre.date_end != event_post.date_end
+            or event_pre.time_start != event_post.time_start
+            or event_pre.time_end != event_post.time_end
+        ):
+            return True
+        else:
+            return False
+
+
+class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
+    model = WakeChangeEvent
+    form_class = WakeChangeEventForm
+    slug_field = "site_uid"
+    template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
+
+    def form_valid(self, form):
+        # The form does not allow setting the site yourself, so we insert that here
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        if not site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        self.object = form.save(commit=False)
+        self.object.site = site
+
+        valid, overlapping_event, plan_with_overlap = self.validate_dates()
+        if valid:
+            response = super(WakeChangeEventCreate, self).form_valid(form)
+        else:
+            response = self.form_invalid(form)
+            set_notification_cookie(
+                response,
+                _("The end date cannot be before the start date %s") % "",
+                error=True,
+            )
+
+        return response
+
+    def form_invalid(self, form):
+        return super(WakeChangeEventCreate, self).form_invalid(form)
+
+
+class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
+    model = WakeChangeEvent
+    slug_field = "site_uid"
+    template_name = "system/wake_plan/wake_change_events/confirm_delete.html"
+
+    def get_object(self, queryset=None):
+        event = WakeChangeEvent.objects.get(id=self.kwargs["wake_change_event_id"])
+        if not event.site.feature_permission.filter(uid="wake_plan"):
+            raise PermissionDenied
+        return event
+
+    def get_success_url(self):
+        return reverse("wake_change_events", args=[self.kwargs["site_uid"]])
+
+    def delete(self, request, *args, **kwargs):
+
+        # Update all pcs belonging to active plans that used this event
+        event = self.get_object()
+        plans = set(event.wake_week_plans.all())
+
+        response = super(WakeChangeEventDelete, self).delete(request, *args, **kwargs)
+
+        for plan in plans:
+            pcs_in_groups = PC.objects.none()
+            groups = plan.groups.all()
+            if plan.enabled and groups:
+                for g in groups:
+                    pcs_in_groups = pcs_in_groups.union(g.pcs.all())
+                if pcs_in_groups:
+                    args_set = plan.get_script_arguments()
+                    run_wake_plan_script(
+                        plan.site, pcs_in_groups, args_set, request.user, type="set"
+                    )
+
+        return response
 
 
 class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
@@ -1359,6 +2290,13 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context["form"]
         site = context["site"]
 
+        # Manually create a list of security problems to not only include those attached but also those
+        # unattached which currently apply to all groups
+        context["security_problems_incl_site"] = group.security_problems.all().union(
+            SecurityProblem.objects.filter(alert_groups=None)
+        )
+
+        # PC picklist related
         pc_queryset = site.pcs.filter(is_activated=True)
         form.fields["pcs"].queryset = pc_queryset
 
@@ -1375,9 +2313,16 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         context["newform"] = PCGroupForm()
         del context["newform"].fields["pcs"]
 
-        context["all_scripts"] = Script.objects.filter(
-            Q(site=site) | Q(site=None), is_security_script=False
-        ).order_by("name")
+        if site.feature_permission.filter(uid="wake_plan"):
+            context["all_scripts"] = Script.objects.filter(
+                Q(site=site) | Q(site=None),
+                Q(is_hidden=False) | Q(uid="suspend_after_time"),
+                is_security_script=False,
+            )
+        else:
+            context["all_scripts"] = Script.objects.filter(
+                Q(site=site) | Q(site=None), is_security_script=False, is_hidden=False
+            )
 
         return context
 
@@ -1386,6 +2331,30 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         # update
         members_pre = set(self.object.pcs.all())
         policy_pre = set(self.object.policy.all())
+        # If the group is a member of a wake_plan,
+        # prevent people from adding pcs that belong to a different wake_plan
+        pcs_with_other_plans_names = []
+        if self.object.wake_week_plan:
+            # Find the pcs being added
+            selected_pcs = form.cleaned_data["pcs"]
+            new_pcs = set(selected_pcs).difference(members_pre)
+            # Find the pcs being added that belong to a different wake plan
+            pcs_with_other_plans_pk = []
+            other_plans_names = []
+            for pc in new_pcs:
+                other_groups = pc.pc_groups.exclude(pk=self.object.pk)
+                for g in other_groups:
+                    if (
+                        g.wake_week_plan
+                        and g.wake_week_plan != self.object.wake_week_plan
+                    ):
+                        pcs_with_other_plans_pk.append(pc.pk)
+                        pcs_with_other_plans_names.append(pc.name)
+                        other_plans_names.append(g.wake_week_plan.name)
+                        break
+            pcs_with_other_plans = PC.objects.filter(pk__in=pcs_with_other_plans_pk)
+            # Only add the pcs that do not belong to a different wake plan
+            form.cleaned_data["pcs"] = selected_pcs.difference(pcs_with_other_plans)
 
         try:
             with transaction.atomic():
@@ -1403,6 +2372,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 surviving_members = members_post.intersection(members_pre)
                 new_members = members_post.difference(members_pre)
                 new_policy = policy_post.difference(policy_pre)
+                removed_members = members_pre.difference(members_post)
 
                 # Run all policy scripts on new PCs...
                 if new_members:
@@ -1417,9 +2387,80 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 for asc in new_policy:
                     asc.run_on(self.request.user, surviving_members)
 
-                set_notification_cookie(
-                    response, _("Group %s updated") % self.object.name
-                )
+                # If the group belongs to an active wake plan
+                if self.object.wake_week_plan and self.object.wake_week_plan.enabled:
+                    if new_members or removed_members:
+                        # Find the other groups belonging to the same wake plan as this one
+                        other_wake_plan_groups = (
+                            self.object.wake_week_plan.groups.exclude(pk=self.object.pk)
+                        )
+                        # Find the pcs in the other groups belonging to the same wake plan as this group
+                        pcs_in_other_wake_plan_groups = PC.objects.none()
+                        for g in other_wake_plan_groups:
+                            pcs_in_other_wake_plan_groups = (
+                                pcs_in_other_wake_plan_groups.union(g.pcs.all())
+                            )
+                    # If the group has new members that do not already belong to the wake plan
+                    # via a different group, set the wake plan on those members
+                    if new_members:
+                        new_wake_plan_members = []
+                        for member in new_members:
+                            if member not in pcs_in_other_wake_plan_groups:
+                                new_wake_plan_members.append(member.pk)
+                        if new_wake_plan_members:
+                            args_set = self.object.wake_week_plan.get_script_arguments()
+                            pcs_to_be_set = PC.objects.filter(
+                                pk__in=new_wake_plan_members
+                            )
+                            run_wake_plan_script(
+                                self.object.site,
+                                pcs_to_be_set,
+                                args_set,
+                                self.request.user,
+                                type="set",
+                            )
+
+                    # If pcs have been removed from the group that do not still belong to the wake plan
+                    # via a different group, remove the wake plan from those pcs
+                    if removed_members:
+                        removed_wake_plan_members = []
+                        for member in removed_members:
+                            if member not in pcs_in_other_wake_plan_groups:
+                                removed_wake_plan_members.append(member.pk)
+                        if removed_wake_plan_members:
+                            pcs_to_be_reset = PC.objects.filter(
+                                pk__in=removed_wake_plan_members
+                            )
+                            run_wake_plan_script(
+                                self.object.site, pcs_to_be_reset, [], self.request.user
+                            )
+
+                # If some pcs could not be added due to belonging to a different wake plan,
+                # display this and the reason
+                if pcs_with_other_plans_names:
+                    (
+                        pcs_with_other_plans_string,
+                        other_plans_string,
+                    ) = self.get_notification_strings(
+                        pcs_with_other_plans_names, other_plans_names
+                    )
+                    set_notification_cookie(
+                        response,
+                        _(
+                            "Group %s updated, but the pc(s) %s could not be added "
+                            "because they already belong to the plan(s) %s"
+                        )
+                        % (
+                            self.object.name,
+                            pcs_with_other_plans_string,
+                            other_plans_string,
+                        ),
+                        error=True,
+                    )
+                else:
+                    set_notification_cookie(
+                        response, _("Group %s updated") % self.object.name
+                    )
 
                 return response
         except MandatoryParameterMissingError as e:
@@ -1440,6 +2481,24 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     def form_invalid(self, form):
         return super(PCGroupUpdate, self).form_invalid(form)
 
+    def get_notification_strings(self, pc_names, plan_names):
+        """Helper function used to generate strings for the notification displayed
+        when selected pcs could not be added."""
+        pc_names = list(set(pc_names))
+        plan_names = list(set(plan_names))
+        if len(pc_names) > 1:
+            pc_string = ", ".join(pc_names[:-1])
+            pc_string = "".join([pc_string, " og ", pc_names[-1]])
+        else:
+            pc_string = pc_names[0]
+
+        if len(plan_names) > 1:
+            plan_string = ", ".join(plan_names[:-1])
+            plan_string = "".join([plan_string, " eller ", plan_names[-1]])
+        else:
+            plan_string = plan_names[0]
+        return pc_string, plan_string
+
 
 class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     template_name = "system/pcgroups/confirm_delete.html"
@@ -1453,7 +2512,34 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return "/site/{0}/groups/".format(self.kwargs["site_uid"])
 
     def delete(self, request, *args, **kwargs):
-        name = self.get_object().name
+        self_object = self.get_object()
+        name = self_object.name
+        # wake_week_plan-related
+        members = self_object.pcs.all()
+        # If this group had an active wake plan and members
+        if (
+            self_object.wake_week_plan
+            and self_object.wake_week_plan.enabled
+            and members
+        ):
+            # Find the other groups belonging to the same wake plan as this group
+            other_wake_plan_groups = self_object.wake_week_plan.groups.exclude(
+                pk=self_object.pk
+            )
+            # Find the pcs in the other groups belonging to the same wake plan as this group
+            pcs_in_other_wake_plan_groups = PC.objects.none()
+            for g in other_wake_plan_groups:
+                pcs_in_other_wake_plan_groups = pcs_in_other_wake_plan_groups.union(
+                    g.pcs.all()
+                )
+            # If this group had members that do not still belong to the wake plan
+            # via a different group, remove the wake plan from those members
+            pcs_to_be_reset = members.difference(pcs_in_other_wake_plan_groups)
+            if pcs_to_be_reset:
+                run_wake_plan_script(
+                    self_object.site, pcs_to_be_reset, [], self.request.user
+                )
+
         response = super(PCGroupDelete, self).delete(request, *args, **kwargs)
         set_notification_cookie(response, _("Group %s deleted") % name)
         return response
@@ -1773,6 +2859,7 @@ documentation_menu_items = [
     ("status", "Status"),
     ("computers", "Computere"),
     ("groups", "Grupper"),
+    ("wake_plans", "Tænd/sluk tidsplaner"),
     ("jobs", "Jobs"),
     ("scripts", "Scripts"),
     ("security_scripts", "Sikkerhedsscripts"),

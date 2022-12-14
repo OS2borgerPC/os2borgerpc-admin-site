@@ -61,7 +61,6 @@ Jobs
       <div id="batches" class="collapse collapse-content {% if selected_batch %}show{% endif %}">
         <ul class="item-list">
           {% for batch in batches %}
-          {% if batch.name != "" %}
           <li>
             <button 
               type="button" 
@@ -70,7 +69,6 @@ Jobs
               {{ batch.name }}
             </button>
           </li>
-          {% endif %}
           {% endfor %}
         </ul>
       </div>
@@ -167,10 +165,16 @@ Jobs
           <td colspan="8">Loading data...</td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">
+            <nav class="pagination-wrapper" aria-label="Job list page">
+              {% include 'widgets/pagination.html' %}
+            </nav>
+          </td>
+        </tr>
+      </tfoot>
     </table>
-    <nav class="pagination-wrapper" aria-label="Job list page">
-      {% include 'widgets/pagination.html' %}
-    </nav>
   </div>
   
 {% endblock %}

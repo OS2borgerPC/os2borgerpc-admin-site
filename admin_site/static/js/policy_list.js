@@ -16,15 +16,15 @@
           return '<input class="policy-script-param'
                   + (type == 'FILE' ? ' phantom' : '')
                   + '" type="' + (type == 'FILE' ? 'file' : 'hidden')
-                  + '" name="' + name 
-                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : '') 
-                  + '" data-inputtype="' + type 
+                  + '" name="' + name
+                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : '')
+                  + '" data-inputtype="' + type
                   + '"' + (mandatory ? ' required="required"' : '') + '/>'
         }
         this.visibleParamField = function (input) {
-          return '<div class="policy-script-print"><strong class="policy-script-print-name">' 
-                  + input.name + ': </strong><span class="policy-script-print-value">' 
-                  + ((input.type == 'BOOLEAN') ? '<input type="checkbox" checked disabled>' : '') 
+          return '<div class="policy-script-print"><strong class="policy-script-print-name">'
+                  + input.name + ': </strong><span class="policy-script-print-value">'
+                  + ((input.type == 'BOOLEAN') ? '<input type="checkbox" checked disabled>' : '')
                   + '</span></div>'
         }
         this.getFieldType = function(type) {
@@ -190,7 +190,6 @@
             t.removeClass("invalid")
             count += 1
           })
-          console.log(count, modalInputs.length)
           if (count != modalInputs.length)
             return false
 
@@ -211,8 +210,8 @@
               if (t.attr('type') == 'password') {
                 inputField.val(t.val())
                 visibleValueField.text('•••••')
-                
-                //This workaround prevents the browser from prompting to save a password 
+
+                //This workaround prevents the browser from prompting to save a password
                 t[0].setAttribute("type", "text")
                 t[0].setAttribute("style", "display: none;")
                 const clonedElement = t[0].cloneNode()

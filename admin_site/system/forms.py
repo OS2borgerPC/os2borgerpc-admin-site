@@ -4,17 +4,22 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 from system.models import (
-    Site,
-    PCGroup,
-    ConfigurationEntry,
-    PC,
-    Script,
-    Input,
-    SecurityProblem,
-    SecurityEvent,
     ChangelogComment,
+    ConfigurationEntry,
+    Input,
+    PC,
+    PCGroup,
+    WakeChangeEvent,
+    WakeWeekPlan,
+    Script,
+    SecurityEvent,
+    SecurityProblem,
+    Site,
 )
 from account.models import SiteMembership
+
+time_format = forms.TimeInput(attrs={"type": "time", "max": "23:59"}, format="%H:%M")
+date_format = forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d")
 
 
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
@@ -61,21 +66,13 @@ class PCGroupForm(forms.ModelForm):
             initial = kwargs.setdefault("initial", {})
             initial["pcs"] = [pc.pk for pc in kwargs["instance"].pcs.all()]
 
-        forms.ModelForm.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self):
-        cleaned_data = self.cleaned_data
-
-        cleaned_data_id = cleaned_data.get("id")
-        id_exists = self.Meta.model.objects.filter(id=cleaned_data_id).exists()
-
-        # self.instance.pk will be set if it's an update form
-        if not self.instance.pk and id_exists:
-            raise ValidationError(_("A group with this ID already exists."))
-        return cleaned_data
+        return self.cleaned_data
 
     def save(self, commit=True):
-        instance = forms.ModelForm.save(self, False)
+        instance = super().save(False)
 
         old_save_m2m = self.save_m2m
 
@@ -96,7 +93,7 @@ class PCGroupForm(forms.ModelForm):
 
     class Meta:
         model = PCGroup
-        exclude = ["site", "configuration"]
+        exclude = ["site", "configuration", "wake_week_plan"]
 
 
 class ScriptForm(forms.ModelForm):
@@ -285,3 +282,70 @@ class SecurityEventForm(forms.ModelForm):
     class Meta:
         model = SecurityEvent
         fields = ("status", "assigned_user", "note")
+
+
+# Used on the Create and Update views
+class WakePlanForm(forms.ModelForm):
+
+    # Picklist related
+    groups = forms.ModelMultipleChoiceField(
+        queryset=PCGroup.objects.all(), required=False
+    )
+    wake_change_events = forms.ModelMultipleChoiceField(
+        queryset=WakeChangeEvent.objects.all(), required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        # Setup for the picklists, so we have access to the groups and wake_change_events for the form
+        if "instance" in kwargs and kwargs["instance"] is not None:
+            initial = kwargs.setdefault("initial", {})
+            initial["groups"] = [group.pk for group in kwargs["instance"].groups.all()]
+            initial["wake_change_events"] = [
+                event.pk for event in kwargs["instance"].wake_change_events.all()
+            ]
+
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = WakeWeekPlan
+        exclude = (
+            "site",
+            "wake_change_events",
+        )
+
+        switch_input = forms.CheckboxInput(
+            attrs={"class": "form-check-input fs-5", "role": "switch"}
+        )
+
+        widgets = {
+            "monday_on": time_format,
+            "monday_off": time_format,
+            "tuesday_on": time_format,
+            "tuesday_off": time_format,
+            "wednesday_on": time_format,
+            "wednesday_off": time_format,
+            "thursday_on": time_format,
+            "thursday_off": time_format,
+            "friday_on": time_format,
+            "friday_off": time_format,
+            "saturday_on": time_format,
+            "saturday_off": time_format,
+            "sunday_on": time_format,
+            "sunday_off": time_format,
+            "sleep_state": forms.Select(attrs={"class": "form-control"}),
+            "enabled": switch_input,
+        }
+
+
+# This should be deleteable later on:
+class WakeChangeEventForm(forms.ModelForm):
+    class Meta:
+        model = WakeChangeEvent
+        exclude = ("site",)
+        widgets = {
+            "name": forms.TextInput(attrs={"id": "wake-change-event-name"}),
+            "date_start": date_format,
+            "time_start": time_format,
+            "date_end": date_format,
+            "time_end": time_format,
+        }

@@ -20,12 +20,23 @@ from system.views import (
     PCGroupRedirect,
     PCGroupUpdate,
     PCUpdate,
+    WakePlanCreate,
+    WakePlanDuplicate,
+    WakePlanDelete,
+    WakePlanRedirect,
+    WakePlanUpdate,
+    WakeChangeEventCreate,
+    WakeChangeEventDelete,
+    WakeChangeEventRedirect,
+    WakeChangeEventUpdate,
     PCsView,
     ScriptCreate,
     ScriptDelete,
     ScriptRedirect,
     ScriptRun,
     ScriptUpdate,
+    GlobalScriptRedirectID,
+    GlobalScriptRedirectUID,
     SecurityEventSearch,
     SecurityEventsUpdate,
     SecurityEventsView,
@@ -165,6 +176,60 @@ urlpatterns = [
         PCGroupDelete.as_view(),
         name="group_delete",
     ),
+    # Wake Plans
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_plans/$",
+        WakePlanRedirect.as_view(),
+        name="wake_plans",
+    ),
+    # This URL needs to be above WakePlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/new/$",
+        WakePlanCreate.as_view(),
+        name="wake_plan_new",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/$",
+        WakePlanUpdate.as_view(),
+        name="wake_plan",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/delete/$",
+        WakePlanDelete.as_view(),
+        name="wake_plan_delete",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/copy/$",
+        WakePlanDuplicate.as_view(),
+        name="wake_plan_duplicate",
+    ),
+    # Wake Change Events
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_events/$",
+        WakeChangeEventRedirect.as_view(),
+        name="wake_change_events",
+    ),
+    # This URL needs to be above WakeChangeEventUpdate, as otherwise that regex tries to parse the word "new" as an ID
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_event/new_altered_hours/$",
+        WakeChangeEventCreate.as_view(),
+        name="wake_change_event_new_altered_hours",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_event/new_closed/$",
+        WakeChangeEventCreate.as_view(),
+        name="wake_change_event_new_closed",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/$",
+        WakeChangeEventUpdate.as_view(),
+        name="wake_change_event",
+    ),
+    url(
+        r"^site/(?P<site_uid>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/delete/$",
+        WakeChangeEventDelete.as_view(),
+        name="wake_change_event_delete",
+    ),
     # Jobs
     url(
         r"^site/(?P<site_uid>[^/]+)/jobs/search/", JobSearch.as_view(), name="jobsearch"
@@ -200,6 +265,16 @@ urlpatterns = [
         r"^site/(?P<slug>[^/]+)/scripts/new/", ScriptCreate.as_view(), name="new_script"
     ),
     url(r"^site/(?P<slug>[^/]+)/scripts/", ScriptRedirect.as_view(), name="scripts"),
+    url(
+        r"^scripts/(?P<script_pk>\d+)/",
+        GlobalScriptRedirectID.as_view(),
+        name="script_redirect_id",
+    ),
+    url(
+        r"^scripts/uid/(?P<script_uid>[^/]+)/",
+        GlobalScriptRedirectUID.as_view(),
+        name="script_redirect_uid",
+    ),
     # Users
     url(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
     url(r"^site/(?P<site_uid>[^/]+)/new_user/$", UserCreate.as_view(), name="new_user"),
@@ -240,6 +315,14 @@ urlpatterns = [
         RedirectView.as_view(
             url="https://os2borgerpc-server-image.readthedocs.io/en/latest/dev.html"
         ),
+    ),
+    url(
+        r"^documentation/wake_plan_user_guide/",
+        RedirectView.as_view(
+            url="https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Guide_til_brug_af_strømbesparingsfunktioner.pdf"
+        ),
+        name="wake_plan_user_guide",
     ),
     url(
         r"^documentation/creating_security_problems/",

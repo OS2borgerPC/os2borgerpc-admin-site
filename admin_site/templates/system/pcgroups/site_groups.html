@@ -78,6 +78,7 @@ active
               {{ form.description|as_crispy_field }}
             </fieldset>
 
+            {# PC picklist #}
             <fieldset id="pcfieldset" class="col-12 col-lg-6">
 
               {{ form.pcs.errors }}
@@ -90,17 +91,41 @@ active
               </div>
               {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' site_url=site.uid target_section='computers' %}
 
+            {# SecurityProblem #}
+            {% if security_problems_incl_site %}
+              <div class="mt-3">
+                <p>Tilknyttede Sikkerhedsregler</p>
+                <ul class="mt-2 list-group">
+                  {% for problem in security_problems_incl_site %}
+                    <li class="list-group-item"><a href="{% url 'security_problem' site.uid problem.uid %}">{{ problem }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {# WakeWeekPlan #}
+            {% if selected_group.wake_week_plan %}
+              <div class="mt-3">
+                <p>Tilknyttet Tænd/sluk tidsplan</p>
+                <p class="mt-2">
+                  <a href="{% url 'wake_plan' site.uid selected_group.wake_week_plan.id %}">{{ selected_group.wake_week_plan }}</a>
+                </p>
+              </div>
+            {% endif %}
+
             </fieldset>
           </div>
         </div>
 
         <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
-          <p class="alert alert-info"><strong>Bemærk</strong><br/>
-            Tilføjes et nyt script til listen, der tager parametre, skal disse parametre sættes først, ved tryk på
-            "Rediger", før man kan "Gemme ændringerne".<br/>
-            Redigering af inputparametre medfører ikke, at et script køres på ny.<br/>
-            Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-tilføjede Computere til Gruppen kører hele listen af scripts.
-          </p>
+          <div class="alert alert-info">
+            <strong>Bemærk</strong>
+            <ul>
+            <li>Tilføjes et nyt script til listen, der tager parametre, skal disse parametre sættes først, ved tryk på "Rediger", før man kan "Gemme ændringerne".</li>
+            <li>Redigering af inputparametre medfører ikke, at et script køres på ny.</li>
+            <li>Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-tilføjede Computere til Gruppen kører hele listen af scripts.</li>
+            </ul>
+          </div>
           {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
         </div>
 
@@ -150,7 +175,7 @@ active
                 {{ newform|crispy }}
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="Gem">
+              <input type="submit" class="btn btn-primary" value="Opret gruppe">
               <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="Annuller">
             </div>
           </form>

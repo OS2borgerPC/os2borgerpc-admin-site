@@ -21,7 +21,7 @@ table {
             }
 
             &:hover {
-                background-color: $orange !important; 
+                background-color: $orange !important;
                 color: $white;
             }
         }
@@ -37,6 +37,11 @@ table {
         &:last-child td:last-child {
             border-radius: 0 0 .33rem 0;
         }
+    }
+
+    tfoot td {
+        background-color: $gray-400 !important;
+        border-radius: 0 0 .33rem .33rem;
     }
 
     &.table-extendable {

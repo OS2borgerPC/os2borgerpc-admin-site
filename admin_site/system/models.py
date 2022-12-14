@@ -1,4 +1,5 @@
 import datetime
+from email.policy import default
 import random
 from statistics import mode
 import string
@@ -209,12 +210,234 @@ class Site(models.Model):
         return "/site/{0}".format(self.url)
 
 
+class FeaturePermission(models.Model):
+    name = models.CharField(verbose_name=_("name"), max_length=255)
+    uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
+    sites = models.ManyToManyField(
+        Site,
+        related_name="feature_permission",
+        verbose_name=_("sites with access"),
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
+
 class Error(Exception):
     pass
 
 
 class MandatoryParameterMissingError(Error):
     pass
+
+
+class WakeChangeEvent(models.Model):
+
+    EVENT_TYPE_CHOICES = (
+        ("ALTERED_HOURS", _("event_type:Altered Hours")),
+        ("CLOSED", _("event_type:Closed")),
+    )
+
+    name = models.CharField(verbose_name=_("name"), max_length=60)
+    date_start = models.DateField(verbose_name=_("date start"))
+    time_start = models.TimeField(verbose_name=_("time start"), null=True, blank=True)
+    date_end = models.DateField(verbose_name=_("date end"))
+    time_end = models.TimeField(verbose_name=_("time end"), null=True, blank=True)
+    # Represented by an on-off switch in the frontend
+    type = models.CharField(
+        verbose_name=_("type"),
+        max_length=15,
+        choices=EVENT_TYPE_CHOICES,
+        default=EVENT_TYPE_CHOICES[0][0],
+    )
+    site = models.ForeignKey(
+        Site, related_name="wake_change_events", on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return (
+            f"{self.name}: {self.date_start.day}/{self.date_start.month}/{str(self.date_start.year)[2:]}"
+            + (
+                f" - {self.date_end.day}/{self.date_end.month}/{str(self.date_end.year)[2:]}"
+                if self.date_start != self.date_end
+                else ""
+            )
+        )
+
+    def get_absolute_url(self):
+        return reverse("wake_change_event", args=(self.site.uid, self.id))
+
+    class Meta:
+        ordering = ["date_start"]
+
+
+class WakeWeekPlan(models.Model):
+
+    # Sleep state choices for the field below - and their translations
+    # These are based on what "rtcwake" supports
+    SLEEP_STATE_CHOICES = (
+        ("STANDBY", _("sleep_state:Standby")),
+        ("FREEZE", _("sleep_state:Freeze")),
+        ("MEM", _("sleep_state:Mem")),
+        ("OFF", _("sleep_state:Off")),
+    )
+
+    default_open = datetime.time(8, 0, 0, 0)
+    default_close = datetime.time(20, 0, 0, 0)
+
+    name = models.CharField(verbose_name=_("name"), max_length=60)
+    enabled = models.BooleanField(verbose_name=_("enabled"), default=True)
+    sleep_state = models.CharField(
+        verbose_name=_("sleep state"),
+        max_length=10,
+        choices=SLEEP_STATE_CHOICES,
+        default=SLEEP_STATE_CHOICES[3][0],
+    )
+    monday_on = models.TimeField(
+        verbose_name=_("monday on"), null=True, blank=True, default=default_open
+    )
+    monday_off = models.TimeField(
+        verbose_name=_("monday off"), null=True, blank=True, default=default_close
+    )
+    monday_open = models.BooleanField(verbose_name=_("monday open"), default=True)
+    tuesday_on = models.TimeField(
+        verbose_name=_("tuesday on"), null=True, blank=True, default=default_open
+    )
+    tuesday_off = models.TimeField(
+        verbose_name=_("tuesday off"), null=True, blank=True, default=default_close
+    )
+    tuesday_open = models.BooleanField(verbose_name=_("tuesday open"), default=True)
+    wednesday_on = models.TimeField(
+        verbose_name=_("wednesday on"), null=True, blank=True, default=default_open
+    )
+    wednesday_off = models.TimeField(
+        verbose_name=_("wednesday off"), null=True, blank=True, default=default_close
+    )
+    wednesday_open = models.BooleanField(verbose_name=_("wednesday open"), default=True)
+    thursday_on = models.TimeField(
+        verbose_name=_("thursday on"), null=True, blank=True, default=default_open
+    )
+    thursday_off = models.TimeField(
+        verbose_name=_("thursday off"), null=True, blank=True, default=default_close
+    )
+    thursday_open = models.BooleanField(verbose_name=_("thursday open"), default=True)
+    friday_on = models.TimeField(
+        verbose_name=_("friday on"), null=True, blank=True, default=default_open
+    )
+    friday_off = models.TimeField(
+        verbose_name=_("friday off"), null=True, blank=True, default=default_close
+    )
+    friday_open = models.BooleanField(verbose_name=_("friday open"), default=True)
+    saturday_on = models.TimeField(
+        verbose_name=_("saturday on"), null=True, blank=True, default=default_open
+    )
+    saturday_off = models.TimeField(
+        verbose_name=_("saturday off"), null=True, blank=True, default=default_close
+    )
+    saturday_open = models.BooleanField(verbose_name=_("saturday open"), default=False)
+    sunday_on = models.TimeField(
+        verbose_name=_("sunday on"), null=True, blank=True, default=default_open
+    )
+    sunday_off = models.TimeField(
+        verbose_name=_("sunday off"), null=True, blank=True, default=default_close
+    )
+    sunday_open = models.BooleanField(verbose_name=_("sunday open"), default=False)
+    site = models.ForeignKey(
+        Site, related_name="wake_week_plans", on_delete=models.CASCADE
+    )
+    wake_change_events = models.ManyToManyField(
+        WakeChangeEvent,
+        related_name="wake_week_plans",
+        verbose_name=_("wake change events"),
+    )
+
+    def get_absolute_url(self):
+        return reverse("wake_plan", args=(self.site.uid, self.id))
+
+    def get_script_arguments(self):
+        args = []
+        if self.monday_open:
+            args.append(self.get_script_argument(self.monday_on))
+            args.append(self.get_script_argument(self.monday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.tuesday_open:
+            args.append(self.get_script_argument(self.tuesday_on))
+            args.append(self.get_script_argument(self.tuesday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.wednesday_open:
+            args.append(self.get_script_argument(self.wednesday_on))
+            args.append(self.get_script_argument(self.wednesday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.thursday_open:
+            args.append(self.get_script_argument(self.thursday_on))
+            args.append(self.get_script_argument(self.thursday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.friday_open:
+            args.append(self.get_script_argument(self.friday_on))
+            args.append(self.get_script_argument(self.friday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.saturday_open:
+            args.append(self.get_script_argument(self.saturday_on))
+            args.append(self.get_script_argument(self.saturday_off))
+        else:
+            args.extend(["None", "None"])
+        if self.sunday_open:
+            args.append(self.get_script_argument(self.sunday_on))
+            args.append(self.get_script_argument(self.sunday_off))
+        else:
+            args.extend(["None", "None"])
+        custom_string = ""
+        today = datetime.date.today()
+        for event in self.wake_change_events.all():
+            if event.type == "CLOSED" and event.date_end >= today:
+                custom_string += (
+                    ";".join(
+                        [
+                            event.date_start.strftime("%d-%m-%Y"),
+                            event.date_end.strftime("%d-%m-%Y"),
+                            "None",
+                            "None",
+                        ]
+                    )
+                    + "|"
+                )
+            elif event.type == "ALTERED_HOURS" and event.date_end >= today:
+                custom_string += (
+                    ";".join(
+                        [
+                            event.date_start.strftime("%d-%m-%Y"),
+                            event.date_end.strftime("%d-%m-%Y"),
+                            self.get_script_argument(event.time_start),
+                            self.get_script_argument(event.time_end),
+                        ]
+                    )
+                    + "|"
+                )
+        args.append(custom_string[:-1])
+        args.append(self.sleep_state)
+
+        return args
+
+    def get_script_argument(self, on_or_off_time):
+        if on_or_off_time is None:
+            return "None"
+        else:
+            return f"{on_or_off_time.hour}:{on_or_off_time.minute}"
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
 
 
 class PCGroup(models.Model):
@@ -226,6 +449,9 @@ class PCGroup(models.Model):
     )
     site = models.ForeignKey(Site, related_name="groups", on_delete=models.CASCADE)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
+    wake_week_plan = models.ForeignKey(
+        WakeWeekPlan, related_name="groups", on_delete=models.SET_NULL, null=True
+    )
 
     def __str__(self):
         return self.name
@@ -460,6 +686,10 @@ class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
+    # To have a consistent, unique reference to a script locally and across servers
+    uid = models.CharField(
+        verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
+    )
     description = models.TextField(verbose_name=_("description"), max_length=4096)
     site = models.ForeignKey(
         Site, related_name="scripts", null=True, blank=True, on_delete=models.CASCADE
@@ -472,6 +702,10 @@ class Script(AuditModelMixin):
     )
     is_security_script = models.BooleanField(
         verbose_name=_("security script"), default=False, null=False
+    )
+
+    is_hidden = models.BooleanField(
+        verbose_name=_("hidden script"), default=False, null=False
     )
 
     maintained_by_magenta = models.BooleanField(

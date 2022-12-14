@@ -1,0 +1,89 @@
+{% extends 'documentation/index.html' %}
+
+{% block admin_groups_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  <h1>Strømbesparende funktioner</h1>
+  <p>
+    De strømbesparende funktioner består af et dvale-script og tænd/sluk-tidsplaner.
+    Disse funktioner kan kun anvendes af de kunder, som har tilkøbt sig adgang.
+    Alle kunder, som var med til at finansiere funktionerne, har automatisk adgang.
+    Andre kunder kan kontakte Magenta, hvis de er interesserede.
+  </p>
+  <p>
+    Dvale-scriptet er kun beregnet til brug på OS2borgerPC, mens tænd/sluk-tidsplaner
+    kan anvendes på både OS2borgerPC og OS2borgerPC Kiosk.
+  </p>
+  <p>
+    Hvis det er første gang du besøger denne side, vil vi foreslå at starte med at læse vores
+    <a href="{% url 'wake_plan_user_guide' %}" target="_blank">Brugerguide til strømsparefunktioner i OS2borgerPC</a>.
+  </p>
+  <h2>Dvale-script</h2>
+  <p>
+    Dvale-scriptet kan bruges til at indstille computere til at gå i dvale efter
+    et antal minutters inaktivitet. Der vises en valgfri advarsel, inden computeren går i dvale.
+    Scriptet tager fem argumenter: hvorvidt funktionen
+    skal aktiveres, antal minutter med inaktivitet før advarslen vises,
+    antal minutter med inaktivitet før maskinen går i dvale,
+    teksten i advarslen og teksten på knappen i advarslen.
+    Hvis de to sidste tekst-relaterede input ikke angives, benyttes standardtekster.
+    Scriptet logger automatisk borgeren ud, inden maskinen går i dvale.
+  </p>
+  <p>
+    Dvale-scriptet kan også sætte maskinen i dvale, hvis den står inaktiv på login-skærmen.
+    Dette kræver dog, at scriptkørsel ved login er blevet slået til via
+    scriptet <a href="{% url 'script_redirect_id' '1064' %}">Login - Slå scriptkørsel ved login til/fra</a>.
+    Advarslen vises ikke på login-skærmen.
+  </p>
+  <p>
+    Bemærk at USB-overvågning ikke kan være aktiv, mens en computer er i dvale.
+  </p>
+  <h2>Tænd/Sluk tidsplaner</h2>
+  <p>
+    En Tænd/Sluk tidsplan er et redskab til at planlægge og administrere
+    tænd- og sluk-tidspunkter for computerne i en eller flere grupper.
+  </p>
+  <p>
+    Brugen af Tænd/Sluk tidsplaner overflødiggør scriptsene
+    <a href="{% url 'script_redirect_id' '12' %}">OS2BorgerPC - Luk ned dagligt</a> og
+    <a href="{% url 'script_redirect_id' '422' %}">OS2BorgerPC - Luk ned og vågn op dagligt</a>.
+  </p>
+  <p>
+    Når man klikker på Tænd/Sluk tidsplan i venstremenuen, vil man til højre for
+    venstremenuen få vist en liste af tidsplaner for det site, man er under. Man
+    kan klikke på navnet for den enkelte tidsplan for at redigere tidsplanen.
+  </p>
+  <p>
+    Til højre vises redigeringsinterfacet for den valgte tidsplan. Hvis ikke der
+    er oprettet nogen tidsplaner for det site, man er under, vises interfacet til
+    oprettelse af tidsplaner.
+  </p>
+  <p>
+    Som standard når man klikker sig ind på en tidsplan, vil man få vist
+    tidsplanens indstillinger samt hvilke undtagelser og grupper, der er knyttet til tidsplanen.
+    Her kan man ændre tidsplanens navn, status, dvaletilstand og indstillinger
+    for den faste ugeplan, samt tilføje/fjerne grupper eller undtagelser
+    fra tidsplanen. Ændringer foretaget på siden træder ikke i kraft, før man
+    klikker på "Gem ændringer"-knappen i bunden af skærmbilledet.
+  </p>
+  <p>
+    Hvis man trykker på "Opret lukkedag", "Opret ændrede åbningstider" eller "Rediger undtagelser"
+    omdirigeres man til en ny side, hvor man kan oprette nye undtagelser
+    og redigere eller slette eksisterende undtagelser. De to "Opret" knapper går direkte til
+    et interface for den pågældende type undtagelse, mens "Rediger undtagelser" åbner
+    redigeringssiden for den første undtagelse for det site, man er under.
+  </p>
+  <p>
+    De forskellige redigeringsmuligheder beskrives nærmere under disse punkter:
+    {% include 'documentation/wake_plans/__submenu__.html' %}
+  </p>
+  <p>
+    Hvis man ønsker at oprette en ny tidsplan, skal man klikke på "tilføj ny
+    tænd/sluk tidsplan" oven over listen med tidsplaner. Dette åbner et interface, hvor
+    man skal udfylde navn for tidsplanen og har mulighed for at redigere i indstillingerne,
+    tilføje undtagelser eller indmelde grupper. Når man klikker på
+    gem, vil man blive viderestillet til redigeringssiden for den nyoprettede
+    tidsplan, hvor man kan fortsætte med at ændre i indstillingerne, tilføje undtagelser eller indmelde grupper.
+    Hvis tidsplanen er sat til "aktiv," vil den også tage effekt, når man klikker på gem.
+  </p>
+{% endblock %}

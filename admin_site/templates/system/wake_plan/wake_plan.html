@@ -1,0 +1,266 @@
+{% extends "system/wake_plan/wake_plan_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block specific_content %}
+
+<div class="container-fluid main sublevelmain">
+
+  <h1 class="divideheader">{{selected_plan.name|default:"Ny Tænd/Sluk tidsplan"}}</h1>
+  {% include 'notification.html' %}
+
+  <form method="post" class="gray-box">
+
+    {% csrf_token %}
+    <div class="container-fluid">
+
+      <div class="alert alert-info">
+        <p><strong>Bemærk</strong></p>
+        <ul>
+          <li>
+            Hvis du er ubekendt med Tænd/Sluk tidsplan-funktionaliteten, vil vi foreslå at starte med at læse vores
+            <a href="{% url 'wake_plan_user_guide' %}" target="_blank">Brugerguide til strømsparefunktioner i OS2borgerPC</a>.
+          </li>
+          <li>
+            Tidsplaner skal have <strong>Grupper</strong> tilknyttet, før de tager effekt, og en <strong>Gruppe</strong> kan kun være tilmeldt én tidsplan.
+          </li>
+          <li>
+            En tidsplan er gældende for alle <strong>Computere</strong> i de <strong>Grupper</strong>, som er tilmeldt tidsplanen.
+          </li>
+          <li>
+            En <strong>Computer</strong> kan kun modtage en ny eller opdateret tidsplan, hvis den er tændt.
+          </li>
+          <li>
+            Tidsplanen anvender tidsindstillingerne på <strong>de individuelle Computere</strong>.
+          </li>
+          <li>
+            Om nogle af <strong>Computerne</strong> også skal gå i dvale ved inaktivitet styres ikke herfra, men i stedet ved at køre
+            <a href="{% url 'script_redirect_uid' 'suspend_after_time' %}">Dvale-scriptet.</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="row" style="margin-left: 0;">
+
+        {# TODO: Make it work with the form errors #}
+        {{form.errors}}
+
+        <article class="col-lg-4 form-switch" id="week-plan-container">
+
+          <label class="mb-2">Tidsplan status*</label><br/>
+          <div class="d-table-cell">
+            {{form.enabled}}
+            <label id="id_enabled_label" style="vertical-align: middle;padding-top:0.25rem;">{% if selected_plan.enabled or not selected_plan %}Aktiv{% else %}Inaktiv{% endif %}</label>
+          </div>
+          <br/>
+
+          {{form.name|as_crispy_field}}
+
+          {{form.sleep_state|as_crispy_field}}
+
+          <button type="button" class="material-icons btn d-table-cell align-middle" data-container="body" title='Nogle dvaletilstande er mere strømbesparende end andre, men noget hardware understøtter ikke de mest strømbesparende tilstande. Vi foreslår at starte med "Off" (den mest strømbesparende), og hvis det ikke virker så prøv dem i rækkefølgen: mem, freeze, standby' data-toggle="popover" data-placement="right">
+            help_outline
+          </button>
+
+          <h2 class="mt-4"><strong>Ugeplan</strong></h2>
+          <p>Konfigurer tænd og sluk for den faste ugeplan</p>
+          <table id="week-plan" class="form-switch table">
+            <thead>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="before-dash">Tænd</td>
+                <td class="dash"></td>
+                <td class="after-dash">Sluk</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Mandag</strong>
+                </td>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input  fs-5 checkbox" name="monday_open" type="checkbox" role="switch" id="id_monday_open" {% if selected_plan.monday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_monday_open">{% if selected_plan.monday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.monday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.monday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Tirsdag</strong>
+                </td>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="tuesday_open" type="checkbox" role="switch" id="id_tuesday_open" {% if selected_plan.tuesday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_tuesday_open">{% if selected_plan.tuesday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.tuesday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.tuesday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Onsdag</strong>
+                </td>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="wednesday_open" type="checkbox" role="switch" id="id_wednesday_open" {% if selected_plan.wednesday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_wednesday_open">{% if selected_plan.wednesday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.wednesday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.wednesday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Torsdag</strong>
+                </td>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="thursday_open"  type="checkbox" role="switch" id="id_thursday_open" {% if selected_plan.thursday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_thursday_open">{% if selected_plan.thursday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.thursday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.thursday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Fredag</strong>
+                </td>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="friday_open" type="checkbox" role="switch" id="id_friday_open" {% if selected_plan.friday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_friday_open">{% if selected_plan.friday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.friday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.friday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Lørdag</strong>
+                </td>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="saturday_open" type="checkbox" role="switch" id="id_saturday_open" {% if selected_plan.saturday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_saturday_open">{% if selected_plan.saturday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.saturday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.saturday_off}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Søndag</strong>
+                </td>
+                <td class="checkbox-switch">
+                  <input style="float:right;" class="form-check-input fs-5 checkbox" name="sunday_open" type="checkbox" role="switch" id="id_sunday_open" {% if selected_plan.sunday_open %}checked{% endif %}>
+                </td>
+                <td class="checkbox-text">
+                  <label style="padding-top:0.5rem;float:left;" class="form-check-label" for="id_sunday_open">{% if selected_plan.sunday_open %}Tændt{% else %}Slukket{% endif %}</label>
+                </td>
+                <td  class="before-dash">
+                  {{form.sunday_on}}
+                </td>
+                <td class="dash">—</td>
+                <td class="after-dash">
+                  {{form.sunday_off}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </article>
+
+        <aside class="col-lg-8 col-xl-4 flex-grow-1">
+          <h2 class="mt-4"><strong>Undtagelser: Lukkedage og Ændrede åbningstider</strong></h2>
+          <p>Planlæg og opret kommende lukkedage eller ændrede åbningstider fra den faste ugentlige tidsplan</p>
+
+          {# Wake change events #}
+          <fieldset id="custom-wake-plans">
+            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-icons">door_front</span>Opret lukkedage</a>
+            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-icons">meeting_room</span>Opret ændrede åbningstider</a>
+            <a class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">edit</span>Rediger undtagelser</a>
+          </fieldset>
+
+          <fieldset class="col-12 col-lg-12">
+
+            {{ form.events.errors }}
+            <div class="clearfix">
+              <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
+                <span class="material-icons px-1">queue</span>
+                <span id="total-wake_change_events"></span>
+              </span>
+            </div>
+            {% include 'widgets/wake_plan_picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text='Tilknyt undtagelse til tidsplan' remove_text='Fjern undtagelse fra tidsplan' site_url=site.uid target_section='wake_change_event' %}
+
+          </fieldset>
+
+          <h2 class="mt-4 mb-0"><strong>Grupper der følger tidsplanen</strong></h2>
+
+          {# PCGroup picklist #}
+          <fieldset class="col-12 col-lg-12">
+
+            {{ form.groups.errors }}
+            <div class="clearfix">
+              <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
+                <span class="material-icons px-1">queue</span>
+                <span id="total-groups"></span>
+              </span>
+            </div>
+            {% include 'widgets/wake_plan_picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilknyt gruppe til tidsplan' remove_text='Fjern gruppe fra tidsplan' site_url=site.uid target_section='groups' %}
+
+          </fieldset>
+
+        </aside>
+      </div>
+      <fieldset class="mt-3">
+        <input id="submit-button" class="btn btn-primary me-3" type="submit" name="submit" value="Gem ændringer">
+        <input id="cancel-button" class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
+        {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
+        {% if selected_plan.id %}
+          <a class="btn btn-secondary" {% if wake_plan_access %} href="{% url 'wake_plan_duplicate' site.uid selected_plan.id %}" {% endif %}>Duplikér tidsplan</a>
+        {% endif %}
+      </fieldset>
+    </div>
+    <hr>
+
+  </form>
+
+</div>
+
+{% endblock %}
