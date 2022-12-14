@@ -65,9 +65,9 @@ OS2borgerPC: Nyheder
                     <form method="GET" class="mt-2">
                         <div id="changelog-search-tag-selectors">
                             {% if global_view %}
-                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'global-changelogs' slug=global %}" id="Alle">Alle</a>
+                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'global-changelogs' slug='global' %}" id="Alle">Alle</a>
                             {% else %}
-                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'global-changelogs' slug=site.url %}" id="Alle">Alle</a>
+                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'changelogs' slug=site.url %}" id="Alle">Alle</a>
                             {% endif %}
                             {% for tag in tag_choices %}
                                 <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" id="{{ tag.pk }}" href="?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}">{{ tag.name }}</a>
