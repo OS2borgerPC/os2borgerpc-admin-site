@@ -207,13 +207,13 @@
         </article>
 
         <aside class="col-lg-8 col-xl-4 flex-grow-1">
-          <h2 class="mt-4"><strong>Lukkedage og undtagelser</strong></h2>
-          <p>Planlæg kommende lukkedage eller opret undtagelser fra den faste ugentlige tidsplan</p>
+          <h2 class="mt-4"><strong>Undtagelser: Lukkedage og Ændrede åbningstider</strong></h2>
+          <p>Planlæg og opret kommende lukkedage eller ændrede åbningstider fra den faste ugentlige tidsplan</p>
 
           {# Wake change events #}
           <fieldset id="custom-wake-plans">
             <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_closed' site.uid %}"><span class="material-icons">door_front</span>Opret lukkedag</a>
-            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-icons">meeting_room</span>Opret ændrede åbningstider</a>
+            <a class="btn btn-secondary me-3 mb-3" href="{% url 'wake_change_event_new_altered_hours' site.uid %}"><span class="material-icons">meeting_room</span>Opret ændret åbningstid</a>
             <a class="btn btn-secondary mb-3" href="{% url 'wake_change_events' site.uid %}"><span class="material-icons">edit</span>Rediger undtagelser</a>
           </fieldset>
 
