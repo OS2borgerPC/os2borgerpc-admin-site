@@ -4,7 +4,7 @@ Version 5.10.0, December 14, 2022
 - Wake plan: Launch new section to handle startup and shutdown times, including related
   documentation, guide and test data
 - Global script redirect by ID or UID
-- Improved backend validation of user permissions when deleting a user
+- Improved backend validation of user permissions when deleting a script
 - Assorted consistency fixes throughout the site
 
 Version 5.9.3, November 9, 2022
