@@ -19,7 +19,7 @@ Sikkerhedsregler
         </div>
         <ul class="item-list">
             {% for sp in site.security_problems.all %}
-                <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>                
+                <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>
                     <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/">
                         {{ sp.name }}
                     </a>
@@ -51,20 +51,23 @@ Sikkerhedsregler
     </h2>
     {% include 'notification.html' %}
 
-    <form name="updategroupform" 
+    <form name="updategroupform"
         id="updategroupform"
-        method="post" 
+        method="post"
         class="gray-box">
-        {% csrf_token %} 
-        
-        <p class="alert alert-info"><strong>Bemærk</strong><br/>
-        Hvis der ikke er nogen gruppe tilknyttet sikkerhedsreglen, så vil reglen gælde <strong>alle</strong> computere.<br/> 
-        Ønsker du midlertidigt at gøre en regel inaktiv, kan du oprette en <em>tom</em> gruppe (dvs. en gruppe uden computere)<br/>
-        og sætte denne gruppe som den overvågede gruppe.
-        </p>
+        {% csrf_token %}
+
+        <div class="alert alert-info">
+            <strong>Bemærk</strong>
+            <ul>
+                <li>Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen gælde <strong>alle</strong> Computere.</li>
+                <li>Ønsker du midlertidigt at gøre en Regel inaktiv, kan du oprette en <em>tom</em> Gruppe (dvs. en Gruppe uden Computere)
+                og sætte denne Gruppe som den overvågede Gruppe.</li>
+            </ul>
+        </div>
         <div class="row gx-5">
             <fieldset class="col-12 col-lg-6">
-                
+
                 <!-- Site field -->
                 <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
 
@@ -102,9 +105,9 @@ Sikkerhedsregler
     <div id="addNewSecProblem" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{% url 'security_problem_new' site.uid %}" 
+                <form action="{% url 'security_problem_new' site.uid %}"
                         name="new_security_problem_form"
-                        id="new_security_problem_form" 
+                        id="new_security_problem_form"
                         method="post">
                     <div class="modal-header">
                         <h3 class="modal-title">Definér ny sikkerhedsregel</h3>
@@ -137,7 +140,7 @@ Sikkerhedsregler
 
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Gem">
+                        <input type="submit" class="btn btn-primary" value="Opret sikkerhedsregel">
                         <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="Annuller">
                     </div>
                 </form>

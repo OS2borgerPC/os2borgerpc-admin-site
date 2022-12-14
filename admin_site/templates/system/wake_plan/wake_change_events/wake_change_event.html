@@ -1,0 +1,116 @@
+{% extends 'system/wake_plan/wake_change_events/wake_change_event_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block specific_content %}
+  <div class="container-fluid main sublevelmain" id="wake-change-plan">
+    <h2 class="divideheader">
+
+          {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
+            Ændrede åbningstider:
+          {% else %}
+            Lukkedage:
+          {% endif %}
+      {{selected_event.name|default:"Ny undtagelse"}}
+    </h2>
+        <button class="btn btn-secondary me-3 mt-3 mb-3" onClick="ReturnToLastVisitedWakePlan()">
+          <span class="material-icons">
+          arrow_back
+          </span>
+          Tilbage til tidsplan
+        </button>
+        {% include 'notification.html' %}
+        <form method="post" accept-charset="utf-8" class="gray-box">
+
+      <div class="alert alert-info">
+        <p><strong>Info</strong></p>
+        <ul>
+          <li>
+            Herinde kan du oprette undtagelser til den faste tidsplan, og disse undtagelser tager præcedens.
+          </li>
+          <li>
+          {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
+            "Ændrede åbningstider" betyder at den i de angivne dage tænder og slukker på de, for undtagelsen, valgte
+            tidspunkter, fremfor de tidspunkter, der står i den faste tidsplan.
+          {% else %}
+            "Lukkedage" betyder at computeren slet ikke tænder den eller de dage.
+          {% endif %}
+          </li>
+        </ul>
+      </div>
+
+        {% csrf_token %}
+        <div class="row gx-5">
+
+        {% comment %} <fieldset class="wake-change-event-form col-12 col-lg-3"> {% endcomment %}
+        <fieldset class="wake-change-event-form col-xl-12 col-xxl-6">
+
+          <label>Navn</label><br/>
+          {{form.name}}
+
+          <table class="mt-4">
+            <thead>
+              <tr>
+                <td class="pe-2"></td>
+                <td>Fra</td>
+                <td></td> <!-- Visual date/time separator -->
+                <td>Til</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="pe-2">Dato</td>
+                <td class="pe-2"> {{form.date_start}}</td>
+                <td>—</td>
+                <td class="ps-2"> {{form.date_end}}</td>
+              </tr>
+
+          {# The second case is for handling the form for creating new altered hours, which doesn't yet have a type #}
+          {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
+              <tr>
+                <td class="pe-2 pt-2">Tidspunkt</td>
+                <td class="wake-change-event-time pt-2 pe-2"> {{form.time_start}}</td>
+                <td>—</td>
+                <td class="wake-change-event-time pt-2 ps-2"> {{form.time_end}}</td>
+              </tr>
+          {% endif %}
+            </tbody>
+          </table>
+
+          {# Insert the wake change "type" based on the URL for Create or from the current value for Update #}
+          {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
+            <input type="hidden" name="type" value="ALTERED_HOURS"/>
+          {% else %}
+            <input type="hidden" name="type" value="CLOSED"/>
+          {% endif %}
+
+        </fieldset>
+
+        {% comment %} <fieldset class="col-12 col-lg-3"> {% endcomment %}
+        <fieldset class="col-xl-12 col-xxl-6">
+          {# WakeWeekPlan(s) #}
+          {% if wake_plan_list_for_event %}
+            <div class="mt-3">
+              <p>Tænd/sluk tidsplaner der anvender denne undtagelse</p>
+              <ul class="mt-2 list-group">
+                {% for plan in wake_plan_list_for_event %}
+                  {% comment %} <li class="list-group-item"><a href="{% url 'wake_plan' site.uid plan.pk %}">{{ plan }}</a></li> {% endcomment %}
+                  {% comment %} the above needs changes in order to work with input and picklist states saving {% endcomment %}
+                  <li class="list-group-item">{{ plan }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </fieldset>
+        </div>
+
+        <fieldset class="mt-4">
+          {# TODO: Lav knap der både opretter den, tilføjer den til picklisten og automatisk går tilbage til wake plan #}
+          <input class="btn btn-primary me-3" id="submit-button" type="submit" name="submit" value="{% if "new" in request.resolver_match.url_name %}Opret{% else %}Gem ændringer {% endif %}">
+          <input class="btn btn-secondary me-3" type="reset" name="cancel" value="Annuller">
+        </fieldset>
+
+      </form>
+
+  </div>
+
+{% endblock %}

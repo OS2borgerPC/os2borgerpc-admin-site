@@ -18,19 +18,20 @@ from system.models import (
     Citizen,
     Configuration,
     ConfigurationEntry,
+    FeaturePermission,
     ImageVersion,
     Input,
     Job,
     PC,
     PCGroup,
+    WakeWeekPlan,
+    WakeChangeEvent,
     Script,
     ScriptTag,
     SecurityEvent,
     SecurityProblem,
     Site,
 )
-
-ar = admin.site.register
 
 
 class ConfigurationEntryInline(admin.TabularInline):
@@ -43,7 +44,7 @@ class SiteInlineForConfiguration(admin.TabularInline):
     extra = 0
 
 
-class PCGroupInlineForConfiguration(admin.TabularInline):
+class PCGroupInline(admin.TabularInline):
     model = PCGroup
     extra = 0
 
@@ -59,7 +60,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
     inlines = [
         ConfigurationEntryInline,
         SiteInlineForConfiguration,
-        PCGroupInlineForConfiguration,
+        PCGroupInline,
         PCInlineForConfiguration,
     ]
 
@@ -113,10 +114,12 @@ class ScriptAdmin(admin.ModelAdmin):
         "name",
         "is_global",
         "is_security_script",
+        "is_hidden",
         "site",
         "jobs_per_site",
         "jobs_per_site_for_the_last_year",
         "associations_to_groups_per_site",
+        "uid",
         "executable_code",
     )
     filter_horizontal = ("tags",)
@@ -186,6 +189,11 @@ class PCInlineForSiteAdmin(admin.TabularInline):
         return False
 
 
+class FeaturePermissionInlineForSiteAdmin(admin.TabularInline):
+    model = FeaturePermission.sites.through
+    extra = 0
+
+
 class SiteAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -195,7 +203,10 @@ class SiteAdmin(admin.ModelAdmin):
         "number_of_kioskpc_computers",
     )
     search_fields = ("name",)
-    inlines = (PCInlineForSiteAdmin,)
+    inlines = (
+        FeaturePermissionInlineForSiteAdmin,
+        PCInlineForSiteAdmin,
+    )
     readonly_fields = ("created",)
 
     def number_of_borgerpc_computers(self, obj):
@@ -222,6 +233,15 @@ class SiteAdmin(admin.ModelAdmin):
     number_of_computers.short_description = _("Number of computers")
     number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
     number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
+
+
+class FeaturePermissionAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "uid",
+    )
+    list_filter = ("name",)
+    search_fields = ("name", "uid")
 
 
 class PCAdmin(admin.ModelAdmin):
@@ -379,22 +399,54 @@ class ChangelogCommentAdmin(admin.ModelAdmin):
     )
 
 
-ar(Configuration, ConfigurationAdmin)
-ar(Site, SiteAdmin)
-ar(PCGroup, PCGroupAdmin)
-ar(PC, PCAdmin)
-ar(ImageVersion, ImageVersionAdmin)
-ar(Changelog, ChangelogAdmin)
-ar(ChangelogTag, ChangelogTagAdmin)
-ar(ChangelogComment, ChangelogCommentAdmin)
-# Job related stuff
-ar(Script, ScriptAdmin)
-ar(ScriptTag, ScriptTagAdmin)
-ar(Batch, BatchAdmin)
-ar(Job, JobAdmin)
-ar(BatchParameter)
+class WakeWeekPlanAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "enabled",
+        "site",
+    )
+    inlines = [PCGroupInline]
+    filter_horizontal = ("wake_change_events",)
+
+
+class WakeWeekPlanInline(admin.TabularInline):
+    model = WakeWeekPlan.wake_change_events.through
+    extra = 0
+
+
+class WakeChangeEventAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "type",
+        "date_start",
+        "date_end",
+        "time_start",
+        "time_end",
+        "site",
+    )
+    inlines = [WakeWeekPlanInline]
+
+
+ar = admin.site.register
+
 ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter, AssociatedScriptParameterAdmin)
+ar(Batch, BatchAdmin)
+ar(BatchParameter)
+ar(Changelog, ChangelogAdmin)
+ar(ChangelogComment, ChangelogCommentAdmin)
+ar(ChangelogTag, ChangelogTagAdmin)
+ar(Citizen, CitizenAdmin)
+ar(Configuration, ConfigurationAdmin)
+ar(ImageVersion, ImageVersionAdmin)
+ar(Job, JobAdmin)
+ar(PC, PCAdmin)
+ar(PCGroup, PCGroupAdmin)
+ar(WakeChangeEvent, WakeChangeEventAdmin)
+ar(WakeWeekPlan, WakeWeekPlanAdmin)
+ar(Script, ScriptAdmin)
+ar(ScriptTag, ScriptTagAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
-ar(Citizen, CitizenAdmin)
+ar(Site, SiteAdmin)
+ar(FeaturePermission, FeaturePermissionAdmin)

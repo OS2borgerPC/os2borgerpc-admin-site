@@ -1,0 +1,62 @@
+{% extends "site_with_navigation.html" %}
+{% load static %}
+
+{% block specific_title %}
+Tænd- / Sluk-tidsplan
+{% endblock %}
+
+{% block stylesheets %}
+  <link href="{% static 'css/wake_plan.css' %}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block subnav %}
+<div class="sublevelnav">
+  <div class="listutils">
+
+    <a class="btn btn-link" href="{% url 'wake_plan_new' site.uid %}">
+        <span class="material-icons">add</span>
+        Tilføj ny tænd/sluk tidsplan
+    </a>
+  </div>
+
+  <ul class="item-list">
+    {% if wake_week_plans_list.all %}
+      {% for plan in wake_week_plans_list %}
+        <li class="{% ifequal plan selected_plan %}active{% endifequal %}">
+          <a class="item-list-link" id="{{plan.id}}" href="{% url 'wake_plan' site.uid plan.id %}">
+            {{ plan.name }}
+            {% if not plan.enabled %}
+              <span class="badge bg-danger">Inaktiv</span>
+            {% endif %}
+          </a>
+          {% ifequal plan selected_plan %}
+            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_plan_delete' site.uid plan.id %}" {% endif %} title="Slet tænd-sluk-tidsplan">
+              clear
+            </a>
+          {% endifequal %}
+        </li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{% static 'js/wake_plan.js' %}"></script>
+  {# Function to check for permission to access wake plans #}
+  {# It's in here instead of the js file above to have access to djangos context #}
+  <script type="text/javascript">
+  $(function() {
+      /* If the site does not have permission to use wake_plans,
+      disable all wake_plan inputs*/
+      var permission = "{{wake_plan_access|safe}}"
+      if ( permission != 'True') {
+        inputs = document.querySelectorAll("input, button, select")
+        /* The starting index is 1 to avoid disabling the logout button*/
+        for (index = 1; index < inputs.length; index++) {
+          inputs[index].disabled = true
+        }
+      }
+  })
+  </script>
+{% endblock %}

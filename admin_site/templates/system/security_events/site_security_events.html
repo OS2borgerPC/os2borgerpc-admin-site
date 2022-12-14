@@ -69,7 +69,7 @@ Sikkerhedshændelser
     <tbody id="securityeventitem-template">
       <tr class="click-list--item">
         <td><input type="checkbox" onchange="selectEvent(this)"/></td>
-        <td><span class="badge badge-#LEVEL_LABEL#">#LEVEL#</span></td> 
+        <td><span class="badge badge-#LEVEL_LABEL#">#LEVEL#</span></td>
         <td><strong>#PROBLEM_LINK#</strong></td>
         <td>#INFO_BUTTON#</td>
         <td><strong>#PC_LINK#</strong></td>
@@ -94,7 +94,7 @@ Sikkerhedshændelser
         {{ form|crispy }}
       </div>
       <div class="modal-footer">
-        <button id="handle_events_save_button" type="button" class="btn btn-primary">Gem</button>
+        <button id="handle_events_save_button" type="button" class="btn btn-primary">Håndter undtagelse</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
       </div>
     </div>
@@ -123,9 +123,15 @@ Sikkerhedshændelser
           <td colspan="5">Loading data...</td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">
+            <nav class="pagination-wrapper" aria-label="Security event list page">
+              {% include 'widgets/pagination.html' %}
+            </nav>
+          </td>
+        </tr>
+      </tfoot>
     </table>
-    <nav class="pagination-wrapper" aria-label="Security event list page">
-      {% include 'widgets/pagination.html' %}
-    </nav>
   </div>
 {% endblock %}

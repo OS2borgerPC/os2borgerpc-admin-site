@@ -1,0 +1,57 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Tidsplans-redigering: Indstillinger</h1>
+  <p>
+    Redigeringsinterfacet for en tidsplan viser tidsplanens indstillinger til venstre i skærmbilledet,
+    og en liste over undtagelser, der er knyttet til tidsplanen til højre i skærmbilledet.
+  </p>
+  <h2>Status</h2>
+  <p>
+    En tidsplan kan være aktiv eller inaktiv. Den har kun effekt på de indmeldte grupper,
+    hvis den er aktiv.
+  </p>
+  <h2>Dvaletilstand</h2>
+  <p>
+    Den valgte dvaletilstand bestemmer, hvilken tilstand medlemmerne af tidsplanen lukker ned i,
+    når de slukker efter tidsplanen. I rækkefølge fra mindste til største strømbesparing er
+    mulighederne standby, freeze, mem og off. Vi anbefaler derfor, at man anvender
+    dvaletilstanden off for størst mulig strømbesparing, men det er ikke alt hardware,
+    der understøtter denne dvaletilstand.
+  </p>
+  <h2>Indstillinger: Ugeplan</h2>
+  <p>
+    I ugeplanen kan man vælge tænd- og sluk-tidspunkter for hver enkelt ugedag, eller om der
+    skal være slukket hele den pågældende dag. Indstillingerne i ugeplanen er som udgangspunkt
+    gældende for alle de pågældende ugedage, medmindre der findes en undtagelse for den
+    pågældende dato.
+  </p>
+  <h2>Indstillinger: Lukkedage og undtagelser</h2>
+  <p>
+    Under punktet "Lukkedage og undtagelser" kan man tilføje eller fjerne undtagelser til
+    ugeplanen for specifikke datoer eller perioder.
+    Hvis der findes en undtagelse for en given dato, vil undtagelsens indstillinger benyttes i stedet
+    for ugeplanens indstillinger.
+    En undtagelse kan være en ændring i tænd- og sluk-tidspunkterne eller en konstant nedlukning
+    for en specifik dato eller periode.
+    Undtagelser oprettes, slettes og redigeres i den fane som åbnes, når man trykker på "Opret lukkedag,"
+    "Opret ændrede åbningstider" eller "Rediger undtagelser." De forskellige knapper går direkte til
+    den del af fanen, som er relateret til deres navn.
+  </p>
+  <h3>Tilføj undtagelser</h3>
+  <p>
+    Du tilføjer undtagelser ved at føre musen hen over "Tilføj undtagelse til tidsplan". Hvis
+    der findes undtagelser, som endnu ikke er medlem af tidsplanen, vil de dukke op i
+    en liste under muse-markøren. Klik på en undtagelse for at knytte undtagelsen
+    til tidsplanen.
+  </p>
+  <h2>Fjern undtagelse</h2>
+  <p>
+    For at fjerne en undtagelse skal du klikke på krydset ud for undtagelsen i listen over
+    tilknyttede undtagelser.
+  </p>
+  <p>
+    Husk at ændringer til listen over undtagelser ikke bliver permanente, før du
+    har klikket på "Gem ændringer" nederst i skærmbilledet.
+  </p>
+{% endblock %}

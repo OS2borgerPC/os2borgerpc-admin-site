@@ -107,7 +107,6 @@
                 }
                 this.addConfig(id, name, value)
             } else {
-                console.log('where is p', window)
                 var p = $('#' + id).find(
                     'input.config-pk[value=' + pk + ']'
                 )

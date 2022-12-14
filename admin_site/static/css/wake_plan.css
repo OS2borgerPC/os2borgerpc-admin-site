@@ -1,0 +1,87 @@
+article {
+  min-width: 480px;
+  min-width: 600px;
+}
+
+tr {
+  border-top: 0!important;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: 100;
+}
+
+.form-switch .form-check-input {
+  margin-left: 0;
+}
+
+.form-switch {
+  padding-left: 0px;
+}
+
+.dash {
+  width: 0;
+  padding-left: 10px!important;
+  padding-right: 10px!important;
+}
+
+.table {
+  --bs-table-bg: transparent;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.1em;
+}
+
+td.before-dash {
+  padding-right: 0;
+}
+
+td.after-dash {
+  padding-left: 0;
+}
+
+.form-check-label {
+  user-select: none;
+  margin-left: 5px;
+  padding-top: 0.5rem;
+  float:left;
+}
+
+.checkbox-switch {
+  padding: 0.75rem 0rem 0.75rem 2rem!important;
+}
+
+.checkbox-text {
+  padding: 0.75rem 2rem 0.75rem 0rem!important;
+}
+
+/* Sleep state info button */
+#div_id_sleep_state, #id_sleep_state {
+  display: inline;
+}
+
+#div_id_sleep_state label {
+  display: block;
+}
+
+#id_sleep_state {
+  width: 85%;
+}
+
+/* Wake change events */
+
+#wake-change-plan .wake-change-event-form input {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 130px;
+}
+
+#wake-change-plan tbody td input {
+  margin-top: 20px
+  vertical-align: middle;
+}
+
+#wake-change-event-name {
+  width: 360px!important;
+}
