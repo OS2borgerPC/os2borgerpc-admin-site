@@ -6,9 +6,9 @@
     <h2 class="divideheader">
 
           {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
-            Ændret åbningstid:
+            Ændrede åbningstider:
           {% else %}
-            Lukket:
+            Lukkedage:
           {% endif %}
       {{selected_event.name|default:"Ny undtagelse"}}
     </h2>
@@ -29,10 +29,10 @@
           </li>
           <li>
           {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
-            "Ændret åbningstid" betyder at den i de angivne dage tænder og slukker på de, for undtagelsen, valgte
+            "Ændrede åbningstider" betyder at den i de angivne dage tænder og slukker på de, for undtagelsen, valgte
             tidspunkter, fremfor de tidspunkter, der står i den faste tidsplan.
           {% else %}
-            "Lukket" betyder at computeren slet ikke tænder den eller de dage.
+            "Lukkedage" betyder at computeren slet ikke tænder den eller de dage.
           {% endif %}
           </li>
         </ul>
