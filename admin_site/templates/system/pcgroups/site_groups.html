@@ -45,11 +45,11 @@ active
     <h2 class="divideheader">Detaljer om <em>{{ selected_group.name }}</em></h2>
     {% include 'notification.html' %}
 
-    <form name="updategroupform" 
+    <form name="updategroupform"
       id="updategroupform"
       action="{% url 'group' site.uid selected_group.url %}"
-      method="post" 
-      enctype="multipart/form-data" 
+      method="post"
+      enctype="multipart/form-data"
       class="row-fluid"
       onsubmit="updateScriptPositions()">
 
