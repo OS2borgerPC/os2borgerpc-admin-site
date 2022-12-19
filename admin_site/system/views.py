@@ -2292,9 +2292,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
 
         # Manually create a list of security problems to not only include those attached but also those
         # unattached which currently apply to all groups
-        context["security_problems_incl_site"] = group.security_problems.all().union(
-            SecurityProblem.objects.filter(alert_groups=None)
-        )
+        context["security_problems_incl_site"] = group.security_problems.filter(
+            site=site
+        ).union(SecurityProblem.objects.filter(alert_groups=None, site=site))
 
         # PC picklist related
         pc_queryset = site.pcs.filter(is_activated=True)
