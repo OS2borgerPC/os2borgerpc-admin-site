@@ -1,3 +1,8 @@
+Version 5.10.1, December 19, 2022
+---------------------------------
+
+- Fix bug where security problems showed up on the groups for other sites on the group page
+
 Version 5.10.0, December 14, 2022
 ---------------------------------
 
