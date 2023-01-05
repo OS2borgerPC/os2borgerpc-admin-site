@@ -25,15 +25,15 @@ detailpage
 <div class="p-4">
   <h2>Siden kunne desværre ikke findes.</h2>
   <div class="card">
-    <div class="card-body">
+    <div class="card-body bg-warning">
       <p><strong class="card-title">Fejlbeskeden er:</strong></p>
       <q class="card-text">
-        {{ exception }}
+        {{ exception|safe }}
       </q>
     </div>
   </div>
   <br/>
-  <p>Hvis i mener, der er tale om en fejl, så kan i skrive til os på <a href="mailto:support@magenta.dk">support@magenta.dk</a>.</p>
+  <p>Hvis I mener, der er tale om en fejl, kan I skrive til os på <a href="mailto:support@magenta.dk">support@magenta.dk</a>.</p>
   <p>Mvh.<br/>
   <strong>OS2BorgerPC-Teamet</strong></p>
 </div>

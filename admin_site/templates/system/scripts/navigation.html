@@ -32,15 +32,15 @@
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
-                {% if script == selected_script and user_type_for_site == 2 or script == selected_script and user.is_superuser %}
+                {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
-                  <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
-                    clear
-                  </a>
+                    <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
+                      clear
+                    </a>
                   {% else %}
-                  <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
-                    clear
-                  </a>
+                    <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                      clear
+                    </a>
                   {% endif %}
                 {% endif %}
               </li>
@@ -56,7 +56,7 @@
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
-                {% if script == selected_script and user_type_for_site == 2 or script == selected_script and user.is_superuser %}
+                {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
                   <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
                     clear
