@@ -25,12 +25,22 @@ def set_css_class_active(url_name, match):
         return "active"
 
 
-# Useful for debugging
+@register.filter
+def file_basename(value):
+    """
+    Print out the file name without the full path.
+    Used to show file input parameters in policies to the user.
+    """
+    return os.path.basename(value.file.name)
+
+
+# Useful for investigating what's in the {{context}}
 @register.filter
 def get_fields(obj):
     return [(field.name, field.value_to_string(obj)) for field in obj._meta.fields]
 
 
+# Useful for investigating what's in the {{context}}
 @register.filter
-def file_basename(value):
-    return os.path.basename(value.file.name)
+def getallattrs(value):
+    return dir(value)

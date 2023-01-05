@@ -7,7 +7,7 @@ Brugere
 {% block subnav %}
 <div class="sublevelnav">
 
-  {% if user_type_for_site == 2 or user.is_superuser %}
+  {% if site_membership.site_user_type == site_membership.SITE_ADMIN or user.is_superuser %}
     <div class="listutils">
       <button class="btn btn-link" data-bs-target="#addNewUser" type="button" data-bs-toggle="modal">
         <span class="material-icons">add</span>
@@ -23,7 +23,7 @@ Brugere
         <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
           {{ listed_user.username }}
         </a>
-        {% if listed_user == selected_user and user_type_for_site == 2 or listed_user == selected_user and user.is_superuser %}
+        {% if listed_user == selected_user and site_membership.site_user_type == site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
           <a class="item-list-deletable material-icons" href="{% url 'delete_user' site.uid selected_user.username %}" title="Slet bruger">
             clear
           </a>
@@ -40,10 +40,10 @@ Brugere
       <h2 class="divideheader">Profil: <em>{{ selected_user.username }}</em></h2>
       {% include 'notification.html' %}
       <div>
-        {% if user_type_for_site != 2 and not user.is_superuser and not user == selected_user %}
+        {% if site_membership.site_user_type != site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
             <p> Site-brugere har ikke adgang til at ændre andre brugere. Bed en site-admin eller Magenta om hjælp.</p>
         {% else %}
-            <form action="{% url 'user' site.uid selected_user.username %}"
+            <form
               name="update_user_form"
               id="update_user_form"
               method="post"
