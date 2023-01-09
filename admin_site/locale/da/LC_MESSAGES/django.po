@@ -630,6 +630,12 @@ msgstr "Bruger %s opdateret"
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
+#: system/views.py:2303
+#, python-format
+msgid "You have no group with the following ID: %s. Try locating the group in the list of groups."
+msgstr "I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>"
+"Prøv i stedet at finde gruppen fra gruppelisten."
+
 #: system/views.py:2457
 #, python-format
 msgid ""

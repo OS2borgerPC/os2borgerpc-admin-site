@@ -1483,7 +1483,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             return WakeWeekPlan.objects.get(
                 id=self.kwargs["wake_week_plan_id"], site=site_id
             )
-        except WakeWeekPlan.DoesNotExist:
+        except (WakeWeekPlan.DoesNotExist, ValueError):
             raise Http404(
                 _("You have no Wake Week Plan with the following ID: %s")
                 % self.kwargs["wake_week_plan_id"]
@@ -1866,7 +1866,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
             return WakeChangeEvent.objects.get(
                 id=self.kwargs["wake_change_event_id"], site=site_id
             )
-        except WakeChangeEvent.DoesNotExist:
+        except (WakeChangeEvent.DoesNotExist, ValueError):
             raise Http404(
                 _("You have no Wake Change Event with the following ID: %s")
                 % self.kwargs["wake_change_event_id"]
@@ -2160,6 +2160,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             self.request.user.is_superuser
             or site_membership_req_user.site_user_type
             == site_membership_req_user.SITE_ADMIN
+            or self.request.user == self.selected_user
         ):
 
             self.object = form.save()
@@ -2205,7 +2206,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
             site_id=site.id
-        ).first
+        ).first()
         if (
             not self.request.user.is_superuser
             and site_membership.site_user_type != site_membership.SITE_ADMIN
@@ -2298,7 +2299,10 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             return PCGroup.objects.get(id=id, site=site)
         except (PCGroup.DoesNotExist, ValueError):
             raise Http404(
-                f"I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>{self.kwargs['group_id']}</h3><br/>Prøv i stedet at finde gruppen fra gruppelisten."
+                _(
+                    "You have no group with the following ID: %s. Try locating the group in the list of groups."
+                )
+                % self.kwargs["group_id"]
             )
 
     def get_context_data(self, **kwargs):
