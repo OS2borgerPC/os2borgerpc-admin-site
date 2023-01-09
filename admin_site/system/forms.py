@@ -192,7 +192,7 @@ class UserForm(forms.ModelForm):
         username = cleaned_data.get("username")
         user_exists = self.Meta.model.objects.filter(username=username).exists()
 
-        if not self.instance.pk and user_exists:
+        if not self.instance.username == username and user_exists:
             raise ValidationError(_("A user with this username already exists."))
         return cleaned_data
 

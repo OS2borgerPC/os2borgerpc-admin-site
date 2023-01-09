@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.utils import dateformat
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
-
-from django.forms.models import model_to_dict
 
 from django.db import transaction
 from django.db.models import Q, F
@@ -578,7 +574,10 @@ class ScriptMixin(object):
         if "script_pk" in kwargs:
             self.script = get_object_or_404(Script, pk=kwargs["script_pk"])
             if self.script.site and self.script.site != self.site:
-                raise Http404(f"Du har intet script med id {self.kwargs['script_pk']}")
+                raise Http404(
+                    _("You have no Script with the following ID: %s")
+                    % self.kwargs["script_pk"]
+                )
 
     def get(self, request, *args, **kwargs):
         self.setup_script_editing(**kwargs)
@@ -681,13 +680,15 @@ class ScriptMixin(object):
                 }
 
                 if data["name"] is None or data["name"] == "":
-                    data["name_error"] = "Fejl: Du skal angive et navn"
+                    data["name_error"] = _("Error: You must provide a name")
                     success = False
 
                 if data["value_type"] not in [
                     value for (value, name) in Input.VALUE_CHOICES
                 ]:
-                    data["type_error"] = "Fejl: Du skal angive en korrekt type"
+                    data["type_error"] = _(
+                        "Error: You must provide a correct input parameter type"
+                    )
                     success = False
 
                 data["mandatory"] = data["mandatory"] != "unchecked"
@@ -818,12 +819,11 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if not request_user.is_superuser:
-            context[
-                "user_type_for_site"
-            ] = request_user.bibos_profile.sitemembership_set.get(
-                site_id=site.id
-            ).site_user_type
+        context[
+            "site_membership"
+        ] = request_user.bibos_profile.sitemembership_set.filter(
+            site_id=site.id
+        ).first()
         return context
 
     def get_object(self, queryset=None):
@@ -1022,12 +1022,12 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         script = self.get_object()
 
         site = script.site
+        site_membership = request.user.bibos_profile.sitemembership_set.filter(
+            site_id=site.id
+        ).first()
         if (
             not request.user.is_superuser
-            and request.user.bibos_profile.sitemembership_set.get(
-                site_id=site.id
-            ).site_user_type
-            != 2
+            and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
 
@@ -1087,7 +1087,10 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             site_id = Site.objects.get(uid=self.kwargs["site_uid"])
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
-            raise Http404(f"Du har ingen computer med id {self.kwargs['pc_uid']}")
+            raise Http404(
+                _("You have no computer with the following ID: %s")
+                % self.kwargs["pc_uid"]
+            )
 
     def get_context_data(self, **kwargs):
         context = super(PCUpdate, self).get_context_data(**kwargs)
@@ -1480,11 +1483,10 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             return WakeWeekPlan.objects.get(
                 id=self.kwargs["wake_week_plan_id"], site=site_id
             )
-        except WakeWeekPlan.DoesNotExist:
+        except (WakeWeekPlan.DoesNotExist, ValueError):
             raise Http404(
-                _(
-                    f"You have no Wake Week Plan with the ID {self.kwargs['wake_week_plan_id']}"
-                )
+                _("You have no Wake Week Plan with the following ID: %s")
+                % self.kwargs["wake_week_plan_id"]
             )
 
     def form_valid(self, form):
@@ -1864,11 +1866,10 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
             return WakeChangeEvent.objects.get(
                 id=self.kwargs["wake_change_event_id"], site=site_id
             )
-        except WakeChangeEvent.DoesNotExist:
+        except (WakeChangeEvent.DoesNotExist, ValueError):
             raise Http404(
-                _(
-                    f"You have no Wake Change Event with the ID {self.kwargs['wake_change_event_id']}"
-                )
+                _("You have no Wake Change Event with the following ID: %s")
+                % self.kwargs["wake_change_event_id"]
             )
 
     def form_valid(self, form):
@@ -2075,13 +2076,13 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+            site=site
+        ).first()
 
         if (
             self.request.user.is_superuser
-            or self.request.user.bibos_profile.sitemembership_set.get(
-                site=site
-            ).site_user_type
-            == 2
+            or site_membership.site_user_type == site_membership.SITE_ADMIN
         ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
@@ -2093,7 +2094,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
             result = super(UserCreate, self).form_valid(form)
             return result
         else:
-            raise Exception("Not site-admin or superuser")
+            raise PermissionDenied
 
     def get_success_url(self):
         return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
@@ -2108,7 +2109,11 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
         except User.DoesNotExist:
-            raise Http404(f"Du har ingen bruger med id {self.kwargs['username']}")
+            raise Http404(
+                _("You have no user with the following ID: %s")
+                % self.kwargs["username"]
+            )
+
         return self.selected_user
 
     def get_context_data(self, **kwargs):
@@ -2134,15 +2139,11 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         context["create_form"].setup_usertype_choices(
             loginusertype, request_user.is_superuser
         )
-        if not request_user.is_superuser:
-            context[
-                "user_type_for_site"
-            ] = request_user.bibos_profile.sitemembership_set.get(
-                site_id=site.id
-            ).site_user_type
+        context["site_membership"] = site_membership
         return context
 
     def get_form_kwargs(self):
+
         kwargs = super(UserUpdate, self).get_form_kwargs()
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         kwargs["site"] = site
@@ -2150,20 +2151,33 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return kwargs
 
     def form_valid(self, form):
-        self.object = form.save()
 
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        user_profile = self.object.bibos_profile
-
-        site_membership = user_profile.sitemembership_set.get(
-            site=site, user_profile=user_profile
+        site_membership_req_user = (
+            self.request.user.bibos_profile.sitemembership_set.filter(site=site).first()
         )
+        if (
+            self.request.user.is_superuser
+            or site_membership_req_user.site_user_type
+            == site_membership_req_user.SITE_ADMIN
+            or self.request.user == self.selected_user
+        ):
 
-        site_membership.site_user_type = form.cleaned_data["usertype"]
-        site_membership.save()
-        response = super(UserUpdate, self).form_valid(form)
-        set_notification_cookie(response, _("User %s updated") % self.object.username)
-        return response
+            self.object = form.save()
+
+            user_profile = self.object.bibos_profile
+            site_membership = user_profile.sitemembership_set.get(
+                site=site, user_profile=user_profile
+            )
+            site_membership.site_user_type = form.cleaned_data["usertype"]
+            site_membership.save()
+            response = super(UserUpdate, self).form_valid(form)
+            set_notification_cookie(
+                response, _("User %s updated") % self.object.username
+            )
+            return response
+        else:
+            raise PermissionDenied
 
     def get_success_url(self):
         return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
@@ -2190,12 +2204,12 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def delete(self, request, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+            site_id=site.id
+        ).first()
         if (
             not self.request.user.is_superuser
-            and self.request.user.bibos_profile.sitemembership_set.get(
-                site_id=site.id
-            ).site_user_type
-            != 2
+            and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
         response = super(UserDelete, self).delete(request, *args, **kwargs)
@@ -2277,11 +2291,19 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        site = Site.objects.get(uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         try:
-            return PCGroup.objects.get(id=self.kwargs["group_id"], site=site)
-        except PCGroup.DoesNotExist:
-            raise Http404(f"Du har ingen gruppe med id {self.kwargs['group_id']}")
+            # Groups used to be identified by a string UID, so sometimes we get lookups for a string which caused a
+            # server error. Hence this explicit attempt to convert it to an int first.
+            id = int(self.kwargs["group_id"])
+            return PCGroup.objects.get(id=id, site=site)
+        except (PCGroup.DoesNotExist, ValueError):
+            raise Http404(
+                _(
+                    "You have no group with the following ID: %s. Try locating the group in the list of groups."
+                )
+                % self.kwargs["group_id"]
+            )
 
     def get_context_data(self, **kwargs):
         context = super(PCGroupUpdate, self).get_context_data(**kwargs)
@@ -2607,7 +2629,10 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                 uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
             )
         except SecurityProblem.DoesNotExist:
-            raise Http404(f"Du har ingen sikkerhedsregel med id {self.kwargs['uid']}")
+            raise Http404(
+                _("You have no Security Problem with the following ID: %s")
+                % self.kwargs["uid"]
+            )
 
     def get_context_data(self, **kwargs):
 
@@ -2652,12 +2677,12 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         # template picklist requires the form pk, name, url (u)id.
         context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
-        if not self.request.user.is_superuser:
-            context[
-                "user_type_for_site"
-            ] = self.request.user.bibos_profile.sitemembership_set.get(
-                site_id=site.id
-            ).site_user_type
+        request_user = self.request.user
+        context[
+            "site_membership"
+        ] = request_user.bibos_profile.sitemembership_set.filter(
+            site_id=site.id
+        ).first()
 
         return context
 
@@ -2680,12 +2705,12 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def delete(self, request, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+            site_id=site.id
+        ).first()
         if (
             not self.request.user.is_superuser
-            and self.request.user.bibos_profile.sitemembership_set.get(
-                site_id=site.id
-            ).site_user_type
-            != 2
+            and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
         response = super(SecurityProblemDelete, self).delete(request, *args, **kwargs)

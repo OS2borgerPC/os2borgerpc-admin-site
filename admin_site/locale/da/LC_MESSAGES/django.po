@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-12 12:10+0100\n"
+"POT-Creation-Date: 2023-01-05 13:59+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -51,27 +51,23 @@ msgstr "Antal BorgerPC computere"
 msgid "Site"
 msgstr "Site"
 
-#: system/forms.py:79
-msgid "A group with this ID already exists."
-msgstr "En gruppe med dette ID eksisterer allerede."
-
-#: system/forms.py:134
+#: system/forms.py:126
 msgid "Usertype"
 msgstr "Brugertype"
 
-#: system/forms.py:138 system/models.py:988
+#: system/forms.py:130 system/models.py:988
 msgid "Password"
 msgstr "Adgangskode"
 
-#: system/forms.py:144
+#: system/forms.py:136
 msgid "Password (again)"
 msgstr "Adgangskode (igen)"
 
-#: system/forms.py:198
+#: system/forms.py:190
 msgid "Passwords must be identical."
 msgstr "De to adgangskoder skal være ens"
 
-#: system/forms.py:204
+#: system/forms.py:196
 msgid "A user with this username already exists."
 msgstr "En bruger med det brugernavn eksisterer allerede."
 
@@ -375,7 +371,7 @@ msgstr "afsluttet"
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:948 system/views.py:506
+#: system/models.py:948 system/views.py:502
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
@@ -483,31 +479,47 @@ msgstr "forfatter"
 msgid "version"
 msgstr "version"
 
-#: system/views.py:316
+#: system/views.py:312
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
-#: system/views.py:539
+#: system/views.py:535
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
-#: system/views.py:848
+#: system/views.py:579
+msgid "You have no Script with the following ID: %s"
+msgstr "Du har ingen undtagelse med ID %s"
+
+#: system/views.py:684
+msgid "Error: You must provide a name"
+msgstr "Fejl: Du skal angive et navn"
+
+#: system/views.py:691
+msgid "Error: You must provide a correct input parameter type"
+msgstr "Fejl: Du skal angive en korrekt input-parameter-type"
+
+#: system/views.py:847
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:943 system/views.py:965
+#: system/views.py:942 system/views.py:964
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1158
+#: system/views.py:1091
+msgid "You have no computer with the following ID: %s"
+msgstr "Du har ingen computer med følgende ID: %s"
+
+#: system/views.py:1161
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
-#: system/views.py:1423
+#: system/views.py:1426
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -518,7 +530,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1440
+#: system/views.py:1443
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -527,7 +539,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1455
+#: system/views.py:1458
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -536,17 +548,16 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1466
+#: system/views.py:1469
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
 
-#: system/views.py:1486
-msgid ""
-"You have no Wake Week Plan with the ID {self.kwargs['wake_week_plan_id']}"
-msgstr "Du har ingen tidsplan med ID {self.kwargs['wake_week_plan_id']}"
+#: system/views.py:1489
+msgid "You have no Wake Week Plan with the following ID: %s"
+msgstr "Du har ingen tidsplan med følgende ID: %s"
 
-#: system/views.py:1613
+#: system/views.py:1616
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -557,7 +568,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1630
+#: system/views.py:1633
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -566,7 +577,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1645
+#: system/views.py:1648
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -575,49 +586,57 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1656
+#: system/views.py:1659
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Tænd/sluk tidsplan %s opdateret"
 
-#: system/views.py:1749
+#: system/views.py:1752
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
-#: system/views.py:1867
-msgid ""
-"You have no Wake Change Event with the ID {self."
-"kwargs['wake_change_event_id']}"
-msgstr "Du har ingen undtagelse med ID {self.kwargs['wake_change_event_id']}"
+#: system/views.py:1873
+msgid "You have no Wake Change Event with the following ID: %s"
+msgstr "Du har ingen undtagelse med ID %s"
 
-#: system/views.py:1902
+#: system/views.py:1908
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undtagelse %s opdateret"
 
-#: system/views.py:1909
+#: system/views.py:1915
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr ""
 "De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
 
-#: system/views.py:1916 system/views.py:1969
+#: system/views.py:1922 system/views.py:1975
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
-#: system/views.py:2162
+#: system/views.py:2115
+msgid "You have no user with the following ID: %s"
+msgstr "Du har ikke nogen Bruger med følgende ID: %s"
+
+#: system/views.py:2167
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:2200
+#: system/views.py:2205
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:2440
+#: system/views.py:2303
+#, python-format
+msgid "You have no group with the following ID: %s. Try locating the group in the list of groups."
+msgstr "I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>"
+"Prøv i stedet at finde gruppen fra gruppelisten."
+
+#: system/views.py:2457
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -626,18 +645,25 @@ msgstr ""
 "Gruppe %s opdateret, men computer(ne) %s kunne ikke tilføjes, da de(n) "
 "allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:2452
+#: system/views.py:2469
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:2464
+#: system/views.py:2481
 #, python-brace-format
 msgid ""
 "No value was specified for the mandatory input \"{0}\" of script \"{1}\""
 msgstr "Den obligatoriske parameterværdi \"{0}\" for script \"{1}\" mangler"
 
-#: system/views.py:2534
+#: system/views.py:2551
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
+
+#: system/views.py:2619
+msgid "You have no Security Problem with the following ID: %s"
+msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
+
+#~ msgid "A group with this ID already exists."
+#~ msgstr "En gruppe med dette ID eksisterer allerede."

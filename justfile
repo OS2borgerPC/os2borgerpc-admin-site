@@ -98,11 +98,11 @@ run-debug:
   sudo docker attach {{django_container}}
 
 # Run django's make-messages for translations
-translations-make-messages:
+translations-make-messages: (verify-container-running django_container)
   @just managepy makemessages --all --ignore venv
 
 # Run django's compile-messages (usually after make-messages) for translations
-translations-compile-messages:
+translations-compile-messages: (verify-container-running django_container)
   @just managepy compilemessages --locale da
 
 # Replace all the fixtures (test data) with what you currently have in your local adminsite db
