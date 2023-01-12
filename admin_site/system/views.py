@@ -864,7 +864,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return reverse("script", args=[self.site.uid, self.script.pk])
 
 
-class GlobalScriptRedirectID(RedirectView):
+class GlobalScriptRedirectID(RedirectView, LoginRequiredMixin):
     permanent = False
     query_string = True
     pattern_name = "script"
@@ -885,7 +885,7 @@ class GlobalScriptRedirectID(RedirectView):
             return super().get_redirect_url(*args, **kwargs)
 
 
-class GlobalScriptRedirectUID(RedirectView):
+class GlobalScriptRedirectUID(RedirectView, LoginRequiredMixin):
     permanent = False
     query_string = True
 
