@@ -11,20 +11,20 @@
     var PolicyList = function() {
         this.scriptInputs = []
         // These two snippets of HTML should match what's inside item.html
-        this.hiddenParamField = function (name, type, mandatory) {
+        this.hiddenParamField = function (name, type, mandatory, default_value) {
 
           return '<input class="policy-script-param'
                   + (type == 'FILE' ? ' phantom' : '')
                   + '" type="' + (type == 'FILE' ? 'file' : 'hidden')
                   + '" name="' + name
-                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : '')
+                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : default_value)
                   + '" data-inputtype="' + type
                   + '"' + (mandatory ? ' required="required"' : '') + '/>'
         }
         this.visibleParamField = function (input) {
           return '<div class="policy-script-print"><strong class="policy-script-print-name">'
                   + input.name + ': </strong><span class="policy-script-print-value">'
-                  + ((input.type == 'BOOLEAN') ? '<input type="checkbox" checked disabled>' : '')
+                  + ((input.type == 'BOOLEAN') ? '<input type="checkbox" checked disabled>' : input.default_value)
                   + '</span></div>'
         }
         this.getFieldType = function(type) {
@@ -155,7 +155,7 @@
           // generate the hidden input fields and divs to render the parameters for the selected script
           for(var i = 0; i < BibOS.PolicyList.scriptInputs.length; i++) {
             paramName = submitName + '_' + scriptPk + '_param_' + i
-            param_fields += this.hiddenParamField(paramName, BibOS.PolicyList.scriptInputs[i].type, BibOS.PolicyList.scriptInputs[i].mandatory)
+            param_fields += this.hiddenParamField(paramName, BibOS.PolicyList.scriptInputs[i].type, BibOS.PolicyList.scriptInputs[i].mandatory, BibOS.PolicyList.scriptInputs[i].default_value)
             param_fields += this.visibleParamField(BibOS.PolicyList.scriptInputs[i])
           }
 
