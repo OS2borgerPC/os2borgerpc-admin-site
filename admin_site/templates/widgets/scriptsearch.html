@@ -49,7 +49,8 @@
                                     name: '{{ input.name }}',
                                     type: '{{ input.value_type }}',
                                     position: '{{ input.position }}',
-                                    required: '{{ input.mandatory }}'
+                                    required: '{{ input.mandatory }}',
+                                    default_value: {% if input.default_value != None %} '{{ input.default_value }}' {% else %} '' {% endif %}
                                 },
                             {% endfor %}
                         ]

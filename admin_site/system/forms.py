@@ -217,7 +217,7 @@ class ParameterForm(forms.Form):
             field_data = {
                 "label": inp.name,
                 "required": True if inp.mandatory else False,
-                "initial": inp.default_value
+                "initial": inp.default_value,
             }
             if inp.value_type == Input.FILE:
                 self.fields[name] = forms.FileField(**field_data)
@@ -225,6 +225,7 @@ class ParameterForm(forms.Form):
                 field_data["widget"] = forms.DateInput(attrs={"type": "date"})
                 self.fields[name] = forms.DateField(**field_data)
             elif inp.value_type == Input.BOOLEAN:
+                field_data["initial"] = "True"
                 self.fields[name] = forms.BooleanField(
                     **field_data, widget=forms.CheckboxInput()
                 )
