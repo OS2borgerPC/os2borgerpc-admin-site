@@ -1,3 +1,13 @@
+Version 5.10.1, January 12, 2023
+--------------------------------
+
+- Give proper errors and error messages when attempting to name a user an existing name, or visiting a 
+  group by a nonexisting ID.
+- Don't give a server error when using one of the new global script redirects and you aren't logged in.
+  Redirect to the login page instead.
+- Rewrite some hardcoded danish to english and use translations there instead.
+- Replace magic numbers with readable names when checking for privileges
+
 Version 5.10.1, December 19, 2022
 ---------------------------------
 
