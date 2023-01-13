@@ -2117,7 +2117,6 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return self.selected_user
 
     def get_context_data(self, **kwargs):
-        self.context_object_name = "selected_user"
         context = super(UserUpdate, self).get_context_data(**kwargs)
         self.add_userlist_to_context(context)
 
@@ -2132,7 +2131,8 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         else:
             loginusertype = None
 
-        context["selected_user"] = self.selected_user
+        context["selected_user"] = User.objects.get(username=self.kwargs["username"])
+
         context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
 
         context["create_form"] = UserForm(prefix="create")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-05 13:59+0100\n"
+"POT-Creation-Date: 2023-01-13 15:20+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -68,8 +68,8 @@ msgid "Passwords must be identical."
 msgstr "De to adgangskoder skal være ens"
 
 #: system/forms.py:196
-msgid "A user with this username already exists."
-msgstr "En bruger med det brugernavn eksisterer allerede."
+msgid "A user named \"%s\" already exists."
+msgstr "En bruger med navnet \"%s\" eksisterer allerede."
 
 #: system/mixins.py:9 system/models.py:134 system/models.py:575
 #: system/models.py:885 system/models.py:1253 system/models.py:1281
@@ -489,28 +489,30 @@ msgstr "Indstillinger for %s opdateret"
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
-#: system/views.py:579
+#: system/views.py:578
+#, python-format
 msgid "You have no Script with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
 
-#: system/views.py:684
+#: system/views.py:683
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du skal angive et navn"
 
-#: system/views.py:691
+#: system/views.py:690
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du skal angive en korrekt input-parameter-type"
 
-#: system/views.py:847
+#: system/views.py:848
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:942 system/views.py:964
+#: system/views.py:943 system/views.py:965
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
 #: system/views.py:1091
+#, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen computer med følgende ID: %s"
 
@@ -553,11 +555,12 @@ msgstr ""
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
 
-#: system/views.py:1489
+#: system/views.py:1488
+#, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidsplan med følgende ID: %s"
 
-#: system/views.py:1616
+#: system/views.py:1615
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -568,7 +571,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1633
+#: system/views.py:1632
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -577,7 +580,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1648
+#: system/views.py:1647
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -586,57 +589,62 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1659
+#: system/views.py:1658
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Tænd/sluk tidsplan %s opdateret"
 
-#: system/views.py:1752
+#: system/views.py:1751
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
-#: system/views.py:1873
+#: system/views.py:1871
+#, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
 
-#: system/views.py:1908
+#: system/views.py:1906
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undtagelse %s opdateret"
 
-#: system/views.py:1915
+#: system/views.py:1913
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr ""
 "De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
 
-#: system/views.py:1922 system/views.py:1975
+#: system/views.py:1920 system/views.py:1973
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
-#: system/views.py:2115
+#: system/views.py:2113
+#, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 
-#: system/views.py:2167
+#: system/views.py:2176
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:2205
+#: system/views.py:2217
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
 #: system/views.py:2303
 #, python-format
-msgid "You have no group with the following ID: %s. Try locating the group in the list of groups."
-msgstr "I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>"
-"Prøv i stedet at finde gruppen fra gruppelisten."
+msgid ""
+"You have no group with the following ID: %s. Try locating the group in the "
+"list of groups."
+msgstr ""
+"I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>Prøv "
+"i stedet at finde gruppen fra gruppelisten."
 
-#: system/views.py:2457
+#: system/views.py:2472
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -645,25 +653,23 @@ msgstr ""
 "Gruppe %s opdateret, men computer(ne) %s kunne ikke tilføjes, da de(n) "
 "allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:2469
+#: system/views.py:2484
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:2481
+#: system/views.py:2496
 #, python-brace-format
 msgid ""
 "No value was specified for the mandatory input \"{0}\" of script \"{1}\""
 msgstr "Den obligatoriske parameterværdi \"{0}\" for script \"{1}\" mangler"
 
-#: system/views.py:2551
+#: system/views.py:2566
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
 
-#: system/views.py:2619
+#: system/views.py:2633
+#, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
-
-#~ msgid "A group with this ID already exists."
-#~ msgstr "En gruppe med dette ID eksisterer allerede."
