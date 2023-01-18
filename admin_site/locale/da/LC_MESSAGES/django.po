@@ -492,7 +492,7 @@ msgstr "Scriptet %s bliver genkørt på computeren %s"
 #: system/views.py:578
 #, python-format
 msgid "You have no Script with the following ID: %s"
-msgstr "Du har ingen undtagelse med ID %s"
+msgstr "Du har intet script med ID %s"
 
 #: system/views.py:683
 msgid "Error: You must provide a name"
