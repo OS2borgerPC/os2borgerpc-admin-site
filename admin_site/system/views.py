@@ -2117,6 +2117,8 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return self.selected_user
 
     def get_context_data(self, **kwargs):
+        # This line is necessary, as without it UserUpdate will think that user = selected_user
+        self.context_object_name = "selected_user"
         context = super(UserUpdate, self).get_context_data(**kwargs)
         self.add_userlist_to_context(context)
 
