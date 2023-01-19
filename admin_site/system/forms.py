@@ -189,11 +189,13 @@ class UserForm(forms.ModelForm):
         if pw1 != pw2:
             raise forms.ValidationError(_("Passwords must be identical."))
 
-        username = cleaned_data.get("username")
-        user_exists = self.Meta.model.objects.filter(username=username).exists()
+        form_username = cleaned_data.get("username")
+        user_exists = self.Meta.model.objects.filter(username=form_username).exists()
 
-        if not self.instance.pk and user_exists:
-            raise ValidationError(_("A user with this username already exists."))
+        if not self.instance.username == form_username and user_exists:
+            raise ValidationError(
+                _('A user named "%s" already exists.') % form_username
+            )
         return cleaned_data
 
     def save(self, commit=True):
