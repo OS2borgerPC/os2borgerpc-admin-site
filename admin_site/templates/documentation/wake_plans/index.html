@@ -1,4 +1,5 @@
 {% extends 'documentation/index.html' %}
+{% load static %}
 
 {% block admin_groups_active %}class="active"{% endblock %}
 
@@ -103,6 +104,14 @@
 
       Nogle BIOS'er har muligheden for at indstille, at maskinen gendanner dens seneste tilstand (eller tænder) bagefter,
       hvis den mistede strømmen. Det vil vi derfor anbefale at slå til.
+
+      Afhængigt af BIOS-version kan det se forskelligt ud, men her er et eksempel fra en NUC:
+      Fra oversigtssiden vælger du "Advanced" og dernæst "Power":
+      admin_site/static/
+      <img src="{% static 'docs/img/wake_plan/nuc_bios_start_page.jpg' %}" alt="">
+      Dernæst går du så ind og redigerer indstillingen "After Power Failure" og sætter denne til "Last State"
+      (anbefalet) eller "Power On".
+      <img src="{% static 'docs/img/wake_plan/nuc_bios_wake_up_power_failure_setting.jpg' %}" alt="">
     </li>
   </ol>
   <h3>Ofte stillede spørgsmål</h3>
