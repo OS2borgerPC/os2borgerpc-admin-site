@@ -40,3 +40,6 @@ class SiteMembershipInline(admin.TabularInline):
 @admin.register(UserProfile)
 class MyUserProfileAdmin(admin.ModelAdmin):
     inlines = [SiteMembershipInline]
+    list_display = ("user",)
+    list_filter = ("sites",)
+    search_fields = ("user__username",)
