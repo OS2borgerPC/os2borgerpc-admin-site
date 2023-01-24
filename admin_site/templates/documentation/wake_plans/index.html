@@ -13,7 +13,8 @@
   </p>
   <p>
     Dvale-scriptet er kun beregnet til brug på OS2borgerPC, mens tænd/sluk-tidsplaner
-    kan anvendes på både OS2borgerPC og OS2borgerPC Kiosk.
+    kan anvendes på både OS2borgerPC og OS2borgerPC Kiosk. Dvale-scriptet kan fint
+    anvendes sammen med tænd/sluk-tidsplaner.
   </p>
   <p>
     Hvis det er første gang du besøger denne side, vil vi foreslå at starte med at læse vores
@@ -87,6 +88,19 @@
     tidsplan, hvor man kan fortsætte med at ændre i indstillingerne, tilføje undtagelser eller indmelde grupper.
     Hvis tidsplanen er sat til "aktiv," vil den også tage effekt, når man klikker på gem.
   </p>
+  <h2>Vigtige bemærkninger</h2>
+  <p>
+    En computer kan kun modtage en ny/opdateret tidsplan, hvis den tændt. Hvis en
+    computer tilmeldes en tidsplan, eller dens tidsplan ændres, mens den er slukket, vil
+    den først begynde at følge den nye/opdaterede tidsplan, når den har været tændt.
+  </p>
+  <p>
+    Hvis en computer modtager en tidsplan, der siger at den skal være slukket på nuværende tidspunkt,
+    vil der gå 20 minutter fra den modtager tidsplanen til den faktisk slukker. Ligeledes,
+    hvis den manuelt tændes på et tidspunkt, hvor den skal være slukket ifølge tidsplanen, vil
+    der gå 20 minutter før den slukker. Dette er valgt, så man har tid til at ændre tidsplanen,
+    inden computeren slukker.
+  </p>
   <h3>Indstilling af BIOS/UEFI</h3>
   <ol>
     <li>
@@ -114,16 +128,20 @@
     </li>
   </ol>
   <h3>Ofte stillede spørgsmål</h3>
-  <h4>1. Hvad sker der, hvis maskinen mister strøm?</h4>
+  <h4>1. Hvordan tilmelder jeg en enkelt-PC til en tidsplan?</h4>
+  <p>Tænd/sluk tidsplaner er designet til at fungere med grupper, og man kan derfor ikke direkte tilmelde en enkelt-PC
+     til en tidsplan. Man kan dog altid oprette en gruppe, som kun indeholder denne ene PC,
+     og tilmelde denne gruppe til tidsplanen.</p>
+  <h4>2. Hvad sker der, hvis maskinen mister strøm?</h4>
   <p>Se punkt 2. under "Indstilling af BIOS/UEFI" længere oppe.</p>
-  <h4>2. Maskinen starter og lukker på de forkerte tidspunkter?</h4>
+  <h4>3. Maskinen starter og lukker på de forkerte tidspunkter?</h4>
   <p>Dette kan skyldes, at tiden på maskinen er indstillet forkert, eksempelvis fordi den ikke har mulighed for at
     tidssynkronisere. Normalt tidssynkroniserer Ubuntu Linux - og flere andre styresystemer - via protokollen NTP (Network
     Time Protocol).
     NTP kører på port 123 over UDP, som vi derfor foreslår at åbne for i jeres netværksopsætning.
-    Hvis i ikke ønsker at åbne for trafikken på alle domæner, ville vi kunne se på at udvikle et script der låser NTP
+    Hvis I ikke ønsker at åbne for trafikken på alle domæner, ville vi kunne se på at udvikle et script, der låser NTP
     til kun at tjekke bestemte URL'er.
   </p>
-  <h4>3. Maskinen starter på de forkerte tidspunkter, men lukker planmæssigt?</h4>
+  <h4>4. Maskinen starter på de forkerte tidspunkter, men lukker planmæssigt?</h4>
   <p>Dette kan skyldes indstillingerne sat i BIOS. Se punkt 1. under "Indstilling af BIOS/UEFI" længere oppe".</p>
 {% endblock %}
