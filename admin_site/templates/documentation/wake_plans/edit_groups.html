@@ -4,7 +4,9 @@
   <h1>Tidsplans-redigering: Tilknyttede grupper</h1>
   <p>
     Redigeringsinterfacet for en tidsplan viser en liste over grupper, der er med i
-    tidsplanen til højre i skærmbilledet. Du kan redigere medlemmerne af tidsplanen som beskrevet herunder.
+    tidsplanen til højre i skærmbilledet. En tidsplan er gældende for alle computere
+    i de grupper, som er tilknyttet tidsplanen. En tidsplan uden tilknyttede grupper har ingen effekt.
+    Du kan redigere medlemmerne af tidsplanen som beskrevet herunder.
   </p>
   <h2>Tilføj gruppe</h2>
   <p>
@@ -36,6 +38,10 @@
   </p>
   <p>
     Bemærk at hvis der senere tilføjes computere til en gruppe, som er medlem af en tidsplan,
-    vil disse computere også blive knyttet til tidsplanen.
+    vil disse computere også blive knyttet til tidsplanen. Hvis de computere, som forsøges tilføjet,
+    allerede er knyttet til en anden tidsplan via en anden gruppe, vil de blive afvist i forbindelse
+    med opdateringen af gruppen, når der klikkes på "Gem ændringer" på grupperedigeringsinterfacet.
+    Gyldige computere vil stadig blive tilføjet. Hvis en eller flere computere afvises, vil
+    siden oplyse om dette samt begrundelsen.
   </p>
 {% endblock %}
