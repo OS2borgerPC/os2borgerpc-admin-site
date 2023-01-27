@@ -22,9 +22,3 @@ The system was prepared by Magenta: See http://www.magenta.dk
 
 All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
-
-Models / Database visualized
-============================
-
-.. image:: models_graphed.png
-   :target: /models_graphed.png

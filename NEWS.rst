@@ -100,7 +100,7 @@ New in this version:
   a policy
 
 Version 5.7.0, July 12, 2022
----------------------------
+----------------------------
 
 New in this version:
 
@@ -111,7 +111,7 @@ New in this version:
 - Fix to remove redudant filename for policy scripts
 
 Version 5.6.5, June 28, 2022
----------------------------
+----------------------------
 
 New in this version:
 
@@ -120,7 +120,7 @@ New in this version:
 - Make associated scripts easily editable in Django Admin
 
 Version 5.6.4, June 21, 2022
----------------------------
+----------------------------
 
 New in this version:
 
