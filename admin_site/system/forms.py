@@ -288,7 +288,6 @@ class SecurityEventForm(forms.ModelForm):
 
 # Used on the Create and Update views
 class WakePlanForm(forms.ModelForm):
-
     # Picklist related
     groups = forms.ModelMultipleChoiceField(
         queryset=PCGroup.objects.all(), required=False
