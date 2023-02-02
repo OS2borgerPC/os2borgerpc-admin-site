@@ -109,7 +109,6 @@ class InputInline(admin.TabularInline):
 
 
 class ScriptAdmin(admin.ModelAdmin):
-
     list_display = (
         "name",
         "is_global",
@@ -252,6 +251,7 @@ class PCAdmin(admin.ModelAdmin):
         "is_activated",
         "last_seen",
         "created",
+        "os2borgerpc_client_version",
     )
     list_filter = (
         "site",
@@ -263,6 +263,9 @@ class PCAdmin(admin.ModelAdmin):
     def site_link(self, obj):
         link = reverse("admin:system_site_change", args=[obj.site_id])
         return mark_safe(f'<a href="{link}">{escape(obj.site.__str__())}</a>')
+
+    def os2borgerpc_client_version(self, obj):
+        return obj.configuration.get("_os2borgerpc.client_version")
 
     site_link.short_description = _("Site")
     site_link.admin_order_field = "site"

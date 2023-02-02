@@ -1,7 +1,16 @@
-Version 5.10.1, January 12, 2023
+Version 5.10.3, February 2, 2023
 --------------------------------
 
-- Give proper errors and error messages when attempting to name a user an existing name, or visiting a 
+- Update Django version to latest patch release: 3.2.17
+- Run most recent black version
+- And info on how to build the documentation
+- Update the documentation
+- Show OS2BPC client version in the backend for the PC table
+
+Version 5.10.2, January 12, 2023
+--------------------------------
+
+- Give proper errors and error messages when attempting to name a user an existing name, or visiting a
   group by a nonexisting ID.
 - Don't give a server error when using one of the new global script redirects and you aren't logged in.
   Redirect to the login page instead.
@@ -100,7 +109,7 @@ New in this version:
   a policy
 
 Version 5.7.0, July 12, 2022
----------------------------
+----------------------------
 
 New in this version:
 
@@ -111,7 +120,7 @@ New in this version:
 - Fix to remove redudant filename for policy scripts
 
 Version 5.6.5, June 28, 2022
----------------------------
+----------------------------
 
 New in this version:
 
@@ -120,7 +129,7 @@ New in this version:
 - Make associated scripts easily editable in Django Admin
 
 Version 5.6.4, June 21, 2022
----------------------------
+----------------------------
 
 New in this version:
 
