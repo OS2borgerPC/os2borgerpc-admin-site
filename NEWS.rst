@@ -1,7 +1,16 @@
-Version 5.10.1, January 12, 2023
+Version 5.10.3, February 2, 2023
 --------------------------------
 
-- Give proper errors and error messages when attempting to name a user an existing name, or visiting a 
+- Update Django version to latest patch release: 3.2.17
+- Run most recent black version
+- And info on how to build the documentation
+- Update the documentation
+- Show OS2BPC client version in the backend for the PC table
+
+Version 5.10.2, January 12, 2023
+--------------------------------
+
+- Give proper errors and error messages when attempting to name a user an existing name, or visiting a
   group by a nonexisting ID.
 - Don't give a server error when using one of the new global script redirects and you aren't logged in.
   Redirect to the login page instead.
