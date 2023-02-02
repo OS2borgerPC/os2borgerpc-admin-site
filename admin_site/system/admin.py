@@ -109,7 +109,6 @@ class InputInline(admin.TabularInline):
 
 
 class ScriptAdmin(admin.ModelAdmin):
-
     list_display = (
         "name",
         "is_global",

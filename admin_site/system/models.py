@@ -236,7 +236,6 @@ class MandatoryParameterMissingError(Error):
 
 
 class WakeChangeEvent(models.Model):
-
     EVENT_TYPE_CHOICES = (
         ("ALTERED_HOURS", _("event_type:Altered Hours")),
         ("CLOSED", _("event_type:Closed")),
@@ -276,7 +275,6 @@ class WakeChangeEvent(models.Model):
 
 
 class WakeWeekPlan(models.Model):
-
     # Sleep state choices for the field below - and their translations
     # These are based on what "rtcwake" supports
     SLEEP_STATE_CHOICES = (
@@ -1245,7 +1243,6 @@ class ChangelogTag(models.Model):
 
 # A model that represents one changelog entry, used to showcase changes/new features to users
 class Changelog(models.Model):
-
     title = models.CharField(verbose_name=_("title"), max_length=100)
     description = models.TextField(verbose_name=_("description"), max_length=240)
     content = MarkdownxField(verbose_name=_("content"))
@@ -1275,7 +1272,6 @@ class Changelog(models.Model):
 
 
 class ChangelogComment(models.Model):
-
     content = models.TextField(verbose_name=_("content"), max_length=240)
     created = models.DateTimeField(
         verbose_name=_("created"), editable=False, auto_now_add=True
