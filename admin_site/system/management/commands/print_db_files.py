@@ -19,7 +19,6 @@ class Command(BaseCommand):
 
     @signalcommand
     def handle(self, *args, **options):
-
         # Get list of all fields (value) for each model (key)
         # that is a FileField or subclass of a FileField
         model_dict = defaultdict(list)

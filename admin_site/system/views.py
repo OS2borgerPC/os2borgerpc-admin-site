@@ -1210,7 +1210,6 @@ class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
 class WakePlanExtendedMixin(WakePlanBaseMixin):
     def get_context_data(self, **kwargs):
-
         context = super(WakePlanExtendedMixin, self).get_context_data(**kwargs)
 
         # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
@@ -1519,7 +1518,6 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
         events_pre = set(self.object.wake_change_events.all())
 
         with transaction.atomic():
-
             response = super(WakePlanUpdate, self).form_valid(form)
 
             (
@@ -1549,7 +1547,6 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             # If the wake plan was active before and after the update
             if enabled_pre and enabled_post:
-
                 # Find the pc objects that belonged to the wake plan before the update
                 pcs_pre = PC.objects.none()
                 for g in groups_pre:
@@ -1995,7 +1992,6 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
         return reverse("wake_change_events", args=[self.kwargs["site_uid"]])
 
     def delete(self, request, *args, **kwargs):
-
         # Update all pcs belonging to active plans that used this event
         event = self.get_object()
         plans = set(event.wake_week_plans.all())
@@ -2024,7 +2020,6 @@ class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=kwargs["slug"])
         users_on_site = site.users
         if users_on_site.exists():
-
             if self.request.user in users_on_site:
                 destination_user = self.request.user.username
             else:  # for superusers just go to the first user in the list
@@ -2145,7 +2140,6 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def get_form_kwargs(self):
-
         kwargs = super(UserUpdate, self).get_form_kwargs()
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         kwargs["site"] = site
@@ -2153,7 +2147,6 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return kwargs
 
     def form_valid(self, form):
-
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         site_membership_req_user = (
             self.request.user.bibos_profile.sitemembership_set.filter(site=site).first()
@@ -2164,7 +2157,6 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             == site_membership_req_user.SITE_ADMIN
             or self.request.user == self.selected_user
         ):
-
             self.object = form.save()
 
             user_profile = self.object.bibos_profile
@@ -2570,7 +2562,6 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
 
 class SecurityProblemsView(SelectionMixin, SiteView):
-
     template_name = "system/security_problems/site_security_problems.html"
     selection_class = SecurityProblem
     class_display_name = "security_problem"
@@ -2637,7 +2628,6 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             )
 
     def get_context_data(self, **kwargs):
-
         context = super(SecurityProblemUpdate, self).get_context_data(**kwargs)
 
         site = context["site"]
@@ -3043,11 +3033,9 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
         last_pay_date = site_obj.paid_for_access_until
 
         if not last_pay_date:
-
             context["site_allowed"] = False
 
         else:
-
             context["site_allowed"] = True
 
             # excluding versions where
@@ -3086,7 +3074,6 @@ class ChangelogListView(ListView):
         return Changelog.objects.all()
 
     def get_paginated_queryset(self, queryset, page):
-
         if not page:
             page = 1
 
