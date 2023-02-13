@@ -95,11 +95,11 @@
     den først begynde at følge den nye/opdaterede tidsplan, når den har været tændt.
   </p>
   <p>
-    Hvis en computer modtager en tidsplan, der siger at den skal være slukket på nuværende tidspunkt,
-    vil der gå 20 minutter fra den modtager tidsplanen til den faktisk slukker. Ligeledes,
-    hvis den manuelt tændes på et tidspunkt, hvor den skal være slukket ifølge tidsplanen, vil
-    der gå 20 minutter før den slukker. Dette er valgt, så man har tid til at ændre tidsplanen,
-    inden computeren slukker.
+    Hvis en computer manuelt tændes efter dens sluk-tidspunkt, eller på en dag hvor den er
+    sat til at være konstant slukket, vil den først slukke automatisk på
+    sluk-tidspunktet for næste dag. Hvis der ikke findes et sluk-tidspunkt for næste dag,
+    vil den automatisk slukke 24 timer efter den blev tændt. Hvis computeren manuelt
+    slukkes igen, vil den vågne efter tidsplanen.
   </p>
   <h3>Indstilling af BIOS/UEFI</h3>
   <ol>
