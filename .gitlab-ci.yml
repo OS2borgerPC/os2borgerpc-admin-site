@@ -43,8 +43,6 @@ variables:
   stage: lint
   needs: []
   image: python:3.8
-  tags:
-      - docker
 
 Lint Python:
     <<: *lint-default
@@ -76,8 +74,6 @@ Build app image:
   image:
     name: gcr.io/kaniko-project/executor:debug-v0.16.0
     entrypoint: [""]
-  tags:
-    - docker
   script:
     # Login to GitLab registry
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
@@ -98,8 +94,6 @@ Build app image:
   variables:
     GIT_STRATEGY: none # We do not need the source code
   dependencies: []
-  tags:
-    - docker
   before_script:
     # install skopeo
     - apk add skopeo
