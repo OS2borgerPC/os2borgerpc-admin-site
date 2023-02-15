@@ -51,6 +51,7 @@
                     position: count || 0,
                     name: '',
                     value_type: 'STRING',
+                    default_value: '',
                     mandatory: true,
                     name_error: '',
                     type_error: ''
@@ -83,6 +84,7 @@
                 elem.find('input.pk-input').attr('name', 'script-input-' + i + '-pk')
                 elem.find('input.name-input').attr('name', 'script-input-' + i + '-name')
                 elem.find('select.type-input').attr('name', 'script-input-' + i + '-type')
+                elem.find('input.default-input').attr('name', 'script-input-' + i + '-default')
                 elem.find('input.mandatory-input').attr('name', 'script-input-' + i + '-mandatory')
             })
             container.find('input.script-number-of-inputs').val(inputs.length)
