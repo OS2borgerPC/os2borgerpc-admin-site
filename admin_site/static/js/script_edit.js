@@ -69,6 +69,7 @@
             }
             elem.find('select')[0].addEventListener("change", type_check)
             elem.insertBefore(container.find('tr.script-input-add').first())
+            this.updateDefaultType(elem)
             this.updateInputNames(id)
         },
         removeInput: function(elem) {
@@ -88,6 +89,24 @@
                 elem.find('input.mandatory-input').attr('name', 'script-input-' + i + '-mandatory')
             })
             container.find('input.script-number-of-inputs').val(inputs.length)
+        },
+        updateDefaultType: function(elem) {
+            var input_type = $(elem).find('select')[0].value
+            var default_input = $(elem).find('input.default-input')
+            if (default_input[0].value == "null") {
+                default_input[0].value = ""
+            }
+            if (input_type == "STRING") {
+                default_input.attr('type', 'text')
+            } else if (input_type == "DATE") {
+                default_input.attr('type', 'date')
+            } else if (input_type == "INT") {
+                default_input.attr('type', 'number')
+            } else if (input_type == "TIME") {
+                default_input.attr('type', 'time')
+            } else {
+                default_input[0].disabled = true
+            }
         }
     })
 
@@ -106,12 +125,27 @@ function type_check(event) {
      the list of all checkboxes also contains the checkbox template at index 0. */
     index = event.target.name.slice(13, -5), ++index
     checkboxes = document.getElementsByClassName("mandatory-input")
+    default_values = document.getElementsByClassName("default-input")
     if (event.target.value == "BOOLEAN") {
         checkboxes[index].checked = false
         checkboxes[index].disabled = true
     } else {
         checkboxes[index].disabled = false
         checkboxes[index].checked = true
+    }
+    default_values[index].disabled = false
+    if (event.target.value == "STRING") {
+        default_values[index].type = "text"
+    } else if (event.target.value == "DATE") {
+        default_values[index].type = "date"
+    } else if (event.target.value == "INT") {
+        default_values[index].type = "number"
+    } else if (event.target.value == "TIME") {
+        default_values[index].type = "time"
+    } else {
+        default_values[index].type = "text"
+        default_values[index].value = ""
+        default_values[index].disabled = true
     }
 }
 
