@@ -2989,8 +2989,14 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
         "location",
     ]
 
+    def render_to_response(self, context, **response_kwargs):
+        # It is necessary to overwrite the standard render_to_response method
+        # when we want to return something that should not be rendered
+        # via a Django template
+        return self.render_to_json_response(context, **response_kwargs)
+
     def get_context_data(self, **kwargs):
-        pcs = []
+        pcs = {}
         for p in self.object.pcs.all():
             pc = {}
             for pn in JSONSiteSummary.interesting_properties:
@@ -3010,7 +3016,7 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
                 else:
                     pv = str(pv)
                 pc[pn] = pv
-            pcs.append(pc)
+            pcs[pc["name"]] = pc
         return pcs
 
 
