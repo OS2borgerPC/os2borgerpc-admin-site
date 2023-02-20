@@ -3016,7 +3016,7 @@ class JSONSiteSummary(JSONResponseMixin, SiteView):
                 else:
                     pv = str(pv)
                 pc[pn] = pv
-            pcs[pc["name"]] = pc
+            pcs[pc["id"]] = pc
         return pcs
 
 
