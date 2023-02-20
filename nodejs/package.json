@@ -9,7 +9,7 @@
     "build-sass": "node_modules/.bin/sass src/custom.scss:dist/css/bootstrap.css --style=compressed --source-map",
     "watch-sass": "node_modules/.bin/sass src/custom.scss:/code/admin_site/static/css/bootstrap.css --style=compressed --source-map --watch",
     "copy-bootstrap-css": "cp dist/css/bootstrap.* node_modules/bootstrap-table/dist/bootstrap-table.min.css /code/admin_site/static/css",
-    "copy-bootstrap-js": "cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* node_modules/bootstrap-table/dist/bootstrap-table.min.js /code/admin_site/static/js",
+    "copy-bootstrap-js": "cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js* node_modules/bootstrap-table/dist/bootstrap-table.min.js node_modules/bootstrap-table/dist/locale/bootstrap-table-da-DK.min.js /code/admin_site/static/js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Magenta ApS",
