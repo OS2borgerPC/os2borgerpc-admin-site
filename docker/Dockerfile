@@ -73,6 +73,7 @@ COPY --from=frontend \
   /code/nodejs/node_modules/jquery/dist/jquery.min.js \
   /code/nodejs/node_modules/qrcodejs/qrcode.min.js \
   /code/nodejs/node_modules/bootstrap-table/dist/bootstrap-table.min.js \
+  /code/nodejs/node_modules/bootstrap-table/dist/locale/bootstrap-table-da-DK.min.js \
   /frontend/js/
 
 # Unfortunately, `collectstatic` requires all settings to be set. We include a
