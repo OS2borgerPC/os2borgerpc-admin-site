@@ -1,3 +1,8 @@
+Version 5.11.0, February 23, 2023
+---------------------------------
+
+- Make computers/json API work again.
+
 Version 5.10.3, February 2, 2023
 --------------------------------
 
