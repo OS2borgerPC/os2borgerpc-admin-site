@@ -7,7 +7,7 @@
 {% block specific_content %}
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     <h2 class="divideheader">
-      Computere 
+      Computere
       <span class="ms-3 badge bg-secondary">Aktiverede: {{ activated_pcs }} / {{ total_pcs }}</span>
       {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
       <span class="ms-3 badge bg-secondary">Online: {{ online_pcs }} / {{ total_pcs }}</span>
@@ -25,8 +25,8 @@
         </tr>
       </thead>
       <tbody>
-          {% for pc in ls_pcs %}
-        <tr class="click-list--item">
+        {% for pc in ls_pcs %}
+          <tr class="click-list--item">
             <td>
               <span style="display: none;">{{pc.name}}</span> <!-- Used to ensure sorting by pcname rather than uid -->
               <strong><a href="{% url 'computer' site_uid=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong>
@@ -40,22 +40,22 @@
             <td>{{ pc.location }}</td>
             <td>
               {% if pc.online %}
-              <span class="badge bg-success">Online</span>
+                <span class="badge bg-success">Online</span>
               {% elif pc.is_activated %}
-              <span class="badge bg-danger">Offline</span>
+                <span class="badge bg-danger">Offline</span>
               {% endif %}
             </td>
             <td>{% if pc.last_seen %}{{ pc.last_seen|timesince }} siden ({{ pc.last_seen }}) {% else %}Aldrig{% endif %}</td>
             <td>
-            {% if pc.security_events.latest_event %}
-	            {{ pc.security_events.latest_event.reported_time }}
-            {% else %}
-              Aldrig
-            {% endif %}
+              {% if pc.security_events.latest_event %}
+                {{ pc.security_events.latest_event.reported_time }}
+              {% else %}
+                Aldrig
+              {% endif %}
             </td>
-        </tr>
+          </tr>
         {% endfor %}
       </tbody>
-    </table> 
+    </table>
   </div>
 {% endblock %}
