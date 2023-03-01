@@ -2679,7 +2679,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return context
 
     def get_success_url(self):
-        return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
+        return reverse("security_problem", args=[self.object.site.uid, self.object.uid])
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
