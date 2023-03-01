@@ -148,7 +148,7 @@
           $("#editpolicyscriptdialog .modal-body").append(inputFields)
           $('#editpolicyscriptdialog').modal('show')
         },
-        renderScriptFields: function(name, scriptPk, submitName) {
+        renderScriptFields: function(pk, scriptPk, submitName) {
           // If we come directly from adding a new script, django template variable "params" will only be #PARAMS#, so we need to render the fields dynamically
           var param_fields = ''
 
@@ -160,7 +160,7 @@
           }
 
           // output the fields
-          $('[data-name="policy-script-' + name + '"]').last().append(param_fields)
+          $('[data-pk="policy-script-' + pk + '"]').last().append(param_fields)
         },
         submitEditDialog: function(policy_id) {
           var wrapper = $("#" + policy_id)
