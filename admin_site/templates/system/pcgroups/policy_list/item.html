@@ -19,7 +19,7 @@
     </td>
   {% endif %}
   <td class="pe-0 js-match" style="width: 40%;">
-    <div data-name="policy-script-{{ name }}" >
+    <div data-name="policy-script-{{ name }}" data-pk="policy-script-{{ script_pk }}">
       <input class="policy-script-pos" type="hidden" name="{{ submit_name|default:'policy' }}" value="{{ ps_pk }}">
       <input class="policy-script-name" type="hidden" name="{{ submit_name|default:'policy' }}_{{ ps_pk }}" value="{{ script_pk }}">
       {% if params != '#PARAMS#' %}
@@ -64,7 +64,7 @@
       {% else %}
         <script>
           $(function(){
-            BibOS.PolicyList.renderScriptFields('{{ name }}', '{{ ps_pk }}', '{{ submit_name|default:'policy' }}')
+            BibOS.PolicyList.renderScriptFields('{{ script_pk }}', '{{ ps_pk }}', '{{ submit_name|default:'policy' }}')
           })
         </script>
       {% endif %}
