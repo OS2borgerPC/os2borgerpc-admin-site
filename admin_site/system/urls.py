@@ -300,14 +300,14 @@ urlpatterns = [
         r"^documentation/os2borgerpc_installation_guide/",
         RedirectView.as_view(
             url="https://github.com/OS2borgerPC/image/raw/development/"
-            + "docs/OS2BorgerPC 20.04 Installationsguide.pdf"
+            + "docs/OS2BorgerPC Installationsguide.pdf"
         ),
     ),
     url(
         r"^documentation/os2borgerpc_installation_guide_old/",
         RedirectView.as_view(
             url="https://github.com/OS2borgerPC/image/raw/development/"
-            + "docs/OS2BorgerPC 20.04 Installationsguide 3.1.1.pdf"
+            + "docs/OS2BorgerPC Installationsguide Old.pdf"
         ),
     ),
     url(
