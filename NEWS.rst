@@ -1,3 +1,11 @@
+Version 5.12.0, March 15, 2023
+------------------------------
+
+- Update URLs to installation guides, use more generic names
+- Remain on selected security rule after saving it
+- Allow all characters in script names without issues with Associated Scripts
+- Remove unmaintained gateway documentation
+
 Version 5.11.0, February 23, 2023
 ---------------------------------
 

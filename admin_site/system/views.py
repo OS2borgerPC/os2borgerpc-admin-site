@@ -2679,7 +2679,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return context
 
     def get_success_url(self):
-        return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
+        return reverse("security_problem", args=[self.object.site.uid, self.object.uid])
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
@@ -2890,10 +2890,6 @@ documentation_menu_items = [
     ("", "OS2borgerPC Kiosk"),
     ("os2borgerpc_kiosk_installation_guide", "Installationsguide"),
     ("os2borgerpc_kiosk_wifi_guide", "Opdatering af Wi-Fi opsætning"),
-    ("", "Opsætning af Gateway"),
-    ("gateway_install", "Installation af gateway"),
-    ("gateway_admin", "Administration af gateway"),
-    ("gateway_use", "Anvendelse af gateway"),
     ("", "Teknisk dokumentation"),
     ("tech/os2borgerpc-image", "OS2borgerPC Image"),
     ("tech/os2borgerpc-admin", "OS2borgerPC Admin Site"),
