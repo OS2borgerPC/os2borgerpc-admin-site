@@ -738,7 +738,7 @@ class ScriptRedirect(RedirectView, SuperAdminOrThisSiteMixin):
 
         # Scripts are sorted with "-site" to ensure global scripts are ordered first in the queryset.
         scripts = Script.objects.filter(
-            Q(site=site) | Q(site=None), is_security_script=is_security
+            Q(site=site) | Q(site=None), is_security_script=is_security, is_hidden=False
         ).order_by("-site", "name")
 
         if scripts.exists():
