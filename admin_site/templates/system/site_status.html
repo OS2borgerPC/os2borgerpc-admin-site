@@ -45,7 +45,14 @@
                 <span class="badge bg-danger">Offline</span>
               {% endif %}
             </td>
-            <td>{% if pc.last_seen %}{{ pc.last_seen|timesince }} siden ({{ pc.last_seen }}) {% else %}Aldrig{% endif %}</td>
+            <td>
+              {% if pc.last_seen %}
+                <span style="display: none;">{{pc.last_seen|date:"U"}}</span> <!-- Used to ensure that datetimes are sorted correctly -->
+                {{ pc.last_seen|timesince }} siden ({{ pc.last_seen }})
+              {% else %}
+                Aldrig
+              {% endif %}
+            </td>
             <td>
               {% if pc.security_events.latest_event %}
                 {{ pc.security_events.latest_event.reported_time }}

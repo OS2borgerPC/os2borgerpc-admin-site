@@ -200,6 +200,7 @@ class SiteAdmin(admin.ModelAdmin):
         "created",
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",
+        "paid_for_access_until",
     )
     search_fields = ("name",)
     inlines = (
