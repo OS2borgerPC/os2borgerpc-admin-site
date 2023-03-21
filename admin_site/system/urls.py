@@ -50,11 +50,20 @@ from system.views import (
     SiteList,
     SiteSettings,
     TwoFactor,
+    AdminTwoFactorSetup,
+    AdminTwoFactorSetupComplete,
+    AdminTwoFactorDisable,
+    AdminTwoFactorBackupTokens,
     UserCreate,
     UserDelete,
     UserRedirect,
     UserUpdate,
 )
+
+from two_factor import views as otp_views
+from two_factor.urls import urlpatterns as tf_urls
+from django.urls import include, path
+
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -123,8 +132,30 @@ urlpatterns = [
         ScriptRedirect.as_view(),
         name="security_scripts",
     ),
-    # Two-factor
+    # Two-factor for OS2borgerPC
     url(r"^site/(?P<slug>[^/]+)/two-factor/$", TwoFactor.as_view(), name="two_factor"),
+    # Two-factor for admin-site
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup/$",
+        AdminTwoFactorSetup.as_view(),
+        name="admin_two_factor_setup",
+    ),
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup-complete/$",
+        AdminTwoFactorSetupComplete.as_view(),
+        name="admin_two_factor_setup_complete",
+    ),
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/disable/$",
+        AdminTwoFactorDisable.as_view(),
+        name="admin_two_factor_disable",
+    ),
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/backup-tokens/$",
+        AdminTwoFactorBackupTokens.as_view(),
+        name="admin_two_factor_backup",
+    ),
+    path("", include(tf_urls)),
     # Sites
     url(r"^$", AdminIndex.as_view(), name="index"),
     url(r"^sites/$", SiteList.as_view(), name="sites"),
