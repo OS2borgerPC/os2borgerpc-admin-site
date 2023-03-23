@@ -34,9 +34,13 @@ services:
         container_name: bpc_admin_site_django
         privileged: true
     db:
-        image: magentaaps/postgres-os2bos:1-10.14-test
-        env_file:
-            - dev-environment/db.env
+        image: postgres:latest
+        restart: always
+        environment:
+            # Note: These values are only used in the local development environment, so it's not particularly important
+            # that they're secure
+            POSTGRES_USER: bpc
+            POSTGRES_PASSWORD: bpc
         volumes:
             - postgres-data:/var/lib/postgresql/data
         container_name: bpc_admin_site_db
