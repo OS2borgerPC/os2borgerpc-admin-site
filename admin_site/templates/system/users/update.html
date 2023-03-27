@@ -1,7 +1,8 @@
 {% extends "site_with_navigation.html" %}
+{% load i18n %}
 
 {% block specific_title %}
-Brugere
+{% translate "Users" %}
 {% endblock %}
 
 {% block subnav %}
@@ -11,7 +12,7 @@ Brugere
     <div class="listutils">
       <button class="btn btn-link" data-bs-target="#addNewUser" type="button" data-bs-toggle="modal">
         <span class="material-icons">add</span>
-        Tilføj ny bruger
+        {% translate "Add new user" %}
       </button>
     </div>
   {% endif %}
@@ -24,7 +25,8 @@ Brugere
           {{ listed_user.username }}
         </a>
         {% if listed_user == selected_user and site_membership.site_user_type == site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
-          <a class="item-list-deletable material-icons" href="{% url 'delete_user' site.uid selected_user.username %}" title="Slet bruger">
+          {% translate "Delete user" as delete_name %}
+          <a class="item-list-deletable material-icons" href="{% url 'delete_user' site.uid selected_user.username %}" title="{{ delete_name }}">
             clear
           </a>
         {% endif %}
@@ -37,11 +39,11 @@ Brugere
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
-      <h2 class="divideheader">Profil: <em>{{ selected_user.username }}</em></h2>
+      <h2 class="divideheader">{% translate "Profile:" %} <em>{{ selected_user.username }}</em></h2>
       {% include 'notification.html' %}
       <div>
         {% if site_membership.site_user_type != site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
-            <p> Site-brugere har ikke adgang til at ændre andre brugere. Bed en site-admin eller Magenta om hjælp.</p>
+            <p> {% translate "Site users are not authorized to edit other users. Ask a site admin or Magenta for help." %}</p>
         {% else %}
             <form
               name="update_user_form"
@@ -51,10 +53,11 @@ Brugere
               {% csrf_token %}
 
               {% include 'system/users/form.html' with form_id='update_user_form' %}
+              {% translate "Save changes" as submit_name %}
 
               <fieldset class="mt-3">
-                <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
-                <button type="reset" class="btn btn-secondary">Annuller</button>
+                <input type="submit" class="btn btn-primary me-3" value="{{ submit_name }}">
+                <button type="reset" class="btn btn-secondary">{% translate "Reset" %}</button>
               </fieldset>
 
             </form>
@@ -72,15 +75,16 @@ Brugere
         <form action="{% url 'new_user' site.uid %}" name="create_user_form" id="create_user_form" method="post">
           {% csrf_token %}
           <div class="modal-header">
-            <h3 class="modal-title">Tilføj ny bruger</h3>
+            <h3 class="modal-title">{% translate "Add new user" %}</h3>
             <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
             {% include 'system/users/form.html' with form=create_form form_id='create_user_form' form_action=create_url %}
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Opret bruger">
-            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuller</button>
+            {% translate "Create user" as create_name %}
+            <input type="submit" class="btn btn-primary" value="{{ create_name }}">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{% translate "Reset" %}</button>
           </div>
         </form>
       </div>
