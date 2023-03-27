@@ -1,4 +1,5 @@
 from django import template
+from django.utils.safestring import mark_safe
 import os
 
 register = template.Library()
@@ -44,3 +45,8 @@ def get_fields(obj):
 @register.filter
 def getallattrs(value):
     return dir(value)
+
+
+@register.filter
+def bold(text):
+    return mark_safe("<strong>" + text + "</strong>")
