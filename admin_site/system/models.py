@@ -990,6 +990,9 @@ class Input(models.Model):
     value_type = models.CharField(
         verbose_name=_("value type"), choices=VALUE_CHOICES, max_length=10
     )
+    default_value = models.CharField(
+        verbose_name=_("default value"), max_length=255, blank=True, null=True
+    )
     position = models.IntegerField(verbose_name=_("position"))
     mandatory = models.BooleanField(verbose_name=_("mandatory"), default=True)
     script = models.ForeignKey(Script, related_name="inputs", on_delete=models.CASCADE)

@@ -646,6 +646,7 @@ class ScriptMixin(object):
                         "pk": input.pk,
                         "name": input.name,
                         "value_type": input.value_type,
+                        "default_value": input.default_value,
                         "mandatory": input.mandatory,
                     }
                     for input in self.script.ordered_inputs
@@ -674,6 +675,7 @@ class ScriptMixin(object):
                     "name": params.get("script-input-%d-name" % i, ""),
                     "value_type": params.get("script-input-%d-type" % i, ""),
                     "position": i,
+                    "default_value": params.get("script-input-%d-default" % i, ""),
                     "mandatory": params.get(
                         "script-input-%d-mandatory" % i, "unchecked"
                     ),
