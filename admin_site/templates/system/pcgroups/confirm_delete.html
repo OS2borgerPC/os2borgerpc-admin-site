@@ -2,13 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block specific_title %}
-Slet gruppe: {{ pcgroup.name }}
+{% translate "Delete group: " %} {{ pcgroup.name }}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk</h3>
+      <h3>{% translate "Note" %}Bemærk</h3>
       <ul>
         <li>
           Tilknyttede <strong>Computere</strong> og <strong>Tilknyttede Scripts</strong> vil blive fjernet fra
@@ -20,14 +20,14 @@ Slet gruppe: {{ pcgroup.name }}
       </ul>
     </div>
     <p>
-      Er du sikker på, du ønsker at slette gruppen
+      {% translate "Are you sure you want to delete this group " %}
       <strong style="font-size: 1.25em;">{{ pcgroup.name }}</strong>?
     </p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
       <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
-      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annuller</a>
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>
 {% endblock %}

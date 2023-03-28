@@ -17,8 +17,8 @@
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button onclick="BibOS.PolicyList.submitEditDialog('{{ policy_id }}')" class="btn btn-primary">Gem</button>
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
+        <button onclick="BibOS.PolicyList.submitEditDialog('{{ policy_id }}')" class="btn btn-primary">{% translate "Save" %}</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Tilføj script</h3>
+        <h3 class="modal-title">{% translate "Add script" %}</h3>
         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
