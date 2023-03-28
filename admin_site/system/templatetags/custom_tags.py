@@ -50,3 +50,8 @@ def getallattrs(value):
 @register.filter
 def bold(text):
     return mark_safe("<strong>" + text + "</strong>")
+
+
+@register.filter
+def italic(text):
+    return mark_safe("<em>" + text + "</em>")

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if list %}
 
     <style>
@@ -23,7 +24,7 @@
             <input class="form-control filtersearchinput" type="search" placeholder="{{ placeholder }}">
             <span class="input-group-text bg-white">
                 <button type="button" class="btn btn-close">
-                    <span class="visually-hidden">Ryd filter</span>
+                    <span class="visually-hidden">{% translate "Clear the filter" %}</span>
                 </button>
             </span>
         </div>
@@ -143,6 +144,6 @@
 
 {% else %}
 
-    <p>Data mangler</p>
+    <p>{% translate "Data is missing" %}</p>
 
 {% endif %}

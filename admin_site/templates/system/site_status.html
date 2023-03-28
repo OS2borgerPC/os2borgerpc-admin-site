@@ -1,27 +1,28 @@
 {% extends "site_with_navigation.html" %}
+{% load i18n %}
 
 {% block specific_title %}
-  Status
+  {% translate "Status" %}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     <h2 class="divideheader">
-      Computere
-      <span class="ms-3 badge bg-secondary">Aktiverede: {{ activated_pcs }} / {{ total_pcs }}</span>
+      {% translate "Computers" %}
+      <span class="ms-3 badge bg-secondary">{% translate "Activated:" %} {{ activated_pcs }} / {{ total_pcs }}</span>
       {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
-      <span class="ms-3 badge bg-secondary">Online: {{ online_pcs }} / {{ total_pcs }}</span>
+      <span class="ms-3 badge bg-secondary">{% translate "Online:" %} {{ online_pcs }} / {{ total_pcs }}</span>
     </h2>
     <table class="table caption-top" data-toggle="table" data-classes="table table-bordered" id="site-status-table">
       <thead>
         <tr>
-          <th data-sortable="true">Navn</th>
-          <th data-sortable="true">Aktiveret</th>
-          <th data-sortable="true">Beskrivelse</th>
-          <th data-sortable="true">Placering</th>
-          <th data-sortable="true">Status</th>
-          <th data-sortable="true">Seneste tjek-ind</th>
-          <th data-sortable="true">Seneste sikkerhedshændelse modtaget</th>
+          <th data-sortable="true">{% translate "Name" %}</th>
+          <th data-sortable="true">{% translate "Activated" %}</th>
+          <th data-sortable="true">{% translate "Description" %}</th>
+          <th data-sortable="true">{% translate "Location" %}</th>
+          <th data-sortable="true">{% translate "Status" %}</th>
+          <th data-sortable="true">{% translate "Latest check-in" %}</th>
+          <th data-sortable="true">{% translate "Latest security event received" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -32,32 +33,32 @@
               <strong><a href="{% url 'computer' site_uid=site.uid pc_uid=pc.uid %}">{{ pc.name }}</a></strong>
             </td>
             {% if pc.is_activated %}
-              <td><span class="badge bg-success">Aktiveret</span></td>
+              <td><span class="badge bg-success">{% translate "Activated" %}</span></td>
             {% else %}
-              <td><span class="badge bg-danger">Ikke aktiveret</span></td>
+              <td><span class="badge bg-danger">{% translate "Not activated" %}</span></td>
             {% endif %}
             <td>{{ pc.description }}</td>
             <td>{{ pc.location }}</td>
             <td>
               {% if pc.online %}
-                <span class="badge bg-success">Online</span>
+                <span class="badge bg-success">{% translate "Online" %}</span>
               {% elif pc.is_activated %}
-                <span class="badge bg-danger">Offline</span>
+                <span class="badge bg-danger">{% translate "Offline" %}</span>
               {% endif %}
             </td>
             <td>
               {% if pc.last_seen %}
                 <span style="display: none;">{{pc.last_seen|date:"U"}}</span> <!-- Used to ensure that datetimes are sorted correctly -->
-                {{ pc.last_seen|timesince }} siden ({{ pc.last_seen }})
+                {{ pc.last_seen|timesince }} {% translate "ago" %} ({{ pc.last_seen }})
               {% else %}
-                Aldrig
+                {% translate "Never" %}
               {% endif %}
             </td>
             <td>
               {% if pc.security_events.latest_event %}
                 {{ pc.security_events.latest_event.reported_time }}
               {% else %}
-                Aldrig
+                {% translate "Never" %}
               {% endif %}
             </td>
           </tr>

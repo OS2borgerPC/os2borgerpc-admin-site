@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block header %}
   <header class="d-flex justify-content-between {% block header_class %}{% endblock %}">
@@ -20,7 +21,7 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="userActionDropdown">
             <li>
-              <a class="dropdown-item" href="/accounts/logout/">Log ud</a>
+              <a class="dropdown-item" href="/accounts/logout/">{% translate "Log out" %}</a>
             </li>
           </ul>
         </div>

@@ -1,6 +1,7 @@
-{% extends "site_with_navigation.html" %} 
+{% extends "site_with_navigation.html" %}
+{% load i18n %}
 {% block specific_title %}
-Totrinsbekræftelse
+{% translate "Two-factor authentication" %}
 {% endblock %}
 
 {% block head_javascripts %}
@@ -17,23 +18,23 @@ Totrinsbekræftelse
 
 {% block specific_content %}
   <div class="container-fluid main">
-    <h2 class="divideheader"> Aktivér: Totrinsbekræftelse for superuser </h2>
+    <h2 class="divideheader"> {% translate "Activate: Two-factor authentication for superuser" %} </h2>
     <div class="tab-content">
 
     <ol>
       <li class="py-3">
-        <strong>Opret sikkerhedsnøgle og QR</strong><br/>
+        <strong>{% translate "Create security key and QR" %}</strong><br/>
         <button class="btn btn-secondary my-3" name="generate-security-key-qr" id="generate-security-key-qr">
-          Generér sikkerhedsnøgle og QR
+          {% translate "Generate security key and QR" %}
         </button>
-        <p class='mb-0 d-none' id='key-text'>Sikkerhedsnøgle:</p>
+        <p class='mb-0 d-none' id='key-text'>{% translate "Security key:" %}</p>
         <!-- Koden skal være i base32 - 26 tegn bestående af A-Z og 2-7 (ikke 0-9!) -->
         <p id="security_code"></p>
         <div id="qr"></div>
       </li>
       <li class="py-3">
-        <p><strong>Scan QR-koden fra trin 1 med din authenticator app</strong></p>
-        <p>Som authenticator app kan eksempelvis bruges:</p>
+        <p><strong>{% translate "Scan the QR code from step 1 with your authenticator app" %}</strong></p>
+        <p>{% translate "Some examples of authenticator apps are:" %}</p>
         <ul>
           <li><a href="https://freeotp.github.io" target="_blank">FreeOTP Authenticator</a></li>
           <li><a href="https://authy.com" target="_blank">Authy</a></li>
@@ -45,11 +46,10 @@ Totrinsbekræftelse
         </ul>
       </li>
       <li class="py-3">
-        <p><strong>Kopier sikkerhedsnøglen fra trin 1 og kør totrinsscriptet med den som inputparameter</strong></p>
+        <p><strong>{% translate "Copy the security key from step 1 and run the two-factor script with it as input" %}</strong></p>
         <p>
-          Du kan finde scriptet
-          "Totrinsbekræftelse for superuser" under menupunktet
-          <a href="{% url 'scripts' site.uid %}" target="_blank">Scripts</a>.
+          {% blocktranslate with name="Totrinsbekræftelse for superuser" %}You can find the script "{{name}}" under the menu item {% endblocktranslate %}
+          <a href="{% url 'scripts' site.uid %}" target="_blank">{% translate "Scripts" %}</a>.
         </p>
       </li>
     </ol>
