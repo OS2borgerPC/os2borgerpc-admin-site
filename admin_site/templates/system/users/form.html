@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% if form.non_field_errors %}
   <span class="form-error">
@@ -22,7 +23,7 @@
       type="checkbox" 
       class="showpasswordcheckbox form-check-input" 
       tabindex="100">
-    <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">Vis Password</label> 
+    <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">{% translate "Show Password" %}</label>
   </div>
 
     {{ form.email|as_crispy_field }}

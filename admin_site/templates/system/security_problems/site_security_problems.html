@@ -1,8 +1,10 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_title %}
-Sikkerhedsregler
+{% translate "Security rules" %}
 {% endblock %}
 
 {% block javascripts %}
@@ -14,7 +16,7 @@ Sikkerhedsregler
         <div class="listutils">
             <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
                 <span class="material-icons">add</span>
-                Definér ny sikkerhedsregel
+                {% translate "Define new security rule" %}
             </button>
         </div>
         <ul class="item-list">
@@ -27,7 +29,7 @@ Sikkerhedsregler
                         {% if user.is_superuser or site_membership.site_user_type == site_membership.SITE_ADMIN %}
                             <a class="item-list-deletable material-icons"
                                href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/"
-                               title="Slet sikkerhedsregel">
+                               title="{% translate 'Delete security rule' %}">
                                 clear
                             </a>
                         {% endif %}
@@ -39,11 +41,15 @@ Sikkerhedsregler
 {% endblock %}
 
 {% block specific_content %}
+{% translate "Add group to surveillance" as g_add %}
+{% translate "Remove monitored group" as g_remove %}
+{% translate "Add email recipient" as e_add %}
+{% translate "Remove recipient" as e_remove %}
 <div class="container-fluid main sublevelmain">
 
     {% if selected_security_problem %}
     <h2 class="divideheader">
-        Detaljer om <em>{{ selected_security_problem.name }}</em>
+        {% translate "Details about" %} <em>{{ selected_security_problem.name }}</em>
         {% comment %}
         TODO later?
         <a class="float-end" href="{% url 'security_problem' site_uid=site.url uid=selected_security_problem.id %}" title="Se alle hændelser for dette sikkerhedsproblem"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
@@ -58,9 +64,13 @@ Sikkerhedsregler
         {% csrf_token %}
 
         <div class="alert alert-info">
-            <strong>Bemærk</strong>
+            <strong>{% translate "Note" %}</strong>
             <ul>
+                {% translate "all" as all %}
+                {% translate "empty" as empty %}
+                <li>{% blocktranslate with a=all|bold %}If the security rule does not have a group added, the rule will apply to {{a}} Computers.{% endblocktranslate %}</li>
                 <li>Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen gælde <strong>alle</strong> Computere.</li>
+                <li>{% blocktranslate with e=empty|italic %}If you want to temporarily disable a rule, you can create an {{e}} Group (i.e. a Group with no Computers) and set this Group as the monitored Group.{% endblocktranslate %}</li>
                 <li>Ønsker du midlertidigt at gøre en Regel inaktiv, kan du oprette en <em>tom</em> Gruppe (dvs. en Gruppe uden Computere)
                 og sætte denne Gruppe som den overvågede Gruppe.</li>
             </ul>
@@ -82,12 +92,12 @@ Sikkerhedsregler
                 {{ form.security_script|as_crispy_field }}
 
                 <p>
-                    <label>Overvågede grupper</label>
-                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj gruppe til overvågning' remove_text='Fjern overvåget gruppe' site_url=site.uid target_section='groups' %}
+                    <label>{% translate "Monitored groups" %}</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=g_add remove_text=g_remove site_url=site.uid target_section='groups' %}
                 </p>
                 <p>
-                    <label>Modtager(e) af e-mail-advarsel</label>
-                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text='Tilføj e-mail-modtager' remove_text='Fjern modtager' site_url=site.uid target_section='users' %}
+                    <label>{% translate "Recipient(s) of email warning" %}</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text=e_add remove_text=e_remove site_url=site.uid target_section='users' %}
                 </p>
 
             </fieldset>
@@ -95,8 +105,8 @@ Sikkerhedsregler
         </div>
 
         <fieldset class="mt-3">
-            <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
-            <button class="btn btn-secondary" type="button" onclick="return BibOS.SecurityProblemList.cancelEditing()">Annuller</button>
+            <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
+            <button class="btn btn-secondary" type="button" onclick="return BibOS.SecurityProblemList.cancelEditing()">{% translate "Reset" %}</button>
         </fieldset>
 
     </form>
@@ -110,7 +120,7 @@ Sikkerhedsregler
                         id="new_security_problem_form"
                         method="post">
                     <div class="modal-header">
-                        <h3 class="modal-title">Definér ny sikkerhedsregel</h3>
+                        <h3 class="modal-title">{% translate "Define new security rule" %}</h3>
                         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -129,19 +139,19 @@ Sikkerhedsregler
                             {{ newform.security_script|as_crispy_field }}
 
                             <p>
-                                <label>Overvågede grupper</label>
-                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=alert_groups identifier='gruppe' unique_id='ag2' add_text='Tilføj gruppe til overvågning' %}
+                                <label>{% translate "Monitored groups" %}</label>
+                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=alert_groups identifier='gruppe' unique_id='ag2' add_text=g_add %}
                             </p>
                             <p>
-                                <label>Modtager(e) af e-mail-advarsel</label>
-                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=alert_users identifier='modtager' unique_id='au2' add_text='Tilføj e-mail-modtager' %}
+                                <label>{% translate "Recipient(s) of email warning" %}</label>
+                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=alert_users identifier='modtager' unique_id='au2' add_text=e_add %}
                             </p>
                         </fieldset>
 
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Opret sikkerhedsregel">
-                        <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="Annuller">
+                        <input type="submit" class="btn btn-primary" value="{% translate 'Create security rule' %}">
+                        <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="{% translate 'Cancel' %}">
                     </div>
                 </form>
             </div>

@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="card comment-card" id="comment-{{ comment.pk }}">
     <strong class="timestamp-created text-muted">
-        {% translate "On" %} {{ comment.created }}{% if comment.parent_comment %} {% translate "answered" %} {% else %} {% translate "wrote" %} {% endif %}<em>{{ comment.user }}:</em>
+        {% translate "On the date" %} {{ comment.created }}{% if comment.parent_comment %} {% translate "answered" %} {% else %} {% translate "wrote" %} {% endif %}<em>{{ comment.user }}:</em>
         {% comment %} (original) Den {{ comment.created }}{% if comment.parent_comment %} svarede {% else %} skrev {% endif %}<em>{{ comment.user }}:</em> {% endcomment %}
     </strong>
     <p>{{ comment.content }}</p>
