@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% if job.failed %}
     <div>
         <a class="btn btn-primary" href="{% url 'restart_job' site.uid job.pk %}">
@@ -5,14 +7,14 @@
                 <span class="material-icons">
                     refresh
                 </span>
-                Genstart job
+                {% translate "restart job" %}
             </span>
         </a>
     </div>
 {% endif %}
 {% if job.log_output %}
   <div class="job-output">
-    <p class="mt-3">Log output</p>
+    <p class="mt-3">{% translate "Log output" %}</p>
     <pre class='bg-light job-output-pre'>{{job.log_output|escape}}</pre>
   </div>
 {% endif %}

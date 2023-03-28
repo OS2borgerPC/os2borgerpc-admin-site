@@ -7,7 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< Updated upstream
 "POT-Creation-Date: 2023-03-27 15:50+0200\n"
+=======
+"POT-Creation-Date: 2023-03-28 09:38+0200\n"
+>>>>>>> Stashed changes
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -121,6 +125,7 @@ msgstr "UID"
 msgid "Paid for access until this date"
 msgstr "Betalt for adgang indtil denne dato"
 
+# *************** Er det her rigtigt *******************
 #: system/models.py:145
 msgid ""
 "Necessary for customers who wish to integrate with standard library login"
@@ -142,6 +147,7 @@ msgstr "Karantæneperiode"
 msgid "Quarantine period when integrating with library login"
 msgstr "Karantæneperiode, når den tilladte logintid er brugt"
 
+# ***** Mangler *******
 #: system/models.py:219
 msgid "sites with access"
 msgstr ""
@@ -399,7 +405,7 @@ msgstr "Afkrydsningsfelt"
 
 #: system/models.py:985
 msgid "Time"
-msgstr ""
+msgstr "Tid"
 
 #: system/models.py:991
 msgid "value type"

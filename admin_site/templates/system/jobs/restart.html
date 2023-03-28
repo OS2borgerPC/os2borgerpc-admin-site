@@ -3,16 +3,19 @@
 {% load custom_tags %}
 
 {% block specific_title %}
-Genstart job
+{% translate "restart job" %}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
+
     <p>{% blocktranslate with job_name=selected_job.batch.script.name|bold pc_name=selected_job.pc.name|bold %}Are you sure you want to restart the execution of the script {{ job_name }} on the computer {{ pc_name }}?{% endblocktranslate %}</p>
+
     <form action="{% url 'restart_job' site.uid selected_job.pk %}" method="post">
       {% csrf_token %}
-      <input class="btn btn-primary me-3" type="submit" value="Ja">
-      <a class="btn btn-secondary" href="{% url 'jobs' site.uid %}">Nej</a>
+      {% translate "yes" as yes %}
+      <input class="btn btn-primary me-3" type="submit" value="{{yes}}">
+      <a class="btn btn-secondary" href="{% url 'jobs' site.uid %}">{% translate "No" %}</a>
     </form>
   </div>
 {% endblock %}
