@@ -1,8 +1,9 @@
 {% extends "site_with_navigation.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block specific_title %}
-Tænd- / Sluk-tidsplan: Undtagelser
+{% translate "On/Off schedule: Exceptions" %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,13 +16,13 @@ Tænd- / Sluk-tidsplan: Undtagelser
 
     <a class="btn btn-link" href="{% url 'wake_change_event_new_altered_hours' site.uid %}">
         <span class="material-icons">meeting_room</span>
-        Tilføj ændrede åbningstider
+        {% translate "Add altered opening hours" %}
     </a>
     <a class="btn btn-link" href="{% url 'wake_change_event_new_closed' site.uid %}">
         <span class="material-icons">
        door_front
         </span>
-        Tilføj lukkedage
+        {% translate "Add closed days" %}
     </a>
   </div>
 
@@ -37,7 +38,7 @@ Tænd- / Sluk-tidsplan: Undtagelser
             {{event}}
           </a>
           {% ifequal event selected_event %}
-            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="Slet undtagelse">
+            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="{% translate 'Delete exception' %}">
               clear
             </a>
           {% endifequal %}

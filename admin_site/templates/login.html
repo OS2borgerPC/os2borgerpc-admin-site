@@ -280,15 +280,16 @@
       <img class="logo" src="/static/img/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
 
       <form method="post" action="">
-          <h2><span class="muted">Log ind:</span> OS2borgerPC</h2>
+          <h2><span class="muted">{% translate "Log in" %}:</span> OS2borgerPC</h2>
           {% csrf_token %}
           {{ form|crispy }}
-          <input class="cto" type="submit" value="Log ind">
+          {% translate "Log in" as login %}
+          <input class="cto" type="submit" value="{{login}}">
           <input type="hidden" name="next" value="{{ next }}">
       </form>
 
       <p style="margin: 2.5rem 0;">
-        OS2borgerPC er en open source løsning. Du kan hente kildekode og dokumentation her:
+        {% translate "OS2borgerPC is an open source product. You can download the source code and documentation here:" %}
         <a href="https://os2.eu/produkt/os2borgerpc" target="_blank">https://os2.eu/produkt/os2borgerpc</a>
       </p>
 
@@ -298,21 +299,23 @@
       href="{% url 'global-changelogs' slug='global' %}"
       class="cto contact" target=""
       style="margin-left: 1rem;">
-      <strong>Se opdateringer i OS2borgerPC</strong>
+      <strong>{% translate "Check updates for OS2borgerPC" %}</strong>
     </a>
 
       <a 
         href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC" 
         class="cto contact" target="_blank">
-        <strong>Send en besked til Magenta</strong>
+        <strong>{% translate "Send a message to Magenta" %}</strong>
       </a>
 
     </section>
   </main>
 
+  {% translate "It looks like you're using Internet Explorer. It won't work on this website." as warning %}
+  {% translate "Try opening this website in Microsoft Edge" as link_text %}
   <ie11-browser-warning 
-    data-warning-text="Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på dette site."
-    data-link-text="Prøv at åbne denne side i Microsoft Edge">
+    data-warning-text="{{warning}}"
+    data-link-text="{{link_text}}">
   </ie11-browser-warning>
 
 </body>

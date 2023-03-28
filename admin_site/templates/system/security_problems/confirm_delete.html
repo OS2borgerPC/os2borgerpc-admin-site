@@ -1,20 +1,30 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_title %}
-Slet sikkerhedsregel: {{ securityproblem.name }}
+{% translate "Delete security rule" %}: {{ securityproblem.name }}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk</h3>
+      <h3>{% translate "Note" %}</h3>
       <ul>
         <li>
+          {% translate "Security rule" as srule %}
+          {% translate "Security events" as sevents %}
+          {% blocktranslate with sr=srule|bold ses=sevents|bold %}If a {{sr}} is deleted, the related {{ses}} will also be deleted.{% endblocktranslate %}
           Hvis en <strong>Sikkerhedsregel</strong> slettes, vil de relaterede <strong>Sikkerhedshændelser</strong>
           også blive slettet.
         </li>
         <li>
+          {% translate "Groups"|bold as groups %}
+          {% translate "Security script"|bold as sscript %}
+          {% translate "Email recipients"|bold as emailr %}
+          {% translate "the Security rule"|bold as tsrule %}
+          {% blocktranslate %}Associated {{groups}}, {{sscript}} and {{emailr}} will be removed from {{tsrule}}.{% endblocktranslate %}
           Tilknyttede <strong>Grupper</strong>, <strong>Sikkerhedsscript</strong> og <strong>E-mail-modtagere</strong>
           vil blive fjernet fra <strong>Sikkerhedsreglen</strong>.
         </li>

@@ -1,7 +1,8 @@
 {% extends 'sitebase.html' %}
+{% load i18n %}
 
 {% block header_title %}
-  404 - Siden kunne ikke findes
+  404 - {% translate "The webpage could not be found" %}
 {% endblock %}
 
 {% block page_type_class %}
@@ -16,25 +17,25 @@ detailpage
 <nav id="left-menu" class="nav nav-pills utils-global">
   <a href="/" class="nav-link link-light d-flex align-items-center">
     <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
-    Gå tilbage til OS2borgerPC-admin
+    {% translate "Return to OS2borgerPC-admin" %}
   </a>
 </nav>
 {% endblock %}
 
 {% block specific_content %}
 <div class="p-4">
-  <h2>Siden kunne desværre ikke findes.</h2>
+  <h2>{% translate "The webpage could unfortunately not be found." %}</h2>
   <div class="card">
     <div class="card-body bg-warning">
-      <p><strong class="card-title">Fejlbeskeden er:</strong></p>
+      <p><strong class="card-title">{% translate "The error message is:" %}</strong></p>
       <q class="card-text">
         {{ exception|safe }}
       </q>
     </div>
   </div>
   <br/>
-  <p>Hvis I mener, der er tale om en fejl, kan I skrive til os på <a href="mailto:support@magenta.dk">support@magenta.dk</a>.</p>
-  <p>Mvh.<br/>
-  <strong>OS2BorgerPC-Teamet</strong></p>
+  <p>{% translate "If you believe that this is an error, you may contact us at" %} <a href="mailto:support@magenta.dk">support@magenta.dk</a>.</p>
+  <p>{% translate "Best regards" %}<br/>
+  <strong>{% translate "The OS2BorgerPC team" %}</strong></p>
 </div>
 {% endblock %}

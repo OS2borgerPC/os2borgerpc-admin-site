@@ -1,26 +1,29 @@
 {% extends "system/wake_plan/wake_change_events/wake_change_event_base.html" %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_title %}
-Slet Undtagelse?: {{selected_event.name}}
+{% translate "Delete exception" %}?: {{selected_event.name}}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk</h3>
+      <h3>{% translate "Note" %}</h3>
       <ul>
-        <li>Slettes <strong>Undtagelsen</strong> vil undtagelsen blive fjernet fra alle tidsplaner, og alle Computere tilmeldt til planerne vil få opdateret deres tidsplan med denne undtagelse fjernet.</li>
+        {% translate "the Exception" as exc" %}
+        <li>{% blocktranslate with ex=exc|bold %}If {{ex}} is deleted, it will be removed from all schedules and the Computers using those schedules will have their schedules updated with this exception removed.{% endblocktranslate %}</li>
       </ul>
     </div>
     <p>
-      Er du sikker på, du ønsker at slette Undtagelsen:
+      {% translate "Are you sure you wish to delete the Exception" %}:
       <strong style="font-size: 1.25em;">{{ selected_event.name }}</strong>
     </p>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
-      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">Annuller</button>
+      <input class="btn btn-danger me-3" type="submit" value="{% translate 'Confirm deletion' %}">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
     </form>
   </div>
 {% endblock %}

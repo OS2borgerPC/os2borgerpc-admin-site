@@ -6,7 +6,7 @@
 {% block specific_title %}
 {% translate "Delete" %}
 {% if is_security %}
-{% translate "Security Scripts" %}
+{% translate "Security Script" %}
 {% else %}
 {% translate "Script" %}
 {% endif %}: {{ script.name }}
@@ -28,10 +28,7 @@
 
           {% translate "Jobs" as jobs %}
 
-          {# Ikke testet endnu #}
-          {% blocktranslate with jobs=jobs|bold the_script=the_script|bold %}
-          Old {{jobs}} with {{the_script}} will be deleted
-          {% endblocktranslate %} 
+          {% blocktranslate with jobs=jobs|bold the_script=the_script|bold %}Old {{jobs}} with {{the_script}} will be deleted.{% endblocktranslate %}
 
           Gamle <strong>Jobs</strong> med <strong>Scriptet</strong> vil blive slettet.
         </li>

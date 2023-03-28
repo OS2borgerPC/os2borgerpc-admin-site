@@ -1,27 +1,31 @@
 {% extends "system/wake_plan/wake_plan_base.html" %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_title %}
-Slet Tænd/Sluk tidsplan?: {{selected_plan.name}}
+{% translate "Delete on/off schedule" %}?: {{selected_plan.name}}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk</h3>
+      <h3>{% translate "Note" %}</h3>
       <ul>
-        <li>Slettes <strong>Tidsplanen</strong> meldes alle <strong>Grupper</strong> og de tilhørende
-          <strong>Computere</strong> ud af den, og de vil ikke længere slukke eller tænde automatisk.</li>
+        {% translate "The schedule" as plan %}
+        {% translate "Groups" as groups %}
+        {% translate "Computers" as computers %}
+        <li>{% blocktranslate with p=plan|bold gs=groups|bold cs=computers|bold %}Deleting {{p}} will remove all {{gs}} and the associated {{cs}} from it, and they will no longer turn off or on automatically.{% endblocktranslate %}</li>
       </ul>
     </div>
     <p>
-      Er du sikker på, du ønsker at slette Tænd/Sluk tidsplanen:
+      {% translate "Are you sure you wish to delete the On/Off schedule" %}:
       <strong style="font-size: 1.25em;">{{ selected_plan.name }}</strong>
     </p>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
-      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">Annuller</button>
+      <input class="btn btn-danger me-3" type="submit" value="{% translate 'Confirm deletion' %}">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
     </form>
   </div>
 {% endblock %}

@@ -1,8 +1,9 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block specific_title %}
-Site-indstillinger
+{% translate "Site settings" %}
 {% endblock %}
 
 {% block javascripts %}
@@ -18,16 +19,16 @@ Site-indstillinger
 {% block specific_content %}
   <div class="container-fluid main">
 
-    <h2 class="divideheader">Indstillinger for <em>{{ site }}</em></h2>
+    <h2 class="divideheader">{% translate "Settings for" %} <em>{{ site }}</em></h2>
     {% include 'notification.html' %}
 
       <!-- The tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="settings-tab" href="#settings" data-bs-toggle="tab" role="tab" aria-controls="settings" aria-selected="true">Indstillinger</a>
+          <a class="nav-link active" id="settings-tab" href="#settings" data-bs-toggle="tab" role="tab" aria-controls="settings" aria-selected="true">{% translate "Settings" %}</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">{% translate "Configurations" %}</a>
         </li>
       </ul>
 
@@ -55,8 +56,8 @@ Site-indstillinger
 
         </div>
         <fieldset class="mt-4">
-          <button class="btn btn-primary me-3" form="site_settings_form" type="submit">Gem ændringer</button>
-          <button class="btn btn-secondary" type="reset">Annuller</button>
+          <button class="btn btn-primary me-3" form="site_settings_form" type="submit">{% translate "Save changes" %}</button>
+          <button class="btn btn-secondary" type="reset">{% translate "Reset" %}</button>
         </fieldset>
       </div>
     </form>
