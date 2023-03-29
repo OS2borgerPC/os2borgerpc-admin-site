@@ -1,3 +1,4 @@
+{% load i18n %}
 <div id="configlist-templates">
   <table class="table">
     <tbody id="configuration-item-template" class="template-container">
@@ -10,7 +11,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Håndter konfiguration</h3>
+        <h3 class="modal-title">{% translate "Handle configuration" %}</h3>
         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
@@ -22,11 +23,11 @@
           <fieldset>
 
             <p>
-              <label for="editconfig_name" class="form-label">Navn:</label>
+              <label for="editconfig_name" class="form-label">{% translate "Name" %}:</label>
               <input id="editconfig_name" maxlength="30" name="editconfig_name" type="text" value="" class="form-control">
             </p>
             <p>
-              <label for="editconfig_value" class="form-label">Værdi:</label>
+              <label for="editconfig_value" class="form-label">{% translate "Value" %}:</label>
               <input id="editconfig_value" maxlength="255" name="editconfig_value" type="text" value="" class="form-control">
             </p>
 
@@ -35,8 +36,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button onclick="BibOS.ConfigList.submitEditDialog()" class="btn btn-primary">Gem</button>
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
+        <button onclick="BibOS.ConfigList.submitEditDialog()" class="btn btn-primary">{% translate "Save" %}</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
       </div>
     </div>
   </div>

@@ -1,8 +1,10 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
 
+{% load i18n %}
+
 {% block specific_title %}
-Ny gruppe
+{% translate "New group" %}
 {% endblock %}
 
 {% block specific_content %}
@@ -10,8 +12,8 @@ Ny gruppe
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-primary me-3" type="submit" value="Opret gruppe">
-      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annuller</a>
+      <input class="btn btn-primary me-3" type="submit" value="{% translate "Create group" %}">
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>
 {% endblock %}

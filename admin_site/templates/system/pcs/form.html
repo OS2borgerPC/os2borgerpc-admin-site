@@ -1,8 +1,10 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
 
+{% load i18n %}
+
 {% block specific_title %}
-Computere
+{% translate "Computers" %}
 {% endblock %}
 
 {% block javascripts %}
@@ -12,7 +14,7 @@ Computere
 {% block subnav %}
 <ul class="sublevelnav item-list">
   {% if not pc_list.all%}
-    <li>Der er ingen computere</li>
+    <li>{% translate "There are no computers" %}</li>
   {% endif %}
   {% for pc in pc_list %}
     <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
@@ -21,10 +23,10 @@ Computere
         {{ pc.name }}
       </a>
         {% if not pc.is_activated %}
-          <span class="badge bg-danger">Ikke aktiveret</span>
+          <span class="badge bg-danger">{% translate "Not activated" %}</span>
         {% endif %}
       {% ifequal pc selected_pc %}
-        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="Slet computer">
+        <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate "Delete computer" %}">
           clear
         </a>
       {% endifequal %}
@@ -37,9 +39,9 @@ Computere
   <div class="container-fluid main sublevelmain">
 
     <h2 class="divideheader">
-      Detaljer om <em>{{ selected_pc.name }}</em>
+      {% translate "Details about" %} <em>{{ selected_pc.name }}</em>
       {% if selected_pc.security_events.count > 0 %}
-      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" Se hændelser for denne PC">
+      <a href="{% url 'security_event_pc' slug=site.url pc_uid=pc.uid %}" title=" {% translate "See events for this computer" %}">
         <span class="badge badge-important">
           <icon class="{% if has_security_events %}icon-fire{% else %}icon-ok{% endif %} icon-white"></icon>
         </span>
@@ -52,22 +54,22 @@ Computere
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       <div class="basic-info">
         <span class="badge bg-secondary">
-          Oprettelsestidspunkt: {{ pc.created }}
+          {% translate "The computer was registered at" %}: {{ pc.created }}
         </span>
         <span class="badge bg-secondary ms-3">
-          Seneste tjek-ind:
+          {% translate "Last check-in" %}:
           {% if selected_pc.last_seen %}
-            {{ selected_pc.last_seen|timesince }} siden
+            {{ selected_pc.last_seen|timesince }} {% translate "since" %}
           {% else %}
-            Aldrig
+            {% translate "Never" %}
           {% endif %}
         </span>
         <span class="badge bg-secondary ms-3">
-          Seneste sikkerhedshændelse modtaget:
+          {% translate "Last security event received" %}:
           {% if security_event %}
-            {{ security_event.reported_time|timesince }} siden
+            {{ security_event.reported_time|timesince }} {% translate "since" %}
           {% else %}
-            Aldrig
+            {% translate "Never" %}
           {% endif %}
         </span>
       </div>
@@ -77,13 +79,13 @@ Computere
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist" id="pc-tabs">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="details-tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
+          <a class="nav-link active" id="details-tab" href="#details" role="tab" aria-controls="details" aria-selected="true">{% translate "Details" %}</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="jobs-tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="false">Jobhistorik</a>
+          <a class="nav-link" id="jobs-tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="false">{% translate "Job history" %}</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="configs-tabs" href="#configs" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+          <a class="nav-link" id="configs-tabs" href="#configs" role="tab" aria-controls="configs" aria-selected="false">{% translate "Configurations" %}</a>
         </li>
       </ul>
 
@@ -110,20 +112,21 @@ Computere
 
               {{ form.pc_groups.errors }}
               <div class="clearfix">
-                <label class="mb-2">Grupper computeren er medlem af</label>
+                <label class="mb-2">{% translate "Groups the computer is a member of" %}</label>
                 <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
                   <span class="material-icons px-1">queue</span>
                   <span id="total-pc_groups"></span>
                 </span>
               </div>
+              {# Kan/Skal teksten i nedenstående linje oversættes eller er det først i picklist.html at det skal oversættes? #}
               {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text='Tilføj computer til gruppe' remove_text='Fjern computer fra gruppe' site_url=site.uid target_section='groups' %}
 
             </fieldset>
           </div>
 
         <fieldset class="mt-5">
-          <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
-          <button class="btn btn-secondary" type="reset">Annuller</button>
+          <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
+          <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>
         </fieldset>
         </div>
 
@@ -132,8 +135,8 @@ Computere
             {% include 'system/configs/list.html' with entries=selected_pc.configuration.entries.all  cnf_id='pc_config' %}
           </fieldset>
           <fieldset class="mt-5">
-            <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
-            <button class="btn btn-secondary" type="reset">Annuller</button>
+            <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
+            <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>
         </fieldset>
         </div>
 
@@ -141,6 +144,7 @@ Computere
           <table id="computer_jobs_table" class="table jobtable">
             <thead>
               <tr>
+                {# Can this be translated? #}
                 {% include 'widgets/orderby_th_reload.html' with key='batch__script__name' label='Script' anchor='#jobs' %}
                 {% include 'widgets/orderby_th_reload.html' with key='created' label='Oprettet' anchor='#jobs' %}
                 {% include 'widgets/orderby_th_reload.html' with key='started' label='Startet' anchor='#jobs' %}

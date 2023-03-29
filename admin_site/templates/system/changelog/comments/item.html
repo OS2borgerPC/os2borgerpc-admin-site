@@ -1,6 +1,8 @@
+{% load i18n %}
 <div class="card comment-card" id="comment-{{ comment.pk }}">
     <strong class="timestamp-created text-muted">
-        Den {{ comment.created }}{% if comment.parent_comment %} svarede {% else %} skrev {% endif %}<em>{{ comment.user }}:</em>
+        {% translate "On" %} {{ comment.created }}{% if comment.parent_comment %} {% translate "answered" %} {% else %} {% translate "wrote" %} {% endif %}<em>{{ comment.user }}:</em>
+        {% comment %} (original) Den {{ comment.created }}{% if comment.parent_comment %} svarede {% else %} skrev {% endif %}<em>{{ comment.user }}:</em> {% endcomment %}
     </strong>
     <p>{{ comment.content }}</p>
     <!-- If a comment has replies show them here -->
@@ -9,7 +11,8 @@
             <!-- if a comment IS a reply to another comment, hide it's children with a toggle button. 
                 This should make it so that only root comments and the first reply to them are displayed -->
             <button style="width: 10rem; display: inline;;" onclick="toggleCommentChildren({{ comment.pk }}, {{ comment.comment_children.count }})" class="btn" id="comment-children-toggle-button-{{ comment.pk }}">
-                Vis {{ comment.comment_children.count }} svar
+                {% blocktranslate with comment_comment_children_count=comment.comment_children.count %}Show {{ comment_comment_children_count }} answer(s){% endblocktranslate %}
+                {% comment %} (original) Vis {{ comment.comment_children.count }} svar {% endcomment %}
             </button>
             <div style="display: none;" id="comment-children-{{ comment.pk }}">
                 {% include 'system/changelog/comments/list.html' with comments=comment.comment_children.all %}
@@ -20,7 +23,7 @@
     {% endif %}
     <!-- Have the reply form be hid unless the toggle button is clicked -->
     {% if user.username %}
-    <button id="reply-toggle-button-{{ comment.pk }}" class="btn btn-primary" style="width: 5rem;" onclick="toggleCommentForm({{ comment.pk }})">Svar</button>
+    <button id="reply-toggle-button-{{ comment.pk }}" class="btn btn-primary" style="width: 5rem;" onclick="toggleCommentForm({{ comment.pk }})">{% translate "Answer" %}</button>
     <div style="display: none;" id="reply-form-{{ comment.pk }}">
         {% include 'system/changelog/comments/form.html' with parent=comment.pk %}
     </div>
