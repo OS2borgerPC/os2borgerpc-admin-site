@@ -1,11 +1,13 @@
 {% extends site_extension %}
 
+{% load i18n %}
+
 {% block header_title %}
 
 {% if site %}
-{{site}}: Nyheder
+{{site}}: {% translate "News" %}
 {% else %}
-OS2borgerPC: Nyheder
+OS2borgerPC: {% translate "News" %}
 {% endif %}
 {% endblock %}
 
@@ -23,16 +25,16 @@ OS2borgerPC: Nyheder
 {% block globalnav %}
     {% if global_view %}
         <nav id="left-menu" class="nav nav-pills utils-global">
-            <h2 class="text-light">Nyheder</h2>
+            <h2 class="text-light">{% translate "News" %}</h2>
             <a href="/" class="nav-link link-light d-flex align-items-center">
                 <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
-                Tilbage til login
+                {% translate "Back to login" %}
             </a>
             <hr>
-            <h2 class="text-light">Dokumentation</h2>
+            <h2 class="text-light">{% translate "Documentation" %}</h2>
             <a href="{% url 'doc' 'changelogs' %}" class="nav-link link-light">
                 <span class="material-icons">help_outline</span>
-                Hjælp til nyhedssiden
+                {% translate "Help for this newssite" %}
               </a>
         </nav>
     {% endif %}
@@ -52,7 +54,7 @@ OS2borgerPC: Nyheder
                         <div class="input-group">
                             <span class="input-group-text bg-white">
                                 <span class="material-icons">search</span>
-                                <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="Søg...">
+                                <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="{% translate "Search..." %}">
                             </span>
                         </div>
                     </form>
@@ -60,14 +62,14 @@ OS2borgerPC: Nyheder
               </div>
               <div class="col-9">
                 <div id="filter-tags">
-                    <strong id="tags-title" class="text-muted">Nyhedskategorier</strong>
+                    <strong id="tags-title" class="text-muted">{% translate "News catagories" %}</strong>
                 <!-- Here the tag filters are defined. Each is a clickable button that filters the entries to show entries with that tag -->
                     <form method="GET" class="mt-2">
                         <div id="changelog-search-tag-selectors">
                             {% if global_view %}
-                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'global-changelogs' slug='global' %}" id="Alle">Alle</a>
+                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'global-changelogs' slug='global' %}" id="Alle">{% translate "All" %}</a>
                             {% else %}
-                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'changelogs' slug=site.url %}" id="Alle">Alle</a>
+                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'changelogs' slug=site.url %}" id="Alle">{% translate "All" %}</a>
                             {% endif %}
                             {% for tag in tag_choices %}
                                 <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" id="{{ tag.pk }}" href="?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}">{{ tag.name }}</a>
@@ -87,13 +89,14 @@ OS2borgerPC: Nyheder
     <div class="changelog-container">
         <h3>
             {% if tag_filter %}
-                Viser nyheder i kategorien <strong>{{ tag_filter.name }}</strong>
+                {% translate "Showing news in the catagory of" %} <strong>{{ tag_filter.name }}</strong>
             {% else %}
-                Viser <strong>alle</strong> nyheder
+                {% translate "Showing" %} <strong>{% translate "all" %}</strong> {% translate "news" %}
+                {% comment %} (original)Viser <strong>alle</strong> nyheder {% endcomment %}
             {% endif %}
             {# Note: Currently you can only search all changelogs, not based on tags #}
             {% if search_query %}
-                der matcher søgeordet <strong>{{ search_query }}</strong>
+                {% translate "that matches the query" %} <strong>{{ search_query }}</strong>
             {% endif %}
         </h3>
         {% for entry in entries %}
@@ -110,11 +113,11 @@ OS2borgerPC: Nyheder
                     <div class="clearfix"></div>
                     <p>
                     {{ entry.description }}<br/><br/>
-                        <em>Læs mere</em>...
+                        <em>{% translate "Read more" %}</em>...
                     </p>
                     <footer>
                         <div class="changelog-tags">
-                            <h3>Nyhedskategorier</h3>
+                            <h3>{% translate "News catagories" %}</h3>
                             <ul class="list-group-horizontal list-group">
                                 {% for tag in entry.tags.all %}
                                     <li><span class="badge bg-primary me-2">{{ tag.name }}</span></li>
@@ -124,7 +127,7 @@ OS2borgerPC: Nyheder
                         </div>
 
                         <div class="changelog-comment-info" title="Vis ">
-                            <p>{{ entry.comments.count }} <span class="material-icons fs-2">chat</span></p>
+                            <p>{{ entry.comments.count }} <span class="material-icons fs-2">{% translate "chat" %}</span></p>
                         </div>
                         <div class="clearfix"></div>
                     </footer>
@@ -141,11 +144,11 @@ OS2borgerPC: Nyheder
         <ul class="pagination justify-content-center">
             {% if entries.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ entries.previous_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">Forrige</a>
+                    <a class="page-link" href="?page={{ entries.previous_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">{% translate "Previous" %}</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Forrige</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% translate "Previous" %}</a>
                 </li>
             {% endif %}
 
@@ -175,11 +178,11 @@ OS2borgerPC: Nyheder
 
             {% if entries.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ entries.next_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">Næste</a>
+                    <a class="page-link" href="?page={{ entries.next_page_number }}{% if tNæsteag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">{% translate "Next" %}</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Næste</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% translate "Next" %}</a>
                 </li>
             {% endif %}
         </ul>

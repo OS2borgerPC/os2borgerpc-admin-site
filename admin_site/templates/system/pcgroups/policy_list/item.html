@@ -1,5 +1,7 @@
 {# Remember that this template must be able to be called both from templates.html and from list.html #}
 
+{% load i18n %}
+
 <tr>
   {% if script_id %}
     <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
@@ -45,7 +47,7 @@
                     {{ param.file_value|file_basename }}
                   </a>
                 {% else %}
-                {% translate "None selected" %}Ingen valgt
+                {% translate "None selected" %}
                 {% endif %}
               {% elif param.input.value_type == 'PASSWORD' %}
                 •••••

@@ -1,12 +1,14 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
 
+{% load i18n %}
+
 {% block specific_title %}
-Slet 
+{% translate "Delete" %}
 {% if is_security %}
-Sikkerhedsscript
+{% translate "Security Scripts" %}
 {% else %}
-Script
+{% translate "Script" %}
 {% endif %}: {{ script.name }}
 {% endblock %}
 
@@ -14,10 +16,23 @@ Script
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk</h3>
+      <h3>{% translate "Note" %}</h3>
       <ul>
         {% if not is_security %}
         <li>
+          {# Her er jeg nået til. Mvh Troels #}
+          
+          {% translate "Security Scripts" as security_scripts %}
+
+          {% translate "the Script" as the_script %}
+
+          {% translate "Jobs" as jobs %}
+
+          {# Ikke testet endnu #}
+          {% blocktranslate with jobs=jobs|bold the_script=the_script|bold %}
+          Old {{jobs}} with {{the_script}} will be deleted
+          {% endblocktranslate %} 
+
           Gamle <strong>Jobs</strong> med <strong>Scriptet</strong> vil blive slettet.
         </li>
         <li>
@@ -32,14 +47,22 @@ Script
         {% endif %}
       </ul>
     </div>
-    <p>Er du sikker på, du ønsker at slette {% if is_security %}Sikkerhedsscriptet{% else %}Scriptet{% endif %}
-    <strong style="font-size: 1.25em;">{{ script.name }}</strong>?</p>
+    
+    <p>    
+      {% translate "Are you sure you want to delete" %}
+      {% if is_security %}
+        {% translate "the Security Script" %}
+      {% else %}
+        {% translate "the Script" %}
+      {% endif %}
+      <strong style="font-size: 1.25em;">{{ script.name }}</strong>?
+    </p>
 
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-danger" type="submit" value="Bekræft sletning">
-      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annullér</a>
+      <input class="btn btn-danger" type="submit" value="{% translate "Confirm deletion" %}Bekræft sletning">
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}Annullér</a>
     </form>
   </div>
 {% endblock %}
