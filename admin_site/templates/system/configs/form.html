@@ -1,8 +1,10 @@
 {% extends "site_with_navigation.html" %}
+
+{% load i18n %}
 {% load crispy_forms_tags %}
 
 {% block specific_title %}
-Rediger parameter
+{% translate "Edit arguments" %}
 {% endblock %}
 
 {% block specific_content %}
@@ -10,8 +12,8 @@ Rediger parameter
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-primary" type="submit" value="Gem ændringer">
-      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annuller</a>
+      <input class="btn btn-primary" type="submit" value="{% translate "Save changes" %}">
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>
 {% endblock %}

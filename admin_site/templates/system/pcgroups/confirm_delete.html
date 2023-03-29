@@ -1,4 +1,7 @@
 {% extends "site_with_navigation.html" %}
+
+{% load i18n %}
+
 {% load crispy_forms_tags %}
 
 {% block specific_title %}
@@ -8,14 +11,13 @@
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>{% translate "Note" %}Bemærk</h3>
+      <h3>{% translate "Note" %}</h3>
       <ul>
         <li>
-          Tilknyttede <strong>Computere</strong> og <strong>Tilknyttede Scripts</strong> vil blive fjernet fra
-          <strong>Gruppen</strong>.
+          {% translate "Associated" %} <strong>{% translate "Computers" %}</strong> {% translate "and" %} <strong>{% translate "Associated Scripts" %}</strong> {% translate "will be removed from" %} <strong>{% translate "the Group" %}</strong>.
         </li>
         <li>
-          Selve <strong>Computerne</strong> og <strong>Scriptsene</strong> vil <strong>IKKE</strong> blive slettet.
+          <strong>{% translate "The Computers" %}</strong> {% translate "and" %} <strong>{% translate "the Scripts" %}</strong> {% translate "will" %} <strong>{% translate "NOT" %}</strong> {% translate "be deleted" %}.  
         </li>
       </ul>
     </div>
@@ -26,7 +28,7 @@
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
+      <input class="btn btn-danger me-3" type="submit" value="{% translate "Confirm deletion" %}">
       <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>

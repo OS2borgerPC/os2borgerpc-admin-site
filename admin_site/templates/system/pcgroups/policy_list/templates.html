@@ -1,4 +1,7 @@
 {# Seemingly used for adding a new policy script via JS, whereas list.html generates the list of already added policy scripts? #}
+
+{% load i18n %}
+
 <div id="policylist-templates">
   <table class="table">
     <tbody id="policy-item-template" class="template-container">
@@ -11,7 +14,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Redigér script</h3>
+        <h3 class="modal-title">{% translate "Edit script" %}</h3>
         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
