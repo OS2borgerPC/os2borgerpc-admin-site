@@ -1,12 +1,14 @@
+{% load i18n %}
+
 {% if policy_id %}
   <div id="{{ policy_id }}">
     <table class="table">
       <thead>
         <tr>
-          <th>Position</th>
-          <th>Script</th>
-          <th>Inputparametre</th>
-          <th>Handlinger</th>
+          <th>{% translate "Position" %}</th>
+          <th>{% translate "Script" %}</th>
+          <th>{% translate "Arguments" %}</th>
+          <th>{% translate "Actions" %}</th>
         </tr>
       </thead>
       <tbody class="sortable">
@@ -18,6 +20,7 @@
       <tfoot>
         <tr>
           <td colspan="4">
+            {# "Tilføj script" oversættes her? #}
             {% include 'widgets/scriptsearch.html' with id=policy_id list=all_scripts placeholder="Tilføj script" %}
           </td>
         </tr>
@@ -25,7 +28,7 @@
     </table>
   </div>
 {% else %}
-  <p>You must specify a <em>policy_id</em> when inserting a policy list</p>
+  <p>{% translate "You must specify a" %} <em>policy_id</em> {% translate "when inserting a policy list" %}</p>
 {% endif %}
 
 <script>

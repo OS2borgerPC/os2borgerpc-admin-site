@@ -92,7 +92,6 @@ OS2borgerPC: {% translate "News" %}
                 {% translate "Showing news in the catagory of" %} <strong>{{ tag_filter.name }}</strong>
             {% else %}
                 {% translate "Showing" %} <strong>{% translate "all" %}</strong> {% translate "news" %}
-                {% comment %} (original)Viser <strong>alle</strong> nyheder {% endcomment %}
             {% endif %}
             {# Note: Currently you can only search all changelogs, not based on tags #}
             {% if search_query %}
@@ -126,7 +125,7 @@ OS2borgerPC: {% translate "News" %}
 
                         </div>
 
-                        <div class="changelog-comment-info" title="Vis ">
+                        <div class="changelog-comment-info" title="{% translate "Show" %} ">
                             <p>{{ entry.comments.count }} <span class="material-icons fs-2">{% translate "chat" %}</span></p>
                         </div>
                         <div class="clearfix"></div>

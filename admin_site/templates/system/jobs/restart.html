@@ -9,7 +9,9 @@
 {% block specific_content %}
   <div class="container-fluid main">
 
-    <p>{% blocktranslate with job_name=selected_job.batch.script.name|bold pc_name=selected_job.pc.name|bold %}Are you sure you want to restart the execution of the script {{ job_name }} on the computer {{ pc_name }}?{% endblocktranslate %}</p>
+    <p>{% blocktranslate with job_name=selected_job.batch.script.name|bold pc_name=selected_job.pc.name|bold trimmed %}
+        Are you sure you want to restart the execution of the script {{ job_name }} on the computer {{ pc_name }}?
+      {% endblocktranslate %}</p>
 
     <form action="{% url 'restart_job' site.uid selected_job.pk %}" method="post">
       {% csrf_token %}
