@@ -5,9 +5,9 @@
     <input type="hidden" name="user" value="{{ user.pk }}">
     <input type="hidden" name="parent_comment" value="{{ parent }}">
     {% if user.username %}
-        <input id="comment-content-{{ entry.pk }}" name="content" class="form-control" placeholder="{% if parent %}{% translate "Answer to" %} {{ comment.user }}{% else %}{% translate "Write a comment" %}{% endif %}" required type="text" style="margin-bottom: 0.5rem;">
-        <input class="btn btn-primary" type="submit" value="{% translate "Add comment" %}">
-        <input class="btn btn-secondary" type="reset" value="{% translate "Cancel" %}" {% if parent %}onclick="toggleCommentForm({{ parent }})"{% endif %}>
+        <input id="comment-content-{{ entry.pk }}" name="content" class="form-control" placeholder="{% if parent %}{% translate 'Answer to' %} {{ comment.user }}{% else %}{% translate 'Write a comment' %}{% endif %}" required type="text" style="margin-bottom: 0.5rem;">
+        <input class="btn btn-primary" type="submit" value="{% translate 'Add comment' %}">
+        <input class="btn btn-secondary" type="reset" value="{% translate 'Cancel' %}" {% if parent %}onclick="toggleCommentForm({{ parent }})"{% endif %}>
     </form>
     {% else %}
     </form>

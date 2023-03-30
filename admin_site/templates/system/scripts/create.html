@@ -14,9 +14,10 @@
     <h2 class="divideheader">
       {% translate "Create" %}
       {% if is_security %}
-        {% translate "security" %}
+        {% translate "Security Script" %}
+      {% else %}
+        {% translate "Script" %}
       {% endif %}
-        {% translate "script" %}
     </h2>
 
     <form method="post"
@@ -33,7 +34,7 @@
         {% include 'notification.html' %}
       </div>
 
-      <input type="submit" class="btn btn-primary" value="{% translate "Create" %}{% if is_security %} {% translate "security" %}{% endif %} {% translate "script" %}">
+      <input type="submit" class="btn btn-primary" value="{% translate 'Create' %}{% if is_security %} {% translate 'Security Script' %}{% else %} {% translate 'Script' %}{% endif %}">
       {% if is_security %}
         <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">{% translate "Cancel" %}</button>
       {% else %}

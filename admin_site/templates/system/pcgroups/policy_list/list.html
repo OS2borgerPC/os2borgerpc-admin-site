@@ -20,8 +20,8 @@
       <tfoot>
         <tr>
           <td colspan="4">
-            {# "Tilføj script" oversættes her? #}
-            {% include 'widgets/scriptsearch.html' with id=policy_id list=all_scripts placeholder="Tilføj script" %}
+            {% translate "Add script" as add_script %}
+            {% include 'widgets/scriptsearch.html' with id=policy_id list=all_scripts placeholder=add_script %}
           </td>
         </tr>
       </tfoot>

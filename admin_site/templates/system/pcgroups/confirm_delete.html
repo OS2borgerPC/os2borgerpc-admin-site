@@ -1,6 +1,7 @@
 {% extends "site_with_navigation.html" %}
 
 {% load i18n %}
+{% load custom_tags %}
 
 {% load crispy_forms_tags %}
 
@@ -14,21 +15,31 @@
       <h3>{% translate "Note" %}</h3>
       <ul>
         <li>
-          {% translate "Associated" %} <strong>{% translate "Computers" %}</strong> {% translate "and" %} <strong>{% translate "Associated Scripts" %}</strong> {% translate "will be removed from" %} <strong>{% translate "the Group" %}</strong>.
+          {% translate "Computers"|bold as computers %}
+          {% translate "Associated Scripts"|bold as asc_scripts %}
+          {% translate "the Group"|bold as the_group %}
+          {% blocktranslate trimmed %}
+          Associated {{computers}} and {{asc_scripts}} will be removed from {{the_group}}.
+          {% endblocktranslate %}
         </li>
         <li>
-          <strong>{% translate "The Computers" %}</strong> {% translate "and" %} <strong>{% translate "the Scripts" %}</strong> {% translate "will" %} <strong>{% translate "NOT" %}</strong> {% translate "be deleted" %}.  
+          {% translate "The Computers"|bold as the_computers %}
+          {% translate "the Scripts"|bold as the_scripts %}
+          {% translate "NOT"|bold as not %}
+          {% blocktranslate trimmed %}
+          {{the_computers}} and {{the_scripts}} will {{not}} be deleted.
+          {% endblocktranslate %}
         </li>
       </ul>
     </div>
     <p>
-      {% translate "Are you sure you want to delete this group " %}
+      {% translate "Are you sure you want to delete the group " %}
       <strong style="font-size: 1.25em;">{{ pcgroup.name }}</strong>?
     </p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-danger me-3" type="submit" value="{% translate "Confirm deletion" %}">
+      <input class="btn btn-danger me-3" type="submit" value="{% translate 'Confirm deletion' %}">
       <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>

@@ -13,7 +13,6 @@
 {% endblock %}
 
 {% block groups_active %}
-{# Oversættes ? #}
 active
 {% endblock %}
 
@@ -32,7 +31,7 @@ active
           {{ group.name }}
         </a>
         {% ifequal group selected_group %}
-            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate "Delete group" %}">
+            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate 'Delete group' %}">
               clear
             </a>
         {% endifequal %}
@@ -92,8 +91,9 @@ active
                     <span id="total-pcs"></span>
                 </span>
               </div>
-              {# Er der noget i den nedenstående linje der skal oversættes her eller skal det gøres i den inkluderede template, altså picklist.html #}
-              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' site_url=site.uid target_section='computers' %}
+              {% translate "Add a computer to the group" as add_c %}
+              {% translate "Remove computer from the group" as remove_c %}
+              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text=add_c remove_text=remove_c site_url=site.uid target_section='computers' %}
 
             {# SecurityProblem #}
             {% if security_problems_incl_site %}
@@ -110,7 +110,7 @@ active
             {# WakeWeekPlan #}
             {% if selected_group.wake_week_plan %}
               <div class="mt-3">
-                <p>{% translate "Associated Turn on/turn off time schedule" %}</p>
+                <p>{% translate "Associated On/Off schedule" %}</p>
                 <p class="mt-2">
                   <a href="{% url 'wake_plan' site.uid selected_group.wake_week_plan.id %}">{{ selected_group.wake_week_plan }}</a>
                 </p>
@@ -127,7 +127,7 @@ active
             <ul>
             <li>{% translate 'If a script that takes arguments is added to the list, then these arguments are to be entered first by clicking "Edit", before you can click "Save changes"' %}.</li>
             <li>{% translate "Editing the script arguments will not make the script run again" %}.</li>
-            <li>{% translate "Computers already in the group only runs newly added scripts, but Computers newly added to the Group runs all the scripts on the list" %}.</li>
+            <li>{% translate "Computers already in the group only run newly added scripts, but Computers newly added to the Group run all the scripts on the list" %}.</li>
             </ul>
           </div>
           {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
@@ -179,8 +179,8 @@ active
                 {{ newform|crispy }}
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="{% translate "Create group" %}">
-              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="{% translate "Cancel" %}">
+              <input type="submit" class="btn btn-primary" value="{% translate 'Create group' %}">
+              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="{% translate 'Cancel' %}">
             </div>
           </form>
         </div>
