@@ -11,8 +11,11 @@
     <div class="alert alert-danger">
       <h3>{% translate "Note" %}</h3>
       <ul>
-        {% translate "the Exception" as exc" %}
-        <li>{% blocktranslate with ex=exc|bold %}If {{ex}} is deleted, it will be removed from all schedules and the Computers using those schedules will have their schedules updated with this exception removed.{% endblocktranslate %}</li>
+        {% translate "the Exception"|bold as the_exception" %}
+        <li>{% blocktranslate trimmed %}
+          If {{the_exception}} is deleted, it will be removed from all schedules and the Computers using those schedules
+          will have their schedules updated with this exception removed.
+          {% endblocktranslate %}</li>
       </ul>
     </div>
     <p>

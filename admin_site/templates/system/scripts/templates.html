@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="template-container">
 
   <table class="table">
@@ -24,7 +25,7 @@
         <td style="vertical-align: middle;">
           <a class="btn btn-sm p-0" href="javascript:void(0)" onclick="BibOS.ScriptEdit.removeInput($(this).parent().parent())">
             <span class="material-icons">delete</span>
-            Fjern
+            {% translate "Remove" %}
           </a>
         </td>
       </tr>

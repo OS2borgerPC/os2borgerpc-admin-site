@@ -11,17 +11,17 @@
     <div class="alert alert-danger">
       <h3>{% translate "Note" %}</h3>
       <ul>
-        <li>{% translate "All of the computer's job history will also be deleted" %}.</li>
+        <li>{% translate "The computer's entire job history will also be deleted" %}.</li>
       </ul>
     </div>
     <p>
-      {% translate "Are you sure you want to delete this computer" %}
+      {% translate "Are you sure you want to delete the computer" %}
       <strong style="font-size: 1.25em;">{{ pc.name }}</strong>
     </p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-danger me-3" type="submit" value="{% translate "Confirm deletion" %}">
+      <input class="btn btn-danger me-3" type="submit" value="{% translate 'Confirm deletion' %}">
       <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
     </form>
   </div>

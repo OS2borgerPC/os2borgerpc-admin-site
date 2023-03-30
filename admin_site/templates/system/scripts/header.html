@@ -1,7 +1,8 @@
 {% extends "site_with_navigation.html" %}
+{% load i18n %}
 
 {% block specific_title %}
-{% if is_security %} Sikkerhedsscripts {% else %} Scripts {% endif %}
+{% if is_security %} {% translate "Security Scripts" %} {% else %} {% translate "Scripts" %} {% endif %}
 {% endblock %}
 
 <!-- Syntax highlighting -->

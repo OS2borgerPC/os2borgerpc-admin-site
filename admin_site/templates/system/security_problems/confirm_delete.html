@@ -13,35 +13,40 @@
       <h3>{% translate "Note" %}</h3>
       <ul>
         <li>
-          {% translate "Security rule" as srule %}
-          {% translate "Security events" as sevents %}
-          {% blocktranslate with sr=srule|bold ses=sevents|bold %}If a {{sr}} is deleted, the related {{ses}} will also be deleted.{% endblocktranslate %}
-          Hvis en <strong>Sikkerhedsregel</strong> slettes, vil de relaterede <strong>Sikkerhedshændelser</strong>
-          også blive slettet.
+          {% translate "Security Rule"|bold as security_rule %}
+          {% translate "Security Events"|bold as security_events %}
+          {% blocktranslate trimmed %}
+          If a {{security_rule}} is deleted, the related {{security_events}} will also be deleted.
+          {% endblocktranslate %}
         </li>
         <li>
           {% translate "Groups"|bold as groups %}
-          {% translate "Security script"|bold as sscript %}
-          {% translate "Email recipients"|bold as emailr %}
-          {% translate "the Security rule"|bold as tsrule %}
-          {% blocktranslate %}Associated {{groups}}, {{sscript}} and {{emailr}} will be removed from {{tsrule}}.{% endblocktranslate %}
-          Tilknyttede <strong>Grupper</strong>, <strong>Sikkerhedsscript</strong> og <strong>E-mail-modtagere</strong>
-          vil blive fjernet fra <strong>Sikkerhedsreglen</strong>.
+          {% translate "Security Script"|bold as security_script %}
+          {% translate "Email recipients"|bold as email_recipients %}
+          {% translate "the Security Rule"|bold as the_security_rule %}
+          {% blocktranslate trimmed %}
+          Associated {{groups}}, {{security_script}} and {{email_recipients}} will be removed from {{the_security_rule}}.
+          {% endblocktranslate %}
         </li>
         <li>
-          Selve <strong>Grupperne</strong>, <strong>Sikkerhedsscriptet</strong> og <strong>E-mail-modtagerne</strong>
-          vil <strong>IKKE</strong> blive slettet.
+          {% translate "The Groups"|bold as the_groups %}
+          {% translate "the Security Script"|bold as the_security_script %}
+          {% translate "the Email recipients"|bold as the_email_recipients %}
+          {% translate "NOT" as NOT %}
+          {% blocktranslate trimmed %}
+          {{the_groups}}, {{the_security_script}} and {{the_email_recipients}} themselves will {{NOT}} be deleted.
+          {% endblocktranslate %}
         </li>
       </ul>
     </div>
-    <p>Er du sikker på, du ønsker at slette Sikkerhedsreglen
+    <p>{% translate "Are you sure you wish to delete the Security Rule" %}
     <strong style="font-size: 1.25em;">{{ securityproblem.name }}</strong>?</p>
 
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-danger" type="submit" value="Bekræft sletning">
-      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annullér</a>
+      <input class="btn btn-danger" type="submit" value="{% translate 'Confirm deletion' %}">
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>
 {% endblock %}

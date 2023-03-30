@@ -23,25 +23,35 @@
             <a href="{% url 'wake_plan_user_guide' %}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
           </li>
           <li>
-            {% translate "Groups" as groups %}
-            {% translate "Group" as group %}
-            {% blocktranslate with gs=groups|bold g=group|bold %}Schedules must have {{gs}} added before they take effect, and a {{g}} can only belong to a single schedule.{% endblocktranslate %}
+            {% translate "Groups"|bold as groups %}
+            {% translate "Group"|bold as group %}
+            {% blocktranslate trimmed %}
+            Schedules must have {{groups}} added before they take effect, and a {{group}} can only belong to a single schedule.
+            {% endblocktranslate %}
           </li>
           <li>
-            {% translate "Computers" as computers %}
-            {% blocktranslate with cs=computers|bold gs=groups|bold %}A schedule applies to all the {{cs}} in the {{gs}} that have been added to the schedule.{% endblocktranslate %}
+            {% translate "Computers"|bold as computers %}
+            {% blocktranslate trimmed %}
+            A schedule applies to all the {{computers}} in the {{groups}} that have been added to the schedule.
+            {% endblocktranslate %}
           </li>
           <li>
-            {% translate "Computer" as computer %}
-            {% blocktranslate with c=computer|bold %}A {{c}} can only receive a new or updated schedule if it is on.{% endblocktranslate %}
+            {% translate "Computer"|bold as computer %}
+            {% blocktranslate trimmed %}
+            A {{computer}} can only receive a new or updated schedule if it is on.
+            {% endblocktranslate %}
           </li>
           <li>
-            {% translate "the individual Computers" as c_text %}
-            {% blocktranslate with ic=c_text|bold %}The schedule uses the time settings on {{ic}}.{% endblocktranslate %}
+            {% translate "the individual Computers"|bold as the_individual_computers %}
+            {% blocktranslate trimmed %}
+            The schedule uses the time settings on {{the_individual_computers}}.
+            {% endblocktranslate %}
           </li>
           <li>
-            {% translate "the Computers" as cs_text %}
-            {% blocktranslate with cs=cs_text|bold %}Whether some of {{cs_text}} should also enter sleep mode when inactive is not determined here, but by running{% endblocktranslate %}
+            {% translate "the Computers"|bold as the_computers %}
+            {% blocktranslate trimmed %}
+            Whether some of {{the_computers}} should also enter sleep mode when inactive is not determined here, but by running
+            {% endblocktranslate %}
             <a href="{% url 'script_redirect_uid' 'suspend_after_time' %}">{% translate "the suspend script." %}</a>
           </li>
         </ul>
@@ -264,7 +274,7 @@
       </div>
       <fieldset class="mt-3">
         <input id="submit-button" class="btn btn-primary me-3" type="submit" name="submit" value="{% translate 'Save changes' %}">
-        <input id="cancel-button" class="btn btn-secondary me-3" type="reset" name="cancel" value="{% translate 'Reset' %}">
+        <input id="cancel-button" class="btn btn-secondary me-3" type="reset" name="cancel" value="{% translate 'Cancel' %}">
         {# Only show the button to duplicate a plan if you're updating an existing entry - not creating a new one#}
         {% if selected_plan.id %}
           <a class="btn btn-secondary" {% if wake_plan_access %} href="{% url 'wake_plan_duplicate' site.uid selected_plan.id %}" {% endif %}>{% translate "Duplicate schedule" %}</a>
