@@ -1,4 +1,5 @@
 {% extends "system/scripts/header.html" %}
+{% load i18n %}
 
 {% block subnav %}
 <div class="sublevelnav">
@@ -10,11 +11,11 @@
       data-bs-toggle="modal"
       title="Tilføj nyt script">
       <span class="material-icons">add</span>
-      Tilføj nyt
+      {% translate "Add new" %}
       {% if is_security %}
-      Sikkerhedsscript
+      {% translate "Security Script" %}
       {% else %}
-      Script
+      {% translate "Script" %}
       {% endif %}
     </button>
 
@@ -24,7 +25,7 @@
         <input id="search_form" type="search" class="form-control" placeholder="Find ...">
         <span class="input-group-text bg-white">
           <button type="button" class="btn btn-close btn-lg" id="search-clear-btn">
-            <span class="visually-hidden">Ryd filter</span>
+            <span class="visually-hidden">{% translate "Clear the filter" %}</span>
           </button>
         </span>
       </div>
@@ -43,11 +44,11 @@
 
   <div class="container-fluid main sublevelmain">
     <h2 class="divideheader">
-      Redigér
+      {% translate "Edit" %}
       {% if is_security %}
-      Sikkerhedsscript
+      {% translate "Security Script" %}
       {% else %}
-      Script
+      {% translate "Script" %}
       {% endif %}
       <em>{{ selected_script.name }}</em>
     </h2>
@@ -63,7 +64,7 @@
 
       {% if not is_security %}
         <div style="float: left; margin-top: .5rem;">
-          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">Kør script</button>
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">{% translate "Run script" %}</button>
         </div>
       {% endif %}
 
@@ -72,9 +73,9 @@
       <fieldset class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
         {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
         {% if selected_script.is_global is False or user.is_superuser %}
-          <input type="submit" class="btn btn-primary me-3" value="Gem ændringer">
+          <input type="submit" class="btn btn-primary me-3" value="{% translate 'Save changes' %}">
         {% endif %}
-        <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">Annuller</button>
+        <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">{% translate "Cancel" %}</button>
       </fieldset>
 
     </form>
@@ -113,15 +114,15 @@
           id="create_script_form" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="modal-header">
-            <h3>Tilføj nyt {% if is_security %}sikkerheds{% endif %}script</h3>
+            <h3>{% translate "Add new" %} {% if is_security %}{% translate "Security Script" %}{% else %}{% translate "Script" %}{% endif %}</h3>
             <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
             {% include 'system/scripts/form.html' with form=create_form disable_inputs="yes" %}
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Opret {% if is_security %}sikkerheds{% endif %}script">
-            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuller</button>
+            <input type="submit" class="btn btn-primary" value="{% translate 'Create' %} {% if is_security %}{% translate 'Security Script' %}{% else %}{% translate 'Script' %}{% endif %}">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
           </div>
         </form>
       </div>

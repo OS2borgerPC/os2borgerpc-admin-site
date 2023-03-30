@@ -1,12 +1,13 @@
+{% load i18n %}
 <div id="script-navigation">
 
   <!-- The two tabs in the submenu: -->
   <ul class="nav nav-tabs scripttabs" role="tab-list">
     <li class="nav-item" role="presentation">
-      <a id="localscripts-tab" class='nav-link {% if not global_selected %} active {% endif %}' href="#localscripts" data-bs-toggle="tab" role="tab" aria-controls="localscripts" aria-selected="true">Lokale scripts</a>
+      <a id="localscripts-tab" class='nav-link {% if not global_selected %} active {% endif %}' href="#localscripts" data-bs-toggle="tab" role="tab" aria-controls="localscripts" aria-selected="true">{% translate "Local scripts" %}</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a id="globalscripts-tab" class='nav-link {% if global_selected %} active {% endif %}' href="#globalscripts" data-bs-toggle="tab" role="tab" aria-controls="globalscripts" aria-selected="false">Globale scripts</a>
+      <a id="globalscripts-tab" class='nav-link {% if global_selected %} active {% endif %}' href="#globalscripts" data-bs-toggle="tab" role="tab" aria-controls="globalscripts" aria-selected="false">{% translate "Global scripts" %}</a>
     </li>
   </ul>
 
@@ -34,11 +35,11 @@
                 </a>
                 {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
-                    <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
+                    <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                       clear
                     </a>
                   {% else %}
-                    <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                    <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                       clear
                     </a>
                   {% endif %}
@@ -58,11 +59,11 @@
                 </a>
                 {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
-                  <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="Slet script">
+                  <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                     clear
                   </a>
                   {% else %}
-                  <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="Slet script">
+                  <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                     clear
                   </a>
                   {% endif %}

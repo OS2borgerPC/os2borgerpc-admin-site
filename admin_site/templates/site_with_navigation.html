@@ -43,7 +43,7 @@ detailpage
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
       <span class="material-icons">whatshot</span>
-      {% translate "Security events" %}
+      {% translate "Security Events" %}
       {% if sec_events > 0 %}
         <span class="float-end badge badge-danger sec-warn-blink">{{ sec_events }}</span>
       {% endif %}
@@ -52,13 +52,13 @@ detailpage
     {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
     <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
       <span class="material-icons">gpp_maybe</span>
-      {% translate "Security rules" %}
+      {% translate "Security Rules" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
     <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
       <span class="material-icons">code</span>
-      {% translate "Security scripts" %}
+      {% translate "Security Scripts" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}

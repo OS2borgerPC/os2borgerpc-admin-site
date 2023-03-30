@@ -54,4 +54,5 @@ def bold(text):
 
 @register.filter
 def italic(text):
+    text = str(text)
     return mark_safe("<em>" + text + "</em>")

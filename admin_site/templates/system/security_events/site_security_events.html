@@ -1,8 +1,9 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block specific_title %}
-Sikkerhedshændelser
+{% translate "Security Events" %}
 {% endblock %}
 
 {% block head_javascripts %}
@@ -17,9 +18,9 @@ Sikkerhedshændelser
   <div id="securityeventsearchnav" class="sublevelnav">
 
     <div class="d-flex justify-content-between align-items-center px-3 py-1">
-      <h3 class="nav-header">Filtre</h3>
+      <h3 class="nav-header">{% translate "Filters" %}</h3>
       <button class="btn btn-link" type="button" onclick="BibOS.SecurityEventList.reset()">
-        Nulstil filtre
+        {% translate "Reset filters" %}
       </button>
     </div>
 
@@ -31,7 +32,7 @@ Sikkerhedshændelser
       <input type="hidden" name="page" value="1">
 
       <div id="securityeventsearch-level-selectors" class="px-3 pt-2">
-        <h4 class="mb-3">Alvorlighedsgrad</h4>
+        <h4 class="mb-3">{% translate "Level" %}</h4>
         {% for l in level_choices %}
           <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" id="chkbx-{{ l.value }}" value="{{ l.value }}" name="level" {{ l.checked }}>
@@ -45,7 +46,7 @@ Sikkerhedshændelser
       <hr>
 
       <div id="securityeventsearch-status-selectors" class="px-3 pt-2">
-        <h4 class="mb-3">Status</h4>
+        <h4 class="mb-3">{% translate "Status" %}</h4>
           {% for s in status_choices %}
           <div class="form-check mb-3">
             <input class="form-check-input" id="chkbx-{{ s.value }}" type="checkbox" value="{{ s.value }}" name="status" {{ s.checked }}>
@@ -87,15 +88,15 @@ Sikkerhedshændelser
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="handle_events_modal_label">Rediger Sikkerhedsadvarsler</h5>
+        <h5 class="modal-title" id="handle_events_modal_label">{% translate "Edit Security Events" %}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {{ form|crispy }}
       </div>
       <div class="modal-footer">
-        <button id="handle_events_save_button" type="button" class="btn btn-primary">Håndter undtagelse</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
+        <button id="handle_events_save_button" type="button" class="btn btn-primary">{% translate "Handle event" %}</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
       </div>
     </div>
   </div>
@@ -103,24 +104,26 @@ Sikkerhedshændelser
 
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     {% include 'notification.html' %}
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#handle_events_modal" id="handle-event-button" disabled="true">Håndter advarsler</button>
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#handle_events_modal" id="handle-event-button" disabled="true">{% translate "Handle events" %}</button>
     <table class="table table-extendable" id="site_securityevents_table">
       <thead>
         <tr>
           <th><input type="checkbox" id="all_events_toggle" autocomplete="off"/></th>
-          <th>Alvorlig-<br/>hedsgrad</th>
-          {% include 'widgets/orderby_th_ajax.html' with label='Regel' action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
-          <th>Info</th>
-          <th>Maskine</th>
-          <th>Hændelses-<br/>tidspunkt</th>
-          <th>Modtagelses-<br/>tidspunkt</th>
-          <th>Status</th>
-          {% include 'widgets/orderby_th_ajax.html' with label='Håndteres af' action="BibOS.SecurityEventList.orderby('assigned_user__username')" slug='handleby' %}
+          <th>{% translate "Level" %}</th>
+          {% translate "Rule" as rule %}
+          {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
+          <th>{% translate "Info" %}</th>
+          <th>{% translate "Device" %}</th>
+          <th>{% translate "Incident time" %}</th>
+          <th>{% translate "Time of receipt" %}</th>
+          <th>{% translate "Status" %}</th>
+          {% translate "Handled by" as handled %}
+          {% include 'widgets/orderby_th_ajax.html' with label=handled action="BibOS.SecurityEventList.orderby('assigned_user__username')" slug='handleby' %}
         </tr>
       </thead>
       <tbody id="securityevent-list">
         <tr class="muted">
-          <td colspan="5">Loading data...</td>
+          <td colspan="5">{% translate "Loading data..." %}</td>
         </tr>
       </tbody>
       <tfoot>

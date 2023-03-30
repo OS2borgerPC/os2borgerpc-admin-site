@@ -34,7 +34,7 @@ OS2borgerPC: {% translate "News" %}
             <h2 class="text-light">{% translate "Documentation" %}</h2>
             <a href="{% url 'doc' 'changelogs' %}" class="nav-link link-light">
                 <span class="material-icons">help_outline</span>
-                {% translate "Help for this newssite" %}
+                {% translate "Help for this news site" %}
               </a>
         </nav>
     {% endif %}
@@ -54,7 +54,7 @@ OS2borgerPC: {% translate "News" %}
                         <div class="input-group">
                             <span class="input-group-text bg-white">
                                 <span class="material-icons">search</span>
-                                <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="{% translate "Search..." %}">
+                                <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="{% translate 'Search...' %}">
                             </span>
                         </div>
                     </form>
@@ -62,7 +62,7 @@ OS2borgerPC: {% translate "News" %}
               </div>
               <div class="col-9">
                 <div id="filter-tags">
-                    <strong id="tags-title" class="text-muted">{% translate "News catagories" %}</strong>
+                    <strong id="tags-title" class="text-muted">{% translate "News categories" %}</strong>
                 <!-- Here the tag filters are defined. Each is a clickable button that filters the entries to show entries with that tag -->
                     <form method="GET" class="mt-2">
                         <div id="changelog-search-tag-selectors">
@@ -116,7 +116,7 @@ OS2borgerPC: {% translate "News" %}
                     </p>
                     <footer>
                         <div class="changelog-tags">
-                            <h3>{% translate "News catagories" %}</h3>
+                            <h3>{% translate "News categories" %}</h3>
                             <ul class="list-group-horizontal list-group">
                                 {% for tag in entry.tags.all %}
                                     <li><span class="badge bg-primary me-2">{{ tag.name }}</span></li>
@@ -125,7 +125,7 @@ OS2borgerPC: {% translate "News" %}
 
                         </div>
 
-                        <div class="changelog-comment-info" title="{% translate "Show" %} ">
+                        <div class="changelog-comment-info" title="{% translate 'Show' %} ">
                             <p>{{ entry.comments.count }} <span class="material-icons fs-2">{% translate "chat" %}</span></p>
                         </div>
                         <div class="clearfix"></div>
@@ -177,7 +177,7 @@ OS2borgerPC: {% translate "News" %}
 
             {% if entries.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ entries.next_page_number }}{% if tNæsteag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">{% translate "Next" %}</a>
+                    <a class="page-link" href="?page={{ entries.next_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">{% translate "Next" %}</a>
                 </li>
             {% else %}
                 <li class="page-item disabled">

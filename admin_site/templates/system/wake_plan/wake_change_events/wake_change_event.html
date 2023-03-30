@@ -107,7 +107,7 @@
         <fieldset class="mt-4">
           {# TODO: Lav knap der både opretter den, tilføjer den til picklisten og automatisk går tilbage til wake plan #}
           <input class="btn btn-primary me-3" id="submit-button" type="submit" name="submit" value="{% if "new" in request.resolver_match.url_name %}{% translate "Create" %}{% else %}{% translate "Save changes" %}{% endif %}">
-          <input class="btn btn-secondary me-3" type="reset" name="cancel" value="{% translate 'Reset' %}">
+          <input class="btn btn-secondary me-3" type="reset" name="cancel" value="{% translate 'Cancel' %}">
         </fieldset>
 
       </form>

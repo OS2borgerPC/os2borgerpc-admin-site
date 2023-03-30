@@ -12,7 +12,7 @@
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-primary me-3" type="submit" value="{% translate "Create group" %}">
+      <input class="btn btn-primary me-3" type="submit" value="{% translate 'Create group' %}">
       <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>

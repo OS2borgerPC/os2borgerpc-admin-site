@@ -11,10 +11,13 @@
     <div class="alert alert-danger">
       <h3>{% translate "Note" %}</h3>
       <ul>
-        {% translate "The schedule" as plan %}
-        {% translate "Groups" as groups %}
-        {% translate "Computers" as computers %}
-        <li>{% blocktranslate with p=plan|bold gs=groups|bold cs=computers|bold %}Deleting {{p}} will remove all {{gs}} and the associated {{cs}} from it, and they will no longer turn off or on automatically.{% endblocktranslate %}</li>
+        {% translate "The schedule"|bold as the_schedule %}
+        {% translate "Groups"|bold as groups %}
+        {% translate "Computers"|bold as computers %}
+        <li>{% blocktranslate trimmed %}
+          Deleting {{the_schedule}} will remove all {{groups}} and the associated {{computers}} from it,
+          and they will no longer turn off or on automatically.
+          {% endblocktranslate %}</li>
       </ul>
     </div>
     <p>
