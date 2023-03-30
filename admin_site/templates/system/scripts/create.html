@@ -1,6 +1,8 @@
 {% extends "system/scripts/header.html" %}
 <!-- Note: This isn't the modal for creating a script, this is only seen, when you have zero scripts in the list. -->
 
+{% load i18n %}
+
 {% block subnav %}
 {% endblock %}
 
@@ -10,7 +12,11 @@
 
   <div class="container-fluid main sublevelmain">
     <h2 class="divideheader">
-      Opret {% if is_security %}sikkerheds{% endif %}script
+      {% translate "Create" %}
+      {% if is_security %}
+        {% translate "security" %}
+      {% endif %}
+        {% translate "script" %}
     </h2>
 
     <form method="post"
@@ -27,11 +33,11 @@
         {% include 'notification.html' %}
       </div>
 
-      <input type="submit" class="btn btn-primary" value="Opret {% if is_security %}sikkerheds{% endif %}script">
+      <input type="submit" class="btn btn-primary" value="{% translate "Create" %}{% if is_security %} {% translate "security" %}{% endif %} {% translate "script" %}">
       {% if is_security %}
-        <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">Annuller</button>
+        <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'security_scripts' site.uid %}'; return false">{% translate "Cancel" %}</button>
       {% else %}
-        <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'scripts' site.uid %}'; return false">Annuller</button>
+        <button class="btn btn-secondary" type="button" onclick="location.href='{% url 'scripts' site.uid %}'; return false">{% translate "Cancel" %}</button>
       {% endif %}
 
       {% include 'system/scripts/form.html' %}

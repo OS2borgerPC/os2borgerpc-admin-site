@@ -54,7 +54,7 @@
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       <div class="basic-info">
         <span class="badge bg-secondary">
-          {% translate "The computer was registered at" %}: {{ pc.created }}
+          {% translate "Registered" %}: {{ pc.created }}
         </span>
         <span class="badge bg-secondary ms-3">
           {% translate "Last check-in" %}:
