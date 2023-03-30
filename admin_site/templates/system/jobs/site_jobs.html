@@ -152,6 +152,7 @@
     <table class="table jobtable table-extendable">
       <thead>
         <tr>
+          {# Are the labels to be translated here? #}
           {% include 'widgets/orderby_th_ajax.html' with label='Script' action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
           {% include 'widgets/orderby_th_ajax.html' with label='Bruger' action="BibOS.JobList.orderby('user__username')" slug='user' %}
           {% include 'widgets/orderby_th_ajax.html' with label='Oprettet' action="BibOS.JobList.orderby('created')" slug='created' %}
