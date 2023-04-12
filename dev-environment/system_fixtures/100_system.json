@@ -3464,7 +3464,7 @@
     "model": "system.wakechangeevent",
     "pk": 4,
     "fields": {
-        "name": "Hellidag2",
+        "name": "Helligdag2",
         "date_start": "2022-10-12",
         "time_start": "12:04:30",
         "date_end": "2022-10-12",
