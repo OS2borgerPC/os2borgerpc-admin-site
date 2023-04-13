@@ -32,8 +32,8 @@ class SimpleTest(TestCase):
         # security_problem = SecurityProblem.objects.create(name='Keyboard',
         # uid='KEYBOARD', description='Usb keyboard added.',
         # level='High', script_id=1, site_id=1)
-        UserProfile.objects.create(user=site_user, type=1)
-        UserProfile.objects.create(user=test_user, type=1)
+        UserProfile.objects.create(user=site_user)
+        UserProfile.objects.create(user=test_user)
 
     def test_basic_addition(self):
         """
