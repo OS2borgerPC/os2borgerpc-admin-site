@@ -4,30 +4,35 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0045_auto_20220401_1050'),
+        ("system", "0045_auto_20220401_1050"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='pc',
-            old_name='creation_time',
-            new_name='created',
+            model_name="pc",
+            old_name="creation_time",
+            new_name="created",
         ),
         migrations.AlterField(
-            model_name='pc',
-            name='created',
-            field=models.DateTimeField(auto_now_add=True, null=True, verbose_name='created'),
+            model_name="pc",
+            name="created",
+            field=models.DateTimeField(
+                auto_now_add=True, null=True, verbose_name="created"
+            ),
         ),
         migrations.AddField(
-            model_name='job',
-            name='created',
-            field=models.DateTimeField(auto_now_add=True, null=True, verbose_name='created'),
+            model_name="job",
+            name="created",
+            field=models.DateTimeField(
+                auto_now_add=True, null=True, verbose_name="created"
+            ),
         ),
         migrations.AddField(
-            model_name='site',
-            name='created',
-            field=models.DateTimeField(auto_now_add=True, null=True, verbose_name='created'),
+            model_name="site",
+            name="created",
+            field=models.DateTimeField(
+                auto_now_add=True, null=True, verbose_name="created"
+            ),
         ),
     ]

@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0015_add_script_tags'),
+        ("system", "0015_add_script_tags"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='site',
-            options={'ordering': ['name']},
+            name="site",
+            options={"ordering": ["name"]},
         ),
     ]

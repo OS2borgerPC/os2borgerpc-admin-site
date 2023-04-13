@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0064_wakechangeevent_site'),
+        ("system", "0064_wakechangeevent_site"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='input',
-            name='default_value',
-            field=models.CharField(blank=True, max_length=255, null=True, verbose_name='default value'),
+            model_name="input",
+            name="default_value",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, verbose_name="default value"
+            ),
         ),
     ]

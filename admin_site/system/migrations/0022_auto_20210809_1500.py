@@ -4,20 +4,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0021_auto_20210809_1308'),
+        ("system", "0021_auto_20210809_1308"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='script',
-            name='user_created',
-            field=models.CharField(blank=True, editable=False, max_length=128, verbose_name='created by user'),
+            model_name="script",
+            name="user_created",
+            field=models.CharField(
+                blank=True,
+                editable=False,
+                max_length=128,
+                verbose_name="created by user",
+            ),
         ),
         migrations.AlterField(
-            model_name='script',
-            name='user_modified',
-            field=models.CharField(blank=True, editable=False, max_length=128, verbose_name='last modified by user'),
+            model_name="script",
+            name="user_modified",
+            field=models.CharField(
+                blank=True,
+                editable=False,
+                max_length=128,
+                verbose_name="last modified by user",
+            ),
         ),
     ]
