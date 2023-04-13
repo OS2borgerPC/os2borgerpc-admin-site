@@ -1232,15 +1232,15 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
             return reverse("scripts", kwargs={"slug": self.kwargs["slug"]})
 
     @transaction.atomic
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, request, *args, **kwargs):
         script = self.get_object()
 
         site = script.site
-        site_membership = request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
-            not request.user.is_superuser
+            not self.request.user.is_superuser
             and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
@@ -1964,7 +1964,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
         # I wonder if one could just call the WakeWeekPlanRedirectView directly?
         return reverse("wake_plans", args=[self.kwargs["site_uid"]])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, request, *args, **kwargs):
         deleted_plan_name = WakeWeekPlan.objects.get(
             id=self.kwargs["wake_week_plan_id"]
         ).name
@@ -2239,7 +2239,7 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
     def get_success_url(self):
         return reverse("wake_change_events", args=[self.kwargs["site_uid"]])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, request, *args, **kwargs):
         # Update all pcs belonging to active plans that used this event
         event = self.get_object()
         plans = set(event.wake_week_plans.all())
@@ -2450,7 +2450,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
         return "/site/%s/users/" % self.kwargs["site_uid"]
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, request, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
             site_id=site.id
@@ -2788,7 +2788,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     def get_success_url(self):
         return "/site/{0}/groups/".format(self.kwargs["site_uid"])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, request, *args, **kwargs):
         self_object = self.get_object()
         name = self_object.name
         # wake_week_plan-related
@@ -2958,7 +2958,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
         return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, request, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
             site_id=site.id
