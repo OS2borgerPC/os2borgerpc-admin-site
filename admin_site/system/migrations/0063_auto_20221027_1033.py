@@ -4,32 +4,52 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0062_auto_20221026_1245'),
+        ("system", "0062_auto_20221026_1245"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='script',
-            name='uid',
-            field=models.CharField(blank=True, max_length=255, null=True, unique=True, verbose_name='UID'),
+            model_name="script",
+            name="uid",
+            field=models.CharField(
+                blank=True, max_length=255, null=True, unique=True, verbose_name="UID"
+            ),
         ),
         migrations.AddField(
-            model_name='script',
-            name='is_hidden',
-            field=models.BooleanField(default=False, verbose_name='hidden script'),
+            model_name="script",
+            name="is_hidden",
+            field=models.BooleanField(default=False, verbose_name="hidden script"),
         ),
         migrations.CreateModel(
-            name='FeaturePermission',
+            name="FeaturePermission",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('uid', models.CharField(max_length=255, unique=True, verbose_name='UID')),
-                ('sites', models.ManyToManyField(blank=True, related_name='feature_permission', to='system.Site', verbose_name='sites with access')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
+                (
+                    "uid",
+                    models.CharField(max_length=255, unique=True, verbose_name="UID"),
+                ),
+                (
+                    "sites",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="feature_permission",
+                        to="system.Site",
+                        verbose_name="sites with access",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['name'],
+                "ordering": ["name"],
             },
         ),
     ]

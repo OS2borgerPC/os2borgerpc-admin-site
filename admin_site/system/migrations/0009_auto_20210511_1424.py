@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0008_auto_20201210_0950'),
+        ("system", "0008_auto_20201210_0950"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='batch',
-            options={'verbose_name_plural': 'Batches'},
+            name="batch",
+            options={"verbose_name_plural": "Batches"},
         ),
         migrations.AlterModelOptions(
-            name='custompackages',
-            options={'verbose_name_plural': 'Custom packages'},
+            name="custompackages",
+            options={"verbose_name_plural": "Custom packages"},
         ),
     ]

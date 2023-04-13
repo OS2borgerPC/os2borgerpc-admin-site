@@ -4,30 +4,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0012_script_deleted'),
+        ("system", "0012_script_deleted"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='script',
-            name='created',
-            field=models.DateTimeField(auto_now_add=True, null=True, verbose_name='created'),
+            model_name="script",
+            name="created",
+            field=models.DateTimeField(
+                auto_now_add=True, null=True, verbose_name="created"
+            ),
         ),
         migrations.AddField(
-            model_name='script',
-            name='modified',
-            field=models.DateTimeField(auto_now=True, null=True, verbose_name='modified'),
+            model_name="script",
+            name="modified",
+            field=models.DateTimeField(
+                auto_now=True, null=True, verbose_name="modified"
+            ),
         ),
         migrations.AddField(
-            model_name='script',
-            name='user_created',
-            field=models.CharField(blank=True, max_length=128, verbose_name='created by user'),
+            model_name="script",
+            name="user_created",
+            field=models.CharField(
+                blank=True, max_length=128, verbose_name="created by user"
+            ),
         ),
         migrations.AddField(
-            model_name='script',
-            name='user_modified',
-            field=models.CharField(blank=True, max_length=128, verbose_name='last modified by user'),
+            model_name="script",
+            name="user_modified",
+            field=models.CharField(
+                blank=True, max_length=128, verbose_name="last modified by user"
+            ),
         ),
     ]

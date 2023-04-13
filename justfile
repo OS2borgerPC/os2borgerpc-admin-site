@@ -50,7 +50,7 @@ bash-no-migrate:
 
 # Runs black on the python codebase
 black:
-  black --extend-exclude="/migrations/" admin_site
+  black admin_site
 
 # Dump the database to a file named {{db_data_file}}
 dump-db-data: (verify-container-running django_container)

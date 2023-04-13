@@ -4,20 +4,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0013_add_created_and_modified_fields'),
+        ("system", "0013_add_created_and_modified_fields"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='script',
-            name='author',
-            field=models.CharField(default='', max_length=255, verbose_name='author'),
+            model_name="script",
+            name="author",
+            field=models.CharField(default="", max_length=255, verbose_name="author"),
         ),
         migrations.AddField(
-            model_name='script',
-            name='author_email',
-            field=models.EmailField(default='', max_length=254, verbose_name='author email'),
+            model_name="script",
+            name="author_email",
+            field=models.EmailField(
+                default="", max_length=254, verbose_name="author email"
+            ),
         ),
     ]

@@ -4,28 +4,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0051_alter_securityproblem_uid'),
+        ("system", "0051_alter_securityproblem_uid"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='pcgroup',
-            name='description',
-            field=models.TextField(blank=True, default='', max_length=1024, verbose_name='description'),
+            model_name="pcgroup",
+            name="description",
+            field=models.TextField(
+                blank=True, default="", max_length=1024, verbose_name="description"
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='securityevent',
-            name='complete_log',
-            field=models.TextField(blank=True, default=''),
+            model_name="securityevent",
+            name="complete_log",
+            field=models.TextField(blank=True, default=""),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='securityevent',
-            name='note',
-            field=models.TextField(blank=True, default=''),
+            model_name="securityevent",
+            name="note",
+            field=models.TextField(blank=True, default=""),
             preserve_default=False,
         ),
     ]
