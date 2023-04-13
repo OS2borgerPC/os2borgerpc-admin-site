@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.db.models import Count
 from django.utils import timezone
 from django.utils.html import format_html_join, escape, mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from system.models import (
