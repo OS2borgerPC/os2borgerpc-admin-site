@@ -4,20 +4,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0016_auto_20210525_1238'),
+        ("system", "0016_auto_20210525_1238"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='site',
-            old_name='last_version',
-            new_name='paid_for_access_until',
+            model_name="site",
+            old_name="last_version",
+            new_name="paid_for_access_until",
         ),
         migrations.AlterField(
-            model_name='site',
-            name='paid_for_access_until',
-            field=models.DateField(blank=True, null=True, verbose_name='Paid for access until this date'),
+            model_name="site",
+            name="paid_for_access_until",
+            field=models.DateField(
+                blank=True, null=True, verbose_name="Paid for access until this date"
+            ),
         ),
     ]

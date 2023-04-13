@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0029_auto_20211004_1516'),
+        ("system", "0029_auto_20211004_1516"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='pc',
-            name='is_activated',
-            field=models.BooleanField(default=False, verbose_name='activated'),
+            model_name="pc",
+            name="is_activated",
+            field=models.BooleanField(default=False, verbose_name="activated"),
         ),
     ]

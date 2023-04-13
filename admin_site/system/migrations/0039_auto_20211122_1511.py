@@ -4,76 +4,75 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0038_auto_20211118_1431'),
+        ("system", "0038_auto_20211118_1431"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='distribution',
-            name='configuration',
+            model_name="distribution",
+            name="configuration",
         ),
         migrations.RemoveField(
-            model_name='distribution',
-            name='package_list',
+            model_name="distribution",
+            name="package_list",
         ),
         migrations.RemoveField(
-            model_name='packageinstallinfo',
-            name='custom_packages',
+            model_name="packageinstallinfo",
+            name="custom_packages",
         ),
         migrations.RemoveField(
-            model_name='packageinstallinfo',
-            name='package',
+            model_name="packageinstallinfo",
+            name="package",
         ),
         migrations.RemoveField(
-            model_name='packagelist',
-            name='packages',
+            model_name="packagelist",
+            name="packages",
         ),
         migrations.RemoveField(
-            model_name='packagestatus',
-            name='package',
+            model_name="packagestatus",
+            name="package",
         ),
         migrations.RemoveField(
-            model_name='packagestatus',
-            name='package_list',
+            model_name="packagestatus",
+            name="package_list",
         ),
         migrations.RemoveField(
-            model_name='pc',
-            name='custom_packages',
+            model_name="pc",
+            name="custom_packages",
         ),
         migrations.RemoveField(
-            model_name='pc',
-            name='distribution',
+            model_name="pc",
+            name="distribution",
         ),
         migrations.RemoveField(
-            model_name='pc',
-            name='do_send_package_info',
+            model_name="pc",
+            name="do_send_package_info",
         ),
         migrations.RemoveField(
-            model_name='pc',
-            name='package_list',
+            model_name="pc",
+            name="package_list",
         ),
         migrations.RemoveField(
-            model_name='pcgroup',
-            name='custom_packages',
+            model_name="pcgroup",
+            name="custom_packages",
         ),
         migrations.DeleteModel(
-            name='CustomPackages',
+            name="CustomPackages",
         ),
         migrations.DeleteModel(
-            name='Distribution',
+            name="Distribution",
         ),
         migrations.DeleteModel(
-            name='Package',
+            name="Package",
         ),
         migrations.DeleteModel(
-            name='PackageInstallInfo',
+            name="PackageInstallInfo",
         ),
         migrations.DeleteModel(
-            name='PackageList',
+            name="PackageList",
         ),
         migrations.DeleteModel(
-            name='PackageStatus',
+            name="PackageStatus",
         ),
     ]

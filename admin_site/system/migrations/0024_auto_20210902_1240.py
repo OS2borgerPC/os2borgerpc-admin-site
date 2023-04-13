@@ -5,29 +5,36 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0023_auto_20210902_1223'),
+        ("system", "0023_auto_20210902_1223"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='script',
-            name='deleted',
+            model_name="script",
+            name="deleted",
         ),
         migrations.AlterField(
-            model_name='associatedscript',
-            name='script',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='associations', to='system.script'),
+            model_name="associatedscript",
+            name="script",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="associations",
+                to="system.script",
+            ),
         ),
         migrations.AlterField(
-            model_name='imageversion',
-            name='os',
-            field=models.CharField(max_length=30, verbose_name='OS'),
+            model_name="imageversion",
+            name="os",
+            field=models.CharField(max_length=30, verbose_name="OS"),
         ),
         migrations.AlterField(
-            model_name='securityproblem',
-            name='script',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='security_problems', to='system.script'),
+            model_name="securityproblem",
+            name="script",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="security_problems",
+                to="system.script",
+            ),
         ),
     ]

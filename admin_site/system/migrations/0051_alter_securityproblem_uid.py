@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0050_alter_input_value_type'),
+        ("system", "0050_alter_input_value_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='securityproblem',
-            name='uid',
-            field=models.SlugField(unique=True, verbose_name='UID'),
+            model_name="securityproblem",
+            name="uid",
+            field=models.SlugField(unique=True, verbose_name="UID"),
         ),
     ]

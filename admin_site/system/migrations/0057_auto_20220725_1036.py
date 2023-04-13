@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0056_auto_20220629_0922'),
+        ("system", "0056_auto_20220629_0922"),
     ]
 
     operations = [
         migrations.RemoveConstraint(
-            model_name='pcgroup',
-            name='unique_uid_per_group',
+            model_name="pcgroup",
+            name="unique_uid_per_group",
         ),
         migrations.RemoveField(
-            model_name='pcgroup',
-            name='uid',
+            model_name="pcgroup",
+            name="uid",
         ),
     ]

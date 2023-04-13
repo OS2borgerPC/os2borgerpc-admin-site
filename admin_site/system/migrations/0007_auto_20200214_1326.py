@@ -6,19 +6,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0006_imageversion'),
+        ("system", "0006_imageversion"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='imageversion',
-            name='img_path',
+            model_name="imageversion",
+            name="img_path",
         ),
         migrations.AddField(
-            model_name='imageversion',
-            name='image_upload',
-            field=models.FileField(default='#', upload_to='images'),
+            model_name="imageversion",
+            name="image_upload",
+            field=models.FileField(default="#", upload_to="images"),
         ),
     ]

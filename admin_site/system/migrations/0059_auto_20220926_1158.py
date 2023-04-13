@@ -6,25 +6,35 @@ import django.utils.timezone
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0058_auto_20220822_1252'),
+        ("system", "0058_auto_20220822_1252"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='changelog',
-            name='created',
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='created'),
+            model_name="changelog",
+            name="created",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, verbose_name="created"
+            ),
         ),
         migrations.AlterField(
-            model_name='changelog',
-            name='updated',
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='updated'),
+            model_name="changelog",
+            name="updated",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, verbose_name="updated"
+            ),
         ),
         migrations.AlterField(
-            model_name='changelogcomment',
-            name='parent_comment',
-            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='comment_children', to='system.changelogcomment'),
+            model_name="changelogcomment",
+            name="parent_comment",
+            field=models.ForeignKey(
+                blank=True,
+                default=None,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="comment_children",
+                to="system.changelogcomment",
+            ),
         ),
     ]
