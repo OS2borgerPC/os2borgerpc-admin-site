@@ -16,6 +16,20 @@ class UserProfile(models.Model):
     sites = models.ManyToManyField(
         Site, through="SiteMembership", related_name="user_profiles"
     )
+
+    # The languages one can choose between
+    DANISH = "da"
+    ENGLISH = "en"
+    SWEDISH = "se"
+
+    language_choices = ((DANISH, "Dansk"), (SWEDISH, "Svenska"), (ENGLISH, "English"))
+
+    language = models.CharField(
+        verbose_name=_("Language"),
+        choices=language_choices,
+        max_length=10,
+        default=DANISH,
+    )
     # TODO: Add more fields/user options as needed.
     # TODO: Make before_save integrity check that SITE_USER and
     # SITE_ADMIN users MUST be associated with a site.
