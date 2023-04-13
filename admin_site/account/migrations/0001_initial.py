@@ -8,22 +8,54 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('system', '0005_auto_20190225_1620'),
+        ("system", "0005_auto_20190225_1620"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='UserProfile',
+            name="UserProfile",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.IntegerField(choices=[(0, 'Super Admin'), (1, 'Site User'), (2, 'Site Admin')], default=1)),
-                ('site', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='system.Site')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='bibos_profile', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "type",
+                    models.IntegerField(
+                        choices=[
+                            (0, "Super Admin"),
+                            (1, "Site User"),
+                            (2, "Site Admin"),
+                        ],
+                        default=1,
+                    ),
+                ),
+                (
+                    "site",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="system.Site",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="bibos_profile",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

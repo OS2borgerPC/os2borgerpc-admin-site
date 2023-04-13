@@ -4,18 +4,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('account', '0003_migrate_from_single_site_to_multiple_sites'),
+        ("account", "0003_migrate_from_single_site_to_multiple_sites"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='userprofile',
-            name='site',
+            model_name="userprofile",
+            name="site",
         ),
         migrations.RemoveField(
-            model_name='userprofile',
-            name='type',
+            model_name="userprofile",
+            name="type",
         ),
     ]

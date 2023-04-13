@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0055_alter_input_value_type'),
+        ("system", "0055_alter_input_value_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='pc',
-            name='uid',
-            field=models.CharField(db_index=True, max_length=255, unique=True, verbose_name='UID'),
+            model_name="pc",
+            name="uid",
+            field=models.CharField(
+                db_index=True, max_length=255, unique=True, verbose_name="UID"
+            ),
         ),
     ]
