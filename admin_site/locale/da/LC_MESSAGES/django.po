@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-30 17:31+0200\n"
+"POT-Creation-Date: 2023-04-13 11:32+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -720,6 +720,25 @@ msgstr "Serverfejl"
 msgid "A server error has occurred, and we have been notified about the error."
 msgstr "Der er sket en serverfejl og vi er blevet notificeret om fejlen."
 
+#: templates/base.html:7
+msgid "OS2borgerPC Administration"
+msgstr "OS2borgerPC Administration"
+
+#: templates/base.html:41 templates/login.html:314
+msgid ""
+"It looks like you're using Internet Explorer. It won't work on this website."
+msgstr ""
+"Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på "
+"dette website."
+
+#: templates/base.html:42 templates/login.html:315
+msgid "Try opening this website in Microsoft Edge"
+msgstr "Prøv at åbne denne side i Microsoft Edge"
+
+#: templates/login.html:9
+msgid "OS2borgerPC Administration Login"
+msgstr "OS2borgerPC Administration Login"
+
 #: templates/login.html:283 templates/login.html:286
 msgid "Log in"
 msgstr "Log ind"
@@ -739,17 +758,6 @@ msgstr "Se opdateringer i OS2borgerPC"
 #: templates/login.html:308
 msgid "Send a message to Magenta"
 msgstr "Send en besked til Magenta"
-
-#: templates/login.html:314
-msgid ""
-"It looks like you're using Internet Explorer. It won't work on this website."
-msgstr ""
-"Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på "
-"dette website."
-
-#: templates/login.html:315
-msgid "Try opening this website in Microsoft Edge"
-msgstr "Prøv at åbne denne side i Microsoft Edge"
 
 #: templates/logout.html:11
 msgid "You have been logged out"
@@ -927,6 +935,10 @@ msgstr "Konfigurationer"
 #: templates/site_with_navigation.html:192
 msgid "Read the documentation ..."
 msgstr "Læs dokumentation ..."
+
+#: templates/sitebase.html:12
+msgid "Welcome"
+msgstr "Velkommen"
 
 #: templates/sitebase.html:24
 msgid "Log out"
