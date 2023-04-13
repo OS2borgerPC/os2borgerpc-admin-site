@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.utils import translation
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
 
@@ -2167,6 +2168,8 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
             site_membership.site_user_type = form.cleaned_data["usertype"]
             site_membership.save()
+            user_profile.language = form.cleaned_data["language"]
+            user_profile.save()
             response = super(UserUpdate, self).form_valid(form)
             set_notification_cookie(
                 response, _("User %s updated") % self.object.username
