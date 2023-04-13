@@ -24,7 +24,7 @@
     </p>
     <form method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form }}
       <input class="btn btn-danger me-3" type="submit" value="{% translate 'Confirm deletion' %}">
       <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
     </form>
