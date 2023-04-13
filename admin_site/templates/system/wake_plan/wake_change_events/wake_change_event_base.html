@@ -28,7 +28,7 @@
 
   <ul class="item-list">
       {% for event in wake_change_events_list %}
-        <li class="{% ifequal event selected_event %}active{% endifequal %}">
+        <li class="{% if event == selected_event %}active{% endif %}">
           <a class="item-list-link" id="{{event.id}}" href="{% url 'wake_change_event' site.uid event.id %}">
             {% if event.type == "ALTERED_HOURS" %}
               <span class="material-icons">meeting_room</span>
@@ -37,11 +37,11 @@
             {% endif %}
             {{event}}
           </a>
-          {% ifequal event selected_event %}
+          {% if event == selected_event %}
             <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_change_event_delete' site.uid event.id %}" {% endif %} title="{% translate 'Delete exception' %}">
               clear
             </a>
-          {% endifequal %}
+          {% endif %}
         </li>
       {% endfor %}
   </ul>

@@ -26,15 +26,15 @@ active
   </div>
   <ul class="item-list">
     {% for group in site.groups.all %}
-      <li class="{% ifequal group selected_group %}active{% endifequal %}">
+      <li class="{% if group == selected_group %}active{% endif %}">
         <a class="item-list-link" href="/site/{{ site.url }}/groups/{{ group.url }}/">
           {{ group.name }}
         </a>
-        {% ifequal group selected_group %}
+        {% if group == selected_group %}
             <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate 'Delete group' %}">
               clear
             </a>
-        {% endifequal %}
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

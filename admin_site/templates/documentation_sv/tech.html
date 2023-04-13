@@ -10,10 +10,10 @@ Teknisk dokumentation
 <p>
 <ul class="nav-list">
   {% for link, name in url_list %}
-    <li {% ifequal doc_active link %}class="active"{% endifequal %}>
+    <li {% if doc_active == link %}class="active"{% endif %}>
       <a href="{% url 'doc' link %}">
         <span class="d-flex align-items-center">
-          <span class="material-icons">article</span> 
+          <span class="material-icons">article</span>
           {{ name }}
         </span>
       </a>
