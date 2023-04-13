@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0041_alter_configurationentry_options'),
+        ("system", "0041_alter_configurationentry_options"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='imageversion',
-            name='release_notes',
+            model_name="imageversion",
+            name="release_notes",
             field=models.TextField(max_length=1500),
         ),
     ]

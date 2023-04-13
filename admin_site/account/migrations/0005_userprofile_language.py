@@ -4,15 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('account', '0004_auto_20210409_1223'),
+        ("account", "0004_auto_20210409_1223"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='userprofile',
-            name='language',
-            field=models.CharField(choices=[('da', 'Dansk'), ('sv', 'Svenska'), ('en', 'English')], default='da', max_length=10, verbose_name='Language'),
+            model_name="userprofile",
+            name="language",
+            field=models.CharField(
+                choices=[("da", "Dansk"), ("sv", "Svenska"), ("en", "English")],
+                default="da",
+                max_length=10,
+                verbose_name="Language",
+            ),
         ),
     ]

@@ -5,15 +5,18 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0025_renaming'),
+        ("system", "0025_renaming"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='securityevent',
-            name='pc',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='security_events', to='system.pc'),
+            model_name="securityevent",
+            name="pc",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="security_events",
+                to="system.pc",
+            ),
         ),
     ]

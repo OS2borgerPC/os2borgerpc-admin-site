@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0059_auto_20220926_1158'),
+        ("system", "0059_auto_20220926_1158"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='changelog',
-            options={'ordering': ['-created']},
+            name="changelog",
+            options={"ordering": ["-created"]},
         ),
     ]

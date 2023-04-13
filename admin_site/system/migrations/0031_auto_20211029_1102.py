@@ -5,72 +5,93 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0030_auto_20211012_1208'),
+        ("system", "0030_auto_20211012_1208"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CiceroPatron',
+            name="CiceroPatron",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('patron_id', models.IntegerField()),
-                ('last_successful_login', models.DateTimeField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("patron_id", models.IntegerField()),
+                ("last_successful_login", models.DateTimeField()),
             ],
         ),
         migrations.AlterField(
-            model_name='pcgroup',
-            name='uid',
-            field=models.CharField(max_length=255, verbose_name='id'),
+            model_name="pcgroup",
+            name="uid",
+            field=models.CharField(max_length=255, verbose_name="id"),
         ),
         migrations.AlterUniqueTogether(
-            name='associatedscript',
+            name="associatedscript",
             unique_together=set(),
         ),
         migrations.AlterUniqueTogether(
-            name='input',
+            name="input",
             unique_together=set(),
         ),
         migrations.AlterUniqueTogether(
-            name='package',
+            name="package",
             unique_together=set(),
         ),
         migrations.AlterUniqueTogether(
-            name='pcgroup',
+            name="pcgroup",
             unique_together=set(),
         ),
         migrations.AlterUniqueTogether(
-            name='securityproblem',
+            name="securityproblem",
             unique_together=set(),
         ),
         migrations.AddConstraint(
-            model_name='associatedscript',
-            constraint=models.UniqueConstraint(fields=('position', 'group'), name='unique_group_position'),
+            model_name="associatedscript",
+            constraint=models.UniqueConstraint(
+                fields=("position", "group"), name="unique_group_position"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='input',
-            constraint=models.UniqueConstraint(fields=('position', 'script'), name='unique_script_position'),
+            model_name="input",
+            constraint=models.UniqueConstraint(
+                fields=("position", "script"), name="unique_script_position"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='package',
-            constraint=models.UniqueConstraint(fields=('name', 'version'), name='unique_version_name'),
+            model_name="package",
+            constraint=models.UniqueConstraint(
+                fields=("name", "version"), name="unique_version_name"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='pcgroup',
-            constraint=models.UniqueConstraint(fields=('uid', 'site'), name='unique_uid_per_group'),
+            model_name="pcgroup",
+            constraint=models.UniqueConstraint(
+                fields=("uid", "site"), name="unique_uid_per_group"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='securityproblem',
-            constraint=models.UniqueConstraint(fields=('uid', 'site'), name='unique_uid_per_site'),
+            model_name="securityproblem",
+            constraint=models.UniqueConstraint(
+                fields=("uid", "site"), name="unique_uid_per_site"
+            ),
         ),
         migrations.AddField(
-            model_name='ciceropatron',
-            name='site',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='system.site'),
+            model_name="ciceropatron",
+            name="site",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="system.site"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='ciceropatron',
-            constraint=models.UniqueConstraint(fields=('patron_id', 'site'), name='unique_patron_per_site'),
+            model_name="ciceropatron",
+            constraint=models.UniqueConstraint(
+                fields=("patron_id", "site"), name="unique_patron_per_site"
+            ),
         ),
     ]
