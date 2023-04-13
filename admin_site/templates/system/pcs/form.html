@@ -17,7 +17,7 @@
     <li>{% translate "There are no computers" %}</li>
   {% endif %}
   {% for pc in pc_list %}
-    <li class="{% ifequal pc selected_pc %}active{% endifequal %}">
+    <li class="{% if pc == selected_pc %}active{% endif %}">
       {% comment %} Add deletion to every row: <a href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}"></a>{% endcomment %}
       <a class="item-list-link" id="{{pc.uid}}" href="/site/{{ site.url }}/computers/{{ pc.uid }}">
         {{ pc.name }}
@@ -25,11 +25,11 @@
         {% if not pc.is_activated %}
           <span class="badge bg-danger">{% translate "Not activated" %}</span>
         {% endif %}
-      {% ifequal pc selected_pc %}
+      {% if pc == selected_pc %}
         <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/computers/{{ pc.uid }}/delete/" title="{% translate 'Delete computer' %}">
           clear
         </a>
-      {% endifequal %}
+      {% endif%}
     </li>
   {% endfor %}
 </ul>
@@ -160,14 +160,14 @@
             </thead>
             {% for job in joblist %}
             <tr class="muted">
-              <td class="{% ifequal orderby_key 'batch__script__name' %}orderby-highligt{% endifequal %}">
+              <td class="{% if orderby_key == 'batch__script__name' %}orderby-highligt{% endif %}">
                   <a href="{% url 'script' site.uid job.batch.script.pk %}"><strong>{{job.batch.script.name}}</strong></a>
                   <span class="batch">{{job.batch.name}}</span>
               </td>
-              <td class="{% ifequal orderby_key 'created' %}orderby-highligt{% endifequal %}">{{job.created|default:'-'}}</td>
-              <td class="{% ifequal orderby_key 'started' %}orderby-highligt{% endifequal %}">{{job.started|default:'-'}}</td>
-              <td class="{% ifequal orderby_key 'finished' %}orderby-highligt{% endifequal %}">{{job.finished|default:'-'}}</td>
-              <td class="{% ifequal orderby_key 'status' %}orderby-highligt{% endifequal %}"><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
+              <td class="{% if orderby_key == 'created' %}orderby-highligt{% endif %}">{{job.created|default:'-'}}</td>
+              <td class="{% if orderby_key == 'started' %}orderby-highligt{% endif %}">{{job.started|default:'-'}}</td>
+              <td class="{% if orderby_key == 'finished' %}orderby-highligt{% endif %}">{{job.finished|default:'-'}}</td>
+              <td class="{% if orderby_key == 'status' %}orderby-highligt{% endif %}"><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
               <td>
                 {% if job.has_info %}
                   <button type="button" class="btn jobinfobutton p-0" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="click" data-bs-animation="true">
