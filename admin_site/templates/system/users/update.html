@@ -20,7 +20,7 @@
 
   <ul class="item-list">
     {% for listed_user in user_list %}
-      <li class="{% ifequal listed_user selected_user %}active{% endifequal %}">
+      <li class="{% if listed_user == selected_user %}active{% endif %}">
         <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
           {{ listed_user.username }}
         </a>
