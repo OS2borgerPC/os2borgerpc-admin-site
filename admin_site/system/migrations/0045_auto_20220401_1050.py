@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0044_alter_imageversion_platform'),
+        ("system", "0044_alter_imageversion_platform"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='script',
-            name='author',
+            model_name="script",
+            name="author",
         ),
         migrations.RemoveField(
-            model_name='script',
-            name='author_email',
+            model_name="script",
+            name="author_email",
         ),
     ]

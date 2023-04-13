@@ -50,7 +50,7 @@ Lint Python:
         - pip3 install -r admin_site/requirements.txt
     script:
         - cd admin_site
-        - black --check --diff --exclude=migrations .
+        - black --check --diff .
 
 Lint Dockerfiles:
       <<: *lint-default

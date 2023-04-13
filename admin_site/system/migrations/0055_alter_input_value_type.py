@@ -4,15 +4,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0054_alter_pc_uid'),
+        ("system", "0054_alter_pc_uid"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='input',
-            name='value_type',
-            field=models.CharField(choices=[('STRING', 'String'), ('INT', 'Integer'), ('DATE', 'Date'), ('FILE', 'File'), ('BOOLEAN', 'Boolean'), ('TIME', 'Time'), ('PASSWORD', 'Password')], max_length=10, verbose_name='value type'),
+            model_name="input",
+            name="value_type",
+            field=models.CharField(
+                choices=[
+                    ("STRING", "String"),
+                    ("INT", "Integer"),
+                    ("DATE", "Date"),
+                    ("FILE", "File"),
+                    ("BOOLEAN", "Boolean"),
+                    ("TIME", "Time"),
+                    ("PASSWORD", "Password"),
+                ],
+                max_length=10,
+                verbose_name="value type",
+            ),
         ),
     ]

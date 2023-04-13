@@ -19,18 +19,13 @@ def set_os2_product_config_entry_for_pcs(apps, schema_editor):
             product = "os2displaypc"
 
         ConfigurationEntry.objects.create(
-            key="os2_product",
-            value=product,
-            owner_configuration=pc.configuration
+            key="os2_product", value=product, owner_configuration=pc.configuration
         )
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0017_auto_20210712_1136'),
+        ("system", "0017_auto_20210712_1136"),
     ]
 
-    operations = [
-        migrations.RunPython(set_os2_product_config_entry_for_pcs)
-    ]
+    operations = [migrations.RunPython(set_os2_product_config_entry_for_pcs)]

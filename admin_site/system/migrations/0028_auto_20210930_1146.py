@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0027_remove_site_security_alerts'),
+        ("system", "0027_remove_site_security_alerts"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='job',
-            name='log_output',
-            field=models.TextField(blank=True, max_length=128000, verbose_name='log output'),
+            model_name="job",
+            name="log_output",
+            field=models.TextField(
+                blank=True, max_length=128000, verbose_name="log output"
+            ),
         ),
     ]

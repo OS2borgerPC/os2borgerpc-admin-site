@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0048_rename_ocurred_time_securityevent_occurred_time"),
     ]
