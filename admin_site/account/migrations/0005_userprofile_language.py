@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userprofile',
             name='language',
-            field=models.CharField(choices=[('da', 'Dansk'), ('se', 'Svenska'), ('en', 'English')], default='da', max_length=10, verbose_name='Language'),
+            field=models.CharField(choices=[('da', 'Dansk'), ('sv', 'Svenska'), ('en', 'English')], default='da', max_length=10, verbose_name='Language'),
         ),
     ]

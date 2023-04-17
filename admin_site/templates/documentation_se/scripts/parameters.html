@@ -1,0 +1,41 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Redigering av Script-inputparametrar</h1>
+  <p>
+    Med skriptinmatningsparametrar kan du ange indataparametrar när ett skript behöver
+    springa. Det finns fyra typer av indataparametrar att välja mellan:
+    <ul>
+      <li>
+        <strong>Sträng</strong>:
+        Gör att du kan ange en textsträng, till exempel en sökväg eller
+        en titel.
+      </li>
+      <li>
+        <strong>Heltal</strong>:
+        Ger möjlighet att ange ett positivt eller negativt heltal
+      </li>
+      <li>
+        <strong>Datum</strong>:
+        Ger möjlighet att ange datum och tid
+      </li>
+      <li>
+        <strong>Fil</strong>:
+        Ger möjlighet att ladda upp en fil som skickas med när:
+        Skriptet måste köras. Skriptet tar emot filparametrar som en sökväg
+        i det lokala filsystemet som pekar på filen.
+      </li>
+    </ul>
+  </p>
+  <p>
+    Om du vill lägga till en indataparameter i ett skript klickar du på ikonen
+    "Lägg till parameter". Detta lägger till en ny rad i listan över ingångsparametrar,
+    var du ska fylla i namn och typ av inmatningsparameter. Om man vill ta bort
+    För en parameter, klicka på länken "Ta bort" till höger i listan.
+  </p>
+  <p>
+    Man måste klicka på knappen "Spara ändringar" högst upp på
+    skriptredigeringssidan innan ändringar som görs i indataparametrar börjar gälla
+    kraft.
+  </p>
+{% endblock %}

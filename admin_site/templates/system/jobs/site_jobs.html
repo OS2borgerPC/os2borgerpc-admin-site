@@ -152,14 +152,20 @@
     <table class="table jobtable table-extendable">
       <thead>
         <tr>
-          {# Are the labels to be translated here? #}
-          {% include 'widgets/orderby_th_ajax.html' with label='Script' action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Bruger' action="BibOS.JobList.orderby('user__username')" slug='user' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Oprettet' action="BibOS.JobList.orderby('created')" slug='created' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Startet' action="BibOS.JobList.orderby('started')" slug='started' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Sluttet' action="BibOS.JobList.orderby('finished')" slug='finished' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Status' action="BibOS.JobList.orderby('status')" slug='status' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Computer' action="BibOS.JobList.orderby('pc__name')" slug='computer' %}
+          {% translate "Script" as script_label %}
+          {% translate "User" as user_label %}
+          {% translate "Created" as create_label %}
+          {% translate "Started" as start_label %}
+          {% translate "Finished" as finish_label %}
+          {% translate "Status" as status_label %}
+          {% translate "Computer" as computer_label %}
+          {% include 'widgets/orderby_th_ajax.html' with label=script_label action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=user_label action="BibOS.JobList.orderby('user__username')" slug='user' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=create_label action="BibOS.JobList.orderby('created')" slug='created' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=start_label action="BibOS.JobList.orderby('started')" slug='started' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=finish_label action="BibOS.JobList.orderby('finished')" slug='finished' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=status_label action="BibOS.JobList.orderby('status')" slug='status' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=computer_label action="BibOS.JobList.orderby('pc__name')" slug='computer' %}
           <th></th> {# Job-info-button #}
         </tr>
       </thead>

@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     # The languages one can choose between
     DANISH = "da"
     ENGLISH = "en"
-    SWEDISH = "se"
+    SWEDISH = "sv"
 
     language_choices = ((DANISH, "Dansk"), (SWEDISH, "Svenska"), (ENGLISH, "English"))
 

@@ -1,8 +1,4 @@
 {% load i18n %}
-<script type="text/javascript">
-  var lang = "{{request.user.bibos_profile.language}}"
-  document.cookie = "django_language="+lang;
-</script>
 {% language request.user.bibos_profile.language %}
 <!DOCTYPE html>
 <html lang="da">
