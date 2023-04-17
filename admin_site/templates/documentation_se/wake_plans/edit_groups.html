@@ -1,0 +1,54 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Schemalägg redigering: Lägg till-grupper</h1>
+  <p>
+    Redigeringsgränssnittet för ett schema visar en lista över grupper som ingår i
+    Schema till höger på skärmen. Ett schema gäller för alla datorer
+    i de grupper som är associerade med schemat. Ett schema utan anslutna grupper har ingen effekt.
+    Du kan redigera medlemmarna i schemat enligt beskrivningen nedan.
+  </p>
+  <h2>Lägg till grupp</h2>
+  <p>
+    Om du vill lägga till grupper håller du muspekaren över Lägg till grupp i schema. Om
+    Det finns grupper som ännu inte är medlemmar i tidtabellen, de kommer att visas i
+    en lista under muspekaren. Klicka på en grupp för att länka gruppen
+    till schemat.
+  </p>
+  <p>
+    Observera att en viss grupp/dator inte kan associeras med mer än ett schema åt gången.
+    Om du lägger till en grupp som redan har ett annat schema tas den bort
+    från föregående schema.
+  </p>
+  <p>
+    Om du försöker lägga till en grupp som innehåller en eller flera datorer,
+    som är kopplat till ett annat schema via en annan grupp kommer den valda gruppen att vara
+    Avvisad för schemauppdateringen när du klickar på "Spara ändringar".
+    Giltiga grupper läggs fortfarande till. Om en eller flera grupper avvisas,
+    Sidan anger detta och resonemanget.
+  </p>
+  <h2>Ta bort grupp</h2>
+  <p>
+    Om du vill ta bort en grupp klickar du på krysset bredvid gruppen i listan över
+    anslutna grupper.
+  </p>
+  <p>
+    Tänk på att ändringar i listan över grupper inte blir permanenta förrän du
+    klickade på "Spara ändringar" längst ner på skärmen.
+  </p>
+  <p>
+    Observera att om datorer senare läggs till i en grupp som är medlem i ett schema,
+    Dessa datorer kommer också att kopplas till schemat. Om datorerna du försöker lägga till,
+    redan är associerade med ett annat schema via en annan grupp, kommer de att avvisas för
+    med uppdateringen av gruppen när du klickar på "Spara ändringar" i gruppredigeringsgränssnittet.
+    Giltiga datorer kommer fortfarande att läggas till. Om en eller flera datorer avvisas,
+    Sidan anger detta och resonemanget.
+  </p>
+{% endblock %}
+
+
+
+
+
+
+	

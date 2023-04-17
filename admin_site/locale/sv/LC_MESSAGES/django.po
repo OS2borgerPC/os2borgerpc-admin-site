@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 17:05+0200\n"
+"POT-Creation-Date: 2023-04-17 16:51+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: account/models.py:30
+#: account/models.py:28 system/forms.py:132
+msgid "Language"
+msgstr "Språk"
+
+#: account/models.py:44
 msgid "Site User"
 msgstr "Site användare"
 
-#: account/models.py:30
+#: account/models.py:44
 msgid "Site Admin"
 msgstr "Site-admin"
 
@@ -30,7 +34,7 @@ msgstr "Global"
 
 #: system/admin.py:145
 msgid "Jobs per site"
-msgstr "Jobs per site"
+msgstr "Jobb per site"
 
 #: system/admin.py:160
 msgid "Jobs per Site for the last year"
@@ -56,19 +60,19 @@ msgstr "Site"
 msgid "Usertype"
 msgstr "Typ av användare"
 
-#: system/forms.py:130 system/models.py:986
+#: system/forms.py:136 system/models.py:986
 msgid "Password"
 msgstr "Lösenord"
 
-#: system/forms.py:136
+#: system/forms.py:142
 msgid "Password (again)"
 msgstr "Lösenord (igen)"
 
-#: system/forms.py:190
+#: system/forms.py:197
 msgid "Passwords must be identical."
 msgstr "De två lösenorden måste vara desamma"
 
-#: system/forms.py:197
+#: system/forms.py:204
 #, python-format
 msgid "A user named \"%s\" already exists."
 msgstr "En användare med namnet \"%s\" finns redan."
@@ -146,7 +150,7 @@ msgstr "Karantänperiod, när den godkända inloggningstiden används."
 
 #: system/models.py:219
 msgid "sites with access"
-msgstr "platser med tillträde"
+msgstr "sites med tillträde"
 
 #: system/models.py:240
 msgid "event_type:Altered Hours"
@@ -323,7 +327,7 @@ msgstr "säkerhetsskript"
 
 #: system/models.py:706
 msgid "hidden script"
-msgstr "dolt script"
+msgstr "dolt skript"
 
 #: system/models.py:710
 msgid "maintained by Magenta"
@@ -335,7 +339,7 @@ msgstr "position"
 
 #: system/models.py:849
 msgid "jobstatus:New"
-msgstr "jobstatus:Nytt"
+msgstr "Nytt"
 
 #: system/models.py:850
 msgid "jobstatus:Submitted"
@@ -374,7 +378,7 @@ msgstr "Slutförd"
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan inte ändra status från {0} til {1}"
 
-#: system/models.py:946 system/views.py:502
+#: system/models.py:946 system/views.py:503
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan endast starta om jobb som har status %s"
@@ -487,49 +491,49 @@ msgstr "författare"
 msgid "version"
 msgstr "version"
 
-#: system/views.py:312
+#: system/views.py:313
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Inställningar för %s uppdaterat"
 
-#: system/views.py:535
+#: system/views.py:536
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s körs på datorn %s"
 
-#: system/views.py:578
+#: system/views.py:579
 #, python-format
 msgid "You have no Script with the following ID: %s"
 msgstr "Du har inget script med ID %s"
 
-#: system/views.py:685
+#: system/views.py:686
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du ska ange ett namn"
 
-#: system/views.py:692
+#: system/views.py:693
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du måste ange en korrekt typ av inmatningsparameter."
 
-#: system/views.py:850
+#: system/views.py:851
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s updaterat"
 
-#: system/views.py:945 system/views.py:967
+#: system/views.py:946 system/views.py:968
 msgid "You must specify at least one group or pc"
 msgstr "Du måste ange minst en dator eller grupp"
 
-#: system/views.py:1093
+#: system/views.py:1094
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen dator med följande ID: %s"
 
-#: system/views.py:1163
+#: system/views.py:1164
 #, python-format
 msgid "Computer %s updated"
 msgstr "Dator %s uppdaterad"
 
-#: system/views.py:1427
+#: system/views.py:1428
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -541,7 +545,7 @@ msgstr ""
 "tidtabellerna%s, och undantag(en) %s kunde inte läggas till på grund av "
 "överlappning med andra utvalda undantag."
 
-#: system/views.py:1444
+#: system/views.py:1445
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -551,7 +555,7 @@ msgstr ""
 "inte läggas till somdator(er) %s är redan inskrivna i tidtabellen/"
 "tidtabellerna %s"
 
-#: system/views.py:1459
+#: system/views.py:1460
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -560,17 +564,17 @@ msgstr ""
 "På-/Av-schema %s har skapats, men undantaget/undantagen %s har inte kunnat "
 "läggas till. grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1470
+#: system/views.py:1471
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Schema för på- och avstängning %s har skapats"
 
-#: system/views.py:1489
+#: system/views.py:1490
 #, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidtabell med följande ID: %s"
 
-#: system/views.py:1614
+#: system/views.py:1615
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -582,7 +586,7 @@ msgstr ""
 "och undantaget/undantagen %s kunde inte läggas till på grund av överlappning "
 "med andra valda undantag"
 
-#: system/views.py:1631
+#: system/views.py:1632
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -591,7 +595,7 @@ msgstr ""
 "Tänd- och släckschema %s uppdaterat, men grupp(er) %s kunde inte läggas till "
 "eftersom dator(er) %s är redan inskrivna i schema(n) %s"
 
-#: system/views.py:1646
+#: system/views.py:1647
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -600,52 +604,52 @@ msgstr ""
 "Tidtabell för på- och avstängning %s uppdaterad, men undantag %s kunde inte "
 "läggas till på grund av överlappning med andra utvalda undantag"
 
-#: system/views.py:1657
+#: system/views.py:1658
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Uppdatering av schemat för på- och avstängning %s"
 
-#: system/views.py:1750
+#: system/views.py:1751
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tänd/släck schema %s borttagen"
 
-#: system/views.py:1870
+#: system/views.py:1871
 #, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har inget undantag med ID %s"
 
-#: system/views.py:1905
+#: system/views.py:1906
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undantag %s uppdaterat"
 
-#: system/views.py:1912
+#: system/views.py:1913
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr "De valda datumen skulle överlappa med undantaget %s i schemat %s"
 
-#: system/views.py:1919 system/views.py:1972
+#: system/views.py:1920 system/views.py:1973
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Datumet Till får inte vara före datumet Från %s"
 
-#: system/views.py:2110
+#: system/views.py:2113
 #, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ingen användare med följande ID: %s"
 
-#: system/views.py:2172
+#: system/views.py:2177
 #, python-format
 msgid "User %s updated"
 msgstr "Användare %s uppdaterad"
 
-#: system/views.py:2213
+#: system/views.py:2218
 #, python-format
 msgid "User %s deleted"
 msgstr "Användaren %s raderad"
 
-#: system/views.py:2299
+#: system/views.py:2304
 #, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
@@ -654,7 +658,7 @@ msgstr ""
 "Du har ingen grupp med följande <em>ID</em>:<br/><br/> <h3>%s</h3><br/> "
 "Försök istället att hitta gruppen från grupplistan."
 
-#: system/views.py:2468
+#: system/views.py:2473
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -663,26 +667,148 @@ msgstr ""
 "Grupp %s uppdaterad, men dator(er) %s kunde inte läggas till eftersom de är "
 "redan inskriven i tidtabellen/tidtabellerna %s"
 
-#: system/views.py:2480
+#: system/views.py:2485
 #, python-format
 msgid "Group %s updated"
 msgstr "Grupp %s uppdaterad"
 
-#: system/views.py:2492
+#: system/views.py:2497
 #, python-brace-format
 msgid ""
 "No value was specified for the mandatory input \"{0}\" of script \"{1}\""
 msgstr "Det obligatoriska parametervärdet \"{0}\" för skriptet \"{1}\" saknas."
 
-#: system/views.py:2562
+#: system/views.py:2567
 #, python-format
 msgid "Group %s deleted"
 msgstr "Grupp %s borttagen"
 
-#: system/views.py:2628
+#: system/views.py:2633
 #, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ingen säkerhetsregel med följande ID: %s"
+
+#: system/views.py:2881
+msgid "The administration site"
+msgstr "Administrationssidan"
+
+#: system/views.py:2882
+msgid "About"
+msgstr "Om"
+
+#: system/views.py:2883 templates/site_with_navigation.html:31
+#: templates/system/jobs/site_jobs.html:35
+#: templates/system/jobs/site_jobs.html:160 templates/system/pcs/form.html:153
+#: templates/system/security_events/site_security_events.html:49
+#: templates/system/security_events/site_security_events.html:119
+#: templates/system/site_status.html:5 templates/system/site_status.html:23
+msgid "Status"
+msgstr "Status"
+
+#: system/views.py:2884 templates/site_with_navigation.html:75
+#: templates/system/jobs/site_jobs.html:81
+#: templates/system/pcgroups/confirm_delete.html:18
+#: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
+#: templates/system/pcs/site_pcs.html:16 templates/system/site_list.html:7
+#: templates/system/site_status.html:11
+#: templates/system/wake_plan/confirm_delete.html:16
+#: templates/system/wake_plan/wake_plan.html:33
+msgid "Computers"
+msgstr "Datorer"
+
+#: system/views.py:2885 templates/site_with_navigation.html:80
+#: templates/system/jobs/site_jobs.html:104
+#: templates/system/pcgroups/site_groups.html:7
+#: templates/system/security_problems/confirm_delete.html:23
+#: templates/system/wake_plan/confirm_delete.html:15
+#: templates/system/wake_plan/wake_plan.html:26
+msgid "Groups"
+msgstr "Grupper"
+
+#: system/views.py:2886
+msgid "On/Off schedules"
+msgstr "Schema för på- och avstängning"
+
+#: system/views.py:2887 templates/site_with_navigation.html:98
+#: templates/system/jobs/site_jobs.html:6
+#: templates/system/scripts/confirm_delete.html:21
+msgid "Jobs"
+msgstr "Jobs"
+
+#: system/views.py:2888 templates/site_with_navigation.html:103
+#: templates/system/scripts/header.html:5
+#: templates/system/site_two_factor.html:52
+msgid "Scripts"
+msgstr "Scripts"
+
+#: system/views.py:2889 templates/site_with_navigation.html:61
+#: templates/system/scripts/header.html:5
+msgid "Security Scripts"
+msgstr "Skript för säkerhet"
+
+#: system/views.py:2890 templates/site_with_navigation.html:110
+#: templates/system/users/confirm_delete.html:5
+#: templates/system/users/create.html:5 templates/system/users/update.html:5
+msgid "Users"
+msgstr "Användare"
+
+#: system/views.py:2891 templates/site_with_navigation.html:186
+#: templates/system/pcgroups/site_groups.html:67
+#: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
+msgid "Configurations"
+msgstr "Konfigurationer"
+
+#: system/views.py:2892
+msgid "Setting up security surveillance (PDF)"
+msgstr "Skapande av säkerhetsövervakning (PDF)"
+
+#: system/views.py:2893
+msgid "The News site"
+msgstr "Nyhetssidan"
+
+#: system/views.py:2894
+msgid "OS2borgerPC"
+msgstr "Sambruk MedbogarPC"
+
+#: system/views.py:2895
+msgid "Installation Guide (PDF)"
+msgstr "Installationsguide (PDF)"
+
+#: system/views.py:2896
+msgid "Old installation guide (PDF)"
+msgstr "Gammal installationsguide (PDF)"
+
+#: system/views.py:2897
+msgid "OS2borgerPC Kiosk"
+msgstr "Sambruk MedborgarPC Kiosk"
+
+#: system/views.py:2898
+msgid "Installation Guide"
+msgstr "Installationsguide"
+
+#: system/views.py:2899
+msgid "Updating Wi-Fi setup"
+msgstr "Uppdaterar Wi-Fi inställningar"
+
+#: system/views.py:2900
+msgid "Technical Documentation"
+msgstr "Teknisk Dokumentation"
+
+#: system/views.py:2901
+msgid "OS2borgerPC Image"
+msgstr "Sambruk MedborgarPC Image"
+
+#: system/views.py:2902
+msgid "OS2borgerPC Admin Site"
+msgstr "Sambruk MedborgarPC Admin Site"
+
+#: system/views.py:2903
+msgid "OS2borgerPC Kiosk Image"
+msgstr "Sambruk MedborgarPC Kiosk Image"
+
+#: system/views.py:2904
+msgid "OS2borgerPC Client"
+msgstr "Sambruk MedborgarPC Client"
 
 #: templates/403.html:5 templates/403.html:18
 msgid "Permission denied"
@@ -690,7 +816,7 @@ msgstr "Rättigheter förbjudna"
 
 #: templates/403.html:21 templates/404.html:20 templates/500.html:21
 msgid "Return to OS2borgerPC-admin"
-msgstr "Gå tillbaka till Sambruk MedborgarPC"
+msgstr "Gå tillbaka till Sambruk MedborgarPC-admin"
 
 #: templates/403.html:28
 msgid "You do not have permission to access this webpage"
@@ -729,6 +855,39 @@ msgstr "Serverfel"
 msgid "A server error has occurred, and we have been notified about the error."
 msgstr "Ett serverfel har inträffat och vi har informerats om felet."
 
+#: templates/base.html:7
+msgid "OS2borgerPC Administration"
+msgstr "Sambruk MedborgarPC Administration"
+
+#: templates/base.html:41 templates/login.html:314
+msgid ""
+"It looks like you're using Internet Explorer. It won't work on this website."
+msgstr ""
+"Det verkar som om du använder Internet Explorer. Det fungerar inte på denna "
+"webbplats."
+
+#: templates/base.html:42 templates/login.html:315
+msgid "Try opening this website in Microsoft Edge"
+msgstr "Försök att öppna den här sidan i Microsoft Edge"
+
+#: templates/documentation/index.html:8
+msgid "OS2borgerPC documentation"
+msgstr "Sambruk MedborgarPC dokumentation"
+
+#: templates/documentation/index.html:22
+#: templates/site_with_navigation.html:119
+#: templates/system/changelog/list.html:34
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: templates/documentation/index.html:25
+msgid "Return to admin"
+msgstr "Tillbaka til admin"
+
+#: templates/login.html:9
+msgid "OS2borgerPC Administration Login"
+msgstr "Sambruk MedborgarPC Administration Inloggning"
+
 #: templates/login.html:283 templates/login.html:286
 msgid "Log in"
 msgstr "Logga in"
@@ -749,17 +908,6 @@ msgstr "Se uppdateringar i Sambruk MedborgarPC"
 msgid "Send a message to Magenta"
 msgstr "Skicka ett meddelande till Magenta"
 
-#: templates/login.html:314
-msgid ""
-"It looks like you're using Internet Explorer. It won't work on this website."
-msgstr ""
-"Det verkar som om du använder Internet Explorer. Det fungerar inte på denna "
-"webbplats."
-
-#: templates/login.html:315
-msgid "Try opening this website in Microsoft Edge"
-msgstr "Försök att öppna den här sidan i Microsoft Edge"
-
 #: templates/logout.html:11
 msgid "You have been logged out"
 msgstr "Du är nu utloggad"
@@ -772,14 +920,6 @@ msgstr "Klicka här för att logga in igen"
 #: templates/system/site_list.html:6
 msgid "Sites"
 msgstr "Sites"
-
-#: templates/site_with_navigation.html:31
-#: templates/system/jobs/site_jobs.html:35 templates/system/pcs/form.html:153
-#: templates/system/security_events/site_security_events.html:49
-#: templates/system/security_events/site_security_events.html:119
-#: templates/system/site_status.html:5 templates/system/site_status.html:23
-msgid "Status"
-msgstr "Status"
 
 #: templates/site_with_navigation.html:37
 #: templates/system/changelog/list.html:8
@@ -803,11 +943,6 @@ msgstr "Säkerhetsincidenter"
 msgid "Security Rules"
 msgstr "Säkerhetsregler"
 
-#: templates/site_with_navigation.html:61
-#: templates/system/scripts/header.html:5
-msgid "Security Scripts"
-msgstr "Skript för säkerhet"
-
 #: templates/site_with_navigation.html:67
 #: templates/system/site_two_factor.html:4
 msgid "Two-factor authentication"
@@ -816,26 +951,6 @@ msgstr "Verifiering i två steg"
 #: templates/site_with_navigation.html:71
 msgid "Organizing"
 msgstr "Organisering"
-
-#: templates/site_with_navigation.html:75
-#: templates/system/jobs/site_jobs.html:81
-#: templates/system/pcgroups/confirm_delete.html:18
-#: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
-#: templates/system/pcs/site_pcs.html:16 templates/system/site_list.html:7
-#: templates/system/site_status.html:11
-#: templates/system/wake_plan/confirm_delete.html:16
-#: templates/system/wake_plan/wake_plan.html:33
-msgid "Computers"
-msgstr "Datorer"
-
-#: templates/site_with_navigation.html:80
-#: templates/system/jobs/site_jobs.html:104
-#: templates/system/pcgroups/site_groups.html:7
-#: templates/system/security_problems/confirm_delete.html:23
-#: templates/system/wake_plan/confirm_delete.html:15
-#: templates/system/wake_plan/wake_plan.html:26
-msgid "Groups"
-msgstr "Grupper"
 
 #: templates/site_with_navigation.html:85
 #: templates/system/wake_plan/wake_plan_base.html:6
@@ -850,27 +965,9 @@ msgstr "Inställningar för Site"
 msgid "Scripting"
 msgstr "Scripting"
 
-#: templates/site_with_navigation.html:98
-#: templates/system/jobs/site_jobs.html:6
-#: templates/system/scripts/confirm_delete.html:21
-msgid "Jobs"
-msgstr "Jobs"
-
-#: templates/site_with_navigation.html:103
-#: templates/system/scripts/header.html:5
-#: templates/system/site_two_factor.html:52
-msgid "Scripts"
-msgstr "Scripts"
-
 #: templates/site_with_navigation.html:107
 msgid "Users & versions"
 msgstr "Användare och versioner"
-
-#: templates/site_with_navigation.html:110
-#: templates/system/users/confirm_delete.html:5
-#: templates/system/users/create.html:5 templates/system/users/update.html:5
-msgid "Users"
-msgstr "Användare"
 
 #: templates/site_with_navigation.html:115
 #: templates/system/site_image_versions.html:4
@@ -878,14 +975,9 @@ msgstr "Användare"
 msgid "Versions"
 msgstr "Versioner"
 
-#: templates/site_with_navigation.html:119
-#: templates/system/changelog/list.html:34
-msgid "Documentation"
-msgstr "Dokumentation"
-
 #: templates/site_with_navigation.html:127
 msgid "Administrating security scripts"
-msgstr "Administration av säkerhetsscript"
+msgstr "Administration av säkerhetsskript"
 
 #: templates/site_with_navigation.html:131
 msgid "Security rule definition"
@@ -921,21 +1013,19 @@ msgstr "Hjälp för nyhetssidan"
 
 #: templates/site_with_navigation.html:175
 msgid "Administrating scripts"
-msgstr "Administration av script"
+msgstr "Administration av skript"
 
 #: templates/site_with_navigation.html:179
 msgid "Executing scripts"
-msgstr "Exekvering av script"
-
-#: templates/site_with_navigation.html:186
-#: templates/system/pcgroups/site_groups.html:67
-#: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
-msgid "Configurations"
-msgstr "Konfigurationer"
+msgstr "Exekvering av skript"
 
 #: templates/site_with_navigation.html:192
 msgid "Read the documentation ..."
 msgstr "Läs dokumentation..."
+
+#: templates/sitebase.html:12
+msgid "Welcome"
+msgstr "Välkommen"
 
 #: templates/sitebase.html:24
 msgid "Log out"
@@ -1199,7 +1289,42 @@ msgstr "Återställ filter"
 msgid "Batches"
 msgstr "Batches"
 
-#: templates/system/jobs/site_jobs.html:168
+#: templates/system/jobs/site_jobs.html:155
+#: templates/system/pcgroups/policy_list/list.html:9
+#: templates/system/pcs/form.html:149
+#: templates/system/scripts/confirm_delete.html:12
+#: templates/system/scripts/create.html:19
+#: templates/system/scripts/create.html:37
+#: templates/system/scripts/update.html:18
+#: templates/system/scripts/update.html:51
+#: templates/system/scripts/update.html:118
+#: templates/system/scripts/update.html:125
+msgid "Script"
+msgstr "Skript"
+
+#: templates/system/jobs/site_jobs.html:156
+msgid "User"
+msgstr "Användare"
+
+#: templates/system/jobs/site_jobs.html:157 templates/system/pcs/form.html:150
+#: templates/system/scripts/form.html:8
+msgid "Created"
+msgstr "Skapad"
+
+#: templates/system/jobs/site_jobs.html:158 templates/system/pcs/form.html:151
+msgid "Started"
+msgstr "Startad"
+
+#: templates/system/jobs/site_jobs.html:159 templates/system/pcs/form.html:152
+msgid "Finished"
+msgstr "Avslutad"
+
+#: templates/system/jobs/site_jobs.html:161
+#: templates/system/wake_plan/wake_plan.html:39
+msgid "Computer"
+msgstr "Dator"
+
+#: templates/system/jobs/site_jobs.html:174
 #: templates/system/security_events/site_security_events.html:126
 msgid "Loading data..."
 msgstr "Hämta data..."
@@ -1224,7 +1349,7 @@ msgstr "Obs"
 #: templates/system/pcgroups/site_groups.html:64
 #: templates/system/scripts/confirm_delete.html:24
 msgid "Associated Scripts"
-msgstr "Associerade script"
+msgstr "Associerade skript"
 
 #: templates/system/pcgroups/confirm_delete.html:20
 msgid "the Group"
@@ -1293,18 +1418,6 @@ msgstr "Ta bort"
 msgid "Position"
 msgstr "Position"
 
-#: templates/system/pcgroups/policy_list/list.html:9
-#: templates/system/pcs/form.html:149
-#: templates/system/scripts/confirm_delete.html:12
-#: templates/system/scripts/create.html:19
-#: templates/system/scripts/create.html:37
-#: templates/system/scripts/update.html:18
-#: templates/system/scripts/update.html:51
-#: templates/system/scripts/update.html:118
-#: templates/system/scripts/update.html:125
-msgid "Script"
-msgstr "Script"
-
 #: templates/system/pcgroups/policy_list/list.html:10
 #: templates/system/scripts/form.html:36
 msgid "Arguments"
@@ -1313,7 +1426,7 @@ msgstr "Inputparametrar"
 #: templates/system/pcgroups/policy_list/list.html:23
 #: templates/system/pcgroups/policy_list/templates.html:34
 msgid "Add script"
-msgstr "Lägg till script"
+msgstr "Lägg till skript"
 
 #: templates/system/pcgroups/policy_list/list.html:31
 msgid "when inserting a policy list"
@@ -1321,7 +1434,7 @@ msgstr "när den infogas i en lista med tillhörande manuskript"
 
 #: templates/system/pcgroups/policy_list/templates.html:17
 msgid "Edit script"
-msgstr "Redigera script"
+msgstr "Redigera skript"
 
 #: templates/system/pcgroups/policy_list/templates.html:30
 msgid "Add script to group"
@@ -1388,8 +1501,7 @@ msgid ""
 "newly added to the Group run all the scripts on the list"
 msgstr ""
 "Befintliga datorer i gruppen kör endast nyligen tillagda skript, medan nya "
-"datorer i gruppen endast kör nya-lagt till Datorer till gruppen som kör hela "
-"listan med script"
+"datorer i gruppen kör hela listan med skript"
 
 #: templates/system/pcs/confirm_delete.html:6 templates/system/pcs/form.html:30
 msgid "Delete computer"
@@ -1453,18 +1565,6 @@ msgstr "Lägg till dator i gruppen"
 msgid "Remove computer from group"
 msgstr "Ta bort datorn från gruppen"
 
-#: templates/system/pcs/form.html:150 templates/system/scripts/form.html:8
-msgid "Created"
-msgstr "Skapad"
-
-#: templates/system/pcs/form.html:151
-msgid "Started"
-msgstr "Startad"
-
-#: templates/system/pcs/form.html:152
-msgid "Finished"
-msgstr "Avslutad"
-
 #: templates/system/pcs/site_pcs.html:17
 msgid "No computers were found"
 msgstr "Inga datorer hittades"
@@ -1483,11 +1583,11 @@ msgstr "Säkerhetsskript"
 #: templates/system/scripts/confirm_delete.html:22
 #: templates/system/scripts/confirm_delete.html:55
 msgid "the Script"
-msgstr "Scriptet"
+msgstr "Skriptet"
 
 #: templates/system/scripts/confirm_delete.html:23
 msgid "Associated Script"
-msgstr "Associerat Script"
+msgstr "Associerat Skript"
 
 #: templates/system/scripts/confirm_delete.html:25
 #: templates/system/scripts/confirm_delete.html:53
@@ -1553,7 +1653,7 @@ msgstr "Typ"
 
 #: templates/system/scripts/form.html:106
 msgid "Default value"
-msgstr ""
+msgstr "Standardvärde"
 
 #: templates/system/scripts/form.html:107
 msgid "Required"
@@ -1577,7 +1677,7 @@ msgstr "Globala scripts"
 #: templates/system/scripts/navigation.html:62
 #: templates/system/scripts/navigation.html:66
 msgid "Delete script"
-msgstr "Ta bort script"
+msgstr "Ta bort skript"
 
 #: templates/system/scripts/run_base.html:60
 msgid "Loading..."
@@ -1587,7 +1687,7 @@ msgstr "Laddar..."
 #: templates/system/scripts/run_step2.html:6
 #: templates/system/scripts/update.html:67
 msgid "Run script"
-msgstr "Kör script"
+msgstr "Kör skript"
 
 #: templates/system/scripts/run_step1.html:7
 msgid "Choose computer or groups"
@@ -1685,11 +1785,11 @@ msgstr "Maskin"
 
 #: templates/system/security_events/site_security_events.html:117
 msgid "Incident time"
-msgstr "Hændelsestidspunkt"
+msgstr "Händelsestidpunkt"
 
 #: templates/system/security_events/site_security_events.html:118
 msgid "Time of receipt"
-msgstr "Modtagelsestidspunkt"
+msgstr "Mottagningstidpunkt"
 
 #: templates/system/security_events/site_security_events.html:120
 msgid "Handled by"
@@ -1849,7 +1949,7 @@ msgid ""
 "versions are shown."
 msgstr ""
 "Din organisation har inget serviceavtal med en leverantör av Sambruk "
-"MedborgarPC leverantör., och därför visas inga versioner.."
+"MedborgarPC, och därför visas inga versioner.."
 
 #: templates/system/site_image_versions.html:102
 msgid "Please contact a OS2borgerPC provider to learn more."
@@ -2130,10 +2230,6 @@ msgid ""
 msgstr ""
 "En tidtabell gäller för alla %(computers)s i de %(groups)s, som är inskrivna "
 "i tidtabellen."
-
-#: templates/system/wake_plan/wake_plan.html:39
-msgid "Computer"
-msgstr "Dator"
 
 #: templates/system/wake_plan/wake_plan.html:40
 #, python-format

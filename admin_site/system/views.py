@@ -2089,6 +2089,8 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 site=site,
                 site_user_type=form.cleaned_data["usertype"],
             )
+            user_profile.language = form.cleaned_data["language"]
+            user_profile.save()
             result = super(UserCreate, self).form_valid(form)
             return result
         else:
@@ -2876,30 +2878,30 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
 
 documentation_menu_items = [
-    ("", "Administrationssiden"),
-    ("om_os2borgerpc_admin", "Om"),
-    ("status", "Status"),
-    ("computers", "Computere"),
-    ("groups", "Grupper"),
-    ("wake_plans", "Tænd/sluk tidsplaner"),
-    ("jobs", "Jobs"),
-    ("scripts", "Scripts"),
-    ("security_scripts", "Sikkerhedsscripts"),
-    ("users", "Brugere"),
-    ("configuration", "Konfigurationer"),
-    ("creating_security_problems", "Oprettelse af Sikkerhedsovervågning (PDF)"),
-    ("changelogs", "Nyhedssiden"),
-    ("", "OS2borgerPC"),
-    ("os2borgerpc_installation_guide", "Installationsguide (PDF)"),
-    ("os2borgerpc_installation_guide_old", "Gammel installationsguide (PDF)"),
-    ("", "OS2borgerPC Kiosk"),
-    ("os2borgerpc_kiosk_installation_guide", "Installationsguide"),
-    ("os2borgerpc_kiosk_wifi_guide", "Opdatering af Wi-Fi opsætning"),
-    ("", "Teknisk dokumentation"),
-    ("tech/os2borgerpc-image", "OS2borgerPC Image"),
-    ("tech/os2borgerpc-admin", "OS2borgerPC Admin Site"),
-    ("tech/os2borgerpc-server-image", "OS2borgerPC Kiosk Image"),
-    ("tech/os2borgerpc-client", "OS2borgerPC Client"),
+    ("", _("The administration site")),
+    ("om_os2borgerpc_admin", _("About")),
+    ("status", _("Status")),
+    ("computers", _("Computers")),
+    ("groups", _("Groups")),
+    ("wake_plans", _("On/Off schedules")),
+    ("jobs", _("Jobs")),
+    ("scripts", _("Scripts")),
+    ("security_scripts", _("Security Scripts")),
+    ("users", _("Users")),
+    ("configuration", _("Configurations")),
+    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
+    ("changelogs", _("The News site")),
+    ("", _("OS2borgerPC")),
+    ("os2borgerpc_installation_guide", _("Installation Guide (PDF)")),
+    ("os2borgerpc_installation_guide_old", _("Old installation guide (PDF)")),
+    ("", _("OS2borgerPC Kiosk")),
+    ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
+    ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
+    ("", _("Technical Documentation")),
+    ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
+    ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
+    ("tech/os2borgerpc-server-image", _("OS2borgerPC Kiosk Image")),
+    ("tech/os2borgerpc-client", _("OS2borgerPC Client")),
 ]
 
 
@@ -2921,7 +2923,10 @@ class DocView(TemplateView):
             raise Http404
 
         # Try <docname>.html and <docname>/index.html
-        name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
+        if self.request.user.bibos_profile.language == "se":
+            name_templates = ["documentation_se/{0}.html", "documentation_se/{0}/index.html"]
+        else:
+            name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
 
         templatename = None
         for nt in name_templates:
@@ -2951,7 +2956,10 @@ class DocView(TemplateView):
                 break
 
         # Add a submenu if it exists
-        submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
+        if self.request.user.bibos_profile.language == "se":
+            submenu_template = "documentation_se/" + docnames[0] + "/__submenu__.html"
+        else:
+            submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
         if self.template_exists(submenu_template):
             context["submenu_template"] = submenu_template
 

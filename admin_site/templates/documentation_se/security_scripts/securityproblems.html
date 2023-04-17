@@ -1,0 +1,36 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Säkerhetsregler</h1>
+  <p>
+    Översikten "Säkerhetsregler" visar alla definierade säkerhetsregler som övervakas.
+    Från översikten kan skapas nya säkerhetsregler.<br>
+    En ny säkerhetsregel måste ha följande indata::
+  </p>
+  <ul>
+	  <li>
+      Namn: Namnet på säkerhetsregeln i fråga.
+	  </li>	     
+	  <li>
+      UID: Ett kort och unikt namn (används internt i systemet). 
+      Detta ID används i koden för det associerade säkerhetsskriptet.
+      Om dessa två inte matchar vet systemet inte 
+      Den säkerhetsregel som säkerhetstillbudet tillhör..
+	  </li>
+	  <li>
+      Beskrivning: Beskrivande text som ingår i de skickade varningsmeddelandena.
+	  </li>
+	  <li>
+       Allvarlighetsgrad: Välj mellan kritisk, hög och normal.
+	  </li>
+	  <li>
+      Säkerhetsskript: Säkerhetsskriptet körs varje gång en dator kontaktar Sambruk MedborgarPC-admin.
+	  </li>
+	  <li>
+      Övervakade grupper: Grupperna definierar vilka datorer den aktuella säkerhetsregeln är aktiv för.
+	  </li>
+	  <li>
+      Mottagare av e-postavisering: Vilka användare som ska få ett meddelande om aviseringen via e-post.
+	  </li>
+  </ul>
+{% endblock %}
