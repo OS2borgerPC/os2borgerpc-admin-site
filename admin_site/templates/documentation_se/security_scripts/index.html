@@ -1,0 +1,34 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Hantering av säkerhetsskript</h1>
+  <p>
+    När du klickar på "Säkerhetsskript" i vänstermenyn kommer du till höger om
+    den vänstra menyn visar en lista över säkerhetsskript och till höger om detta
+    visar redigeringsgränssnittet för säkerhetsskript.
+  </p>
+  <p>
+    Säkerhetsskript övervakar speciella händelser, medan skript är för
+    fristående åtgärder.
+  </p>
+  <p>
+    Listan över säkerhetsskript är uppdelad i två delar, som du kan växla mellan genom att
+    klicka på flikarna "Lokala skript" och "Globala skript" ovan över listan.
+  </p>
+  <p>
+    Lokala skript täcker säkerhetsskript som bara kan användas på det site du är
+    under Medan globala skript omfattar säkerhetsskript som kan användas på alla
+    sites.
+  </p>
+  <p>
+    För varje säkerhetsskript kan du välja mellan följande:
+    {% include 'documentation_se/security_scripts/__submenu__.html' %}
+  </p>
+  <p>
+    Om du vill skapa ett nytt säkerhetsskript klickar du på "lägg till nytt
+    skript" ovanför listan över säkerhetsskript. Detta öppnar en dialogruta där du kan
+    fyll i namn, beskrivning och ladda upp säkerhetsskriptkoden. När du klickar på
+    säkerhetsskriptet skapas och du omdirigeras till
+    redigeringssidan för det nyligen skapade säkerhetsskriptet.
+  </p>
+{% endblock %}

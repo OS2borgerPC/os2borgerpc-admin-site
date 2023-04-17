@@ -103,7 +103,7 @@ translations-make-messages: (verify-container-running django_container)
 
 # Run django's compile-messages (usually after make-messages) for translations
 translations-compile-messages: (verify-container-running django_container)
-  @just managepy compilemessages --locale da,se
+  @just managepy compilemessages --locale da,sv
 
 # Replace all the fixtures (test data) with what you currently have in your local adminsite db
 update-test-data: (verify-container-running django_container)

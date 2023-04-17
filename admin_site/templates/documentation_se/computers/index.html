@@ -1,0 +1,20 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Datorhantering</h1>
+
+  <p>
+    Administrationssidan för en dator har tre flikar med olika
+    Funktioner som beskrivs nedan. Klicka på den enskilda fliken för att
+    Öppna lämplig funktion.
+  </p>
+  <p>
+    Du hittar dokumentation för de olika delarna genom att följa följande
+    Länkar:
+    {% include 'documentation_se/computers/__submenu__.html' with submenu_active=None %}
+  </p>
+  <p>
+    Du kan läsa mer om konfigurationer på sidan <a href="{% url 'doc' 'configuration' %}">Konfigurationer</a>.
+  </p>
+
+{% endblock %}

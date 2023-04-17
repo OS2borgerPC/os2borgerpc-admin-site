@@ -1,0 +1,33 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Associerade Script</h1>
+
+  <p>
+    Du har möjlighet att tilldela en serie associerade skript till varje grupp. Så här ändrar du associerade skript för en grupp, klicka in i gruppen och tryck på fliken <strong>Associerade Script</strong>.
+    Tryck på inmatningsfältet <strong>Lägg till script</strong> och sök efter skriptet du vill associera med gruppen, klicka sedan på skriptet så läggs det till som associerat skript.
+  </p>
+  <p>
+    När en dator läggs till i en grupp körs alla associerade skript automatiskt.
+    När du tilldelar ett nytt skript till en grupp körs det automatiskt på gruppens datorer.
+  </p>
+  <p>
+    Skript har en position som anger i vilken ordning de körs, och de kan ha vissa indataparametrar
+    som de körs med.
+  </p>
+  <p>En dator kan enkelt anslutas av flera grupper.<br/>
+    Exempel: Det finns en dator i biblioteket och en annan i Medborgarservice, som måste ha olika hemsidor, 
+    Men båda har samma skanner inkopplad. Då kan datorerna registreras i en grupp för medborgarservice och en annan för skannerdatorer.</p>
+  <p>
+    Vi rekommenderar att du använder Associerade Script när det är möjligt, eftersom det kan göra det lättare att ställa in nya
+  datorer upp på en avdelning, eftersom allt du behöver göra är att registrera dig för gruppen och sedan köra lämpliga skript
+  sedan med rätt ingångsparametrar automatiskt.
+  </p>
+  <h2>Anteckningar</h2>
+  <ul>
+    <li>När ett skript läggs till eller tas bort från listan sparas det bara efter att ha tryckt på <strong>Spara ändringar</strong>.</li>
+    <li>Om skriptet du lägger till använder indataparametrar anger du värdena för dessa genom att trycka på <strong>Redigera</strong>, och detta <em>ska</em> göras innan
+      ändringarna kan sparas. Det innebär att ett skript som använder indataparametrar inte kan mappas, med tomma indataparametrar.</li>
+    <li>Om du vill ändra indataparametrarna för ett visst skript måste skriptet tas bort från gruppen och läggas till igen med de uppdaterade indataparametrarna.</li>
+  </ul>
+{% endblock %}

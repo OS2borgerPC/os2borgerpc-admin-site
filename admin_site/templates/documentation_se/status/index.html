@@ -1,0 +1,18 @@
+{% extends 'documentation/index.html' %}
+
+{% block getting_started_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  <h1>Status</h1>
+  <p>
+    När du loggar in på Sambruk MedborgarPC-admin Du kommer att presenteras med statusbilden
+    för dit site, som din Sambruk MedborgarPC-Användaren är associerad till. 
+    Om du har åtkomst till flera sites måste du först välja det site du vill ange.
+  </p>
+  <h2>Datorer</h2>
+  <p>
+    I den här listan ser du information om alla datorer för sitet, sorterade efter nya/inaktiva datorer
+    <a href="{% url 'doc' 'computers/activating' %}">som väntar på att aktiveras</a>  på toppen, och annars när de senast sågs.
+  </p>
+  <p>Du kan klicka på den enskilda datorn för att se mer information om den.</p>
+{% endblock %}

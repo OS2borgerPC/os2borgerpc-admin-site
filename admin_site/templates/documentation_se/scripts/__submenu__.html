@@ -1,0 +1,11 @@
+<ul class="docsubnav">
+    <li {% ifequal submenu_active 'edit' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'scripts/edit' %}"> Redigering av Skript</a>
+    </li>
+    <li {% ifequal submenu_active 'parameters' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'scripts/parameters' %}"> Redigering av inmatningsparametrar</a>
+    </li>
+    <li {% ifequal submenu_active 'running' %}class="active"{% endifequal %}>
+      <a href="{% url 'doc' 'scripts/running' %}"> Utförande av Skript</a>
+    </li>
+</ul>
