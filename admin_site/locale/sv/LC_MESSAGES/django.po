@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-17 16:51+0200\n"
+"POT-Creation-Date: 2023-04-18 13:26+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: se\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -378,7 +378,7 @@ msgstr "Slutförd"
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan inte ändra status från {0} til {1}"
 
-#: system/models.py:946 system/views.py:503
+#: system/models.py:946 system/views.py:509
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan endast starta om jobb som har status %s"
@@ -491,49 +491,49 @@ msgstr "författare"
 msgid "version"
 msgstr "version"
 
-#: system/views.py:313
+#: system/views.py:315
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Inställningar för %s uppdaterat"
 
-#: system/views.py:536
+#: system/views.py:545
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
-msgstr "Scriptet %s körs på datorn %s"
+msgstr "Skriptet %s körs på datorn %s"
 
-#: system/views.py:579
+#: system/views.py:590
 #, python-format
 msgid "You have no Script with the following ID: %s"
-msgstr "Du har inget script med ID %s"
+msgstr "Du har inget skript med ID %s"
 
-#: system/views.py:686
+#: system/views.py:697
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du ska ange ett namn"
 
-#: system/views.py:693
+#: system/views.py:704
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du måste ange en korrekt typ av inmatningsparameter."
 
-#: system/views.py:851
+#: system/views.py:864
 #, python-format
 msgid "Script %s updated"
-msgstr "Script %s updaterat"
+msgstr "Skript %s updaterat"
 
-#: system/views.py:946 system/views.py:968
+#: system/views.py:961 system/views.py:983
 msgid "You must specify at least one group or pc"
 msgstr "Du måste ange minst en dator eller grupp"
 
-#: system/views.py:1094
+#: system/views.py:1109
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen dator med följande ID: %s"
 
-#: system/views.py:1164
+#: system/views.py:1181
 #, python-format
 msgid "Computer %s updated"
 msgstr "Dator %s uppdaterad"
 
-#: system/views.py:1428
+#: system/views.py:1447
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -545,7 +545,7 @@ msgstr ""
 "tidtabellerna%s, och undantag(en) %s kunde inte läggas till på grund av "
 "överlappning med andra utvalda undantag."
 
-#: system/views.py:1445
+#: system/views.py:1462
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -555,7 +555,7 @@ msgstr ""
 "inte läggas till somdator(er) %s är redan inskrivna i tidtabellen/"
 "tidtabellerna %s"
 
-#: system/views.py:1460
+#: system/views.py:1475
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -564,17 +564,17 @@ msgstr ""
 "På-/Av-schema %s har skapats, men undantaget/undantagen %s har inte kunnat "
 "läggas till. grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1471
+#: system/views.py:1485
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Schema för på- och avstängning %s har skapats"
 
-#: system/views.py:1490
+#: system/views.py:1505
 #, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidtabell med följande ID: %s"
 
-#: system/views.py:1615
+#: system/views.py:1630
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -586,7 +586,7 @@ msgstr ""
 "och undantaget/undantagen %s kunde inte läggas till på grund av överlappning "
 "med andra valda undantag"
 
-#: system/views.py:1632
+#: system/views.py:1645
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -595,7 +595,7 @@ msgstr ""
 "Tänd- och släckschema %s uppdaterat, men grupp(er) %s kunde inte läggas till "
 "eftersom dator(er) %s är redan inskrivna i schema(n) %s"
 
-#: system/views.py:1647
+#: system/views.py:1658
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -604,52 +604,52 @@ msgstr ""
 "Tidtabell för på- och avstängning %s uppdaterad, men undantag %s kunde inte "
 "läggas till på grund av överlappning med andra utvalda undantag"
 
-#: system/views.py:1658
+#: system/views.py:1669
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Uppdatering av schemat för på- och avstängning %s"
 
-#: system/views.py:1751
+#: system/views.py:1766
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tänd/släck schema %s borttagen"
 
-#: system/views.py:1871
+#: system/views.py:1888
 #, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har inget undantag med ID %s"
 
-#: system/views.py:1906
+#: system/views.py:1925
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undantag %s uppdaterat"
 
-#: system/views.py:1913
+#: system/views.py:1935
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr "De valda datumen skulle överlappa med undantaget %s i schemat %s"
 
-#: system/views.py:1920 system/views.py:1973
+#: system/views.py:1945 system/views.py:2001
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Datumet Till får inte vara före datumet Från %s"
 
-#: system/views.py:2113
+#: system/views.py:2143
 #, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ingen användare med följande ID: %s"
 
-#: system/views.py:2177
+#: system/views.py:2208
 #, python-format
 msgid "User %s updated"
 msgstr "Användare %s uppdaterad"
 
-#: system/views.py:2218
+#: system/views.py:2251
 #, python-format
 msgid "User %s deleted"
 msgstr "Användaren %s raderad"
 
-#: system/views.py:2304
+#: system/views.py:2338
 #, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
@@ -658,7 +658,7 @@ msgstr ""
 "Du har ingen grupp med följande <em>ID</em>:<br/><br/> <h3>%s</h3><br/> "
 "Försök istället att hitta gruppen från grupplistan."
 
-#: system/views.py:2473
+#: system/views.py:2507
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -667,46 +667,45 @@ msgstr ""
 "Grupp %s uppdaterad, men dator(er) %s kunde inte läggas till eftersom de är "
 "redan inskriven i tidtabellen/tidtabellerna %s"
 
-#: system/views.py:2485
+#: system/views.py:2519
 #, python-format
 msgid "Group %s updated"
 msgstr "Grupp %s uppdaterad"
 
-#: system/views.py:2497
-#, python-brace-format
-msgid ""
-"No value was specified for the mandatory input \"{0}\" of script \"{1}\""
-msgstr "Det obligatoriska parametervärdet \"{0}\" för skriptet \"{1}\" saknas."
+#: system/views.py:2533
+#, python-format
+msgid "No value was specified for the mandatory input %s of script %s"
+msgstr "Det obligatoriska parametervärdet %s för skriptet %s saknas."
 
-#: system/views.py:2567
+#: system/views.py:2605
 #, python-format
 msgid "Group %s deleted"
 msgstr "Grupp %s borttagen"
 
-#: system/views.py:2633
+#: system/views.py:2672
 #, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ingen säkerhetsregel med följande ID: %s"
 
-#: system/views.py:2881
+#: system/views.py:2920
 msgid "The administration site"
 msgstr "Administrationssidan"
 
-#: system/views.py:2882
+#: system/views.py:2921
 msgid "About"
 msgstr "Om"
 
-#: system/views.py:2883 templates/site_with_navigation.html:31
-#: templates/system/jobs/site_jobs.html:35
-#: templates/system/jobs/site_jobs.html:160 templates/system/pcs/form.html:153
-#: templates/system/security_events/site_security_events.html:49
-#: templates/system/security_events/site_security_events.html:119
+#: system/views.py:2922 templates/site_with_navigation.html:31
+#: templates/system/jobs/site_jobs.html:37
+#: templates/system/jobs/site_jobs.html:162 templates/system/pcs/form.html:153
+#: templates/system/security_events/site_security_events.html:51
+#: templates/system/security_events/site_security_events.html:121
 #: templates/system/site_status.html:5 templates/system/site_status.html:23
 msgid "Status"
 msgstr "Status"
 
-#: system/views.py:2884 templates/site_with_navigation.html:75
-#: templates/system/jobs/site_jobs.html:81
+#: system/views.py:2923 templates/site_with_navigation.html:75
+#: templates/system/jobs/site_jobs.html:83
 #: templates/system/pcgroups/confirm_delete.html:18
 #: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
 #: templates/system/pcs/site_pcs.html:16 templates/system/site_list.html:7
@@ -716,8 +715,8 @@ msgstr "Status"
 msgid "Computers"
 msgstr "Datorer"
 
-#: system/views.py:2885 templates/site_with_navigation.html:80
-#: templates/system/jobs/site_jobs.html:104
+#: system/views.py:2924 templates/site_with_navigation.html:80
+#: templates/system/jobs/site_jobs.html:106
 #: templates/system/pcgroups/site_groups.html:7
 #: templates/system/security_problems/confirm_delete.html:23
 #: templates/system/wake_plan/confirm_delete.html:15
@@ -725,88 +724,88 @@ msgstr "Datorer"
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py:2886
+#: system/views.py:2925
 msgid "On/Off schedules"
 msgstr "Schema för på- och avstängning"
 
-#: system/views.py:2887 templates/site_with_navigation.html:98
+#: system/views.py:2926 templates/site_with_navigation.html:98
 #: templates/system/jobs/site_jobs.html:6
 #: templates/system/scripts/confirm_delete.html:21
 msgid "Jobs"
 msgstr "Jobs"
 
-#: system/views.py:2888 templates/site_with_navigation.html:103
+#: system/views.py:2927 templates/site_with_navigation.html:103
 #: templates/system/scripts/header.html:5
 #: templates/system/site_two_factor.html:52
 msgid "Scripts"
-msgstr "Scripts"
+msgstr "Skript"
 
-#: system/views.py:2889 templates/site_with_navigation.html:61
+#: system/views.py:2928 templates/site_with_navigation.html:61
 #: templates/system/scripts/header.html:5
 msgid "Security Scripts"
 msgstr "Skript för säkerhet"
 
-#: system/views.py:2890 templates/site_with_navigation.html:110
+#: system/views.py:2929 templates/site_with_navigation.html:110
 #: templates/system/users/confirm_delete.html:5
 #: templates/system/users/create.html:5 templates/system/users/update.html:5
 msgid "Users"
 msgstr "Användare"
 
-#: system/views.py:2891 templates/site_with_navigation.html:186
+#: system/views.py:2930 templates/site_with_navigation.html:186
 #: templates/system/pcgroups/site_groups.html:67
 #: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
 msgid "Configurations"
 msgstr "Konfigurationer"
 
-#: system/views.py:2892
+#: system/views.py:2931
 msgid "Setting up security surveillance (PDF)"
 msgstr "Skapande av säkerhetsövervakning (PDF)"
 
-#: system/views.py:2893
+#: system/views.py:2932
 msgid "The News site"
 msgstr "Nyhetssidan"
 
-#: system/views.py:2894
+#: system/views.py:2933
 msgid "OS2borgerPC"
 msgstr "Sambruk MedbogarPC"
 
-#: system/views.py:2895
+#: system/views.py:2934
 msgid "Installation Guide (PDF)"
 msgstr "Installationsguide (PDF)"
 
-#: system/views.py:2896
+#: system/views.py:2935
 msgid "Old installation guide (PDF)"
 msgstr "Gammal installationsguide (PDF)"
 
-#: system/views.py:2897
+#: system/views.py:2936
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
-#: system/views.py:2898
+#: system/views.py:2937
 msgid "Installation Guide"
 msgstr "Installationsguide"
 
-#: system/views.py:2899
+#: system/views.py:2938
 msgid "Updating Wi-Fi setup"
 msgstr "Uppdaterar Wi-Fi inställningar"
 
-#: system/views.py:2900
+#: system/views.py:2939
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
 
-#: system/views.py:2901
+#: system/views.py:2940
 msgid "OS2borgerPC Image"
 msgstr "Sambruk MedborgarPC Image"
 
-#: system/views.py:2902
+#: system/views.py:2941
 msgid "OS2borgerPC Admin Site"
 msgstr "Sambruk MedborgarPC Admin Site"
 
-#: system/views.py:2903
+#: system/views.py:2942
 msgid "OS2borgerPC Kiosk Image"
 msgstr "Sambruk MedborgarPC Kiosk Image"
 
-#: system/views.py:2904
+#: system/views.py:2943
 msgid "OS2borgerPC Client"
 msgstr "Sambruk MedborgarPC Client"
 
@@ -1058,7 +1057,7 @@ msgstr "Lägg till en kommentar"
 #: templates/system/scripts/create.html:41
 #: templates/system/scripts/update.html:79
 #: templates/system/scripts/update.html:126
-#: templates/system/security_events/site_security_events.html:99
+#: templates/system/security_events/site_security_events.html:101
 #: templates/system/security_problems/confirm_delete.html:49
 #: templates/system/security_problems/site_security_problems.html:112
 #: templates/system/security_problems/site_security_problems.html:157
@@ -1110,7 +1109,7 @@ msgstr "Relaterad till version"
 
 #: templates/system/changelog/item.html:35
 msgid "Written by"
-msgstr "Skrevet af"
+msgstr "Skriven av"
 
 #: templates/system/changelog/item.html:45
 msgid "Comments"
@@ -1275,21 +1274,21 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: templates/system/jobs/site_jobs.html:20
-#: templates/system/security_events/site_security_events.html:21
+#: templates/system/jobs/site_jobs.html:22
+#: templates/system/security_events/site_security_events.html:23
 msgid "Filters"
 msgstr "Filter"
 
-#: templates/system/jobs/site_jobs.html:21
-#: templates/system/security_events/site_security_events.html:23
+#: templates/system/jobs/site_jobs.html:23
+#: templates/system/security_events/site_security_events.html:25
 msgid "Reset filters"
 msgstr "Återställ filter"
 
-#: templates/system/jobs/site_jobs.html:58
+#: templates/system/jobs/site_jobs.html:60
 msgid "Batches"
 msgstr "Batches"
 
-#: templates/system/jobs/site_jobs.html:155
+#: templates/system/jobs/site_jobs.html:157
 #: templates/system/pcgroups/policy_list/list.html:9
 #: templates/system/pcs/form.html:149
 #: templates/system/scripts/confirm_delete.html:12
@@ -1302,30 +1301,30 @@ msgstr "Batches"
 msgid "Script"
 msgstr "Skript"
 
-#: templates/system/jobs/site_jobs.html:156
+#: templates/system/jobs/site_jobs.html:158
 msgid "User"
 msgstr "Användare"
 
-#: templates/system/jobs/site_jobs.html:157 templates/system/pcs/form.html:150
+#: templates/system/jobs/site_jobs.html:159 templates/system/pcs/form.html:150
 #: templates/system/scripts/form.html:8
 msgid "Created"
 msgstr "Skapad"
 
-#: templates/system/jobs/site_jobs.html:158 templates/system/pcs/form.html:151
+#: templates/system/jobs/site_jobs.html:160 templates/system/pcs/form.html:151
 msgid "Started"
 msgstr "Startad"
 
-#: templates/system/jobs/site_jobs.html:159 templates/system/pcs/form.html:152
+#: templates/system/jobs/site_jobs.html:161 templates/system/pcs/form.html:152
 msgid "Finished"
 msgstr "Avslutad"
 
-#: templates/system/jobs/site_jobs.html:161
+#: templates/system/jobs/site_jobs.html:163
 #: templates/system/wake_plan/wake_plan.html:39
 msgid "Computer"
 msgstr "Dator"
 
-#: templates/system/jobs/site_jobs.html:174
-#: templates/system/security_events/site_security_events.html:126
+#: templates/system/jobs/site_jobs.html:176
+#: templates/system/security_events/site_security_events.html:128
 msgid "Loading data..."
 msgstr "Hämta data..."
 
@@ -1362,7 +1361,7 @@ msgid ""
 "%(the_group)s."
 msgstr ""
 "Associerade %(computers)s och %(asc_scripts)s kommer att tas bort från"
-"%gruppen(erna)."
+"%(the_group)s."
 
 #: templates/system/pcgroups/confirm_delete.html:26
 msgid "The Computers"
@@ -1370,7 +1369,7 @@ msgstr "Datorerna"
 
 #: templates/system/pcgroups/confirm_delete.html:27
 msgid "the Scripts"
-msgstr "Scripten"
+msgstr "Skripten"
 
 #: templates/system/pcgroups/confirm_delete.html:28
 #: templates/system/security_problems/confirm_delete.html:35
@@ -1438,7 +1437,7 @@ msgstr "Redigera skript"
 
 #: templates/system/pcgroups/policy_list/templates.html:30
 msgid "Add script to group"
-msgstr "Lägg till script till grupp"
+msgstr "Lägg till skript till grupp"
 
 #: templates/system/pcgroups/site_groups.html:24
 #: templates/system/pcgroups/site_groups.html:174
@@ -1666,11 +1665,11 @@ msgstr "Lägg till parametrar"
 
 #: templates/system/scripts/navigation.html:7
 msgid "Local scripts"
-msgstr "Lokala scripts"
+msgstr "Lokala skript"
 
 #: templates/system/scripts/navigation.html:10
 msgid "Global scripts"
-msgstr "Globala scripts"
+msgstr "Globala skript"
 
 #: templates/system/scripts/navigation.html:38
 #: templates/system/scripts/navigation.html:42
@@ -1729,7 +1728,7 @@ msgstr "Job startat"
 #, python-format
 msgid ""
 "Job based on script %(sname)s has been started on %(num_pcs)s computer(s)"
-msgstr "Job baserat på script %(sname)s har påbörjats på %(num_pcs)s dator(er)"
+msgstr "Job baserat på skript %(sname)s har påbörjats på %(num_pcs)s dator(er)"
 
 #: templates/system/scripts/run_step3.html:13
 msgid "You can follow the created jobs here"
@@ -1754,44 +1753,44 @@ msgid "Clear the filter"
 msgstr "Rensa filter"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: templates/system/security_events/site_security_events.html:35
-#: templates/system/security_events/site_security_events.html:112
+#: templates/system/security_events/site_security_events.html:37
+#: templates/system/security_events/site_security_events.html:114
 msgid "Level"
 msgstr "Svårighetsgrad"
 
-#: templates/system/security_events/site_security_events.html:91
+#: templates/system/security_events/site_security_events.html:93
 msgid "Edit Security Events"
 msgstr "Redigera säkerhetsincidenter"
 
-#: templates/system/security_events/site_security_events.html:98
+#: templates/system/security_events/site_security_events.html:100
 msgid "Handle event"
 msgstr "Hantera incidenter"
 
-#: templates/system/security_events/site_security_events.html:107
+#: templates/system/security_events/site_security_events.html:109
 msgid "Handle events"
 msgstr "Hantera incidenter"
 
-#: templates/system/security_events/site_security_events.html:113
+#: templates/system/security_events/site_security_events.html:115
 msgid "Rule"
 msgstr "Regel"
 
-#: templates/system/security_events/site_security_events.html:115
+#: templates/system/security_events/site_security_events.html:117
 msgid "Info"
 msgstr "Info"
 
-#: templates/system/security_events/site_security_events.html:116
+#: templates/system/security_events/site_security_events.html:118
 msgid "Device"
 msgstr "Maskin"
 
-#: templates/system/security_events/site_security_events.html:117
+#: templates/system/security_events/site_security_events.html:119
 msgid "Incident time"
 msgstr "Händelsestidpunkt"
 
-#: templates/system/security_events/site_security_events.html:118
+#: templates/system/security_events/site_security_events.html:120
 msgid "Time of receipt"
 msgstr "Mottagningstidpunkt"
 
-#: templates/system/security_events/site_security_events.html:120
+#: templates/system/security_events/site_security_events.html:122
 msgid "Handled by"
 msgstr "Hanteras av"
 
@@ -2032,8 +2031,8 @@ msgid ""
 "Copy the security key from step 1 and run the two-factor script with it as "
 "input"
 msgstr ""
-"Kopiera säkerhetsnyckeln från steg 1 och kör tvåstegsskriptet med den "
-"somIngångsparameter."
+"Kopiera säkerhetsnyckeln från steg 1 och kör tvåstegsskriptet med den som "
+"Ingångsparameter."
 
 #: templates/system/site_two_factor.html:51
 #, python-format
