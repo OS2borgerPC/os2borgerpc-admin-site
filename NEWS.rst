@@ -1,3 +1,13 @@
+Version 5.13.0, April 18, 2023
+------------------------------
+
+- Add language variability and allow Danish, English or Swedish
+- Add default values for script inputs
+- Fix sorting for last_seen on status page
+- Show paid_for_access_until on sites overview in backend
+- Switch from custom DB image to default postgres image in docker-compose.yml
+- Don't redirect to a hidden script when entering scripts subsection
+
 Version 5.12.0, March 15, 2023
 ------------------------------
 

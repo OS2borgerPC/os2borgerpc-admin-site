@@ -134,6 +134,7 @@ function type_check(event) {
         checkboxes[index].checked = true
     }
     default_values[index].disabled = false
+    default_values[index].value = ""
     if (event.target.value == "STRING") {
         default_values[index].type = "text"
     } else if (event.target.value == "DATE") {
@@ -144,7 +145,6 @@ function type_check(event) {
         default_values[index].type = "time"
     } else {
         default_values[index].type = "text"
-        default_values[index].value = ""
         default_values[index].disabled = true
     }
 }
