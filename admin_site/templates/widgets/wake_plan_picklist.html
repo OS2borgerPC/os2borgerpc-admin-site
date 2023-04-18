@@ -1,6 +1,7 @@
 <!-- This picklist copy was created to get the wake plan to be able to save and restore changes when navigating back and
 forth between a wake plan and wake change events.
 In the future consider if this can be merged back into the regular picklist, with a few conditionals -->
+{% load i18n %}
 {% if submit_name and identifier %}
 
     {% comment %}
@@ -194,6 +195,6 @@ In the future consider if this can be merged back into the regular picklist, wit
 
 {% else %}
 
-  <p>Data mangler</p>
+  <p>{% translate "Data is missing" %}</p>
 
 {% endif %}

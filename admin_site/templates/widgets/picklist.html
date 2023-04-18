@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if submit_name and identifier %}
 
     {% comment %}
@@ -160,6 +161,6 @@
 
 {% else %}
 
-  <p>Data mangler</p>
+  <p>{% translate "Data is missing" %}</p>
 
 {% endif %}

@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.utils import translation
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
 
@@ -309,7 +310,9 @@ class SiteSettings(UpdateView, SiteView):
         # Handle saving of site configs data
         self.object.configuration.update_from_request(request.POST, "site_configs")
 
+        translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(response, _("Settings for %s updated") % kwargs["slug"])
+        translation.deactivate()
         return response
 
 
@@ -498,9 +501,12 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
     def status_fail_response(self):
         response = HttpResponseRedirect(self.get_success_url())
+        translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(
-            response, _("Can only restart jobs with status %s") % Job.FAILED
+            response,
+            _("Can only restart jobs with status %s") % Job.FAILED,
         )
+        translation.deactivate()
         return response
 
     def get(self, request, *args, **kwargs):
@@ -530,11 +536,13 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
         self.object.restart(user=self.request.user)
         response = HttpResponseRedirect(self.get_success_url())
+        translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(
             response,
             _("The script %s is being rerun on the computer %s")
             % (self.object.batch.script.name, self.object.pc.name),
         )
+        translation.deactivate()
         return response
 
     def get_success_url(self):
@@ -847,7 +855,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.save_script_inputs()
             self.create_associated_script_parameters()
             response = super(ScriptUpdate, self).form_valid(form)
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(response, _("Script %s updated") % self.script.name)
+            translation.deactivate()
 
             return response
         else:
@@ -1160,7 +1170,9 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                     for asc in policy:
                         asc.run_on(self.request.user, [pc])
 
+        translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(response, _("Computer %s updated") % pc.name)
+        translation.deactivate()
         return response
 
 
@@ -1421,6 +1433,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
 
         # If some groups or exceptions could not be verified, display this and the reason
         if invalid_groups_string and invalid_events_string:
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1437,7 +1450,9 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
                 ),
                 error=True,
             )
+            translation.deactivate()
         elif invalid_groups_string and not invalid_events_string:
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1452,23 +1467,25 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
                 ),
                 error=True,
             )
+            translation.deactivate()
         elif not invalid_groups_string and invalid_events_string:
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response,
                 _(
                     "PCWakePlan %s created, but the WakeChangeEvents %s could not be added "
                     "due to overlap"
                 )
-                % (
-                    self.object.name,
-                    invalid_events_string,
-                ),
+                % (self.object.name, invalid_events_string),
                 error=True,
             )
+            translation.deactivate()
         else:
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response, _("PCWakePlan %s created") % self.object.name
             )
+            translation.deactivate()
 
         return response
 
@@ -1608,6 +1625,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             # If some groups or exceptions could not be verified, display this and the reason
             if invalid_groups_string and invalid_events_string:
+                translation.activate(self.request.user.bibos_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1624,7 +1642,9 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                     ),
                     error=True,
                 )
+                translation.deactivate()
             elif invalid_groups_string and not invalid_events_string:
+                translation.activate(self.request.user.bibos_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1639,23 +1659,26 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                     ),
                     error=True,
                 )
+                translation.deactivate()
             elif not invalid_groups_string and invalid_events_string:
+                translation.activate(self.request.user.bibos_profile.language)
                 set_notification_cookie(
                     response,
                     _(
                         "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added "
                         "due to overlap"
                     )
-                    % (
-                        self.object.name,
-                        invalid_events_string,
-                    ),
+                    % (self.object.name, invalid_events_string),
                     error=True,
                 )
+                translation.deactivate()
             else:
+                translation.activate(self.request.user.bibos_profile.language)
                 set_notification_cookie(
-                    response, _("PCWakePlan %s updated") % self.object.name
+                    response,
+                    _("PCWakePlan %s updated") % self.object.name,
                 )
+                translation.deactivate()
 
             return response
 
@@ -1746,9 +1769,12 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
 
         response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
 
+        translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(
-            response, _("Wake Week Plan %s deleted") % deleted_plan_name
+            response,
+            _("Wake Week Plan %s deleted") % deleted_plan_name,
         )
+        translation.deactivate()
         return response
 
 
@@ -1901,24 +1927,31 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                                 type="set",
                             )
 
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
-                response, _("Wake Change Event %s updated") % self.object.name
+                response,
+                _("Wake Change Event %s updated") % self.object.name,
             )
+            translation.deactivate()
         else:
             response = self.form_invalid(form)
             if overlapping_event:
+                translation.activate(self.request.user.bibos_profile.language)
                 set_notification_cookie(
                     response,
                     _("The chosen dates would cause overlap with event %s in plan %s")
                     % (overlapping_event, plan_with_overlap),
                     error=True,
                 )
+                translation.deactivate()
             else:
+                translation.activate(self.request.user.bibos_profile.language)
                 set_notification_cookie(
                     response,
                     _("The end date cannot be before the start date %s") % "",
                     error=True,
                 )
+                translation.deactivate()
 
         return response
 
@@ -1967,11 +2000,13 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
             response = super(WakeChangeEventCreate, self).form_valid(form)
         else:
             response = self.form_invalid(form)
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response,
                 _("The end date cannot be before the start date %s") % "",
                 error=True,
             )
+            translation.deactivate()
 
         return response
 
@@ -2088,6 +2123,8 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 site=site,
                 site_user_type=form.cleaned_data["usertype"],
             )
+            user_profile.language = form.cleaned_data["language"]
+            user_profile.save()
             result = super(UserCreate, self).form_valid(form)
             return result
         else:
@@ -2167,10 +2204,14 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
             site_membership.site_user_type = form.cleaned_data["usertype"]
             site_membership.save()
+            user_profile.language = form.cleaned_data["language"]
+            user_profile.save()
             response = super(UserUpdate, self).form_valid(form)
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response, _("User %s updated") % self.object.username
             )
+            translation.deactivate()
             return response
         else:
             raise PermissionDenied
@@ -2209,9 +2250,11 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             raise PermissionDenied
         response = super(UserDelete, self).delete(request, *args, **kwargs)
+        translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
         )
+        translation.deactivate()
         return response
 
 
@@ -2462,6 +2505,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     ) = self.get_notification_strings(
                         pcs_with_other_plans_names, other_plans_names
                     )
+                    translation.activate(self.request.user.bibos_profile.language)
                     set_notification_cookie(
                         response,
                         _(
@@ -2475,10 +2519,14 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                         ),
                         error=True,
                     )
+                    translation.deactivate()
                 else:
+                    translation.activate(self.request.user.bibos_profile.language)
                     set_notification_cookie(
-                        response, _("Group %s updated") % self.object.name
+                        response,
+                        _("Group %s updated") % self.object.name,
                     )
+                    translation.deactivate()
 
                 return response
         except MandatoryParameterMissingError as e:
@@ -2486,14 +2534,14 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             # HttpResponse, so make one with form_invalid()
             response = self.form_invalid(form)
             parameter = e.args[0]
+            translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response,
-                _(
-                    'No value was specified for the mandatory input "{0}"'
-                    ' of script "{1}"'
-                ).format(parameter.name, parameter.script.name),
+                _("No value was specified for the mandatory input %s" " of script %s")
+                % (parameter.name, parameter.script.name),
                 error=True,
             )
+            translation.deactivate()
             return response
 
     def form_invalid(self, form):
@@ -2559,7 +2607,9 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
                 )
 
         response = super(PCGroupDelete, self).delete(request, *args, **kwargs)
+        translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(response, _("Group %s deleted") % name)
+        translation.deactivate()
         return response
 
 
@@ -2873,30 +2923,30 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
 
 documentation_menu_items = [
-    ("", "Administrationssiden"),
-    ("om_os2borgerpc_admin", "Om"),
-    ("status", "Status"),
-    ("computers", "Computere"),
-    ("groups", "Grupper"),
-    ("wake_plans", "Tænd/sluk tidsplaner"),
-    ("jobs", "Jobs"),
-    ("scripts", "Scripts"),
-    ("security_scripts", "Sikkerhedsscripts"),
-    ("users", "Brugere"),
-    ("configuration", "Konfigurationer"),
-    ("creating_security_problems", "Oprettelse af Sikkerhedsovervågning (PDF)"),
-    ("changelogs", "Nyhedssiden"),
-    ("", "OS2borgerPC"),
-    ("os2borgerpc_installation_guide", "Installationsguide (PDF)"),
-    ("os2borgerpc_installation_guide_old", "Gammel installationsguide (PDF)"),
-    ("", "OS2borgerPC Kiosk"),
-    ("os2borgerpc_kiosk_installation_guide", "Installationsguide"),
-    ("os2borgerpc_kiosk_wifi_guide", "Opdatering af Wi-Fi opsætning"),
-    ("", "Teknisk dokumentation"),
-    ("tech/os2borgerpc-image", "OS2borgerPC Image"),
-    ("tech/os2borgerpc-admin", "OS2borgerPC Admin Site"),
-    ("tech/os2borgerpc-server-image", "OS2borgerPC Kiosk Image"),
-    ("tech/os2borgerpc-client", "OS2borgerPC Client"),
+    ("", _("The administration site")),
+    ("om_os2borgerpc_admin", _("About")),
+    ("status", _("Status")),
+    ("computers", _("Computers")),
+    ("groups", _("Groups")),
+    ("wake_plans", _("On/Off schedules")),
+    ("jobs", _("Jobs")),
+    ("scripts", _("Scripts")),
+    ("security_scripts", _("Security Scripts")),
+    ("users", _("Users")),
+    ("configuration", _("Configurations")),
+    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
+    ("changelogs", _("The News site")),
+    ("", _("OS2borgerPC")),
+    ("os2borgerpc_installation_guide", _("Installation Guide (PDF)")),
+    ("os2borgerpc_installation_guide_old", _("Old installation guide (PDF)")),
+    ("", _("OS2borgerPC Kiosk")),
+    ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
+    ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
+    ("", _("Technical Documentation")),
+    ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
+    ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
+    ("tech/os2borgerpc-server-image", _("OS2borgerPC Kiosk Image")),
+    ("tech/os2borgerpc-client", _("OS2borgerPC Client")),
 ]
 
 
@@ -2918,7 +2968,13 @@ class DocView(TemplateView):
             raise Http404
 
         # Try <docname>.html and <docname>/index.html
-        name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
+        if self.request.user.bibos_profile.language == "sv":
+            name_templates = [
+                "documentation_sv/{0}.html",
+                "documentation_sv/{0}/index.html",
+            ]
+        else:
+            name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
 
         templatename = None
         for nt in name_templates:
@@ -2948,7 +3004,10 @@ class DocView(TemplateView):
                 break
 
         # Add a submenu if it exists
-        submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
+        if self.request.user.bibos_profile.language == "sv":
+            submenu_template = "documentation_sv/" + docnames[0] + "/__submenu__.html"
+        else:
+            submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
         if self.template_exists(submenu_template):
             context["submenu_template"] = submenu_template
 

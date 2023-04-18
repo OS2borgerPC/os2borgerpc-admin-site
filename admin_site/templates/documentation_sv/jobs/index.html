@@ -1,0 +1,49 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Översikt över jobb</h1>
+  <p>
+    Jobböversikten ger en översikt över avvecklingen av jobb på
+    Sambruk MedborgarPC-datorer för det valda site. Till vänster kan du välja diverse
+    filter som gör listan mer hanterbar, och till höger finns en lista över
+    jobb som matchar de valda filtren.
+
+  </p>
+  <h2>Filtre</h2>
+  <p>
+    Genom att klicka på kryssrutorna bredvid de olika statusarna kan du:
+    Filtrera de jobb som visas baserat på deras status. Som standard är alla statusar
+    förutom "Klar" och "Löst" listade.
+  </p>
+  <p>
+    Under kryssrutorna kan du välja filter baserat på partier, datorer
+    och grupper. För att filtrera på dessa, klicka på den kategori du vill ha
+    och klicka sedan på ett objekt i listan som ska
+    övik. Det valda objektet markeras med grönt. Du kan klicka på
+    på den igen för att avmarkera den. Det är bara möjligt att välja en
+    objekt i varje kategori.
+  </p>
+  <h2>Jobblistan</h2>
+  <p>
+    Aktivitetshanteraren visar skriptnamn, starttid, sluttid, status,
+    datornamn och batchnamn för varje jobb som matchar de valda filerna. Man
+    kan ändra sorteringen genom att klicka på rubrikerna ovanför tabellen.
+  </p>
+  <p>
+    Om du klickar på den lilla ikonen till höger i listan får du möjlighet att:
+    för att se loggutdata för jobb som har slutförts, samt en länk som du kan
+    Klicka här om du vill starta om jobbet om det är ett misslyckat jobb.
+  </p>
+  <h2>Jobs drevet af Magenta</h2>
+  <p>
+    Om ett jobb säger "Magenta" som användarnamn betyder det att jobbet är 
+    drivs av Sambruk MedborgarPC-teamet hos Magenta.</p>
+    <p>Den används till exempel för:</p>
+  </p>
+  <ul>
+    <li>Underhåll</li> 
+    <li>Uppdateringar</li> 
+    <li>Felsökning och rättning</li> 
+    <li>Lappa säkerhetshål (CVE'er identificeret i Ubuntu)</li> 
+  </ul>
+{% endblock %}

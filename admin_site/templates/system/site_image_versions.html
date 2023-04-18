@@ -1,6 +1,7 @@
 {% extends "site_with_navigation.html" %}
+{% load i18n %}
 {% block specific_title %}
-  Versioner
+  {% translate "Versions" %}
 {% endblock %}
 {% block subnav %}
   <ul class="sublevelnav item-list">
@@ -23,15 +24,15 @@
   {% if selected_platform_images %}
     <!-- First index of 'minor_versions' is the newest version -->
     {% with selected_platform_images|first as first_obj %}
-    <h2 class="divideheader">Nyeste udgave af {{ selected_platform.1 }}</h2>
+    <h2 class="divideheader">{% translate "Newest version of" %} {{ selected_platform.1 }}</h2>
     <dl>
-      <dt>Version</dt>
+      <dt>{% translate "Version" %}</dt>
       <dd>{{ first_obj.image_version }}</dd>
-      <dt>Release-dato</dt>
+      <dt>{% translate "Release date" %}</dt>
       <dd>{{ first_obj.release_date }}</dd>
-      <dt>Operativsystem</dt>
+      <dt>{% translate "Operating system" %}</dt>
       <dd>{{ first_obj.os }}</dd>
-      <dt>Udgivelsesnoter</dt>
+      <dt>{% translate "Release notes" %}</dt>
       <dd>
     <pre style="font-family: var(--bs-font-sans-serif)">{{ first_obj.release_notes }}</pre>
     </dd>
@@ -40,29 +41,29 @@
     <span class="material-icons">
       cloud_download
     </span>
-    Download
+    {% translate "Download" %}
   </a>
 {% endwith %}
 {% else %}
-<h2 class="divideheader">Versioner</h2>
-<p>Der blev ikke fundet nogen versioner</p>
+<h2 class="divideheader">{% translate "Versions" %}</h2>
+<p>{% translate "No versions were found" %}</p>
 {% endif %}
 {% if selected_platform_images.count > 1 %}
 <!-- Proceed to load remaining versions -->
 <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-    Tidligere versioner
+    {% translate "Earlier versions" %}
     </button>
   </div>
   <table class="table table-hover accordion-body accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
     <thead>
       <tr>
-        <th>Version</th>
-        <th>Release-dato</th>
-        <th>Operativsystem</th>
-        <th>Udgivelsesnoter</th>
-        <th>Download</th>
+        <th>{% translate "Version" %}</th>
+        <th>{% translate "Release date" %}</th>
+        <th>{% translate "Operating system" %}</th>
+        <th>{% translate "Release notes" %}</th>
+        <th>{% translate "Download" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -83,7 +84,7 @@
               <span class="material-icons">
                 cloud_download
               </span>
-              Download
+              {% translate "Download" %}
             </span>
             </a>
           </td>
@@ -94,12 +95,11 @@
 </table>
 </div>
 {% else %}
-<h2 class="text-error"><strong>INGEN ADGANG</strong></h2>
+<h2 class="text-error"><strong>{% translate "NO ACCESS" %}</strong></h2>
 <p>
-Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, og
-derfor vises ingen versioner.
+{% translate "Your organization has no service agreement with a OS2borgerPC provider so no versions are shown." %}
 </p>
-<p>Kontakt venligst OS2borgerpc leverandør, for at høre mere.</p>
+<p>{% translate "Please contact a OS2borgerPC provider to learn more." %}</p>
 {% endif %}
 </div>
 {% endblock %}

@@ -1,7 +1,9 @@
 {% extends "site_with_navigation.html" %}
 
+{% load i18n %}
+
 {% block specific_title %}
-Computere
+{% translate "Computers" %}
 {% endblock %}
 
 {% block subnav %}
@@ -11,7 +13,7 @@ Computere
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
-    <h2 class="divideheader">Computere</h2>
-    <p>Der blev ikke fundet nogen computere</p>
+    <h2 class="divideheader">{% translate "Computers" %}</h2>
+    <p>{% translate "No computers were found" %}</p>
   </div>
 {% endblock %}

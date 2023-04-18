@@ -1,14 +1,18 @@
 {% extends 'system/scripts/run_base.html' %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block run_dialog_heading %}
-  <h3 class="modal-title" id="myModalLabel3">Job startet!</h3>
+  <h3 class="modal-title" id="myModalLabel3">{% translate "Job started" %}!</h3>
 {% endblock %}
 
 {% block run_dialog_content %}
-  <p>Job baseret på script <em>{{ script.name }}</em> er startet på <em>{{ num_pcs }}</em> computer(e)</p>
-  <p><a href="{% url 'jobs' site.uid %}?batch={{batch.pk}}" onclick="this.target='_top'">Du kan følge de oprettede jobs her</a></p>
+  <p>{% blocktranslate trimmed with sname=script.name|italic num_pcs=num_pcs|italic %}
+      Job based on script {{sname}} has been started on {{num_pcs}} computer(s){% endblocktranslate %}
+  </p>
+  <p><a href="{% url 'jobs' site.uid %}?batch={{batch.pk}}" onclick="this.target='_top'">{% translate "You can follow the created jobs here" %}</a></p>
 {% endblock %}
 
 {% block run_dialog_footer %}
-  <button class="btn btn-primary" type="button" onclick="dismissDialog()">Luk</button>
+  <button class="btn btn-primary" type="button" onclick="dismissDialog()">{% translate "Close" %}</button>
 {% endblock %}

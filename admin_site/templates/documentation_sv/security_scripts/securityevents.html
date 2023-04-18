@@ -1,0 +1,22 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Sikkerhedshændelser</h1>
+  <p>
+	Den här sammanfattningen visar de enskilda händelser som utlöses av systemet.
+	I vänsterspalten kan du välja hur översikten filtreras, det vill säga vilka händelser du vill se.
+	Standardvärdet är att du ser alla obearbetade händelser.
+	Översikten visar också allvarlighetsgraden för incidenterna.
+  </p>  
+  <p>
+  Från översikten kan du utföra två åtgärder:.<br>
+  Du kan:</p>
+  <ul>
+	  <li>
+	  Markera att du tar ansvar för att hantera händelsen. Detta ändrar statusen till "Tilldelad".
+	  </li>
+	  <li>
+	  Markera händelsen som bearbetad. Detta ändrar statusen till "Löst".
+	  </li>
+  </ul>    
+{% endblock %}

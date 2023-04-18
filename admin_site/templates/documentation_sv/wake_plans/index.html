@@ -1,0 +1,142 @@
+{% extends 'documentation/index.html' %}
+{% load static %}
+
+{% block admin_groups_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  <h1>Energisparfunktioner</h1>
+  <p>
+    De energisparande funktionerna består av ett sömnskript och på / av-scheman.
+    Dessa funktioner kan endast användas av kunder som har köpt åtkomst.
+    Alla kunder som hjälpte till att finansiera funktionerna har automatisk åtkomst.
+    Andra kunder kan kontakta Magenta om de är intresserade.
+  </p>
+  <p>
+    Vilolägesskriptet är endast avsett för användning på Sambruk MedborgarPC, medan på/av-scheman
+    kan användas på både Sambruk MedborgarPC och Sambruk MedborgarPC Kiosk. 
+    Används med på/av-scheman.
+  </p>
+  <p>
+    Om det här är första gången du besöker den här sidan föreslår vi att du börjar med att läsa vår
+    <a href="{% url 'wake_plan_user_guide' %}" target="_blank">Brugerguide til strømsparefunktioner i OS2borgerPC</a>.
+  </p>
+  <h2>Skript för viloläge</h2>
+  <p>
+    Vilolägesskriptet kan användas för att ställa in datorer så att de försätts i viloläge efter
+    ett antal minuters inaktivitet. Ett valfritt varningsmeddelande visas innan datorn försätts i viloläge.
+    Skriptet tar fem argument: om funktionen
+    måste aktiveras, antal minuters inaktivitet innan varningen visas,
+    antal minuters inaktivitet innan maskinen försätts i viloläge,
+    Texten i varningen och texten på knappen i aviseringen.
+    Om de två sista textrelaterade inmatningarna inte anges används standardtexter.
+    Skriptet loggar automatiskt ut medborgaren innan maskinen går i viloläge.
+  </p>
+  <p>
+    Vilolägesskriptet kan också försätta maskinen i viloläge om den är inaktiv på inloggningsskärmen.
+    Detta kräver dock att skriptkörning vid inloggning har aktiverats via
+    scriptet <a href="{% url 'script_redirect_id' '1064' %}">Login - Slå scriptkørsel ved login til/fra</a>.
+    Varningen visas inte på inloggningsskärmen.
+  </p>
+  <p>
+    Observera att USB-övervakning inte kan vara aktiv när en dator är i viloläge.
+  </p>
+  <h2>Schema för på- och avstängning</h2>
+  <p>
+    Ett on/off-schema är ett verktyg för planering och hantering
+    På- och av-tider för datorerna i en eller flera grupper.
+  </p>
+  <p>
+    Användningen av På / Av-scheman eliminerar behovet av skript
+    <a href="{% url 'script_redirect_id' '12' %}">OS2BorgerPC - Luk ned dagligt</a> og
+    <a href="{% url 'script_redirect_id' '422' %}">OS2BorgerPC - Luk ned og vågn op dagligt</a>.
+  </p>
+  <p>
+    När du klickar på På/Av-schema i vänstermenyn ser du en lista med scheman för sitet du befinner dig under till höger om vänstermenyn. Du kan klicka på namnet på det individuella schemat för att redigera schemat.
+  </p>
+  <p>
+    Till höger visas redigeringsgränssnittet för det valda schemat. Om inga tidtabeller har skapats för sitet du befinner dig under, visas gränssnittet för att skapa tidtabeller.
+  </p>
+  <p>
+    Som standard, när du klickar på ett schema, ser du
+    schemats inställningar, samt vilka undantag och grupper som är kopplade till schemat.
+    Här kan du ändra schemanamn, status, viloläge och inställningar
+    för det fasta veckoschemat, samt lägga till/ta bort grupper eller undantag
+    från schemat. Ändringar som görs på webbplatsen träder inte i kraft förrän du
+    klicka på knappen "Spara ändringar" längst ner på skärmen.
+  </p>
+  <p>
+    Om du trycker på "Skapa stängningsdag", "Skapa ändrade öppettider" eller "Redigera undantag"
+    Omdirigera dig till en ny sida där du kan skapa nya undantag
+    och redigera eller ta bort befintliga undantag. De två "Skapa" -knapparna går direkt till
+    ett gränssnitt för den typen av undantag, medan "Redigera undantag" öppnas
+    redigeringssidan för det första undantaget för den webbplats du befinner dig under.
+  </p>
+  <p>
+    De olika redigeringsalternativen beskrivs mer detaljerat under dessa punkter:
+    {% include 'documentation_sv/wake_plans/__submenu__.html' %}
+  </p>
+  <p>
+    Om du vill skapa ett nytt schema klickar du på "lägg till nytt På/Av-schema" ovanför schemalistan. Detta öppnar ett gränssnitt där
+    man måste fylla i schemats namn och ha möjlighet att redigera i inställningarna,
+    Lägg till undantag eller gå med i grupper. När du klickar på
+    spara, kommer en att omdirigeras till redigeringssidan för den nyskapade
+    schemalägg var du kan fortsätta att ändra inställningar, lägga till undantag eller gå med i grupper.
+    Om schemat är inställt på "aktivt" träder det också i kraft när du klickar på spara.
+  </p>
+  <h2>Viktiga anmärkningar</h2>
+  <p>
+    En dator kan bara ta emot ett nytt/uppdaterat schema om det är påslaget. Om en
+    datorn registrerar sig i ett schema eller dess schema ändras medan den är avstängd,
+    det börjar bara följa det nya / uppdaterade schemat när det har aktiverats.
+  </p>
+  <p>
+    Om en dator slås på manuellt efter att den stängts av eller en dag när den är
+    Ställ in på att vara ständigt avstängd, den stängs först av automatiskt
+    ledig tid för nästa dag. Om det inte finns någon avstängningstid för nästa dag,
+    den stängs automatiskt av 24 timmar efter att den startades. Om datorn manuellt
+    Om den stängs av igen vaknar den enligt schemat.
+  </p>
+  <h3>Ställa in BIOS/UEFI</h3>
+  <ol>
+    <li>
+      Om BIOS är inställt på att vakna vid en viss tidpunkt när strömscheman är aktiverade, kommer maskinen inte att
+      följa starttiderna i schemat, utan istället de tider som anges i BIOS. Det kommer dock fortfarande att
+      följ de avstängningstider som anges i schemat.
+      Om maskinen behöver följa starttiderna i schemat måste du ange BIOS på maskinerna och aktivera starttidshanteringen
+      från. Att ändra BIOS är i allmänhet inte möjligt att göra från operativsystemet, så därför kan vi inte göra det via antingen
+      scripts.
+    </li>
+    <li>
+      Om maskinerna tillfälligt förlorar strömmen medan de stängs av enligt schemat kommer de fortfarande att vakna enligt
+      Schema. (Det vill säga tekniskt så länge det fortfarande finns ström på CMOS-batteriet.)
+      Men om de tappar strömmen medan de är påslagna, kommer de inte att vakna på egen hand.
+
+      Vissa BIOS har möjlighet att ställa in maskinen för att återställa sitt senaste tillstånd (eller slå på) efteråt,
+      om den förlorade makten. Vi rekommenderar därför att du strejkar.
+
+      Beroende på BIOS-versionen kan det se annorlunda ut, men här är ett exempel från en NUC:
+      På översiktssidan väljer du "Avancerat" och sedan "Ström":
+      <img src="{% static 'docs/img/wake_plan/nuc_bios_start_page.jpg' %}" alt="">
+      Därefter går du in och redigerar inställningen "Efter strömavbrott" och ställer in den på "Senaste tillstånd"
+      (rekommenderas) eller "Power On".
+      <img src="{% static 'docs/img/wake_plan/nuc_bios_wake_up_power_failure_setting.jpg' %}" alt="">
+    </li>
+  </ol>
+  <h3>Vanliga frågor</h3>
+  <h4>1. Hur registrerar jag en enda dator för ett schema?</h4>
+  <p>På/av-scheman är utformade för att fungera med grupper, så du kan inte registrera en enskild dator direkt
+     till ett schema. Du kan dock alltid skapa en grupp som bara innehåller den här datorn,
+     och registrera den här gruppen i schemat.</p>
+  <h4>2. Vad händer om maskinen tappar ström?</h4>
+  <p>Se punkt 2 under "Ställa in BIOS/UEFI" längre upp.</p>
+  <h4>3. Maskinen startar och stängs av vid fel tidpunkter?</h4>
+  <p>Det kan bero på att tiden på maskinen är felaktigt inställd, till exempel för att den inte har möjlighet att
+    Tidssynkronisering. Vanligtvis synkroniserar Ubuntu Linux - och flera andra operativsystem - tiden via NTP-protokollet (Network)
+    Tidsprotokoll).
+    NTP körs på port 123 ovanför UDP, vilket vi därför föreslår att du öppnar i din nätverksinstallation.
+    Om du inte vill öppna trafik på alla domäner kan vi titta på att utveckla ett skript som låser NTP
+    om du bara vill kontrollera vissa webbadresser.
+  </p>
+  <h4>4. Maskinen startar vid fel tidpunkter, men stängs av enligt schema?</h4>
+  <p>Detta kan bero på inställningarna i BIOS. Se punkt 1 under "Ställa in BIOS/UEFI" längre upp".</p>
+{% endblock %}

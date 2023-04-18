@@ -1,4 +1,5 @@
 {% extends "sitebase.html" %}
+{% load i18n %}
 
 {% block header_title %}
   <div class="container">OS2 <em>borgerPC</em> admin</div>
@@ -7,8 +8,8 @@
 {% block specific_content %}
 <div class="d-flex align-items-center justify-content-center" style="min-height: 50vh;">
   <div style="text-align: center;">
-    <h2>Du er nu logget ud</h2>
-    <p><a href="/">Klik her for at logge ind igen</a></p>
+    <h2>{% translate "You have been logged out" %}</h2>
+    <p><a href="/">{% translate "Click here to log in again" %}</a></p>
   </div>
 </div>
 {% endblock %}

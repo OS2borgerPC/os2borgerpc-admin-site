@@ -1,0 +1,212 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Konfigurationer</h1>
+
+  <p class="alert alert-danger">
+    Ta inte bort eller redigera konfigurationer om du inte är säker på vad du gör!
+  </p>
+
+  <p class="alert alert-warning">
+    Konfigurationer är funktioner som främst är avsedda för teknisk felsökning, systemadministratörer och skriptutvecklare, och därför förmodligen inte relevanta för de flesta.
+  </p>
+
+  <p>
+    Konfigurationer används för att utbyta information mellan administratörswebbplatsen och de associerade datorerna, i båda
+    retninger.<br/>
+    Det vill säga det är både möjligt från administratörswebbplatsen att ange ett värde som en eller flera datorer sedan kommer att få,
+    och skickar också ett datorvärde till administratörswebbplatsen.
+  </p>
+  <p>Allmänna exempel på tillämpningar:</p>
+  <ul>
+    <li>Datorn skickar bland annat information om sitt värdnamn, nätverkskortets MAC-adress och hur många uppdateringar och säkerhetsuppdateringar,
+      tillgänglig för den från Ubuntu.<br>
+      Detta kan vara relevant för systemadministratörer i vissa fall.</li>
+    <li>Datorn skickar också information om att den kör MedBorgarPC eller MedBorgarPC Kiosk, och dess specifika versioner.<br/>
+      I vissa fall kan det vara relevant att veta i samband med felsökning.</li>
+    <li>I samband med utvecklingen av ett skript vill man skicka konfigurationen dit via administratörswebbplatsen, som sedan kan uppdateras utan att köra om
+      skript eller som kan variera mellan grupper eller datorer.</li>
+      I vissa fall kan detta vara relevant för skriptutvecklare att känna till.</li>
+  </ul>
+
+  <p>
+    De allra flesta konfigurationer styrs av administratörswebbplatsen snarare än på den enskilda datorn.
+    Det vill säga, om du ändrar värdet på den enskilda maskinen, kommer det oftast att ändras tillbaka till vad administratörswebbplatsen säger av
+    Nästa incheckning.
+  </p>
+
+  <h3>Teknisk information för systemadministratörer</h3>
+
+  <h4>Hantera konfigurationer</h4>
+
+  <p>
+    Klicka på knappen "Lägg till konfiguration" för att lägga till en ny konfigurationsnyckel/værdi.<br/>
+    Om du vill korrigera eller ta bort ett värde klickar du på <strong>Redigera</strong> eller <strong>Radera</strong> bredvid varje nyckel.
+  </p>
+
+  <h4>Konfigurationer på olika nivåer</h4>
+
+  <p>Konfigurationer finns i tre nivåer:</p>
+
+  <p><strong>1. Site-konfigurationer</strong></p>
+
+  <p>
+    Dessa konfigurationsparametrar gäller för alla datorer som är associerade med den valda platsen.
+  </p>
+
+  <p>
+    Platskonfigurationer kan åsidosättas via anpassade konfigurationsnycklar/värden
+    på grupper och på enskilda datorer.
+  </p>
+
+  <p><strong>2. Gruppkonfigurationer</strong></p>
+
+  <p>
+    Ändringar av konfigurationer på en grupp kommer att påverka alla datorer som är medlemmar i gruppen, <em>såvida inte</em> den aktuella konfigurationsnyckeln har specialanpassats på den enskilda datorn.
+  </p>
+
+  <p><strong>3. Computer-konfigurationer</strong></p>
+
+  <p>
+    Konfigurationer som anges på en dator har alltid företräde framför
+    administratörswebbplats-konfiguration eller konfiguration för grupper som datorn är medlem i.
+  </p>
+
+  <h4>Vikten av de inbyggda konfigurationerna</h4>
+
+  <p class="alert alert-info">
+    Alla värden utan _ framför bestäms av adminsite, medan värden med _ bestäms av datorn/klienten.<br/>
+    I praktiken innebär det att du byter ex:. <strong>os2BorgerPC_version</strong> på maskinen, Då kommer det att skrivas över efter nästa
+    incheckning med administratörswebbplatsen.
+  </p>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Namn</th>
+        <th>Betydelse</th>
+        <th>Kommentar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>_os2borgerpc.client_version</td>
+        <td>Versionen på OS2BorgerPC-klienten</td>
+        <td>Klienten är den programvara som körs på datorn som är i kontakt med administratörswebbplatsen</td>
+      </tr>
+      <tr>
+        <td>_os_name</td>
+        <td>Namnet på operativsystemet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>_os_release</td>
+        <td>Versionen av operativsystemet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>admin_url</td>
+        <td>Adressen till servern som checkas in med</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>distribution</td>
+        <td>Namnet på operativsystemet</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>fresh_install</td>
+        <td>-</td>
+        <td>Under utfasning</td>
+      </tr>
+      <tr>
+        <td>gateway</td>
+        <td>Under utfasningen: Användes om du konfigurerade en gateway som mellanhand mellan datorn och administrationen</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>hostname</td>
+        <td>Maskinens hostname</td>
+        <td>Sættes pt. kun ifm. installationen</td>
+      </tr>
+      <tr>
+      <tr>
+        <td>job_timeout</td>
+        <td>Hur länge klienten väntar på slutförandet av jobb, anges i sekunder</td>
+        <td>Om job_timeout tar slut stoppas processen. Det är användbart om något i systemet hänger,
+          såsom förpackningssystemet eller ett skript som förgäves försöker få input från användaren
+        </td>
+      </tr>
+      <tr>
+        <td>mac</td>
+        <td>Netværkskortets MAC-adresse. LAN-kortets MAC-adress väljs, även om det registreras över Wi-Fi.</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>os2_product</td>
+        <td>Identifierar om datorn är en OS2BorgerPC eller en OS2BorgerPC Kiosk</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>os2borgerpc_version</td>
+        <td>Versionen på OS2BorgerPC</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>security_updates</td>
+        <td>Antalet säkerhetspaketuppdateringar från Ubuntu som är tillgängliga för datorn</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>site</td>
+        <td>Vilken plats maskinen är ansluten till</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>updates</td>
+        <td>Antalet vanliga paketuppdateringar från Ubuntu som är tillgängliga för datorn</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>uid</td>
+        <td>Maskinens UID</td>
+        <td>Administratörswebbplatsen använder detta för att identifiera datorn</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Teknisk information för skriptutvecklare</h3>
+
+  <h4>Såhär utvecklas information</h4>
+
+  <h5>Site <span class='material-icons'>arrow_right_alt</span> Computer</h5>
+
+  <p>Du skapar ett konfigurationsvärde på en plats, grupp eller dator och det sprids automatiskt till
+  nästa gång datorn checkar in för att nya skript ska köras;.<p>
+
+  <h5>Datorer <span class='material-icons'>arrow_right_alt</span> Site</h5>
+
+  <p>Från en terminal på din dator eller från ett skript kan du använda dessa program:</p>
+  <table class="table table-hover">
+    <thead>
+      <tr><th>Namn</th><th>Funktionalitet</th><th>Användningsexempel</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>get_os2borgerpc_config</td>
+        <td>Hämtar värdet för ett konfigurationsvärde</td>
+        <td>get_os2borgerpc_config site<br/> <br/>
+          Får UID för site som datorn är associerad med.</td>
+      </tr>
+      <tr>
+        <td>set_os2borgerpc_config</td>
+        <td>Anger värdet för ett konfigurationsvärde</td>
+        <td>set_os2borgerpc_config borger ja<br/> <br/>
+          Skapar en ny konfiguration med namnet borger och ställer in den på 'ja'</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Ovanstående program interagerar med filen i praktiken /etc/os2borgerpc/os2borgerpc.conf</p>
+
+{% endblock %}

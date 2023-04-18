@@ -1,0 +1,51 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+    <h1>Nyhetssidan</h1> 
+
+    <p>
+        Syftet med nyhetssidan är att samla in och presentera innehållet i nya uppdateringar i Sambruk MedborgarPC. <br> 
+        På sidan är det möjligt att: <br>
+        <ul> 
+            <li>Se en lista över inlägg, med en kort förklaring</li> 
+            <li>Sortera inlägg efter kategori</li> 
+            <li>Sök efter inlägg</li> 
+            <li>Läs inlägget</li> 
+            <li>Kommentera varje inlägg med den användare du är registrerad på adminsidan som</li> 
+        </ul> 
+    </p> 
+
+    <hr>
+    <h2>Lista över inlägg</h2> 
+    <p>
+        När du går till nyhetssidan kommer du att visas en lista med inlägg sorterade med de senaste inläggen först. <br> 
+        Varje inlägg på listan har en kort sammanfattning av uppdateringens innehåll, samt ett datum när den publicerades.
+    </p>
+    <hr>
+    <h2>Sortering av inlägg</h2> 
+    <p>
+        Varje inlägg har en eller flera kategorier som listan kan sorteras efter. Detta görs genom att välja relevant kategori från alternativen som visas högst upp på sidan.
+    </p>
+    <hr>
+    <h2>Sök efter inlägg</h2> 
+    <p>
+        Sökfältet högst upp på sidan kan användas för att söka i inläggen.
+    </p>
+    <hr>
+    <h2>Detaljerad visning av ett inlägg</h2> 
+    <p>
+        Varje inlägg är expanderbart och visar en mer detaljerad förklaring av uppdateringen. <br> 
+        <img height="500px" src="/static/docs/img/changelogs/1.png"><br> 
+        <img height="500px" src="/static/docs/img/changelogs/2.png"><br>
+    </p>
+    <hr>
+    <h2>Kommentarer på inlägg</h2> 
+    <p>
+        Om du är inloggad på sidan kommer du att kunna lägga till kommentarer till ett inlägg. <br> 
+        <img src="/static/docs/img/changelogs/3.png"><br> 
+        När du lägger till en kommentar kommer ditt användarnamn att visas ovanför kommentaren <br> 
+        <img src="/static/docs/img/changelogs/4.png"><br> 
+        Kommentarer kan också besvaras av både Magentas anställda och alla användare som är registrerade på en site. <br>
+        <img src="/static/docs/img/changelogs/5.png"><br>
+    </p>
+{% endblock %}

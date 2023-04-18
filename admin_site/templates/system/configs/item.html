@@ -1,4 +1,5 @@
 {# Remember that this templates must be able to be called both from templates.html and from list.html #}
+{% load i18n %}
 <tr>
   <td class="config-print-key">{{ key }}</td>
   <td class="pe-0">
@@ -12,10 +13,10 @@
   <td>
     <p class="mb-0" style="margin-left: -.5rem;">
       <a class="btn btn-sm" href="javascript:void(0)" onclick="BibOS.ConfigList.startEdit(this, '{{ submit_name }}')">
-        <span class='material-icons'>edit</span>Redigér
+        <span class='material-icons'>edit</span>{% translate "Edit" %}
       </a>
       <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="BibOS.ConfigList.removeItem(this)">
-        <span class='material-icons'>delete</span>Slet
+        <span class='material-icons'>delete</span>{% translate "Delete" %}
       </a>
     </p>
   

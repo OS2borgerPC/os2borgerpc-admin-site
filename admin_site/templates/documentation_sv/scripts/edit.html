@@ -1,0 +1,24 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Redigering av skript</h1>
+  <p>
+    För att redigera ett skript, klicka på "Skript" i den vänstra menyn och
+    välj sedan skriptet i listan över skript till höger om
+    vänster meny. Observera att du kan behöva växla mellan
+    flikarna "Lokala skript" och "Globala skript" för att hitta skriptet.
+  </p>
+  <p>
+    När du redigerar ett skript har du möjlighet att ändra dess namn och
+    beskrivning. Du kan också ladda upp en ny version av skriptet genom att
+    fyll i fältet under "Ladda upp skriptkod". Ändringar du har gjort
+    träda inte i kraft förrän du har klickat på "Spara ändringar" högst upp i
+    sedan.
+  </p>
+  <p>
+    På den sista fliken har du möjlighet att
+    <a href="{% url 'doc' 'scripts/parameters' %}">anpassa
+    inputparametrar för Scriptet</a>.
+  </p>
+  <p>
+{% endblock %}

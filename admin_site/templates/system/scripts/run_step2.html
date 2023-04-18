@@ -1,9 +1,10 @@
 {% extends 'system/scripts/run_base.html' %}
+{% load i18n %}
 
 {% block run_dialog_heading %}
   <h3>
-    <span class="text-muted">Kør script:</span><br> 
-    Angiv parametre
+    <span class="text-muted">{% translate "Run script" %}:</span><br>
+    {% translate "Specify parameters" %}
   </h3>
 {% endblock %}
 
@@ -21,7 +22,7 @@
         </div>
       </div>
     {%empty%}
-      <p>Scriptet tager ingen parametre.</p>
+      <p>{% translate "The script takes no parameters." %}</p>
     {%endfor%}
   
 {% endblock %}
@@ -29,7 +30,7 @@
 {% block run_dialog_footer %}
   <button onclick="scriptStep2Submit()" type="button" class="btn btn-warning">
     <span class="d-flex align-items-center">
-      Kør 
+      {% translate "Run" %}
       <span class="material-icons ms-1" style="font-size: 1.25rem;">
         arrow_forward
       </span>
