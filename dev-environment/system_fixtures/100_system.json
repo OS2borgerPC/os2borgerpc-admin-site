@@ -1759,24 +1759,6 @@
 },
 {
     "model": "system.configurationentry",
-    "pk": 274,
-    "fields": {
-        "key": "fsf",
-        "value": "5",
-        "owner_configuration": 1
-    }
-},
-{
-    "model": "system.configurationentry",
-    "pk": 277,
-    "fields": {
-        "key": "sdfs",
-        "value": "5",
-        "owner_configuration": 1
-    }
-},
-{
-    "model": "system.configurationentry",
     "pk": 295,
     "fields": {
         "key": "_os2borgerpc.client_version",
@@ -3393,9 +3375,9 @@
         "name": "Magenta",
         "uid": "magenta",
         "configuration": 1,
-        "paid_for_access_until": "2022-04-02",
+        "paid_for_access_until": "2025-04-02",
         "created": null,
-        "isil": "",
+        "isil": "DK-100000",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00"
     }
@@ -3409,7 +3391,7 @@
         "configuration": 60,
         "paid_for_access_until": "2025-01-17",
         "created": null,
-        "isil": "",
+        "isil": "DK-100000",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00"
     }
@@ -3434,7 +3416,334 @@
     "fields": {
         "name": "Tidsplan",
         "uid": "wake_plan",
-        "sites": [1]
+        "sites": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 1,
+    "fields": {
+        "name": "Vinterferie",
+        "date_start": "2022-10-12",
+        "time_start": null,
+        "date_end": "2022-12-12",
+        "time_end": null,
+        "type": "CLOSED",
+        "site": 9
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 2,
+    "fields": {
+        "name": "Helligdag",
+        "date_start": "2022-10-12",
+        "time_start": "12:04:06",
+        "date_end": "2022-10-12",
+        "time_end": "17:04:07",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 3,
+    "fields": {
+        "name": "Efterårsferie",
+        "date_start": "2022-09-12",
+        "time_start": null,
+        "date_end": "2022-10-12",
+        "time_end": null,
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 4,
+    "fields": {
+        "name": "Helligdag2",
+        "date_start": "2022-10-12",
+        "time_start": "12:04:30",
+        "date_end": "2022-10-12",
+        "time_end": "18:04:34",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 5,
+    "fields": {
+        "name": "Efterårsferie2",
+        "date_start": "2022-09-12",
+        "time_start": null,
+        "date_end": "2022-10-12",
+        "time_end": null,
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 6,
+    "fields": {
+        "name": "Vinterferie2",
+        "date_start": "2022-10-12",
+        "time_start": "12:03:35",
+        "date_end": "2022-12-12",
+        "time_end": "20:03:36",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 7,
+    "fields": {
+        "name": "Helligdag3",
+        "date_start": "2022-10-12",
+        "time_start": null,
+        "date_end": "2022-10-12",
+        "time_end": null,
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 8,
+    "fields": {
+        "name": "Efterårsferie3",
+        "date_start": "2022-09-12",
+        "time_start": "12:04:15",
+        "date_end": "2022-10-12",
+        "time_end": "20:04:16",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 9,
+    "fields": {
+        "name": "Vinterferie3",
+        "date_start": "2022-10-12",
+        "time_start": null,
+        "date_end": "2022-12-12",
+        "time_end": null,
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 10,
+    "fields": {
+        "name": "Helligdag4",
+        "date_start": "2022-10-12",
+        "time_start": "12:04:06",
+        "date_end": "2022-10-12",
+        "time_end": "17:04:07",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 11,
+    "fields": {
+        "name": "Efterårsferie4",
+        "date_start": "2022-09-12",
+        "time_start": null,
+        "date_end": "2022-10-12",
+        "time_end": null,
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 12,
+    "fields": {
+        "name": "Vinterferie4",
+        "date_start": "2022-10-12",
+        "time_start": "12:03:35",
+        "date_end": "2022-12-12",
+        "time_end": "20:03:36",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 13,
+    "fields": {
+        "name": "Helligdag5",
+        "date_start": "2022-10-12",
+        "time_start": "12:04:06",
+        "date_end": "2022-10-12",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 14,
+    "fields": {
+        "name": "Efterårsferie5",
+        "date_start": "2022-09-12",
+        "time_start": "12:04:15",
+        "date_end": "2022-10-12",
+        "time_end": "20:04:16",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 15,
+    "fields": {
+        "name": "Vinterferie5",
+        "date_start": "2022-10-12",
+        "time_start": "12:03:35",
+        "date_end": "2022-12-12",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 16,
+    "fields": {
+        "name": "Helligdag6",
+        "date_start": "2022-10-12",
+        "time_start": "12:04:06",
+        "date_end": "2022-10-12",
+        "time_end": "17:04:07",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 17,
+    "fields": {
+        "name": "Efterårsferie6",
+        "date_start": "2022-09-12",
+        "time_start": "12:04:15",
+        "date_end": "2022-10-12",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 18,
+    "fields": {
+        "name": "Vinterferie6",
+        "date_start": "2022-10-12",
+        "time_start": "12:03:35",
+        "date_end": "2022-12-12",
+        "time_end": "20:03:36",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 19,
+    "fields": {
+        "name": "Helligdag7",
+        "date_start": "2022-10-12",
+        "time_start": "12:04:06",
+        "date_end": "2022-10-12",
+        "time_end": "17:04:07",
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 20,
+    "fields": {
+        "name": "Efterårsferie7",
+        "date_start": "2022-09-12",
+        "time_start": "12:04:15",
+        "date_end": "2022-10-12",
+        "time_end": "20:04:16",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 21,
+    "fields": {
+        "name": "Vinterferie7",
+        "date_start": "2022-10-12",
+        "time_start": "12:03:35",
+        "date_end": "2022-12-12",
+        "time_end": "20:03:36",
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 22,
+    "fields": {
+        "name": "Helligdag8",
+        "date_start": "2022-10-12",
+        "time_start": "12:04:06",
+        "date_end": "2022-10-12",
+        "time_end": "17:04:07",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 23,
+    "fields": {
+        "name": "Efterårsferie8",
+        "date_start": "2022-09-12",
+        "time_start": "12:04:15",
+        "date_end": "2022-10-12",
+        "time_end": "20:04:16",
+        "type": "CLOSED",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 24,
+    "fields": {
+        "name": "Vinterferie8",
+        "date_start": "2022-10-12",
+        "time_start": "12:03:35",
+        "date_end": "2022-12-12",
+        "time_end": "20:03:36",
+        "type": "ALTERED_HOURS",
+        "site": 1
+    }
+},
+{
+    "model": "system.wakechangeevent",
+    "pk": 25,
+    "fields": {
+        "name": "Helligdag9",
+        "date_start": "2022-10-12",
+        "time_start": null,
+        "date_end": "2022-10-12",
+        "time_end": null,
+        "type": "CLOSED",
+        "site": 1
     }
 },
 {
@@ -3533,8 +3842,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            2,
-            3
+            3,
+            2
         ]
     }
 },
@@ -3603,8 +3912,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            4,
             5,
+            4,
             6
         ]
     }
@@ -3639,10 +3948,10 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
+            8,
             5,
             6,
-            7,
-            8
+            7
         ]
     }
 },
@@ -3744,360 +4053,44 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            1,
             8,
+            11,
             9,
             10,
-            11
+            1
         ]
     }
 },
 {
-    "model": "system.wakechangeevent",
-    "pk": 1,
-    "fields": {
-        "name": "Vinterferie",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": null,
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 9
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 2,
-    "fields": {
-        "name": "Helligdag",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
-        "type": "ALTERED_HOURS",
-        "site": 1
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 3,
-    "fields": {
-        "name": "Efterårsferie",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": null,
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 4,
-    "fields": {
-        "name": "Hellidag2",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:30",
-        "time_end": "18:04:34",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 5,
-    "fields": {
-        "name": "Efterårsferie2",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": null,
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 6,
-    "fields": {
-        "name": "Vinterferie2",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": "12:03:35",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 7,
-    "fields": {
-        "name": "Helligdag3",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": null,
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 8,
-    "fields": {
-        "name": "Efterårsferie3",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 9,
-    "fields": {
-        "name": "Vinterferie3",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": null,
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
+    "model": "system.wakeweekplan",
     "pk": 10,
     "fields": {
-        "name": "Helligdag4",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 11,
-    "fields": {
-        "name": "Efterårsferie4",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": null,
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 12,
-    "fields": {
-        "name": "Vinterferie4",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": "12:03:35",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 13,
-    "fields": {
-        "name": "Helligdag5",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 14,
-    "fields": {
-        "name": "Efterårsferie5",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 15,
-    "fields": {
-        "name": "Vinterferie5",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": "12:03:35",
-        "time_end": "20:03:36",
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 16,
-    "fields": {
-        "name": "Helligdag6",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 17,
-    "fields": {
-        "name": "Efterårsferie6",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 18,
-    "fields": {
-        "name": "Vinterferie6",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": "12:03:35",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 19,
-    "fields": {
-        "name": "Helligdag7",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 20,
-    "fields": {
-        "name": "Efterårsferie7",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 21,
-    "fields": {
-        "name": "Vinterferie7",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": "12:03:35",
-        "time_end": "20:03:36",
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 22,
-    "fields": {
-        "name": "Helligdag8",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:06",
-        "time_end": "17:04:07",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 23,
-    "fields": {
-        "name": "Efterårsferie8",
-        "date_start": "2022-09-12",
-        "date_end": "2022-10-12",
-        "time_start": "12:04:15",
-        "time_end": "20:04:16",
-        "type": "CLOSED",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 24,
-    "fields": {
-        "name": "Vinterferie8",
-        "date_start": "2022-10-12",
-        "date_end": "2022-12-12",
-        "time_start": "12:03:35",
-        "time_end": "20:03:36",
-        "type": "ALTERED_HOURS",
-        "site": 1
-
-    }
-},
-{
-    "model": "system.wakechangeevent",
-    "pk": 25,
-    "fields": {
-        "name": "Helligdag9",
-        "date_start": "2022-10-12",
-        "date_end": "2022-10-12",
-        "time_start": null,
-        "time_end": null,
-        "type": "CLOSED",
-        "site": 1
-
+        "name": "Fyrrummet",
+        "enabled": true,
+        "sleep_state": "OFF",
+        "monday_on": "08:00:00",
+        "monday_off": "20:00:00",
+        "monday_open": true,
+        "tuesday_on": "08:00:00",
+        "tuesday_off": "20:00:00",
+        "tuesday_open": true,
+        "wednesday_on": "08:00:00",
+        "wednesday_off": "20:00:00",
+        "wednesday_open": true,
+        "thursday_on": "08:00:00",
+        "thursday_off": "20:00:00",
+        "thursday_open": true,
+        "friday_on": "08:00:00",
+        "friday_off": "20:00:00",
+        "friday_open": true,
+        "saturday_on": "08:00:00",
+        "saturday_off": "20:00:00",
+        "saturday_open": false,
+        "sunday_on": "08:00:00",
+        "sunday_off": "20:00:00",
+        "sunday_open": false,
+        "site": 1,
+        "wake_change_events": []
     }
 },
 {
@@ -4485,10 +4478,12 @@
         "user_created": "",
         "user_modified": "magenta",
         "name": "Detekter sudo-kørsel",
+        "uid": null,
         "description": "Email: john@doe.comDette script alarmerer, hvis der bliver forsøgt at køre en sudo kommando på maskinen.\r\n\r\n \r\nUdarbejdet af john@doe.com",
         "site": null,
         "executable_code": "script_uploads/sudo_event.py",
         "is_security_script": true,
+        "is_hidden": false,
         "maintained_by_magenta": false,
         "tags": []
     }
@@ -4502,10 +4497,12 @@
         "user_created": "",
         "user_modified": "magenta",
         "name": "Detekter nyt keyboard",
+        "uid": null,
         "description": "Keyboard detect script som forsøger at finde keyboard inputs helt tilbage fra sidste gang systemet blev tjekket.",
         "site": null,
         "executable_code": "script_uploads/keyboard_event.py",
         "is_security_script": true,
+        "is_hidden": false,
         "maintained_by_magenta": false,
         "tags": []
     }
@@ -4519,10 +4516,994 @@
         "user_created": "",
         "user_modified": "magenta",
         "name": "Bluetooth - Fjern ikon fra menu-bjælke",
+        "uid": null,
         "description": "Dette script fjerner Bluetooth ikonet fra Ubuntus menu-bjælke.\r\n\r\nTestet på Ubuntu 20.04.",
         "site": 1,
         "executable_code": "script_uploads/remove_bluetooth_applet_GFCSe0M.sh",
         "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 5,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:16:32.818",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Autostart tilføj/fjern",
+        "uid": null,
+        "description": "Dette script tilføjer eller fjerner Google Chrome fra autostart. Det er endvidere muligt at få Google Chrome til at starte op i fuldskærm.\r\n\r\nAutostart betyder at Google Chrome vil starte op når brugeren logger ind.\r\n\r\nHvis du tilføjer \"Ja\" som argument bliver Google Chrome tilføjet til autostart og åbnet i fuldskærm.\r\nHvis du tilføjer \"Nej\" som argument bliver Google Chrome tilføjet til autostart og åbnet i normal skærm størelse.\r\nHvis du tilføjer \"Fjern\" som argument bliver Google Chrome fjernet fra autostart.\r\n\r\nTestet på Ubuntu 20.04",
+        "site": null,
+        "executable_code": "script_uploads/chrome_autostart_cP5Rsu2.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 6,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:16:16.929",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Deaktiver autologin",
+        "uid": null,
+        "description": "Deaktiverer browserlogin og 'husk password' for Google Chrome.\r\n\r\nDette script kan køres uden at have installeret Google Chrome.\r\n\r\nTestet på Ubuntu 20.04",
+        "site": null,
+        "executable_code": "script_uploads/chrome_policy_deactivate_login_m0TvmUo.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 7,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:16:10.864",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Deaktiver nøglering",
+        "uid": null,
+        "description": "Dette script deaktivere Ubuntu pop-up når Publikumsbruger åbner Google Chrome. \r\nGoogle-Chrome ønsker at oprette en standard nøglering.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_disable_keyring.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 8,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:27:09.584",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Chrome - Installér",
+        "uid": null,
+        "description": "Installerer Google Chrome.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_install_KDwvq0C.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 9,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:15:57.250",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Chrome - Skift startside",
+        "uid": null,
+        "description": "Scriptet skifter startside for Google Chrome for brugeren Borger.\r\nScriptet forventer en hjemmeside URL som input paramter.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_policy_homepage_hd2Rmxs.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 10,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:26:58.614",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Chrome - Sæt som default browser",
+        "uid": null,
+        "description": "Baseret på policies.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/chrome_policy_default_browser.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            3
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 11,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:30:10.289",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Desktop - Fjern \"Luk ned\" og \"Genstart\" fra sessionmenuen og blokér for nedlukning via systempolitik",
+        "uid": null,
+        "description": "Opdateret til Ubuntu 20.04 (dog stadig med baglæns-kompatibilitet).",
+        "site": null,
+        "executable_code": "script_uploads/polkit_policy_shutdown_R6uMvd2.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 12,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:30:03.787",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "Desktop - Fjern besked om opdatering",
+        "uid": null,
+        "description": "Dette script fjerner popup om ny LTS-version.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/remove_new_release_message.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 13,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:15:34.367",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Desktop - Skift baggrundsbillede",
+        "uid": null,
+        "description": "Dette script skifter baggrundsbillede for borger på en OS2borgerPC.\r\nScriptet tager en baggrundsbillede fil som parameter.\r\nBorger behøver ikke at logge ud før baggrundsbillede skifter.\r\nEfterfølgende vil det ikke være muligt for borger at skifte baggrundsbilledet.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/dconf_policy_desktop.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 14,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:15:40.905",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Desktop - Vis tilgængelighedsfunktioner",
+        "uid": null,
+        "description": "Viser en menu for at styre systemets tilgængelighedsfunktioner øverste på skærmen.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/dconf_policy.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 16,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:24:03.341",
+        "user_created": "",
+        "user_modified": "",
+        "name": "OS2borgerPC - Skift start tidspunkt og interval",
+        "uid": null,
+        "description": "This script sets the cron.d/bibos_jobmanager job to execute at a random startup time with a certain interval. So if the interval is 5 minutes, the jobmanager could run at\r\n 1, 6, 11...56 every hour, instead of 0, 5, 10 ...55.\r\n\r\nStart time is chosen randomly within interval.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/randomize_jobmanager.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 17,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:23:42.962",
+        "user_created": "",
+        "user_modified": "",
+        "name": "OS2DisplayPC - Installer Chromium",
+        "uid": null,
+        "description": "Installér Chromium og en minimal X.\r\n\r\nOpgradering af Chromium-install-scriptet til Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/chromium_install.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 18,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:23:36.807",
+        "user_created": "",
+        "user_modified": "",
+        "name": "OS2displayPC - Installer SSH og VNC",
+        "uid": null,
+        "description": "Installer SSH og VNC for fjernadgang. \r\n\r\nDu kan lave SSH-forbindelse med det almindelige Unix-password.\r\n\r\nGiv VNC-passwordet med som parameter.",
+        "site": null,
+        "executable_code": "script_uploads/vnc_and_ssh_install_7Q7CazQ.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 19,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-12-02T13:39:30.625",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "OS2displayPC - Autostart Chromium",
+        "uid": null,
+        "description": "Start Chromium i kiosk-mode og sæt start-URL-en.\r\n\r\nDer angives en forsinkelse før browseren startes, der kan hjælpe med at løse evt. timing issues (som regel virker det fint med 1 sekund, der angives ved tallet 1).\r\n\r\nSkærmens højde og bredde skal sættes til skærmens korrekte opløsning.\r\n\r\nDesuden skal der angives en orientering, som kan være \"left\", \"right\" eller \"normal\".",
+        "site": null,
+        "executable_code": "script_uploads/chromium_setup_ocWvyJg.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 20,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:26.875",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Aktivér automatisk borgerlogin",
+        "uid": null,
+        "description": "Skift frem og tilbage mellem automatisk login for publikum eller ej.\r\n\r\nScriptet tager én parameter, som kan være \"--enable\" eller \"--disable\", som slår automatisk login til hhv. fra.\r\n\r\nAutomatisk login er som standard slået TIL på publikums-PC'er.  \r\n\r\nHvis man slår det FRA, skal man bruge scriptet \"Skift password for bruger\" til at sætte et kendt password for publikumsbrugeren.",
+        "site": null,
+        "executable_code": "script_uploads/user_automatic_login.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 21,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:15.258",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Aktivér automatiske opdateringer",
+        "uid": null,
+        "description": "Dette script aktiverer automatiske opdateringer. \r\nNår du slår automatiske opdateringer til skal du vælge om du både vil have sikkerhedsopdateringer og generelle opdateringer slået til, eller blot sikkerhedsopdateringer.\r\nHvis du ønsker at det kun er sikkerhedsopdateringer der skal slåes til skal du tilføje parametren \"sikkerhed\". Hvis det derimod er både sikkerhedsopdateringer og generelle opdateringer skal du tilføje parametren \"alt\".\r\n\r\nVær opmærksom på at med det nyeste os2borgerpc-image er sikkerhedsopdateringer slået til.\r\nMagenta anbefaler at kun sikkerhedsopdateringer er slået til. Især hvis man gør brug af Google Chrome.\r\n\r\nInfo om de to opdateringsmuligheder:\r\n\r\nSikkerhedsopdateringer:\r\nDe vigtigste opdateringer, som retter sårbarheder i systemet og dets programmer.\r\n\r\nGenerelle opdateringer:\r\nRetter fejl i tilføjelsesprogrammerne.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/apt_periodic_control_qqYafra.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 22,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:36.967",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Genstart computer efter X minutter",
+        "uid": null,
+        "description": "Genstart computeren én gang efter et foruddefineret antal minutter.\r\n\r\nHvis antallet af minutter er større end fem, bliver brugeren notificeret først. Brugeren har ingen mulighed for at undgå genstarten.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/reboot_after_time_aG4Gjkw.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 23,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:42.820",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Genstart computeren NU",
+        "uid": null,
+        "description": "Genstarter computeren med det samme.\r\n\r\nAdvarsel: Jobs lavet ud fra dette script vil altid ende i status \"Afsendt\".\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/reboot_now.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 24,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:31.797",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Grub: Aktiver sikkerhed",
+        "uid": null,
+        "description": "Dette script vil gøre at alle grub menuerne på nær Ubuntu vil kræve en adgangskode for brugeren superuser. \r\n\r\nDet er vigtigt at man afprøver scriptet på en enkelt borgerpc før man ruller det ud på dem alle sammen.\r\n\r\nDet er også vigtigt at man husker det kodeord man sætter på grub.\r\nDet er dog muligt at ændre det igen hvis man glemmer kodeordet. \r\n\r\n*Note: Man kan læse om hvad grub er, her: https://help.ubuntu.com/community/Grub2\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/grub_set_password_HdoIPiZ.py",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 25,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:41:54.489",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Log altid ud efter X minutter uden besked",
+        "uid": null,
+        "description": "Log altid brugeren ud efter et antal minutter uden at give besked.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/always_logout_after_time.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 26,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:52.581",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Log bruger ud efter X minutter med besked",
+        "uid": null,
+        "description": "Log altid brugeren ud efter et antal minutter. Det vil sige, at hvis dette script kaldes med parameteren \"60\", vil brugerne altid automatisk blive logget ud en time efter, at de loggede ind.\r\n\r\nScriptet tager altså én parameter, antallet af minutter. Hvis antallet af minutter er mindre end fem (anbefales kun til test), får brugeren ikke besked om det først.\r\n\r\nEllers vil brugeren få en tydelig besked fem minutter før nedlukning.\r\n\r\nTestet på Ubuntu 20.04. Der er i 20.04 ikke noget problem med æ, ø og å i dialogteksterne.",
+        "site": null,
+        "executable_code": "script_uploads/setup_inactive_logout.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 27,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:44.437",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Log brugeren ud",
+        "uid": null,
+        "description": "Dette script logger brugeren borger(user) ud med det samme.",
+        "site": null,
+        "executable_code": "script_uploads/logout_user.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 28,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:13:57.595",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Luk ned dagligt",
+        "uid": null,
+        "description": "Lukker computeren ned på et bestemt tidspunkt hver dag.\r\n\r\nParametrene angiver timer og minutter i klokkeslettet.\r\n\r\nDet er muligt at angive \"--off\" som første parameter og en blank som anden parameter. Dette standser den daglige nedlukning.\r\n\r\nBrugeren varskos fem minutter før nedlukningen.\r\n\r\nNB: Brugeren har ingen mulighed for at undgå dette.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/shutdown_at_time.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 29,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:23.733",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Luk ned og vågn dagligt",
+        "uid": null,
+        "description": "Dette script sætter computeren til at lukke ned og vågne op på det samme tidspunkt hver dag.\r\nSom argument tager scriptet HH:MM (tidspunktet for nedlukning) og antallet af timer computeren skal vågne op efter nedlukning.\r\n\r\nDet er muligt at angive \"--off\" som første parameter og 0 og 0 som de næste to parametre. Dette standser den daglige nedlukning.\r\nScriptet er baseret på \"System - Luk ned dagligt\" https://bibos-admin.magenta-aps.dk/site/magenta/scripts/12/",
+        "site": null,
+        "executable_code": "script_uploads/shutdown_and_wakeup_R3wRh69.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 30,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:14:11.937",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Opdater alt",
+        "uid": null,
+        "description": "Dettte script opdaterer alle pakker på systemet. \r\n\r\nSå det anbefales at køre dette script hvis en opdatering ude på maskinen er gået galt, eller hvis man kun har sat automatiske sikkerhedsopdateringer til.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/update_all_7LM3G3y.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 31,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:14:21.909",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - rotér skærm",
+        "uid": null,
+        "description": "Rotérer den første skærm der bliver fundet til \"normal\", \"left\" eller \"right\".\r\n\r\n\r\nTestet på Ubuntu 20.04",
+        "site": null,
+        "executable_code": "script_uploads/rotate_display_6g79WvQ.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 32,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:40.123",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Set system clock from BIOS",
+        "uid": null,
+        "description": "Dette script sætter local time fra BIOS.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/set_local_time_from_bios.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 33,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:14:30.786",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "System - Skift lydudgang",
+        "uid": null,
+        "description": "Skifter den default-lydudgang, systemet benytter. (Publikums-brugeren må gerne skifte lydudgang under brug, men denne ændring vil også slettes ved logout.)\r\nÆndringerne vil også være der efter borgerPC'en har været slukket.\r\n\r\nScriptet virker på OS2borgerPC 16.04 og 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/pulse_policy_profile.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 34,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:48.545",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Skift navn på en computer",
+        "uid": null,
+        "description": "Ændring af hostname på en maskine; den skifter IKKE navn mv. i admin systemet. Maskinen skal genstartes før ændringen træder i kraft.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/change_computer_name1.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 35,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-10-08T16:03:07.664",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "System - Skift password for bruger",
+        "uid": null,
+        "description": "Skifter publikumsbrugerens password til det angivne.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDa publikumsbrugeren logger ind automatisk, er det normalt ikke nødvendigt at sætte et password for denne bruger.\r\n\r\nPasswords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/change_user_password_bO697ab.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 36,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-09-30T13:42:57.053",
+        "user_created": "",
+        "user_modified": "flash_gordon",
+        "name": "System - Skift password for superbruger",
+        "uid": null,
+        "description": "Skift til det angivne superbrugerpassword.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDet er MEGET VIGTIGT at skifte fra standard-passwordet til et andet, så snart en BibOS-maskine er færdiginstalleret. Passwords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
+        "site": null,
+        "executable_code": "script_uploads/change_superuser_password_6zL696e.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 37,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:20:23.484",
+        "user_created": "",
+        "user_modified": "",
+        "name": "System - Tilføj Exfat support",
+        "uid": null,
+        "description": "Gør det muligt for Ubuntu at tilkoble et Windows exfat drev.\r\n\r\nTestet på Ubuntu 20.04.\r\n\r\nUdviklet af: Unkown.",
+        "site": null,
+        "executable_code": "script_uploads/Exfat_enable_qCyiT2z.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 56,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-10T09:12:51.853",
+        "user_created": "",
+        "user_modified": "",
+        "name": "Ping-advarsel",
+        "uid": null,
+        "description": "Ping!",
+        "site": 1,
+        "executable_code": "script_uploads/pingevent.py",
+        "is_security_script": true,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 58,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:09:26.671",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Test scriptfilnavne",
+        "uid": null,
+        "description": "dfsdf",
+        "site": 1,
+        "executable_code": "script_uploads/diagnostic_logfiles_b649s9e.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 59,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-25T16:19:38.683",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "script test",
+        "uid": null,
+        "description": "1",
+        "site": 1,
+        "executable_code": "script_uploads/test-script_xKItgpL.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 60,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2021-08-25T16:19:45.291",
+        "user_created": "",
+        "user_modified": "mowgli",
+        "name": "script test 2",
+        "uid": null,
+        "description": "2",
+        "site": 1,
+        "executable_code": "script_uploads/dbus-address.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 61,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:08:35.963",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "Sæt baggrundsbillede",
+        "uid": null,
+        "description": "a",
+        "site": 1,
+        "executable_code": "script_uploads/emptyish.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 62,
+    "fields": {
+        "created": "2021-08-10T09:12:51.835",
+        "modified": "2022-01-26T15:09:59.510",
+        "user_created": "",
+        "user_modified": "magenta",
+        "name": "test",
+        "uid": null,
+        "description": "Just a test script",
+        "site": 1,
+        "executable_code": "script_uploads/test.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 68,
+    "fields": {
+        "created": "2021-08-25T11:19:11.606",
+        "modified": "2022-01-26T15:15:27.842",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "Desktop - Logud-knap med valgfrit ikon",
+        "uid": null,
+        "description": "Tilføjer en logud-knap til skrivebordet, med valgfrit navn og ikon (uploades), og mulighed for at bestemme om der skal logges ud øjeblikkeligt, \r\neller om brugeren skal bekræfte først.\r\n\r\nParametre:\r\n\r\n1: Navnet du ønsker, knappen skal have på skrivebordet.\r\n2. Om der skal genstartes øjeblikkeligt eller om brugeren skal spørges om bekræftelse (med mulighed for at stoppe logud).\r\n3. Hvilket ikon logudknappen skal have (en kvadratisk .SVG- eller .PNG-fil).\r\n\r\nBemærk: Dette script forudsætter at også scriptet \"Desktop - Aktiver genveje\" køres for at aktivere knappen.\r\n\r\nØnsker du at slette genvejen, kan det gøres med scriptet \"Desktop - Tilføj/Fjern programgenvej på skrivebord\".",
+        "site": null,
+        "executable_code": "script_uploads/desktop_logout_button_icon_W0J3c67.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            4
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 69,
+    "fields": {
+        "created": "2021-08-25T11:20:13.670",
+        "modified": "2022-01-26T15:18:12.344",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "Desktop - Aktiver genveje",
+        "uid": null,
+        "description": "\"Aktiverer\" genveje på skrivebordet.\r\n\r\nInden dette script køres kan man godt tilføje en genvej, men det rette ikon ikke dukke op, og programmet vil i stedet blive åbnet i et tekstredigeringsprogram.\r\n\r\nDer skal logges ud og ind igen - eller alternativt genstartes - før det tager effekt.\r\nScriptet skal kun køres én gang - så virker genveje der er tilføjet til skrivebordet både før og efter.",
+        "site": 1,
+        "executable_code": "script_uploads/desktop_activate_shortcuts.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 74,
+    "fields": {
+        "created": "2021-11-28T15:43:34.421",
+        "modified": "2022-01-26T15:12:05.296",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "OS2borgerPC - Log altid ud efter X minutter med nedtæller",
+        "uid": null,
+        "description": "Opsætter en OS2borgerPC til altid at logge ud efter et bestemt antal sekunder, med en visuel nedtæller på skærmen, til at vise, hvor længe, der er tilbage.\r\n\r\nScriptet tager 4 parametre:\r\n  1. Aktivér?: ja/nej\r\n  2. Antal sekunder før logud\r\n  3. Hvilket x-koordinat nedtæller-vinduet skal have.\r\n  3. Hvilket y-koordinat nedtæller-vinduet skal have.",
+        "site": null,
+        "executable_code": "script_uploads/always_logout_after_time_visual_WRE7ERj.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 75,
+    "fields": {
+        "created": "2021-11-28T15:44:26.423",
+        "modified": "2022-01-26T15:12:10.354",
+        "user_created": "mowgli",
+        "user_modified": "magenta",
+        "name": "Cicero - Installér PAM-modul",
+        "uid": null,
+        "description": "Opsætter en OS2borgerPC til at tjekke op mod Cicero ved login for Borger.\r\n\r\nScriptet tager ét parameter:\r\n1: Aktivér: ja/nej\r\n\r\nDette script afhænger af, at følgende andre scripts er kørt:\r\n- System - Aktivér automatisk borgerlogin (det skal slås fra)\r\n\r\n...og det vil oftest også bruges sammen med:\r\nOS2borgerPC - Log altid ud efter X minutter med nedtæller",
+        "site": null,
+        "executable_code": "script_uploads/cicero_install_pam_gsMTFne.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 76,
+    "fields": {
+        "created": "2021-11-30T14:50:10.592",
+        "modified": "2021-11-30T14:50:40.156",
+        "user_created": "mowgli",
+        "user_modified": "",
+        "name": "OS2borgerPC - Opdater klient (yanked)",
+        "uid": null,
+        "description": "Midlertidigt script ifm. test af PAM, der opdaterer klienten til nyeste version",
+        "site": null,
+        "executable_code": "script_uploads/update_client_yanked.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 77,
+    "fields": {
+        "created": "2021-12-02T13:40:43.310",
+        "modified": "2021-12-02T13:40:51.799",
+        "user_created": "mowgli",
+        "user_modified": "mowgli",
+        "name": "OS2displayPC - Chromium - Skift startside",
+        "uid": null,
+        "description": "-",
+        "site": 1,
+        "executable_code": "script_uploads/chromium_change_homepage.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 78,
+    "fields": {
+        "created": "2022-01-04T16:36:40.662",
+        "modified": "2022-01-04T16:41:07.708",
+        "user_created": "mowgli",
+        "user_modified": "mowgli",
+        "name": "System - Slå to-faktor autentifikation for superbruger til",
+        "uid": null,
+        "description": "Slår tidsbaseret totrinsbekræftelse til for superbrugeren, ved login på en borgerPC.\r\n\r\nGå først ind på siden \"Totrinsbekræftelse\" i menuen til venstre her på adminsitet, for at se processen for at slå totrinsbekræftelse til.\r\n\r\nSå snart du har genereret en sikkerhedsnøgle på ovenstående side, skal dette script køres med sikkerhedsnøgle som det andet parameter.\r\n\r\nFra næste login, vil der nu for superbrugeren være et ekstra skridt i loginprocessen efter koden, hvor der skal indtastes totrins-koden.\r\n\r\nTager det ikke effekt øjeblikkeligt efter logud, foreslås en genstart af maskinen.\r\n\r\nInputparametre:\r\n1. Aktivér?: 'Ja' slår totrinsbekræftelse til, 'nej' slår det fra.\r\n2: Sikkerhedsnøgle: Sikkerhedsnøglen totrinsbekræftelse-systemet internt har brug for. \r\nSamme sikkerhedsnøgle for flere computere betyder, du kan logge ind på flere computere med samme totrins-koder, fremfor hver computer skal tilføjes individuelt til din totrinsbekræftelse-app.",
+        "site": null,
+        "executable_code": "script_uploads/setup_two_factor_superuser_BAk1AH4.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "system.script",
+    "pk": 79,
+    "fields": {
+        "created": "2022-01-17T11:45:01.720",
+        "modified": "2022-01-26T15:07:45.964",
+        "user_created": "flash_gordon",
+        "user_modified": "magenta",
+        "name": "OS2borgerPC - Spær adgang til terminalen",
+        "uid": null,
+        "description": "Spær adgangen til terminalen for publikumsbrugeren (superuser har stadig adgang).\r\n\r\nBemærk, at brugerens adgang til terminalen ikke i sig selv er et sikkerhedshul. Brugeren kan fra terminalen gøre præcis de ting, som vedkommende har tilladelse til i forvejen.\r\n\r\nHvis brugeren er i stand til at udfordre systemets sikkerhed fra terminalen, skyldes det altså de underliggende tilladelser - ikke terminaladgangen, som ikke gør en grundlæggende forskel.\r\n\r\nBlokering af terminaladgangen er dermed dybest set en lappeløsning, som kan være ganske fornuftig - men de underliggende problemer burde adresseres, og hvis de bliver det, vil det ikke længere være nødvendigt at blokere for terminaladgangen.",
+        "site": 1,
+        "executable_code": "script_uploads/test_sHq1sWl.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 80,
+    "fields": {
+        "created": "2022-01-18T10:06:14.551",
+        "modified": "2022-01-26T15:09:01.715",
+        "user_created": "flash_gordon",
+        "user_modified": "magenta",
+        "name": "Desktop - Slå skriverettigheder for skrivebord fra/til",
+        "uid": null,
+        "description": "Slår skriverettigheder for skrivebordet til og fra for Borger-brugeren.\r\n\r\nArgumenter:\r\n  1. Aktivér?: \r\n     ja: brugeren har IKKE rettighed til at lægge filer på skrivebordet (standard)\r\n     nej: brugeren har rettighed til at lægge filer på skrivebordet",
+        "site": 1,
+        "executable_code": "script_uploads/desktop_toggle_writable_uD7ggxo.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 81,
+    "fields": {
+        "created": "2022-06-09T14:51:56.693",
+        "modified": "2022-06-09T14:51:56.704",
+        "user_created": "magenta",
+        "user_modified": "",
+        "name": "Detekter låst/udløbet bruger",
+        "uid": null,
+        "description": "f",
+        "site": null,
+        "executable_code": "script_uploads/detect_user_expired_event.py",
+        "is_security_script": true,
+        "is_hidden": false,
         "maintained_by_magenta": false,
         "tags": []
     }
@@ -4561,892 +5542,6 @@
         "executable_code": "script_uploads/on_off_schedule_remove.sh",
         "is_security_script": false,
         "is_hidden": true,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 5,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:16:32.818",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Chrome - Autostart tilføj/fjern",
-        "description": "Dette script tilføjer eller fjerner Google Chrome fra autostart. Det er endvidere muligt at få Google Chrome til at starte op i fuldskærm.\r\n\r\nAutostart betyder at Google Chrome vil starte op når brugeren logger ind.\r\n\r\nHvis du tilføjer \"Ja\" som argument bliver Google Chrome tilføjet til autostart og åbnet i fuldskærm.\r\nHvis du tilføjer \"Nej\" som argument bliver Google Chrome tilføjet til autostart og åbnet i normal skærm størelse.\r\nHvis du tilføjer \"Fjern\" som argument bliver Google Chrome fjernet fra autostart.\r\n\r\nTestet på Ubuntu 20.04",
-        "site": null,
-        "executable_code": "script_uploads/chrome_autostart_cP5Rsu2.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            3
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 6,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:16:16.929",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Chrome - Deaktiver autologin",
-        "description": "Deaktiverer browserlogin og 'husk password' for Google Chrome.\r\n\r\nDette script kan køres uden at have installeret Google Chrome.\r\n\r\nTestet på Ubuntu 20.04",
-        "site": null,
-        "executable_code": "script_uploads/chrome_policy_deactivate_login_m0TvmUo.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            3
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 7,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:16:10.864",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Chrome - Deaktiver nøglering",
-        "description": "Dette script deaktivere Ubuntu pop-up når Publikumsbruger åbner Google Chrome. \r\nGoogle-Chrome ønsker at oprette en standard nøglering.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/chrome_disable_keyring.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            3
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 8,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:27:09.584",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "Chrome - Installér",
-        "description": "Installerer Google Chrome.",
-        "site": null,
-        "executable_code": "script_uploads/chrome_install_KDwvq0C.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            3
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 9,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:15:57.250",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Chrome - Skift startside",
-        "description": "Scriptet skifter startside for Google Chrome for brugeren Borger.\r\nScriptet forventer en hjemmeside URL som input paramter.",
-        "site": null,
-        "executable_code": "script_uploads/chrome_policy_homepage_hd2Rmxs.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            3
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 10,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:26:58.614",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "Chrome - Sæt som default browser",
-        "description": "Baseret på policies.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/chrome_policy_default_browser.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            3
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 11,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:30:10.289",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "Desktop - Fjern \"Luk ned\" og \"Genstart\" fra sessionmenuen og blokér for nedlukning via systempolitik",
-        "description": "Opdateret til Ubuntu 20.04 (dog stadig med baglæns-kompatibilitet).",
-        "site": null,
-        "executable_code": "script_uploads/polkit_policy_shutdown_R6uMvd2.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            4
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 12,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:30:03.787",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "Desktop - Fjern besked om opdatering",
-        "description": "Dette script fjerner popup om ny LTS-version.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/remove_new_release_message.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            4
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 13,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:15:34.367",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Desktop - Skift baggrundsbillede",
-        "description": "Dette script skifter baggrundsbillede for borger på en OS2borgerPC.\r\nScriptet tager en baggrundsbillede fil som parameter.\r\nBorger behøver ikke at logge ud før baggrundsbillede skifter.\r\nEfterfølgende vil det ikke være muligt for borger at skifte baggrundsbilledet.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/dconf_policy_desktop.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            4
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 14,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:15:40.905",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Desktop - Vis tilgængelighedsfunktioner",
-        "description": "Viser en menu for at styre systemets tilgængelighedsfunktioner øverste på skærmen.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/dconf_policy.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            4
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 16,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:24:03.341",
-        "user_created": "",
-        "user_modified": "",
-        "name": "OS2borgerPC - Skift start tidspunkt og interval",
-        "description": "This script sets the cron.d/bibos_jobmanager job to execute at a random startup time with a certain interval. So if the interval is 5 minutes, the jobmanager could run at\r\n 1, 6, 11...56 every hour, instead of 0, 5, 10 ...55.\r\n\r\nStart time is chosen randomly within interval.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/randomize_jobmanager.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            2
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 17,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:23:42.962",
-        "user_created": "",
-        "user_modified": "",
-        "name": "OS2DisplayPC - Installer Chromium",
-        "description": "Installér Chromium og en minimal X.\r\n\r\nOpgradering af Chromium-install-scriptet til Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/chromium_install.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            2
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 18,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:23:36.807",
-        "user_created": "",
-        "user_modified": "",
-        "name": "OS2displayPC - Installer SSH og VNC",
-        "description": "Installer SSH og VNC for fjernadgang. \r\n\r\nDu kan lave SSH-forbindelse med det almindelige Unix-password.\r\n\r\nGiv VNC-passwordet med som parameter.",
-        "site": null,
-        "executable_code": "script_uploads/vnc_and_ssh_install_7Q7CazQ.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            2
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 19,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-12-02T13:39:30.625",
-        "user_created": "",
-        "user_modified": "mowgli",
-        "name": "OS2displayPC - Autostart Chromium",
-        "description": "Start Chromium i kiosk-mode og sæt start-URL-en.\r\n\r\nDer angives en forsinkelse før browseren startes, der kan hjælpe med at løse evt. timing issues (som regel virker det fint med 1 sekund, der angives ved tallet 1).\r\n\r\nSkærmens højde og bredde skal sættes til skærmens korrekte opløsning.\r\n\r\nDesuden skal der angives en orientering, som kan være \"left\", \"right\" eller \"normal\".",
-        "site": null,
-        "executable_code": "script_uploads/chromium_setup_ocWvyJg.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            2
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 20,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:26.875",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Aktivér automatisk borgerlogin",
-        "description": "Skift frem og tilbage mellem automatisk login for publikum eller ej.\r\n\r\nScriptet tager én parameter, som kan være \"--enable\" eller \"--disable\", som slår automatisk login til hhv. fra.\r\n\r\nAutomatisk login er som standard slået TIL på publikums-PC'er.  \r\n\r\nHvis man slår det FRA, skal man bruge scriptet \"Skift password for bruger\" til at sætte et kendt password for publikumsbrugeren.",
-        "site": null,
-        "executable_code": "script_uploads/user_automatic_login.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 21,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:15.258",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - Aktivér automatiske opdateringer",
-        "description": "Dette script aktiverer automatiske opdateringer. \r\nNår du slår automatiske opdateringer til skal du vælge om du både vil have sikkerhedsopdateringer og generelle opdateringer slået til, eller blot sikkerhedsopdateringer.\r\nHvis du ønsker at det kun er sikkerhedsopdateringer der skal slåes til skal du tilføje parametren \"sikkerhed\". Hvis det derimod er både sikkerhedsopdateringer og generelle opdateringer skal du tilføje parametren \"alt\".\r\n\r\nVær opmærksom på at med det nyeste os2borgerpc-image er sikkerhedsopdateringer slået til.\r\nMagenta anbefaler at kun sikkerhedsopdateringer er slået til. Især hvis man gør brug af Google Chrome.\r\n\r\nInfo om de to opdateringsmuligheder:\r\n\r\nSikkerhedsopdateringer:\r\nDe vigtigste opdateringer, som retter sårbarheder i systemet og dets programmer.\r\n\r\nGenerelle opdateringer:\r\nRetter fejl i tilføjelsesprogrammerne.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/apt_periodic_control_qqYafra.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 22,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:36.967",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Genstart computer efter X minutter",
-        "description": "Genstart computeren én gang efter et foruddefineret antal minutter.\r\n\r\nHvis antallet af minutter er større end fem, bliver brugeren notificeret først. Brugeren har ingen mulighed for at undgå genstarten.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/reboot_after_time_aG4Gjkw.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 23,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:42.820",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Genstart computeren NU",
-        "description": "Genstarter computeren med det samme.\r\n\r\nAdvarsel: Jobs lavet ud fra dette script vil altid ende i status \"Afsendt\".\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/reboot_now.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 24,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:31.797",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - Grub: Aktiver sikkerhed",
-        "description": "Dette script vil gøre at alle grub menuerne på nær Ubuntu vil kræve en adgangskode for brugeren superuser. \r\n\r\nDet er vigtigt at man afprøver scriptet på en enkelt borgerpc før man ruller det ud på dem alle sammen.\r\n\r\nDet er også vigtigt at man husker det kodeord man sætter på grub.\r\nDet er dog muligt at ændre det igen hvis man glemmer kodeordet. \r\n\r\n*Note: Man kan læse om hvad grub er, her: https://help.ubuntu.com/community/Grub2\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/grub_set_password_HdoIPiZ.py",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 25,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:41:54.489",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Log altid ud efter X minutter uden besked",
-        "description": "Log altid brugeren ud efter et antal minutter uden at give besked.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/always_logout_after_time.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 26,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:52.581",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - Log bruger ud efter X minutter med besked",
-        "description": "Log altid brugeren ud efter et antal minutter. Det vil sige, at hvis dette script kaldes med parameteren \"60\", vil brugerne altid automatisk blive logget ud en time efter, at de loggede ind.\r\n\r\nScriptet tager altså én parameter, antallet af minutter. Hvis antallet af minutter er mindre end fem (anbefales kun til test), får brugeren ikke besked om det først.\r\n\r\nEllers vil brugeren få en tydelig besked fem minutter før nedlukning.\r\n\r\nTestet på Ubuntu 20.04. Der er i 20.04 ikke noget problem med æ, ø og å i dialogteksterne.",
-        "site": null,
-        "executable_code": "script_uploads/setup_inactive_logout.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 27,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:44.437",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - Log brugeren ud",
-        "description": "Dette script logger brugeren borger(user) ud med det samme.",
-        "site": null,
-        "executable_code": "script_uploads/logout_user.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 28,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:13:57.595",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - Luk ned dagligt",
-        "description": "Lukker computeren ned på et bestemt tidspunkt hver dag.\r\n\r\nParametrene angiver timer og minutter i klokkeslettet.\r\n\r\nDet er muligt at angive \"--off\" som første parameter og en blank som anden parameter. Dette standser den daglige nedlukning.\r\n\r\nBrugeren varskos fem minutter før nedlukningen.\r\n\r\nNB: Brugeren har ingen mulighed for at undgå dette.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/shutdown_at_time.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 29,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:23.733",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Luk ned og vågn dagligt",
-        "description": "Dette script sætter computeren til at lukke ned og vågne op på det samme tidspunkt hver dag.\r\nSom argument tager scriptet HH:MM (tidspunktet for nedlukning) og antallet af timer computeren skal vågne op efter nedlukning.\r\n\r\nDet er muligt at angive \"--off\" som første parameter og 0 og 0 som de næste to parametre. Dette standser den daglige nedlukning.\r\nScriptet er baseret på \"System - Luk ned dagligt\" https://bibos-admin.magenta-aps.dk/site/magenta/scripts/12/",
-        "site": null,
-        "executable_code": "script_uploads/shutdown_and_wakeup_R3wRh69.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 30,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:14:11.937",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - Opdater alt",
-        "description": "Dettte script opdaterer alle pakker på systemet. \r\n\r\nSå det anbefales at køre dette script hvis en opdatering ude på maskinen er gået galt, eller hvis man kun har sat automatiske sikkerhedsopdateringer til.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/update_all_7LM3G3y.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 31,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:14:21.909",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - rotér skærm",
-        "description": "Rotérer den første skærm der bliver fundet til \"normal\", \"left\" eller \"right\".\r\n\r\n\r\nTestet på Ubuntu 20.04",
-        "site": null,
-        "executable_code": "script_uploads/rotate_display_6g79WvQ.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 32,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:40.123",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Set system clock from BIOS",
-        "description": "Dette script sætter local time fra BIOS.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/set_local_time_from_bios.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 33,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:14:30.786",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "System - Skift lydudgang",
-        "description": "Skifter den default-lydudgang, systemet benytter. (Publikums-brugeren må gerne skifte lydudgang under brug, men denne ændring vil også slettes ved logout.)\r\nÆndringerne vil også være der efter borgerPC'en har været slukket.\r\n\r\nScriptet virker på OS2borgerPC 16.04 og 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/pulse_policy_profile.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 34,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:48.545",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Skift navn på en computer",
-        "description": "Ændring af hostname på en maskine; den skifter IKKE navn mv. i admin systemet. Maskinen skal genstartes før ændringen træder i kraft.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/change_computer_name1.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 35,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-10-08T16:03:07.664",
-        "user_created": "",
-        "user_modified": "mowgli",
-        "name": "System - Skift password for bruger",
-        "description": "Skifter publikumsbrugerens password til det angivne.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDa publikumsbrugeren logger ind automatisk, er det normalt ikke nødvendigt at sætte et password for denne bruger.\r\n\r\nPasswords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/change_user_password_bO697ab.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 36,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:57.053",
-        "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Skift password for superbruger",
-        "description": "Skift til det angivne superbrugerpassword.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDet er MEGET VIGTIGT at skifte fra standard-passwordet til et andet, så snart en BibOS-maskine er færdiginstalleret. Passwords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
-        "site": null,
-        "executable_code": "script_uploads/change_superuser_password_6zL696e.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 37,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:20:23.484",
-        "user_created": "",
-        "user_modified": "",
-        "name": "System - Tilføj Exfat support",
-        "description": "Gør det muligt for Ubuntu at tilkoble et Windows exfat drev.\r\n\r\nTestet på Ubuntu 20.04.\r\n\r\nUdviklet af: Unkown.",
-        "site": null,
-        "executable_code": "script_uploads/Exfat_enable_qCyiT2z.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 56,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-10T09:12:51.853",
-        "user_created": "",
-        "user_modified": "",
-        "name": "Ping-advarsel",
-        "description": "Ping!",
-        "site": 1,
-        "executable_code": "script_uploads/pingevent.py",
-        "is_security_script": true,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 58,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:09:26.671",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Test scriptfilnavne",
-        "description": "dfsdf",
-        "site": 1,
-        "executable_code": "script_uploads/diagnostic_logfiles_b649s9e.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 59,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-25T16:19:38.683",
-        "user_created": "",
-        "user_modified": "mowgli",
-        "name": "script test",
-        "description": "1",
-        "site": 1,
-        "executable_code": "script_uploads/test-script_xKItgpL.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 60,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-08-25T16:19:45.291",
-        "user_created": "",
-        "user_modified": "mowgli",
-        "name": "script test 2",
-        "description": "2",
-        "site": 1,
-        "executable_code": "script_uploads/dbus-address.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 61,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:08:35.963",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "Sæt baggrundsbillede",
-        "description": "a",
-        "site": 1,
-        "executable_code": "script_uploads/emptyish.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 62,
-    "fields": {
-        "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:09:59.510",
-        "user_created": "",
-        "user_modified": "magenta",
-        "name": "test",
-        "description": "Just a test script",
-        "site": 1,
-        "executable_code": "script_uploads/test.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 68,
-    "fields": {
-        "created": "2021-08-25T11:19:11.606",
-        "modified": "2022-01-26T15:15:27.842",
-        "user_created": "mowgli",
-        "user_modified": "magenta",
-        "name": "Desktop - Logud-knap med valgfrit ikon",
-        "description": "Tilføjer en logud-knap til skrivebordet, med valgfrit navn og ikon (uploades), og mulighed for at bestemme om der skal logges ud øjeblikkeligt, \r\neller om brugeren skal bekræfte først.\r\n\r\nParametre:\r\n\r\n1: Navnet du ønsker, knappen skal have på skrivebordet.\r\n2. Om der skal genstartes øjeblikkeligt eller om brugeren skal spørges om bekræftelse (med mulighed for at stoppe logud).\r\n3. Hvilket ikon logudknappen skal have (en kvadratisk .SVG- eller .PNG-fil).\r\n\r\nBemærk: Dette script forudsætter at også scriptet \"Desktop - Aktiver genveje\" køres for at aktivere knappen.\r\n\r\nØnsker du at slette genvejen, kan det gøres med scriptet \"Desktop - Tilføj/Fjern programgenvej på skrivebord\".",
-        "site": null,
-        "executable_code": "script_uploads/desktop_logout_button_icon_W0J3c67.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            4
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 69,
-    "fields": {
-        "created": "2021-08-25T11:20:13.670",
-        "modified": "2022-01-26T15:18:12.344",
-        "user_created": "mowgli",
-        "user_modified": "magenta",
-        "name": "Desktop - Aktiver genveje",
-        "description": "\"Aktiverer\" genveje på skrivebordet.\r\n\r\nInden dette script køres kan man godt tilføje en genvej, men det rette ikon ikke dukke op, og programmet vil i stedet blive åbnet i et tekstredigeringsprogram.\r\n\r\nDer skal logges ud og ind igen - eller alternativt genstartes - før det tager effekt.\r\nScriptet skal kun køres én gang - så virker genveje der er tilføjet til skrivebordet både før og efter.",
-        "site": 1,
-        "executable_code": "script_uploads/desktop_activate_shortcuts.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 74,
-    "fields": {
-        "created": "2021-11-28T15:43:34.421",
-        "modified": "2022-01-26T15:12:05.296",
-        "user_created": "mowgli",
-        "user_modified": "magenta",
-        "name": "OS2borgerPC - Log altid ud efter X minutter med nedtæller",
-        "description": "Opsætter en OS2borgerPC til altid at logge ud efter et bestemt antal sekunder, med en visuel nedtæller på skærmen, til at vise, hvor længe, der er tilbage.\r\n\r\nScriptet tager 4 parametre:\r\n  1. Aktivér?: ja/nej\r\n  2. Antal sekunder før logud\r\n  3. Hvilket x-koordinat nedtæller-vinduet skal have.\r\n  3. Hvilket y-koordinat nedtæller-vinduet skal have.",
-        "site": null,
-        "executable_code": "script_uploads/always_logout_after_time_visual_WRE7ERj.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 75,
-    "fields": {
-        "created": "2021-11-28T15:44:26.423",
-        "modified": "2022-01-26T15:12:10.354",
-        "user_created": "mowgli",
-        "user_modified": "magenta",
-        "name": "Cicero - Installér PAM-modul",
-        "description": "Opsætter en OS2borgerPC til at tjekke op mod Cicero ved login for Borger.\r\n\r\nScriptet tager ét parameter:\r\n1: Aktivér: ja/nej\r\n\r\nDette script afhænger af, at følgende andre scripts er kørt:\r\n- System - Aktivér automatisk borgerlogin (det skal slås fra)\r\n\r\n...og det vil oftest også bruges sammen med:\r\nOS2borgerPC - Log altid ud efter X minutter med nedtæller",
-        "site": null,
-        "executable_code": "script_uploads/cicero_install_pam_gsMTFne.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 76,
-    "fields": {
-        "created": "2021-11-30T14:50:10.592",
-        "modified": "2021-11-30T14:50:40.156",
-        "user_created": "mowgli",
-        "user_modified": "",
-        "name": "OS2borgerPC - Opdater klient (yanked)",
-        "description": "Midlertidigt script ifm. test af PAM, der opdaterer klienten til nyeste version",
-        "site": null,
-        "executable_code": "script_uploads/update_client_yanked.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 77,
-    "fields": {
-        "created": "2021-12-02T13:40:43.310",
-        "modified": "2021-12-02T13:40:51.799",
-        "user_created": "mowgli",
-        "user_modified": "mowgli",
-        "name": "OS2displayPC - Chromium - Skift startside",
-        "description": "-",
-        "site": 1,
-        "executable_code": "script_uploads/chromium_change_homepage.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 78,
-    "fields": {
-        "created": "2022-01-04T16:36:40.662",
-        "modified": "2022-01-04T16:41:07.708",
-        "user_created": "mowgli",
-        "user_modified": "mowgli",
-        "name": "System - Slå to-faktor autentifikation for superbruger til",
-        "description": "Slår tidsbaseret totrinsbekræftelse til for superbrugeren, ved login på en borgerPC.\r\n\r\nGå først ind på siden \"Totrinsbekræftelse\" i menuen til venstre her på adminsitet, for at se processen for at slå totrinsbekræftelse til.\r\n\r\nSå snart du har genereret en sikkerhedsnøgle på ovenstående side, skal dette script køres med sikkerhedsnøgle som det andet parameter.\r\n\r\nFra næste login, vil der nu for superbrugeren være et ekstra skridt i loginprocessen efter koden, hvor der skal indtastes totrins-koden.\r\n\r\nTager det ikke effekt øjeblikkeligt efter logud, foreslås en genstart af maskinen.\r\n\r\nInputparametre:\r\n1. Aktivér?: 'Ja' slår totrinsbekræftelse til, 'nej' slår det fra.\r\n2: Sikkerhedsnøgle: Sikkerhedsnøglen totrinsbekræftelse-systemet internt har brug for. \r\nSamme sikkerhedsnøgle for flere computere betyder, du kan logge ind på flere computere med samme totrins-koder, fremfor hver computer skal tilføjes individuelt til din totrinsbekræftelse-app.",
-        "site": null,
-        "executable_code": "script_uploads/setup_two_factor_superuser_BAk1AH4.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": [
-            1
-        ]
-    }
-},
-{
-    "model": "system.script",
-    "pk": 79,
-    "fields": {
-        "created": "2022-01-17T11:45:01.720",
-        "modified": "2022-01-26T15:07:45.964",
-        "user_created": "flash_gordon",
-        "user_modified": "magenta",
-        "name": "OS2borgerPC - Spær adgang til terminalen",
-        "description": "Spær adgangen til terminalen for publikumsbrugeren (superuser har stadig adgang).\r\n\r\nBemærk, at brugerens adgang til terminalen ikke i sig selv er et sikkerhedshul. Brugeren kan fra terminalen gøre præcis de ting, som vedkommende har tilladelse til i forvejen.\r\n\r\nHvis brugeren er i stand til at udfordre systemets sikkerhed fra terminalen, skyldes det altså de underliggende tilladelser - ikke terminaladgangen, som ikke gør en grundlæggende forskel.\r\n\r\nBlokering af terminaladgangen er dermed dybest set en lappeløsning, som kan være ganske fornuftig - men de underliggende problemer burde adresseres, og hvis de bliver det, vil det ikke længere være nødvendigt at blokere for terminaladgangen.",
-        "site": 1,
-        "executable_code": "script_uploads/test_sHq1sWl.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 80,
-    "fields": {
-        "created": "2022-01-18T10:06:14.551",
-        "modified": "2022-01-26T15:09:01.715",
-        "user_created": "flash_gordon",
-        "user_modified": "magenta",
-        "name": "Desktop - Slå skriverettigheder for skrivebord fra/til",
-        "description": "Slår skriverettigheder for skrivebordet til og fra for Borger-brugeren.\r\n\r\nArgumenter:\r\n  1. Aktivér?: \r\n     ja: brugeren har IKKE rettighed til at lægge filer på skrivebordet (standard)\r\n     nej: brugeren har rettighed til at lægge filer på skrivebordet",
-        "site": 1,
-        "executable_code": "script_uploads/desktop_toggle_writable_uD7ggxo.sh",
-        "is_security_script": false,
-        "maintained_by_magenta": false,
-        "tags": []
-    }
-},
-{
-    "model": "system.script",
-    "pk": 81,
-    "fields": {
-        "created": "2022-06-09T14:51:56.693",
-        "modified": "2022-06-09T14:51:56.704",
-        "user_created": "magenta",
-        "user_modified": "",
-        "name": "Detekter låst/udløbet bruger",
-        "description": "f",
-        "site": null,
-        "executable_code": "script_uploads/detect_user_expired_event.py",
-        "is_security_script": true,
         "maintained_by_magenta": false,
         "tags": []
     }
@@ -9084,118 +9179,6 @@
 },
 {
     "model": "system.job",
-    "pk": 207,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.703",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 53,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 208,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.703",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 53,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 209,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.705",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 54,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 210,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.705",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 54,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 211,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.706",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 54,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 212,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.706",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 54,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 213,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.707",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 54,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 214,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.707",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 54,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
     "pk": 215,
     "fields": {
         "status": "NEW",
@@ -9536,6 +9519,7 @@
     "fields": {
         "name": "Ja/Nej/Fjern",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 5
@@ -9547,6 +9531,7 @@
     "fields": {
         "name": "URL",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 9
@@ -9558,6 +9543,7 @@
     "fields": {
         "name": "Aktivér?",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 11
@@ -9569,6 +9555,7 @@
     "fields": {
         "name": "Baggrundsbillede",
         "value_type": "FILE",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 13
@@ -9580,6 +9567,7 @@
     "fields": {
         "name": "Aktivér?",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 14
@@ -9591,6 +9579,7 @@
     "fields": {
         "name": "Interval",
         "value_type": "INT",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 16
@@ -9602,6 +9591,7 @@
     "fields": {
         "name": "vncpassword",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 18
@@ -9613,6 +9603,7 @@
     "fields": {
         "name": "forsinkelse",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 19
@@ -9624,6 +9615,7 @@
     "fields": {
         "name": "URL",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 19
@@ -9635,6 +9627,7 @@
     "fields": {
         "name": "bredde",
         "value_type": "STRING",
+        "default_value": null,
         "position": 2,
         "mandatory": true,
         "script": 19
@@ -9646,6 +9639,7 @@
     "fields": {
         "name": "højde",
         "value_type": "STRING",
+        "default_value": null,
         "position": 3,
         "mandatory": true,
         "script": 19
@@ -9657,6 +9651,7 @@
     "fields": {
         "name": "orientering",
         "value_type": "STRING",
+        "default_value": null,
         "position": 4,
         "mandatory": true,
         "script": 19
@@ -9668,6 +9663,7 @@
     "fields": {
         "name": "action",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 20
@@ -9679,6 +9675,7 @@
     "fields": {
         "name": "Aktiver generelle opdateringer (sikkerhed/alt)",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 21
@@ -9690,6 +9687,7 @@
     "fields": {
         "name": "minutter",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 22
@@ -9701,6 +9699,7 @@
     "fields": {
         "name": "password",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 24
@@ -9712,6 +9711,7 @@
     "fields": {
         "name": "minutter",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 25
@@ -9723,6 +9723,7 @@
     "fields": {
         "name": "Tid til dialog bliver vist",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 26
@@ -9734,6 +9735,7 @@
     "fields": {
         "name": "Tid til brugeren bliver logget ud",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 26
@@ -9745,6 +9747,7 @@
     "fields": {
         "name": "Tekst som bliver vist i dialogboksen",
         "value_type": "STRING",
+        "default_value": null,
         "position": 2,
         "mandatory": true,
         "script": 26
@@ -9756,6 +9759,7 @@
     "fields": {
         "name": "Tekst som bliver vist på dialogboks knappen",
         "value_type": "STRING",
+        "default_value": null,
         "position": 3,
         "mandatory": true,
         "script": 26
@@ -9767,6 +9771,7 @@
     "fields": {
         "name": "timer",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 28
@@ -9778,6 +9783,7 @@
     "fields": {
         "name": "minutter",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 28
@@ -9789,6 +9795,7 @@
     "fields": {
         "name": "timer",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 29
@@ -9800,6 +9807,7 @@
     "fields": {
         "name": "minutter",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 29
@@ -9811,6 +9819,7 @@
     "fields": {
         "name": "timer til opvågning",
         "value_type": "STRING",
+        "default_value": null,
         "position": 2,
         "mandatory": true,
         "script": 29
@@ -9822,6 +9831,7 @@
     "fields": {
         "name": "Retning ('normal', 'left' eller 'right')",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 31
@@ -9833,6 +9843,7 @@
     "fields": {
         "name": "Lydudgang (f.eks. hdmi eller analog)",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 33
@@ -9844,6 +9855,7 @@
     "fields": {
         "name": "navn",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 34
@@ -9855,6 +9867,7 @@
     "fields": {
         "name": "password",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 35
@@ -9866,6 +9879,7 @@
     "fields": {
         "name": "password_igen",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 35
@@ -9877,6 +9891,7 @@
     "fields": {
         "name": "password",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 36
@@ -9888,6 +9903,7 @@
     "fields": {
         "name": "password_igen",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 36
@@ -9899,6 +9915,7 @@
     "fields": {
         "name": "Tekst",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 60
@@ -9910,6 +9927,7 @@
     "fields": {
         "name": "Billede",
         "value_type": "FILE",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 61
@@ -9921,6 +9939,7 @@
     "fields": {
         "name": "Navn på genvejen",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 68
@@ -9932,6 +9951,7 @@
     "fields": {
         "name": "Bekræftelse på logud? (ja/nej)",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 68
@@ -9943,6 +9963,7 @@
     "fields": {
         "name": "Ikon til genvejen",
         "value_type": "FILE",
+        "default_value": null,
         "position": 2,
         "mandatory": true,
         "script": 68
@@ -9954,6 +9975,7 @@
     "fields": {
         "name": "fs",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 61
@@ -9965,6 +9987,7 @@
     "fields": {
         "name": "Aktivér? (ja/nej)",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 75
@@ -9976,6 +9999,7 @@
     "fields": {
         "name": "Aktiver?: ja / nej",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 74
@@ -9987,6 +10011,7 @@
     "fields": {
         "name": "Minutter til logud",
         "value_type": "INT",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 74
@@ -9998,6 +10023,7 @@
     "fields": {
         "name": "Logud-vindue x-position",
         "value_type": "INT",
+        "default_value": null,
         "position": 2,
         "mandatory": true,
         "script": 74
@@ -10009,6 +10035,7 @@
     "fields": {
         "name": "Logud-vindue y-position",
         "value_type": "INT",
+        "default_value": null,
         "position": 3,
         "mandatory": true,
         "script": 74
@@ -10020,6 +10047,7 @@
     "fields": {
         "name": "URL",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 77
@@ -10031,6 +10059,7 @@
     "fields": {
         "name": "Aktivér? (ja/nej)",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 78
@@ -10042,6 +10071,7 @@
     "fields": {
         "name": "Sikkerhedsnøgle",
         "value_type": "STRING",
+        "default_value": null,
         "position": 1,
         "mandatory": true,
         "script": 78
@@ -10053,9 +10083,202 @@
     "fields": {
         "name": "Aktivér? (ja: fjern skriverettighed / nej: giv skriverettighed)",
         "value_type": "STRING",
+        "default_value": null,
         "position": 0,
         "mandatory": true,
         "script": 80
+    }
+},
+{
+    "model": "system.input",
+    "pk": 78,
+    "fields": {
+        "name": "Mandag tænd",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 0,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 79,
+    "fields": {
+        "name": "Mandag slukket",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 1,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 80,
+    "fields": {
+        "name": "Tirsdag tænd",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 2,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 81,
+    "fields": {
+        "name": "Tirsdag slukket",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 3,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 82,
+    "fields": {
+        "name": "Onsdag tænd",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 4,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 83,
+    "fields": {
+        "name": "Onsdag slukket",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 5,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 84,
+    "fields": {
+        "name": "Torsdag tænd",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 6,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 85,
+    "fields": {
+        "name": "Torsdag slukket",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 7,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 86,
+    "fields": {
+        "name": "Fredag tænd",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 8,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 87,
+    "fields": {
+        "name": "Fredag slukket",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 9,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 88,
+    "fields": {
+        "name": "Lørdag tænd",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 10,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 89,
+    "fields": {
+        "name": "Lørdag slukket",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 11,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 90,
+    "fields": {
+        "name": "Søndag tænd",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 12,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 91,
+    "fields": {
+        "name": "Søndag slukket",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 13,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 92,
+    "fields": {
+        "name": "Undtagelser",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 14,
+        "mandatory": true,
+        "script": 82
+    }
+},
+{
+    "model": "system.input",
+    "pk": 93,
+    "fields": {
+        "name": "Dvaletilstand",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 15,
+        "mandatory": true,
+        "script": 82
     }
 },
 {

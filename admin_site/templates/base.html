@@ -1,10 +1,10 @@
 {% load i18n %}
-
+{% language request.user.bibos_profile.language %}
 <!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="utf-8">
-  <title>OS2borgerPC Administration</title>
+  <title>{% translate "OS2borgerPC Administration" %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="https://os2.eu/sites/all/themes/osto_web/favicon.ico" type="image/vnd.microsoft.icon">
   <link href="/static/css/bootstrap-table.min.css" rel="stylesheet" media="screen">
@@ -38,9 +38,11 @@
     </div>
   </div>
 
+  {% translate "It looks like you're using Internet Explorer. It won't work on this website." as warning %}
+  {% translate "Try opening this website in Microsoft Edge" as link_text %}
   <ie11-browser-warning>
-    data-warning-text="Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på dette site."
-    data-link-text="Prøv at åbne denne side i Microsoft Edge">
+    data-warning-text="{{warning}}"
+    data-link-text="{{link_text}}">
   </ie11-browser-warning>
 
   <script src="/static/js/bootstrap-table.min.js"></script>
@@ -49,3 +51,4 @@
   {% block javascripts %}{% endblock %}
 </body>
 </html>
+{% endlanguage %}

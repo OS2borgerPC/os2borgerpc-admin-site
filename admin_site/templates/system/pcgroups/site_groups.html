@@ -1,8 +1,10 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
 
+{% load i18n %}
+
 {% block specific_title %}
-Grupper
+{% translate "Groups" %}
 {% endblock %}
 
 {% block javascripts %}
@@ -19,7 +21,7 @@ active
   <div class="listutils">
     <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
       <span class="material-icons">add</span>
-      Tilføj ny gruppe
+        {% translate "Add new group" %}
     </button>
   </div>
   <ul class="item-list">
@@ -29,7 +31,7 @@ active
           {{ group.name }}
         </a>
         {% ifequal group selected_group %}
-            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="Slet gruppe">
+            <a class="item-list-deletable material-icons" href="/site/{{ site.url }}/groups/{{ selected_group.url }}/delete/" title="{% translate 'Delete group' %}">
               clear
             </a>
         {% endifequal %}
@@ -42,7 +44,7 @@ active
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
 
-    <h2 class="divideheader">Detaljer om <em>{{ selected_group.name }}</em></h2>
+    <h2 class="divideheader">{% translate "Details about" %} <em>{{ selected_group.name }}</em></h2>
     {% include 'notification.html' %}
 
     <form name="updategroupform"
@@ -56,13 +58,13 @@ active
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">Detaljer</a>
+          <a class="nav-link active" id="details-tab" href="#details" data-bs-toggle="tab" role="tab" aria-controls="details" aria-selected="true">{% translate "Details" %}</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="policies-tab" href="#policies" data-bs-toggle="tab" role="tab" aria-controls="policies" aria-selected="false">Tilknyttede Scripts</a>
+          <a class="nav-link" id="policies-tab" href="#policies" data-bs-toggle="tab" role="tab" aria-controls="policies" aria-selected="false">{% translate "Associated Scripts" %}</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">Konfigurationer</a>
+          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">{% translate "Configurations" %}</a>
         </li>
       </ul>
 
@@ -83,18 +85,20 @@ active
 
               {{ form.pcs.errors }}
               <div class="clearfix">
-              <label class="mb-2">Computere i denne gruppe</label>
+              <label class="mb-2">{% translate "Computers in this group" %}</label>
                 <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
                   <span class="material-icons px-1">computer</span>
                     <span id="total-pcs"></span>
                 </span>
               </div>
-              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text='Tilmeld en computer til gruppen' remove_text='Fjern computer fra gruppen' site_url=site.uid target_section='computers' %}
+              {% translate "Add a computer to the group" as add_c %}
+              {% translate "Remove computer from the group" as remove_c %}
+              {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text=add_c remove_text=remove_c site_url=site.uid target_section='computers' %}
 
             {# SecurityProblem #}
             {% if security_problems_incl_site %}
               <div class="mt-3">
-                <p>Tilknyttede Sikkerhedsregler</p>
+                <p>{% translate "Associated Security Rules" %}</p>
                 <ul class="mt-2 list-group">
                   {% for problem in security_problems_incl_site %}
                     <li class="list-group-item"><a href="{% url 'security_problem' site.uid problem.uid %}">{{ problem }}</a></li>
@@ -106,7 +110,7 @@ active
             {# WakeWeekPlan #}
             {% if selected_group.wake_week_plan %}
               <div class="mt-3">
-                <p>Tilknyttet Tænd/sluk tidsplan</p>
+                <p>{% translate "Associated On/Off schedule" %}</p>
                 <p class="mt-2">
                   <a href="{% url 'wake_plan' site.uid selected_group.wake_week_plan.id %}">{{ selected_group.wake_week_plan }}</a>
                 </p>
@@ -119,11 +123,11 @@ active
 
         <div id="policies" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="policies-tab">
           <div class="alert alert-info">
-            <strong>Bemærk</strong>
+            <strong>{% translate "Note" %}</strong>
             <ul>
-            <li>Tilføjes et nyt script til listen, der tager parametre, skal disse parametre sættes først, ved tryk på "Rediger", før man kan "Gemme ændringerne".</li>
-            <li>Redigering af inputparametre medfører ikke, at et script køres på ny.</li>
-            <li>Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-tilføjede Computere til Gruppen kører hele listen af scripts.</li>
+            <li>{% translate 'If a script that takes arguments is added to the list, then these arguments are to be entered first by clicking "Edit", before you can click "Save changes"' %}.</li>
+            <li>{% translate "Editing the script arguments will not make the script run again" %}.</li>
+            <li>{% translate "Computers already in the group only run newly added scripts, but Computers newly added to the Group run all the scripts on the list" %}.</li>
             </ul>
           </div>
           {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
@@ -136,8 +140,8 @@ active
       </div>
 
       <div class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
-        <button class="btn btn-primary me-3" type="submit">Gem ændringer</button>
-        <button class="btn btn-secondary" type="reset">Annuller</button>
+        <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
+        <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>
         <!--<button class="btn btn-secondary" onclick="return BibOS.PackageList.cancelEditing()">Annuller</button>-->
       </div>
 
@@ -167,7 +171,7 @@ active
         <div class="modal-content">
           <form action="{% url 'new_group' site.uid %}" name="new_group_form" id="new_group_form" method="post">
             <div class="modal-header">
-              <h3 class="modal-title">Tilføj ny gruppe</h3>
+              <h3 class="modal-title">{% translate "Add new group" %}</h3>
               <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -175,8 +179,8 @@ active
                 {{ newform|crispy }}
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="Opret gruppe">
-              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="Annuller">
+              <input type="submit" class="btn btn-primary" value="{% translate 'Create group' %}">
+              <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="{% translate 'Cancel' %}">
             </div>
           </form>
         </div>

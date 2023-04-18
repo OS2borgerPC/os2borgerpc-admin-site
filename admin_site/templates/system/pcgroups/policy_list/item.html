@@ -1,5 +1,7 @@
 {# Remember that this template must be able to be called both from templates.html and from list.html #}
 
+{% load i18n %}
+
 <tr>
   {% if script_id %}
     <td class="sortable-handle" style="min-width: 6.2rem; width: 5%; cursor: pointer;">
@@ -45,7 +47,7 @@
                     {{ param.file_value|file_basename }}
                   </a>
                 {% else %}
-                  Ingen valgt
+                {% translate "None selected" %}
                 {% endif %}
               {% elif param.input.value_type == 'PASSWORD' %}
                 •••••
@@ -74,10 +76,10 @@
   <td style="min-width: 6.2rem; width: 20%;">
     <p class="mb-0" style="margin-left: -.5rem;">
       <a class="mb-1 mt-1 btn btn-sm" href="javascript:void(0)" onclick="BibOS.PolicyList.editScript(this, '{{ submit_name }}')">
-        <span class='material-icons'>edit</span>Redigér
+        <span class='material-icons'>edit</span>{% translate "Edit" %}
       </a>
       <a class="btn btn-sm ps-3" href="javascript:void(0)" onclick="BibOS.PolicyList.removeItem(this, '{{ submit_name }}')">
-        <span class='material-icons'>delete</span>Fjern
+        <span class='material-icons'>delete</span>{% translate "Remove" %}
       </a>
     </p>
   </td>

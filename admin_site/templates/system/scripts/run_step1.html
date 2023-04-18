@@ -1,15 +1,16 @@
 {% extends 'system/scripts/run_base.html' %}
+{% load i18n %}
 
 {% block run_dialog_heading %}
   <h3>
-    <span class="text-muted">Kør script:</span><br>
-    Vælg computer eller grupper
+    <span class="text-muted">{% translate "Run script" %}:</span><br>
+    {% translate "Choose computer or groups" %}
   </h3>
 {% endblock %}
 
 {% block run_dialog_content %}
-    <p>Bemærk: Der kan kun køres scripts på computere, der er aktiverede, og på grupper, der har tilknyttet minimum 1
-    computer.</p>
+    <p>{% blocktranslate trimmed %}Note: Scripts can only be run on computers that have been activated
+        and groups that have at least 1 associated computer.{% endblocktranslate %}</p>
   
     <div class="row">
       <div class="col-6">
@@ -17,7 +18,7 @@
         <ul class="list-unstyled">
             <li class="mb-3">
               <input type="checkbox" onclick="toggle_checks(this, 'pcs')" id="pick-all-pcs"/>
-              <label for="pick-all-pcs"><strong>Vælg alle Computere</strong></label>
+              <label for="pick-all-pcs"><strong>{% translate "Choose all Computers" %}</strong></label>
               <br/>
             </li>
             {% for pc in pcs %}
@@ -35,7 +36,7 @@
         <ul class="list-unstyled">
             <li class="mb-3">
               <input type="checkbox" onclick="toggle_checks(this, 'groups')" id="pick-all-groups"/>
-              <label for="pick-all-groups"><strong>Vælg alle Grupper</strong></label>
+              <label for="pick-all-groups"><strong>{% translate "Choose all Groups" %}</strong></label>
               <br/>
             </li>
           {% for group in groups %}
@@ -63,7 +64,7 @@
 {% block run_dialog_footer %}
   <button onclick="scriptStep1Submit()" role="button" class="btn btn-secondary">
     <span class="d-flex align-items-center">
-      Næste 
+      {% translate "Next" %}
       <span class="material-icons ms-1">
         chevron_right
       </span>

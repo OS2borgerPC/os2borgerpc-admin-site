@@ -1,11 +1,12 @@
+{% load i18n %}
 {% if cnf_id %}
 <div id="{{ cnf_id }}">
   <table class="table">
     <thead>
       <tr>
-        <th>Nøgle</th>
-        <th>Værdi</th>
-        <th>Handlinger</th>
+        <th>{% translate "Key" %}</th>
+        <th>{% translate "Value" %}</th>
+        <th>{% translate "Actions" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -15,10 +16,10 @@
       <tr>
         <td colspan="3">
           <input type="hidden" name="{{ cnf_id }}_new_entries" id="{{ cnf_id }}_new_entries" value="0">
-          <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ConfigList.startAdd('{{ cnf_id }}')" title="Tilføj ny konfiguration">
+          <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ConfigList.startAdd('{{ cnf_id }}')" title="{% translate 'Add new configuration' %}">
             <span class="d-flex align-items-center ">
               <span class="material-icons me-1">add</span>
-              Tilføj konfiguration
+              {% translate "Add configuration" %}
             </span>
           </a>
         </td>
@@ -27,5 +28,5 @@
   </table>
 </div>
 {% else %}
-<p>You must specify a <em>cnf_id</em> when inserting a configuration list</p>
+<p>{% translate "You must specify a" %} <em>cnf_id</em> {% translate "when inserting a configuration list" %}</p>
 {% endif %}

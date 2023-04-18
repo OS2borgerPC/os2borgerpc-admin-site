@@ -1,12 +1,17 @@
 {% extends "site_with_navigation.html" %}
 
+{% load i18n %}
+
 {% block specific_title %}
-Jobs
+{% translate "Jobs" %}
 {% endblock %}
 
 {% block head_javascripts %}
   <script type="text/javascript">
     var bibos_job_search_url = "{% url 'jobsearch' site.uid %}"
+    /* This cookie is used to get the correct language for job status */
+    var lang = "{{request.user.bibos_profile.language}}"
+    document.cookie = "django_language="+lang;
   </script>
   <script type="text/javascript" src="/static/js/jobs_list.js"></script>
 {% endblock %}
@@ -15,8 +20,8 @@ Jobs
 <div id="jobsearchnav" class="sublevelnav">
 
   <div class="d-flex justify-content-between align-items-center px-3 py-1">
-    <h3 class="nav-header">Filtre</h3>
-    <button class="btn btn-link" type="button" onclick="BibOS.JobList.reset()">Nulstil filtre</button>
+    <h3 class="nav-header">{% translate "Filters" %}</h3>
+    <button class="btn btn-link" type="button" onclick="BibOS.JobList.reset()">{% translate "Reset filters" %}</button>
   </div>
 
   <hr class="mt-0">
@@ -30,7 +35,7 @@ Jobs
     <input type="hidden" name="page" value="1">
 
     <div id="jobsearch-status-selectors" class="px-3 pt-2">
-      <h3 class="mb-3">Status</h3>
+      <h3 class="mb-3">{% translate "Status" %}</h3>
       {% for s in status_choices%}
         <div class="form-check mb-3">
           <input class="form-check-input" 
@@ -53,7 +58,7 @@ Jobs
       <a data-bs-toggle="collapse" href="#batches" role="button" aria-expanded="false" aria-controls="batches">
         <span class="material-icons">folder</span>
         <span class="collapse-label">
-          Batches
+          {% translate "Batches" %}
         </span>
         <span class="material-icons collapse-arrow">arrow_drop_down</span>
       </a>
@@ -76,7 +81,7 @@ Jobs
       <a data-bs-toggle="collapse" href="#computers" role="button" aria-expanded="false" aria-controls="computers">
         <span class="material-icons">folder</span>
         <span class="collapse-label">
-          Computere
+          {% translate "Computers" %}
         </span>
         <span class="material-icons collapse-arrow">arrow_drop_down</span>
       </a>
@@ -99,7 +104,7 @@ Jobs
       <a data-bs-toggle="collapse" href="#groups" role="button" aria-expanded="false" aria-controls="groups">
         <span class="material-icons">folder</span>
         <span class="collapse-label">
-          Grupper
+          {% translate "Groups" %}
         </span>
         <span class="material-icons collapse-arrow">arrow_drop_down</span>
       </a>
@@ -150,19 +155,26 @@ Jobs
     <table class="table jobtable table-extendable">
       <thead>
         <tr>
-          {% include 'widgets/orderby_th_ajax.html' with label='Script' action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Bruger' action="BibOS.JobList.orderby('user__username')" slug='user' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Oprettet' action="BibOS.JobList.orderby('created')" slug='created' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Startet' action="BibOS.JobList.orderby('started')" slug='started' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Sluttet' action="BibOS.JobList.orderby('finished')" slug='finished' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Status' action="BibOS.JobList.orderby('status')" slug='status' %}
-          {% include 'widgets/orderby_th_ajax.html' with label='Computer' action="BibOS.JobList.orderby('pc__name')" slug='computer' %}
+          {% translate "Script" as script_label %}
+          {% translate "User" as user_label %}
+          {% translate "Created" as create_label %}
+          {% translate "Started" as start_label %}
+          {% translate "Finished" as finish_label %}
+          {% translate "Status" as status_label %}
+          {% translate "Computer" as computer_label %}
+          {% include 'widgets/orderby_th_ajax.html' with label=script_label action="BibOS.JobList.orderby('batch__script__name')" slug='script' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=user_label action="BibOS.JobList.orderby('user__username')" slug='user' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=create_label action="BibOS.JobList.orderby('created')" slug='created' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=start_label action="BibOS.JobList.orderby('started')" slug='started' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=finish_label action="BibOS.JobList.orderby('finished')" slug='finished' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=status_label action="BibOS.JobList.orderby('status')" slug='status' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=computer_label action="BibOS.JobList.orderby('pc__name')" slug='computer' %}
           <th></th> {# Job-info-button #}
         </tr>
       </thead>
       <tbody id="job-list">
         <tr class="muted">
-          <td colspan="8">Loading data...</td>
+          <td colspan="8">{% translate "Loading data..." %}</td>
         </tr>
       </tbody>
       <tfoot>

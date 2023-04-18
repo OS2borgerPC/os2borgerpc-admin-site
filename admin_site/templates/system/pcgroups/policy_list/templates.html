@@ -1,4 +1,7 @@
 {# Seemingly used for adding a new policy script via JS, whereas list.html generates the list of already added policy scripts? #}
+
+{% load i18n %}
+
 <div id="policylist-templates">
   <table class="table">
     <tbody id="policy-item-template" class="template-container">
@@ -11,24 +14,24 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Redigér script</h3>
+        <h3 class="modal-title">{% translate "Edit script" %}</h3>
         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button onclick="BibOS.PolicyList.submitEditDialog('{{ policy_id }}')" class="btn btn-primary">Gem</button>
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
+        <button onclick="BibOS.PolicyList.submitEditDialog('{{ policy_id }}')" class="btn btn-primary">{% translate "Save" %}</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
       </div>
     </div>
   </div>
 </div>
 
-<div id="addpolicyscriptdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-label="Tilføj script til gruppe" aria-hidden="true">
+<div id="addpolicyscriptdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-label="{% translate 'Add script to group' %}" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">Tilføj script</h3>
+        <h3 class="modal-title">{% translate "Add script" %}</h3>
         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">

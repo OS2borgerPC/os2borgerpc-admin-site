@@ -1,0 +1,65 @@
+{% extends 'documentation/index.html' %}
+
+{% block specific_content %}
+  <h1>Redigera schema: Inställningar</h1>
+  <p>
+    Redigeringsgränssnittet för ett schema visar schemainställningarna till vänster på skärmen,
+    och en lista över undantag som är associerade med schemat till höger på skärmen.
+  </p>
+  <h2>Status</h2>
+  <p>
+    Ett schema kan vara aktivt eller inaktivt. Det har bara en effekt på de inskrivna grupperna,
+    om den är aktiv.
+  </p>
+  <h2>Viloläge</h2>
+  <p>
+    Det valda viloläget avgör vilket läge medlemmarna i schemat stängs av i,
+    när de stängs av enligt schema. För att från minsta till maximala energibesparingar,
+    Alternativ för standby, frysning, mem och av. Vi rekommenderar därför att du använder
+    Viloläge av för maximal energibesparing, men inte all hårdvara
+    som stöder detta viloläge. Om viloläge tillämpas på en dator,
+    som inte stöder det, datorn vaknar inte igen. Det kommer dock fortfarande att kunna
+    Aktiveras manuellt.
+  </p>
+  <h2>Inställningar: Veckoschema</h2>
+  <p>
+    I veckoschemat kan du välja att slå på och av tider för varje veckodag, eller om det finns
+    måste vara avstängd under hela dagen. Inställningarna i veckoschemat är som utgångspunkt
+    Gäller alla dagar i veckan, om det inte finns ett undantag för det
+    det datumet.
+  </p>
+  <h2>Inställningar: Stängningsdagar och undantag</h2>
+  <p>
+    Under rubriken "Stängningsdagar och undantag" kan du lägga till eller ta bort undantag till
+    Veckoschemat för specifika datum eller perioder.
+    Om det finns ett undantag för ett visst datum används undantagsinställningarna i stället
+    för veckoschemainställningarna.
+    Ett undantag kan vara en förändring i på- och avstängningstiderna eller en konstant avstängning
+    för ett visst datum eller en viss period.
+    Undantag skapas, raderas och redigeras i fliken som öppnas när du trycker på "Skapa stängningsdag"
+    "Skapa ändrade timmar" eller "Redigera undantag". De olika knapparna går direkt till
+    Den del av fliken som är relaterad till deras namn.
+  </p>
+  <h3>Lägg till undantag</h3>
+  <p>
+    Om du vill lägga till undantag håller du muspekaren över "Lägg till undantag i schemat." Om
+    Det finns undantag som ännu inte ingår i tidsplanen, de kommer att finnas med i
+    en lista under muspekaren. Klicka på ett undantag för att associera undantaget
+    till schemat.
+  </p>
+  <p>
+    Om du försöker lägga till ett undantag som överlappar ett eller flera redan
+    associerade undantag kommer det valda undantaget att avvisas för
+    uppdateringen av schemat när du klickar på "Spara ändringar". Giltiga undantag
+    kommer fortfarande att läggas till. Om ett eller flera undantag avvisas,
+    Sidan anger detta och resonemanget.
+  </p>
+  <h2>Ta bort undantag</h2>
+  <p>
+    Om du vill ta bort ett undantag klickar du på krysset bredvid undantaget i listan över
+    associerade undantag.
+  </p>
+  <p>
+    Kom ihåg att ändringar i listan över undantag inte blir permanenta förrän du har klickat på "Spara ändringar" längst ner på skärmen.
+  </p>
+{% endblock %}	

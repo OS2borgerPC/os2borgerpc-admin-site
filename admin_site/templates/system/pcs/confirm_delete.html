@@ -1,26 +1,28 @@
 {% extends "site_with_navigation.html" %}
 
+{% load i18n %}
+
 {% block specific_title %}
-Slet computer: {{pc.name}}
+{% translate "Delete computer" %}: {{pc.name}}
 {% endblock %}
 
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk</h3>
+      <h3>{% translate "Note" %}</h3>
       <ul>
-        <li>Hele computerens jobhistorik vil også blive slettet.</li>
+        <li>{% translate "The computer's entire job history will also be deleted" %}.</li>
       </ul>
     </div>
     <p>
-      Er du sikker på, du ønsker at slette computeren
+      {% translate "Are you sure you want to delete the computer" %}
       <strong style="font-size: 1.25em;">{{ pc.name }}</strong>
     </p>
     <form action="" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <input class="btn btn-danger me-3" type="submit" value="Bekræft sletning">
-      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">Annuller</button>
+      <input class="btn btn-danger me-3" type="submit" value="{% translate 'Confirm deletion' %}">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
     </form>
   </div>
 {% endblock %}

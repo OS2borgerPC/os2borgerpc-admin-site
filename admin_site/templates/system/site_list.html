@@ -1,9 +1,10 @@
 {% extends "sitebase.html" %}
+{% load i18n %}
 
 {% block header_title %}
-  Administrér <em>Sites</em>
-  <span class="ms-3 badge bg-secondary" title="Antal sites i alt">Sites: {{site_list|length}}</span>
-  <span class="ms-3 badge bg-secondary" title="Antal computere i alt">Computere: {{pcs_count}}</span>
+  {% translate "Administrate" %} <em>{% translate "Sites" %}</em>
+  <span class="ms-3 badge bg-secondary" title="Antal sites i alt">{% translate "Sites" %}: {{site_list|length}}</span>
+  <span class="ms-3 badge bg-secondary" title="Antal computere i alt">{% translate "Computers" %}: {{pcs_count}}</span>
 {% endblock %}
 
 {% block header_class %}container{% endblock %}

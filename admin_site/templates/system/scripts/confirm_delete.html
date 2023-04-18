@@ -1,12 +1,15 @@
 {% extends "site_with_navigation.html" %}
 {% load crispy_forms_tags %}
 
+{% load i18n %}
+{% load custom_tags %}
+
 {% block specific_title %}
-Slet 
+{% translate "Delete" %}
 {% if is_security %}
-Sikkerhedsscript
+{% translate "Security Script" %}
 {% else %}
-Script
+{% translate "Script" %}
 {% endif %}: {{ script.name }}
 {% endblock %}
 
@@ -14,32 +17,51 @@ Script
 {% block specific_content %}
   <div class="container-fluid main">
     <div class="alert alert-danger">
-      <h3>Bemærk</h3>
+      <h3>{% translate "Note" %}</h3>
+      {% translate "Jobs"|bold as jobs %}
+      {% translate "the Script"|bold as the_script %}
+      {% translate "Associated Script"|bold as associated_script %}
+      {% translate "Associated Scripts"|bold as associated_scripts %}
+      {% translate "the Security Script"|bold as the_security_script %}
+      {% translate "Security Rule"|bold as security_rule %}
+      {% translate "the Security Rule"|bold as the_security_rule %}
       <ul>
         {% if not is_security %}
-        <li>
-          Gamle <strong>Jobs</strong> med <strong>Scriptet</strong> vil blive slettet.
+        <li>          
+          {% blocktranslate trimmed %}
+            Old {{jobs}} with {{the_script}} will be deleted.
+          {% endblocktranslate %}
         </li>
         <li>
-          Hvis <strong>Scriptet</strong> er sat som <strong>Tilknyttet Script</strong> vil listen af de
-          <strong>Tilknyttede Scripts</strong> blive opdateret med <strong>Scriptet</strong> fjernet.
+          {% blocktranslate trimmed %}
+            If {{the_script}} is set as an {{associated_script}} the list of the {{associated_scripts}} will be updated with {{the_script}} removed.
+          {% endblocktranslate %}
         </li>
         {% else %}
         <li>
-          Hvis <strong>Sikkerhedsscriptet</strong> bruges i en <strong>Sikkerhedsregel</strong>, vil
-          <strong>Sikkerhedsreglen</strong> også blive slettet.
+          {% blocktranslate trimmed %}
+            If {{the_security_script}} is used in a {{security_rule}}, then {{the_security_rule}} will also be deleted.
+          {% endblocktranslate %}
         </li>
         {% endif %}
       </ul>
     </div>
-    <p>Er du sikker på, du ønsker at slette {% if is_security %}Sikkerhedsscriptet{% else %}Scriptet{% endif %}
-    <strong style="font-size: 1.25em;">{{ script.name }}</strong>?</p>
+    
+    <p>    
+      {% translate "Are you sure you want to delete" %}
+      {% if is_security %}
+        {% translate "the Security Script" %}
+      {% else %}
+        {% translate "the Script" %}
+      {% endif %}
+      <strong style="font-size: 1.25em;">{{ script.name }}</strong>?
+    </p>
 
     <form action="" method="post">
       {% csrf_token %}
       {{ form|crispy }}
-      <input class="btn btn-danger" type="submit" value="Bekræft sletning">
-      <a class="btn btn-secondary" href="javascript:history.go(-1)">Annullér</a>
+      <input class="btn btn-danger" type="submit" value="{% translate 'Confirm deletion' %}">
+      <a class="btn btn-secondary" href="javascript:history.go(-1)">{% translate "Cancel" %}</a>
     </form>
   </div>
 {% endblock %}

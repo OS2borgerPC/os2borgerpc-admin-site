@@ -1,3 +1,4 @@
+{% load i18n %}
 <div id="script-searchlist" class="tab-content" style="display: none;">
     <ul id="script-search-list" class="item-list"></ul>
 
@@ -9,7 +10,7 @@
             local_scripts.push({
                 id: {{ script.pk }},
                 url: '{% url script_url site.uid script.pk %}',
-                name: '{{ script.name }} <span class="badge bg-info">Lokalt</span>',
+                name: '{{ script.name }} <span class="badge bg-info">{% translate "Local" %}</span>',
                 category: 'local',
                 delete_url: '{% url 'delete_script' site.uid script.pk %}'
             })
@@ -18,7 +19,7 @@
             local_scripts.push({
                 id: {{ script.pk }},
                 url: '{% url script_url site.uid script.pk %}',
-                name: '{{ script.name }} <span class="badge bg-primary">Globalt</span>',
+                name: '{{ script.name }} <span class="badge bg-primary">{% translate "Global" %}</span>',
                 category: 'global',
                 delete_url: '{% url 'delete_script' site.uid script.pk %}'
             })

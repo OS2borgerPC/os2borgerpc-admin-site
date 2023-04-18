@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="template-container">
 
   <table class="table">
@@ -16,12 +17,15 @@
           </select>
         </td>
         <td>
+          <input type="text" name="script-input-default" value="#DEFAULT_VALUE#" class="default-input form-control">
+        </td>
+        <td>
           <input type="checkbox" name="script-input-mandatory" value="#MANDATORY#" class="mandatory-input form-check-input">
         </td>
         <td style="vertical-align: middle;">
           <a class="btn btn-sm p-0" href="javascript:void(0)" onclick="BibOS.ScriptEdit.removeInput($(this).parent().parent())">
             <span class="material-icons">delete</span>
-            Fjern
+            {% translate "Remove" %}
           </a>
         </td>
       </tr>

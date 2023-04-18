@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from system.models import (
     ChangelogComment,
@@ -16,7 +16,7 @@ from system.models import (
     SecurityProblem,
     Site,
 )
-from account.models import SiteMembership
+from account.models import SiteMembership, UserProfile
 
 time_format = forms.TimeInput(attrs={"type": "time", "max": "23:59"}, format="%H:%M")
 date_format = forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d")
@@ -126,6 +126,12 @@ class UserForm(forms.ModelForm):
         label=_("Usertype"),
     )
 
+    language = forms.ChoiceField(
+        required=True,
+        choices=UserProfile.language_choices,
+        label=_("Language"),
+    )
+
     new_password = forms.CharField(
         label=_("Password"),
         widget=forms.PasswordInput(attrs={"class": "passwordinput"}),
@@ -160,6 +166,7 @@ class UserForm(forms.ModelForm):
             site = kwargs.pop("site")
             site_membership = user_profile.sitemembership_set.get(site=site)
             initial["usertype"] = site_membership.site_user_type
+            initial["language"] = user_profile.language
         else:
             initial["usertype"] = SiteMembership.SITE_USER
         self.initial_type = initial["usertype"]
@@ -217,6 +224,7 @@ class ParameterForm(forms.Form):
             field_data = {
                 "label": inp.name,
                 "required": True if inp.mandatory else False,
+                "initial": inp.default_value,
             }
             if inp.value_type == Input.FILE:
                 self.fields[name] = forms.FileField(**field_data)
@@ -224,6 +232,7 @@ class ParameterForm(forms.Form):
                 field_data["widget"] = forms.DateInput(attrs={"type": "date"})
                 self.fields[name] = forms.DateField(**field_data)
             elif inp.value_type == Input.BOOLEAN:
+                field_data["initial"] = "True"
                 self.fields[name] = forms.BooleanField(
                     **field_data, widget=forms.CheckboxInput()
                 )
