@@ -2794,7 +2794,7 @@ class SecurityEventsView(SiteView):
 
         context["form"] = SecurityEventForm()
         qs = context["form"].fields["assigned_user"].queryset
-        qs = qs.filter(Q(bibos_profile__sites=self.get_object()) | Q(is_superuser=True))
+        qs = qs.filter(bibos_profile__sites=self.get_object())
         context["form"].fields["assigned_user"].queryset = qs
 
         return context
