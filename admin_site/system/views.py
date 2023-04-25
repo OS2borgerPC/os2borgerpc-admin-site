@@ -33,6 +33,7 @@ from two_factor.plugins.phonenumber.utils import get_available_phone_methods
 from django_otp.decorators import otp_required
 from django_otp import devices_for_user, user_has_device
 from django_otp.plugins.otp_static.models import StaticToken
+from django.forms import Form
 
 from account.models import (
     UserProfile,
@@ -90,7 +91,10 @@ def run_wake_plan_script(site, pcs, args, user, type="remove"):
         script = Script.objects.get(uid="wake_plan_remove")
     batch = script.run_on(site, pcs, *args, user=user)
 
-def otp_check(view=None, redirect_field_name='next', login_url=None, if_configured=False):
+
+def otp_check(
+    view=None, redirect_field_name="next", login_url=None, if_configured=False
+):
     """
     Modfied version of otp_required that redirects to site root if you do not have a device configured
     The normal version redirects to the login page, which results in a loop of logging in,
@@ -100,11 +104,16 @@ def otp_check(view=None, redirect_field_name='next', login_url=None, if_configur
         login_url = "/"
 
     def test(user):
-        return user.is_verified() or (if_configured and user.is_authenticated and not user_has_device(user))
+        return user.is_verified() or (
+            if_configured and user.is_authenticated and not user_has_device(user)
+        )
 
-    decorator = user_passes_test(test, login_url=login_url, redirect_field_name=redirect_field_name)
+    decorator = user_passes_test(
+        test, login_url=login_url, redirect_field_name=redirect_field_name
+    )
 
     return decorator if (view is None) else decorator(view)
+
 
 # Mixin class to require login
 class LoginRequiredMixin(View):
@@ -346,6 +355,8 @@ class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
 
 
 class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
+    form_class = Form
+
     def get_success_url(self):
         success_url = "/site/%s/users/%s/" % (
             self.kwargs["slug"],
@@ -355,9 +366,7 @@ class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
 
     def get_context_data(self, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context = {
-            "site": site,
-        }
+        context = {"site": site, "user": self.request.user, "form": Form}
         return context
 
     def dispatch(self, *args, **kwargs):
@@ -458,6 +467,7 @@ class AdminTwoFactorSetupComplete(
         else:
             handler = self.http_method_not_allowed
         return handler(request, *args, **kwargs)
+
 
 @method_decorator(otp_check, name="dispatch")
 class AdminTwoFactorBackupTokens(otp_views.BackupTokensView, SuperAdminOrThisSiteMixin):
