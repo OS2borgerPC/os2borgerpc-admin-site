@@ -16,9 +16,7 @@ admin.autodiscover()
 
 urlpatterns = [
     # Examples:
-    url(
-        "accounts/login/", otp_views.LoginView.as_view()
-    ),  # template_name="login.html")),
+    url("accounts/login/", otp_views.LoginView.as_view()),
     url(r"^xmlrpc/$", handle_xmlrpc, name="xmlrpc"),
     url("accounts/logout/", auth_views.LogoutView.as_view(template_name="logout.html")),
     url(r"^", include("system.urls")),
