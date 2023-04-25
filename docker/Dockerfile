@@ -54,7 +54,6 @@ WORKDIR /code/
 # Install requirements.
 COPY admin_site/requirements.txt /code/admin_site/requirements.txt
 RUN pip3 install --no-cache-dir -r  admin_site/requirements.txt
-RUN chmod --recursive 777 /usr/local/lib/python3.8/site-packages/two_factor
 
 # Copy backend code.
 COPY README.rst .
