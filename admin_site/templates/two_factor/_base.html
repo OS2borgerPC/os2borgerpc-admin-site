@@ -198,6 +198,22 @@
             text-decoration: underline;
         }
 
+        .btn-link {
+            background-color: transparent;
+            border: none;
+            color: var(--accent);
+            font-size: var(--base-fontsize);
+            font-weight: 400;
+            text-decoration: underline;
+            width: auto;
+            cursor: pointer;
+            transition: color .3s;
+        }
+
+        .btn-link:hover {
+            color: #122f35;
+        }
+
         .cto {
             background-color: var(--accent);
             border: none;
@@ -208,7 +224,7 @@
             font-weight: bold;
             text-decoration: none;
             width: auto;
-            margin: 1.75rem 0;
+            margin: 1.75rem 0 0;
             cursor: pointer;
             transition: background-color .3s;
         }
@@ -216,6 +232,10 @@
         .cto:hover,
         .cto:focus {
 						background-color: var(--text-light);
+        }
+
+        .cto.primary {
+            margin-right: 0.75rem;
         }
 
         .cto.contact {

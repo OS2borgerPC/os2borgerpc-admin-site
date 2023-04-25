@@ -60,7 +60,6 @@ from system.views import (
     UserUpdate,
 )
 
-from two_factor import views as otp_views
 from two_factor.urls import urlpatterns as tf_urls
 from django.urls import include, path
 
@@ -138,22 +137,22 @@ urlpatterns = [
     url(
         r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup/$",
         AdminTwoFactorSetup.as_view(),
-        name="admin_two_factor_setup",
+        name="admin_otp_setup",
     ),
     url(
         r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup-complete/$",
         AdminTwoFactorSetupComplete.as_view(),
-        name="admin_two_factor_setup_complete",
+        name="admin_otp_setup_complete",
     ),
     url(
         r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/disable/$",
         AdminTwoFactorDisable.as_view(),
-        name="admin_two_factor_disable",
+        name="admin_otp_disable",
     ),
     url(
         r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/backup-tokens/$",
         AdminTwoFactorBackupTokens.as_view(),
-        name="admin_two_factor_backup",
+        name="admin_otp_backup",
     ),
     path("", include(tf_urls)),
     # Sites
