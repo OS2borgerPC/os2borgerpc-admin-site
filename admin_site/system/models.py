@@ -527,7 +527,7 @@ class PCGroup(models.Model):
                     else:
                         par.file_value = req_files[param_name]
                 else:
-                    if param_name not in req_params or not req_params[param_name]:
+                    if param_name not in req_params:
                         if par.pk is not None:
                             # Don't blank existing values
                             continue
@@ -535,6 +535,8 @@ class PCGroup(models.Model):
                             raise MandatoryParameterMissingError(inp)
                         else:
                             pass
+                    elif not req_params[param_name] and inp.mandatory:
+                        raise MandatoryParameterMissingError(inp)
                     else:
                         par.string_value = req_params[param_name]
                 par.save()
