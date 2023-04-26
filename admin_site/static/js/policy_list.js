@@ -206,7 +206,7 @@
             } else if (t.attr('type') == 'checkbox') {
               inputField.val((this.checked) ? 'True' : 'False')
               visibleValueField[0].innerHTML = '<input type="checkbox" disabled ' + ((this.checked) ? 'checked>' : '>')
-            } else if (t.val().trim().length != 0) {
+            } else {
               if (t.attr('type') == 'password') {
                 inputField.val(t.val())
                 visibleValueField.text('•••••')
