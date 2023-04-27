@@ -3,35 +3,40 @@
     "model": "account.userprofile",
     "pk": 1,
     "fields": {
-        "user": 35
+        "user": 35,
+        "language": "da"
     }
 },
 {
     "model": "account.userprofile",
     "pk": 2,
     "fields": {
-        "user": 36
+        "user": 36,
+        "language": "da"
     }
 },
 {
     "model": "account.userprofile",
     "pk": 3,
     "fields": {
-        "user": 37
+        "user": 37,
+        "language": "da"
     }
 },
 {
     "model": "account.userprofile",
     "pk": 4,
     "fields": {
-        "user": 38
+        "user": 38,
+        "language": "da"
     }
 },
 {
     "model": "account.userprofile",
     "pk": 5,
     "fields": {
-        "user": 39
+        "user": 39,
+        "language": "da"
     }
 },
 {
