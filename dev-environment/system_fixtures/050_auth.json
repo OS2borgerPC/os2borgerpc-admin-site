@@ -936,11 +936,227 @@
     }
 },
 {
+    "model": "auth.permission",
+    "pk": 105,
+    "fields": {
+        "name": "Can add changelog comment",
+        "content_type": 27,
+        "codename": "add_changelogcomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 106,
+    "fields": {
+        "name": "Can change changelog comment",
+        "content_type": 27,
+        "codename": "change_changelogcomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 107,
+    "fields": {
+        "name": "Can delete changelog comment",
+        "content_type": 27,
+        "codename": "delete_changelogcomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 108,
+    "fields": {
+        "name": "Can view changelog comment",
+        "content_type": 27,
+        "codename": "view_changelogcomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 109,
+    "fields": {
+        "name": "Can add wake change event",
+        "content_type": 28,
+        "codename": "add_wakechangeevent"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 110,
+    "fields": {
+        "name": "Can change wake change event",
+        "content_type": 28,
+        "codename": "change_wakechangeevent"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 111,
+    "fields": {
+        "name": "Can delete wake change event",
+        "content_type": 28,
+        "codename": "delete_wakechangeevent"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 112,
+    "fields": {
+        "name": "Can view wake change event",
+        "content_type": 28,
+        "codename": "view_wakechangeevent"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 113,
+    "fields": {
+        "name": "Can add wake week plan",
+        "content_type": 29,
+        "codename": "add_wakeweekplan"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 114,
+    "fields": {
+        "name": "Can change wake week plan",
+        "content_type": 29,
+        "codename": "change_wakeweekplan"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 115,
+    "fields": {
+        "name": "Can delete wake week plan",
+        "content_type": 29,
+        "codename": "delete_wakeweekplan"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 116,
+    "fields": {
+        "name": "Can view wake week plan",
+        "content_type": 29,
+        "codename": "view_wakeweekplan"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 117,
+    "fields": {
+        "name": "Can add feature permission",
+        "content_type": 30,
+        "codename": "add_featurepermission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 118,
+    "fields": {
+        "name": "Can change feature permission",
+        "content_type": 30,
+        "codename": "change_featurepermission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 119,
+    "fields": {
+        "name": "Can delete feature permission",
+        "content_type": 30,
+        "codename": "delete_featurepermission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 120,
+    "fields": {
+        "name": "Can view feature permission",
+        "content_type": 30,
+        "codename": "view_featurepermission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 121,
+    "fields": {
+        "name": "Can add user profile",
+        "content_type": 31,
+        "codename": "add_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 122,
+    "fields": {
+        "name": "Can change user profile",
+        "content_type": 31,
+        "codename": "change_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 123,
+    "fields": {
+        "name": "Can delete user profile",
+        "content_type": 31,
+        "codename": "delete_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 124,
+    "fields": {
+        "name": "Can view user profile",
+        "content_type": 31,
+        "codename": "view_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 125,
+    "fields": {
+        "name": "Can add site membership",
+        "content_type": 32,
+        "codename": "add_sitemembership"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 126,
+    "fields": {
+        "name": "Can change site membership",
+        "content_type": 32,
+        "codename": "change_sitemembership"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 127,
+    "fields": {
+        "name": "Can delete site membership",
+        "content_type": 32,
+        "codename": "delete_sitemembership"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 128,
+    "fields": {
+        "name": "Can view site membership",
+        "content_type": 32,
+        "codename": "view_sitemembership"
+    }
+},
+{
     "model": "auth.user",
     "pk": 35,
     "fields": {
         "password": "pbkdf2_sha256$260000$SIRvs2xVZfaq6J5dTwprEA$utC5ILCA6UQAQtFIMFZNrKMFkoXajCUabC7ZAO3JLYA=",
-        "last_login": "2022-04-01T15:49:55.237",
+        "last_login": "2023-04-27T11:20:17.430",
         "is_superuser": true,
         "username": "magenta",
         "first_name": "",
