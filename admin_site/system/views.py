@@ -2950,7 +2950,7 @@ documentation_menu_items = [
 ]
 
 
-class DocView(TemplateView):
+class DocView(TemplateView, LoginRequiredMixin):
     docname = "status"
 
     def template_exists(self, subpath):
