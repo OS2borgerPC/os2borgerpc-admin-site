@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import escape
 from django.utils import translation
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
@@ -2886,7 +2887,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                         if event.assigned_user
                         else ""
                     ),
-                    "summary": event.summary,
+                    "summary": escape(event.summary),
                     "note": event.note,
                 }
                 for event in page_obj
