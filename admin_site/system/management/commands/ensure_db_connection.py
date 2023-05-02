@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         connection = connections["default"]
-        required_params = ["database", "password", "host", "user"]
+        required_params = ["password", "host", "user"]
         available_params = connection.get_connection_params()
         missing_params = [p for p in required_params if p not in available_params]
         if missing_params:
