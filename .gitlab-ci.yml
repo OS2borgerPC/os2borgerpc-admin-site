@@ -159,7 +159,7 @@ TESTING trigger salt deployment:
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.test
-    SALTBERT_URL: https://ctrldev1.magenta-aps.dk
+    SALTBERT_URL: https://saltmaster.os2borgerpc.magentahosted.dk
     SALTBERT_PASSWORD: $SALTBERT_TEST_PASSWORD
   environment:
     name: os2borgerpc-test
@@ -183,7 +183,7 @@ PROD trigger salt deployment:
   when: manual
   variables:
     SALTBERT_ORCHESTRATION: os2bpc.production
-    SALTBERT_URL: https://ctrl1.magenta-aps.dk
+    SALTBERT_URL: https://saltmaster.os2borgerpc.magentahosted.dk
     SALTBERT_PASSWORD: $SALTBERT_PROD_PASSWORD
   environment:
     name: os2borgerpc-admin
