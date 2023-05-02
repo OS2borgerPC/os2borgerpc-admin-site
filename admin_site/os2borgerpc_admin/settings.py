@@ -89,7 +89,6 @@ SOURCE_DIR = os.path.abspath(os.path.join(install_dir, ".."))
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         "NAME": settings["DB_NAME"],
         "USER": settings["DB_USER"],
         "PASSWORD": settings["DB_PASSWORD"],
@@ -336,4 +335,4 @@ MARKDOWNX_IMAGE_MAX_SIZE = {"size": (800, 800), "quality": 90}
 # This specifies where uploaded media (images) are stored
 MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+FORM_RENDERER = "django.forms.renderers.DjangoDivFormRenderer"
