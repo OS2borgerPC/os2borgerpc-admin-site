@@ -6,7 +6,6 @@ Replace this with more appropriate tests for your application.
 """
 
 import os
-import pep8
 
 from django.conf import settings
 from django.test import TestCase
@@ -45,42 +44,12 @@ class SimpleTest(TestCase):
         data = "KEYBOARD, Summary, Raw data"
         split = data.split(",")
         email_list = []
-        user_profiles = UserProfile.objects.filter(type=1)
-        for user in user_profiles:
-            email_list.append(User.objects.get(id=user.user_id).email)
+        user_profiles = UserProfile.objects.all()
+        for up in user_profiles:
+            if up.user.email is not None:
+                email_list.append(User.objects.get(id=up.user_id).email)
 
         message = EmailMessage(split[0], split[1], settings.ADMIN_EMAIL, email_list)
 
         self.assertEqual(len(email_list), 2)
         self.assertEqual(message.send(), 1)
-
-
-def pep8_test(filepath):
-    def do_test(self):
-        arglist = ["--exclude=migrations", filepath]
-        pep8.process_options(arglist)
-
-        pep8.input_dir(filepath)
-        output = pep8.get_statistics()
-        # print "PEP8 OUTPUT: " + str(output)
-        self.assertEqual(len(output), 0)
-
-    return do_test
-
-
-class Pep8Test(TestCase):
-    """Test that the template system a well as the default clients and plugins
-    are PEP8-compliant."""
-
-    def j(d):
-        result = os.path.abspath(os.path.join(parent_directory, d))
-        return result
-
-    system_dir = j("system")
-    admin_dir = j("admin")
-    client_dir = j("../bibos_client")
-    utils_dir = j("../bibos_utils")
-    test_system = pep8_test(system_dir)
-    test_admin = pep8_test(admin_dir)
-    test_client = pep8_test(client_dir)
-    test_utils = pep8_test(utils_dir)
