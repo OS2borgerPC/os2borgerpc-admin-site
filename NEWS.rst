@@ -1,20 +1,30 @@
+Version 5.14.0, May 3, 2023
+---------------------------
+
+- Escape contents of security event log before outputting it to the page.
+- Fix and change favicons.
+- Require login to view documentation.
+- Allow changing values of associated script inputs to empty strings.
+- Remove superusers from the list of people a Security Event can be assigned to.
+
+
 Version 5.13.0, April 18, 2023
 ------------------------------
 
-- Add language variability and allow Danish, English or Swedish
-- Add default values for script inputs
-- Fix sorting for last_seen on status page
-- Show paid_for_access_until on sites overview in backend
-- Switch from custom DB image to default postgres image in docker-compose.yml
-- Don't redirect to a hidden script when entering scripts subsection
+- Add language variability and allow Danish, English or Swedish.
+- Add default values for script inputs.
+- Fix sorting for last_seen on status page.
+- Show paid_for_access_until on sites overview in backend.
+- Switch from custom DB image to default postgres image in docker-compose.yml.
+- Don't redirect to a hidden script when entering scripts subsection.
 
 Version 5.12.0, March 15, 2023
 ------------------------------
 
-- Update URLs to installation guides, use more generic names
-- Remain on selected security rule after saving it
-- Allow all characters in script names without issues with Associated Scripts
-- Remove unmaintained gateway documentation
+- Update URLs to installation guides, use more generic names.
+- Remain on selected security rule after saving it.
+- Allow all characters in script names without issues with Associated Scripts.
+- Remove unmaintained gateway documentation.
 
 Version 5.11.0, February 23, 2023
 ---------------------------------
@@ -24,11 +34,11 @@ Version 5.11.0, February 23, 2023
 Version 5.10.3, February 2, 2023
 --------------------------------
 
-- Update Django version to latest patch release: 3.2.17
-- Run most recent black version
-- And info on how to build the documentation
-- Update the documentation
-- Show OS2BPC client version in the backend for the PC table
+- Update Django version to latest patch release: 3.2.17.
+- Run most recent black version.
+- And info on how to build the documentation.
+- Update the documentation.
+- Show OS2BPC client version in the backend for the PC table.
 
 Version 5.10.2, January 12, 2023
 --------------------------------
@@ -38,46 +48,46 @@ Version 5.10.2, January 12, 2023
 - Don't give a server error when using one of the new global script redirects and you aren't logged in.
   Redirect to the login page instead.
 - Rewrite some hardcoded danish to english and use translations there instead.
-- Replace magic numbers with readable names when checking for privileges
+- Replace magic numbers with readable names when checking for privileges.
 
 Version 5.10.1, December 19, 2022
 ---------------------------------
 
-- Fix bug where security problems showed up on the groups for other sites on the group page
+- Fix bug where security problems showed up on the groups for other sites on the group page.
 
 Version 5.10.0, December 14, 2022
 ---------------------------------
 
-- Wake plan: Launch new section to handle startup and shutdown times, including related
-  documentation, guide and test data
-- Global script redirect by ID or UID
-- Improved backend validation of user permissions when deleting a script
-- Assorted consistency fixes throughout the site
+- Wake plan: Launch new section to handle startup and shutdown times, including related.
+  documentation, guide and test data.
+- Global script redirect by ID or UID.
+- Improved backend validation of user permissions when deleting a script.
+- Assorted consistency fixes throughout the site.
 
 Version 5.9.3, November 9, 2022
 ---------------------------------
 
-- Prevent computers from being re-registered - print an error message if it already exists on the adminsite
-- Site admins: Fix it so site admins can delete their own scripts and security problems again
-- Scripts: Select global scripts by default instead of local
-- Changelog: UI refinements
-- Changelog: Fix bug so refreshing after writing a comment doesn't re-post the comment
-- Jobs: Fix bug where "Status" was hidden at lower resolutions instead of "Batch"
-- Jobs: Don't show batches with empty names in the collapse
-- Jobs: Show batch name as part of the link column to save on space for lower resolutions
-- Add a justfile for a better/faster development workflow, containing common commands
-- Images: Fix the links to download older images so they work again
+- Prevent computers from being re-registered - print an error message if it already exists on the adminsite.
+- Site admins: Fix it so site admins can delete their own scripts and security problems again.
+- Scripts: Select global scripts by default instead of local.
+- Changelog: UI refinements.
+- Changelog: Fix bug so refreshing after writing a comment doesn't re-post the comment.
+- Jobs: Fix bug where "Status" was hidden at lower resolutions instead of "Batch".
+- Jobs: Don't show batches with empty names in the collapse.
+- Jobs: Show batch name as part of the link column to save on space for lower resolutions.
+- Add a justfile for a better/faster development workflow, containing common commands.
+- Images: Fix the links to download older images so they work again.
 - Views consistency, use RedirectView instead of redirecting in a function, more consistent template directory
-  structure, delete unused template
-- /admin improvements
+  structure, delete unused template.
+- /admin improvements.
 
 
 Version 5.9.2, September 26, 2022
 ---------------------------------
 
-- Changelog: Redesign the list/overview page somewhat
-- Jobs list: Handle deleted users so they don't cause server errors
-- Fix script annull button so it doesn't rather arbitrarily reset things it shouldn't
+- Changelog: Redesign the list/overview page somewhat.
+- Jobs list: Handle deleted users so they don't cause server errors.
+- Fix script annull button so it doesn't rather arbitrarily reset things it shouldn't.
 
 Version 5.9.1, September 16, 2022
 ---------------------------------
@@ -91,22 +101,22 @@ Version 5.9.0, September 16, 2022
 New in this version:
 
 - Add News page where customers can be informed of new additions,
-  changes or identified bugs in adminsite, images, client or scripts
-- You can now handle multiple security events at the same time
-- Fix bug where input parameters were set back to mandatory unintentionally
+  changes or identified bugs in adminsite, images, client or scripts.
+- You can now handle multiple security events at the same time.
+- Fix bug where input parameters were set back to mandatory unintentionally.
 - Fix bug where a date or an integer input parameters couldn't be set to
-  optional as it caused a server error
-- Globals scripts page is now loaded by default instead of local scripts
+  optional as it caused a server error.
+- Globals scripts page is now loaded by default instead of local scripts.
 
 Version 5.8.1, August 26, 2022
 ------------------------------
 
 New in this version:
 
-- Make it possible to delete SecurityProblems / SecurityRules
+- Make it possible to delete SecurityProblems / SecurityRules.
 - Fix a small bug when adding a new checkbox parameter, so it starts with
   mandatory off, as otherwise the checkbox won't accept not being "checked"
-  (it will only have one state)
+  (it will only have one state).
 
 Version 5.8.0, August 25, 2022
 ------------------------------
@@ -115,32 +125,32 @@ New in this version:
 
 - Make it possible for everyone to set script parameters as mandatory or not.
 - Fix a bug so mandatory isn't re-enabled every time "Gem ændringer" is
-  pressed
-- Update django dependencies
-- Small updates to the documentation
+  pressed.
+- Update django dependencies.
+- Small updates to the documentation.
 - RPC: Accept empty 'started' and 'finished' from clients, so machines with
-  such jobs in their backlog check in correctly again
-- Minor improvements to /admin
-- Make JobSearch available only to users belonging to the site or superusers
-- Add "Check all" checkboxes when running scripts on PC's or PCGroups
+  such jobs in their backlog check in correctly again.
+- Minor improvements to /admin.
+- Make JobSearch available only to users belonging to the site or superusers.
+- Add "Check all" checkboxes when running scripts on PC's or PCGroups.
 - Restrict "Site Users'" privileges: They can't add, edit, or delete other
-  users, or delete scripts any more
-  Only "Site Admins" can do those now
+  users, or delete scripts any more.
+  Only "Site Admins" can do those now.
 - PCGroups no longer have an UID but use ID instead. This also changes their
-  URL's
+  URL's.
 - Fix server error when in some cases you both add and delete scripts from
-  a policy
+  a policy.
 
 Version 5.7.0, July 12, 2022
 ----------------------------
 
 New in this version:
 
-- Add input type password, admin site now hides the value of passwords
-- Fix security events search in django admin
-- Show UID for PC in PC page and make UID unique
-- Add a batch per site when using the maintenance script maintenance command
-- Fix to remove redudant filename for policy scripts
+- Add input type password, admin site now hides the value of passwords.
+- Fix security events search in django admin.
+- Show UID for PC in PC page and make UID unique.
+- Add a batch per site when using the maintenance script maintenance command.
+- Fix to remove redudant filename for policy scripts.
 
 Version 5.6.5, June 28, 2022
 ----------------------------
@@ -148,114 +158,114 @@ Version 5.6.5, June 28, 2022
 New in this version:
 
 - Allow pushing security events with different date formats
-  (for example with or without seconds.)
-- Make associated scripts easily editable in Django Admin
+  (for example with or without seconds).
+- Make associated scripts easily editable in Django Admin.
 
 Version 5.6.4, June 21, 2022
 ----------------------------
 
 New in this version:
 
-- Add password input field for scripts
-- Refactor rpc.get_instructions for increased readability and performance
-- Fix Cicero pincode input to allow leading zeroes
-- Small fixes to Fixtures, Django admin and Job view
+- Add password input field for scripts.
+- Refactor rpc.get_instructions for increased readability and performance.
+- Fix Cicero pincode input to allow leading zeroes.
+- Small fixes to Fixtures, Django admin and Job view.
 
 Version 5.6.3, June 8, 2022
 ---------------------------
 
 New in this version:
 
-- Add maintenance script support (scripts run as superuser)
-- Add a database index on PC uid field
-- Move print_db_files management command to the correct place
-- Remove flake8 from linters
+- Add maintenance script support (scripts run as superuser).
+- Add a database index on PC uid field.
+- Move print_db_files management command to the correct place.
+- Remove flake8 from linters.
 
 Version 5.6.2, June 2, 2022
 ---------------------------
 
 New in this version:
 
-- Make PCGroup uid unique
-- Make PCGroupAdmin nicer
+- Make PCGroup uid unique.
+- Make PCGroupAdmin nicer.
 
 Version 5.6.1, June 2, 2022
 ---------------------------
 
 New in this version:
 
-- Add custom error pages (403, 404, 500)
+- Add custom error pages (403, 404, 500).
 
 Version 5.6.0, May 30, 2022
 ---------------------------
 
 New in this version:
 
-- Security events: The log will henceforth be empty: Indicate this
-  better than a blank space
-- Security events: Show both occurred and received times
-- Security events: /admin/ improvements to security events
-- Fix batch names: Leave empty unless it's an associated script
-- Fix security problem links to its added groups
-- Security issue: Deny access to viewing computers of other sites
-- Security issue: Deny access to viewing local scripts of other sites
-- push_security_events: ignore nonsensical events and log them
-- Make securityproblem UID globally unique
-- Remove null from TextFields and CharFields
+- Security events: The log will henceforth be empty: Indicate this.
+  better than a blank space.
+- Security events: Show both occurred and received times.
+- Security events: /admin/ improvements to security events.
+- Fix batch names: Leave empty unless it's an associated script.
+- Fix security problem links to its added groups.
+- Security issue: Deny access to viewing computers of other sites.
+- Security issue: Deny access to viewing local scripts of other sites.
+- push_security_events: ignore nonsensical events and log them.
+- Make securityproblem UID globally unique.
+- Remove null from TextFields and CharFields.
 
 Version 5.5.1, May 3, 2022
 --------------------------
 
 New in this version:
 
-- Add time inputtype
-- Make date inputtype a date instead of date and time
-- Send script names to clients running them
+- Add time inputtype.
+- Make date inputtype a date instead of date and time.
+- Send script names to clients running them.
 
 Version 5.4.2, April 12, 2022
 -----------------------------
 
 New in this version:
 
-- Fix sorting of computer name on Status page
-- Add totals above picklists in Computere and Grupper
+- Fix sorting of computer name on Status page.
+- Add totals above picklists in Computere and Grupper.
 
 Version 5.4.1, April 1, 2022
 ----------------------------
 
 New in this version:
 
-- Reordering policy scripts is now possible
-- Add link from Jobs page to PC
-- Add created field for Site and Jobs, display it for PCs and Jobs
-- More info on Sites overview
-- Remove author field
+- Reordering policy scripts is now possible.
+- Add link from Jobs page to PC.
+- Add created field for Site and Jobs, display it for PCs and Jobs.
+- More info on Sites overview.
+- Remove author field.
 
 Version 5.3.1, March 21, 2022
 -----------------------------
 
 New in this version:
 
-- Make Versions page render correctly
-- Update Django version
+- Make Versions page render correctly.
+- Update Django version.
 
 Version 5.3.0, January 26, 2022
 -------------------------------
 
 New in this version:
 
-- Run black on the python codebase
-- Setup black in the pipeline
-- Two factor authentication page created
-- Picklists: selected elements are now links instead of just plaintext
-- Jobs: improved job restart UX with name and computer instead of ID
-- Status: count online/all_pcs instead of online/activated
-- Image versions: Redesign page
-- Add checkbox input type
-- Fix AssociatedScriptParameters being added when new ScriptParameters
+- Run black on the python codebase.
+- Setup black in the pipeline.
+- Two factor authentication page created.
+- Picklists: selected elements are now links instead of just plaintext.
+- Jobs: improved job restart UX with name and computer instead of ID.
+- Status: count online/all_pcs instead of online/activated.
+- Image versions: Redesign page.
+- Add checkbox input type.
+- Fix AssociatedScriptParameters being added when new ScriptParameters.
   are added to a script.
-- Fix link to Configuration documentation
-- Make AssociatedScriptParameters that are files easily downloadable
+- Fix link to Configuration documentation.
+- Make AssociatedScriptParameters that are files easily downloadable.
 
 
 Version 5.2.1, January 3, 2022
