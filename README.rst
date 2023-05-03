@@ -15,7 +15,7 @@ alerts that may be triggered e.g. if a user changes a USB keyboard (some
 libraries have experienced problems with people trying to insert key
 loggers between keyboard and computer).
 
-Read the documentation for this project in docs/ or at 
+Read the documentation for this project in docs/ or at
 `Read The Docs <https://os2borgerpc-admin.readthedocs.io/>`_.
 
 The system was prepared by Magenta: See http://www.magenta.dk
