@@ -1,3 +1,13 @@
+Version 5.14.0, May 3, 2023
+---------------------------
+
+- Escape contents of security event log before outputting it to the page.
+- Fix and change favicons.
+- Require login to view documentation.
+- Allow changing values of associated script inputs to empty strings.
+- Remove superusers from the list of people a Security Event can be assigned to.
+
+
 Version 5.13.0, April 18, 2023
 ------------------------------
 
