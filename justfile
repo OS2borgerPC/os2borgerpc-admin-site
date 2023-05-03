@@ -76,8 +76,8 @@ fix-permissions:
   sudo fd --hidden -x chmod 777
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
-managepy +COMMANDS: (verify-container-running django_container)
-  sudo docker exec -i --tty {{django_container}} ./manage.py {{COMMANDS}}
+managepy +COMMAND: (verify-container-running django_container)
+  sudo docker exec -i --tty {{django_container}} ./manage.py {{COMMAND}}
 
 # Useful if changing requirements.txt and ...?
 recreate-django:
