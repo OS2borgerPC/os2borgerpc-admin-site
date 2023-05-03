@@ -1,5 +1,5 @@
 # Good info on syntax: https://cheatography.com/linux-china/cheat-sheets/justfile/
-# Easiest way to install on Ubuntu: 
+# Easiest way to install on Ubuntu:
 # $ snap install --edge --classic just
 
 # Default shell and settings used in the recipes
@@ -76,8 +76,8 @@ fix-permissions:
   sudo fd --hidden -x chmod 777
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
-managepy +COMMANDS: (verify-container-running django_container)
-  sudo docker exec -i --tty {{django_container}} ./manage.py {{COMMANDS}}
+managepy +COMMAND: (verify-container-running django_container)
+  sudo docker exec -i --tty {{django_container}} ./manage.py {{COMMAND}}
 
 # Useful if changing requirements.txt and ...?
 recreate-django:
@@ -107,9 +107,9 @@ translations-compile-messages: (verify-container-running django_container)
 
 # Replace all the fixtures (test data) with what you currently have in your local adminsite db
 update-test-data: (verify-container-running django_container)
-  sudo docker-compose exec -u 0 {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
-  sudo docker-compose exec -u 0 {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
-  sudo docker-compose exec -u 0 {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
+  sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
+  sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
+  sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
   printf '%s' 'NOTE: This may add unwanted log output to the top of the files! Verify and clean them up before commiting if so.'
 
 # Create a graph of the django models to a file named models_graphed.png

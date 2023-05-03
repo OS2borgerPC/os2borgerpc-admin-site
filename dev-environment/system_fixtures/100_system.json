@@ -3948,8 +3948,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            8,
             5,
+            8,
             6,
             7
         ]
@@ -4055,9 +4055,9 @@
         "wake_change_events": [
             8,
             11,
+            1,
             9,
-            10,
-            1
+            10
         ]
     }
 },
@@ -10282,6 +10282,18 @@
     }
 },
 {
+    "model": "system.input",
+    "pk": 94,
+    "fields": {
+        "name": "test",
+        "value_type": "STRING",
+        "default_value": "",
+        "position": 1,
+        "mandatory": true,
+        "script": 9
+    }
+},
+{
     "model": "system.batchparameter",
     "pk": 1,
     "fields": {
@@ -10369,6 +10381,26 @@
         "file_value": "",
         "input": 27,
         "associated_script": 18
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 8,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 94,
+        "associated_script": 7
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 9,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 94,
+        "associated_script": 16
     }
 },
 {
@@ -10460,7 +10492,7 @@
         "pc": 26,
         "summary": "Aug 3 13:43:50 os2borgerpc sudo: root : TTY=pts/0 ; PWD=/ ; USER=root ; COMMAND=/usr/bin/chmod 500 /usr/lib/cups/backend/princh",
         "complete_log": "Log 1 2 3 4",
-        "status": "NEW",
+        "status": "RESOLVED",
         "assigned_user": null,
         "note": ""
     }
@@ -10488,9 +10520,9 @@
         "occurred_time": "2022-08-05T11:10:48",
         "reported_time": "2022-08-05T13:10:51",
         "pc": 9,
-        "summary": "Aug 3 13:43:50 os2borgerpc sudo: root : TTY=pts/0 ; PWD=/ ; USER=root ; COMMAND=/usr/bin/chmod 500 /usr/lib/cups/backend/princh",
+        "summary": "Apr 18 11:02:55 HEY sudo:     root : TTY=pts/1 ; PWD=/ ; USER=mdatp ; COMMAND=/usr/bin/curl -s -S -d {#012        \"client\": {#012            \"appVersion\": \"101.98.58\"#012            \"hostname\": \"HEY\"#012            \"platform\": \"Linux\"#012            \"machineGuid\": \"sdfsfs-12313-sfdsf\"#012            \"orgId\": \"sdfsdfs-121231-sdfsfsdf-123231\"#012            \"productGuid\":\"sdfdfsfs-123131-sfsdfs-s-3131\"#012        }#012        \"reports\":[#012            {#012                \"$type\":\"installationReport\"#012                \"correlation_id\": \"sdfsdfdsd-1231231231-sfsfsfs-12312313\"#012                \"version\": \"101.98.58\"#012                \"severity\": \"I\"#012                \"code\":\"UpgradeSucceeded\"#012                \"text\":\"\"#012            }#012        ]#012    } -X POST --max-time 5 --connect-timeout 5 https://x.cp.wd.microsoft.com/api/report",
         "complete_log": "",
-        "status": "RESOLVED",
+        "status": "NEW",
         "assigned_user": 35,
         "note": "Note"
     }

@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import escape
 from django.utils import translation
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
@@ -2794,7 +2795,7 @@ class SecurityEventsView(SiteView):
 
         context["form"] = SecurityEventForm()
         qs = context["form"].fields["assigned_user"].queryset
-        qs = qs.filter(Q(bibos_profile__sites=self.get_object()) | Q(is_superuser=True))
+        qs = qs.filter(bibos_profile__sites=self.get_object())
         context["form"].fields["assigned_user"].queryset = qs
 
         return context
@@ -2886,7 +2887,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                         if event.assigned_user
                         else ""
                     ),
-                    "summary": event.summary,
+                    "summary": escape(event.summary),
                     "note": event.note,
                 }
                 for event in page_obj
@@ -2950,7 +2951,7 @@ documentation_menu_items = [
 ]
 
 
-class DocView(TemplateView):
+class DocView(TemplateView, LoginRequiredMixin):
     docname = "status"
 
     def template_exists(self, subpath):
