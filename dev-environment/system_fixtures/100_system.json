@@ -4615,7 +4615,7 @@
     "pk": 9,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2022-01-26T15:15:57.250",
+        "modified": "2023-05-08T14:12:46.883",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Chrome - Skift startside",
@@ -5140,10 +5140,10 @@
     "pk": 35,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-10-08T16:03:07.664",
+        "modified": "2023-05-08T14:14:39.285",
         "user_created": "",
-        "user_modified": "mowgli",
-        "name": "System - Skift password for bruger",
+        "user_modified": "magenta",
+        "name": "System - Skift kodeord for Borger",
         "uid": null,
         "description": "Skifter publikumsbrugerens password til det angivne.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDa publikumsbrugeren logger ind automatisk, er det normalt ikke nødvendigt at sætte et password for denne bruger.\r\n\r\nPasswords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
         "site": null,
@@ -5161,10 +5161,10 @@
     "pk": 36,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2021-09-30T13:42:57.053",
+        "modified": "2023-05-08T14:17:13.412",
         "user_created": "",
-        "user_modified": "flash_gordon",
-        "name": "System - Skift password for superbruger",
+        "user_modified": "magenta",
+        "name": "System - Skift kodeord for superuser",
         "uid": null,
         "description": "Skift til det angivne superbrugerpassword.\r\n\r\nParametre:\r\n\r\n-password\r\n-passwordigen - det nye password og en gentagelse, for at sikre at brugeren kan skrive det to gange.\r\n\r\nDet er MEGET VIGTIGT at skifte fra standard-passwordet til et andet, så snart en BibOS-maskine er færdiginstalleret. Passwords vises p.t. i klartekst, når man indtaster dem. Pas derfor på ikke at blive kigget over skulderen e.l.\r\n\r\nTestet på Ubuntu 20.04.",
         "site": null,
@@ -5542,6 +5542,25 @@
         "executable_code": "script_uploads/on_off_schedule_remove.sh",
         "is_security_script": false,
         "is_hidden": true,
+        "maintained_by_magenta": false,
+        "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 84,
+    "fields": {
+        "created": "2023-05-08T14:18:22.789",
+        "modified": "2023-05-08T14:18:31.724",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "Script med valgfrit parameter",
+        "uid": null,
+        "description": "test",
+        "site": 1,
+        "executable_code": "script_uploads/emptyish.sh",
+        "is_security_script": false,
+        "is_hidden": false,
         "maintained_by_magenta": false,
         "tags": []
     }
@@ -6069,6 +6088,24 @@
     }
 },
 {
+    "model": "system.batch",
+    "pk": 59,
+    "fields": {
+        "name": "Gruppe4",
+        "script": 36,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 60,
+    "fields": {
+        "name": "Gruppe4",
+        "script": 84,
+        "site": 1
+    }
+},
+{
     "model": "system.associatedscript",
     "pk": 6,
     "fields": {
@@ -6101,7 +6138,7 @@
     "fields": {
         "group": 9,
         "script": 8,
-        "position": 3
+        "position": 2
     }
 },
 {
@@ -6110,7 +6147,7 @@
     "fields": {
         "group": 9,
         "script": 6,
-        "position": 4
+        "position": 3
     }
 },
 {
@@ -6119,7 +6156,7 @@
     "fields": {
         "group": 9,
         "script": 7,
-        "position": 5
+        "position": 4
     }
 },
 {
@@ -6128,7 +6165,7 @@
     "fields": {
         "group": 9,
         "script": 10,
-        "position": 6
+        "position": 5
     }
 },
 {
@@ -6137,7 +6174,7 @@
     "fields": {
         "group": 9,
         "script": 9,
-        "position": 7
+        "position": 6
     }
 },
 {
@@ -6146,7 +6183,7 @@
     "fields": {
         "group": 9,
         "script": 27,
-        "position": 8
+        "position": 7
     }
 },
 {
@@ -6155,7 +6192,7 @@
     "fields": {
         "group": 9,
         "script": 31,
-        "position": 9
+        "position": 8
     }
 },
 {
@@ -6291,6 +6328,24 @@
         "group": 17,
         "script": 3,
         "position": 14
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 36,
+    "fields": {
+        "group": 9,
+        "script": 36,
+        "position": 9
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 37,
+    "fields": {
+        "group": 9,
+        "script": 84,
+        "position": 10
     }
 },
 {
@@ -9514,6 +9569,90 @@
     }
 },
 {
+    "model": "system.job",
+    "pk": 239,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2023-05-08T14:14:59.762",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 59,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 240,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2023-05-08T14:14:59.764",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 59,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 241,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2023-05-08T14:14:59.765",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 59,
+        "pc": 23
+    }
+},
+{
+    "model": "system.job",
+    "pk": 242,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2023-05-08T14:18:45.340",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 60,
+        "pc": 26
+    }
+},
+{
+    "model": "system.job",
+    "pk": 243,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2023-05-08T14:18:45.341",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 60,
+        "pc": 28
+    }
+},
+{
+    "model": "system.job",
+    "pk": 244,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2023-05-08T14:18:45.341",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 60,
+        "pc": 23
+    }
+},
+{
     "model": "system.input",
     "pk": 1,
     "fields": {
@@ -9531,7 +9670,7 @@
     "fields": {
         "name": "URL",
         "value_type": "STRING",
-        "default_value": null,
+        "default_value": "",
         "position": 0,
         "mandatory": true,
         "script": 9
@@ -9866,8 +10005,8 @@
     "pk": 30,
     "fields": {
         "name": "password",
-        "value_type": "STRING",
-        "default_value": null,
+        "value_type": "PASSWORD",
+        "default_value": "",
         "position": 0,
         "mandatory": true,
         "script": 35
@@ -9878,8 +10017,8 @@
     "pk": 31,
     "fields": {
         "name": "password_igen",
-        "value_type": "STRING",
-        "default_value": null,
+        "value_type": "PASSWORD",
+        "default_value": "",
         "position": 1,
         "mandatory": true,
         "script": 35
@@ -9890,8 +10029,8 @@
     "pk": 32,
     "fields": {
         "name": "password",
-        "value_type": "STRING",
-        "default_value": null,
+        "value_type": "PASSWORD",
+        "default_value": "",
         "position": 0,
         "mandatory": true,
         "script": 36
@@ -9902,8 +10041,8 @@
     "pk": 33,
     "fields": {
         "name": "password_igen",
-        "value_type": "STRING",
-        "default_value": null,
+        "value_type": "PASSWORD",
+        "default_value": "",
         "position": 1,
         "mandatory": true,
         "script": 36
@@ -10283,14 +10422,14 @@
 },
 {
     "model": "system.input",
-    "pk": 94,
+    "pk": 95,
     "fields": {
         "name": "test",
         "value_type": "STRING",
         "default_value": "",
-        "position": 1,
-        "mandatory": true,
-        "script": 9
+        "position": 0,
+        "mandatory": false,
+        "script": 84
     }
 },
 {
@@ -10354,6 +10493,36 @@
     }
 },
 {
+    "model": "system.batchparameter",
+    "pk": 7,
+    "fields": {
+        "string_value": "hey",
+        "file_value": "",
+        "input": 32,
+        "batch": 59
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 8,
+    "fields": {
+        "string_value": "hey",
+        "file_value": "",
+        "input": 33,
+        "batch": 59
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 9,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 95,
+        "batch": 60
+    }
+},
+{
     "model": "system.associatedscriptparameter",
     "pk": 5,
     "fields": {
@@ -10385,22 +10554,32 @@
 },
 {
     "model": "system.associatedscriptparameter",
-    "pk": 8,
+    "pk": 10,
     "fields": {
-        "string_value": "",
+        "string_value": "woop",
         "file_value": "",
-        "input": 94,
-        "associated_script": 7
+        "input": 32,
+        "associated_script": 36
     }
 },
 {
     "model": "system.associatedscriptparameter",
-    "pk": 9,
+    "pk": 11,
+    "fields": {
+        "string_value": "hey",
+        "file_value": "",
+        "input": 33,
+        "associated_script": 36
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 12,
     "fields": {
         "string_value": "",
         "file_value": "",
-        "input": 94,
-        "associated_script": 16
+        "input": 95,
+        "associated_script": 37
     }
 },
 {
