@@ -527,7 +527,9 @@ class PCGroup(models.Model):
                     else:
                         par.file_value = req_files[param_name]
                 else:
-                    if param_name not in req_params:
+                    if param_name not in req_params or (
+                        not req_params[param_name] and inp.value_type == Input.PASSWORD
+                    ):
                         if par.pk is not None:
                             # Don't blank existing values
                             continue
