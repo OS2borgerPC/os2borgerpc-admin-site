@@ -1,3 +1,8 @@
+Version 5.14.1, May 8, 2023
+---------------------------
+
+- Fix bug causing MandatoryParameterMissingError when saving a group with an associated script that uses password input
+
 Version 5.14.0, May 3, 2023
 ---------------------------
 
