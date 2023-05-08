@@ -6334,7 +6334,7 @@
     "model": "system.associatedscript",
     "pk": 36,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 36,
         "position": 9
     }
@@ -6343,7 +6343,7 @@
     "model": "system.associatedscript",
     "pk": 37,
     "fields": {
-        "group": 10,
+        "group": 9,
         "script": 84,
         "position": 10
     }
