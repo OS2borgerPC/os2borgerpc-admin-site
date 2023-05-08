@@ -6109,7 +6109,7 @@
     "model": "system.associatedscript",
     "pk": 6,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 8,
         "position": 0
     }
@@ -6118,7 +6118,7 @@
     "model": "system.associatedscript",
     "pk": 7,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 9,
         "position": 1
     }
@@ -6136,7 +6136,7 @@
     "model": "system.associatedscript",
     "pk": 12,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 8,
         "position": 2
     }
@@ -6145,7 +6145,7 @@
     "model": "system.associatedscript",
     "pk": 13,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 6,
         "position": 3
     }
@@ -6154,7 +6154,7 @@
     "model": "system.associatedscript",
     "pk": 14,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 7,
         "position": 4
     }
@@ -6163,7 +6163,7 @@
     "model": "system.associatedscript",
     "pk": 15,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 10,
         "position": 5
     }
@@ -6172,7 +6172,7 @@
     "model": "system.associatedscript",
     "pk": 16,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 9,
         "position": 6
     }
@@ -6181,7 +6181,7 @@
     "model": "system.associatedscript",
     "pk": 17,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 27,
         "position": 7
     }
@@ -6190,7 +6190,7 @@
     "model": "system.associatedscript",
     "pk": 18,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 31,
         "position": 8
     }
@@ -6334,7 +6334,7 @@
     "model": "system.associatedscript",
     "pk": 36,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 36,
         "position": 9
     }
@@ -6343,7 +6343,7 @@
     "model": "system.associatedscript",
     "pk": 37,
     "fields": {
-        "group": 9,
+        "group": 10,
         "script": 84,
         "position": 10
     }
