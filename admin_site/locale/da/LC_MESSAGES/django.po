@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-18 13:26+0200\n"
+"POT-Creation-Date: 2023-05-16 14:48+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -59,7 +59,7 @@ msgstr "Site"
 msgid "Usertype"
 msgstr "Brugertype"
 
-#: system/forms.py:136 system/models.py:986
+#: system/forms.py:136 system/models.py:990
 msgid "Password"
 msgstr "Adgangskode"
 
@@ -76,8 +76,8 @@ msgstr "De to adgangskoder skal være ens"
 msgid "A user named \"%s\" already exists."
 msgstr "En bruger med navnet \"%s\" eksisterer allerede."
 
-#: system/mixins.py:9 system/models.py:134 system/models.py:573
-#: system/models.py:883 system/models.py:1253 system/models.py:1280
+#: system/mixins.py:9 system/models.py:134 system/models.py:577
+#: system/models.py:887 system/models.py:1257 system/models.py:1284
 msgid "created"
 msgstr "oprettet"
 
@@ -110,14 +110,14 @@ msgid "owner configuration"
 msgstr "ejer-konfiguration"
 
 #: system/models.py:127 system/models.py:214 system/models.py:244
-#: system/models.py:290 system/models.py:444 system/models.py:558
-#: system/models.py:674 system/models.py:686 system/models.py:770
-#: system/models.py:989 system/models.py:1097 system/models.py:1238
+#: system/models.py:290 system/models.py:444 system/models.py:562
+#: system/models.py:678 system/models.py:690 system/models.py:774
+#: system/models.py:993 system/models.py:1101 system/models.py:1242
 msgid "name"
 msgstr "navn"
 
-#: system/models.py:128 system/models.py:215 system/models.py:560
-#: system/models.py:689 system/models.py:1098
+#: system/models.py:128 system/models.py:215 system/models.py:564
+#: system/models.py:693 system/models.py:1102
 msgid "UID"
 msgstr "UID"
 
@@ -290,243 +290,243 @@ msgstr "søndag tænd"
 msgid "wake change events"
 msgstr "undtagelser"
 
-#: system/models.py:446 system/models.py:563 system/models.py:691
-#: system/models.py:1099 system/models.py:1250
+#: system/models.py:446 system/models.py:567 system/models.py:695
+#: system/models.py:1103 system/models.py:1254
 msgid "description"
 msgstr "beskrivelse"
 
-#: system/models.py:557
+#: system/models.py:561
 msgid "MAC"
 msgstr "MAC"
 
-#: system/models.py:568
+#: system/models.py:572
 msgid "activated"
 msgstr "aktiveret"
 
-#: system/models.py:570
+#: system/models.py:574
 msgid "update required"
 msgstr "opdatering påkrævet"
 
-#: system/models.py:575
+#: system/models.py:579
 msgid "last seen"
 msgstr "seneste tjek-ind"
 
-#: system/models.py:577
+#: system/models.py:581
 msgid "location"
 msgstr "placering"
 
-#: system/models.py:699
+#: system/models.py:703
 msgid "executable code"
 msgstr "eksekverbar kode"
 
-#: system/models.py:702 system/models.py:1108
+#: system/models.py:706 system/models.py:1112
 msgid "security script"
 msgstr "sikkerhedsscript"
 
-#: system/models.py:706
+#: system/models.py:710
 msgid "hidden script"
 msgstr "skjult script"
 
-#: system/models.py:710
+#: system/models.py:714
 msgid "maintained by Magenta"
 msgstr "vedligeholdt af Magenta"
 
-#: system/models.py:787 system/models.py:996
+#: system/models.py:791 system/models.py:1000
 msgid "position"
 msgstr "position"
 
-#: system/models.py:849
+#: system/models.py:853
 msgid "jobstatus:New"
 msgstr "Nyt"
 
-#: system/models.py:850
+#: system/models.py:854
 msgid "jobstatus:Submitted"
 msgstr "Afsendt"
 
-#: system/models.py:851
+#: system/models.py:855
 msgid "jobstatus:Running"
 msgstr "Kører"
 
-#: system/models.py:852
+#: system/models.py:856
 msgid "jobstatus:Failed"
 msgstr "Fejlet"
 
-#: system/models.py:853
+#: system/models.py:857
 msgid "jobstatus:Done"
 msgstr "Udført"
 
-#: system/models.py:854
+#: system/models.py:858
 msgid "jobstatus:Resolved"
 msgstr "Genstartet"
 
-#: system/models.py:880
+#: system/models.py:884
 msgid "log output"
 msgstr "log output"
 
-#: system/models.py:885
+#: system/models.py:889
 msgid "started"
 msgstr "påbegyndt"
 
-#: system/models.py:886
+#: system/models.py:890
 msgid "finished"
 msgstr "afsluttet"
 
-#: system/models.py:939
+#: system/models.py:943
 #, python-brace-format
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:946 system/views.py:509
+#: system/models.py:950 system/views.py:509
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
 
-#: system/models.py:980
+#: system/models.py:984
 msgid "String"
 msgstr "Streng"
 
-#: system/models.py:981
+#: system/models.py:985
 msgid "Integer"
 msgstr "Heltal"
 
-#: system/models.py:982
+#: system/models.py:986
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html:63
 msgid "Date"
 msgstr "Dato"
 
-#: system/models.py:983
+#: system/models.py:987
 msgid "File"
 msgstr "Fil"
 
-#: system/models.py:984
+#: system/models.py:988
 msgid "Boolean"
 msgstr "Afkrydsningsfelt"
 
-#: system/models.py:985
+#: system/models.py:989
 msgid "Time"
 msgstr "Tid"
 
-#: system/models.py:991
+#: system/models.py:995
 msgid "value type"
 msgstr "værdi-type"
 
-#: system/models.py:994
+#: system/models.py:998
 msgid "default value"
 msgstr "standardværdi"
 
-#: system/models.py:997
+#: system/models.py:1001
 msgid "mandatory"
 msgstr "påkrævet"
 
 # SecurityProblem class
-#: system/models.py:1080
+#: system/models.py:1084
 msgid "securitylevel:Normal"
 msgstr "Normal"
 
-#: system/models.py:1081
+#: system/models.py:1085
 msgid "securitylevel:High"
 msgstr "Høj"
 
-#: system/models.py:1082
+#: system/models.py:1086
 msgid "securitylevel:Critical"
 msgstr "Kritisk"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: system/models.py:1101
+#: system/models.py:1105
 msgid "level"
 msgstr "alvorlighedsgrad"
 
-#: system/models.py:1115
+#: system/models.py:1119
 msgid "alert groups"
 msgstr "overvågede grupper"
 
-#: system/models.py:1121
+#: system/models.py:1125
 msgid "alert users"
 msgstr "modtager(e) af e-mail-advarsel"
 
 # SecurityEvent class
-#: system/models.py:1149
+#: system/models.py:1153
 msgid "eventstatus:New"
 msgstr "Ny"
 
-#: system/models.py:1150
+#: system/models.py:1154
 msgid "eventstatus:Assigned"
 msgstr "Tildelt"
 
-#: system/models.py:1151
+#: system/models.py:1155
 msgid "eventstatus:Resolved"
 msgstr "Løst"
 
-#: system/models.py:1167
+#: system/models.py:1171
 msgid "occurred"
 msgstr "hændelsestidspunkt"
 
-#: system/models.py:1169
+#: system/models.py:1173
 msgid "reported"
 msgstr "modtagelsestidspunkt"
 
-#: system/models.py:1176
+#: system/models.py:1180
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py:1249
+#: system/models.py:1253
 msgid "title"
 msgstr "titel"
 
-#: system/models.py:1251 system/models.py:1278
+#: system/models.py:1255 system/models.py:1282
 msgid "content"
 msgstr "indhold"
 
-#: system/models.py:1254
+#: system/models.py:1258
 msgid "updated"
 msgstr "opdateret"
 
-#: system/models.py:1255
+#: system/models.py:1259
 msgid "author"
 msgstr "forfatter"
 
-#: system/models.py:1258
+#: system/models.py:1262
 msgid "version"
 msgstr "version"
 
-#: system/views.py:315
+#: system/views.py:316
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
-#: system/views.py:545
+#: system/views.py:544
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
-#: system/views.py:590
+#: system/views.py:588
 #, python-format
 msgid "You have no Script with the following ID: %s"
 msgstr "Du har intet script med ID %s"
 
-#: system/views.py:697
+#: system/views.py:695
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du skal angive et navn"
 
-#: system/views.py:704
+#: system/views.py:702
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du skal angive en korrekt input-parameter-type"
 
-#: system/views.py:864
+#: system/views.py:861
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:961 system/views.py:983
+#: system/views.py:957 system/views.py:979
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1109
+#: system/views.py:1105
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen computer med følgende ID: %s"
 
-#: system/views.py:1181
+#: system/views.py:1176
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
@@ -542,7 +542,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1462
+#: system/views.py:1466
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -551,7 +551,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1475
+#: system/views.py:1483
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -560,17 +560,17 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1485
+#: system/views.py:1493
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
 
-#: system/views.py:1505
+#: system/views.py:1513
 #, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidsplan med følgende ID: %s"
 
-#: system/views.py:1630
+#: system/views.py:1639
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -581,7 +581,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1645
+#: system/views.py:1658
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -590,7 +590,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1658
+#: system/views.py:1675
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -599,53 +599,53 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1669
+#: system/views.py:1686
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Tænd/sluk tidsplan %s opdateret"
 
-#: system/views.py:1766
+#: system/views.py:1782
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
-#: system/views.py:1888
+#: system/views.py:1903
 #, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
 
-#: system/views.py:1925
+#: system/views.py:1940
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undtagelse %s opdateret"
 
-#: system/views.py:1935
+#: system/views.py:1949
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr ""
 "De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
 
-#: system/views.py:1945 system/views.py:2001
+#: system/views.py:1958 system/views.py:2013
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
-#: system/views.py:2143
+#: system/views.py:2154
 #, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 
-#: system/views.py:2208
+#: system/views.py:2219
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:2251
+#: system/views.py:2262
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:2338
+#: system/views.py:2349
 #, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
@@ -654,7 +654,7 @@ msgstr ""
 "I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>Prøv "
 "i stedet at finde gruppen fra gruppelisten."
 
-#: system/views.py:2507
+#: system/views.py:2519
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -663,45 +663,45 @@ msgstr ""
 "Gruppe %s opdateret, men computer(ne) %s kunne ikke tilføjes, da de(n) "
 "allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:2519
+#: system/views.py:2534
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:2533
+#: system/views.py:2547
 #, python-format
 msgid "No value was specified for the mandatory input %s of script %s"
 msgstr "Den obligatoriske parameterværdi %s for script %s mangler"
 
-#: system/views.py:2605
+#: system/views.py:2618
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
 
-#: system/views.py:2672
+#: system/views.py:2685
 #, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
 
-#: system/views.py:2920
+#: system/views.py:2933
 msgid "The administration site"
 msgstr "Administrationssiden"
 
-#: system/views.py:2921
+#: system/views.py:2934
 msgid "About"
 msgstr "Om"
 
-#: system/views.py:2922 templates/site_with_navigation.html:31
-#: templates/system/jobs/site_jobs.html:37
-#: templates/system/jobs/site_jobs.html:162 templates/system/pcs/form.html:153
-#: templates/system/security_events/site_security_events.html:51
-#: templates/system/security_events/site_security_events.html:121
+#: system/views.py:2935 templates/site_with_navigation.html:31
+#: templates/system/jobs/site_jobs.html:38
+#: templates/system/jobs/site_jobs.html:163 templates/system/pcs/form.html:153
+#: templates/system/security_events/site_security_events.html:53
+#: templates/system/security_events/site_security_events.html:123
 #: templates/system/site_status.html:5 templates/system/site_status.html:23
 msgid "Status"
 msgstr "Status"
 
-#: system/views.py:2923 templates/site_with_navigation.html:75
-#: templates/system/jobs/site_jobs.html:83
+#: system/views.py:2936 templates/site_with_navigation.html:75
+#: templates/system/jobs/site_jobs.html:84
 #: templates/system/pcgroups/confirm_delete.html:18
 #: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
 #: templates/system/pcs/site_pcs.html:16 templates/system/site_list.html:7
@@ -711,8 +711,8 @@ msgstr "Status"
 msgid "Computers"
 msgstr "Computere"
 
-#: system/views.py:2924 templates/site_with_navigation.html:80
-#: templates/system/jobs/site_jobs.html:106
+#: system/views.py:2937 templates/site_with_navigation.html:80
+#: templates/system/jobs/site_jobs.html:107
 #: templates/system/pcgroups/site_groups.html:7
 #: templates/system/security_problems/confirm_delete.html:23
 #: templates/system/wake_plan/confirm_delete.html:15
@@ -720,88 +720,88 @@ msgstr "Computere"
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py:2925
+#: system/views.py:2938
 msgid "On/Off schedules"
 msgstr "Tænd/Sluk tidsplaner"
 
-#: system/views.py:2926 templates/site_with_navigation.html:98
+#: system/views.py:2939 templates/site_with_navigation.html:98
 #: templates/system/jobs/site_jobs.html:6
 #: templates/system/scripts/confirm_delete.html:21
 msgid "Jobs"
 msgstr "Jobs"
 
-#: system/views.py:2927 templates/site_with_navigation.html:103
+#: system/views.py:2940 templates/site_with_navigation.html:103
 #: templates/system/scripts/header.html:5
 #: templates/system/site_two_factor.html:52
 msgid "Scripts"
 msgstr "Scripts"
 
-#: system/views.py:2928 templates/site_with_navigation.html:61
+#: system/views.py:2941 templates/site_with_navigation.html:61
 #: templates/system/scripts/header.html:5
 msgid "Security Scripts"
 msgstr "Sikkerhedsscripts"
 
-#: system/views.py:2929 templates/site_with_navigation.html:110
+#: system/views.py:2942 templates/site_with_navigation.html:110
 #: templates/system/users/confirm_delete.html:5
 #: templates/system/users/create.html:5 templates/system/users/update.html:5
 msgid "Users"
 msgstr "Brugere"
 
-#: system/views.py:2930 templates/site_with_navigation.html:186
+#: system/views.py:2943 templates/site_with_navigation.html:186
 #: templates/system/pcgroups/site_groups.html:67
 #: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
 msgid "Configurations"
 msgstr "Konfigurationer"
 
-#: system/views.py:2931
+#: system/views.py:2944
 msgid "Setting up security surveillance (PDF)"
 msgstr "Oprettelse af Sikkerhedsovervågning (PDF)"
 
-#: system/views.py:2932
+#: system/views.py:2945
 msgid "The News site"
 msgstr "Nyhedssiden"
 
-#: system/views.py:2933
+#: system/views.py:2946
 msgid "OS2borgerPC"
 msgstr "OS2BorgerPC"
 
-#: system/views.py:2934
+#: system/views.py:2947
 msgid "Installation Guide (PDF)"
 msgstr "Installationsguide (PDF)"
 
-#: system/views.py:2935
+#: system/views.py:2948
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: system/views.py:2936
+#: system/views.py:2949
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
-#: system/views.py:2937
+#: system/views.py:2950
 msgid "Installation Guide"
 msgstr "Installationsguide"
 
-#: system/views.py:2938
+#: system/views.py:2951
 msgid "Updating Wi-Fi setup"
 msgstr "Opdatering af Wi-Fi opsætning"
 
-#: system/views.py:2939
+#: system/views.py:2952
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
 
-#: system/views.py:2940
+#: system/views.py:2953
 msgid "OS2borgerPC Image"
 msgstr "OS2borgerPC Image"
 
-#: system/views.py:2941
+#: system/views.py:2954
 msgid "OS2borgerPC Admin Site"
 msgstr "OS2borgerPC Admin Site"
 
-#: system/views.py:2942
+#: system/views.py:2955
 msgid "OS2borgerPC Kiosk Image"
 msgstr "OS2borgerPC Kiosk Image"
 
-#: system/views.py:2943
+#: system/views.py:2956
 msgid "OS2borgerPC Client"
 msgstr "OS2borgerPC Client"
 
@@ -1052,7 +1052,7 @@ msgstr "Tilføj kommentar"
 #: templates/system/scripts/create.html:41
 #: templates/system/scripts/update.html:79
 #: templates/system/scripts/update.html:126
-#: templates/system/security_events/site_security_events.html:101
+#: templates/system/security_events/site_security_events.html:103
 #: templates/system/security_problems/confirm_delete.html:49
 #: templates/system/security_problems/site_security_problems.html:112
 #: templates/system/security_problems/site_security_problems.html:157
@@ -1269,21 +1269,21 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: templates/system/jobs/site_jobs.html:22
-#: templates/system/security_events/site_security_events.html:23
+#: templates/system/jobs/site_jobs.html:23
+#: templates/system/security_events/site_security_events.html:25
 msgid "Filters"
 msgstr "Filtre"
 
-#: templates/system/jobs/site_jobs.html:23
-#: templates/system/security_events/site_security_events.html:25
+#: templates/system/jobs/site_jobs.html:24
+#: templates/system/security_events/site_security_events.html:27
 msgid "Reset filters"
 msgstr "Nulstil filtre"
 
-#: templates/system/jobs/site_jobs.html:60
+#: templates/system/jobs/site_jobs.html:61
 msgid "Batches"
 msgstr "Batches"
 
-#: templates/system/jobs/site_jobs.html:157
+#: templates/system/jobs/site_jobs.html:158
 #: templates/system/pcgroups/policy_list/list.html:9
 #: templates/system/pcs/form.html:149
 #: templates/system/scripts/confirm_delete.html:12
@@ -1296,30 +1296,30 @@ msgstr "Batches"
 msgid "Script"
 msgstr "Script"
 
-#: templates/system/jobs/site_jobs.html:158
+#: templates/system/jobs/site_jobs.html:159
 msgid "User"
 msgstr "Bruger"
 
-#: templates/system/jobs/site_jobs.html:159 templates/system/pcs/form.html:150
+#: templates/system/jobs/site_jobs.html:160 templates/system/pcs/form.html:150
 #: templates/system/scripts/form.html:8
 msgid "Created"
 msgstr "Oprettet"
 
-#: templates/system/jobs/site_jobs.html:160 templates/system/pcs/form.html:151
+#: templates/system/jobs/site_jobs.html:161 templates/system/pcs/form.html:151
 msgid "Started"
 msgstr "Startet"
 
-#: templates/system/jobs/site_jobs.html:161 templates/system/pcs/form.html:152
+#: templates/system/jobs/site_jobs.html:162 templates/system/pcs/form.html:152
 msgid "Finished"
 msgstr "Sluttet"
 
-#: templates/system/jobs/site_jobs.html:163
+#: templates/system/jobs/site_jobs.html:164
 #: templates/system/wake_plan/wake_plan.html:39
 msgid "Computer"
 msgstr "Computer"
 
-#: templates/system/jobs/site_jobs.html:176
-#: templates/system/security_events/site_security_events.html:128
+#: templates/system/jobs/site_jobs.html:177
+#: templates/system/security_events/site_security_events.html:130
 msgid "Loading data..."
 msgstr "Henter data..."
 
@@ -1746,44 +1746,44 @@ msgid "Clear the filter"
 msgstr "Ryd filter"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: templates/system/security_events/site_security_events.html:37
-#: templates/system/security_events/site_security_events.html:114
+#: templates/system/security_events/site_security_events.html:39
+#: templates/system/security_events/site_security_events.html:116
 msgid "Level"
 msgstr "Alvorlighedsgrad"
 
-#: templates/system/security_events/site_security_events.html:93
+#: templates/system/security_events/site_security_events.html:95
 msgid "Edit Security Events"
 msgstr "Rediger Sikkerhedshændelser"
 
-#: templates/system/security_events/site_security_events.html:100
+#: templates/system/security_events/site_security_events.html:102
 msgid "Handle event"
 msgstr "Håndter hændelse"
 
-#: templates/system/security_events/site_security_events.html:109
+#: templates/system/security_events/site_security_events.html:111
 msgid "Handle events"
 msgstr "Håndter hændelser"
 
-#: templates/system/security_events/site_security_events.html:115
+#: templates/system/security_events/site_security_events.html:117
 msgid "Rule"
 msgstr "Regel"
 
-#: templates/system/security_events/site_security_events.html:117
+#: templates/system/security_events/site_security_events.html:119
 msgid "Info"
 msgstr "Info"
 
-#: templates/system/security_events/site_security_events.html:118
+#: templates/system/security_events/site_security_events.html:120
 msgid "Device"
 msgstr "Maskine"
 
-#: templates/system/security_events/site_security_events.html:119
+#: templates/system/security_events/site_security_events.html:121
 msgid "Incident time"
 msgstr "Hændelsestidspunkt"
 
-#: templates/system/security_events/site_security_events.html:120
+#: templates/system/security_events/site_security_events.html:122
 msgid "Time of receipt"
 msgstr "Modtagelsestidspunkt"
 
-#: templates/system/security_events/site_security_events.html:122
+#: templates/system/security_events/site_security_events.html:124
 msgid "Handled by"
 msgstr "Håndteres af"
 

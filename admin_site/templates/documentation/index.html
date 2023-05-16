@@ -25,7 +25,11 @@ detailpage
     {% translate "Return to admin" %}
   </a>
   {% for link, name in docmenuitems %}
-  {% if link %}
+  {% if link in pdf_href %}
+    <a class="nav-link link-light" href="{{ pdf_href|get_item:link }}">
+      {{ name }}
+    </a>
+  {% elif link %}
   
     <a class="nav-link link-light {% ifequal menu_active link %}active{% endifequal %}" href="{% url 'doc' link %}">
       {{ name }}
