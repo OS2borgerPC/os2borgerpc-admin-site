@@ -202,9 +202,24 @@ function updateCounter() {
     totalEvents = document.getElementsByClassName("click-list--item").length - 1
     handleButton = document.getElementById("handle-event-button")
 
+    // Dict containing the translations for the button
+    var text_dict = {
+        "da": ["Håndter ", " ud af ", " hændelser"],
+        "en": ["Handle ", " out of ", " events"],
+        "sv": ["Hanterar ", " av ", " incidenter"]
+    }
+    // Get the correct translation based on the django_language cookie
+    const text = text_dict[getCookie("django_language")]
     // Updates the text on the button to show how many (if any) events have been selected
-    handleButton.innerText = "Håndter " + ( selectedEvents > 0 ? selectedEvents + " ud af " + totalEvents : "") + " advarsler"
+    handleButton.innerText = text[0] + ( selectedEvents > 0 ? selectedEvents + text[1] + totalEvents : "") + text[2]
 
     // Disables the button when no elements are selected
     document.getElementById("handle-event-button").disabled = ( selectedEvents == 0 )
+}
+
+// Function to get the value of a named cookie
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
 }
