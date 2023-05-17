@@ -28,9 +28,9 @@ def register_new_computer(mac, name, distribution, site, configuration):
 
     if PC.objects.filter(uid=uid).count():
         raise Exception(
-            "Denne maskine er allerede registreret på det angivne admin-site. "
-            "Slet først maskinen fra computerlisten på admin-sitet, "
-            "og registrer den så igen."
+            "This computer is already registered with the chosen admin portal. "
+            "Start by deleting the computer on the computer list on your site "
+            "and then restart the registration."
         )
     try:
         new_pc = PC.objects.get(uid=uid)

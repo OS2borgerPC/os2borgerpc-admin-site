@@ -44,21 +44,25 @@
 {% endblock %}
 
 {% block javascripts %}
-  <script src="{% static 'js/wake_plan.js' %}"></script>
-  {# Function to check for permission to access wake plans #}
-  {# It's in here instead of the js file above to have access to djangos context #}
   <script type="text/javascript">
-  $(function() {
-      /* If the site does not have permission to use wake_plans,
-      disable all wake_plan inputs*/
-      var permission = "{{wake_plan_access|safe}}"
-      if ( permission != 'True') {
-        inputs = document.querySelectorAll("input, button, select")
-        /* The starting index is 1 to avoid disabling the logout button*/
-        for (index = 1; index < inputs.length; index++) {
-          inputs[index].disabled = true
+    {# Function to check for permission to access wake plans #}
+    {# It's in here instead of the js file below to have access to djangos context #}
+    $(function() {
+        /* If the site does not have permission to use wake_plans,
+        disable all wake_plan inputs*/
+        var permission = "{{wake_plan_access|safe}}"
+        if ( permission != 'True') {
+          inputs = document.querySelectorAll("input, button, select")
+          /* The starting index is 1 to avoid disabling the logout button*/
+          for (index = 1; index < inputs.length; index++) {
+            inputs[index].disabled = true
+          }
         }
-      }
-  })
+    })
+    /* This cookie is used to get the correct language for text
+       changed by js */
+    var lang = "{{request.user.bibos_profile.language}}"
+    document.cookie = "django_language="+lang;
   </script>
+  <script src="{% static 'js/wake_plan.js' %}"></script>
 {% endblock %}
