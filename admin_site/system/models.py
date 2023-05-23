@@ -1205,12 +1205,9 @@ class ImageVersion(models.Model):
     image_upload = models.FileField(upload_to="images", default="#")
 
     def __str__(self):
-        return "| {0} | {1} | {2} | {3} | {4} |".format(
+        return "{0} {1}".format(
+            self.get_platform_display(),
             self.image_version,
-            self.release_date,
-            self.os,
-            self.release_notes,
-            self.image_upload,
         )
 
     class Meta:
