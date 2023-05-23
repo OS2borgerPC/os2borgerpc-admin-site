@@ -304,7 +304,7 @@ class ScriptTagAdmin(admin.ModelAdmin):
 
 
 class ImageVersionAdmin(admin.ModelAdmin):
-    list_display = ("platform", "image_version", "os", "release_date")
+    list_display = ("__str__", "platform", "image_version", "os", "release_date")
 
 
 class SecurityProblemAdmin(admin.ModelAdmin):
