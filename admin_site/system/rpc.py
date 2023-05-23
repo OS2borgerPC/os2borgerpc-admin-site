@@ -28,8 +28,8 @@ def register_new_computer(mac, name, distribution, site, configuration):
 
     if PC.objects.filter(uid=uid).count():
         raise Exception(
-            "This computer is already registered with the chosen admin portal. "
-            "Start by deleting the computer on the computer list on your site "
+            "This Computer is already registered with the chosen admin portal. "
+            " deleting the Computer on the computer list on your Site "
             "and then restart the registration."
         )
     try:
@@ -133,7 +133,12 @@ def get_instructions(pc_uid, update_data=None):
     jobs, which will be scheduled for execution and executed upon receipt.
     These jobs will generally take the form of bash scripts."""
 
-    pc = PC.objects.get(uid=pc_uid)
+    try:
+        pc = PC.objects.get(uid=pc_uid)
+    except PC.DoesNotExist:
+        raise Exception(
+            "This Computer does not appear to be registered with the configured admin portal."
+        )
 
     pc.last_seen = datetime.now()
     pc.save()
