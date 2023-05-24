@@ -28,8 +28,8 @@ def register_new_computer(mac, name, distribution, site, configuration):
 
     if PC.objects.filter(uid=uid).count():
         raise Exception(
-            "This Computer is already registered with the chosen admin portal. "
-            " deleting the Computer on the computer list on your Site "
+            "This computer is already registered with the chosen admin portal. "
+            "Start by deleting the computer on the computer list on your site "
             "and then restart the registration."
         )
     try:

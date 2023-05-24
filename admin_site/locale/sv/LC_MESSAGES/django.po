@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 14:48+0200\n"
+"POT-Creation-Date: 2023-05-24 15:11+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,15 +182,15 @@ msgstr "typ"
 
 #: system/models.py:281
 msgid "sleep_state:Standby"
-msgstr "Låsläge Vila"
+msgstr "Standby"
 
 #: system/models.py:282
 msgid "sleep_state:Freeze"
-msgstr "Låsläge fryst"
+msgstr "Freeze"
 
 #: system/models.py:283
 msgid "sleep_state:Mem"
-msgstr "Låsläge Mem"
+msgstr "Mem"
 
 #: system/models.py:284
 msgid "sleep_state:Off"
@@ -378,7 +378,7 @@ msgstr "Slutförd"
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan inte ändra status från {0} til {1}"
 
-#: system/models.py:950 system/views.py:509
+#: system/models.py:950 system/views.py:508
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan endast starta om jobb som har status %s"
@@ -491,49 +491,49 @@ msgstr "författare"
 msgid "version"
 msgstr "version"
 
-#: system/views.py:316
+#: system/views.py:315
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Inställningar för %s uppdaterat"
 
-#: system/views.py:544
+#: system/views.py:543
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Skriptet %s körs på datorn %s"
 
-#: system/views.py:588
+#: system/views.py:587
 #, python-format
 msgid "You have no Script with the following ID: %s"
 msgstr "Du har inget skript med ID %s"
 
-#: system/views.py:695
+#: system/views.py:694
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du ska ange ett namn"
 
-#: system/views.py:702
+#: system/views.py:701
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du måste ange en korrekt typ av inmatningsparameter."
 
-#: system/views.py:861
+#: system/views.py:860
 #, python-format
 msgid "Script %s updated"
 msgstr "Skript %s updaterat"
 
-#: system/views.py:957 system/views.py:979
+#: system/views.py:956 system/views.py:978
 msgid "You must specify at least one group or pc"
 msgstr "Du måste ange minst en dator eller grupp"
 
-#: system/views.py:1105
+#: system/views.py:1104
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen dator med följande ID: %s"
 
-#: system/views.py:1176
+#: system/views.py:1175
 #, python-format
 msgid "Computer %s updated"
 msgstr "Dator %s uppdaterad"
 
-#: system/views.py:1447
+#: system/views.py:1450
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -545,7 +545,7 @@ msgstr ""
 "tidtabellerna%s, och undantag(en) %s kunde inte läggas till på grund av "
 "överlappning med andra utvalda undantag."
 
-#: system/views.py:1466
+#: system/views.py:1469
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -555,7 +555,7 @@ msgstr ""
 "inte läggas till somdator(er) %s är redan inskrivna i tidtabellen/"
 "tidtabellerna %s"
 
-#: system/views.py:1483
+#: system/views.py:1486
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -564,17 +564,17 @@ msgstr ""
 "På-/Av-schema %s har skapats, men undantaget/undantagen %s har inte kunnat "
 "läggas till. grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1493
+#: system/views.py:1496
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Schema för på- och avstängning %s har skapats"
 
-#: system/views.py:1513
+#: system/views.py:1516
 #, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidtabell med följande ID: %s"
 
-#: system/views.py:1639
+#: system/views.py:1642
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -586,7 +586,7 @@ msgstr ""
 "och undantaget/undantagen %s kunde inte läggas till på grund av överlappning "
 "med andra valda undantag"
 
-#: system/views.py:1658
+#: system/views.py:1661
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -595,7 +595,7 @@ msgstr ""
 "Tänd- och släckschema %s uppdaterat, men grupp(er) %s kunde inte läggas till "
 "eftersom dator(er) %s är redan inskrivna i schema(n) %s"
 
-#: system/views.py:1675
+#: system/views.py:1678
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -604,52 +604,52 @@ msgstr ""
 "Tidtabell för på- och avstängning %s uppdaterad, men undantag %s kunde inte "
 "läggas till på grund av överlappning med andra utvalda undantag"
 
-#: system/views.py:1686
+#: system/views.py:1689
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Uppdatering av schemat för på- och avstängning %s"
 
-#: system/views.py:1782
+#: system/views.py:1785
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tänd/släck schema %s borttagen"
 
-#: system/views.py:1903
+#: system/views.py:1906
 #, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har inget undantag med ID %s"
 
-#: system/views.py:1940
+#: system/views.py:1943
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undantag %s uppdaterat"
 
-#: system/views.py:1949
+#: system/views.py:1952
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr "De valda datumen skulle överlappa med undantaget %s i schemat %s"
 
-#: system/views.py:1958 system/views.py:2013
+#: system/views.py:1961 system/views.py:2016
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Datumet Till får inte vara före datumet Från %s"
 
-#: system/views.py:2154
+#: system/views.py:2157
 #, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ingen användare med följande ID: %s"
 
-#: system/views.py:2219
+#: system/views.py:2222
 #, python-format
 msgid "User %s updated"
 msgstr "Användare %s uppdaterad"
 
-#: system/views.py:2262
+#: system/views.py:2265
 #, python-format
 msgid "User %s deleted"
 msgstr "Användaren %s raderad"
 
-#: system/views.py:2349
+#: system/views.py:2352
 #, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
@@ -658,7 +658,7 @@ msgstr ""
 "Du har ingen grupp med följande <em>ID</em>:<br/><br/> <h3>%s</h3><br/> "
 "Försök istället att hitta gruppen från grupplistan."
 
-#: system/views.py:2519
+#: system/views.py:2522
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -667,35 +667,35 @@ msgstr ""
 "Grupp %s uppdaterad, men dator(er) %s kunde inte läggas till eftersom de är "
 "redan inskriven i tidtabellen/tidtabellerna %s"
 
-#: system/views.py:2534
+#: system/views.py:2537
 #, python-format
 msgid "Group %s updated"
 msgstr "Grupp %s uppdaterad"
 
-#: system/views.py:2547
+#: system/views.py:2550
 #, python-format
 msgid "No value was specified for the mandatory input %s of script %s"
 msgstr "Det obligatoriska parametervärdet %s för skriptet %s saknas."
 
-#: system/views.py:2618
+#: system/views.py:2621
 #, python-format
 msgid "Group %s deleted"
 msgstr "Grupp %s borttagen"
 
-#: system/views.py:2685
+#: system/views.py:2688
 #, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ingen säkerhetsregel med följande ID: %s"
 
-#: system/views.py:2933
+#: system/views.py:2936
 msgid "The administration site"
 msgstr "Administrationssidan"
 
-#: system/views.py:2934
+#: system/views.py:2937
 msgid "About"
 msgstr "Om"
 
-#: system/views.py:2935 templates/site_with_navigation.html:31
+#: system/views.py:2938 templates/site_with_navigation.html:31
 #: templates/system/jobs/site_jobs.html:38
 #: templates/system/jobs/site_jobs.html:163 templates/system/pcs/form.html:153
 #: templates/system/security_events/site_security_events.html:53
@@ -704,7 +704,7 @@ msgstr "Om"
 msgid "Status"
 msgstr "Status"
 
-#: system/views.py:2936 templates/site_with_navigation.html:75
+#: system/views.py:2939 templates/site_with_navigation.html:75
 #: templates/system/jobs/site_jobs.html:84
 #: templates/system/pcgroups/confirm_delete.html:18
 #: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
@@ -715,7 +715,7 @@ msgstr "Status"
 msgid "Computers"
 msgstr "Datorer"
 
-#: system/views.py:2937 templates/site_with_navigation.html:80
+#: system/views.py:2940 templates/site_with_navigation.html:80
 #: templates/system/jobs/site_jobs.html:107
 #: templates/system/pcgroups/site_groups.html:7
 #: templates/system/security_problems/confirm_delete.html:23
@@ -724,88 +724,88 @@ msgstr "Datorer"
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py:2938
+#: system/views.py:2941
 msgid "On/Off schedules"
 msgstr "Schema för på- och avstängning"
 
-#: system/views.py:2939 templates/site_with_navigation.html:98
+#: system/views.py:2942 templates/site_with_navigation.html:98
 #: templates/system/jobs/site_jobs.html:6
 #: templates/system/scripts/confirm_delete.html:21
 msgid "Jobs"
 msgstr "Jobs"
 
-#: system/views.py:2940 templates/site_with_navigation.html:103
+#: system/views.py:2943 templates/site_with_navigation.html:103
 #: templates/system/scripts/header.html:5
 #: templates/system/site_two_factor.html:52
 msgid "Scripts"
 msgstr "Skript"
 
-#: system/views.py:2941 templates/site_with_navigation.html:61
+#: system/views.py:2944 templates/site_with_navigation.html:61
 #: templates/system/scripts/header.html:5
 msgid "Security Scripts"
 msgstr "Skript för säkerhet"
 
-#: system/views.py:2942 templates/site_with_navigation.html:110
+#: system/views.py:2945 templates/site_with_navigation.html:110
 #: templates/system/users/confirm_delete.html:5
 #: templates/system/users/create.html:5 templates/system/users/update.html:5
 msgid "Users"
 msgstr "Användare"
 
-#: system/views.py:2943 templates/site_with_navigation.html:186
+#: system/views.py:2946 templates/site_with_navigation.html:186
 #: templates/system/pcgroups/site_groups.html:67
 #: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
 msgid "Configurations"
 msgstr "Konfigurationer"
 
-#: system/views.py:2944
+#: system/views.py:2947
 msgid "Setting up security surveillance (PDF)"
 msgstr "Skapande av säkerhetsövervakning (PDF)"
 
-#: system/views.py:2945
+#: system/views.py:2948
 msgid "The News site"
 msgstr "Nyhetssidan"
 
-#: system/views.py:2946
+#: system/views.py:2949
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
 
-#: system/views.py:2947
+#: system/views.py:2950
 msgid "Installation Guide (PDF)"
 msgstr "Installationsguide (PDF)"
 
-#: system/views.py:2948
+#: system/views.py:2951
 msgid "Old installation guide (PDF)"
 msgstr "Gammal installationsguide (PDF)"
 
-#: system/views.py:2949
+#: system/views.py:2952
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
-#: system/views.py:2950
+#: system/views.py:2953
 msgid "Installation Guide"
 msgstr "Installationsguide"
 
-#: system/views.py:2951
+#: system/views.py:2954
 msgid "Updating Wi-Fi setup"
 msgstr "Uppdaterar Wi-Fi inställningar"
 
-#: system/views.py:2952
+#: system/views.py:2955
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
 
-#: system/views.py:2953
+#: system/views.py:2956
 msgid "OS2borgerPC Image"
 msgstr "Sambruk MedborgarPC Image"
 
-#: system/views.py:2954
+#: system/views.py:2957
 msgid "OS2borgerPC Admin Site"
 msgstr "Sambruk MedborgarPC Admin Site"
 
-#: system/views.py:2955
+#: system/views.py:2958
 msgid "OS2borgerPC Kiosk Image"
 msgstr "Sambruk MedborgarPC Kiosk Image"
 
-#: system/views.py:2956
+#: system/views.py:2959
 msgid "OS2borgerPC Client"
 msgstr "Sambruk MedborgarPC Client"
 
@@ -869,17 +869,17 @@ msgstr ""
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Försök att öppna den här sidan i Microsoft Edge"
 
-#: templates/documentation/index.html:8
+#: templates/documentation/index.html:9
 msgid "OS2borgerPC documentation"
 msgstr "Sambruk MedborgarPC dokumentation"
 
-#: templates/documentation/index.html:22
+#: templates/documentation/index.html:23
 #: templates/site_with_navigation.html:119
 #: templates/system/changelog/list.html:34
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: templates/documentation/index.html:25
+#: templates/documentation/index.html:26
 msgid "Return to admin"
 msgstr "Tillbaka til admin"
 
@@ -2283,7 +2283,7 @@ msgid ""
 "\" (which saves the most power), and if that does not work then try them in "
 "the order: mem, freeze, standby"
 msgstr ""
-"Vissa vilolägen är mer energieffektiva än andra, men vissa datorerhar inte "
+"Vissa vilolägen är mer energieffektiva än andra, men vissa datorer har inte "
 "stöd för de mest energisparande lägena. Vi föreslår att du börjar med \"Off"
 "\" (den mest energibesparande), och om det inte fungerar försöker du med dem "
 "i ordningen: mem, freeze, standby"

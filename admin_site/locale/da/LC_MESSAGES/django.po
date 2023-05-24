@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 14:48+0200\n"
+"POT-Creation-Date: 2023-05-24 15:11+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -376,7 +376,7 @@ msgstr "afsluttet"
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:950 system/views.py:509
+#: system/models.py:950 system/views.py:508
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
@@ -489,49 +489,49 @@ msgstr "forfatter"
 msgid "version"
 msgstr "version"
 
-#: system/views.py:316
+#: system/views.py:315
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
-#: system/views.py:544
+#: system/views.py:543
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
-#: system/views.py:588
+#: system/views.py:587
 #, python-format
 msgid "You have no Script with the following ID: %s"
 msgstr "Du har intet script med ID %s"
 
-#: system/views.py:695
+#: system/views.py:694
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du skal angive et navn"
 
-#: system/views.py:702
+#: system/views.py:701
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du skal angive en korrekt input-parameter-type"
 
-#: system/views.py:861
+#: system/views.py:860
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:957 system/views.py:979
+#: system/views.py:956 system/views.py:978
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1105
+#: system/views.py:1104
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen computer med følgende ID: %s"
 
-#: system/views.py:1176
+#: system/views.py:1175
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
-#: system/views.py:1447
+#: system/views.py:1450
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -542,7 +542,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1466
+#: system/views.py:1469
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -551,7 +551,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1483
+#: system/views.py:1486
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -560,17 +560,17 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1493
+#: system/views.py:1496
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
 
-#: system/views.py:1513
+#: system/views.py:1516
 #, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidsplan med følgende ID: %s"
 
-#: system/views.py:1639
+#: system/views.py:1642
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -581,7 +581,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1658
+#: system/views.py:1661
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -590,7 +590,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1675
+#: system/views.py:1678
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -599,53 +599,53 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1686
+#: system/views.py:1689
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Tænd/sluk tidsplan %s opdateret"
 
-#: system/views.py:1782
+#: system/views.py:1785
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
-#: system/views.py:1903
+#: system/views.py:1906
 #, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
 
-#: system/views.py:1940
+#: system/views.py:1943
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undtagelse %s opdateret"
 
-#: system/views.py:1949
+#: system/views.py:1952
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr ""
 "De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
 
-#: system/views.py:1958 system/views.py:2013
+#: system/views.py:1961 system/views.py:2016
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
-#: system/views.py:2154
+#: system/views.py:2157
 #, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 
-#: system/views.py:2219
+#: system/views.py:2222
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:2262
+#: system/views.py:2265
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:2349
+#: system/views.py:2352
 #, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
@@ -654,7 +654,7 @@ msgstr ""
 "I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>Prøv "
 "i stedet at finde gruppen fra gruppelisten."
 
-#: system/views.py:2519
+#: system/views.py:2522
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -663,35 +663,35 @@ msgstr ""
 "Gruppe %s opdateret, men computer(ne) %s kunne ikke tilføjes, da de(n) "
 "allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:2534
+#: system/views.py:2537
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:2547
+#: system/views.py:2550
 #, python-format
 msgid "No value was specified for the mandatory input %s of script %s"
 msgstr "Den obligatoriske parameterværdi %s for script %s mangler"
 
-#: system/views.py:2618
+#: system/views.py:2621
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
 
-#: system/views.py:2685
+#: system/views.py:2688
 #, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
 
-#: system/views.py:2933
+#: system/views.py:2936
 msgid "The administration site"
 msgstr "Administrationssiden"
 
-#: system/views.py:2934
+#: system/views.py:2937
 msgid "About"
 msgstr "Om"
 
-#: system/views.py:2935 templates/site_with_navigation.html:31
+#: system/views.py:2938 templates/site_with_navigation.html:31
 #: templates/system/jobs/site_jobs.html:38
 #: templates/system/jobs/site_jobs.html:163 templates/system/pcs/form.html:153
 #: templates/system/security_events/site_security_events.html:53
@@ -700,7 +700,7 @@ msgstr "Om"
 msgid "Status"
 msgstr "Status"
 
-#: system/views.py:2936 templates/site_with_navigation.html:75
+#: system/views.py:2939 templates/site_with_navigation.html:75
 #: templates/system/jobs/site_jobs.html:84
 #: templates/system/pcgroups/confirm_delete.html:18
 #: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
@@ -711,7 +711,7 @@ msgstr "Status"
 msgid "Computers"
 msgstr "Computere"
 
-#: system/views.py:2937 templates/site_with_navigation.html:80
+#: system/views.py:2940 templates/site_with_navigation.html:80
 #: templates/system/jobs/site_jobs.html:107
 #: templates/system/pcgroups/site_groups.html:7
 #: templates/system/security_problems/confirm_delete.html:23
@@ -720,88 +720,88 @@ msgstr "Computere"
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py:2938
+#: system/views.py:2941
 msgid "On/Off schedules"
 msgstr "Tænd/Sluk tidsplaner"
 
-#: system/views.py:2939 templates/site_with_navigation.html:98
+#: system/views.py:2942 templates/site_with_navigation.html:98
 #: templates/system/jobs/site_jobs.html:6
 #: templates/system/scripts/confirm_delete.html:21
 msgid "Jobs"
 msgstr "Jobs"
 
-#: system/views.py:2940 templates/site_with_navigation.html:103
+#: system/views.py:2943 templates/site_with_navigation.html:103
 #: templates/system/scripts/header.html:5
 #: templates/system/site_two_factor.html:52
 msgid "Scripts"
 msgstr "Scripts"
 
-#: system/views.py:2941 templates/site_with_navigation.html:61
+#: system/views.py:2944 templates/site_with_navigation.html:61
 #: templates/system/scripts/header.html:5
 msgid "Security Scripts"
 msgstr "Sikkerhedsscripts"
 
-#: system/views.py:2942 templates/site_with_navigation.html:110
+#: system/views.py:2945 templates/site_with_navigation.html:110
 #: templates/system/users/confirm_delete.html:5
 #: templates/system/users/create.html:5 templates/system/users/update.html:5
 msgid "Users"
 msgstr "Brugere"
 
-#: system/views.py:2943 templates/site_with_navigation.html:186
+#: system/views.py:2946 templates/site_with_navigation.html:186
 #: templates/system/pcgroups/site_groups.html:67
 #: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
 msgid "Configurations"
 msgstr "Konfigurationer"
 
-#: system/views.py:2944
+#: system/views.py:2947
 msgid "Setting up security surveillance (PDF)"
 msgstr "Oprettelse af Sikkerhedsovervågning (PDF)"
 
-#: system/views.py:2945
+#: system/views.py:2948
 msgid "The News site"
 msgstr "Nyhedssiden"
 
-#: system/views.py:2946
+#: system/views.py:2949
 msgid "OS2borgerPC"
 msgstr "OS2BorgerPC"
 
-#: system/views.py:2947
+#: system/views.py:2950
 msgid "Installation Guide (PDF)"
 msgstr "Installationsguide (PDF)"
 
-#: system/views.py:2948
+#: system/views.py:2951
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: system/views.py:2949
+#: system/views.py:2952
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
-#: system/views.py:2950
+#: system/views.py:2953
 msgid "Installation Guide"
 msgstr "Installationsguide"
 
-#: system/views.py:2951
+#: system/views.py:2954
 msgid "Updating Wi-Fi setup"
 msgstr "Opdatering af Wi-Fi opsætning"
 
-#: system/views.py:2952
+#: system/views.py:2955
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
 
-#: system/views.py:2953
+#: system/views.py:2956
 msgid "OS2borgerPC Image"
 msgstr "OS2borgerPC Image"
 
-#: system/views.py:2954
+#: system/views.py:2957
 msgid "OS2borgerPC Admin Site"
 msgstr "OS2borgerPC Admin Site"
 
-#: system/views.py:2955
+#: system/views.py:2958
 msgid "OS2borgerPC Kiosk Image"
 msgstr "OS2borgerPC Kiosk Image"
 
-#: system/views.py:2956
+#: system/views.py:2959
 msgid "OS2borgerPC Client"
 msgstr "OS2borgerPC Client"
 
@@ -864,17 +864,17 @@ msgstr ""
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Prøv at åbne denne side i Microsoft Edge"
 
-#: templates/documentation/index.html:8
+#: templates/documentation/index.html:9
 msgid "OS2borgerPC documentation"
 msgstr "OS2borgerPC dokumentation"
 
-#: templates/documentation/index.html:22
+#: templates/documentation/index.html:23
 #: templates/site_with_navigation.html:119
 #: templates/system/changelog/list.html:34
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: templates/documentation/index.html:25
+#: templates/documentation/index.html:26
 msgid "Return to admin"
 msgstr "Tilbage til admin"
 
