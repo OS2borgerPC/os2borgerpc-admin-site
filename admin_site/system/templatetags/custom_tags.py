@@ -56,3 +56,8 @@ def bold(text):
 def italic(text):
     text = str(text)
     return mark_safe("<em>" + text + "</em>")
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

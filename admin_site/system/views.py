@@ -21,7 +21,6 @@ from django.views.generic.list import BaseListView
 from django.db import transaction
 from django.db.models import Q, F
 from django.conf import settings
-from django.template.defaulttags import register
 
 from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
@@ -2963,10 +2962,6 @@ documentation_menu_items = [
 
 class DocView(TemplateView, LoginRequiredMixin):
     docname = "status"
-
-    @register.filter
-    def get_item(dictionary, key):
-        return dictionary.get(key)
 
     def template_exists(self, subpath):
         fullpath = os.path.join(settings.DOCUMENTATION_DIR, subpath)
