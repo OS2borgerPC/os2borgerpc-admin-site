@@ -1,5 +1,6 @@
 const WEEK_PLAN = document.getElementById("week-plan")
 const WAKE_PLAN_FROM_URL_KEY = "last_plan_id"
+const LANGUAGE = getCookie("django_language")
 
 // Turns a week day on/off
 // If off start_time and end_time are hidden. If on required is set to true, to remove the browser x button to clear the time field
@@ -12,13 +13,25 @@ function weekDayOn(el, on) {
   const END_TIME_INPUT = el.parentElement.parentElement.children[5].firstElementChild
   const ON_OFF_TEXT = el.parentElement.parentElement.children[2].firstElementChild
 
+  // Dict containing the translations for the switch
+  var text_dict = {
+      "da": ["Tændt", "Slukket"],
+      "en": ["On", "Off"],
+      "sv": ["På", "Stängd"]
+  }
+
+  // Get the correct translation based on the django_language cookie
+    const text = text_dict[LANGUAGE]
+
   if (on) {
     START_TIME.style.visibility = "visible"
     START_TIME_INPUT.setAttribute('required',true)
     SEPARATOR.style.visibility = "visible"
     END_TIME.style.visibility = "visible"
     END_TIME_INPUT.setAttribute('required',true)
-    ON_OFF_TEXT.innerText = "Tændt"
+    // TODO: Use django JS translations instead
+    ON_OFF_TEXT.innerText = text[0]
+    //ON_OFF_TEXT.innerText = gettext("On")
 
   }
   else {
@@ -27,7 +40,9 @@ function weekDayOn(el, on) {
     SEPARATOR.style.visibility = "hidden"
     END_TIME.style.visibility = "hidden"
     END_TIME_INPUT.removeAttribute('required')
-    ON_OFF_TEXT.innerText = "Slukket"
+    // TODO: Use django JS translations instead
+    ON_OFF_TEXT.innerText = text[1]
+    //ON_OFF_TEXT.innerText = gettext("Off")
   }
 }
 
@@ -63,10 +78,23 @@ const CHECKBOX_ENABLED = document.getElementById("id_enabled")
 const CHECKBOX_ENABLED_LABEL = document.getElementById("id_enabled_label")
 if (CHECKBOX_ENABLED) { // Don't attempt to set this listener if we're on a subpage where this doesn't exist
   function setPlanStateText(on) {
-    if (on) {
-      CHECKBOX_ENABLED_LABEL.innerText = "Aktiv"
+    // TODO: Use django JS translations instead
+    // Dict containing the translations for the switch
+    var text_dict = {
+        "da": ["Aktiv", "Inaktiv"],
+        "en": ["Active", "Inactive"],
+        "sv": ["Aktiv", "Inaktiv"]
     }
-    else CHECKBOX_ENABLED_LABEL.innerText = "Inaktiv"
+
+    // Get the correct translation based on the django_language cookie
+    const text = text_dict[LANGUAGE]
+
+    if (on) {
+      CHECKBOX_ENABLED_LABEL.innerText = text[0]
+      // CHECKBOX_ENABLED_LABEL.innerText = gettext("Active")
+    }
+    else CHECKBOX_ENABLED_LABEL.innerText = text[1]
+    // else CHECKBOX_ENABLED_LABEL.innerText = gettext("Inactive")
   }
 
   CHECKBOX_ENABLED.addEventListener('click', function() {
