@@ -347,3 +347,10 @@ function oldBrowserWarning() {
 window.addEventListener('load', function() {
   oldBrowserWarning()
 })
+
+// Function to get the value of a named cookie
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}

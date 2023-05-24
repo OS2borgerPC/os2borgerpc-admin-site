@@ -2,13 +2,6 @@ const WEEK_PLAN = document.getElementById("week-plan")
 const WAKE_PLAN_FROM_URL_KEY = "last_plan_id"
 const LANGUAGE = getCookie("django_language")
 
-// Function to get the value of a named cookie
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 // Turns a week day on/off
 // If off start_time and end_time are hidden. If on required is set to true, to remove the browser x button to clear the time field
 function weekDayOn(el, on) {
