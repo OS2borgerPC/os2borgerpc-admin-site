@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-24 13:27+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: static/js/security_events_list.js:208
+msgid "Handle"
+msgstr "Hanterar"
+
+#: static/js/security_events_list.js:208
+msgid "out of"
+msgstr "av"
+
+#: static/js/security_events_list.js:208
+msgid "events"
+msgstr "incidenter"
+
+#: static/js/wake_plan.js:22
+msgid "On"
+msgstr "På"
+
+#: static/js/wake_plan.js:31
+msgid "Off"
+msgstr "Stängd"
+
+#: static/js/wake_plan.js:69
+msgid "Active"
+msgstr "Aktiv"
+
+#: static/js/wake_plan.js:71
+msgid "Inactive"
+msgstr "Inaktiv"

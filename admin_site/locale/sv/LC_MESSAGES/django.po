@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-24 15:11+0200\n"
+"POT-Creation-Date: 2023-05-24 13:27+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -858,14 +858,14 @@ msgstr "Ett serverfel har inträffat och vi har informerats om felet."
 msgid "OS2borgerPC Administration"
 msgstr "Sambruk MedborgarPC Administration"
 
-#: templates/base.html:41 templates/login.html:314
+#: templates/base.html:42 templates/login.html:314
 msgid ""
 "It looks like you're using Internet Explorer. It won't work on this website."
 msgstr ""
 "Det verkar som om du använder Internet Explorer. Det fungerar inte på denna "
 "webbplats."
 
-#: templates/base.html:42 templates/login.html:315
+#: templates/base.html:43 templates/login.html:315
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Försök att öppna den här sidan i Microsoft Edge"
 

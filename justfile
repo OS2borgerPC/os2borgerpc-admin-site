@@ -97,9 +97,10 @@ run-debug:
   sudo docker-compose up -d {{compose_django_service}} {{compose_db_service}}
   sudo docker attach {{django_container}}
 
-# Run django's make-messages for translations
+# Run django's make-messages for translations, including translations for javascript files (djangojs)
 translations-make-messages: (verify-container-running django_container)
   @just managepy makemessages --all --ignore venv
+  @just managepy makemessages --all --ignore venv -d djangojs
 
 # Run django's compile-messages (usually after make-messages) for translations
 translations-compile-messages: (verify-container-running django_container)

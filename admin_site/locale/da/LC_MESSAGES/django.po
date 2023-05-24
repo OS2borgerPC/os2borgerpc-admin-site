@@ -853,14 +853,14 @@ msgstr "Der er sket en serverfejl og vi er blevet notificeret om fejlen."
 msgid "OS2borgerPC Administration"
 msgstr "OS2borgerPC Administration"
 
-#: templates/base.html:41 templates/login.html:314
+#: templates/base.html:42 templates/login.html:314
 msgid ""
 "It looks like you're using Internet Explorer. It won't work on this website."
 msgstr ""
 "Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på "
 "dette website."
 
-#: templates/base.html:42 templates/login.html:315
+#: templates/base.html:43 templates/login.html:315
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Prøv at åbne denne side i Microsoft Edge"
 

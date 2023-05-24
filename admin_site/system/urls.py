@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from django.views.generic import RedirectView
 
+# from django.views.i18n import JavaScriptCatalog
+
 from system.views import (
     AdminIndex,
     ChangelogListView,
@@ -54,8 +56,10 @@ from system.views import (
     UserUpdate,
 )
 
-
 urlpatterns = [
+    # TODO: Switch to using the django javascript translation system
+    # For translations of strings in javascript files that are printed to the user
+    # url("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     # Security events UI
     url(
         r"^site/(?P<site_uid>[^/]+)/security_events/update/$",

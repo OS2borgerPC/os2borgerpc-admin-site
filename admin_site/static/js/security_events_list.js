@@ -202,6 +202,7 @@ function updateCounter() {
     totalEvents = document.getElementsByClassName("click-list--item").length - 1
     handleButton = document.getElementById("handle-event-button")
 
+    // TODO: Use django JS translations instead
     // Dict containing the translations for the button
     var text_dict = {
         "da": ["Håndter ", " ud af ", " hændelser"],
@@ -212,6 +213,7 @@ function updateCounter() {
     const text = text_dict[getCookie("django_language")]
     // Updates the text on the button to show how many (if any) events have been selected
     handleButton.innerText = text[0] + ( selectedEvents > 0 ? selectedEvents + text[1] + totalEvents : "") + text[2]
+    //handleButton.innerText = gettext("Handle") + " " + ( selectedEvents > 0 ? selectedEvents + " " + gettext("out of") + " " + totalEvents : "") + " " + gettext("events")
 
     // Disables the button when no elements are selected
     document.getElementById("handle-event-button").disabled = ( selectedEvents == 0 )
