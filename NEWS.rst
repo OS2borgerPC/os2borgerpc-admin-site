@@ -1,3 +1,12 @@
+Version 5.15.0, May 25, 2023
+----------------------------
+
+- Improved display of image version in backend
+- Link to different pdf files based on chosen language
+- Add error message when attempting to check in with an unregistered machine
+- English error message when attempting to register an already registered machine
+- Translate text set via javascript
+
 Version 5.14.1, May 8, 2023
 ---------------------------
 
