@@ -1235,6 +1235,15 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             site=context["site"]
         )
 
+        # Get the link to the user guide for the chosen language
+        context["wake_plan_user_guide"] = (
+            "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Wake_plan_user_guide"
+            + "_"
+            + self.request.user.bibos_profile.language
+            + ".pdf"
+        )
+
         form = context["form"]
         # params = self.request.GET or self.request.POST
 
@@ -2994,6 +3003,19 @@ class DocView(TemplateView, LoginRequiredMixin):
         docnames = self.docname.split("/")
 
         context["menu_active"] = docnames[0]
+
+        # Get the links to the pdf files for the chosen language
+        pdf_href = {
+            "os2borgerpc_installation_guide": "https://github.com/OS2borgerPC/image/raw/development/"
+            + "docs/OS2BorgerPC_installation_guide",
+            "os2borgerpc_installation_guide_old": "https://github.com/OS2borgerPC/image/raw/development/"
+            + "docs/OS2BorgerPC_installation_guide_old",
+            "creating_security_problems": "https://raw.githubusercontent.com/OS2borgerPC/admin-site/development/"
+            + "admin_site/static/docs/OS2BorgerPC_security_rules",
+        }
+        for key in pdf_href:
+            pdf_href[key] += "_" + self.request.user.bibos_profile.language + ".pdf"
+        context["pdf_href"] = pdf_href
 
         # Set heading according to chosen item
         current_heading = None
