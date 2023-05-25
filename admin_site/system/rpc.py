@@ -189,7 +189,12 @@ def get_proxy_setup(pc_uid):
 
 
 def push_config_keys(pc_uid, config_dict):
-    pc = PC.objects.get(uid=pc_uid)
+    try:
+        pc = PC.objects.get(uid=pc_uid)
+    except PC.DoesNotExist:
+        raise Exception(
+            "This Computer does not appear to be registered with the configured admin portal."
+        )
     if not pc.is_activated:
         return 0
 
