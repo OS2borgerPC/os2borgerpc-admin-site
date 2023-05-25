@@ -1191,10 +1191,12 @@ class SecurityEvent(models.Model):
 class ImageVersion(models.Model):
     BORGERPC = "BORGERPC"
     BORGERPC_KIOSK = "BORGERPC_KIOSK"
+    MEDBORGARPC = "MEDBORGARPC"
 
     platform_choices = (
         (BORGERPC, "OS2borgerPC"),
         (BORGERPC_KIOSK, "OS2borgerPC Kiosk"),
+        (MEDBORGARPC, "Sambruk MedborgarPC"),
     )
 
     platform = models.CharField(max_length=128, choices=platform_choices)
