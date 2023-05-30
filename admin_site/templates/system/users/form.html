@@ -26,6 +26,21 @@
     <label class="form-check-label" for="{{ form_id|default:'user_form' }}_show_password">{% translate "Show Password" %}</label>
   </div>
 
+  {% if user == selected_user and form_id != 'create_user_form' and not user.totpdevice_set.first %}
+    <div class="mt-3">
+      <p>
+        <a class="btn btn-secondary" href="{% url 'admin_otp_setup' site.uid user.username %}">{% translate "Set up two-factor authentication" %}</a>
+      </p>
+    </div>
+  {% elif user == selected_user and form_id != 'create_user_form' and user.totpdevice_set.first %}
+    <div class="mt-3">
+      <p>
+        <a class="btn btn-secondary me-3" href="{% url 'admin_otp_backup' site.uid user.username %}">{% translate "Generate backup tokens" %}</a>
+        <a class="btn btn-secondary" href="{% url 'admin_otp_disable' site.uid user.username %}">{% translate "Deactivate two-factor authentication" %}</a>
+      </p>
+    </div>
+  {% endif %}
+
     {{ form.email|as_crispy_field }}
     {{ form.usertype|as_crispy_field }}
     {{ form.language|as_crispy_field }}

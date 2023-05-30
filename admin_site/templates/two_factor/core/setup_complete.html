@@ -1,0 +1,31 @@
+{% extends "site_with_navigation.html" %}
+{% load i18n %}
+
+{% block specific_title %}
+{% translate "Two-factor authentication for admin-site login" %}
+{% endblock %}
+
+{% block specific_content %}
+<div class="container-fluid main sublevelmain">
+  <h2 class="divideheader">{% trans "Enable Two-Factor Authentication for" %} <em>{{ request.user.username }}</em></h2>
+  <div class="tab-content">
+
+  <p>{% blocktrans trimmed %}Congratulations, you've successfully enabled two-factor
+      authentication.{% endblocktrans %}</p>
+
+  {% if not phone_methods %}
+    <a href="{% url 'user' site.uid user.username %}"
+        class="btn btn-primary me-3">{% trans "Back to user profile" %}</a>
+  {% else %}
+    <p>{% blocktrans trimmed %}However, it might happen that you don't have access to
+      your primary token device. To enable account recovery, add a phone
+      number.{% endblocktrans %}</p>
+
+    <a href="{% url 'two_factor:profile' %}"
+        class="float-right btn btn-link">{% trans "Back to user profile" %}</a>
+    <p><a href="{% url 'two_factor:phone_create' %}"
+        class="btn btn-success">{% trans "Add Phone Number" %}</a></p>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
