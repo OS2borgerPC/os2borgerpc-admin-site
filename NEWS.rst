@@ -1,3 +1,9 @@
+Version 5.16.0, May 30, 2023
+----------------------------
+
+- Add two-factor login for the admin-site
+- Restore old links to installation guide and wake plan user guide
+
 Version 5.15.0, May 25, 2023
 ----------------------------
 
