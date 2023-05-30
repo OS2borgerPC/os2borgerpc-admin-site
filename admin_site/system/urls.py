@@ -331,10 +331,25 @@ urlpatterns = [
         RedirectView.as_view(url="/documentation/om_os2borgerpc_admin/"),
     ),
     url(
+        r"^documentation/os2borgerpc_installation_guide/",
+        RedirectView.as_view(
+            url="https://github.com/OS2borgerPC/image/raw/development/"
+            + "docs/OS2BorgerPC Installationsguide.pdf"
+        ),
+    ),
+    url(
         r"^documentation/os2borgerpc_kiosk_installation_guide",
         RedirectView.as_view(
             url="https://os2borgerpc-server-image.readthedocs.io/en/latest/dev.html"
         ),
+    ),
+    url(
+        r"^documentation/wake_plan_user_guide/",
+        RedirectView.as_view(
+            url="https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Guide_til_brug_af_strømbesparingsfunktioner.pdf"
+        ),
+        name="wake_plan_user_guide",
     ),
     url(
         r"^documentation/tech/os2borgerpc-image",
