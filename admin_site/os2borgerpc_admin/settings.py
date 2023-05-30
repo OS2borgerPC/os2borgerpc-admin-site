@@ -264,7 +264,6 @@ XMLRPC_METHODS = (
     ("system.rpc.send_status_info", "send_status_info"),
     ("system.rpc.upload_dist_packages", "upload_dist_packages"),
     ("system.rpc.get_instructions", "get_instructions"),
-    ("system.rpc.get_proxy_setup", "get_proxy_setup"),
     ("system.rpc.push_config_keys", "push_config_keys"),
     ("system.rpc.push_security_events", "push_security_events"),
     ("system.rpc.citizen_login", "citizen_login"),
@@ -301,16 +300,6 @@ LOGGING = {
         "level": settings.get("LOG_LEVEL", fallback="ERROR"),
     },
 }
-
-ETC_DIR = os.path.join(install_dir, "etc")
-PROXY_HTPASSWD_FILE = os.path.join(ETC_DIR, "bibos-proxy.htpasswd")
-
-# List of hosts that should be allowed through BibOS gateway proxies
-DEFAULT_ALLOWED_PROXY_HOSTS = settings.get("DEFAULT_ALLOWED_PROXY_HOSTS", [])
-
-# List of hosts that should be proxied directly from the gateway and
-# not through the central server
-DEFAULT_DIRECT_PROXY_HOSTS = settings.get("DEFAULT_DIRECT_PROXY_HOSTS", [])
 
 INITIALIZE_DATABASE = settings.getboolean("INITIALIZE_DATABASE", False)
 

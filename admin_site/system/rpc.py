@@ -1,7 +1,6 @@
 # This module contains the implementation of the XML-RPC API used by the
 # client.
 
-import system.proxyconf
 import system.utils
 import hashlib
 import logging
@@ -179,13 +178,6 @@ def get_instructions(pc_uid, update_data=None):
     }
 
     return instructions
-
-
-def get_proxy_setup(pc_uid):
-    pc = PC.objects.get(uid=pc_uid)
-    if not pc.is_activated:
-        return 0
-    return system.proxyconf.get_proxy_setup(pc_uid)
 
 
 def push_config_keys(pc_uid, config_dict):
