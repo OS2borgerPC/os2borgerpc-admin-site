@@ -3207,6 +3207,8 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         # Get the links to the pdf files for the chosen language
         pdf_href = {
+            "wake_plans": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Wake_plan_user_guide",
             "os2borgerpc_installation_guide": "https://github.com/OS2borgerPC/image/raw/development/"
             + "docs/OS2BorgerPC_installation_guide",
             "os2borgerpc_installation_guide_old": "https://github.com/OS2borgerPC/image/raw/development/"
