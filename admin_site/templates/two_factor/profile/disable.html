@@ -1,0 +1,24 @@
+{% extends "site_with_navigation.html" %}
+{% load i18n %}
+
+{% block specific_title %}
+{% translate "Two-factor authentication for admin-site login" %}
+{% endblock %}
+
+{% block specific_content %}
+<div class="container-fluid main sublevelmain">
+  <h2 class="divideheader">{% trans "Disable Two-factor Authentication for" %} <em>{{ request.user.username }}</em></h2>
+  <div class="tab-content">
+  <p>{% blocktrans trimmed %}You are about to disable two-factor authentication. This
+    weakens your account security, are you sure?{% endblocktrans %}</p>
+  <form method="post">
+    {% csrf_token %}
+    <table>{{ form }}</table>
+    <button class="btn btn-danger me-3"
+            type="submit">{% trans "Disable" %}</button>
+    <a href="{% url 'user' site.uid user.username %}"
+        class="btn btn-secondary">{% trans "Cancel" %}</a>
+  </form>
+  </div>
+</div>
+{% endblock %}

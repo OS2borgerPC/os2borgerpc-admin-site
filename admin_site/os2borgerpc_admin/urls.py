@@ -8,6 +8,7 @@ from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from two_factor import views as otp_views
 
 from markdownx import urls as markdownx
 
@@ -15,7 +16,7 @@ admin.autodiscover()
 
 urlpatterns = [
     # Examples:
-    url("accounts/login/", auth_views.LoginView.as_view(template_name="login.html")),
+    url("accounts/login/", otp_views.LoginView.as_view()),
     url(r"^xmlrpc/$", handle_xmlrpc, name="xmlrpc"),
     url("accounts/logout/", auth_views.LogoutView.as_view(template_name="logout.html")),
     url(r"^", include("system.urls")),

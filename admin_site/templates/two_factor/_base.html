@@ -1,7 +1,4 @@
-{% load crispy_forms_tags %}
-
 {% load i18n %}
-
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -95,7 +92,7 @@
             font-family: var(--sans-font);
             font-size: var(--base-fontsize);
         }
-        
+
         /* Make the body a nice central block */
         body {
             color: var(--text);
@@ -155,7 +152,7 @@
             display: block;
         }
 
-        input[type="text"], 
+        input[type="text"],
         input[type="password"] {
           height: 3rem;
           border: solid 2px var(--accent-bg);
@@ -164,9 +161,9 @@
           transition: outline .3s;
         }
 
-        input[type="text"]:hover, 
+        input[type="text"]:hover,
         input[type="password"]:hover,
-        input[type="text"]:focus, 
+        input[type="text"]:focus,
         input[type="password"]:focus {
             outline: solid 2px var(--accent);
         }
@@ -199,7 +196,23 @@
         p a:hover,
         p a:focus {
             text-decoration: underline;
-        } 
+        }
+
+        .btn-link {
+            background-color: transparent;
+            border: none;
+            color: var(--accent);
+            font-size: var(--base-fontsize);
+            font-weight: 400;
+            text-decoration: underline;
+            width: auto;
+            cursor: pointer;
+            transition: color .3s;
+        }
+
+        .btn-link:hover {
+            color: #122f35;
+        }
 
         .cto {
             background-color: var(--accent);
@@ -211,7 +224,7 @@
             font-weight: bold;
             text-decoration: none;
             width: auto;
-            margin: 1.75rem 0;
+            margin: 1.75rem 0 0;
             cursor: pointer;
             transition: background-color .3s;
         }
@@ -219,6 +232,10 @@
         .cto:hover,
         .cto:focus {
 						background-color: var(--text-light);
+        }
+
+        .cto.primary {
+            margin-right: 0.75rem;
         }
 
         .cto.contact {
@@ -279,14 +296,11 @@
 
       <img class="logo" src="/static/img/cropped-magenta_logo-2.png" alt="Magenta - open source IT">
 
-      <form method="post" action="">
-          <h2><span class="muted">{% translate "Log in" %}:</span> OS2borgerPC</h2>
-          {% csrf_token %}
-          {{ form|crispy }}
-          {% translate "Log in" as login %}
-          <input class="cto" type="submit" value="{{login}}">
-          <input type="hidden" name="next" value="{{ next }}">
-      </form>
+       {% block content_wrapper %}
+          <div class="container">
+            {% block content %}{% endblock %}
+          </div>
+       {% endblock %}
 
       <p style="margin: 2.5rem 0;">
         {% translate "OS2borgerPC is an open source product. You can download the source code and documentation here:" %}
@@ -295,15 +309,15 @@
 
       <hr>
 
-      <a 
+      <a
       href="{% url 'global-changelogs' slug='global' %}"
       class="cto contact" target=""
       style="margin-left: 1rem;">
       <strong>{% translate "Check updates for OS2borgerPC" %}</strong>
     </a>
 
-      <a 
-        href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC" 
+      <a
+        href="https://www.magenta.dk/dansk-it-firma-aarhus-kobenhavn-nuuk/?subject=OS2borgerPC"
         class="cto contact" target="_blank">
         <strong>{% translate "Send a message to Magenta" %}</strong>
       </a>
@@ -313,7 +327,7 @@
 
   {% translate "It looks like you're using Internet Explorer. It won't work on this website." as warning %}
   {% translate "Try opening this website in Microsoft Edge" as link_text %}
-  <ie11-browser-warning 
+  <ie11-browser-warning
     data-warning-text="{{warning}}"
     data-link-text="{{link_text}}">
   </ie11-browser-warning>

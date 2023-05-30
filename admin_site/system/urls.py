@@ -50,11 +50,19 @@ from system.views import (
     SiteList,
     SiteSettings,
     TwoFactor,
+    AdminTwoFactorSetup,
+    AdminTwoFactorSetupComplete,
+    AdminTwoFactorDisable,
+    AdminTwoFactorBackupTokens,
     UserCreate,
     UserDelete,
     UserRedirect,
     UserUpdate,
 )
+
+from two_factor.urls import urlpatterns as tf_urls
+from django.urls import include, path
+
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -123,8 +131,30 @@ urlpatterns = [
         ScriptRedirect.as_view(),
         name="security_scripts",
     ),
-    # Two-factor
+    # Two-factor for OS2borgerPC
     url(r"^site/(?P<slug>[^/]+)/two-factor/$", TwoFactor.as_view(), name="two_factor"),
+    # Two-factor for admin-site
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup/$",
+        AdminTwoFactorSetup.as_view(),
+        name="admin_otp_setup",
+    ),
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/setup-complete/$",
+        AdminTwoFactorSetupComplete.as_view(),
+        name="admin_otp_setup_complete",
+    ),
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/disable/$",
+        AdminTwoFactorDisable.as_view(),
+        name="admin_otp_disable",
+    ),
+    url(
+        r"^site/(?P<slug>[^/]+)/admin-two-factor/(?P<username>[_\w\@\.\+\-]+)/backup-tokens/$",
+        AdminTwoFactorBackupTokens.as_view(),
+        name="admin_otp_backup",
+    ),
+    path("", include(tf_urls)),
     # Sites
     url(r"^$", AdminIndex.as_view(), name="index"),
     url(r"^sites/$", SiteList.as_view(), name="sites"),
@@ -301,10 +331,25 @@ urlpatterns = [
         RedirectView.as_view(url="/documentation/om_os2borgerpc_admin/"),
     ),
     url(
+        r"^documentation/os2borgerpc_installation_guide/",
+        RedirectView.as_view(
+            url="https://github.com/OS2borgerPC/image/raw/development/"
+            + "docs/OS2BorgerPC Installationsguide.pdf"
+        ),
+    ),
+    url(
         r"^documentation/os2borgerpc_kiosk_installation_guide",
         RedirectView.as_view(
             url="https://os2borgerpc-server-image.readthedocs.io/en/latest/dev.html"
         ),
+    ),
+    url(
+        r"^documentation/wake_plan_user_guide/",
+        RedirectView.as_view(
+            url="https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Guide_til_brug_af_strømbesparingsfunktioner.pdf"
+        ),
+        name="wake_plan_user_guide",
     ),
     url(
         r"^documentation/tech/os2borgerpc-image",

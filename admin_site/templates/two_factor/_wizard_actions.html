@@ -1,0 +1,7 @@
+{% load i18n %}
+
+<button type="submit" class="btn btn-primary me-3">{% trans "Next" %}</button>
+{% if cancel_url %}
+  <a href="{{ cancel_url }}"
+     class="btn btn-secondary">{% trans "Cancel" %}</a>
+{% endif %}
