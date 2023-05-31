@@ -1514,6 +1514,9 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                     or valid_exception.date_start
                     <= exception.date_end
                     <= valid_exception.date_end
+                    or exception.date_start
+                    <= valid_exception.date_start
+                    <= exception.date_end
                 ):
                     exception_is_valid = False
                     invalid_exceptions_names.append(exception.name)
@@ -2036,7 +2039,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
             site=context["site"]
         ).order_by("-date_start", "name", "pk")
 
-        if event is not None:
+        if event is not None and event.id:
             context["wake_plan_list_for_event"] = event.wake_week_plans.all()
 
         context["wake_plan_access"] = (
@@ -2065,6 +2068,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
                         or other_event.date_start
                         <= event.date_end
                         <= other_event.date_end
+                        or event.date_start <= other_event.date_start <= event.date_end
                     ):
                         valid = False
                         overlapping_event = other_event.name
