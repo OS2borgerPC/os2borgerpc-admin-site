@@ -2316,6 +2316,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         form.prefix = "create"
         return form
 
+    def get_form_kwargs(self):
+        kwargs = super(UserCreate, self).get_form_kwargs()
+        kwargs["language"] = self.request.user.bibos_profile.language
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super(UserCreate, self).get_context_data(**kwargs)
         self.add_userlist_to_context(context)
@@ -2386,7 +2391,9 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
         context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
 
-        context["create_form"] = UserForm(prefix="create")
+        context["create_form"] = UserForm(
+            prefix="create", language=self.request.user.bibos_profile.language
+        )
         context["create_form"].setup_usertype_choices(
             loginusertype, request_user.is_superuser
         )
