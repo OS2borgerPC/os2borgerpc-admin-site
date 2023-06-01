@@ -169,6 +169,9 @@ class UserForm(forms.ModelForm):
             initial["language"] = user_profile.language
         else:
             initial["usertype"] = SiteMembership.SITE_USER
+            language = kwargs.pop("language", None)
+            if language is not None:
+                initial["language"] = language
         self.initial_type = initial["usertype"]
         super(UserForm, self).__init__(*args, **kwargs)
 
