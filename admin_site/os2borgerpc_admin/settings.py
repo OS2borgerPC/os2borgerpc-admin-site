@@ -107,6 +107,14 @@ if settings.get("ALLOWED_HOSTS"):
 else:
     ALLOWED_HOSTS = []
 
+# Django > 4.0 introduced changes related to CSRF
+# https://docs.djangoproject.com/en/4.2/releases/4.0/#csrf
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
+if settings.get("CSRF_TRUSTED_ORIGINS"):
+    CSRF_TRUSTED_ORIGINS = settings.get("CSRF_TRUSTED_ORIGINS").split(",")
+else:
+    CSRF_TRUSTED_ORIGINS = []
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
