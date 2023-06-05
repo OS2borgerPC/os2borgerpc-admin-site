@@ -15,12 +15,7 @@ from markdownx import urls as markdownx
 admin.autodiscover()
 
 urlpatterns = [
-    re_path(
-        "accounts/login/", otp_views.LoginView.as_view()
-    ),  # template_name="login.html")),
-    re_path(
-        "accounts/login/", auth_views.LoginView.as_view(template_name="login.html")
-    ),
+    re_path("accounts/login/", otp_views.LoginView.as_view()),
     re_path(r"^xmlrpc/$", handle_xmlrpc, name="xmlrpc"),
     re_path(
         "accounts/logout/", auth_views.LogoutView.as_view(template_name="logout.html")
