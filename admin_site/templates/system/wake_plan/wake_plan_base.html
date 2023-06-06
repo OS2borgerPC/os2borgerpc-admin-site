@@ -32,7 +32,7 @@
           </a>
           {% if plan == selected_plan %}
             {% translate "Delete on/off schedule" as delete %}
-            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_plan_delete' site.uid plan.id %}" {% endif %} title="{{delete}">
+            <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_plan_delete' site.uid plan.id %}" {% endif %} title="{{delete}}">
               clear
             </a>
           {% endif %}
