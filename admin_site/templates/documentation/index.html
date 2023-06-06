@@ -31,14 +31,12 @@ detailpage
       {{ name }}
     </a>
   {% elif link %}
-  
-    <a class="nav-link link-light {% ifequal menu_active link %}active{% endifequal %}" href="{% url 'doc' link %}">
+    <a class="nav-link link-light {% if menu_active == link %}active{% endif %}" href="{% url 'doc' link %}">
       {{ name }}
     </a>
     {% if menu_active == link and submenu_template %}
       {% include submenu_template %}
     {% endif %}
-  
   {% else %}
   <hr>
   <h2 class="text-light">{{ name }}</h2>

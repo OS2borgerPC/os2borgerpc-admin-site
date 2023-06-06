@@ -1,6 +1,6 @@
 from django_xmlrpc.views import handle_xmlrpc
 
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -15,17 +15,18 @@ from markdownx import urls as markdownx
 admin.autodiscover()
 
 urlpatterns = [
-    # Examples:
-    url("accounts/login/", otp_views.LoginView.as_view()),
-    url(r"^xmlrpc/$", handle_xmlrpc, name="xmlrpc"),
-    url("accounts/logout/", auth_views.LogoutView.as_view(template_name="logout.html")),
-    url(r"^", include("system.urls")),
-    url(r"^admin-xml/$", handle_xmlrpc),
+    re_path("accounts/login/", otp_views.LoginView.as_view()),
+    re_path(r"^xmlrpc/$", handle_xmlrpc, name="xmlrpc"),
+    re_path(
+        "accounts/logout/", auth_views.LogoutView.as_view(template_name="logout.html")
+    ),
+    re_path(r"^", include("system.urls")),
+    re_path(r"^admin-xml/$", handle_xmlrpc),
     # Uncomment the admin/doc line below to enable admin documentation:
-    url("admin/doc/", include("django.contrib.admindocs.urls")),
+    re_path("admin/doc/", include("django.contrib.admindocs.urls")),
     # Uncomment the next line to enable the admin:
-    url(r"^admin/", admin.site.urls),
-    url("markdownx/", include(markdownx)),
+    re_path(r"^admin/", admin.site.urls),
+    re_path("markdownx/", include(markdownx)),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

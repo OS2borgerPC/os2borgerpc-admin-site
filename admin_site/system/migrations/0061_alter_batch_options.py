@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0060_alter_changelog_options'),
+        ("system", "0060_alter_changelog_options"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='batch',
-            options={'ordering': ['-id'], 'verbose_name_plural': 'Batches'},
+            name="batch",
+            options={"ordering": ["-id"], "verbose_name_plural": "Batches"},
         ),
     ]

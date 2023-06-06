@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0010_auto_20210628_1127'),
+        ("system", "0010_auto_20210628_1127"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='script',
-            name='maintained_by_magenta',
-            field=models.BooleanField(default=False, verbose_name='maintained by Magenta'),
+            model_name="script",
+            name="maintained_by_magenta",
+            field=models.BooleanField(
+                default=False, verbose_name="maintained by Magenta"
+            ),
         ),
     ]

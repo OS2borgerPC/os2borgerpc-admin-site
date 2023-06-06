@@ -5,36 +5,53 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0033_site_isil'),
+        ("system", "0033_site_isil"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CitizenLogin',
+            name="CitizenLogin",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('citizen_id', models.CharField(max_length=128, unique=True)),
-                ('last_successful_login', models.DateTimeField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("citizen_id", models.CharField(max_length=128, unique=True)),
+                ("last_successful_login", models.DateTimeField()),
             ],
         ),
         migrations.AlterField(
-            model_name='site',
-            name='isil',
-            field=models.CharField(blank=True, default='', help_text='Necessary for customers who wish to integrate with standard library login', max_length=10, verbose_name='ISIL'),
+            model_name="site",
+            name="isil",
+            field=models.CharField(
+                blank=True,
+                default="",
+                help_text="Necessary for customers who wish to integrate with standard library login",
+                max_length=10,
+                verbose_name="ISIL",
+            ),
             preserve_default=False,
         ),
         migrations.DeleteModel(
-            name='CiceroPatron',
+            name="CiceroPatron",
         ),
         migrations.AddField(
-            model_name='citizenlogin',
-            name='site',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='system.site'),
+            model_name="citizenlogin",
+            name="site",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="system.site"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='citizenlogin',
-            constraint=models.UniqueConstraint(fields=('citizen_id', 'site'), name='unique_citizen_per_site'),
+            model_name="citizenlogin",
+            constraint=models.UniqueConstraint(
+                fields=("citizen_id", "site"), name="unique_citizen_per_site"
+            ),
         ),
     ]

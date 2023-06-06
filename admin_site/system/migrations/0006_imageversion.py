@@ -6,26 +6,33 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0005_auto_20190225_1620'),
+        ("system", "0005_auto_20190225_1620"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ImageVersion',
+            name="ImageVersion",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('img_vers', models.CharField(max_length=7, unique=True)),
-                ('rel_date', models.DateField()),
-                ('os', models.CharField(max_length=30)),
-                ('rel_notes', models.TextField(max_length=350)),
-                ('img_path', models.CharField(max_length=200)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("img_vers", models.CharField(max_length=7, unique=True)),
+                ("rel_date", models.DateField()),
+                ("os", models.CharField(max_length=30)),
+                ("rel_notes", models.TextField(max_length=350)),
+                ("img_path", models.CharField(max_length=200)),
             ],
         ),
         migrations.AddField(
-            model_name='site',
-            name='last_version',
+            model_name="site",
+            name="last_version",
             field=models.DateField(blank=True, null=True),
         ),
     ]

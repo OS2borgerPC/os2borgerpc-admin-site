@@ -89,7 +89,6 @@ SOURCE_DIR = os.path.abspath(os.path.join(install_dir, ".."))
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         "NAME": settings["DB_NAME"],
         "USER": settings["DB_USER"],
         "PASSWORD": settings["DB_PASSWORD"],
@@ -107,6 +106,14 @@ if settings.get("ALLOWED_HOSTS"):
     ALLOWED_HOSTS = settings.get("ALLOWED_HOSTS").split(",")
 else:
     ALLOWED_HOSTS = []
+
+# Django > 4.0 introduced changes related to CSRF. Note that the protocol has to be specified too.
+# https://docs.djangoproject.com/en/4.2/releases/4.0/#csrf
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
+if settings.get("CSRF_TRUSTED_ORIGINS"):
+    CSRF_TRUSTED_ORIGINS = settings.get("CSRF_TRUSTED_ORIGINS").split(",")
+else:
+    CSRF_TRUSTED_ORIGINS = []
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -336,4 +343,4 @@ MARKDOWNX_IMAGE_MAX_SIZE = {"size": (800, 800), "quality": 90}
 # This specifies where uploaded media (images) are stored
 MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+FORM_RENDERER = "django.forms.renderers.DjangoDivFormRenderer"

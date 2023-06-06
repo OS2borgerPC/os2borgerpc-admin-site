@@ -1,3 +1,10 @@
+Version 5.17.0, June 6, 2023
+----------------------------
+
+- Update Django from 3.2.17 -> 4.2.1
+- Fix bug in wake plan validation
+- Create new users with the same language set as yourself by default
+
 Version 5.16.0, May 30, 2023
 ----------------------------
 

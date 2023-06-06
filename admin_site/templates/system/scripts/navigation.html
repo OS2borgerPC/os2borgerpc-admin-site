@@ -15,13 +15,13 @@
   <div class="tab-content">
 
     <div class="tab-pane fade list-collapsible {% if not global_selected %}show active{% endif %}" id="localscripts" role="tabpanel" aria-labelledby="localscripts-tab">
-      
+
       {% for ltag, scripts in local_scripts_by_tag.items %}
         {% if ltag != 'untagged' %}
-          <a data-bs-toggle="collapse" 
+          <a data-bs-toggle="collapse"
             href="#collapse{{ ltag.name|slugify }}local"
-            role="button" 
-            aria-expanded="false" 
+            role="button"
+            aria-expanded="false"
             aria-controls="collapse{{ ltag.name|slugify }}local">
             <span class="material-icons">folder</span>
             <span class="collapse-label">{{ ltag.name }}</span>
@@ -29,7 +29,7 @@
           </a>
           <ul class="item-list collapse collapse-content" id="collapse{{ ltag.name|slugify }}local">
             {% for script in scripts %}
-              <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
+              <li class="{% if script == selected_script %}active{% endif %}" id="{% if script == selected_script %}selected-script{% endif %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
@@ -53,7 +53,7 @@
       {% if local_scripts_by_tag.untagged %}
         <ul class="item-list">
           {% for script in local_scripts_by_tag.untagged %}
-              <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
+              <li class="{% if script == selected_script %}active{% endif %}" id="{% if script == selected_script %}selected-script{% endif %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
@@ -72,11 +72,11 @@
           {% endfor %}
         </ul>
       {% endif %}
-      
+
     </div>
 
     <div class="tab-pane fade list-collapsible {% if global_selected %}show active{% endif %}" id="globalscripts" role="tabpanel" aria-labelledby="globalscripts-tab">
-      
+
       {% for gtag, scripts in global_scripts_by_tag.items %}
         {% if gtag != 'untagged' %}
           <a data-bs-toggle="collapse" href="#collapse{{ gtag.name|slugify }}global" role="button" aria-expanded="false" aria-controls="collapse{{ gtag.name|slugify }}global">
@@ -86,7 +86,7 @@
           </a>
           <ul class="item-list collapse collapse-content" id="collapse{{ gtag.name|slugify }}global">
             {% for script in scripts %}
-              <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
+              <li class="{% if script == selected_script %}active{% endif %}" id="{% if script == selected_script %}selected-script{% endif %}">
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
@@ -99,7 +99,7 @@
       {% if global_scripts_by_tag.untagged %}
         <ul class="item-list">
           {% for script in global_scripts_by_tag.untagged %}
-            <li class="{% ifequal script selected_script %}active{% endifequal %}" id="{% ifequal script selected_script %}selected-script{% endifequal %}">
+            <li class="{% if script == selected_script %}active{% endif %}" id="{% if script == selected_script %}selected-script{% endif %}">
               <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                 {{ script.name }}
               </a>
@@ -125,5 +125,5 @@
       document.getElementById('selected-script').scrollIntoView({'block': 'center'});
     })
   </script>
-  
+
 </div>

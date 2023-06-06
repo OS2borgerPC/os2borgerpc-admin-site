@@ -4,15 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0043_alter_input_value_type'),
+        ("system", "0043_alter_input_value_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='imageversion',
-            name='platform',
-            field=models.CharField(choices=[('BORGERPC', 'OS2borgerPC'), ('BORGERPC_KIOSK', 'OS2borgerPC Kiosk')], max_length=128),
+            model_name="imageversion",
+            name="platform",
+            field=models.CharField(
+                choices=[
+                    ("BORGERPC", "OS2borgerPC"),
+                    ("BORGERPC_KIOSK", "OS2borgerPC Kiosk"),
+                ],
+                max_length=128,
+            ),
         ),
     ]

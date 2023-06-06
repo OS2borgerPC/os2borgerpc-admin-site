@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ValidationError
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from system.models import (
     ChangelogComment,
@@ -169,6 +169,9 @@ class UserForm(forms.ModelForm):
             initial["language"] = user_profile.language
         else:
             initial["usertype"] = SiteMembership.SITE_USER
+            language = kwargs.pop("language", None)
+            if language is not None:
+                initial["language"] = language
         self.initial_type = initial["usertype"]
         super(UserForm, self).__init__(*args, **kwargs)
 

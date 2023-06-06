@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0040_alter_imageversion_platform'),
+        ("system", "0040_alter_imageversion_platform"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='configurationentry',
-            options={'ordering': ['key']},
+            name="configurationentry",
+            options={"ordering": ["key"]},
         ),
     ]

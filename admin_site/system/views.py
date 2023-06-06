@@ -1232,15 +1232,15 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
             return reverse("scripts", kwargs={"slug": self.kwargs["slug"]})
 
     @transaction.atomic
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
         script = self.get_object()
 
         site = script.site
-        site_membership = request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
-            not request.user.is_superuser
+            not self.request.user.is_superuser
             and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
@@ -1250,7 +1250,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         # We create a list as the next command would change it
         scripts_pcgroups = list(PCGroup.objects.filter(policy__script=script))
 
-        response = super(ScriptDelete, self).delete(request, *args, **kwargs)
+        response = super(ScriptDelete, self).delete(form, *args, **kwargs)
 
         # For each of those groups update the script positions to avoid gaps
         for spcg in scripts_pcgroups:
@@ -1514,6 +1514,9 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
                     or valid_exception.date_start
                     <= exception.date_end
                     <= valid_exception.date_end
+                    or exception.date_start
+                    <= valid_exception.date_start
+                    <= exception.date_end
                 ):
                     exception_is_valid = False
                     invalid_exceptions_names.append(exception.name)
@@ -1964,7 +1967,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
         # I wonder if one could just call the WakeWeekPlanRedirectView directly?
         return reverse("wake_plans", args=[self.kwargs["site_uid"]])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
         deleted_plan_name = WakeWeekPlan.objects.get(
             id=self.kwargs["wake_week_plan_id"]
         ).name
@@ -1976,9 +1979,9 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
             pcs_in_groups = PC.objects.none()
             for g in groups:
                 pcs_in_groups = pcs_in_groups.union(g.pcs.all())
-            run_wake_plan_script(plan.site, pcs_in_groups, [], request.user)
+            run_wake_plan_script(plan.site, pcs_in_groups, [], self.request.user)
 
-        response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
+        response = super(WakePlanDelete, self).delete(form, *args, **kwargs)
 
         translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(
@@ -2036,7 +2039,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
             site=context["site"]
         ).order_by("-date_start", "name", "pk")
 
-        if event is not None:
+        if event is not None and event.id:
             context["wake_plan_list_for_event"] = event.wake_week_plans.all()
 
         context["wake_plan_access"] = (
@@ -2065,6 +2068,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
                         or other_event.date_start
                         <= event.date_end
                         <= other_event.date_end
+                        or event.date_start <= other_event.date_start <= event.date_end
                     ):
                         valid = False
                         overlapping_event = other_event.name
@@ -2239,12 +2243,12 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
     def get_success_url(self):
         return reverse("wake_change_events", args=[self.kwargs["site_uid"]])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
         # Update all pcs belonging to active plans that used this event
         event = self.get_object()
         plans = set(event.wake_week_plans.all())
 
-        response = super(WakeChangeEventDelete, self).delete(request, *args, **kwargs)
+        response = super(WakeChangeEventDelete, self).delete(form, *args, **kwargs)
 
         for plan in plans:
             pcs_in_groups = PC.objects.none()
@@ -2255,7 +2259,11 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
                 if pcs_in_groups:
                     args_set = plan.get_script_arguments()
                     run_wake_plan_script(
-                        plan.site, pcs_in_groups, args_set, request.user, type="set"
+                        plan.site,
+                        pcs_in_groups,
+                        args_set,
+                        self.request.user,
+                        type="set",
                     )
 
         return response
@@ -2311,6 +2319,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         form = super(UserCreate, self).get_form(form_class)
         form.prefix = "create"
         return form
+
+    def get_form_kwargs(self):
+        kwargs = super(UserCreate, self).get_form_kwargs()
+        kwargs["language"] = self.request.user.bibos_profile.language
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(UserCreate, self).get_context_data(**kwargs)
@@ -2382,7 +2395,9 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
         context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
 
-        context["create_form"] = UserForm(prefix="create")
+        context["create_form"] = UserForm(
+            prefix="create", language=self.request.user.bibos_profile.language
+        )
         context["create_form"].setup_usertype_choices(
             loginusertype, request_user.is_superuser
         )
@@ -2450,7 +2465,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
         return "/site/%s/users/" % self.kwargs["site_uid"]
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
             site_id=site.id
@@ -2460,7 +2475,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
-        response = super(UserDelete, self).delete(request, *args, **kwargs)
+        response = super(UserDelete, self).delete(form, *args, **kwargs)
         translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
@@ -2788,7 +2803,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     def get_success_url(self):
         return "/site/{0}/groups/".format(self.kwargs["site_uid"])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
         self_object = self.get_object()
         name = self_object.name
         # wake_week_plan-related
@@ -2817,7 +2832,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
                     self_object.site, pcs_to_be_reset, [], self.request.user
                 )
 
-        response = super(PCGroupDelete, self).delete(request, *args, **kwargs)
+        response = super(PCGroupDelete, self).delete(form, *args, **kwargs)
         translation.activate(self.request.user.bibos_profile.language)
         set_notification_cookie(response, _("Group %s deleted") % name)
         translation.deactivate()
@@ -2958,7 +2973,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
         return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
             site_id=site.id
@@ -2968,7 +2983,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
             and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
-        response = super(SecurityProblemDelete, self).delete(request, *args, **kwargs)
+        response = super(SecurityProblemDelete, self).delete(form, *args, **kwargs)
         return response
 
 

@@ -21,11 +21,11 @@
         </div>
         <ul class="item-list">
             {% for sp in site.security_problems.all %}
-                <li {% ifequal sp selected_security_problem %}class="active"{% endifequal %}>
+                <li {% if sp == selected_security_problem %}class="active"{% endif %}>
                     <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/">
                         {{ sp.name }}
                     </a>
-                    {% ifequal sp selected_security_problem %}
+                    {% if sp == selected_security_problem %}
                         {% if user.is_superuser or site_membership.site_user_type == site_membership.SITE_ADMIN %}
                             <a class="item-list-deletable material-icons"
                                href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/"
@@ -33,7 +33,7 @@
                                 clear
                             </a>
                         {% endif %}
-                    {% endifequal %}
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>

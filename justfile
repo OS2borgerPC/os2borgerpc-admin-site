@@ -23,8 +23,7 @@ models_output_file_name := "models_graphed.png"
 
 # The default recipe, if none is specified
 @default:
-  if ! which fzf > /dev/null; then echo "fzf not installed. If on Ubuntu: Install the fzf package." && exit 1; fi
-  @just --choose
+  @just --list
 
 # Help command, which lists available recipes
 help:
@@ -50,7 +49,7 @@ bash-no-migrate:
 
 # Runs black on the python codebase
 black:
-  black --extend-exclude="/migrations/" admin_site
+  black admin_site
 
 # Dump the database to a file named {{db_data_file}}
 dump-db-data: (verify-container-running django_container)
@@ -78,6 +77,11 @@ fix-permissions:
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
 managepy +COMMAND: (verify-container-running django_container)
   sudo docker exec -i --tty {{django_container}} ./manage.py {{COMMAND}}
+
+# Related to: https://docs.djangoproject.com/en/4.2/howto/upgrade-version/
+# Checks for any deprecation warnings in your project
+check-deprecation-warnings: (verify-container-running django_container)
+  sudo docker exec -i --tty {{django_container}} python -Wa manage.py test
 
 # Useful if changing requirements.txt and ...?
 recreate-django:

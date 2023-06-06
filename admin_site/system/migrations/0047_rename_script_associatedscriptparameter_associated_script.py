@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('system', '0046_auto_20220401_1158'),
+        ("system", "0046_auto_20220401_1158"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='associatedscriptparameter',
-            old_name='script',
-            new_name='associated_script',
+            model_name="associatedscriptparameter",
+            old_name="script",
+            new_name="associated_script",
         ),
     ]

@@ -23,19 +23,19 @@
   <ul class="item-list">
     {% if wake_week_plans_list.all %}
       {% for plan in wake_week_plans_list %}
-        <li class="{% ifequal plan selected_plan %}active{% endifequal %}">
+        <li class="{% if plan == selected_plan %}active{% endif %}">
           <a class="item-list-link" id="{{plan.id}}" href="{% url 'wake_plan' site.uid plan.id %}">
             {{ plan.name }}
             {% if not plan.enabled %}
               <span class="badge bg-danger">{% translate "Inactive" %}</span>
             {% endif %}
           </a>
-          {% ifequal plan selected_plan %}
+          {% if plan == selected_plan %}
             {% translate "Delete on/off schedule" as delete %}
             <a class="item-list-deletable material-icons" {% if wake_plan_access %} href="{% url 'wake_plan_delete' site.uid plan.id %}" {% endif %} title="{{delete}}">
               clear
             </a>
-          {% endifequal %}
+          {% endif %}
         </li>
       {% endfor %}
     {% endif %}
