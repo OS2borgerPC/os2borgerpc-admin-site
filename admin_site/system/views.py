@@ -1979,7 +1979,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
             pcs_in_groups = PC.objects.none()
             for g in groups:
                 pcs_in_groups = pcs_in_groups.union(g.pcs.all())
-            run_wake_plan_script(plan.site, pcs_in_groups, [], request.user)
+            run_wake_plan_script(plan.site, pcs_in_groups, [], self.request.user)
 
         response = super(WakePlanDelete, self).delete(request, *args, **kwargs)
 
@@ -2259,7 +2259,11 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
                 if pcs_in_groups:
                     args_set = plan.get_script_arguments()
                     run_wake_plan_script(
-                        plan.site, pcs_in_groups, args_set, request.user, type="set"
+                        plan.site,
+                        pcs_in_groups,
+                        args_set,
+                        self.request.user,
+                        type="set",
                     )
 
         return response
