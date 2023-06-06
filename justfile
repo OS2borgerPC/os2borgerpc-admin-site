@@ -81,8 +81,6 @@ managepy +COMMAND: (verify-container-running django_container)
 # Related to: https://docs.djangoproject.com/en/4.2/howto/upgrade-version/
 # Checks for any deprecation warnings in your project
 check-deprecation-warnings: (verify-container-running django_container)
-  # pep8 is not in requirements, so install that manually first, so the tests don't fail
-  sudo docker exec -i --tty -u root {{django_container}} pip install pep8
   sudo docker exec -i --tty {{django_container}} python -Wa manage.py test
 
 # Useful if changing requirements.txt and ...?
