@@ -126,7 +126,11 @@ active
             <strong>{% translate "Note" %}</strong>
             <ul>
             <li>{% translate 'If a script that takes arguments is added to the list, then these arguments are to be entered first by clicking "Edit", before you can click "Save changes"' %}.</li>
-            <li>{% translate "Editing the script arguments will not make the script run again" %}.</li>
+            {% if site.rerun_asc %}
+              <li>{% translate "Editing the script arguments will make the script run again on all Computers in the Group. This can be toggled off under Site settings" %}.</li>
+            {% else %}
+              <li>{% translate "Editing the script arguments will not make the script run again. This can be changed under Site settings" %}.</li>
+            {% endif %}
             <li>{% translate "Computers already in the group only run newly added scripts, but Computers newly added to the Group run all the scripts on the list" %}.</li>
             </ul>
           </div>
