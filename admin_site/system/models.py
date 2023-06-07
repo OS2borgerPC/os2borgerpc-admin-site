@@ -486,6 +486,7 @@ class PCGroup(models.Model):
 
         existing_set = set(asc.pk for asc in self.policy.all())
         old_params = set()
+        updated_policy_scripts = set()
 
         for pk in existing_set:
             asc = AssociatedScript.objects.get(pk=pk)
@@ -525,6 +526,11 @@ class PCGroup(models.Model):
                         else:
                             pass
                     else:
+                        if (
+                            par.pk is not None
+                            and par.file_value != req_files[param_name]
+                        ):
+                            updated_policy_scripts.add(par.associated_script)
                         par.file_value = req_files[param_name]
                 else:
                     if param_name not in req_params or (
@@ -540,8 +546,14 @@ class PCGroup(models.Model):
                     elif not req_params[param_name] and inp.mandatory:
                         raise MandatoryParameterMissingError(inp)
                     else:
+                        if (
+                            par.pk is not None
+                            and par.string_value != req_params[param_name]
+                        ):
+                            updated_policy_scripts.add(par.associated_script)
                         par.string_value = req_params[param_name]
                 par.save()
+        return updated_policy_scripts
 
     @property
     def ordered_policy(self):
