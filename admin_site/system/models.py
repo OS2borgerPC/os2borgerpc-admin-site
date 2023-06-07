@@ -160,6 +160,9 @@ class Site(models.Model):
         blank=True,
         default=datetime.timedelta(hours=4),
     )
+    rerun_asc = models.BooleanField(
+        verbose_name=_("Rerun edited associated scripts"), default=False
+    )
 
     class Meta:
         ordering = ["name"]
