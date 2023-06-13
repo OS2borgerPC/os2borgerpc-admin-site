@@ -101,7 +101,7 @@ active
                 <p>{% translate "Associated Security Rules" %}</p>
                 <ul class="mt-2 list-group">
                   {% for problem in security_problems_incl_site %}
-                    <li class="list-group-item"><a href="{% url 'security_problem' site.uid problem.uid %}">{{ problem }}</a></li>
+                    <li class="list-group-item"><a href="{% url 'security_problem' site.uid problem.id %}">{{ problem }}</a></li>
                   {% endfor %}
                 </ul>
               </div>
