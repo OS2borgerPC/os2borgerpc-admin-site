@@ -7,17 +7,13 @@
 {% translate "Security Rules" %}
 {% endblock %}
 
-{% block javascripts %}
-<script type="text/javascript" src="/static/js/userlist.js"></script>
-{% endblock %}
-
 {% block subnav %}
     <div id="security-problems-nav" class="sublevelnav">
         <div class="listutils">
-            <button class="btn btn-link" data-bs-target="#addNewSecProblem" type="button" data-bs-toggle="modal">
+            <a class="btn btn-link" href="{% url 'security_problem_new' site.uid %}">
                 <span class="material-icons">add</span>
                 {% translate "Define new security rule" %}
-            </button>
+            </a>
         </div>
         <ul class="item-list">
             {% for sp in site.security_problems.all %}
@@ -55,6 +51,11 @@
         <a class="float-end" href="{% url 'security_problem' site_uid=site.url uid=selected_security_problem.id %}" title="{% translate 'See all events for this Security Rule' %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
         {% endcomment %}
     </h2>
+    {% else %}
+    <h2 class="divideheader">
+        {% translate "New security rule" %}
+    </h2>
+    {% endif %}
     {% include 'notification.html' %}
 
     <form name="updategroupform"
@@ -108,57 +109,10 @@
 
         <fieldset class="mt-3">
             <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
-            <button class="btn btn-secondary" type="button" onclick="return BibOS.SecurityProblemList.cancelEditing()">{% translate "Cancel" %}</button>
+            <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>
         </fieldset>
 
     </form>
-    {% endif %}
-
-    <div id="addNewSecProblem" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{% url 'security_problem_new' site.uid %}"
-                        name="new_security_problem_form"
-                        id="new_security_problem_form"
-                        method="post">
-                    <div class="modal-header">
-                        <h3 class="modal-title">{% translate "Define new security rule" %}</h3>
-                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        {% csrf_token %}
-                        <fieldset>
-
-                            <!-- Site field -->
-                            <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
-
-                            <!-- And now the rest -->
-                            {{ newform.name|as_crispy_field }}
-                            {{ newform.uid|as_crispy_field }}
-                            {{ newform.description|as_crispy_field }}
-                            {{ newform.level|as_crispy_field }}
-                            {{ newform.security_script|as_crispy_field }}
-
-                            <p>
-                                <label>{% translate "Monitored groups" %}</label>
-                                {% include 'widgets/picklist.html' with submit_name='alert_groups' available_list=alert_groups identifier='gruppe' unique_id='ag2' add_text=g_add %}
-                            </p>
-                            <p>
-                                <label>{% translate "Recipient(s) of email warning" %}</label>
-                                {% include 'widgets/picklist.html' with submit_name='alert_users' available_list=alert_users identifier='modtager' unique_id='au2' add_text=e_add %}
-                            </p>
-                        </fieldset>
-
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="{% translate 'Create security rule' %}">
-                        <input type="reset" class="btn btn-secondary" data-bs-dismiss="modal" value="{% translate 'Cancel' %}">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
 </div>
 {% endblock %}

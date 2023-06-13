@@ -45,7 +45,7 @@ from system.views import (
     SecurityProblemCreate,
     SecurityProblemDelete,
     SecurityProblemUpdate,
-    SecurityProblemsView,
+    SecurityProblemRedirect,
     SiteDetailView,
     SiteList,
     SiteSettings,
@@ -107,7 +107,7 @@ urlpatterns = [
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/security_problems/$",
-        SecurityProblemsView.as_view(),
+        SecurityProblemRedirect.as_view(),
         name="security_problems",
     ),
     # Security scripts

@@ -1129,6 +1129,10 @@ class SecurityProblem(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        site_url = self.site.get_absolute_url()
+        return "{0}/security_problems/{1}".format(site_url, self.uid)
+
     class Meta:
         ordering = ["name"]
 
