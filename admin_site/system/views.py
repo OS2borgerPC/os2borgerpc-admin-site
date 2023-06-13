@@ -2843,7 +2843,6 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
 
 
 class SecurityProblemRedirect(RedirectView, SuperAdminOrThisSiteMixin):
-
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
 
@@ -2909,12 +2908,12 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             return SecurityProblem.objects.get(
-                uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
+                id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
             )
         except SecurityProblem.DoesNotExist:
             raise Http404(
                 _("You have no Security Problem with the following ID: %s")
-                % self.kwargs["uid"]
+                % self.kwargs["id"]
             )
 
     def get_context_data(self, **kwargs):
@@ -2960,7 +2959,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return context
 
     def get_success_url(self):
-        return reverse("security_problem", args=[self.object.site.uid, self.object.uid])
+        return reverse("security_problem", args=[self.object.site.uid, self.object.id])
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
@@ -2970,7 +2969,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def get_object(self, queryset=None):
         return SecurityProblem.objects.get(
-            uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
+            id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
         )
 
     def get_success_url(self):
@@ -3095,7 +3094,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "site_uid": site.uid,
                     "problem_name": event.problem.name,
                     "problem_url": reverse(
-                        "security_problem", args=[site.uid, event.problem.uid]
+                        "security_problem", args=[site.uid, event.problem.id]
                     ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),

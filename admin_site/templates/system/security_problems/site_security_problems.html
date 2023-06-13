@@ -18,13 +18,13 @@
         <ul class="item-list">
             {% for sp in site.security_problems.all %}
                 <li {% if sp == selected_security_problem %}class="active"{% endif %}>
-                    <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.uid }}/">
+                    <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.id }}/">
                         {{ sp.name }}
                     </a>
                     {% if sp == selected_security_problem %}
                         {% if user.is_superuser or site_membership.site_user_type == site_membership.SITE_ADMIN %}
                             <a class="item-list-deletable material-icons"
-                               href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.uid }}/delete/"
+                               href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.id }}/delete/"
                                title="{% translate 'Delete security rule' %}">
                                 clear
                             </a>
@@ -85,7 +85,6 @@
                 <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
 
                 {{ form.name|as_crispy_field }}
-                {{ form.uid|as_crispy_field }}
                 {{ form.description|as_crispy_field }}
                 {{ form.level|as_crispy_field }}
 
