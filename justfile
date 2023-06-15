@@ -67,12 +67,15 @@ view-dumped-db-data:
 # Fix adminsite permissions in case you get "Permission Denied" errors
 fix-permissions:
   #!/usr/bin/env sh
+  # Setting all directories to 777, all files to 666 and finally set the executable bit for the few files needing that
   if ! which fd > /dev/null; then
     printf '%s\n' "fd not installed. If on Ubuntu: Install the fd-find package, and create a symlink like this:" \
          "sudo ln -s /usr/bin/fdfind /usr/local/bin/fd"
     exit 1
   fi
-  sudo fd --hidden -x chmod 777
+  sudo fd --hidden --type directory -x chmod 777
+  sudo fd --hidden --type file -x chmod 666
+  sudo chmod 777 justfile docker/docker-entrypoint.sh scripts/cleanup_old_media_files/cleanup_old_media_files.py admin_site/manage.py
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
 managepy +COMMAND: (verify-container-running django_container)
