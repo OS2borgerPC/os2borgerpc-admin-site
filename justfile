@@ -75,7 +75,7 @@ fix-permissions:
   fi
   sudo fd --hidden --type directory -x chmod 777
   sudo fd --hidden --type file -x chmod 666
-  sudo chmod 777 justfile docker/docker-entrypoint.sh scripts/cleanup_old_media_files/cleanup_old_media_files.py admin_site/manage.py
+  sudo chmod 755 justfile docker/docker-entrypoint.sh scripts/cleanup_old_media_files/cleanup_old_media_files.py admin_site/manage.py
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
 managepy +COMMAND: (verify-container-running django_container)
