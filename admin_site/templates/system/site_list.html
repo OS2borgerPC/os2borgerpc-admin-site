@@ -4,9 +4,20 @@
 {% block header_title %}
   {% translate "Total number of sites" as total_sites %}
   {% translate "Total number of computers" as total_pcs %}
+  {% translate "Total number of BorgerPC's" as total_bpc %}
+  {% translate "Total number of Kiosk PC's" as total_kiosk %}
+  {% translate "Total number of" as total_release_before %}
+  {% translate "computers" as total_release_after %}
   {% translate "Administrate" %} <em>{% translate "Sites" %}</em>
   <span class="ms-3 badge bg-secondary text-dark" title="{{total_sites}}">{% translate "Sites" %}: {{site_list|length}}</span>
-  <span class="ms-3 badge bg-secondary text-dark" title="{{total_pcs}}">{% translate "Computers" %}: {{pcs_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark" title="{{total_pcs}}">{% translate "Computers" %}: {{total_pcs_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark" title="{{total_bpc}}">{% translate "OS2borgerPC" %}: {{borgerpc_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark" title="{{total_kiosk}}">{% translate "OS2borgerPC Kiosk" %}: {{borgerpc_kiosk_count}}</span>
+  {% for release, release_count in releases %}
+    {% if release_count > 0 %}
+      <span class="ms-3 badge bg-secondary text-dark" title="{{total_release_before}} {{release}} {{total_release_after}}">{{release}}: {{release_count}}</span>
+    {% endif %}
+  {% endfor %}
   {% if user.is_superuser %}
   <div class="float-end">
     <span class="me-3 badge bg-secondary text-dark">{% translate "Admin site version" %}: {{version}}</span>
@@ -30,8 +41,8 @@
                 <span class="pe-4">
                   <span class='material-icons'>home</span>
                   {{site.name}}
-                  </span>
-                <span class="material-icons">computer</span>{{site.pcs.count}}
+                </span>
+               <span class="material-icons" title="">computer</span>{{site.pcs.count}}
               </a>
             </div>
           {% endfor %}
@@ -45,12 +56,12 @@
                   <span class='material-icons'>home</span>
                   {{site.name}}
                 </span>
-                <span class="material-icons">computer</span>{{site.pcs.count}}
+               <span class="material-icons" title="">computer</span>{{site.pcs.count}}
               </a>
             </div>
           {% endfor %}
-        {% endif %}  
-      {% endfor %}     
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
 {% endblock %}

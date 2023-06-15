@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-23 09:46+0200\n"
+"POT-Creation-Date: 2024-04-23 09:58+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -131,6 +131,7 @@ msgstr "Kommentarer"
 
 #: changelog/templates/list.html system/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
+#: templates/system/site_list.html templates/system/site_status.html
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
 
@@ -981,7 +982,6 @@ msgstr "Status"
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
 #: templates/system/pcs/site_pcs.html templates/system/site_list.html
-#: templates/system/site_status.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
@@ -1054,7 +1054,8 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammal installationsguide (PDF)"
 
-#: system/views.py
+#: system/views.py templates/system/site_list.html
+#: templates/system/site_status.html
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
@@ -5356,6 +5357,22 @@ msgstr "Totalt antal sites"
 msgid "Total number of computers"
 msgstr "Totalt antal datorer"
 
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Total number of BorgerPC's"
+msgstr "Totalt antal MedborgarPC'er"
+
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Total number of Kiosk PC's"
+msgstr "Totalt antal Kiosk PC'er"
+
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Total number of"
+msgstr "Totalt antal"
+
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "computers"
+msgstr "datorer"
+
 #: templates/system/site_list.html
 msgid "Administrate"
 msgstr "Hantera"
@@ -5446,7 +5463,7 @@ msgid ""
 "OS2borgerPC Kiosk"
 msgstr ""
 "Aktivera tvåstegsverifiering for superuser inloggning på en Sambruk "
-"MedborgarPC eller en Sambruk MedborgerPC Kiosk"
+"MedborgarPC eller en Sambruk MedborgarPC Kiosk"
 
 #: templates/system/site_two_factor_pc.html
 msgid ""
