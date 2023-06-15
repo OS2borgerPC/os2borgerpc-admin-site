@@ -114,6 +114,38 @@ def otp_check(
     return decorator if (view is None) else decorator(view)
 
 
+def site_pcs_stats(context, site_list):
+    context["borgerpc_count"] = PC.objects.filter(
+        site__in=site_list,
+        configuration__entries__key="os2_product",
+        configuration__entries__value="os2borgerpc",
+    ).count()
+    context["borgerpc_kiosk_count"] = PC.objects.filter(
+        site__in=site_list,
+        configuration__entries__key="os2_product",
+        configuration__entries__value="os2borgerpc kiosk",
+    ).count()
+    # Add counts for each _os_release
+    context["releases"] = []
+    for release in (
+        ConfigurationEntry.objects.filter(key="_os_release")
+        .order_by("value")
+        .distinct("value")
+        .values("value")
+    ):
+        context["releases"].append(
+            (
+                release["value"],
+                PC.objects.filter(
+                    site__in=site_list,
+                    configuration__entries__key="_os_release",
+                    configuration__entries__value=release["value"],
+                ).count(),
+            )
+        )
+    return context
+
+
 # Mixin class to require login
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""
@@ -265,11 +297,15 @@ class SiteList(ListView, LoginRequiredMixin):
             qs = Site.objects.all()
         else:
             qs = user.user_profile.sites.all()
+
         return qs
 
     def get_context_data(self, **kwargs):
         context = super(SiteList, self).get_context_data(**kwargs)
-        context["pcs_count"] = PC.objects.filter(site__in=self.get_queryset()).count()
+        context = site_pcs_stats(context, self.get_queryset())
+        context["total_pcs_count"] = PC.objects.filter(
+            site__in=self.get_queryset()
+        ).count()
         context["user"] = self.request.user
         context["version"] = open("/code/VERSION", "r").read()
         countries = Country.objects.all()
@@ -310,6 +346,7 @@ class SiteDetailView(SiteView):
     # For hver pc skal vi hente seneste security event.
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
+        context = site_pcs_stats(context, [kwargs["object"]])
         # Top level list of new PCs etc.
         not_activated_pcs = self.object.pcs.filter(is_activated=False)
 

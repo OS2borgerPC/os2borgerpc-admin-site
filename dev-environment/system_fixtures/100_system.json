@@ -1312,7 +1312,7 @@
     "pk": 204,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 17
     }
 },
@@ -1321,7 +1321,7 @@
     "pk": 205,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 18
     }
 },
@@ -1330,7 +1330,7 @@
     "pk": 206,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 3
     }
 },
@@ -1339,7 +1339,7 @@
     "pk": 207,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 15
     }
 },
@@ -1348,7 +1348,7 @@
     "pk": 208,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 22
     }
 },
@@ -1357,7 +1357,7 @@
     "pk": 209,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 28
     }
 },
@@ -1366,7 +1366,7 @@
     "pk": 211,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 9
     }
 },
@@ -1447,7 +1447,7 @@
     "pk": 224,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 32
     }
 },
@@ -1573,7 +1573,7 @@
     "pk": 238,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 34
     }
 },
@@ -1636,7 +1636,7 @@
     "pk": 245,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "22.04",
         "owner_configuration": 38
     }
 },
@@ -1699,7 +1699,7 @@
     "pk": 252,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 38
     }
 },
@@ -1780,7 +1780,7 @@
     "pk": 297,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "20.04",
         "owner_configuration": 44
     }
 },
@@ -1834,7 +1834,7 @@
     "pk": 303,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 44
     }
 },
@@ -1915,7 +1915,7 @@
     "pk": 312,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "20.04",
         "owner_configuration": 45
     }
 },
@@ -1978,7 +1978,7 @@
     "pk": 319,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 45
     }
 },
@@ -2077,7 +2077,7 @@
     "pk": 330,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "22.04",
         "owner_configuration": 46
     }
 },
@@ -2131,7 +2131,7 @@
     "pk": 336,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 46
     }
 },
@@ -2212,7 +2212,7 @@
     "pk": 345,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "22.04",
         "owner_configuration": 48
     }
 },
@@ -2266,7 +2266,7 @@
     "pk": 351,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 48
     }
 },
@@ -2392,7 +2392,7 @@
     "pk": 365,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 49
     }
 },
@@ -2455,7 +2455,7 @@
     "pk": 372,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "20.04",
         "owner_configuration": 49
     }
 },
@@ -2536,7 +2536,7 @@
     "pk": 381,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 50
     }
 },
@@ -2671,7 +2671,7 @@
     "pk": 396,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 51
     }
 },
@@ -2743,7 +2743,7 @@
     "pk": 418,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "20.04",
         "owner_configuration": 55
     }
 },
@@ -2797,7 +2797,7 @@
     "pk": 424,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 55
     }
 },
@@ -2869,7 +2869,7 @@
     "pk": 446,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "22.04",
         "owner_configuration": 54
     }
 },
@@ -2923,7 +2923,7 @@
     "pk": 452,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 54
     }
 },
@@ -2995,7 +2995,7 @@
     "pk": 460,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "20.04",
         "owner_configuration": 56
     }
 },
@@ -3049,7 +3049,7 @@
     "pk": 466,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 56
     }
 },
@@ -3130,7 +3130,7 @@
     "pk": 475,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "22.04",
         "owner_configuration": 57
     }
 },
@@ -3184,7 +3184,7 @@
     "pk": 481,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc",
         "owner_configuration": 57
     }
 },
@@ -3283,7 +3283,7 @@
     "pk": 492,
     "fields": {
         "key": "os2_product",
-        "value": "5",
+        "value": "os2borgerpc kiosk",
         "owner_configuration": 59
     }
 },
@@ -3337,7 +3337,7 @@
     "pk": 498,
     "fields": {
         "key": "_os_release",
-        "value": "5",
+        "value": "20.04",
         "owner_configuration": 59
     }
 },
@@ -3420,6 +3420,96 @@
         "key": "_ip_addresses",
         "value": "172.17.0.1 172.18.0.1 192.168.49.1 172.16.20.228",
         "owner_configuration": 55
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 508,
+    "fields": {
+        "key": "_os_release",
+        "value": "20.04",
+        "owner_configuration": 15
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 509,
+    "fields": {
+        "key": "_os_release",
+        "value": "22.04",
+        "owner_configuration": 32
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 510,
+    "fields": {
+        "key": "_os_release",
+        "value": "22.04",
+        "owner_configuration": 17
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 511,
+    "fields": {
+        "key": "_os_release",
+        "value": "24.04",
+        "owner_configuration": 51
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 512,
+    "fields": {
+        "key": "_os_release",
+        "value": "24.04",
+        "owner_configuration": 1
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 513,
+    "fields": {
+        "key": "os2_product",
+        "value": "os2borgerpc kiosk",
+        "owner_configuration": 1
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 514,
+    "fields": {
+        "key": "_os_release",
+        "value": "20.04",
+        "owner_configuration": 28
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 515,
+    "fields": {
+        "key": "_os_release",
+        "value": "22.04",
+        "owner_configuration": 18
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 516,
+    "fields": {
+        "key": "_os_release",
+        "value": "24.04",
+        "owner_configuration": 3
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 517,
+    "fields": {
+        "key": "_os_release",
+        "value": "24.04",
+        "owner_configuration": 50
     }
 },
 {
