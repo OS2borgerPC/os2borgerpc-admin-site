@@ -18,30 +18,24 @@ AUTH_PROFILE_MODULE = "account.UserProfile"
 config = configparser.ConfigParser()
 config["settings"] = {}
 
-# We support loading settings from two files. The fallback values in this
-# `settings.py` is first overwritten by the values defined in the file where
-# the env var `BPC_SYSTEM_CONFIG_PATH` points to. Finally the values are
-# overwritten by the values the env var `BPC_USER_CONFIG_PATH` points to.
-#
-# The `BPC_SYSTEM_CONFIG_PATH` file is for an alternative set of default
-# values. It is useful in a specific environment such as Docker. An example is
-# the setting for STATIC_ROOT. The default in `settings.py` is relative to the
-# current directory. In Docker it should be an absolute path that is easy to
-# mount a volume to.
-#
+# We load settings from a file. The fallback values in this
+# `settings.py` is overwritten by the values defined in the file
+# the env var `BPC_USER_CONFIG_PATH` points to.
 
-# The `BPC_USER_CONFIG_PATH` file is for normal settings and should generally
+# The `BPC_USER_CONFIG_PATH` file is for settings that should generally
 # be unique to an instance deployment.
 
-for env in ["BPC_SYSTEM_CONFIG_PATH", "BPC_USER_CONFIG_PATH"]:
-    path = os.getenv(env, None)
-    if path:
-        try:
-            with open(path) as fp:
-                config.read_file(fp)
-            logger.info("Loaded setting %s from %s" % (env, path))
-        except OSError as e:
-            logger.error("Loading setting %s from %s failed with %s." % (env, path, e))
+path = os.getenv("BPC_USER_CONFIG_PATH", None)
+if path:
+    try:
+        with open(path) as fp:
+            config.read_file(fp)
+        logger.info("Loaded settings file BPC_USER_CONFIG_PATH from %s" % (path))
+    except OSError as e:
+        logger.error(
+            "Loading settings file BPC_USER_CONFIG_PATH from %s failed with %s."
+            % (path, e)
+        )
 
 # use settings section as default
 settings = config["settings"]
@@ -143,7 +137,7 @@ USE_TZ = False
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = settings["MEDIA_ROOT"]
+MEDIA_ROOT = "/media"
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -154,7 +148,7 @@ MEDIA_URL = "/media/"
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = settings["STATIC_ROOT"]
+STATIC_ROOT = "/static"
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
