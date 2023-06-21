@@ -2366,7 +2366,10 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-        except User.DoesNotExist:
+            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
+                site__uid=self.kwargs["site_uid"]
+            )
+        except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
                 _("You have no user with the following ID: %s")
                 % self.kwargs["username"]
