@@ -163,11 +163,16 @@ def get_instructions(pc_uid, update_data=None):
 
     for security_problem in security_problems:
         # inject security problem uid into the script code.
+        # "name" will be used as part of the script name on the client, whereas SECURITY_PROBLEM_UID is used internally to
+        # pair SecurityProblems with SecurityEvents
+        identifier = (
+            f"script{security_problem.security_script.id}_problem{security_problem.id}"
+        )
         script_dict = {
-            "name": str(security_problem.id),
+            "name": identifier,
             "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
-            .replace("%SECURITY_PROBLEM_UID%", str(security_problem.id)),
+            .replace("%SECURITY_PROBLEM_UID%", identifier),
         }
         scripts.append(script_dict)
 
