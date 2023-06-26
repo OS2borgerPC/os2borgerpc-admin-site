@@ -24,12 +24,24 @@ class UserProfileInline(admin.TabularInline):
 @admin.register(User)
 class MyUserAdmin(UserAdmin):
     inlines = [UserProfileInline]
+    list_display = (
+        "username",
+        "email",
+        "sites",
+        "is_staff",
+        "is_active",
+        "bibos_profile",
+    )
+    search_fields = ("username", "email")
 
     @transaction.atomic
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         if not hasattr(obj, "bibos_profile"):
             UserProfile.objects.create(user=obj)
+
+    def sites(self, obj):
+        return list(obj.bibos_profile.sites.all())
 
 
 class SiteMembershipInline(admin.TabularInline):
@@ -40,6 +52,9 @@ class SiteMembershipInline(admin.TabularInline):
 @admin.register(UserProfile)
 class MyUserProfileAdmin(admin.ModelAdmin):
     inlines = [SiteMembershipInline]
-    list_display = ("user",)
+    list_display = ("user", "user_sites", "language")
     list_filter = ("sites",)
     search_fields = ("user__username",)
+
+    def user_sites(self, obj):
+        return list(obj.sites.all())
