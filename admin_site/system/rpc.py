@@ -240,14 +240,23 @@ def push_security_events(pc_uid, events_csv):
             )
             return 1
 
-        security_problem = SecurityProblem.objects.filter(id=rule_id).first()
+        try:
+            security_problem = SecurityProblem.objects.filter(id=rule_id).first()
+        except ValueError:
+            logger.exception(
+                "Security event log contained invalid rule ID %s, Event: %s, PC UID %s",
+                rule_id,
+                str(event),
+                pc.uid,
+            )
+            continue
 
         if not security_problem:
             # Ignore ID's of SecurityProblems that don't exist
             logger.error(
                 "Security problem with ID %s could not be found, Event: %s, PC UID %s",
                 rule_id,
-                event,
+                str(event),
                 pc.uid,
             )
             continue
@@ -260,7 +269,7 @@ def push_security_events(pc_uid, events_csv):
                     "match site of PC, Event: %s, PC UID %s"
                 ),
                 security_problem.id,
-                event,
+                str(event),
                 pc.uid,
             )
             continue
