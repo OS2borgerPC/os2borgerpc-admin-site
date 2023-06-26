@@ -161,7 +161,7 @@ class Site(models.Model):
         default=datetime.timedelta(hours=4),
     )
     rerun_asc = models.BooleanField(
-        verbose_name=_("Rerun edited associated scripts"), default=False
+        verbose_name=_("Automatically rerun associated scripts when you update their arguments"), default=False
     )
 
     class Meta:
