@@ -2651,7 +2651,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 self.object.configuration.update_from_request(
                     self.request.POST, "group_configuration"
                 )
-                self.object.update_policy_from_request(self.request, "group_policies")
+                updated_policy_scripts = self.object.update_policy_from_request(
+                    self.request, "group_policies"
+                )
 
                 response = super(PCGroupUpdate, self).form_valid(form)
 
@@ -2671,10 +2673,14 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     for asc in ordered_policy:
                         asc.run_on(self.request.user, new_members)
 
-                new_policy = list(new_policy)
-                new_policy.sort(key=lambda asc: asc.position)
+                if self.object.site.rerun_asc:
+                    policy_for_all = new_policy.union(updated_policy_scripts)
+                else:
+                    policy_for_all = new_policy
+                policy_for_all = list(policy_for_all)
+                policy_for_all.sort(key=lambda asc: asc.position)
                 # ... and run new policy scripts on old PCs
-                for asc in new_policy:
+                for asc in policy_for_all:
                     asc.run_on(self.request.user, surviving_members)
 
                 # If the group belongs to an active wake plan
