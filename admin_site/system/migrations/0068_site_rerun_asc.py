@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("system", "0066_alter_imageversion_platform"),
+        ("system", "0067_remove_securityproblem_unique_uid_per_site_and_more"),
     ]
 
     operations = [
@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
             model_name="site",
             name="rerun_asc",
             field=models.BooleanField(
-                default=False, verbose_name="Rerun edited associated scripts"
+                default=False,
+                verbose_name="Automatically rerun associated scripts when you update their arguments",
             ),
         ),
     ]

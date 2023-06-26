@@ -106,8 +106,8 @@ run-debug:
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)
 translations-make-messages: (verify-container-running django_container)
-  @just managepy makemessages --all --ignore venv
-  @just managepy makemessages --all --ignore venv -d djangojs
+  @just managepy makemessages --all --ignore venv --add-location file
+  @just managepy makemessages --all --ignore venv --add-location file -d djangojs
 
 # Run django's compile-messages (usually after make-messages) for translations
 translations-compile-messages: (verify-container-running django_container)
