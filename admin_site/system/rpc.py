@@ -172,7 +172,7 @@ def get_instructions(pc_uid, update_data=None):
             "name": identifier,
             "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
-            .replace("%SECURITY_PROBLEM_UID%", identifier),
+            .replace("%SECURITY_PROBLEM_UID%", str(security_problem.id)),
         }
         scripts.append(script_dict)
 
@@ -246,6 +246,7 @@ def push_security_events(pc_uid, events_csv):
             # Ignore ID's of SecurityProblems that don't exist
             logger.error(
                 "Security problem with ID %s could not be found, Event: %s, PC UID %s",
+                rule_id,
                 event,
                 pc.uid,
             )
