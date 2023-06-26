@@ -10587,7 +10587,6 @@
     "pk": 1,
     "fields": {
         "name": "Ping advarsel",
-        "uid": "MPING",
         "description": "Ping!",
         "level": "Normal",
         "site": 1,
@@ -10603,7 +10602,6 @@
     "pk": 4,
     "fields": {
         "name": "Sudo-advarsel",
-        "uid": "sudo",
         "description": "a",
         "level": "High",
         "site": 1,
@@ -10619,7 +10617,6 @@
     "pk": 5,
     "fields": {
         "name": "Keyboard-advarsel",
-        "uid": "keyboard",
         "description": "",
         "level": "High",
         "site": 1,
@@ -10635,7 +10632,6 @@
     "pk": 6,
     "fields": {
         "name": "Detekter låst/udløbet bruger",
-        "uid": "locked",
         "description": "abc",
         "level": "High",
         "site": 1,

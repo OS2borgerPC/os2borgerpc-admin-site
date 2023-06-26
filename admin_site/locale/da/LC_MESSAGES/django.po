@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 10:47+0200\n"
+"POT-Creation-Date: 2023-06-26 10:07+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -67,17 +67,17 @@ msgstr "Adgangskode"
 msgid "Password (again)"
 msgstr "Adgangskode (igen)"
 
-#: system/forms.py:197
+#: system/forms.py:200
 msgid "Passwords must be identical."
 msgstr "De to adgangskoder skal være ens"
 
-#: system/forms.py:204
+#: system/forms.py:207
 #, python-format
 msgid "A user named \"%s\" already exists."
 msgstr "En bruger med navnet \"%s\" eksisterer allerede."
 
 #: system/mixins.py:9 system/models.py:134 system/models.py:577
-#: system/models.py:887 system/models.py:1254 system/models.py:1281
+#: system/models.py:887 system/models.py:1255 system/models.py:1282
 msgid "created"
 msgstr "oprettet"
 
@@ -112,12 +112,12 @@ msgstr "ejer-konfiguration"
 #: system/models.py:127 system/models.py:214 system/models.py:244
 #: system/models.py:290 system/models.py:444 system/models.py:562
 #: system/models.py:678 system/models.py:690 system/models.py:774
-#: system/models.py:993 system/models.py:1101 system/models.py:1239
+#: system/models.py:993 system/models.py:1101 system/models.py:1240
 msgid "name"
 msgstr "navn"
 
 #: system/models.py:128 system/models.py:215 system/models.py:564
-#: system/models.py:693 system/models.py:1102
+#: system/models.py:693
 msgid "UID"
 msgstr "UID"
 
@@ -291,7 +291,7 @@ msgid "wake change events"
 msgstr "undtagelser"
 
 #: system/models.py:446 system/models.py:567 system/models.py:695
-#: system/models.py:1103 system/models.py:1251
+#: system/models.py:1102 system/models.py:1252
 msgid "description"
 msgstr "beskrivelse"
 
@@ -319,7 +319,7 @@ msgstr "placering"
 msgid "executable code"
 msgstr "eksekverbar kode"
 
-#: system/models.py:706 system/models.py:1112
+#: system/models.py:706 system/models.py:1111
 msgid "security script"
 msgstr "sikkerhedsscript"
 
@@ -376,7 +376,7 @@ msgstr "afsluttet"
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:950 system/views.py:703
+#: system/models.py:950 system/views.py:709
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
@@ -432,60 +432,60 @@ msgid "securitylevel:Critical"
 msgstr "Kritisk"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: system/models.py:1105
+#: system/models.py:1104
 msgid "level"
 msgstr "alvorlighedsgrad"
 
-#: system/models.py:1119
+#: system/models.py:1118
 msgid "alert groups"
 msgstr "overvågede grupper"
 
-#: system/models.py:1125
+#: system/models.py:1124
 msgid "alert users"
 msgstr "modtager(e) af e-mail-advarsel"
 
 # SecurityEvent class
-#: system/models.py:1153
+#: system/models.py:1152
 msgid "eventstatus:New"
 msgstr "Ny"
 
-#: system/models.py:1154
+#: system/models.py:1153
 msgid "eventstatus:Assigned"
 msgstr "Tildelt"
 
-#: system/models.py:1155
+#: system/models.py:1154
 msgid "eventstatus:Resolved"
 msgstr "Løst"
 
-#: system/models.py:1171
+#: system/models.py:1170
 msgid "occurred"
 msgstr "hændelsestidspunkt"
 
-#: system/models.py:1173
+#: system/models.py:1172
 msgid "reported"
 msgstr "modtagelsestidspunkt"
 
-#: system/models.py:1180
+#: system/models.py:1179
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py:1250
+#: system/models.py:1251
 msgid "title"
 msgstr "titel"
 
-#: system/models.py:1252 system/models.py:1279
+#: system/models.py:1253 system/models.py:1280
 msgid "content"
 msgstr "indhold"
 
-#: system/models.py:1255
+#: system/models.py:1256
 msgid "updated"
 msgstr "opdateret"
 
-#: system/models.py:1256
+#: system/models.py:1257
 msgid "author"
 msgstr "forfatter"
 
-#: system/models.py:1259
+#: system/models.py:1260
 msgid "version"
 msgstr "version"
 
@@ -494,44 +494,44 @@ msgstr "version"
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
-#: system/views.py:738
+#: system/views.py:744
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
-#: system/views.py:782
+#: system/views.py:788
 #, python-format
 msgid "You have no Script with the following ID: %s"
 msgstr "Du har intet script med ID %s"
 
-#: system/views.py:889
+#: system/views.py:895
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du skal angive et navn"
 
-#: system/views.py:896
+#: system/views.py:902
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du skal angive en korrekt input-parameter-type"
 
-#: system/views.py:1055
+#: system/views.py:1061
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:1151 system/views.py:1173
+#: system/views.py:1157 system/views.py:1179
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1299
+#: system/views.py:1305
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen computer med følgende ID: %s"
 
-#: system/views.py:1370
+#: system/views.py:1376
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
-#: system/views.py:1645
+#: system/views.py:1654
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -542,7 +542,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1664
+#: system/views.py:1673
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -551,7 +551,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1681
+#: system/views.py:1690
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -560,17 +560,17 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1691
+#: system/views.py:1700
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
 
-#: system/views.py:1711
+#: system/views.py:1720
 #, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidsplan med følgende ID: %s"
 
-#: system/views.py:1837
+#: system/views.py:1846
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -581,7 +581,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1856
+#: system/views.py:1865
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -590,7 +590,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1873
+#: system/views.py:1882
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -599,53 +599,53 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1884
+#: system/views.py:1893
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Tænd/sluk tidsplan %s opdateret"
 
-#: system/views.py:1980
+#: system/views.py:1989
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
-#: system/views.py:2101
+#: system/views.py:2111
 #, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
 
-#: system/views.py:2138
+#: system/views.py:2148
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undtagelse %s opdateret"
 
-#: system/views.py:2147
+#: system/views.py:2157
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr ""
 "De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
 
-#: system/views.py:2156 system/views.py:2211
+#: system/views.py:2166 system/views.py:2221
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
-#: system/views.py:2352
+#: system/views.py:2371
 #, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 
-#: system/views.py:2417
+#: system/views.py:2438
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:2460
+#: system/views.py:2481
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:2547
+#: system/views.py:2568
 #, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
@@ -654,7 +654,7 @@ msgstr ""
 "I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>Prøv "
 "i stedet at finde gruppen fra gruppelisten."
 
-#: system/views.py:2717
+#: system/views.py:2738
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -663,35 +663,35 @@ msgstr ""
 "Gruppe %s opdateret, men computer(ne) %s kunne ikke tilføjes, da de(n) "
 "allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:2732
+#: system/views.py:2753
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:2745
+#: system/views.py:2766
 #, python-format
 msgid "No value was specified for the mandatory input %s of script %s"
 msgstr "Den obligatoriske parameterværdi %s for script %s mangler"
 
-#: system/views.py:2816
+#: system/views.py:2837
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
 
-#: system/views.py:2883
+#: system/views.py:2912
 #, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
 
-#: system/views.py:3131
+#: system/views.py:3151
 msgid "The administration site"
 msgstr "Administrationssiden"
 
-#: system/views.py:3132
+#: system/views.py:3152
 msgid "About"
 msgstr "Om"
 
-#: system/views.py:3133 templates/site_with_navigation.html:33
+#: system/views.py:3153 templates/site_with_navigation.html:33
 #: templates/system/jobs/site_jobs.html:38
 #: templates/system/jobs/site_jobs.html:163 templates/system/pcs/form.html:153
 #: templates/system/security_events/site_security_events.html:53
@@ -700,7 +700,7 @@ msgstr "Om"
 msgid "Status"
 msgstr "Status"
 
-#: system/views.py:3134 templates/site_with_navigation.html:77
+#: system/views.py:3154 templates/site_with_navigation.html:77
 #: templates/system/jobs/site_jobs.html:84
 #: templates/system/pcgroups/confirm_delete.html:18
 #: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
@@ -711,7 +711,7 @@ msgstr "Status"
 msgid "Computers"
 msgstr "Computere"
 
-#: system/views.py:3135 templates/site_with_navigation.html:82
+#: system/views.py:3155 templates/site_with_navigation.html:82
 #: templates/system/jobs/site_jobs.html:107
 #: templates/system/pcgroups/site_groups.html:7
 #: templates/system/security_problems/confirm_delete.html:23
@@ -720,88 +720,88 @@ msgstr "Computere"
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py:3136
+#: system/views.py:3156
 msgid "On/Off schedules"
 msgstr "Tænd/Sluk tidsplaner"
 
-#: system/views.py:3137 templates/site_with_navigation.html:100
+#: system/views.py:3157 templates/site_with_navigation.html:100
 #: templates/system/jobs/site_jobs.html:6
 #: templates/system/scripts/confirm_delete.html:21
 msgid "Jobs"
 msgstr "Jobs"
 
-#: system/views.py:3138 templates/site_with_navigation.html:105
+#: system/views.py:3158 templates/site_with_navigation.html:105
 #: templates/system/scripts/header.html:5
 #: templates/system/site_two_factor.html:63
 msgid "Scripts"
 msgstr "Scripts"
 
-#: system/views.py:3139 templates/site_with_navigation.html:63
+#: system/views.py:3159 templates/site_with_navigation.html:63
 #: templates/system/scripts/header.html:5
 msgid "Security Scripts"
 msgstr "Sikkerhedsscripts"
 
-#: system/views.py:3140 templates/site_with_navigation.html:112
+#: system/views.py:3160 templates/site_with_navigation.html:112
 #: templates/system/users/confirm_delete.html:5
 #: templates/system/users/create.html:5 templates/system/users/update.html:5
 msgid "Users"
 msgstr "Brugere"
 
-#: system/views.py:3141 templates/site_with_navigation.html:188
+#: system/views.py:3161 templates/site_with_navigation.html:188
 #: templates/system/pcgroups/site_groups.html:67
 #: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
 msgid "Configurations"
 msgstr "Konfigurationer"
 
-#: system/views.py:3142
+#: system/views.py:3162
 msgid "Setting up security surveillance (PDF)"
 msgstr "Oprettelse af Sikkerhedsovervågning (PDF)"
 
-#: system/views.py:3143
+#: system/views.py:3163
 msgid "The News site"
 msgstr "Nyhedssiden"
 
-#: system/views.py:3144
+#: system/views.py:3164
 msgid "OS2borgerPC"
 msgstr "OS2BorgerPC"
 
-#: system/views.py:3145
+#: system/views.py:3165
 msgid "Installation Guide (PDF)"
 msgstr "Installationsguide (PDF)"
 
-#: system/views.py:3146
+#: system/views.py:3166
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: system/views.py:3147
+#: system/views.py:3167
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
-#: system/views.py:3148
+#: system/views.py:3168
 msgid "Installation Guide"
 msgstr "Installationsguide"
 
-#: system/views.py:3149
+#: system/views.py:3169
 msgid "Updating Wi-Fi setup"
 msgstr "Opdatering af Wi-Fi opsætning"
 
-#: system/views.py:3150
+#: system/views.py:3170
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
 
-#: system/views.py:3151
+#: system/views.py:3171
 msgid "OS2borgerPC Image"
 msgstr "OS2borgerPC Image"
 
-#: system/views.py:3152
+#: system/views.py:3172
 msgid "OS2borgerPC Admin Site"
 msgstr "OS2borgerPC Admin Site"
 
-#: system/views.py:3153
+#: system/views.py:3173
 msgid "OS2borgerPC Kiosk Image"
 msgstr "OS2borgerPC Kiosk Image"
 
-#: system/views.py:3154
+#: system/views.py:3174
 msgid "OS2borgerPC Client"
 msgstr "OS2borgerPC Client"
 
@@ -853,16 +853,14 @@ msgstr "Der er sket en serverfejl og vi er blevet notificeret om fejlen."
 msgid "OS2borgerPC Administration"
 msgstr "OS2borgerPC Administration"
 
-#: templates/base.html:41 templates/login.html:314
-#: templates/two_factor/_base.html:328
+#: templates/base.html:41 templates/two_factor/_base.html:328
 msgid ""
 "It looks like you're using Internet Explorer. It won't work on this website."
 msgstr ""
 "Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på "
 "dette website."
 
-#: templates/base.html:42 templates/login.html:315
-#: templates/two_factor/_base.html:329
+#: templates/base.html:42 templates/two_factor/_base.html:329
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Prøv at åbne denne side i Microsoft Edge"
 
@@ -879,33 +877,6 @@ msgstr "Dokumentation"
 #: templates/documentation/index.html:26
 msgid "Return to admin"
 msgstr "Tilbage til admin"
-
-#: templates/login.html:9 templates/two_factor/_base.html:6
-msgid "OS2borgerPC Administration Login"
-msgstr "OS2borgerPC Administration Login"
-
-#: templates/login.html:283 templates/login.html:286
-#: templates/two_factor/core/login.html:6
-#: templates/two_factor/core/login.html:21
-#: templates/two_factor/core/login.html:22
-msgid "Log in"
-msgstr "Log ind"
-
-#: templates/login.html:292 templates/two_factor/_base.html:306
-msgid ""
-"OS2borgerPC is an open source product. You can download the source code and "
-"documentation here:"
-msgstr ""
-"OS2borgerPC er en open source løsning. Du kan hente kildekoden og "
-"dokumentationen her:"
-
-#: templates/login.html:302 templates/two_factor/_base.html:316
-msgid "Check updates for OS2borgerPC"
-msgstr "Se opdateringer i OS2borgerPC"
-
-#: templates/login.html:308 templates/two_factor/_base.html:322
-msgid "Send a message to Magenta"
-msgstr "Send en besked til Magenta"
 
 #: templates/logout.html:11
 msgid "You have been logged out"
@@ -1060,7 +1031,6 @@ msgstr "Tilføj kommentar"
 #: templates/system/security_events/site_security_events.html:103
 #: templates/system/security_problems/confirm_delete.html:49
 #: templates/system/security_problems/site_security_problems.html:112
-#: templates/system/security_problems/site_security_problems.html:157
 #: templates/system/site_settings.html:60
 #: templates/system/users/confirm_delete.html:20
 #: templates/system/users/create.html:17 templates/system/users/update.html:60
@@ -1143,7 +1113,7 @@ msgid "Showing"
 msgstr "Viser"
 
 #: templates/system/changelog/list.html:94
-#: templates/system/security_problems/site_security_problems.html:70
+#: templates/system/security_problems/site_security_problems.html:71
 msgid "all"
 msgstr "alle"
 
@@ -1340,7 +1310,7 @@ msgstr "Slet gruppe"
 #: templates/system/pcs/confirm_delete.html:12
 #: templates/system/scripts/confirm_delete.html:20
 #: templates/system/security_problems/confirm_delete.html:13
-#: templates/system/security_problems/site_security_problems.html:68
+#: templates/system/security_problems/site_security_problems.html:69
 #: templates/system/site_two_factor.html:24
 #: templates/system/wake_plan/confirm_delete.html:12
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html:12
@@ -1454,7 +1424,7 @@ msgstr "Slet gruppe"
 
 #: templates/system/pcgroups/site_groups.html:47
 #: templates/system/pcs/form.html:43
-#: templates/system/security_problems/site_security_problems.html:52
+#: templates/system/security_problems/site_security_problems.html:48
 msgid "Details about"
 msgstr "Detaljer om"
 
@@ -1797,7 +1767,7 @@ msgid "Handled by"
 msgstr "Håndteres af"
 
 #: templates/system/security_problems/confirm_delete.html:7
-#: templates/system/security_problems/site_security_problems.html:32
+#: templates/system/security_problems/site_security_problems.html:28
 msgid "Delete security rule"
 msgstr "Slet sikkerhedsregel"
 
@@ -1844,32 +1814,35 @@ msgstr ""
 msgid "Are you sure you wish to delete the Security Rule"
 msgstr "Er du sikker på, du ønsker at slette Sikkerhedsreglen"
 
-#: templates/system/security_problems/site_security_problems.html:19
-#: templates/system/security_problems/site_security_problems.html:126
+#: templates/system/security_problems/site_security_problems.html:15
 msgid "Define new security rule"
 msgstr "Definér ny sikkerhedsregel"
 
-#: templates/system/security_problems/site_security_problems.html:44
+#: templates/system/security_problems/site_security_problems.html:40
 msgid "Add group to surveillance"
 msgstr "Tilføj gruppe til overvågning"
 
-#: templates/system/security_problems/site_security_problems.html:45
+#: templates/system/security_problems/site_security_problems.html:41
 msgid "Remove monitored group"
 msgstr "Fjern overvåget gruppe"
 
-#: templates/system/security_problems/site_security_problems.html:46
+#: templates/system/security_problems/site_security_problems.html:42
 msgid "Add email recipient"
 msgstr "Tilføj e-mail-modtager"
 
-#: templates/system/security_problems/site_security_problems.html:47
+#: templates/system/security_problems/site_security_problems.html:43
 msgid "Remove recipient"
 msgstr "Fjern modtager"
 
-#: templates/system/security_problems/site_security_problems.html:71
+#: templates/system/security_problems/site_security_problems.html:57
+msgid "New security rule"
+msgstr "Ny sikkerhedsregel"
+
+#: templates/system/security_problems/site_security_problems.html:72
 msgid "empty"
 msgstr "tom"
 
-#: templates/system/security_problems/site_security_problems.html:72
+#: templates/system/security_problems/site_security_problems.html:73
 #, python-format
 msgid ""
 "If the Security Rule does not have a Group added, the rule will apply to "
@@ -1878,7 +1851,7 @@ msgstr ""
 "Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen "
 "gælde %(all)s Computere."
 
-#: templates/system/security_problems/site_security_problems.html:75
+#: templates/system/security_problems/site_security_problems.html:76
 #, python-format
 msgid ""
 "If you want to temporarily disable a rule, you can create an %(empty)s Group "
@@ -1889,18 +1862,12 @@ msgstr ""
 "overvågede Gruppe."
 
 #: templates/system/security_problems/site_security_problems.html:98
-#: templates/system/security_problems/site_security_problems.html:145
 msgid "Monitored groups"
 msgstr "Overvågede grupper"
 
 #: templates/system/security_problems/site_security_problems.html:102
-#: templates/system/security_problems/site_security_problems.html:149
 msgid "Recipient(s) of email warning"
 msgstr "Modtager(e) af e-mail-advarsel"
-
-#: templates/system/security_problems/site_security_problems.html:156
-msgid "Create security rule"
-msgstr "Opret sikkerhedsregel"
 
 #: templates/system/site_image_versions.html:27
 msgid "Newest version of"
@@ -2424,6 +2391,26 @@ msgstr "Duplikér tidsplan"
 msgid "Add new On/Off schedule"
 msgstr "Tilføj ny tænd/sluk tidsplan"
 
+#: templates/two_factor/_base.html:6
+msgid "OS2borgerPC Administration Login"
+msgstr "OS2borgerPC Administration Login"
+
+#: templates/two_factor/_base.html:306
+msgid ""
+"OS2borgerPC is an open source product. You can download the source code and "
+"documentation here:"
+msgstr ""
+"OS2borgerPC er en open source løsning. Du kan hente kildekoden og "
+"dokumentationen her:"
+
+#: templates/two_factor/_base.html:316
+msgid "Check updates for OS2borgerPC"
+msgstr "Se opdateringer i OS2borgerPC"
+
+#: templates/two_factor/_base.html:322
+msgid "Send a message to Magenta"
+msgstr "Send en besked til Magenta"
+
 #: templates/two_factor/core/backup_tokens.html:5
 #: templates/two_factor/core/setup.html:5
 #: templates/two_factor/core/setup_complete.html:5
@@ -2469,6 +2456,11 @@ msgstr "Tilbage til brugerprofil"
 msgid "Generate Tokens"
 msgstr "Generér koder"
 
+#: templates/two_factor/core/login.html:6
+#: templates/two_factor/core/login.html:21
+msgid "Log in"
+msgstr "Log ind"
+
 #: templates/two_factor/core/login.html:9
 msgid "Please enter the token generated by your authenticator app."
 msgstr "Indtast venligst koden fra din authenticator app."
@@ -2483,15 +2475,15 @@ msgstr ""
 "blevet generéret, så du kan opbevare dem sikkert. Indtast venligst en af "
 "dine backupkoder for at logge ind."
 
-#: templates/two_factor/core/login.html:26
+#: templates/two_factor/core/login.html:25
 msgid "Back"
 msgstr "Tilbage"
 
-#: templates/two_factor/core/login.html:30
+#: templates/two_factor/core/login.html:29
 msgid "As a last resort, you can use a"
 msgstr "Som en sidste udvej, kan du bruge en"
 
-#: templates/two_factor/core/login.html:32
+#: templates/two_factor/core/login.html:31
 msgid "backup token"
 msgstr "backupkode"
 
@@ -2607,3 +2599,6 @@ msgstr "Deaktivér"
 #: templates/widgets/wake_plan_picklist.html:199
 msgid "Data is missing"
 msgstr "Data mangler"
+
+#~ msgid "Create security rule"
+#~ msgstr "Opret sikkerhedsregel"

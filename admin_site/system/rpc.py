@@ -163,11 +163,16 @@ def get_instructions(pc_uid, update_data=None):
 
     for security_problem in security_problems:
         # inject security problem uid into the script code.
+        # "name" will be used as part of the script name on the client, whereas SECURITY_PROBLEM_UID is used internally to
+        # pair SecurityProblems with SecurityEvents
+        identifier = (
+            f"script{security_problem.security_script.id}_problem{security_problem.id}"
+        )
         script_dict = {
-            "name": security_problem.uid,
+            "name": identifier,
             "executable_code": security_problem.security_script.executable_code.read()
             .decode("utf8")
-            .replace("%SECURITY_PROBLEM_UID%", security_problem.uid),
+            .replace("%SECURITY_PROBLEM_UID%", str(security_problem.id)),
         }
         scripts.append(script_dict)
 
@@ -226,7 +231,7 @@ def push_security_events(pc_uid, events_csv):
 
     for event in events_csv:
         try:
-            event_date, event_uid, event_summary, event_complete_log = event.split(",")
+            event_date, rule_id, event_summary, event_complete_log = event.split(",")
         except ValueError:
             logger.exception(
                 "Security event generated ValueError, Event: %s, PC UID: %s",
@@ -235,13 +240,23 @@ def push_security_events(pc_uid, events_csv):
             )
             return 1
 
-        security_problem = SecurityProblem.objects.filter(uid=event_uid).first()
+        try:
+            security_problem = SecurityProblem.objects.filter(id=rule_id).first()
+        except ValueError:
+            logger.exception(
+                "Security event log contained invalid rule ID %s, Event: %s, PC UID %s",
+                rule_id,
+                str(event),
+                pc.uid,
+            )
+            continue
 
         if not security_problem:
-            # Ignore UID's of SecurityProblems that don't exist
+            # Ignore ID's of SecurityProblems that don't exist
             logger.error(
-                "Security problem with UID %s could not be found, Event: %s, PC UID %s",
-                event,
+                "Security problem with ID %s could not be found, Event: %s, PC UID %s",
+                rule_id,
+                str(event),
                 pc.uid,
             )
             continue
@@ -250,11 +265,11 @@ def push_security_events(pc_uid, events_csv):
             # Ignore SecurityProblems matching a computer on a different site
             logger.error(
                 (
-                    "Security problem with UID %s does not "
+                    "Security problem with ID %s does not "
                     "match site of PC, Event: %s, PC UID %s"
                 ),
-                security_problem.uid,
-                event,
+                security_problem.id,
+                str(event),
                 pc.uid,
             )
             continue

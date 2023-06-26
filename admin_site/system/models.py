@@ -1099,7 +1099,6 @@ class SecurityProblem(models.Model):
     }
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    uid = models.SlugField(verbose_name=_("UID"), unique=True)
     description = models.TextField(verbose_name=_("description"), blank=True)
     level = models.CharField(
         verbose_name=_("level"), max_length=10, choices=LEVEL_CHOICES, default=HIGH
@@ -1129,12 +1128,12 @@ class SecurityProblem(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        site_url = self.site.get_absolute_url()
+        return "{0}/security_problems/{1}".format(site_url, self.id)
+
     class Meta:
         ordering = ["name"]
-
-        constraints = [
-            models.UniqueConstraint(fields=["uid", "site"], name="unique_uid_per_site"),
-        ]
 
 
 class SecurityEvent(models.Model):
