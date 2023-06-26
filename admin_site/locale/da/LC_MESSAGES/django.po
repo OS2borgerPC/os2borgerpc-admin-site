@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-26 10:07+0200\n"
+"POT-Creation-Date: 2023-06-26 13:05+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -15,523 +15,521 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: account/models.py:28 system/forms.py:132
+#: account/models.py system/forms.py
 msgid "Language"
 msgstr "Sprog"
 
-#: account/models.py:44
+#: account/models.py
 msgid "Site User"
 msgstr "Site-bruger"
 
-#: account/models.py:44
+#: account/models.py
 msgid "Site Admin"
 msgstr "Site-admin"
 
-#: system/admin.py:133 templates/system/scripts/search_result.html:22
+#: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
 msgstr "Global"
 
-#: system/admin.py:145
+#: system/admin.py
 msgid "Jobs per site"
 msgstr "Jobs per site"
 
-#: system/admin.py:160
+#: system/admin.py
 msgid "Jobs per Site for the last year"
 msgstr "Jobs per site i det sidste år"
 
-#: system/admin.py:233
+#: system/admin.py
 msgid "Number of computers"
 msgstr "Antal computere"
 
-#: system/admin.py:234
+#: system/admin.py
 msgid "Number of KioskPC computers"
 msgstr "Antal KioskPC computere"
 
-#: system/admin.py:235
+#: system/admin.py
 msgid "Number of BorgerPC computers"
 msgstr "Antal BorgerPC computere"
 
-#: system/admin.py:271
+#: system/admin.py
 msgid "Site"
 msgstr "Site"
 
-#: system/forms.py:126
+#: system/forms.py
 msgid "Usertype"
 msgstr "Brugertype"
 
-#: system/forms.py:136 system/models.py:990
+#: system/forms.py system/models.py
 msgid "Password"
 msgstr "Adgangskode"
 
-#: system/forms.py:142
+#: system/forms.py
 msgid "Password (again)"
 msgstr "Adgangskode (igen)"
 
-#: system/forms.py:200
+#: system/forms.py
 msgid "Passwords must be identical."
 msgstr "De to adgangskoder skal være ens"
 
-#: system/forms.py:207
+#: system/forms.py
 #, python-format
 msgid "A user named \"%s\" already exists."
 msgstr "En bruger med navnet \"%s\" eksisterer allerede."
 
-#: system/mixins.py:9 system/models.py:134 system/models.py:577
-#: system/models.py:887 system/models.py:1255 system/models.py:1282
+#: system/mixins.py system/models.py
 msgid "created"
 msgstr "oprettet"
 
-#: system/mixins.py:12
+#: system/mixins.py
 msgid "modified"
 msgstr "ændret"
 
-#: system/mixins.py:19
+#: system/mixins.py
 msgid "created by user"
 msgstr "oprettet af bruger"
 
-#: system/mixins.py:25
+#: system/mixins.py
 msgid "last modified by user"
 msgstr "sidst ændret af bruger"
 
-#: system/models.py:25
+#: system/models.py
 msgid "status:New"
 msgstr "Ny"
 
-#: system/models.py:26
+#: system/models.py
 msgid "status:Fail"
 msgstr "Fejlet"
 
-#: system/models.py:27
+#: system/models.py
 msgid "status:Update"
 msgstr "Opdatering"
 
-#: system/models.py:116
+#: system/models.py
 msgid "owner configuration"
 msgstr "ejer-konfiguration"
 
-#: system/models.py:127 system/models.py:214 system/models.py:244
-#: system/models.py:290 system/models.py:444 system/models.py:562
-#: system/models.py:678 system/models.py:690 system/models.py:774
-#: system/models.py:993 system/models.py:1101 system/models.py:1240
+#: system/models.py
 msgid "name"
 msgstr "navn"
 
-#: system/models.py:128 system/models.py:215 system/models.py:564
-#: system/models.py:693
+#: system/models.py
 msgid "UID"
 msgstr "UID"
 
-#: system/models.py:131
+#: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalt for adgang indtil denne dato"
 
-#: system/models.py:145
+#: system/models.py
 msgid ""
 "Necessary for customers who wish to integrate with standard library login"
 msgstr "Nødvendigt for kunder der ønsker at integrere standard bibliotekslogin"
 
-#: system/models.py:150
+#: system/models.py
 msgid "Login duration"
 msgstr "Login-tid"
 
-#: system/models.py:151
+#: system/models.py
 msgid "Login duration when integrating with library login"
 msgstr "Hvor længe man kan bruge PC'en med bibliotekslogin"
 
-#: system/models.py:157
+#: system/models.py
 msgid "Quarantine duration"
 msgstr "Karantæneperiode"
 
-#: system/models.py:158
+#: system/models.py
 msgid "Quarantine period when integrating with library login"
 msgstr "Karantæneperiode, når den tilladte logintid er brugt"
 
-#: system/models.py:219
+#: system/models.py
+msgid "Automatically rerun associated scripts when you update their arguments"
+msgstr "Genkør automatisk tilknyttede scripts når I opdaterer deres inputparametre"
+
+#: system/models.py
 msgid "sites with access"
 msgstr "sites med adgang"
 
-#: system/models.py:240
+#: system/models.py
 msgid "event_type:Altered Hours"
 msgstr "Ændrede åbningstider"
 
-#: system/models.py:241
+#: system/models.py
 msgid "event_type:Closed"
 msgstr "Lukkedage"
 
-#: system/models.py:245
+#: system/models.py
 msgid "date start"
 msgstr "startdato"
 
-#: system/models.py:246
+#: system/models.py
 msgid "time start"
 msgstr "tænd"
 
-#: system/models.py:247
+#: system/models.py
 msgid "date end"
 msgstr "slutdato"
 
-#: system/models.py:248
+#: system/models.py
 msgid "time end"
 msgstr "sluk"
 
-#: system/models.py:251
+#: system/models.py
 msgid "type"
 msgstr "type"
 
-#: system/models.py:281
+#: system/models.py
 msgid "sleep_state:Standby"
 msgstr "Standby"
 
-#: system/models.py:282
+#: system/models.py
 msgid "sleep_state:Freeze"
 msgstr "Freeze"
 
-#: system/models.py:283
+#: system/models.py
 msgid "sleep_state:Mem"
 msgstr "Mem"
 
-#: system/models.py:284
+#: system/models.py
 msgid "sleep_state:Off"
 msgstr "Off"
 
-#: system/models.py:291
+#: system/models.py
 msgid "enabled"
 msgstr "aktiv"
 
-#: system/models.py:293
+#: system/models.py
 msgid "sleep state"
 msgstr "dvaletilstand"
 
-#: system/models.py:299
+#: system/models.py
 msgid "monday on"
 msgstr "mandag tænd"
 
-#: system/models.py:302
+#: system/models.py
 msgid "monday off"
 msgstr "mandag sluk"
 
-#: system/models.py:304
+#: system/models.py
 msgid "monday open"
 msgstr "mandag tænd"
 
-#: system/models.py:306
+#: system/models.py
 msgid "tuesday on"
 msgstr "tirsdag tænd"
 
-#: system/models.py:309
+#: system/models.py
 msgid "tuesday off"
 msgstr "tirsdags luk"
 
-#: system/models.py:311
+#: system/models.py
 msgid "tuesday open"
 msgstr "tirsdag tænd"
 
-#: system/models.py:313
+#: system/models.py
 msgid "wednesday on"
 msgstr "onsdag tænd"
 
-#: system/models.py:316
+#: system/models.py
 msgid "wednesday off"
 msgstr "onsdag sluk"
 
-#: system/models.py:318
+#: system/models.py
 msgid "wednesday open"
 msgstr "onsdag tænd"
 
-#: system/models.py:320
+#: system/models.py
 msgid "thursday on"
 msgstr "torsdag tænd"
 
-#: system/models.py:323
+#: system/models.py
 msgid "thursday off"
 msgstr "torsdag sluk"
 
-#: system/models.py:325
+#: system/models.py
 msgid "thursday open"
 msgstr "torsdag tænd"
 
-#: system/models.py:327
+#: system/models.py
 msgid "friday on"
 msgstr "fredag tænd"
 
-#: system/models.py:330
+#: system/models.py
 msgid "friday off"
 msgstr "fredag sluk"
 
-#: system/models.py:332
+#: system/models.py
 msgid "friday open"
 msgstr "fredag tænd"
 
-#: system/models.py:334
+#: system/models.py
 msgid "saturday on"
 msgstr "lørdag tænd"
 
-#: system/models.py:337
+#: system/models.py
 msgid "saturday off"
 msgstr "lørdag sluk"
 
-#: system/models.py:339
+#: system/models.py
 msgid "saturday open"
 msgstr "lørdag tænd"
 
-#: system/models.py:341
+#: system/models.py
 msgid "sunday on"
 msgstr "søndag tænd"
 
-#: system/models.py:344
+#: system/models.py
 msgid "sunday off"
 msgstr "søndag sluk"
 
-#: system/models.py:346
+#: system/models.py
 msgid "sunday open"
 msgstr "søndag tænd"
 
-#: system/models.py:353
+#: system/models.py
 msgid "wake change events"
 msgstr "undtagelser"
 
-#: system/models.py:446 system/models.py:567 system/models.py:695
-#: system/models.py:1102 system/models.py:1252
+#: system/models.py
 msgid "description"
 msgstr "beskrivelse"
 
-#: system/models.py:561
+#: system/models.py
 msgid "MAC"
 msgstr "MAC"
 
-#: system/models.py:572
+#: system/models.py
 msgid "activated"
 msgstr "aktiveret"
 
-#: system/models.py:574
+#: system/models.py
 msgid "update required"
 msgstr "opdatering påkrævet"
 
-#: system/models.py:579
+#: system/models.py
 msgid "last seen"
 msgstr "seneste tjek-ind"
 
-#: system/models.py:581
+#: system/models.py
 msgid "location"
 msgstr "placering"
 
-#: system/models.py:703
+#: system/models.py
 msgid "executable code"
 msgstr "eksekverbar kode"
 
-#: system/models.py:706 system/models.py:1111
+#: system/models.py
 msgid "security script"
 msgstr "sikkerhedsscript"
 
-#: system/models.py:710
+#: system/models.py
 msgid "hidden script"
 msgstr "skjult script"
 
-#: system/models.py:714
+#: system/models.py
 msgid "maintained by Magenta"
 msgstr "vedligeholdt af Magenta"
 
-#: system/models.py:791 system/models.py:1000
+#: system/models.py
 msgid "position"
 msgstr "position"
 
-#: system/models.py:853
+#: system/models.py
 msgid "jobstatus:New"
 msgstr "Nyt"
 
-#: system/models.py:854
+#: system/models.py
 msgid "jobstatus:Submitted"
 msgstr "Afsendt"
 
-#: system/models.py:855
+#: system/models.py
 msgid "jobstatus:Running"
 msgstr "Kører"
 
-#: system/models.py:856
+#: system/models.py
 msgid "jobstatus:Failed"
 msgstr "Fejlet"
 
-#: system/models.py:857
+#: system/models.py
 msgid "jobstatus:Done"
 msgstr "Udført"
 
-#: system/models.py:858
+#: system/models.py
 msgid "jobstatus:Resolved"
 msgstr "Genstartet"
 
-#: system/models.py:884
+#: system/models.py
 msgid "log output"
 msgstr "log output"
 
-#: system/models.py:889
+#: system/models.py
 msgid "started"
 msgstr "påbegyndt"
 
-#: system/models.py:890
+#: system/models.py
 msgid "finished"
 msgstr "afsluttet"
 
-#: system/models.py:943
+#: system/models.py
 #, python-brace-format
 msgid "Cannot change status from {0} to {1}"
 msgstr "Kan ikke ændre status fra {0} til {1}"
 
-#: system/models.py:950 system/views.py:709
+#: system/models.py system/views.py
 #, python-format
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
 
-#: system/models.py:984
+#: system/models.py
 msgid "String"
 msgstr "Streng"
 
-#: system/models.py:985
+#: system/models.py
 msgid "Integer"
 msgstr "Heltal"
 
-#: system/models.py:986
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:63
+#: system/models.py
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Date"
 msgstr "Dato"
 
-#: system/models.py:987
+#: system/models.py
 msgid "File"
 msgstr "Fil"
 
-#: system/models.py:988
+#: system/models.py
 msgid "Boolean"
 msgstr "Afkrydsningsfelt"
 
-#: system/models.py:989
+#: system/models.py
 msgid "Time"
 msgstr "Tid"
 
-#: system/models.py:995
+#: system/models.py
 msgid "value type"
 msgstr "værdi-type"
 
-#: system/models.py:998
+#: system/models.py
 msgid "default value"
 msgstr "standardværdi"
 
-#: system/models.py:1001
+#: system/models.py
 msgid "mandatory"
 msgstr "påkrævet"
 
 # SecurityProblem class
-#: system/models.py:1084
+#: system/models.py
 msgid "securitylevel:Normal"
 msgstr "Normal"
 
-#: system/models.py:1085
+#: system/models.py
 msgid "securitylevel:High"
 msgstr "Høj"
 
-#: system/models.py:1086
+#: system/models.py
 msgid "securitylevel:Critical"
 msgstr "Kritisk"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: system/models.py:1104
+#: system/models.py
 msgid "level"
 msgstr "alvorlighedsgrad"
 
-#: system/models.py:1118
+#: system/models.py
 msgid "alert groups"
 msgstr "overvågede grupper"
 
-#: system/models.py:1124
+#: system/models.py
 msgid "alert users"
 msgstr "modtager(e) af e-mail-advarsel"
 
 # SecurityEvent class
-#: system/models.py:1152
+#: system/models.py
 msgid "eventstatus:New"
 msgstr "Ny"
 
-#: system/models.py:1153
+#: system/models.py
 msgid "eventstatus:Assigned"
 msgstr "Tildelt"
 
-#: system/models.py:1154
+#: system/models.py
 msgid "eventstatus:Resolved"
 msgstr "Løst"
 
-#: system/models.py:1170
+#: system/models.py
 msgid "occurred"
 msgstr "hændelsestidspunkt"
 
-#: system/models.py:1172
+#: system/models.py
 msgid "reported"
 msgstr "modtagelsestidspunkt"
 
-#: system/models.py:1179
+#: system/models.py
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py:1251
+#: system/models.py
 msgid "title"
 msgstr "titel"
 
-#: system/models.py:1253 system/models.py:1280
+#: system/models.py
 msgid "content"
 msgstr "indhold"
 
-#: system/models.py:1256
+#: system/models.py
 msgid "updated"
 msgstr "opdateret"
 
-#: system/models.py:1257
+#: system/models.py
 msgid "author"
 msgstr "forfatter"
 
-#: system/models.py:1260
+#: system/models.py
 msgid "version"
 msgstr "version"
 
-#: system/views.py:348
+#: system/views.py
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
-#: system/views.py:744
+#: system/views.py
 #, python-format
 msgid "The script %s is being rerun on the computer %s"
 msgstr "Scriptet %s bliver genkørt på computeren %s"
 
-#: system/views.py:788
+#: system/views.py
 #, python-format
 msgid "You have no Script with the following ID: %s"
 msgstr "Du har intet script med ID %s"
 
-#: system/views.py:895
+#: system/views.py
 msgid "Error: You must provide a name"
 msgstr "Fejl: Du skal angive et navn"
 
-#: system/views.py:902
+#: system/views.py
 msgid "Error: You must provide a correct input parameter type"
 msgstr "Fejl: Du skal angive en korrekt input-parameter-type"
 
-#: system/views.py:1061
+#: system/views.py
 #, python-format
 msgid "Script %s updated"
 msgstr "Script %s opdateret"
 
-#: system/views.py:1157 system/views.py:1179
+#: system/views.py
 msgid "You must specify at least one group or pc"
 msgstr "Du skal angive mindst en pc eller gruppe"
 
-#: system/views.py:1305
+#: system/views.py
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen computer med følgende ID: %s"
 
-#: system/views.py:1376
+#: system/views.py
 #, python-format
 msgid "Computer %s updated"
 msgstr "Computer %s opdateret"
 
-#: system/views.py:1654
+#: system/views.py
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -542,7 +540,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1673
+#: system/views.py
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the group(s) %s could not be added because the "
@@ -551,7 +549,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1690
+#: system/views.py
 #, python-format
 msgid ""
 "PCWakePlan %s created, but the WakeChangeEvents %s could not be added due to "
@@ -560,17 +558,17 @@ msgstr ""
 "Tænd/sluk tidsplan %s oprettet, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1700
+#: system/views.py
 #, python-format
 msgid "PCWakePlan %s created"
 msgstr "Tænd/sluk tidsplan %s oprettet"
 
-#: system/views.py:1720
+#: system/views.py
 #, python-format
 msgid "You have no Wake Week Plan with the following ID: %s"
 msgstr "Du har ingen tidsplan med følgende ID: %s"
 
-#: system/views.py:1846
+#: system/views.py
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -581,7 +579,7 @@ msgstr ""
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s, og undtagelse(rne) "
 "%s kunne ikke tilføjes grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1865
+#: system/views.py
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the group(s) %s could not be added because the "
@@ -590,7 +588,7 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men gruppe(rne) %s kunne ikke tilføjes, da "
 "computer(ne) %s allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:1882
+#: system/views.py
 #, python-format
 msgid ""
 "PCWakePlan %s updated, but the WakeChangeEvents %s could not be added due to "
@@ -599,53 +597,53 @@ msgstr ""
 "Tænd/sluk tidsplan %s opdateret, men undtagelse(rne) %s kunne ikke tilføjes "
 "grundet overlap med andre valgte undtagelser"
 
-#: system/views.py:1893
+#: system/views.py
 #, python-format
 msgid "PCWakePlan %s updated"
 msgstr "Tænd/sluk tidsplan %s opdateret"
 
-#: system/views.py:1989
+#: system/views.py
 #, python-format
 msgid "Wake Week Plan %s deleted"
 msgstr "Tænd/Sluk tidsplan %s slettet"
 
-#: system/views.py:2111
+#: system/views.py
 #, python-format
 msgid "You have no Wake Change Event with the following ID: %s"
 msgstr "Du har ingen undtagelse med ID %s"
 
-#: system/views.py:2148
+#: system/views.py
 #, python-format
 msgid "Wake Change Event %s updated"
 msgstr "Undtagelse %s opdateret"
 
-#: system/views.py:2157
+#: system/views.py
 #, python-format
 msgid "The chosen dates would cause overlap with event %s in plan %s"
 msgstr ""
 "De valgte datoer ville medføre overlap med undtagelsen %s i tidsplanen %s"
 
-#: system/views.py:2166 system/views.py:2221
+#: system/views.py
 #, python-format
 msgid "The end date cannot be before the start date %s"
 msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
-#: system/views.py:2371
+#: system/views.py
 #, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 
-#: system/views.py:2438
+#: system/views.py
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
 
-#: system/views.py:2481
+#: system/views.py
 #, python-format
 msgid "User %s deleted"
 msgstr "Bruger %s slettet"
 
-#: system/views.py:2568
+#: system/views.py
 #, python-format
 msgid ""
 "You have no group with the following ID: %s. Try locating the group in the "
@@ -654,7 +652,7 @@ msgstr ""
 "I har ingen gruppe med følgende <em>ID</em>:<br/><br/> <h3>%s</h3><br/>Prøv "
 "i stedet at finde gruppen fra gruppelisten."
 
-#: system/views.py:2738
+#: system/views.py
 #, python-format
 msgid ""
 "Group %s updated, but the pc(s) %s could not be added because they already "
@@ -663,574 +661,548 @@ msgstr ""
 "Gruppe %s opdateret, men computer(ne) %s kunne ikke tilføjes, da de(n) "
 "allerede er tilmeldt tidsplan(erne) %s"
 
-#: system/views.py:2753
+#: system/views.py
 #, python-format
 msgid "Group %s updated"
 msgstr "Gruppe %s opdateret"
 
-#: system/views.py:2766
+#: system/views.py
 #, python-format
 msgid "No value was specified for the mandatory input %s of script %s"
 msgstr "Den obligatoriske parameterværdi %s for script %s mangler"
 
-#: system/views.py:2837
+#: system/views.py
 #, python-format
 msgid "Group %s deleted"
 msgstr "Gruppe %s slettet"
 
-#: system/views.py:2912
+#: system/views.py
 #, python-format
 msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
 
-#: system/views.py:3151
+#: system/views.py
 msgid "The administration site"
 msgstr "Administrationssiden"
 
-#: system/views.py:3152
+#: system/views.py
 msgid "About"
 msgstr "Om"
 
-#: system/views.py:3153 templates/site_with_navigation.html:33
-#: templates/system/jobs/site_jobs.html:38
-#: templates/system/jobs/site_jobs.html:163 templates/system/pcs/form.html:153
-#: templates/system/security_events/site_security_events.html:53
-#: templates/system/security_events/site_security_events.html:123
-#: templates/system/site_status.html:5 templates/system/site_status.html:23
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
+#: templates/system/security_events/site_security_events.html
+#: templates/system/site_status.html
 msgid "Status"
 msgstr "Status"
 
-#: system/views.py:3154 templates/site_with_navigation.html:77
-#: templates/system/jobs/site_jobs.html:84
-#: templates/system/pcgroups/confirm_delete.html:18
-#: templates/system/pcs/form.html:7 templates/system/pcs/site_pcs.html:6
-#: templates/system/pcs/site_pcs.html:16 templates/system/site_list.html:7
-#: templates/system/site_status.html:11
-#: templates/system/wake_plan/confirm_delete.html:16
-#: templates/system/wake_plan/wake_plan.html:33
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/jobs/site_jobs.html
+#: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
+#: templates/system/pcs/site_pcs.html templates/system/site_list.html
+#: templates/system/site_status.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
 msgstr "Computere"
 
-#: system/views.py:3155 templates/site_with_navigation.html:82
-#: templates/system/jobs/site_jobs.html:107
-#: templates/system/pcgroups/site_groups.html:7
-#: templates/system/security_problems/confirm_delete.html:23
-#: templates/system/wake_plan/confirm_delete.html:15
-#: templates/system/wake_plan/wake_plan.html:26
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/jobs/site_jobs.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py:3156
+#: system/views.py
 msgid "On/Off schedules"
 msgstr "Tænd/Sluk tidsplaner"
 
-#: system/views.py:3157 templates/site_with_navigation.html:100
-#: templates/system/jobs/site_jobs.html:6
-#: templates/system/scripts/confirm_delete.html:21
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/jobs/site_jobs.html
+#: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
 
-#: system/views.py:3158 templates/site_with_navigation.html:105
-#: templates/system/scripts/header.html:5
-#: templates/system/site_two_factor.html:63
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/scripts/header.html templates/system/site_two_factor.html
 msgid "Scripts"
 msgstr "Scripts"
 
-#: system/views.py:3159 templates/site_with_navigation.html:63
-#: templates/system/scripts/header.html:5
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/scripts/header.html
 msgid "Security Scripts"
 msgstr "Sikkerhedsscripts"
 
-#: system/views.py:3160 templates/site_with_navigation.html:112
-#: templates/system/users/confirm_delete.html:5
-#: templates/system/users/create.html:5 templates/system/users/update.html:5
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/users/confirm_delete.html
+#: templates/system/users/create.html templates/system/users/update.html
 msgid "Users"
 msgstr "Brugere"
 
-#: system/views.py:3161 templates/site_with_navigation.html:188
-#: templates/system/pcgroups/site_groups.html:67
-#: templates/system/pcs/form.html:89 templates/system/site_settings.html:31
+#: system/views.py templates/site_with_navigation.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/site_settings.html
 msgid "Configurations"
 msgstr "Konfigurationer"
 
-#: system/views.py:3162
+#: system/views.py
 msgid "Setting up security surveillance (PDF)"
 msgstr "Oprettelse af Sikkerhedsovervågning (PDF)"
 
-#: system/views.py:3163
+#: system/views.py
 msgid "The News site"
 msgstr "Nyhedssiden"
 
-#: system/views.py:3164
+#: system/views.py
 msgid "OS2borgerPC"
 msgstr "OS2BorgerPC"
 
-#: system/views.py:3165
+#: system/views.py
 msgid "Installation Guide (PDF)"
 msgstr "Installationsguide (PDF)"
 
-#: system/views.py:3166
+#: system/views.py
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: system/views.py:3167
+#: system/views.py
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
-#: system/views.py:3168
+#: system/views.py
 msgid "Installation Guide"
 msgstr "Installationsguide"
 
-#: system/views.py:3169
+#: system/views.py
 msgid "Updating Wi-Fi setup"
 msgstr "Opdatering af Wi-Fi opsætning"
 
-#: system/views.py:3170
+#: system/views.py
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
 
-#: system/views.py:3171
+#: system/views.py
 msgid "OS2borgerPC Image"
 msgstr "OS2borgerPC Image"
 
-#: system/views.py:3172
+#: system/views.py
 msgid "OS2borgerPC Admin Site"
 msgstr "OS2borgerPC Admin Site"
 
-#: system/views.py:3173
+#: system/views.py
 msgid "OS2borgerPC Kiosk Image"
 msgstr "OS2borgerPC Kiosk Image"
 
-#: system/views.py:3174
+#: system/views.py
 msgid "OS2borgerPC Client"
 msgstr "OS2borgerPC Client"
 
-#: templates/403.html:5 templates/403.html:18
+#: templates/403.html
 msgid "Permission denied"
 msgstr "Forbudt"
 
-#: templates/403.html:21 templates/404.html:20 templates/500.html:21
+#: templates/403.html templates/404.html templates/500.html
 msgid "Return to OS2borgerPC-admin"
 msgstr "Gå tilbage til OS2borgerPC-admin"
 
-#: templates/403.html:28
+#: templates/403.html
 msgid "You do not have permission to access this webpage"
 msgstr "Du har ikke adgang til denne side"
 
-#: templates/403.html:29 templates/404.html:38 templates/500.html:29
+#: templates/403.html templates/404.html templates/500.html
 msgid "Best regards"
 msgstr "Mvh."
 
-#: templates/403.html:30 templates/404.html:39 templates/500.html:30
+#: templates/403.html templates/404.html templates/500.html
 msgid "The OS2BorgerPC team"
 msgstr "OS2BorgerPC-teamet"
 
-#: templates/404.html:5
+#: templates/404.html
 msgid "The webpage could not be found"
 msgstr "Siden kunne ikke findes"
 
-#: templates/404.html:27
+#: templates/404.html
 msgid "The webpage could unfortunately not be found."
 msgstr "Siden kunne desværre ikke findes"
 
-#: templates/404.html:30
+#: templates/404.html
 msgid "The error message is:"
 msgstr "Fejlbeskeden er:"
 
-#: templates/404.html:37
+#: templates/404.html
 msgid "If you believe that this is an error, you may contact us at"
 msgstr "Hvis I mener, der er tale om en fejl, kan I skrive til os på"
 
-#: templates/500.html:5 templates/500.html:18
+#: templates/500.html
 msgid "Server error"
 msgstr "Serverfejl"
 
-#: templates/500.html:28
+#: templates/500.html
 msgid "A server error has occurred, and we have been notified about the error."
 msgstr "Der er sket en serverfejl og vi er blevet notificeret om fejlen."
 
-#: templates/base.html:7
+#: templates/base.html
 msgid "OS2borgerPC Administration"
 msgstr "OS2borgerPC Administration"
 
-#: templates/base.html:41 templates/two_factor/_base.html:328
+#: templates/base.html templates/two_factor/_base.html
 msgid ""
 "It looks like you're using Internet Explorer. It won't work on this website."
 msgstr ""
 "Det ser ud som om, at du benytter Internet Explorer. Det vil ikke fungere på "
 "dette website."
 
-#: templates/base.html:42 templates/two_factor/_base.html:329
+#: templates/base.html templates/two_factor/_base.html
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Prøv at åbne denne side i Microsoft Edge"
 
-#: templates/documentation/index.html:9
+#: templates/documentation/index.html
 msgid "OS2borgerPC documentation"
 msgstr "OS2borgerPC dokumentation"
 
-#: templates/documentation/index.html:23
-#: templates/site_with_navigation.html:121
-#: templates/system/changelog/list.html:34
+#: templates/documentation/index.html templates/site_with_navigation.html
+#: templates/system/changelog/list.html
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: templates/documentation/index.html:26
+#: templates/documentation/index.html
 msgid "Return to admin"
 msgstr "Tilbage til admin"
 
-#: templates/logout.html:11
+#: templates/logout.html
 msgid "You have been logged out"
 msgstr "Du er nu logget ud"
 
-#: templates/logout.html:12
+#: templates/logout.html
 msgid "Click here to log in again"
 msgstr "Klik her for at logge ind igen"
 
-#: templates/site_with_navigation.html:25 templates/system/site_list.html:5
-#: templates/system/site_list.html:6
+#: templates/site_with_navigation.html templates/system/site_list.html
 msgid "Sites"
 msgstr "Sites"
 
-#: templates/site_with_navigation.html:39
-#: templates/system/changelog/list.html:8
-#: templates/system/changelog/list.html:10
-#: templates/system/changelog/list.html:28
+#: templates/site_with_navigation.html templates/system/changelog/list.html
 msgid "News"
 msgstr "Nyheder"
 
-#: templates/site_with_navigation.html:43
+#: templates/site_with_navigation.html
 msgid "Security"
 msgstr "Sikkerhed"
 
-#: templates/site_with_navigation.html:48
-#: templates/system/security_events/site_security_events.html:6
-#: templates/system/security_problems/confirm_delete.html:17
+#: templates/site_with_navigation.html
+#: templates/system/security_events/site_security_events.html
+#: templates/system/security_problems/confirm_delete.html
 msgid "Security Events"
 msgstr "Sikkerhedshændelser"
 
-#: templates/site_with_navigation.html:57
-#: templates/system/security_problems/site_security_problems.html:7
+#: templates/site_with_navigation.html
+#: templates/system/security_problems/site_security_problems.html
 msgid "Security Rules"
 msgstr "Sikkerhedsregler"
 
-#: templates/site_with_navigation.html:69
-#: templates/system/site_two_factor.html:4
+#: templates/site_with_navigation.html templates/system/site_two_factor.html
 msgid "Two-factor authentication"
 msgstr "Totrinsbekræftelse"
 
-#: templates/site_with_navigation.html:73
+#: templates/site_with_navigation.html
 msgid "Organizing"
 msgstr "Organisering"
 
-#: templates/site_with_navigation.html:87
-#: templates/system/wake_plan/wake_plan_base.html:6
+#: templates/site_with_navigation.html
+#: templates/system/wake_plan/wake_plan_base.html
 msgid "On/Off schedule"
 msgstr "Tænd/Sluk tidsplan"
 
-#: templates/site_with_navigation.html:92 templates/system/site_settings.html:6
+#: templates/site_with_navigation.html templates/system/site_settings.html
 msgid "Site settings"
 msgstr "Site-indstillinger"
 
-#: templates/site_with_navigation.html:96
+#: templates/site_with_navigation.html
 msgid "Scripting"
 msgstr "Scripting"
 
-#: templates/site_with_navigation.html:109
+#: templates/site_with_navigation.html
 msgid "Users & versions"
 msgstr "Brugere & versioner"
 
-#: templates/site_with_navigation.html:117
-#: templates/system/site_image_versions.html:4
-#: templates/system/site_image_versions.html:48
+#: templates/site_with_navigation.html
+#: templates/system/site_image_versions.html
 msgid "Versions"
 msgstr "Versioner"
 
-#: templates/site_with_navigation.html:129
+#: templates/site_with_navigation.html
 msgid "Administrating security scripts"
 msgstr "Administration af sikkerhedsscripts"
 
-#: templates/site_with_navigation.html:133
+#: templates/site_with_navigation.html
 msgid "Security rule definition"
 msgstr "Definition af sikkerhedsregler"
 
-#: templates/site_with_navigation.html:137
+#: templates/site_with_navigation.html
 msgid "Help regarding security events"
 msgstr "Hjælp til sikkerhedshændelser"
 
-#: templates/site_with_navigation.html:142
+#: templates/site_with_navigation.html
 msgid "Administrating computers"
 msgstr "Administration af computere"
 
-#: templates/site_with_navigation.html:147
+#: templates/site_with_navigation.html
 msgid "Administrating groups"
 msgstr "Administration af grupper"
 
-#: templates/site_with_navigation.html:152
+#: templates/site_with_navigation.html
 msgid "Administrating on/off schedules"
 msgstr "Administration af tidsplaner"
 
-#: templates/site_with_navigation.html:160
+#: templates/site_with_navigation.html
 msgid "Help regarding the job list"
 msgstr "Hjælp til joblisten"
 
-#: templates/site_with_navigation.html:165
+#: templates/site_with_navigation.html
 msgid "Administrating users"
 msgstr "Administration af brugere"
 
-#: templates/site_with_navigation.html:170
+#: templates/site_with_navigation.html
 msgid "Help regarding the news page"
 msgstr "Hjælp til nyhedssiden"
 
-#: templates/site_with_navigation.html:177
+#: templates/site_with_navigation.html
 msgid "Administrating scripts"
 msgstr "Administration af scripts"
 
-#: templates/site_with_navigation.html:181
+#: templates/site_with_navigation.html
 msgid "Executing scripts"
 msgstr "Afvikling af scripts"
 
-#: templates/site_with_navigation.html:194
+#: templates/site_with_navigation.html
 msgid "Read the documentation ..."
 msgstr "Læs dokumentation ..."
 
-#: templates/sitebase.html:12
+#: templates/sitebase.html
 msgid "Welcome"
 msgstr "Velkommen"
 
-#: templates/sitebase.html:24
+#: templates/sitebase.html
 msgid "Log out"
 msgstr "Log ud"
 
-#: templates/system/changelog/comments/form.html:8
+#: templates/system/changelog/comments/form.html
 msgid "Answer to"
 msgstr "Svar til"
 
-#: templates/system/changelog/comments/form.html:8
+#: templates/system/changelog/comments/form.html
 msgid "Write a comment"
 msgstr "Skriv en kommentar"
 
-#: templates/system/changelog/comments/form.html:9
+#: templates/system/changelog/comments/form.html
 msgid "Add comment"
 msgstr "Tilføj kommentar"
 
-#: templates/system/changelog/comments/form.html:10
-#: templates/system/configs/form.html:16
-#: templates/system/configs/templates.html:40
-#: templates/system/pcgroups/confirm_delete.html:43
-#: templates/system/pcgroups/form.html:16
-#: templates/system/pcgroups/policy_list/templates.html:24
-#: templates/system/pcgroups/site_groups.html:144
-#: templates/system/pcgroups/site_groups.html:183
-#: templates/system/pcs/confirm_delete.html:25
-#: templates/system/pcs/form.html:131 templates/system/pcs/form.html:141
-#: templates/system/scripts/confirm_delete.html:64
-#: templates/system/scripts/create.html:39
-#: templates/system/scripts/create.html:41
-#: templates/system/scripts/update.html:79
-#: templates/system/scripts/update.html:126
-#: templates/system/security_events/site_security_events.html:103
-#: templates/system/security_problems/confirm_delete.html:49
-#: templates/system/security_problems/site_security_problems.html:112
-#: templates/system/site_settings.html:60
-#: templates/system/users/confirm_delete.html:20
-#: templates/system/users/create.html:17 templates/system/users/update.html:60
-#: templates/system/users/update.html:87
-#: templates/system/wake_plan/confirm_delete.html:31
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html:29
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:114
-#: templates/system/wake_plan/wake_plan.html:277
-#: templates/two_factor/_wizard_actions.html:6
-#: templates/two_factor/profile/disable.html:20
+#: templates/system/changelog/comments/form.html
+#: templates/system/configs/form.html templates/system/configs/templates.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/form.html
+#: templates/system/pcgroups/policy_list/templates.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/create.html templates/system/scripts/update.html
+#: templates/system/security_events/site_security_events.html
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/security_problems/site_security_problems.html
+#: templates/system/site_settings.html
+#: templates/system/users/confirm_delete.html
+#: templates/system/users/create.html templates/system/users/update.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+#: templates/system/wake_plan/wake_plan.html
+#: templates/two_factor/_wizard_actions.html
+#: templates/two_factor/profile/disable.html
 msgid "Cancel"
 msgstr "Annuller"
 
-#: templates/system/changelog/comments/form.html:14
+#: templates/system/changelog/comments/form.html
 msgid "Please log in to add your comment"
 msgstr "Log venligst ind for at kommentere"
 
-#: templates/system/changelog/comments/item.html:4
+#: templates/system/changelog/comments/item.html
 msgid "On the date"
 msgstr "Den"
 
-#: templates/system/changelog/comments/item.html:4
+#: templates/system/changelog/comments/item.html
 msgid "answered"
 msgstr "svarede"
 
-#: templates/system/changelog/comments/item.html:4
+#: templates/system/changelog/comments/item.html
 msgid "wrote"
 msgstr "skrev"
 
-#: templates/system/changelog/comments/item.html:13
+#: templates/system/changelog/comments/item.html
 #, python-format
 msgid "Show %(comment_comment_children_count)s answer(s)"
 msgstr "Vis %(comment_comment_children_count)s svar"
 
-#: templates/system/changelog/comments/item.html:26
+#: templates/system/changelog/comments/item.html
 msgid "Answer"
 msgstr "Svar"
 
-#: templates/system/changelog/item.html:15
-#: templates/system/changelog/list.html:65
-#: templates/system/changelog/list.html:119
+#: templates/system/changelog/item.html templates/system/changelog/list.html
 msgid "News categories"
 msgstr "Nyhedskategorier"
 
-#: templates/system/changelog/item.html:27
+#: templates/system/changelog/item.html
 msgid "Related to version"
 msgstr "Relateret til version"
 
-#: templates/system/changelog/item.html:35
+#: templates/system/changelog/item.html
 msgid "Written by"
 msgstr "Skrevet af"
 
-#: templates/system/changelog/item.html:45
+#: templates/system/changelog/item.html
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: templates/system/changelog/list.html:31
+#: templates/system/changelog/list.html
 msgid "Back to login"
 msgstr "Tilbage til login"
 
-#: templates/system/changelog/list.html:37
+#: templates/system/changelog/list.html
 msgid "Help for this news site"
 msgstr "Hjælp til nyhedssiden"
 
-#: templates/system/changelog/list.html:57
+#: templates/system/changelog/list.html
 msgid "Search..."
 msgstr "Søg..."
 
-#: templates/system/changelog/list.html:70
-#: templates/system/changelog/list.html:72
+#: templates/system/changelog/list.html
 msgid "All"
 msgstr "Alle"
 
-#: templates/system/changelog/list.html:92
+#: templates/system/changelog/list.html
 msgid "Showing news in the catagory of"
 msgstr "Viser nyheder i kategorien"
 
-#: templates/system/changelog/list.html:94
+#: templates/system/changelog/list.html
 msgid "Showing"
 msgstr "Viser"
 
-#: templates/system/changelog/list.html:94
-#: templates/system/security_problems/site_security_problems.html:71
+#: templates/system/changelog/list.html
+#: templates/system/security_problems/site_security_problems.html
 msgid "all"
 msgstr "alle"
 
-#: templates/system/changelog/list.html:94
+#: templates/system/changelog/list.html
 msgid "news"
 msgstr "nyheder"
 
-#: templates/system/changelog/list.html:98
+#: templates/system/changelog/list.html
 msgid "that matches the query"
 msgstr "der matcher søgeordet"
 
-#: templates/system/changelog/list.html:115
+#: templates/system/changelog/list.html
 msgid "Read more"
 msgstr "Læs mere"
 
-#: templates/system/changelog/list.html:128
+#: templates/system/changelog/list.html
 msgid "Show"
 msgstr "Vis"
 
-#: templates/system/changelog/list.html:129
+#: templates/system/changelog/list.html
 msgid "chat"
 msgstr "chat"
 
-#: templates/system/changelog/list.html:146
-#: templates/system/changelog/list.html:150
+#: templates/system/changelog/list.html
 msgid "Previous"
 msgstr "Forrige"
 
-#: templates/system/changelog/list.html:180
-#: templates/system/changelog/list.html:184
-#: templates/system/scripts/run_step1.html:67
-#: templates/two_factor/_wizard_actions.html:3
+#: templates/system/changelog/list.html templates/system/scripts/run_step1.html
+#: templates/two_factor/_wizard_actions.html
 msgid "Next"
 msgstr "Næste"
 
-#: templates/system/configs/form.html:7
+#: templates/system/configs/form.html
 msgid "Edit arguments"
 msgstr "Redigér parameter"
 
-#: templates/system/configs/form.html:15
-#: templates/system/pcgroups/site_groups.html:143
-#: templates/system/pcs/form.html:130 templates/system/pcs/form.html:140
-#: templates/system/scripts/update.html:77
-#: templates/system/security_problems/site_security_problems.html:111
-#: templates/system/site_settings.html:59 templates/system/users/update.html:56
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:113
-#: templates/system/wake_plan/wake_plan.html:276
+#: templates/system/configs/form.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/scripts/update.html
+#: templates/system/security_problems/site_security_problems.html
+#: templates/system/site_settings.html templates/system/users/update.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+#: templates/system/wake_plan/wake_plan.html
 msgid "Save changes"
 msgstr "Gem ændringer"
 
-#: templates/system/configs/item.html:16
-#: templates/system/pcgroups/policy_list/item.html:79
-#: templates/system/scripts/update.html:47
+#: templates/system/configs/item.html
+#: templates/system/pcgroups/policy_list/item.html
+#: templates/system/scripts/update.html
 msgid "Edit"
 msgstr "Redigér"
 
-#: templates/system/configs/item.html:19
-#: templates/system/scripts/confirm_delete.html:8
-#: templates/system/scripts/form.html:108
+#: templates/system/configs/item.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/form.html
 msgid "Delete"
 msgstr "Slet"
 
-#: templates/system/configs/list.html:7
+#: templates/system/configs/list.html
 msgid "Key"
 msgstr "Nøgle"
 
-#: templates/system/configs/list.html:8
-#: templates/system/configs/templates.html:30
+#: templates/system/configs/list.html templates/system/configs/templates.html
 msgid "Value"
 msgstr "Værdi"
 
-#: templates/system/configs/list.html:9
-#: templates/system/pcgroups/policy_list/list.html:11
+#: templates/system/configs/list.html
+#: templates/system/pcgroups/policy_list/list.html
 msgid "Actions"
 msgstr "Handlinger"
 
-#: templates/system/configs/list.html:19
+#: templates/system/configs/list.html
 msgid "Add new configuration"
 msgstr "Tilføj ny konfiguration"
 
-#: templates/system/configs/list.html:22
+#: templates/system/configs/list.html
 msgid "Add configuration"
 msgstr "Tilføj konfiguration"
 
-#: templates/system/configs/list.html:31
-#: templates/system/pcgroups/policy_list/list.html:31
+#: templates/system/configs/list.html
+#: templates/system/pcgroups/policy_list/list.html
 msgid "You must specify a"
 msgstr "Du skal angive en"
 
-#: templates/system/configs/list.html:31
+#: templates/system/configs/list.html
 msgid "when inserting a configuration list"
 msgstr "når der indsættes i en konfigurationsliste"
 
-#: templates/system/configs/templates.html:14
+#: templates/system/configs/templates.html
 msgid "Handle configuration"
 msgstr "Håndter konfiguration"
 
-#: templates/system/configs/templates.html:26
-#: templates/system/scripts/form.html:104 templates/system/site_status.html:19
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:49
+#: templates/system/configs/templates.html templates/system/scripts/form.html
+#: templates/system/site_status.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Name"
 msgstr "Navn"
 
-#: templates/system/configs/templates.html:39
-#: templates/system/pcgroups/policy_list/templates.html:23
+#: templates/system/configs/templates.html
+#: templates/system/pcgroups/policy_list/templates.html
 msgid "Save"
 msgstr "Gem"
 
-#: templates/system/jobs/info.html:10 templates/system/jobs/restart.html:6
+#: templates/system/jobs/info.html templates/system/jobs/restart.html
 msgid "Restart job"
 msgstr "Genstart job"
 
-#: templates/system/jobs/info.html:17
+#: templates/system/jobs/info.html
 msgid "Log output"
 msgstr "Log output"
 
-#: templates/system/jobs/restart.html:12
+#: templates/system/jobs/restart.html
 #, python-format
 msgid ""
 "Are you sure you want to restart the execution of the script %(job_name)s on "
@@ -1239,96 +1211,90 @@ msgstr ""
 "Er du sikker på, at du vil genstarte kørslen af scriptet %(job_name)s på "
 "computeren %(pc_name)s?"
 
-#: templates/system/jobs/restart.html:18
+#: templates/system/jobs/restart.html
 msgid "Yes"
 msgstr "Ja"
 
-#: templates/system/jobs/restart.html:20
+#: templates/system/jobs/restart.html
 msgid "No"
 msgstr "Nej"
 
-#: templates/system/jobs/site_jobs.html:23
-#: templates/system/security_events/site_security_events.html:25
+#: templates/system/jobs/site_jobs.html
+#: templates/system/security_events/site_security_events.html
 msgid "Filters"
 msgstr "Filtre"
 
-#: templates/system/jobs/site_jobs.html:24
-#: templates/system/security_events/site_security_events.html:27
+#: templates/system/jobs/site_jobs.html
+#: templates/system/security_events/site_security_events.html
 msgid "Reset filters"
 msgstr "Nulstil filtre"
 
-#: templates/system/jobs/site_jobs.html:61
+#: templates/system/jobs/site_jobs.html
 msgid "Batches"
 msgstr "Batches"
 
-#: templates/system/jobs/site_jobs.html:158
-#: templates/system/pcgroups/policy_list/list.html:9
-#: templates/system/pcs/form.html:149
-#: templates/system/scripts/confirm_delete.html:12
-#: templates/system/scripts/create.html:19
-#: templates/system/scripts/create.html:37
-#: templates/system/scripts/update.html:18
-#: templates/system/scripts/update.html:51
-#: templates/system/scripts/update.html:118
-#: templates/system/scripts/update.html:125
+#: templates/system/jobs/site_jobs.html
+#: templates/system/pcgroups/policy_list/list.html
+#: templates/system/pcs/form.html templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/create.html templates/system/scripts/update.html
 msgid "Script"
 msgstr "Script"
 
-#: templates/system/jobs/site_jobs.html:159
+#: templates/system/jobs/site_jobs.html
 msgid "User"
 msgstr "Bruger"
 
-#: templates/system/jobs/site_jobs.html:160 templates/system/pcs/form.html:150
-#: templates/system/scripts/form.html:8
+#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
+#: templates/system/scripts/form.html
 msgid "Created"
 msgstr "Oprettet"
 
-#: templates/system/jobs/site_jobs.html:161 templates/system/pcs/form.html:151
+#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
 msgid "Started"
 msgstr "Startet"
 
-#: templates/system/jobs/site_jobs.html:162 templates/system/pcs/form.html:152
+#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
 msgid "Finished"
 msgstr "Sluttet"
 
-#: templates/system/jobs/site_jobs.html:164
-#: templates/system/wake_plan/wake_plan.html:39
+#: templates/system/jobs/site_jobs.html
+#: templates/system/wake_plan/wake_plan.html
 msgid "Computer"
 msgstr "Computer"
 
-#: templates/system/jobs/site_jobs.html:177
-#: templates/system/security_events/site_security_events.html:130
+#: templates/system/jobs/site_jobs.html
+#: templates/system/security_events/site_security_events.html
 msgid "Loading data..."
 msgstr "Henter data..."
 
-#: templates/system/pcgroups/confirm_delete.html:9
+#: templates/system/pcgroups/confirm_delete.html
 msgid "Delete group: "
 msgstr "Slet gruppe"
 
-#: templates/system/pcgroups/confirm_delete.html:15
-#: templates/system/pcgroups/site_groups.html:126
-#: templates/system/pcs/confirm_delete.html:12
-#: templates/system/scripts/confirm_delete.html:20
-#: templates/system/security_problems/confirm_delete.html:13
-#: templates/system/security_problems/site_security_problems.html:69
-#: templates/system/site_two_factor.html:24
-#: templates/system/wake_plan/confirm_delete.html:12
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html:12
-#: templates/system/wake_plan/wake_plan.html:19
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/security_problems/site_security_problems.html
+#: templates/system/site_two_factor.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
 msgid "Note"
 msgstr "Bemærk"
 
-#: templates/system/pcgroups/confirm_delete.html:19
-#: templates/system/pcgroups/site_groups.html:64
-#: templates/system/scripts/confirm_delete.html:24
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/scripts/confirm_delete.html
 msgid "Associated Scripts"
 msgstr "Tilknyttede Scripts"
 
-#: templates/system/pcgroups/confirm_delete.html:20
+#: templates/system/pcgroups/confirm_delete.html
 msgid "the Group"
 msgstr "Gruppen"
 
-#: templates/system/pcgroups/confirm_delete.html:21
+#: templates/system/pcgroups/confirm_delete.html
 #, python-format
 msgid ""
 "Associated %(computers)s and %(asc_scripts)s will be removed from "
@@ -1337,123 +1303,121 @@ msgstr ""
 "Tilknyttede %(computers)s og %(asc_scripts)s vil blive fjernet fra "
 "%(the_group)s."
 
-#: templates/system/pcgroups/confirm_delete.html:26
+#: templates/system/pcgroups/confirm_delete.html
 msgid "The Computers"
 msgstr "Computerne"
 
-#: templates/system/pcgroups/confirm_delete.html:27
+#: templates/system/pcgroups/confirm_delete.html
 msgid "the Scripts"
 msgstr "Scriptsene"
 
-#: templates/system/pcgroups/confirm_delete.html:28
-#: templates/system/security_problems/confirm_delete.html:35
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/security_problems/confirm_delete.html
 msgid "NOT"
 msgstr "IKKE"
 
-#: templates/system/pcgroups/confirm_delete.html:29
+#: templates/system/pcgroups/confirm_delete.html
 #, python-format
 msgid "%(the_computers)s and %(the_scripts)s will %(not)s be deleted."
 msgstr "%(the_computers)s og %(the_scripts)s vil %(not)s blive slettet."
 
-#: templates/system/pcgroups/confirm_delete.html:36
+#: templates/system/pcgroups/confirm_delete.html
 msgid "Are you sure you want to delete the group "
 msgstr "Er du sikker på, at du ønsker at slette gruppen "
 
-#: templates/system/pcgroups/confirm_delete.html:42
-#: templates/system/pcs/confirm_delete.html:24
-#: templates/system/scripts/confirm_delete.html:63
-#: templates/system/security_problems/confirm_delete.html:48
-#: templates/system/users/confirm_delete.html:19
-#: templates/system/wake_plan/confirm_delete.html:30
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html:28
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcs/confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/users/confirm_delete.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
 msgid "Confirm deletion"
 msgstr "Bekræft sletning"
 
-#: templates/system/pcgroups/form.html:7
+#: templates/system/pcgroups/form.html
 msgid "New group"
 msgstr "Ny gruppe"
 
-#: templates/system/pcgroups/form.html:15
-#: templates/system/pcgroups/site_groups.html:182
+#: templates/system/pcgroups/form.html
+#: templates/system/pcgroups/site_groups.html
 msgid "Create group"
 msgstr "Opret gruppe"
 
-#: templates/system/pcgroups/policy_list/item.html:50
+#: templates/system/pcgroups/policy_list/item.html
 msgid "None selected"
 msgstr "Ingen valgt"
 
-#: templates/system/pcgroups/policy_list/item.html:82
-#: templates/system/scripts/templates.html:28
+#: templates/system/pcgroups/policy_list/item.html
+#: templates/system/scripts/templates.html
 msgid "Remove"
 msgstr "Fjern"
 
-#: templates/system/pcgroups/policy_list/list.html:8
+#: templates/system/pcgroups/policy_list/list.html
 msgid "Position"
 msgstr "Position"
 
-#: templates/system/pcgroups/policy_list/list.html:10
-#: templates/system/scripts/form.html:36
+#: templates/system/pcgroups/policy_list/list.html
+#: templates/system/scripts/form.html
 msgid "Arguments"
 msgstr "Inputparametre"
 
-#: templates/system/pcgroups/policy_list/list.html:23
-#: templates/system/pcgroups/policy_list/templates.html:34
+#: templates/system/pcgroups/policy_list/list.html
+#: templates/system/pcgroups/policy_list/templates.html
 msgid "Add script"
 msgstr "Tilføj script"
 
-#: templates/system/pcgroups/policy_list/list.html:31
+#: templates/system/pcgroups/policy_list/list.html
 msgid "when inserting a policy list"
 msgstr "når der indsættes i en liste af tilknyttede scripts"
 
-#: templates/system/pcgroups/policy_list/templates.html:17
+#: templates/system/pcgroups/policy_list/templates.html
 msgid "Edit script"
 msgstr "Redigér script"
 
-#: templates/system/pcgroups/policy_list/templates.html:30
+#: templates/system/pcgroups/policy_list/templates.html
 msgid "Add script to group"
 msgstr "Tilføj script til gruppe"
 
-#: templates/system/pcgroups/site_groups.html:24
-#: templates/system/pcgroups/site_groups.html:174
+#: templates/system/pcgroups/site_groups.html
 msgid "Add new group"
 msgstr "Tilføj ny gruppe"
 
-#: templates/system/pcgroups/site_groups.html:34
+#: templates/system/pcgroups/site_groups.html
 msgid "Delete group"
 msgstr "Slet gruppe"
 
-#: templates/system/pcgroups/site_groups.html:47
-#: templates/system/pcs/form.html:43
-#: templates/system/security_problems/site_security_problems.html:48
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/security_problems/site_security_problems.html
 msgid "Details about"
 msgstr "Detaljer om"
 
-#: templates/system/pcgroups/site_groups.html:61
-#: templates/system/pcs/form.html:83 templates/system/scripts/form.html:29
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/scripts/form.html
 msgid "Details"
 msgstr "Detaljer"
 
-#: templates/system/pcgroups/site_groups.html:88
+#: templates/system/pcgroups/site_groups.html
 msgid "Computers in this group"
 msgstr "Computere i gruppen"
 
-#: templates/system/pcgroups/site_groups.html:94
+#: templates/system/pcgroups/site_groups.html
 msgid "Add a computer to the group"
 msgstr "Tilføj en computer til gruppen"
 
-#: templates/system/pcgroups/site_groups.html:95
+#: templates/system/pcgroups/site_groups.html
 msgid "Remove computer from the group"
 msgstr "Fjern computer fra gruppen"
 
-#: templates/system/pcgroups/site_groups.html:101
+#: templates/system/pcgroups/site_groups.html
 msgid "Associated Security Rules"
 msgstr "Tilknyttede Sikkerhedsregler"
 
-#: templates/system/pcgroups/site_groups.html:113
+#: templates/system/pcgroups/site_groups.html
 msgid "Associated On/Off schedule"
 msgstr "Tilknyttet Tænd/sluk tidsplan"
 
-#: templates/system/pcgroups/site_groups.html:128
+#: templates/system/pcgroups/site_groups.html
 msgid ""
 "If a script that takes arguments is added to the list, then these arguments "
 "are to be entered first by clicking \"Edit\", before you can click \"Save "
@@ -1462,11 +1426,21 @@ msgstr ""
 "Tilføjes et nyt script til listen, der tager parametre, skal disse parametre "
 "sættes først, ved tryk på \"Rediger\", før man kan \"Gemme ændringerne\""
 
-#: templates/system/pcgroups/site_groups.html:129
-msgid "Editing the script arguments will not make the script run again"
-msgstr "Redigering af inputparametre medfører ikke, at et script køres på ny"
+#: templates/system/pcgroups/site_groups.html
+msgid ""
+"Editing the script arguments will make the script run again on all Computers "
+"in the Group. This can be toggled off under Site settings"
+msgstr "Redigering af inputparametre medfører, at et script køres på ny "
+"på alle Computere i Gruppen. Dette kan slås fra under Site-indstillinger"
 
-#: templates/system/pcgroups/site_groups.html:130
+#: templates/system/pcgroups/site_groups.html
+msgid ""
+"Editing the script arguments will not make the script run again. This can be "
+"changed under Site settings"
+msgstr "Redigering af inputparametre medfører ikke, at et script køres på ny. "
+"Dette kan ændres under Site-indstillinger"
+
+#: templates/system/pcgroups/site_groups.html
 msgid ""
 "Computers already in the group only run newly added scripts, but Computers "
 "newly added to the Group run all the scripts on the list"
@@ -1474,114 +1448,105 @@ msgstr ""
 "Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-"
 "tilføjede Computere til Gruppen kører hele listen af scripts"
 
-#: templates/system/pcs/confirm_delete.html:6 templates/system/pcs/form.html:30
+#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"
 msgstr "Slet computer"
 
-#: templates/system/pcs/confirm_delete.html:14
+#: templates/system/pcs/confirm_delete.html
 msgid "The computer's entire job history will also be deleted"
 msgstr "Hele computerens jobhistorik vil også blive slettet"
 
-#: templates/system/pcs/confirm_delete.html:18
+#: templates/system/pcs/confirm_delete.html
 msgid "Are you sure you want to delete the computer"
 msgstr "Er du sikker på, at du ønsker at slette computeren"
 
-#: templates/system/pcs/form.html:17
+#: templates/system/pcs/form.html
 msgid "There are no computers"
 msgstr "Der er ingen computere"
 
-#: templates/system/pcs/form.html:27 templates/system/site_status.html:38
+#: templates/system/pcs/form.html templates/system/site_status.html
 msgid "Not activated"
 msgstr "Ikke aktiveret"
 
-#: templates/system/pcs/form.html:45
+#: templates/system/pcs/form.html
 msgid "See events for this computer"
 msgstr "Se hændelser for denne computer"
 
-#: templates/system/pcs/form.html:58
+#: templates/system/pcs/form.html
 msgid "Registered"
 msgstr "Registreret"
 
-#: templates/system/pcs/form.html:61
+#: templates/system/pcs/form.html
 msgid "Last check-in"
 msgstr "Seneste tjek-ind"
 
-#: templates/system/pcs/form.html:63 templates/system/pcs/form.html:71
-#: templates/system/site_status.html:52
+#: templates/system/pcs/form.html templates/system/site_status.html
 msgid "ago"
 msgstr "siden"
 
-#: templates/system/pcs/form.html:65 templates/system/pcs/form.html:73
-#: templates/system/site_status.html:54 templates/system/site_status.html:61
+#: templates/system/pcs/form.html templates/system/site_status.html
 msgid "Never"
 msgstr "Aldrig"
 
-#: templates/system/pcs/form.html:69
+#: templates/system/pcs/form.html
 msgid "Last security event received"
 msgstr "Seneste sikkerhedshændelse modtaget"
 
-#: templates/system/pcs/form.html:86
+#: templates/system/pcs/form.html
 msgid "Job history"
 msgstr "Jobhistorik"
 
-#: templates/system/pcs/form.html:116
+#: templates/system/pcs/form.html
 msgid "Groups the computer is a member of"
 msgstr "Grupper computeren er medlem af"
 
-#: templates/system/pcs/form.html:122
+#: templates/system/pcs/form.html
 msgid "Add computer to group"
 msgstr "Tilføj computer til gruppe"
 
-#: templates/system/pcs/form.html:123
+#: templates/system/pcs/form.html
 msgid "Remove computer from group"
 msgstr "Fjern computer fra gruppe"
 
-#: templates/system/pcs/site_pcs.html:17
+#: templates/system/pcs/site_pcs.html
 msgid "No computers were found"
 msgstr "Der blev ikke fundet nogen computere"
 
-#: templates/system/scripts/confirm_delete.html:10
-#: templates/system/scripts/create.html:17
-#: templates/system/scripts/create.html:37
-#: templates/system/scripts/update.html:16
-#: templates/system/scripts/update.html:49
-#: templates/system/scripts/update.html:118
-#: templates/system/scripts/update.html:125
-#: templates/system/security_problems/confirm_delete.html:24
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/create.html templates/system/scripts/update.html
+#: templates/system/security_problems/confirm_delete.html
 msgid "Security Script"
 msgstr "Sikkerhedsscript"
 
-#: templates/system/scripts/confirm_delete.html:22
-#: templates/system/scripts/confirm_delete.html:55
+#: templates/system/scripts/confirm_delete.html
 msgid "the Script"
 msgstr "Scriptet"
 
-#: templates/system/scripts/confirm_delete.html:23
+#: templates/system/scripts/confirm_delete.html
 msgid "Associated Script"
 msgstr "Tilknyttet Script"
 
-#: templates/system/scripts/confirm_delete.html:25
-#: templates/system/scripts/confirm_delete.html:53
-#: templates/system/security_problems/confirm_delete.html:33
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/security_problems/confirm_delete.html
 msgid "the Security Script"
 msgstr "Sikkerhedsscriptet"
 
-#: templates/system/scripts/confirm_delete.html:26
-#: templates/system/security_problems/confirm_delete.html:16
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/security_problems/confirm_delete.html
 msgid "Security Rule"
 msgstr "Sikkerhedsregel"
 
-#: templates/system/scripts/confirm_delete.html:27
-#: templates/system/security_problems/confirm_delete.html:26
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/security_problems/confirm_delete.html
 msgid "the Security Rule"
 msgstr "Sikkerhedsreglen"
 
-#: templates/system/scripts/confirm_delete.html:31
+#: templates/system/scripts/confirm_delete.html
 #, python-format
 msgid "Old %(jobs)s with %(the_script)s will be deleted."
 msgstr "Gamle %(jobs)s med %(the_script)s vil blive slettet."
 
-#: templates/system/scripts/confirm_delete.html:36
+#: templates/system/scripts/confirm_delete.html
 #, python-format
 msgid ""
 "If %(the_script)s is set as an %(associated_script)s the list of the "
@@ -1590,7 +1555,7 @@ msgstr ""
 "Hvis %(the_script)s er sat som %(associated_script)s vil listen af de "
 "%(associated_scripts)s blive opdateret med %(the_script)s fjernet."
 
-#: templates/system/scripts/confirm_delete.html:42
+#: templates/system/scripts/confirm_delete.html
 #, python-format
 msgid ""
 "If %(the_security_script)s is used in a %(security_rule)s, then "
@@ -1599,72 +1564,65 @@ msgstr ""
 "Hvis %(the_security_script)s bruges i en %(security_rule)s, vil "
 "%(the_security_rule)s også blive slettet."
 
-#: templates/system/scripts/confirm_delete.html:51
+#: templates/system/scripts/confirm_delete.html
 msgid "Are you sure you want to delete"
 msgstr "Er du sikker på, at du ønsker at slette"
 
-#: templates/system/scripts/create.html:15
-#: templates/system/scripts/create.html:37
-#: templates/system/scripts/update.html:125
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:113
+#: templates/system/scripts/create.html templates/system/scripts/update.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Create"
 msgstr "Opret"
 
-#: templates/system/scripts/form.html:17
+#: templates/system/scripts/form.html
 msgid "Modified"
 msgstr "Ændret"
 
-#: templates/system/scripts/form.html:32 templates/system/scripts/form.html:84
+#: templates/system/scripts/form.html
 msgid "Code"
 msgstr "Kode"
 
-#: templates/system/scripts/form.html:105
+#: templates/system/scripts/form.html
 msgid "Type"
 msgstr "Type"
 
-#: templates/system/scripts/form.html:106
+#: templates/system/scripts/form.html
 msgid "Default value"
 msgstr "Standardværdi"
 
-#: templates/system/scripts/form.html:107
+#: templates/system/scripts/form.html
 msgid "Required"
 msgstr "Påkrævet"
 
-#: templates/system/scripts/form.html:114
-#: templates/system/scripts/form.html:117
+#: templates/system/scripts/form.html
 msgid "Add arguments"
 msgstr "Tilføj parametre"
 
-#: templates/system/scripts/navigation.html:7
+#: templates/system/scripts/navigation.html
 msgid "Local scripts"
 msgstr "Lokale scripts"
 
-#: templates/system/scripts/navigation.html:10
+#: templates/system/scripts/navigation.html
 msgid "Global scripts"
 msgstr "Globale scripts"
 
-#: templates/system/scripts/navigation.html:38
-#: templates/system/scripts/navigation.html:42
-#: templates/system/scripts/navigation.html:62
-#: templates/system/scripts/navigation.html:66
+#: templates/system/scripts/navigation.html
 msgid "Delete script"
 msgstr "Slet script"
 
-#: templates/system/scripts/run_base.html:60
+#: templates/system/scripts/run_base.html
 msgid "Loading..."
 msgstr "Loading..."
 
-#: templates/system/scripts/run_step1.html:6
-#: templates/system/scripts/run_step2.html:6
-#: templates/system/scripts/update.html:67
+#: templates/system/scripts/run_step1.html
+#: templates/system/scripts/run_step2.html templates/system/scripts/update.html
 msgid "Run script"
 msgstr "Kør script"
 
-#: templates/system/scripts/run_step1.html:7
+#: templates/system/scripts/run_step1.html
 msgid "Choose computer or groups"
 msgstr "Vælg computer eller grupper"
 
-#: templates/system/scripts/run_step1.html:12
+#: templates/system/scripts/run_step1.html
 msgid ""
 "Note: Scripts can only be run on computers that have been activated and "
 "groups that have at least 1 associated computer."
@@ -1672,106 +1630,103 @@ msgstr ""
 "Bemærk: Der kan kun køres scripts på computere, der er aktiverede, og på "
 "grupper, der har tilknyttet minimum 1 computer."
 
-#: templates/system/scripts/run_step1.html:21
+#: templates/system/scripts/run_step1.html
 msgid "Choose all Computers"
 msgstr "Vælg alle Computere"
 
-#: templates/system/scripts/run_step1.html:39
+#: templates/system/scripts/run_step1.html
 msgid "Choose all Groups"
 msgstr "Vælg alle Grupper"
 
-#: templates/system/scripts/run_step2.html:7
+#: templates/system/scripts/run_step2.html
 msgid "Specify parameters"
 msgstr "Angiv parametre"
 
-#: templates/system/scripts/run_step2.html:25
+#: templates/system/scripts/run_step2.html
 msgid "The script takes no parameters."
 msgstr "Dette script tager ingen parametre."
 
-#: templates/system/scripts/run_step2.html:33
+#: templates/system/scripts/run_step2.html
 msgid "Run"
 msgstr "Kør"
 
-#: templates/system/scripts/run_step3.html:6
+#: templates/system/scripts/run_step3.html
 msgid "Job started"
 msgstr "Job startet"
 
-#: templates/system/scripts/run_step3.html:10
+#: templates/system/scripts/run_step3.html
 #, python-format
 msgid ""
 "Job based on script %(sname)s has been started on %(num_pcs)s computer(s)"
 msgstr "Job baseret på script %(sname)s er startet på %(num_pcs)s computer(e)"
 
-#: templates/system/scripts/run_step3.html:13
+#: templates/system/scripts/run_step3.html
 msgid "You can follow the created jobs here"
 msgstr "Du kan følge de oprettede jobs her"
 
-#: templates/system/scripts/run_step3.html:17
+#: templates/system/scripts/run_step3.html
 msgid "Close"
 msgstr "Luk"
 
-#: templates/system/scripts/search_result.html:13
+#: templates/system/scripts/search_result.html
 msgid "Local"
 msgstr "Lokalt"
 
-#: templates/system/scripts/update.html:14
-#: templates/system/scripts/update.html:118
+#: templates/system/scripts/update.html
 msgid "Add new"
 msgstr "Tilføj nyt"
 
-#: templates/system/scripts/update.html:28
-#: templates/widgets/scriptsearch.html:27
+#: templates/system/scripts/update.html templates/widgets/scriptsearch.html
 msgid "Clear the filter"
 msgstr "Ryd filter"
 
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
-#: templates/system/security_events/site_security_events.html:39
-#: templates/system/security_events/site_security_events.html:116
+#: templates/system/security_events/site_security_events.html
 msgid "Level"
 msgstr "Alvorlighedsgrad"
 
-#: templates/system/security_events/site_security_events.html:95
+#: templates/system/security_events/site_security_events.html
 msgid "Edit Security Events"
 msgstr "Rediger Sikkerhedshændelser"
 
-#: templates/system/security_events/site_security_events.html:102
+#: templates/system/security_events/site_security_events.html
 msgid "Handle event"
 msgstr "Håndter hændelse"
 
-#: templates/system/security_events/site_security_events.html:111
+#: templates/system/security_events/site_security_events.html
 msgid "Handle events"
 msgstr "Håndter hændelser"
 
-#: templates/system/security_events/site_security_events.html:117
+#: templates/system/security_events/site_security_events.html
 msgid "Rule"
 msgstr "Regel"
 
-#: templates/system/security_events/site_security_events.html:119
+#: templates/system/security_events/site_security_events.html
 msgid "Info"
 msgstr "Info"
 
-#: templates/system/security_events/site_security_events.html:120
+#: templates/system/security_events/site_security_events.html
 msgid "Device"
 msgstr "Maskine"
 
-#: templates/system/security_events/site_security_events.html:121
+#: templates/system/security_events/site_security_events.html
 msgid "Incident time"
 msgstr "Hændelsestidspunkt"
 
-#: templates/system/security_events/site_security_events.html:122
+#: templates/system/security_events/site_security_events.html
 msgid "Time of receipt"
 msgstr "Modtagelsestidspunkt"
 
-#: templates/system/security_events/site_security_events.html:124
+#: templates/system/security_events/site_security_events.html
 msgid "Handled by"
 msgstr "Håndteres af"
 
-#: templates/system/security_problems/confirm_delete.html:7
-#: templates/system/security_problems/site_security_problems.html:28
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/security_problems/site_security_problems.html
 msgid "Delete security rule"
 msgstr "Slet sikkerhedsregel"
 
-#: templates/system/security_problems/confirm_delete.html:18
+#: templates/system/security_problems/confirm_delete.html
 #, python-format
 msgid ""
 "If a %(security_rule)s is deleted, the related %(security_events)s will also "
@@ -1780,11 +1735,11 @@ msgstr ""
 "Hvis en %(security_rule)s slettes, vil de relaterede %(security_events)s "
 "også blive slettet."
 
-#: templates/system/security_problems/confirm_delete.html:25
+#: templates/system/security_problems/confirm_delete.html
 msgid "Email recipients"
 msgstr "E-mail-modtagere"
 
-#: templates/system/security_problems/confirm_delete.html:27
+#: templates/system/security_problems/confirm_delete.html
 #, python-format
 msgid ""
 "Associated %(groups)s, %(security_script)s and %(email_recipients)s will be "
@@ -1793,15 +1748,15 @@ msgstr ""
 "Tilknyttede %(groups)s, %(security_script)s og %(email_recipients)s vil "
 "blive fjernet fra %(the_security_rule)s."
 
-#: templates/system/security_problems/confirm_delete.html:32
+#: templates/system/security_problems/confirm_delete.html
 msgid "The Groups"
 msgstr "Grupperne"
 
-#: templates/system/security_problems/confirm_delete.html:34
+#: templates/system/security_problems/confirm_delete.html
 msgid "the Email recipients"
 msgstr "E-mail-modtagerne"
 
-#: templates/system/security_problems/confirm_delete.html:36
+#: templates/system/security_problems/confirm_delete.html
 #, python-format
 msgid ""
 "%(the_groups)s, %(the_security_script)s and %(the_email_recipients)s "
@@ -1810,39 +1765,39 @@ msgstr ""
 "Selve %(the_groups)s, %(the_security_script)s og %(the_email_recipients)s "
 "vil %(NOT)s blive slettet."
 
-#: templates/system/security_problems/confirm_delete.html:42
+#: templates/system/security_problems/confirm_delete.html
 msgid "Are you sure you wish to delete the Security Rule"
 msgstr "Er du sikker på, du ønsker at slette Sikkerhedsreglen"
 
-#: templates/system/security_problems/site_security_problems.html:15
+#: templates/system/security_problems/site_security_problems.html
 msgid "Define new security rule"
 msgstr "Definér ny sikkerhedsregel"
 
-#: templates/system/security_problems/site_security_problems.html:40
+#: templates/system/security_problems/site_security_problems.html
 msgid "Add group to surveillance"
 msgstr "Tilføj gruppe til overvågning"
 
-#: templates/system/security_problems/site_security_problems.html:41
+#: templates/system/security_problems/site_security_problems.html
 msgid "Remove monitored group"
 msgstr "Fjern overvåget gruppe"
 
-#: templates/system/security_problems/site_security_problems.html:42
+#: templates/system/security_problems/site_security_problems.html
 msgid "Add email recipient"
 msgstr "Tilføj e-mail-modtager"
 
-#: templates/system/security_problems/site_security_problems.html:43
+#: templates/system/security_problems/site_security_problems.html
 msgid "Remove recipient"
 msgstr "Fjern modtager"
 
-#: templates/system/security_problems/site_security_problems.html:57
+#: templates/system/security_problems/site_security_problems.html
 msgid "New security rule"
 msgstr "Ny sikkerhedsregel"
 
-#: templates/system/security_problems/site_security_problems.html:72
+#: templates/system/security_problems/site_security_problems.html
 msgid "empty"
 msgstr "tom"
 
-#: templates/system/security_problems/site_security_problems.html:73
+#: templates/system/security_problems/site_security_problems.html
 #, python-format
 msgid ""
 "If the Security Rule does not have a Group added, the rule will apply to "
@@ -1851,7 +1806,7 @@ msgstr ""
 "Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen "
 "gælde %(all)s Computere."
 
-#: templates/system/security_problems/site_security_problems.html:76
+#: templates/system/security_problems/site_security_problems.html
 #, python-format
 msgid ""
 "If you want to temporarily disable a rule, you can create an %(empty)s Group "
@@ -1861,57 +1816,51 @@ msgstr ""
 "Gruppe (dvs. en Gruppe uden Computere) og sætte denne Gruppe som den "
 "overvågede Gruppe."
 
-#: templates/system/security_problems/site_security_problems.html:98
+#: templates/system/security_problems/site_security_problems.html
 msgid "Monitored groups"
 msgstr "Overvågede grupper"
 
-#: templates/system/security_problems/site_security_problems.html:102
+#: templates/system/security_problems/site_security_problems.html
 msgid "Recipient(s) of email warning"
 msgstr "Modtager(e) af e-mail-advarsel"
 
-#: templates/system/site_image_versions.html:27
+#: templates/system/site_image_versions.html
 msgid "Newest version of"
 msgstr "Nyeste udgave af"
 
-#: templates/system/site_image_versions.html:29
-#: templates/system/site_image_versions.html:62
+#: templates/system/site_image_versions.html
 msgid "Version"
 msgstr "Version"
 
-#: templates/system/site_image_versions.html:31
-#: templates/system/site_image_versions.html:63
+#: templates/system/site_image_versions.html
 msgid "Release date"
 msgstr "Release-dato"
 
-#: templates/system/site_image_versions.html:33
-#: templates/system/site_image_versions.html:64
+#: templates/system/site_image_versions.html
 msgid "Operating system"
 msgstr "Operativsystem"
 
-#: templates/system/site_image_versions.html:35
-#: templates/system/site_image_versions.html:65
+#: templates/system/site_image_versions.html
 msgid "Release notes"
 msgstr "Udgivelsesnoter"
 
-#: templates/system/site_image_versions.html:44
-#: templates/system/site_image_versions.html:66
-#: templates/system/site_image_versions.html:87
+#: templates/system/site_image_versions.html
 msgid "Download"
 msgstr "Download"
 
-#: templates/system/site_image_versions.html:49
+#: templates/system/site_image_versions.html
 msgid "No versions were found"
 msgstr "Ingen versioner fundet"
 
-#: templates/system/site_image_versions.html:56
+#: templates/system/site_image_versions.html
 msgid "Earlier versions"
 msgstr "Tidligere versioner"
 
-#: templates/system/site_image_versions.html:98
+#: templates/system/site_image_versions.html
 msgid "NO ACCESS"
 msgstr "INGEN ADGANG"
 
-#: templates/system/site_image_versions.html:100
+#: templates/system/site_image_versions.html
 msgid ""
 "Your organization has no service agreement with a OS2borgerPC provider so no "
 "versions are shown."
@@ -1919,63 +1868,63 @@ msgstr ""
 "Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, "
 "og derfor vises ingen versioner."
 
-#: templates/system/site_image_versions.html:102
+#: templates/system/site_image_versions.html
 msgid "Please contact a OS2borgerPC provider to learn more."
 msgstr "Kontakt venligst OS2borgerPC leverandør for at høre mere."
 
-#: templates/system/site_list.html:5
+#: templates/system/site_list.html
 msgid "Administrate"
 msgstr "Administrér"
 
-#: templates/system/site_settings.html:22
+#: templates/system/site_settings.html
 msgid "Settings for"
 msgstr "Indstillinger for"
 
-#: templates/system/site_settings.html:28
+#: templates/system/site_settings.html
 msgid "Settings"
 msgstr "Indstillinger"
 
-#: templates/system/site_status.html:12
+#: templates/system/site_status.html
 msgid "Activated:"
 msgstr "Aktiverede:"
 
-#: templates/system/site_status.html:14
+#: templates/system/site_status.html
 msgid "Online:"
 msgstr "Online:"
 
-#: templates/system/site_status.html:20 templates/system/site_status.html:36
+#: templates/system/site_status.html
 msgid "Activated"
 msgstr "Aktiveret"
 
-#: templates/system/site_status.html:21
+#: templates/system/site_status.html
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: templates/system/site_status.html:22
+#: templates/system/site_status.html
 msgid "Location"
 msgstr "Placering"
 
-#: templates/system/site_status.html:24
+#: templates/system/site_status.html
 msgid "Latest check-in"
 msgstr "Seneste tjek-ind"
 
-#: templates/system/site_status.html:25
+#: templates/system/site_status.html
 msgid "Latest security event received"
 msgstr "Seneste sikkerhedshændelse modtaget"
 
-#: templates/system/site_status.html:44
+#: templates/system/site_status.html
 msgid "Online"
 msgstr "Online"
 
-#: templates/system/site_status.html:46
+#: templates/system/site_status.html
 msgid "Offline"
 msgstr "Offline"
 
-#: templates/system/site_two_factor.html:21
+#: templates/system/site_two_factor.html
 msgid "Activate: Two-factor authentication for superuser"
 msgstr "Aktivér: Totrinsbekræftelse for superuser"
 
-#: templates/system/site_two_factor.html:26
+#: templates/system/site_two_factor.html
 msgid ""
 "This section is related to setting up two-factor authentication on an "
 "OS2borgerPC."
@@ -1983,7 +1932,7 @@ msgstr ""
 "Denne sektion er relateret til opsætning af totrinsbekræftelse på en "
 "OS2borgerPC."
 
-#: templates/system/site_two_factor.html:29
+#: templates/system/site_two_factor.html
 msgid ""
 "Two-factor authentication on your admin-site profile is administered from "
 "the Users-section."
@@ -1991,27 +1940,27 @@ msgstr ""
 "Totrinsbekræftelse på din admin-site profil administreres fra sektionen "
 "Brugere."
 
-#: templates/system/site_two_factor.html:37
+#: templates/system/site_two_factor.html
 msgid "Create security key and QR"
 msgstr "Opret sikkerhedsnøgle og QR"
 
-#: templates/system/site_two_factor.html:39
+#: templates/system/site_two_factor.html
 msgid "Generate security key and QR"
 msgstr "Generér sikkerhedsnøgle og QR"
 
-#: templates/system/site_two_factor.html:41
+#: templates/system/site_two_factor.html
 msgid "Security key:"
 msgstr "Sikkerhedsnøgle:"
 
-#: templates/system/site_two_factor.html:47
+#: templates/system/site_two_factor.html
 msgid "Scan the QR code from step 1 with your authenticator app"
 msgstr "Scan QR-koden fra trin 1 med din authenticator app"
 
-#: templates/system/site_two_factor.html:48
+#: templates/system/site_two_factor.html
 msgid "Some examples of authenticator apps are:"
 msgstr "Som authenticator app kan eksempelvis bruges:"
 
-#: templates/system/site_two_factor.html:60
+#: templates/system/site_two_factor.html
 msgid ""
 "Copy the security key from step 1 and run the two-factor script with it as "
 "input"
@@ -2019,53 +1968,53 @@ msgstr ""
 "Kopier sikkerhedsnøglen fra trin 1 og kør totrinsscriptet med den som "
 "inputparameter"
 
-#: templates/system/site_two_factor.html:62
+#: templates/system/site_two_factor.html
 #, python-format
 msgid "You can find the script \"%(name)s\" under the menu item "
 msgstr "Du kan finde scriptet \"%(name)s\" under menupunktet "
 
-#: templates/system/users/confirm_delete.html:11
-#: templates/system/users/update.html:28
+#: templates/system/users/confirm_delete.html
+#: templates/system/users/update.html
 msgid "Delete user"
 msgstr "Slet bruger"
 
-#: templates/system/users/confirm_delete.html:16
+#: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
 msgstr "Er du sikker på, at du vil slette brugeren"
 
-#: templates/system/users/create.html:10
+#: templates/system/users/create.html
 msgid "Create new user"
 msgstr "Tilføj ny bruger"
 
-#: templates/system/users/create.html:16 templates/system/users/update.html:85
+#: templates/system/users/create.html templates/system/users/update.html
 msgid "Create user"
 msgstr "Opret bruger"
 
-#: templates/system/users/form.html:26
+#: templates/system/users/form.html
 msgid "Show Password"
 msgstr "Vis Password"
 
-#: templates/system/users/form.html:32
+#: templates/system/users/form.html
 msgid "Set up two-factor authentication"
 msgstr "Opsæt totrinsbekræftelse"
 
-#: templates/system/users/form.html:38
+#: templates/system/users/form.html
 msgid "Generate backup tokens"
 msgstr "Generér backupkoder"
 
-#: templates/system/users/form.html:39
+#: templates/system/users/form.html
 msgid "Deactivate two-factor authentication"
 msgstr "Deaktivér totrinsbekræftelse"
 
-#: templates/system/users/update.html:15 templates/system/users/update.html:78
+#: templates/system/users/update.html
 msgid "Add new user"
 msgstr "Tilføj ny bruger"
 
-#: templates/system/users/update.html:42
+#: templates/system/users/update.html
 msgid "Profile:"
 msgstr "Profil:"
 
-#: templates/system/users/update.html:46
+#: templates/system/users/update.html
 msgid ""
 "Site users are not authorized to edit other users. Ask a site admin or "
 "Magenta for help."
@@ -2073,16 +2022,16 @@ msgstr ""
 "Site-brugere har ikke adgang til at ændre andre brugere. Bed en site-admin "
 "eller Magenta om hjælp."
 
-#: templates/system/wake_plan/confirm_delete.html:6
-#: templates/system/wake_plan/wake_plan_base.html:34
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_plan_base.html
 msgid "Delete on/off schedule"
 msgstr "Slet tænd/sluk tidsplan"
 
-#: templates/system/wake_plan/confirm_delete.html:14
+#: templates/system/wake_plan/confirm_delete.html
 msgid "The schedule"
 msgstr "Tidsplanen"
 
-#: templates/system/wake_plan/confirm_delete.html:17
+#: templates/system/wake_plan/confirm_delete.html
 #, python-format
 msgid ""
 "Deleting %(the_schedule)s will remove all %(groups)s and the associated "
@@ -2092,20 +2041,20 @@ msgstr ""
 "%(computers)s ud af den, og de vil ikke længere slukke eller tænde "
 "automatisk."
 
-#: templates/system/wake_plan/confirm_delete.html:24
+#: templates/system/wake_plan/confirm_delete.html
 msgid "Are you sure you wish to delete the On/Off schedule"
 msgstr "Er du sikker på, at du ønsker at slette Tænd/Sluk tidsplanen"
 
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html:6
-#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html:41
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html
 msgid "Delete exception"
 msgstr "Slet undtagelse"
 
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html:14
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
 msgid "the Exception"
 msgstr "Undtagelsen"
 
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html:15
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #, python-format
 msgid ""
 "If %(the_exception)s is deleted, it will be removed from all schedules and "
@@ -2116,27 +2065,27 @@ msgstr ""
 "og alle Computere tilmeldt til planerne vil få opdateret deres tidsplan med "
 "denne undtagelse fjernet."
 
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html:22
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
 msgid "Are you sure you wish to delete the Exception"
 msgstr "Er du sikker på, at du ønsker at slette Undtagelsen"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:10
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Altered opening hours"
 msgstr "Ændrede åbningstider"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:12
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Closed days"
 msgstr "Lukkedage"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:14
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "New exception"
 msgstr "Ny undtagelse"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:21
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Return to schedule"
 msgstr "Tilbage til tidsplan"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:30
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid ""
 "Here you can create exceptions from the recurring week plan and these "
 "exceptions have precedence"
@@ -2144,7 +2093,7 @@ msgstr ""
 "Herinde kan du oprette undtagelser til den faste tidsplan, og disse "
 "undtagelser tager præcedens."
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:34
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid ""
 "\"Altered opening hours\" means that for the selected days, the computer "
 "will turn on and off at the times selected for the exception rather than "
@@ -2154,7 +2103,7 @@ msgstr ""
 "slukker på de, for undtagelsen, valgte tidspunkter, fremfor de tidspunkter, "
 "der står i den faste ugeplan."
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:36
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid ""
 "\"Closed days\" means that the computer will not turn on automatically "
 "during the selected days."
@@ -2162,39 +2111,39 @@ msgstr ""
 "\"Lukkedage\" betyder at computeren slet ikke tænder automatisk den eller de "
 "dage."
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:56
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "From"
 msgstr "Fra"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:58
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "To"
 msgstr "Til"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:72
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Point in time"
 msgstr "Tidspunkt"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html:96
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "On/Off schedules that use this exception"
 msgstr "Tænd/Sluk tidsplaner der anvender denne undtagelse"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html:6
+#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html
 msgid "On/Off schedule: Exceptions"
 msgstr "Tænd/Sluk tidsplan: Undtagelser"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html:19
+#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html
 msgid "Add altered opening hours"
 msgstr "Tilføj ændrede åbningstider"
 
-#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html:25
+#: templates/system/wake_plan/wake_change_events/wake_change_event_base.html
 msgid "Add closed days"
 msgstr "Tilføj lukkedage"
 
-#: templates/system/wake_plan/wake_plan.html:9
+#: templates/system/wake_plan/wake_plan.html
 msgid "New on/off schedule"
 msgstr "Ny tænd/sluk tidsplan"
 
-#: templates/system/wake_plan/wake_plan.html:22
+#: templates/system/wake_plan/wake_plan.html
 msgid ""
 "If you are unfamiliar with the functionality of on/off schedules, we "
 "recommend first reading our"
@@ -2202,15 +2151,15 @@ msgstr ""
 "Hvis du er ubekendt med Tænd/Sluk tidsplan-funktionaliteten, vil vi foreslå "
 "at starte med at læse vores"
 
-#: templates/system/wake_plan/wake_plan.html:23
+#: templates/system/wake_plan/wake_plan.html
 msgid "User guide to power saving functions in OS2borgerPC"
 msgstr "Brugerguide til strømsparefunktioner i OS2borgerPC"
 
-#: templates/system/wake_plan/wake_plan.html:27
+#: templates/system/wake_plan/wake_plan.html
 msgid "Group"
 msgstr "Gruppe"
 
-#: templates/system/wake_plan/wake_plan.html:28
+#: templates/system/wake_plan/wake_plan.html
 #, python-format
 msgid ""
 "Schedules must have %(groups)s added before they take effect, and a "
@@ -2219,7 +2168,7 @@ msgstr ""
 "Tidsplaner skal have %(groups)s tilknyttet, før de tager effekt, og en "
 "%(group)s kan kun være tilmeldt én tidsplan."
 
-#: templates/system/wake_plan/wake_plan.html:34
+#: templates/system/wake_plan/wake_plan.html
 #, python-format
 msgid ""
 "A schedule applies to all the %(computers)s in the %(groups)s that have been "
@@ -2228,28 +2177,28 @@ msgstr ""
 "En tidsplan er gældende for alle %(computers)s i de %(groups)s, som er "
 "tilmeldt tidsplanen."
 
-#: templates/system/wake_plan/wake_plan.html:40
+#: templates/system/wake_plan/wake_plan.html
 #, python-format
 msgid "A %(computer)s can only receive a new or updated schedule if it is on."
 msgstr ""
 "En %(computer)s kan kun modtage en ny eller opdateret tidsplan, hvis den er "
 "tændt"
 
-#: templates/system/wake_plan/wake_plan.html:45
+#: templates/system/wake_plan/wake_plan.html
 msgid "the individual Computers"
 msgstr "de individuelle Computere"
 
-#: templates/system/wake_plan/wake_plan.html:46
+#: templates/system/wake_plan/wake_plan.html
 #, python-format
 msgid "The schedule uses the time settings on %(the_individual_computers)s."
 msgstr ""
 "Tidsplanen anvender tidsindstillingerne på %(the_individual_computers)s."
 
-#: templates/system/wake_plan/wake_plan.html:51
+#: templates/system/wake_plan/wake_plan.html
 msgid "the Computers"
 msgstr "Computerne"
 
-#: templates/system/wake_plan/wake_plan.html:52
+#: templates/system/wake_plan/wake_plan.html
 #, python-format
 msgid ""
 "Whether some of %(the_computers)s should also enter sleep mode when inactive "
@@ -2258,24 +2207,24 @@ msgstr ""
 "Om nogle af %(the_computers)s også skal gå i dvale ved inaktivitet styres "
 "ikke herfra, men i stedet ved at køre"
 
-#: templates/system/wake_plan/wake_plan.html:55
+#: templates/system/wake_plan/wake_plan.html
 msgid "the suspend script."
 msgstr "Dvale-scriptet"
 
-#: templates/system/wake_plan/wake_plan.html:67
+#: templates/system/wake_plan/wake_plan.html
 msgid "Schedule status"
 msgstr "Tidsplan status"
 
-#: templates/system/wake_plan/wake_plan.html:70
+#: templates/system/wake_plan/wake_plan.html
 msgid "Active"
 msgstr "Aktiv"
 
-#: templates/system/wake_plan/wake_plan.html:70
-#: templates/system/wake_plan/wake_plan_base.html:30
+#: templates/system/wake_plan/wake_plan.html
+#: templates/system/wake_plan/wake_plan_base.html
 msgid "Inactive"
 msgstr "Inaktiv"
 
-#: templates/system/wake_plan/wake_plan.html:77
+#: templates/system/wake_plan/wake_plan.html
 msgid ""
 "Some sleep states save more power than others, but some hardware does not "
 "support the most power saving states. We recommend starting with \"Off"
@@ -2287,63 +2236,63 @@ msgstr ""
 "med \"Off\" (den mest strømbesparende), og hvis det ikke virker så prøv dem "
 "i rækkefølgen: mem, freeze, standby"
 
-#: templates/system/wake_plan/wake_plan.html:82
+#: templates/system/wake_plan/wake_plan.html
 msgid "Week plan"
 msgstr "Ugeplan"
 
-#: templates/system/wake_plan/wake_plan.html:83
+#: templates/system/wake_plan/wake_plan.html
 msgid "Configure on and off for the recurring week plan"
 msgstr "Konfigurer tænd og sluk for den faste ugeplan"
 
-#: templates/system/wake_plan/wake_plan.html:90
+#: templates/system/wake_plan/wake_plan.html
 msgid "On at"
 msgstr "Tænd"
 
-#: templates/system/wake_plan/wake_plan.html:92
+#: templates/system/wake_plan/wake_plan.html
 msgid "Off at"
 msgstr "Sluk"
 
-#: templates/system/wake_plan/wake_plan.html:98
+#: templates/system/wake_plan/wake_plan.html
 msgid "On"
 msgstr "Tændt"
 
-#: templates/system/wake_plan/wake_plan.html:99
+#: templates/system/wake_plan/wake_plan.html
 msgid "Off"
 msgstr "Slukket"
 
-#: templates/system/wake_plan/wake_plan.html:100
+#: templates/system/wake_plan/wake_plan.html
 msgid "Monday"
 msgstr "Mandag"
 
-#: templates/system/wake_plan/wake_plan.html:118
+#: templates/system/wake_plan/wake_plan.html
 msgid "Tuesday"
 msgstr "Tirsdag"
 
-#: templates/system/wake_plan/wake_plan.html:136
+#: templates/system/wake_plan/wake_plan.html
 msgid "Wednesday"
 msgstr "Onsdag"
 
-#: templates/system/wake_plan/wake_plan.html:154
+#: templates/system/wake_plan/wake_plan.html
 msgid "Thursday"
 msgstr "Torsdag"
 
-#: templates/system/wake_plan/wake_plan.html:172
+#: templates/system/wake_plan/wake_plan.html
 msgid "Friday"
 msgstr "Fredag"
 
-#: templates/system/wake_plan/wake_plan.html:190
+#: templates/system/wake_plan/wake_plan.html
 msgid "Saturday"
 msgstr "Lørdag"
 
-#: templates/system/wake_plan/wake_plan.html:208
+#: templates/system/wake_plan/wake_plan.html
 msgid "Sunday"
 msgstr "Søndag"
 
-#: templates/system/wake_plan/wake_plan.html:230
+#: templates/system/wake_plan/wake_plan.html
 msgid "Exceptions: Closed days and altered opening hours"
 msgstr "Undtagelser: Lukkedage og Ændrede åbningstider"
 
-#: templates/system/wake_plan/wake_plan.html:231
+#: templates/system/wake_plan/wake_plan.html
 msgid ""
 "Plan and create upcoming closed days and altered opening hours from the "
 "recurring week plan"
@@ -2351,51 +2300,51 @@ msgstr ""
 "Planlæg og opret kommende lukkedage og ændrede åbningstider fra den faste "
 "ugentlige tidsplan"
 
-#: templates/system/wake_plan/wake_plan.html:235
+#: templates/system/wake_plan/wake_plan.html
 msgid "Create closed days"
 msgstr "Opret lukkedage"
 
-#: templates/system/wake_plan/wake_plan.html:236
+#: templates/system/wake_plan/wake_plan.html
 msgid "Create altered opening hours"
 msgstr "Opret ændrede åbningstider"
 
-#: templates/system/wake_plan/wake_plan.html:237
+#: templates/system/wake_plan/wake_plan.html
 msgid "Edit exceptions"
 msgstr "Rediger undtagelser"
 
-#: templates/system/wake_plan/wake_plan.html:249
+#: templates/system/wake_plan/wake_plan.html
 msgid "Add exception to schedule"
 msgstr "Tilknyt undtagelse til tidsplan"
 
-#: templates/system/wake_plan/wake_plan.html:250
+#: templates/system/wake_plan/wake_plan.html
 msgid "Remove exception from schedule"
 msgstr "Fjern undtagelse fra tidsplan"
 
-#: templates/system/wake_plan/wake_plan.html:255
+#: templates/system/wake_plan/wake_plan.html
 msgid "Groups that follow the schedule"
 msgstr "Grupper der følger tidsplanen"
 
-#: templates/system/wake_plan/wake_plan.html:267
+#: templates/system/wake_plan/wake_plan.html
 msgid "Add group to schedule"
 msgstr "Tilknyt gruppe til tidsplan"
 
-#: templates/system/wake_plan/wake_plan.html:268
+#: templates/system/wake_plan/wake_plan.html
 msgid "Remove group from schedule"
 msgstr "Fjern gruppe fra tidsplan"
 
-#: templates/system/wake_plan/wake_plan.html:280
+#: templates/system/wake_plan/wake_plan.html
 msgid "Duplicate schedule"
 msgstr "Duplikér tidsplan"
 
-#: templates/system/wake_plan/wake_plan_base.html:19
+#: templates/system/wake_plan/wake_plan_base.html
 msgid "Add new On/Off schedule"
 msgstr "Tilføj ny tænd/sluk tidsplan"
 
-#: templates/two_factor/_base.html:6
+#: templates/two_factor/_base.html
 msgid "OS2borgerPC Administration Login"
 msgstr "OS2borgerPC Administration Login"
 
-#: templates/two_factor/_base.html:306
+#: templates/two_factor/_base.html
 msgid ""
 "OS2borgerPC is an open source product. You can download the source code and "
 "documentation here:"
@@ -2403,26 +2352,26 @@ msgstr ""
 "OS2borgerPC er en open source løsning. Du kan hente kildekoden og "
 "dokumentationen her:"
 
-#: templates/two_factor/_base.html:316
+#: templates/two_factor/_base.html
 msgid "Check updates for OS2borgerPC"
 msgstr "Se opdateringer i OS2borgerPC"
 
-#: templates/two_factor/_base.html:322
+#: templates/two_factor/_base.html
 msgid "Send a message to Magenta"
 msgstr "Send en besked til Magenta"
 
-#: templates/two_factor/core/backup_tokens.html:5
-#: templates/two_factor/core/setup.html:5
-#: templates/two_factor/core/setup_complete.html:5
-#: templates/two_factor/profile/disable.html:5
+#: templates/two_factor/core/backup_tokens.html
+#: templates/two_factor/core/setup.html
+#: templates/two_factor/core/setup_complete.html
+#: templates/two_factor/profile/disable.html
 msgid "Two-factor authentication for admin-site login"
 msgstr "Totrinsbekræftelse for admin-site login"
 
-#: templates/two_factor/core/backup_tokens.html:10
+#: templates/two_factor/core/backup_tokens.html
 msgid "Backup Tokens"
 msgstr "Backupkoder"
 
-#: templates/two_factor/core/backup_tokens.html:12
+#: templates/two_factor/core/backup_tokens.html
 msgid ""
 "Backup tokens can be used when your authenticator app isn't available.<br> "
 "The backup tokens below can be used for login verification.<br> If you've "
@@ -2434,7 +2383,7 @@ msgstr ""
 "brugt alle dine backupkoder, kan du generere et nyt sæt af backupkoder.<br> "
 "Kun de backupkoder som vises herunder er gyldige."
 
-#: templates/two_factor/core/backup_tokens.html:23
+#: templates/two_factor/core/backup_tokens.html
 msgid ""
 "Print these tokens and keep them somewhere safe<br> or save them in e.g. "
 "Bitwarden."
@@ -2442,30 +2391,28 @@ msgstr ""
 "Print disse koder ud og opbevar dem sikkert<br> eller gem dem i f.eks. "
 "Bitwarden."
 
-#: templates/two_factor/core/backup_tokens.html:26
+#: templates/two_factor/core/backup_tokens.html
 msgid "You don't have any backup tokens yet."
 msgstr "Du har ingen backupkoder endnu."
 
-#: templates/two_factor/core/backup_tokens.html:35
-#: templates/two_factor/core/setup_complete.html:18
-#: templates/two_factor/core/setup_complete.html:25
+#: templates/two_factor/core/backup_tokens.html
+#: templates/two_factor/core/setup_complete.html
 msgid "Back to user profile"
 msgstr "Tilbage til brugerprofil"
 
-#: templates/two_factor/core/backup_tokens.html:36
+#: templates/two_factor/core/backup_tokens.html
 msgid "Generate Tokens"
 msgstr "Generér koder"
 
-#: templates/two_factor/core/login.html:6
-#: templates/two_factor/core/login.html:21
+#: templates/two_factor/core/login.html
 msgid "Log in"
 msgstr "Log ind"
 
-#: templates/two_factor/core/login.html:9
+#: templates/two_factor/core/login.html
 msgid "Please enter the token generated by your authenticator app."
 msgstr "Indtast venligst koden fra din authenticator app."
 
-#: templates/two_factor/core/login.html:12
+#: templates/two_factor/core/login.html
 msgid ""
 "Use this form for entering backup tokens for logging in. These tokens have "
 "been generated for you to print and keep safe. Please enter one of these "
@@ -2475,24 +2422,24 @@ msgstr ""
 "blevet generéret, så du kan opbevare dem sikkert. Indtast venligst en af "
 "dine backupkoder for at logge ind."
 
-#: templates/two_factor/core/login.html:25
+#: templates/two_factor/core/login.html
 msgid "Back"
 msgstr "Tilbage"
 
-#: templates/two_factor/core/login.html:29
+#: templates/two_factor/core/login.html
 msgid "As a last resort, you can use a"
 msgstr "Som en sidste udvej, kan du bruge en"
 
-#: templates/two_factor/core/login.html:31
+#: templates/two_factor/core/login.html
 msgid "backup token"
 msgstr "backupkode"
 
-#: templates/two_factor/core/setup.html:14
-#: templates/two_factor/core/setup_complete.html:10
+#: templates/two_factor/core/setup.html
+#: templates/two_factor/core/setup_complete.html
 msgid "Enable Two-Factor Authentication for"
 msgstr "Aktivér Totrinsbekræftelse for"
 
-#: templates/two_factor/core/setup.html:17
+#: templates/two_factor/core/setup.html
 msgid ""
 "You are about to take your account security to the next level. Follow the "
 "steps in this wizard to enable two-factor authentication."
@@ -2500,11 +2447,11 @@ msgstr ""
 "Du er ved at forøge sikkerheden på din brugerkonto. Følg skridtene i denne "
 "wizard for at aktivere totrinsbekræftelse."
 
-#: templates/two_factor/core/setup.html:21
+#: templates/two_factor/core/setup.html
 msgid "Please select which authentication method you would like to use."
 msgstr ""
 
-#: templates/two_factor/core/setup.html:24
+#: templates/two_factor/core/setup.html
 msgid ""
 "To start using an authenticator app, please use your smartphone to scan the "
 "QR code below. For example, use FreeOTP Authenticator."
@@ -2512,7 +2459,7 @@ msgstr ""
 "Brug venligst din authenticator app til at skanne QR koden herunder. Du kan "
 "f.eks. bruge FreeOTP Authenticator."
 
-#: templates/two_factor/core/setup.html:28
+#: templates/two_factor/core/setup.html
 msgid ""
 "Alternatively, you can use the following secret to set up TOTP in your "
 "authenticator manually."
@@ -2520,35 +2467,35 @@ msgstr ""
 "Alternativt kan du bruge følgende secret til manuelt at indstille TOTP i din "
 "authenticator app."
 
-#: templates/two_factor/core/setup.html:30
+#: templates/two_factor/core/setup.html
 msgid "TOTP Secret:"
 msgstr "TOTP Secret:"
 
-#: templates/two_factor/core/setup.html:31
+#: templates/two_factor/core/setup.html
 msgid "Then, enter the token generated by the app."
 msgstr "Indtast derefter den kode, som din app har generéret."
 
-#: templates/two_factor/core/setup.html:34
+#: templates/two_factor/core/setup.html
 msgid ""
 "Please enter the phone number you wish to receive the text messages on. This "
 "number will be validated in the next step."
 msgstr ""
 
-#: templates/two_factor/core/setup.html:38
+#: templates/two_factor/core/setup.html
 msgid ""
 "Please enter the phone number you wish to be called on. This number will be "
 "validated in the next step."
 msgstr ""
 
-#: templates/two_factor/core/setup.html:43
+#: templates/two_factor/core/setup.html
 msgid "We are calling your phone right now, please enter the digits you hear."
 msgstr ""
 
-#: templates/two_factor/core/setup.html:46
+#: templates/two_factor/core/setup.html
 msgid "We sent you a text message, please enter the tokens we sent."
 msgstr ""
 
-#: templates/two_factor/core/setup.html:50
+#: templates/two_factor/core/setup.html
 msgid ""
 "We've encountered an issue with the selected authentication method. Please "
 "go back and verify that you entered your information correctly, try again, "
@@ -2559,31 +2506,31 @@ msgstr ""
 "verificer at du indtastede din information korrekt, prøv igen, eller brug en "
 "anden metode. Hvis problemet fortsætter så kontakt Magenta."
 
-#: templates/two_factor/core/setup.html:57
+#: templates/two_factor/core/setup.html
 msgid ""
 "To identify and verify your YubiKey, please insert a token in the field "
 "below. Your YubiKey will be linked to your account."
 msgstr ""
 
-#: templates/two_factor/core/setup_complete.html:13
+#: templates/two_factor/core/setup_complete.html
 msgid "Congratulations, you've successfully enabled two-factor authentication."
 msgstr "Tillykke, du har nu aktiveret totrinsbekræftelse."
 
-#: templates/two_factor/core/setup_complete.html:20
+#: templates/two_factor/core/setup_complete.html
 msgid ""
 "However, it might happen that you don't have access to your primary token "
 "device. To enable account recovery, add a phone number."
 msgstr ""
 
-#: templates/two_factor/core/setup_complete.html:27
+#: templates/two_factor/core/setup_complete.html
 msgid "Add Phone Number"
 msgstr ""
 
-#: templates/two_factor/profile/disable.html:10
+#: templates/two_factor/profile/disable.html
 msgid "Disable Two-factor Authentication for"
 msgstr "Deaktivér Totrinsbekræftelse for"
 
-#: templates/two_factor/profile/disable.html:12
+#: templates/two_factor/profile/disable.html
 msgid ""
 "You are about to disable two-factor authentication. This weakens your "
 "account security, are you sure?"
@@ -2591,12 +2538,12 @@ msgstr ""
 "Du er ved at deaktivere totrinsbekræftelse. Dette svækker sikkerheden på din "
 "brugerkonto. Er du sikker?"
 
-#: templates/two_factor/profile/disable.html:18
+#: templates/two_factor/profile/disable.html
 msgid "Disable"
 msgstr "Deaktivér"
 
-#: templates/widgets/picklist.html:165 templates/widgets/scriptsearch.html:147
-#: templates/widgets/wake_plan_picklist.html:199
+#: templates/widgets/picklist.html templates/widgets/scriptsearch.html
+#: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data mangler"
 
