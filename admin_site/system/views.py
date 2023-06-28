@@ -2666,6 +2666,16 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             pk__in=selected_pc_ids
         ).values_list("pk", "name", "uid")
 
+        # supervisor picklist related
+        user_set = User.objects.filter(bibos_profile__sites=site)
+        selected_user_ids = form["supervisors"].value()
+        context["available_users"] = user_set.exclude(
+            pk__in=selected_user_ids
+        ).values_list("pk", "username", "username")
+        context["selected_users"] = user_set.filter(
+            pk__in=selected_user_ids
+        ).values_list("pk", "username", "username")
+
         context["selected_group"] = group
 
         context["newform"] = PCGroupForm()
