@@ -457,6 +457,13 @@ class PCGroup(models.Model):
         WakeWeekPlan, related_name="groups", on_delete=models.SET_NULL, null=True
     )
 
+    supervisors = models.ManyToManyField(
+        User,
+        related_name="pc_groups",
+        verbose_name=_("supervisors"),
+        blank=True,
+    )
+
     def __str__(self):
         return self.name
 

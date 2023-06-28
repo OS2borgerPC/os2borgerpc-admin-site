@@ -20,9 +20,14 @@ def notify_users(security_event, security_problem, pc):
     # Subject = security name,
     # Body = description + technical summary
     email_list = []
-    alert_users = security_problem.alert_users.all()
+    supervisor_relations = pc.pc_groups.exclude(supervisors=None)
+    if supervisor_relations:
+        alert_users_pk = list(set(supervisor_relations.values_list("supervisors", flat=True)))
+        alert_users = User.objects.filter(pk__in=alert_users_pk)
+    else:
+        alert_users = security_problem.alert_users.all()
     for user in alert_users:
-        email_list.append(User.objects.get(id=user.id).email)
+        email_list.append(user.email)
 
     body = f"Beskrivelse af sikkerhedsadvarsel: {security_problem.description}\n"
     body += f"Kort resume af data fra log filen : {security_event.summary}"
