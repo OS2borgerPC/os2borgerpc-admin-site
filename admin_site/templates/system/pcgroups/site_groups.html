@@ -95,6 +95,16 @@ active
               {% translate "Remove computer from the group" as remove_c %}
               {% include 'widgets/picklist.html' with submit_name='pcs' selected_list=selected_pcs available_list=available_pcs identifier='computer' add_text=add_c remove_text=remove_c site_url=site.uid target_section='computers' %}
 
+            {# supervisor picklist #}
+            <div class="mt-3">
+            <p>
+              {% translate "Add a supervisor for the group" as add_s %}
+              {% translate "Remove a supervisor for the group" as remove_s %}
+              <label class="mt-2">{% translate "Supervisors for this group" %}</label>
+              {% include 'widgets/picklist.html' with submit_name='supervisors' selected_list=selected_users available_list=available_users identifier='supervisor' add_text=add_s remove_text=remove_s site_url=site.uid target_section='users' %}
+            </p>
+            </div>
+
             {# SecurityProblem #}
             {% if security_problems_incl_site %}
               <div class="mt-3">
