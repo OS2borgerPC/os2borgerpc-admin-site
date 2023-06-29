@@ -33,6 +33,16 @@ services:
         tty: true
         container_name: bpc_admin_site_django
         privileged: true
+    cron-service:
+        image: os2borgerpc-admin-site_os2borgerpc-admin:latest
+        volumes:
+            - .:/code/
+            - ./dev-environment/dev-settings.ini:/user-settings.ini
+            - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
+        command: [ "supercronic", "/crontab" ]
+        entrypoint: [ ]
+        depends_on:
+            - os2borgerpc-admin
     db:
         image: postgres:latest
         restart: always

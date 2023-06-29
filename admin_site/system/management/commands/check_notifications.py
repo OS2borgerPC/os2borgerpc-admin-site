@@ -7,6 +7,13 @@ class Command(BaseCommand):
     help = "Check if any notifications need to be sent"
 
     def handle(self, *args, **options):
+        # PCS = relevant_object.pcs.exclude(recently_online=False)
+        # now = datetime.now()
+        # for pc in PCS:
+        #     if (now - pc.last_seen).seconds > offline_timer:
+        #         pc.recently_online = False
+        #         pc.save()
+
         sites = Site.objects.all()
         for site in sites:
             print(site.name)
