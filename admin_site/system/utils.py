@@ -25,9 +25,9 @@ def notify_users(security_event, security_problem, pc):
         alert_users_pk = list(
             set(supervisor_relations.values_list("supervisors", flat=True))
         )
-        alert_users = User.objects.filter(pk__in=alert_users_pk)
+        alert_users = User.objects.only("email").filter(pk__in=alert_users_pk)
     else:
-        alert_users = security_problem.alert_users.all()
+        alert_users = security_problem.alert_users.only("email").all()
     for user in alert_users:
         email_list.append(user.email)
 
