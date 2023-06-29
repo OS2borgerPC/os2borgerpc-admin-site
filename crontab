@@ -1,3 +1,3 @@
 # must be ended with a new line "LF" (Unix) and not "CRLF" (Windows)
-*/5 * * * * /code/admin_site/manage.py check_notifications
+*/10 * * * * /code/admin_site/manage.py check_notifications
 # An empty line is required at the end of this file for a valid cron file.

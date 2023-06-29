@@ -22,7 +22,9 @@ def notify_users(security_event, security_problem, pc):
     email_list = []
     supervisor_relations = pc.pc_groups.exclude(supervisors=None)
     if supervisor_relations:
-        alert_users_pk = list(set(supervisor_relations.values_list("supervisors", flat=True)))
+        alert_users_pk = list(
+            set(supervisor_relations.values_list("supervisors", flat=True))
+        )
         alert_users = User.objects.filter(pk__in=alert_users_pk)
     else:
         alert_users = security_problem.alert_users.all()
