@@ -42,9 +42,6 @@ from account.models import (
 
 from system.models import (
     AssociatedScriptParameter,
-    Changelog,
-    ChangelogComment,
-    ChangelogTag,
     ConfigurationEntry,
     ImageVersion,
     Input,
@@ -63,7 +60,6 @@ from system.models import (
 
 # PC Status codes
 from system.forms import (
-    ChangelogCommentForm,
     ConfigurationEntryForm,
     PCForm,
     PCGroupForm,
@@ -3359,91 +3355,3 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             context["platform_choices"] = dict(ImageVersion.platform_choices)
 
         return context
-
-
-class ChangelogListView(ListView):
-    template_name = "system/changelog/list.html"
-
-    def get_queryset(self, filter=None):
-        if filter:
-            return Changelog.objects.filter(
-                Q(author__icontains=filter)
-                | Q(title__icontains=filter)
-                | Q(content__icontains=filter)
-                | Q(description__icontains=filter)
-                | Q(version__icontains=filter)
-            )
-        return Changelog.objects.all()
-
-    def get_paginated_queryset(self, queryset, page):
-        if not page:
-            page = 1
-
-        paginator = Paginator(queryset, 5)
-        page_obj = paginator.get_page(page)
-
-        return page_obj
-
-    def get_context_data(self, **kwargs):
-        context = super(ChangelogListView, self).get_context_data(**kwargs)
-
-        context["tag_choices"] = ChangelogTag.objects.values("name", "pk")
-
-        context["page"] = self.request.GET.get("page")
-
-        # Get the search query (if any) and filter the queryset based on that
-        search_query = self.request.GET.get("search")
-
-        if search_query:
-            queryset = self.get_queryset(search_query)
-            context["search_query"] = search_query
-        else:
-            queryset = self.get_queryset()
-
-        # Filter the queryset based on which site is viewing the site if the slug is
-        # 'global' it means the user is not logged in and therefore needs a different
-        # context
-        if context["view"].kwargs.get("slug") != "global":
-            context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
-            context["site_extension"] = "site_with_navigation.html"
-            context["global_view"] = False
-            queryset = queryset.filter(Q(site=context["site"]) | Q(site=None))
-        else:
-            context["site_extension"] = "sitebase.html"
-            context["global_view"] = True
-            queryset = queryset.filter(site=None)
-
-        # Get the tag filter (if any) and filter the queryset accordingly
-        context["tag_filter"] = self.request.GET.get("tag")
-
-        if context["tag_filter"]:
-            context["tag_filter"] = ChangelogTag.objects.get(pk=context["tag_filter"])
-            queryset = queryset.filter(tags=context["tag_filter"])
-
-        # Paginate the queryset and add it to the context
-        context["entries"] = self.get_paginated_queryset(queryset, context["page"])
-
-        # Add all comments that belong to the entries on the current page to the
-        # context
-        context["comments"] = ChangelogComment.objects.filter(
-            Q(changelog__in=context["entries"].object_list) & Q(parent_comment=None)
-        ).order_by("-created")
-
-        return context
-
-    def post(self, request, *args, **kwargs):
-        req = request.POST
-
-        comment = ChangelogComment()
-
-        comment.user = get_object_or_404(User, pk=req["user"])
-        comment.changelog = get_object_or_404(Changelog, pk=req["changelog"])
-        comment.content = req["content"]
-
-        if req["parent_comment"] != "None":
-            comment.parent_comment = get_object_or_404(
-                ChangelogComment, pk=req["parent_comment"]
-            )
-
-        comment.save()
-        return redirect("changelogs", slug=kwargs["slug"])

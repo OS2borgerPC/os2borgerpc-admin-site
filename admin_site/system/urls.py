@@ -5,7 +5,6 @@ from django.views.generic import RedirectView
 
 from system.views import (
     AdminIndex,
-    ChangelogListView,
     ConfigurationEntryCreate,
     ConfigurationEntryDelete,
     ConfigurationEntryUpdate,
@@ -390,15 +389,6 @@ urlpatterns = [
         ImageVersionsView.as_view(),
         name="image-version-major",
     ),
-    # Changelog
-    re_path(
-        r"^site/(?P<slug>[^/]+)/changes/",
-        ChangelogListView.as_view(),
-        name="global-changelogs",
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/changes/",
-        ChangelogListView.as_view(),
-        name="changelogs",
-    ),
+    # Include changelog URLs
+    re_path(r"^changelog/", include("changelog.urls")),
 ]

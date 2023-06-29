@@ -12,9 +12,6 @@ from system.models import (
     AssociatedScriptParameter,
     Batch,
     BatchParameter,
-    Changelog,
-    ChangelogComment,
-    ChangelogTag,
     Citizen,
     Configuration,
     ConfigurationEntry,
@@ -31,6 +28,12 @@ from system.models import (
     SecurityEvent,
     SecurityProblem,
     Site,
+)
+
+from changelog.models import (
+    Changelog,
+    ChangelogComment,
+    ChangelogTag,
 )
 
 
