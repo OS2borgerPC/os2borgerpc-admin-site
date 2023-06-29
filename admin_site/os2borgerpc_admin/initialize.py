@@ -9,7 +9,10 @@ from django.core.management import call_command
 
 from os2borgerpc_admin.settings import install_dir
 
-fixtures_dir = os.path.join(install_dir, "system/fixtures")
+fixtures_dirs = [
+    os.path.join(install_dir, "system/fixtures"),
+    os.path.join(install_dir, "changelog/fixtures"),
+]
 
 
 def initialize():
@@ -18,7 +21,8 @@ def initialize():
     Should be able to be run multiple times over without
     generating duplicates.
     """
-    if os.path.exists(fixtures_dir) and os.path.isdir(fixtures_dir):
-        for file in sorted(glob.glob(os.path.join(fixtures_dir, "*.json"))):
-            if os.path.isfile(file):
-                call_command("loaddata", file)
+    for dir in fixtures_dirs:
+        if os.path.exists(dir) and os.path.isdir(dir):
+            for file in sorted(glob.glob(os.path.join(dir, "*.json"))):
+                if os.path.isfile(file):
+                    call_command("loaddata", file)
