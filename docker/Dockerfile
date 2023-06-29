@@ -59,6 +59,7 @@ ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.
     SUPERCRONIC=supercronic-linux-amd64 \
     SUPERCRONIC_SHA1SUM=642f4f5a2b67f3400b5ea71ff24f18c0a7d77d49
 
+# hadolint ignore=DL4006
 RUN curl -fsSLO "$SUPERCRONIC_URL" \
  && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
  && chmod +x "$SUPERCRONIC" \
@@ -70,6 +71,9 @@ COPY README.rst .
 COPY LICENSE .
 COPY docker ./docker
 COPY admin_site ./admin_site
+
+# Copy crontab-file
+COPY crontab /crontab
 
 WORKDIR /code/admin_site
 
