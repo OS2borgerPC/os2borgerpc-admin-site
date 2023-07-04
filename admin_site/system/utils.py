@@ -92,7 +92,7 @@ def cicero_validate(loaner_number, pincode, agency_id):
         session_key = response.json()["sessionKey"]
         # Just debugging for the moment.
     else:
-        # TODO: Unable to authenticate with system user - log this.
+        # Unable to authenticate with system user - log this.
         message = response.json()["message"]
         logger.error(
             f"Unable to log in with configured user name and password: {message}"

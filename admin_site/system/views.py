@@ -58,19 +58,20 @@ from system.models import (
     ScriptTag,
     SecurityEvent,
     SecurityProblem,
+    EventRuleServer,
+    SecState,
     Site,
 )
 
-# PC Status codes
 from system.forms import (
     ChangelogCommentForm,
     ConfigurationEntryForm,
+    EventRuleServerForm,
     PCForm,
     PCGroupForm,
     ParameterForm,
     ScriptForm,
     SecurityEventForm,
-    SecurityProblemForm,
     SiteForm,
     UserForm,
     WakeChangeEventForm,
@@ -1346,7 +1347,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context["security_event"] = pc.security_events.latest_event()
         context["has_security_events"] = (
             pc.security_events.exclude(status=SecurityEvent.RESOLVED)
-            .exclude(problem__level=SecurityProblem.NORMAL)
+            .exclude(problem__level=SecState.NORMAL)
             .count()
             > 0
         )
@@ -1404,10 +1405,10 @@ class WakePlanRedirect(RedirectView):
 
 
 class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+    # What's in common between both Create, Update and Delete
     def get_context_data(self, **kwargs):
         context = super(WakePlanBaseMixin, self).get_context_data(**kwargs)
 
-        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
@@ -1425,10 +1426,11 @@ class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
 
 class WakePlanExtendedMixin(WakePlanBaseMixin):
+    # What's in common between both Create and Update - but not Delete
     def get_context_data(self, **kwargs):
         context = super(WakePlanExtendedMixin, self).get_context_data(**kwargs)
 
-        # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
+        # These are shared between BaseMixin and ExtendedMixin - ideally they could just be inherited here
         context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
         plan = self.object
         context["selected_plan"] = plan
@@ -2580,9 +2582,10 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context["form"]
         site = context["site"]
 
+        # TODO: Do we want to add EventRuleServers here as well?
         # Manually create a list of security problems to not only include those attached but also those
         # unattached which currently apply to all groups
-        context["security_problems_incl_site"] = group.security_problems.all().union(
+        context["security_problems_incl_site"] = group.securityproblem.all().union(
             SecurityProblem.objects.filter(alert_groups=None, site=site)
         )
 
@@ -2858,87 +2861,42 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class SecurityProblemRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
 
-        security_problems = SecurityProblem.objects.filter(site=site)
+        # TODO: Make these related_names plural :/
+        security_problem = site.securityproblem.all().order_by("name").first()
+        event_rule_server = site.eventruleserver.all().order_by("name").first()
 
-        if security_problems.exists():
-            security_problem = security_problems.first()
-            return security_problem.get_absolute_url()
+        if security_problem is not None or event_rule_server is not None:
+            if security_problem and event_rule_server:
+                alphabetically_first = sorted(
+                    [security_problem, event_rule_server], key=lambda x: x.name
+                )[0]
+                return alphabetically_first.get_absolute_url()
+            elif security_problem and event_rule_server is None:
+                return security_problem.get_absolute_url()
+            elif security_problem is None and event_rule_server:
+                return event_rule_server.get_absolute_url()
         else:
-            return reverse("security_problem_new", args=[site.uid])
+            return reverse("event_rule_security_problem_new", args=[site.uid])
 
 
-class SecurityProblemCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/security_problems/site_security_problems.html"
-    model = SecurityProblem
-    slug_field = "site_uid"
-    form_class = SecurityProblemForm
-
+class SecurityProblemBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
-        context = super(SecurityProblemCreate, self).get_context_data(**kwargs)
+        context = super(SecurityProblemBaseMixin, self).get_context_data(**kwargs)
 
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        form = context["form"]
-
-        group_set = site.groups.all()
-        selected_group_ids = form["alert_groups"].value()
-        if not selected_group_ids:
-            selected_group_ids = []
-        # template picklist requires the form pk, name, url (u)id.
-        context["available_groups"] = group_set.exclude(
-            pk__in=selected_group_ids
-        ).values_list("pk", "name", "pk")
-        context["selected_groups"] = group_set.filter(
-            pk__in=selected_group_ids
-        ).values_list("pk", "name", "pk")
-
-        user_set = User.objects.filter(bibos_profile__sites=site)
-        selected_user_ids = form["alert_users"].value()
-        if not selected_user_ids:
-            selected_user_ids = []
-        context["available_users"] = user_set.exclude(
-            pk__in=selected_user_ids
-        ).values_list("pk", "username", "username")
-        context["selected_users"] = user_set.filter(
-            pk__in=selected_user_ids
-        ).values_list("pk", "username", "username")
-
-        # Limit list of scripts to only include security scripts.
-        script_set = Script.objects.filter(
-            Q(site__isnull=True) | Q(site=site),
-            is_security_script=True,
-        )
-        form.fields["security_script"].queryset = script_set
-
-        return context
-
-
-class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    template_name = "system/security_problems/site_security_problems.html"
-    model = SecurityProblem
-    form_class = SecurityProblemForm
-
-    def get_object(self, queryset=None):
-        try:
-            return SecurityProblem.objects.get(
-                id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
-            )
-        except SecurityProblem.DoesNotExist:
-            raise Http404(
-                _("You have no Security Problem with the following ID: %s")
-                % self.kwargs["id"]
-            )
-
-    def get_context_data(self, **kwargs):
-        context = super(SecurityProblemUpdate, self).get_context_data(**kwargs)
+        # For the menu: Gather all security problems and notifications rules and sort them
+        event_listeners = list(context["site"].securityproblem.all())
+        event_listeners.extend(list(context["site"].eventruleserver.all()))
+        context["event_listeners"] = sorted(event_listeners, key=lambda x: x.name)
 
         site = context["site"]
         form = context["form"]
         group_set = site.groups.all()
-        selected_group_ids = form["alert_groups"].value()
+        selected_group_ids = form["alert_groups"].value() or []
+
         # template picklist requires the form pk, name, url (u)id.
         context["available_groups"] = group_set.exclude(
             pk__in=selected_group_ids
@@ -2948,7 +2906,8 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         ).values_list("pk", "name", "pk")
 
         user_set = User.objects.filter(bibos_profile__sites=site)
-        selected_user_ids = form["alert_users"].value()
+        selected_user_ids = form["alert_users"].value() or []
+
         context["available_users"] = user_set.exclude(
             pk__in=selected_user_ids
         ).values_list("pk", "username", "username")
@@ -2963,7 +2922,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         form.fields["security_script"].queryset = script_set
 
         # Extra fields
-        context["selected_security_problem"] = self.object
+        context["selected"] = self.object
 
         request_user = self.request.user
         context[
@@ -2974,14 +2933,88 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
         return context
 
+
+class EventRuleServerBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+    # This has a LOT in common with SecurityProblemBaseMixin - ideally they were merged or they inherited from a common
+    # mixin
+
+    def get_context_data(self, **kwargs):
+        context = super(EventRuleServerBaseMixin, self).get_context_data(**kwargs)
+
+        # For the menu: Gather all security problems and notifications rules and sort them
+        event_listeners = list(context["site"].securityproblem.all())
+        event_listeners.extend(list(context["site"].eventruleserver.all()))
+        context["event_listeners"] = sorted(event_listeners, key=lambda x: x.name)
+
+        site = context["site"]
+        form = context["form"]
+        group_set = site.groups.all()
+
+        selected_group_ids = form["alert_groups"].value() or []
+
+        # template picklist requires the form pk, name, url (u)id.
+        context["available_groups"] = group_set.exclude(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+        context["selected_groups"] = group_set.filter(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+
+        user_set = User.objects.filter(bibos_profile__sites=site)
+
+        selected_user_ids = form["alert_users"].value() or []
+
+        context["available_users"] = user_set.exclude(
+            pk__in=selected_user_ids
+        ).values_list("pk", "username", "username")
+        context["selected_users"] = user_set.filter(
+            pk__in=selected_user_ids
+        ).values_list("pk", "username", "username")
+
+        # Extra fields
+        context["selected"] = self.object
+
+        request_user = self.request.user
+        context[
+            "site_membership"
+        ] = request_user.bibos_profile.sitemembership_set.filter(
+            site_id=site.id
+        ).first()
+
+        return context
+
+
+class SecurityProblemCreate(SecurityProblemBaseMixin, CreateView):
+    template_name = "system/event_rules/site_security_problems.html"
+    model = SecurityProblem
+    fields = "__all__"
+
+
+class SecurityProblemUpdate(SecurityProblemBaseMixin, UpdateView):
+    template_name = "system/event_rules/site_security_problems.html"
+    model = SecurityProblem
+    fields = "__all__"
+
+    def get_object(self, queryset=None):
+        try:
+            return SecurityProblem.objects.get(
+                id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
+            )
+        except SecurityProblem.DoesNotExist:
+            raise Http404(
+                _("You have no Security Problem with the following ID: %s")
+                % self.kwargs["id"]
+            )
+
     def get_success_url(self):
-        return reverse("security_problem", args=[self.object.site.uid, self.object.id])
+        return reverse(
+            "event_rule_security_problem", args=[self.object.site.uid, self.object.id]
+        )
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
-    template_name = "system/security_problems/confirm_delete.html"
+    template_name = "system/event_rules/security_problem_confirm_delete.html"
     model = SecurityProblem
-    # form_class = <hopefully_not_necessary>
 
     def get_object(self, queryset=None):
         return SecurityProblem.objects.get(
@@ -2989,7 +3022,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
         )
 
     def get_success_url(self):
-        return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
+        return reverse("event_rules", args=[self.kwargs["site_uid"]])
 
     def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
@@ -3005,6 +3038,60 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
         return response
 
 
+# TODO: Rewrite these to use a common base mixin with SecurityProblem, like WakePlanBase/ExtendedMixin
+class EventRuleServerCreate(EventRuleServerBaseMixin, CreateView):
+    template_name = "system/event_rules/site_event_rule_servers.html"
+    model = EventRuleServer
+    slug_field = "site_uid"
+    form_class = EventRuleServerForm
+
+
+class EventRuleServerUpdate(EventRuleServerBaseMixin, UpdateView):
+    template_name = "system/event_rules/site_event_rule_servers.html"
+    model = EventRuleServer
+    form_class = EventRuleServerForm
+
+    def get_object(self, queryset=None):
+        try:
+            return EventRuleServer.objects.get(
+                id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
+            )
+        except EventRuleServer.DoesNotExist:
+            raise Http404(
+                _("You have no Event Rule Server with the following ID: %s")
+                % self.kwargs["id"]
+            )
+
+    def get_success_url(self):
+        return reverse("event_rule_server", args=[self.object.site.uid, self.object.id])
+
+
+class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
+    template_name = "system/event_rules/event_rule_server_confirm_delete.html"
+    model = EventRuleServer
+
+    def get_object(self, queryset=None):
+        return EventRuleServer.objects.get(
+            id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
+        )
+
+    def get_success_url(self):
+        return reverse("event_rules", args=[self.kwargs["site_uid"]])
+
+    def form_valid(self, form, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+            site_id=site.id
+        ).first()
+        if (
+            not self.request.user.is_superuser
+            and site_membership.site_user_type != site_membership.SITE_ADMIN
+        ):
+            raise PermissionDenied
+        response = super(EventRuleServerDelete, self).delete(form, *args, **kwargs)
+        return response
+
+
 class SecurityEventsView(SiteView):
     template_name = "system/security_events/site_security_events.html"
 
@@ -3012,15 +3099,15 @@ class SecurityEventsView(SiteView):
         # First, get basic context from superclass
         context = super(SecurityEventsView, self).get_context_data(**kwargs)
         # Supply extra info as needed.
-        level_preselected = set([SecurityProblem.CRITICAL, SecurityProblem.HIGH])
+        level_preselected = set([SecState.CRITICAL, SecState.HIGH])
         context["level_choices"] = [
             {
                 "name": name,
                 "value": value,
-                "label": SecurityProblem.LEVEL_TO_LABEL[value],
+                "label": SecState.LEVEL_TO_LABEL[value],
                 "checked": 'checked="checked' if value in level_preselected else "",
             }
-            for (value, name) in SecurityProblem.LEVEL_CHOICES
+            for (value, name) in SecState.LEVEL_CHOICES
         ]
         status_preselected = set([SecurityEvent.NEW, SecurityEvent.ASSIGNED])
         context["status_choices"] = [
@@ -3110,16 +3197,15 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "site_uid": site.uid,
                     "problem_name": event.problem.name,
                     "problem_url": reverse(
-                        "security_problem", args=[site.uid, event.problem.id]
+                        "event_rule_security_problem", args=[site.uid, event.problem.id]
                     ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "reported": event.reported_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
-                    "level": SecurityProblem.LEVEL_TRANSLATIONS[event.problem.level],
-                    "level_label": SecurityProblem.LEVEL_TO_LABEL[event.problem.level]
-                    + "",
+                    "level": SecState.LEVEL_TRANSLATIONS[event.problem.level],
+                    "level_label": SecState.LEVEL_TO_LABEL[event.problem.level] + "",
                     "pc_name": event.pc.name,
                     "pc_url": reverse("computer", args=[site.uid, event.pc.uid]),
                     "assigned_user": (

@@ -100,7 +100,7 @@ run:
 
 # Start the admin-site stack in the background and attach specifically to the django container - so python breakpoints work
 run-debug:
-  sudo docker-compose up -d {{compose_django_service}} {{compose_db_service}}
+  sudo docker-compose up -d
   sudo docker attach {{django_container}}
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)

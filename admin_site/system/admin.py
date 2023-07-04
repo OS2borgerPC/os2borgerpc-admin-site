@@ -22,15 +22,16 @@ from system.models import (
     ImageVersion,
     Input,
     Job,
+    EventRuleServer,
     PC,
     PCGroup,
-    WakeWeekPlan,
-    WakeChangeEvent,
     Script,
     ScriptTag,
     SecurityEvent,
     SecurityProblem,
     Site,
+    WakeChangeEvent,
+    WakeWeekPlan,
 )
 
 
@@ -311,6 +312,18 @@ class SecurityProblemAdmin(admin.ModelAdmin):
     list_display = ("name", "site", "level", "security_script")
 
 
+# TODO: Add relevant attributes for eventruleservers
+class EventRuleServerAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "site",
+        "level",
+        "monitor_period_start",
+        "monitor_period_end",
+        "maximum_offline_period",
+    )
+
+
 class SecurityEventAdmin(admin.ModelAdmin):
     list_display = (
         "problem",
@@ -460,15 +473,16 @@ ar(ChangelogComment, ChangelogCommentAdmin)
 ar(ChangelogTag, ChangelogTagAdmin)
 ar(Citizen, CitizenAdmin)
 ar(Configuration, ConfigurationAdmin)
+ar(FeaturePermission, FeaturePermissionAdmin)
 ar(ImageVersion, ImageVersionAdmin)
 ar(Job, JobAdmin)
+ar(EventRuleServer, EventRuleServerAdmin)
 ar(PC, PCAdmin)
 ar(PCGroup, PCGroupAdmin)
-ar(WakeChangeEvent, WakeChangeEventAdmin)
-ar(WakeWeekPlan, WakeWeekPlanAdmin)
 ar(Script, ScriptAdmin)
 ar(ScriptTag, ScriptTagAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
 ar(Site, SiteAdmin)
-ar(FeaturePermission, FeaturePermissionAdmin)
+ar(WakeChangeEvent, WakeChangeEventAdmin)
+ar(WakeWeekPlan, WakeWeekPlanAdmin)

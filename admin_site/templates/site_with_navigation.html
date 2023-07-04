@@ -51,8 +51,8 @@ detailpage
       {% endif %}
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
-    <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
+    {% set_css_class_active request.resolver_match.url_name "event_rule" as current_url_event_rules %}
+    <a class="nav-link link-light {{ current_url_event_rules }}" href="{% url 'event_rules' slug=site.url %}">
       <span class="material-icons">gpp_maybe</span>
       {% translate "Security Rules" %}
     </a>
@@ -122,7 +122,7 @@ detailpage
 
     {% if current_url_site %}
       {% comment %} Status currently has no documentation! {% endcomment %}
-    {% elif current_url_security_scripts or current_url_security_problems or current_url_security_events %}
+    {% elif current_url_security_scripts or current_url_event_rules or current_url_security_events %}
       <a href="{% url 'doc' 'security_scripts' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         {% translate "Administrating security scripts" %}

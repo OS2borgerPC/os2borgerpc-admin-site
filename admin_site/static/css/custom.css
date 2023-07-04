@@ -5,7 +5,7 @@
  */
 
 
-/* TODO: The contents of this file should be merged to the custom Bootstrap build 
+/* TODO: The contents of this file should be merged to the custom Bootstrap build
  or their related templates */
 
 
@@ -117,4 +117,9 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 #scriptform textarea {
   min-width: 90vh;
   height: 40vh;
+}
+
+#monitor-period input {
+  display: inline;
+  width: 100px;
 }
