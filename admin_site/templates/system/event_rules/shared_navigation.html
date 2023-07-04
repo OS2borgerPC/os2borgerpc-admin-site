@@ -1,0 +1,48 @@
+{% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block specific_title %}
+{% translate "Security Rules" %}
+{% endblock %}
+
+{% block subnav %}
+<div id="security-problems-nav" class="sublevelnav">
+  <div class="listutils">
+    <a class="btn btn-link" href="{% url 'event_rule_security_problem_new' site.uid %}">
+      <span class="material-icons">add</span>
+      {% translate "Define new security rule" %}
+    </a>
+    <a class="btn btn-link" href="{% url 'event_rule_server_new' site.uid %}">
+      <span class="material-icons">add</span>
+      {% translate "Define new server event rule" %}
+    </a>
+  </div>
+  <ul class="item-list">
+    {% for el in event_listeners %}
+      <li {% if el == selected %}class="active"{% endif %}>
+        {% if el|get_model_name == "EventRuleServer" %}
+          <span class='material-icons ms-3'>desktop_access_disabled</span>
+        {% endif %}
+        <a class="item-list-link" href="{{el.get_absolute_url}}">
+          {{ el.name }}
+        </a>
+        {% if el == selected %}
+          {% if user.is_superuser or site_membership.site_user_type == site_membership.SITE_ADMIN %}
+          <a class="item-list-deletable material-icons"
+             {% if el|get_model_name == "EventRuleServer" %}
+               href="{% url 'event_rule_server_delete' site.uid el.id %}"
+             {% else %}
+               href="{% url 'event_rule_security_problem_delete' site.uid el.id %}"
+             {% endif %}
+             title="{% translate 'Delete' %}">
+            clear
+          </a>
+          {% endif %}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
