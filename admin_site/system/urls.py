@@ -44,7 +44,10 @@ from system.views import (
     SecurityProblemCreate,
     SecurityProblemDelete,
     SecurityProblemUpdate,
-    SecurityProblemRedirect,
+    EventRuleRedirect,
+    EventRuleServerCreate,
+    EventRuleServerDelete,
+    EventRuleServerUpdate,
     SiteDetailView,
     SiteList,
     SiteSettings,
@@ -86,26 +89,43 @@ urlpatterns = [
         SecurityEventsView.as_view(),
         name="security_events",
     ),
-    # Security problems UI
+    # Shared by Security Problems and Event Rule Servers
+    re_path(
+        r"^site/(?P<slug>[^/]+)/event_rules/$",
+        EventRuleRedirect.as_view(),
+        name="event_rules",
+    ),
+    # Security problems
     re_path(
         r"^site/(?P<site_uid>[^/]+)/security_problems/new/$",
         SecurityProblemCreate.as_view(),
-        name="security_problem_new",
+        name="event_rule_security_problem_new",
     ),
     re_path(
         r"^site/(?P<site_uid>[^/]+)/security_problems/(?P<id>[^/]+)/delete/$",
         SecurityProblemDelete.as_view(),
-        name="security_problem_delete",
+        name="event_rule_security_problem_delete",
     ),
     re_path(
         r"^site/(?P<site_uid>[^/]+)/security_problems/(?P<id>[^/]+)/$",
         SecurityProblemUpdate.as_view(),
-        name="security_problem",
+        name="event_rule_security_problem",
+    ),
+    # Event Rule Server
+    re_path(
+        r"^site/(?P<site_uid>[^/]+)/event_rule_servers/new/$",
+        EventRuleServerCreate.as_view(),
+        name="event_rule_server_new",
     ),
     re_path(
-        r"^site/(?P<slug>[^/]+)/security_problems/$",
-        SecurityProblemRedirect.as_view(),
-        name="security_problems",
+        r"^site/(?P<site_uid>[^/]+)/event_rule_servers/(?P<id>[^/]+)/delete/$",
+        EventRuleServerDelete.as_view(),
+        name="event_rule_server_delete",
+    ),
+    re_path(
+        r"^site/(?P<site_uid>[^/]+)/event_rule_servers/(?P<id>[^/]+)/$",
+        EventRuleServerUpdate.as_view(),
+        name="event_rule_server",
     ),
     # Security scripts
     re_path(

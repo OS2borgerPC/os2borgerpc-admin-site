@@ -3379,7 +3379,8 @@
         "created": null,
         "isil": "DK-100000",
         "user_login_duration": "01:00:00",
-        "user_quarantine_duration": "04:00:00"
+        "user_quarantine_duration": "04:00:00",
+        "rerun_asc": false
     }
 },
 {
@@ -3393,7 +3394,8 @@
         "created": null,
         "isil": "DK-100000",
         "user_login_duration": "01:00:00",
-        "user_quarantine_duration": "04:00:00"
+        "user_quarantine_duration": "04:00:00",
+        "rerun_asc": false
     }
 },
 {
@@ -3407,7 +3409,8 @@
         "created": null,
         "isil": "",
         "user_login_duration": "01:00:00",
-        "user_quarantine_duration": "04:00:00"
+        "user_quarantine_duration": "04:00:00",
+        "rerun_asc": false
     }
 },
 {
@@ -4101,7 +4104,8 @@
         "description": "",
         "site": 1,
         "configuration": 5,
-        "wake_week_plan": 1
+        "wake_week_plan": 1,
+        "supervisors": []
     }
 },
 {
@@ -4112,7 +4116,8 @@
         "description": "",
         "site": 1,
         "configuration": 21,
-        "wake_week_plan": 3
+        "wake_week_plan": 3,
+        "supervisors": []
     }
 },
 {
@@ -4123,7 +4128,8 @@
         "description": "",
         "site": 1,
         "configuration": 33,
-        "wake_week_plan": 1
+        "wake_week_plan": 1,
+        "supervisors": []
     }
 },
 {
@@ -4134,7 +4140,8 @@
         "description": "test",
         "site": 1,
         "configuration": 35,
-        "wake_week_plan": null
+        "wake_week_plan": null,
+        "supervisors": []
     }
 },
 {
@@ -4145,7 +4152,8 @@
         "description": "-",
         "site": 1,
         "configuration": 58,
-        "wake_week_plan": null
+        "wake_week_plan": null,
+        "supervisors": []
     }
 },
 {
@@ -4159,7 +4167,6 @@
         "configuration": 3,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2020-11-30T18:15:43.997",
         "last_seen": "2020-12-01T14:15:03",
         "location": "",
@@ -4180,7 +4187,6 @@
         "configuration": 15,
         "site": 9,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-01-11T11:03:36.510",
         "last_seen": "2021-01-11T15:30:04",
         "location": "",
@@ -4198,7 +4204,6 @@
         "configuration": 17,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-01-21T08:50:37.470",
         "last_seen": "2021-01-21T09:05:02",
         "location": "",
@@ -4218,7 +4223,6 @@
         "configuration": 18,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-01-21T11:16:10.403",
         "last_seen": "2021-01-28T12:50:03",
         "location": "beskrivelse 2",
@@ -4239,7 +4243,6 @@
         "configuration": 28,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-01-29T12:52:58.793",
         "last_seen": "2021-01-29T14:14:32",
         "location": "",
@@ -4257,7 +4260,6 @@
         "configuration": 32,
         "site": 1,
         "is_activated": true,
-        "is_update_required": true,
         "created": "2021-08-25T10:01:37.352",
         "last_seen": "2021-08-25T15:30:08",
         "location": "",
@@ -4275,7 +4277,6 @@
         "configuration": 1,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-09-11T13:33:02.398",
         "last_seen": null,
         "location": "",
@@ -4293,7 +4294,6 @@
         "configuration": 46,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-11-25T15:34:19.791",
         "last_seen": "2021-11-30T10:30:02",
         "location": "",
@@ -4313,7 +4313,6 @@
         "configuration": 48,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-11-29T09:22:59.334",
         "last_seen": "2021-12-01T11:35:04",
         "location": "",
@@ -4333,7 +4332,6 @@
         "configuration": 49,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-11-29T10:39:13.906",
         "last_seen": "2022-01-18T10:45:11",
         "location": "",
@@ -4353,7 +4351,6 @@
         "configuration": 50,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-11-30T12:59:58.700",
         "last_seen": "2022-01-10T09:20:08",
         "location": "",
@@ -4373,7 +4370,6 @@
         "configuration": 51,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-11-30T13:03:03.481",
         "last_seen": "2022-01-14T16:55:06",
         "location": "",
@@ -4394,7 +4390,6 @@
         "configuration": 55,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2021-12-02T13:32:08.296",
         "last_seen": "2021-12-02T15:05:05",
         "location": "",
@@ -4414,7 +4409,6 @@
         "configuration": 57,
         "site": 9,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2022-01-05T14:43:09.479",
         "last_seen": "2022-01-17T17:20:05",
         "location": "",
@@ -4432,7 +4426,6 @@
         "configuration": 59,
         "site": 1,
         "is_activated": true,
-        "is_update_required": false,
         "created": "2022-01-10T11:37:48.592",
         "last_seen": "2022-01-14T15:10:04",
         "location": "beskrivelse 5",
@@ -10643,10 +10636,41 @@
     }
 },
 {
+    "model": "system.eventruleserver",
+    "pk": 1,
+    "fields": {
+        "name": "Maksimal offline-periode i Tårnet",
+        "description": "Det kan vi ikke have.",
+        "level": "High",
+        "site": 1,
+        "monitor_period_start": "08:00:00",
+        "monitor_period_end": "16:00:00",
+        "maximum_offline_period": 25,
+        "alert_groups": [],
+        "alert_users": []
+    }
+},
+{
+    "model": "system.eventruleserver",
+    "pk": 2,
+    "fields": {
+        "name": "Maksimal offline-periode i Vinterhaven",
+        "description": "Den går ikke!",
+        "level": "High",
+        "site": 1,
+        "monitor_period_start": "10:00:00",
+        "monitor_period_end": "12:00:00",
+        "maximum_offline_period": 15,
+        "alert_groups": [],
+        "alert_users": []
+    }
+},
+{
     "model": "system.securityevent",
     "pk": 1,
     "fields": {
         "problem": 5,
+        "event_rule_server": null,
         "occurred_time": "2022-08-05T11:07:20",
         "reported_time": "2022-08-05T11:07:26",
         "pc": 8,
@@ -10662,6 +10686,7 @@
     "pk": 2,
     "fields": {
         "problem": 5,
+        "event_rule_server": null,
         "occurred_time": "2022-08-05T11:08:02",
         "reported_time": "2022-08-05T11:08:16",
         "pc": 26,
@@ -10677,6 +10702,7 @@
     "pk": 3,
     "fields": {
         "problem": 1,
+        "event_rule_server": null,
         "occurred_time": "2022-08-05T11:08:53",
         "reported_time": "2022-08-05T11:08:56",
         "pc": 26,
@@ -10692,6 +10718,7 @@
     "pk": 4,
     "fields": {
         "problem": 4,
+        "event_rule_server": null,
         "occurred_time": "2022-08-05T11:10:48",
         "reported_time": "2022-08-05T13:10:51",
         "pc": 9,
@@ -10707,6 +10734,7 @@
     "pk": 5,
     "fields": {
         "problem": 4,
+        "event_rule_server": null,
         "occurred_time": "2022-08-05T11:21:35",
         "reported_time": "2022-08-05T11:25:38",
         "pc": 26,

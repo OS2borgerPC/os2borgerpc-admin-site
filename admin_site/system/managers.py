@@ -8,10 +8,10 @@ class SecurityEventQuerySet(models.QuerySet):
 
     def priority_events_for_site(self, site):
         """Get priority events for a site."""
-        from system.models import SecurityProblem, SecurityEvent
+        from system.models import SecState, SecurityEvent
 
         return (
             self.filter(problem__site=site)
-            .exclude(problem__level=SecurityProblem.NORMAL)
+            .exclude(problem__level=SecState.NORMAL)
             .exclude(status=SecurityEvent.RESOLVED)
         )
