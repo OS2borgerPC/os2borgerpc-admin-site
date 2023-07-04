@@ -1,40 +1,7 @@
-{% extends "site_with_navigation.html" %}
+{% extends "system/event_rules/shared_navigation.html" %}
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load custom_tags %}
-
-{% block specific_title %}
-{% translate "Security Rules" %}
-{% endblock %}
-
-{% block subnav %}
-    <div id="security-problems-nav" class="sublevelnav">
-        <div class="listutils">
-            <a class="btn btn-link" href="{% url 'security_problem_new' site.uid %}">
-                <span class="material-icons">add</span>
-                {% translate "Define new security rule" %}
-            </a>
-        </div>
-        <ul class="item-list">
-            {% for sp in site.security_problems.all %}
-                <li {% if sp == selected_security_problem %}class="active"{% endif %}>
-                    <a class="item-list-link" href="/site/{{ site.url }}/security_problems/{{ sp.id }}/">
-                        {{ sp.name }}
-                    </a>
-                    {% if sp == selected_security_problem %}
-                        {% if user.is_superuser or site_membership.site_user_type == site_membership.SITE_ADMIN %}
-                            <a class="item-list-deletable material-icons"
-                               href="/site/{{ site.url }}/security_problems/{{ selected_security_problem.id }}/delete/"
-                               title="{% translate 'Delete security rule' %}">
-                                clear
-                            </a>
-                        {% endif %}
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endblock %}
 
 {% block specific_content %}
 {% translate "Add group to surveillance" as g_add %}
@@ -43,12 +10,12 @@
 {% translate "Remove recipient" as e_remove %}
 <div class="container-fluid main sublevelmain">
 
-    {% if selected_security_problem %}
+    {% if selected %}
     <h2 class="divideheader">
-        {% translate "Details about" %} <em>{{ selected_security_problem.name }}</em>
+        {% translate "Details about" %} <em>{{ selected.name }}</em>
         {% comment %}
         TODO later?
-        <a class="float-end" href="{% url 'security_problem' site_uid=site.url uid=selected_security_problem.id %}" title="{% translate 'See all events for this Security Rule' %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
+        <a class="float-end" href="{% url 'security_problem' site_uid=site.url uid=selected.id %}" title="{% translate 'See all events for this Security Rule' %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
         {% endcomment %}
     </h2>
     {% else %}
@@ -89,8 +56,8 @@
                 <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
 
                 {{ form.name|as_crispy_field }}
-                {{ form.description|as_crispy_field }}
                 {{ form.level|as_crispy_field }}
+                {{ form.description|as_crispy_field }}
 
             </fieldset>
 

@@ -12,13 +12,17 @@ from system.models import (
     WakeWeekPlan,
     Script,
     SecurityEvent,
-    SecurityProblem,
+    EventRuleServer,
     Site,
 )
 from account.models import SiteMembership, UserProfile
 
-time_format = forms.TimeInput(attrs={"type": "time", "max": "23:59"}, format="%H:%M")
-date_format = forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d")
+time_format = forms.TimeInput(
+    attrs={"type": "time", "max": "23:59", "class": "form-control"}, format="%H:%M"
+)
+date_format = forms.DateInput(
+    attrs={"type": "date", "class": "form-control"}, format="%Y-%m-%d"
+)
 
 
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
@@ -271,25 +275,34 @@ class PCForm(forms.ModelForm):
         exclude = (
             "configuration",
             "site",
-            "is_update_required",
             "created",
             "last_seen",
         )
 
 
-class SecurityProblemForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SecurityProblemForm, self).__init__(*args, **kwargs)
-
+class ChangelogCommentForm(forms.ModelForm):
     class Meta:
-        model = SecurityProblem
-        fields = "__all__"
+        model = ChangelogComment
+        fields = ["content"]
 
 
 class SecurityEventForm(forms.ModelForm):
     class Meta:
         model = SecurityEvent
         fields = ("status", "assigned_user", "note")
+
+
+class EventRuleServerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EventRuleServerForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = EventRuleServer
+        fields = "__all__"
+        widgets = {
+            "monitor_period_start": time_format,
+            "monitor_period_end": time_format,
+        }
 
 
 # Used on the Create and Update views
