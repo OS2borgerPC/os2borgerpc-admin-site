@@ -2679,6 +2679,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
 
         context["newform"] = PCGroupForm()
         del context["newform"].fields["pcs"]
+        del context["newform"].fields["supervisors"]
 
         if site.feature_permission.filter(uid="wake_plan"):
             context["all_scripts"] = Script.objects.filter(
@@ -3223,20 +3224,27 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         params = self.request.GET
 
         query = {"problem__site": site}
+        query2 = {"event_rule_server__site": site}
         if params.get("pc", None):
             query["pc__uid"] = params["pc"]
 
         if "level" in params:
             query["problem__level__in"] = params.getlist("level")
+            query2["event_rule_server__level__in"] = params.getlist("level")
 
         if "status" in params:
             query["status__in"] = params.getlist("status")
+            query2["status__in"] = params.getlist("status")
 
         orderby = params.get("orderby", "-occurred_time")
         if orderby not in SecurityEventSearch.VALID_ORDER_BY:
             orderby = "-occurred_time"
 
-        queryset = queryset.filter(**query).order_by(orderby, "pk")
+        queryset = (
+            queryset.filter(**query)
+            .union(queryset.filter(**query2))
+            .order_by(orderby, "pk")
+        )
 
         return queryset
 
@@ -3270,17 +3278,32 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                 {
                     "pk": event.pk,
                     "site_uid": site.uid,
-                    "problem_name": event.problem.name,
+                    "problem_name": event.problem.name
+                    if event.problem
+                    else event.event_rule_server.name,
                     "problem_url": reverse(
                         "event_rule_security_problem", args=[site.uid, event.problem.id]
+                    )
+                    if event.problem
+                    else reverse(
+                        "event_rule_server", args=[site.uid, event.event_rule_server.id]
                     ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "reported": event.reported_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
-                    "level": SecState.LEVEL_TRANSLATIONS[event.problem.level],
-                    "level_label": SecState.LEVEL_TO_LABEL[event.problem.level] + "",
+                    "level": SecState.LEVEL_TRANSLATIONS[
+                        event.problem.level
+                        if event.problem
+                        else event.event_rule_server.level
+                    ],
+                    "level_label": SecState.LEVEL_TO_LABEL[
+                        event.problem.level
+                        if event.problem
+                        else event.event_rule_server.level
+                    ]
+                    + "",
                     "pc_name": event.pc.name,
                     "pc_url": reverse("computer", args=[site.uid, event.pc.uid]),
                     "assigned_user": (

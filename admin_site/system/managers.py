@@ -14,4 +14,9 @@ class SecurityEventQuerySet(models.QuerySet):
             self.filter(problem__site=site)
             .exclude(problem__level=SecState.NORMAL)
             .exclude(status=SecurityEvent.RESOLVED)
+            .union(
+                self.filter(event_rule_server__site=site)
+                .exclude(event_rule_server__level=SecState.NORMAL)
+                .exclude(status=SecurityEvent.RESOLVED)
+            )
         )
