@@ -1267,7 +1267,10 @@ class SecurityEvent(models.Model):
     note = models.TextField(blank=True)
 
     def __str__(self):
-        return "{0}: {1}".format(self.problem.name, self.id)
+        if self.problem:
+            return "{0}: {1}".format(self.problem.name, self.id)
+        else:
+            return "{0}: {1}".format(self.event_rule_server.name, self.id)
 
     class Meta:
         constraints = [
