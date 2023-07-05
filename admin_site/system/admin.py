@@ -330,6 +330,7 @@ class EventRuleServerAdmin(admin.ModelAdmin):
 class SecurityEventAdmin(admin.ModelAdmin):
     list_display = (
         "problem",
+        "event_rule_server",
         "get_site",
         "occurred_time",
         "reported_time",
