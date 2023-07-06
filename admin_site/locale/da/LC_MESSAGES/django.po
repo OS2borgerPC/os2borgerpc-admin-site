@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-26 13:05+0200\n"
+"POT-Creation-Date: 2023-07-06 16:41+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -101,8 +101,17 @@ msgid "status:Fail"
 msgstr "Fejlet"
 
 #: system/models.py
-msgid "status:Update"
-msgstr "Opdatering"
+msgid "securitylevel:Critical"
+msgstr "Kritisk"
+
+#: system/models.py
+msgid "securitylevel:High"
+msgstr "Høj"
+
+# SecurityProblem class
+#: system/models.py
+msgid "securitylevel:Normal"
+msgstr "Normal"
 
 #: system/models.py
 msgid "owner configuration"
@@ -143,7 +152,8 @@ msgstr "Karantæneperiode, når den tilladte logintid er brugt"
 
 #: system/models.py
 msgid "Automatically rerun associated scripts when you update their arguments"
-msgstr "Genkør automatisk tilknyttede scripts når I opdaterer deres inputparametre"
+msgstr ""
+"Genkør automatisk tilknyttede scripts når I opdaterer deres inputparametre"
 
 #: system/models.py
 msgid "sites with access"
@@ -294,16 +304,16 @@ msgid "description"
 msgstr "beskrivelse"
 
 #: system/models.py
+msgid "supervisors"
+msgstr "ansvarspersoner"
+
+#: system/models.py
 msgid "MAC"
 msgstr "MAC"
 
 #: system/models.py
 msgid "activated"
 msgstr "aktiveret"
-
-#: system/models.py
-msgid "update required"
-msgstr "opdatering påkrævet"
 
 #: system/models.py
 msgid "last seen"
@@ -416,19 +426,6 @@ msgstr "standardværdi"
 msgid "mandatory"
 msgstr "påkrævet"
 
-# SecurityProblem class
-#: system/models.py
-msgid "securitylevel:Normal"
-msgstr "Normal"
-
-#: system/models.py
-msgid "securitylevel:High"
-msgstr "Høj"
-
-#: system/models.py
-msgid "securitylevel:Critical"
-msgstr "Kritisk"
-
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: system/models.py
 msgid "level"
@@ -441,6 +438,18 @@ msgstr "overvågede grupper"
 #: system/models.py
 msgid "alert users"
 msgstr "modtager(e) af e-mail-advarsel"
+
+#: system/models.py
+msgid "monitor period start"
+msgstr "overvågningsperiode-start"
+
+#: system/models.py
+msgid "monitor period end"
+msgstr "overvågningsperiode-slut"
+
+#: system/models.py
+msgid "maximum offline period allowed, in minutes"
+msgstr "maksimal tilladt offline-periode i minutter"
 
 # SecurityEvent class
 #: system/models.py
@@ -682,6 +691,10 @@ msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
 
 #: system/views.py
+msgid "You have no Event Rule Server with the following ID: %s"
+msgstr "Du har ikke nogen offline-regel med følgende ID: %s"
+
+#: system/views.py
 msgid "The administration site"
 msgstr "Administrationssiden"
 
@@ -707,15 +720,16 @@ msgid "Computers"
 msgstr "Computere"
 
 #: system/views.py templates/site_with_navigation.html
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/site_groups.html
-#: templates/system/security_problems/confirm_delete.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py
+#: system/views.py templates/site_with_navigation.html
 msgid "On/Off schedules"
 msgstr "Tænd/Sluk tidsplaner"
 
@@ -888,44 +902,38 @@ msgid "News"
 msgstr "Nyheder"
 
 #: templates/site_with_navigation.html
-msgid "Security"
-msgstr "Sikkerhed"
+msgid "Monitoring"
+msgstr "Overvågning"
 
 #: templates/site_with_navigation.html
 #: templates/system/security_events/site_security_events.html
-#: templates/system/security_problems/confirm_delete.html
-msgid "Security Events"
-msgstr "Sikkerhedshændelser"
+msgid "Events"
+msgstr "Hændelser"
 
 #: templates/site_with_navigation.html
-#: templates/system/security_problems/site_security_problems.html
-msgid "Security Rules"
-msgstr "Sikkerhedsregler"
-
-#: templates/site_with_navigation.html templates/system/site_two_factor.html
-msgid "Two-factor authentication"
-msgstr "Totrinsbekræftelse"
+#: templates/system/event_rules/shared_navigation.html
+msgid "Monitoring Rules"
+msgstr "Overvågningsregler"
 
 #: templates/site_with_navigation.html
 msgid "Organizing"
 msgstr "Organisering"
-
-#: templates/site_with_navigation.html
-#: templates/system/wake_plan/wake_plan_base.html
-msgid "On/Off schedule"
-msgstr "Tænd/Sluk tidsplan"
 
 #: templates/site_with_navigation.html templates/system/site_settings.html
 msgid "Site settings"
 msgstr "Site-indstillinger"
 
 #: templates/site_with_navigation.html
+msgid "2FA OS2borgerPC"
+msgstr "2FA OS2borgerPC"
+
+#: templates/site_with_navigation.html
 msgid "Scripting"
 msgstr "Scripting"
 
 #: templates/site_with_navigation.html
-msgid "Users & versions"
-msgstr "Brugere & versioner"
+msgid "Users & Versions"
+msgstr "Brugere & Versioner"
 
 #: templates/site_with_navigation.html
 #: templates/system/site_image_versions.html
@@ -1002,6 +1010,10 @@ msgstr "Tilføj kommentar"
 
 #: templates/system/changelog/comments/form.html
 #: templates/system/configs/form.html templates/system/configs/templates.html
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/form.html
 #: templates/system/pcgroups/policy_list/templates.html
@@ -1010,8 +1022,6 @@ msgstr "Tilføj kommentar"
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/security_events/site_security_events.html
-#: templates/system/security_problems/confirm_delete.html
-#: templates/system/security_problems/site_security_problems.html
 #: templates/system/site_settings.html
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/create.html templates/system/users/update.html
@@ -1090,7 +1100,8 @@ msgid "Showing"
 msgstr "Viser"
 
 #: templates/system/changelog/list.html
-#: templates/system/security_problems/site_security_problems.html
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
 msgid "all"
 msgstr "alle"
 
@@ -1128,10 +1139,11 @@ msgid "Edit arguments"
 msgstr "Redigér parameter"
 
 #: templates/system/configs/form.html
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/scripts/update.html
-#: templates/system/security_problems/site_security_problems.html
-#: templates/system/site_settings.html templates/system/users/update.html
+#: templates/system/scripts/update.html templates/system/site_settings.html
+#: templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Save changes"
@@ -1144,8 +1156,9 @@ msgid "Edit"
 msgstr "Redigér"
 
 #: templates/system/configs/item.html
+#: templates/system/event_rules/shared_navigation.html
 #: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/form.html
+#: templates/system/scripts/form.html templates/system/scripts/templates.html
 msgid "Delete"
 msgstr "Slet"
 
@@ -1193,6 +1206,228 @@ msgstr "Navn"
 #: templates/system/pcgroups/policy_list/templates.html
 msgid "Save"
 msgstr "Gem"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "Delete security rule"
+msgstr "Slet sikkerhedsregel"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/site_two_factor.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "Note"
+msgstr "Bemærk"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+msgid "Security Rule"
+msgstr "Sikkerhedsregel"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "Security Events"
+msgstr "Sikkerhedshændelser"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#, python-format
+msgid ""
+"If a %(security_rule)s is deleted, the related %(security_events)s will also "
+"be deleted."
+msgstr ""
+"Hvis en %(security_rule)s slettes, vil de relaterede %(security_events)s "
+"også blive slettet."
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/create.html templates/system/scripts/update.html
+msgid "Security Script"
+msgstr "Sikkerhedsscript"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "Email recipients"
+msgstr "E-mail-modtagere"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+msgid "the Security Rule"
+msgstr "Sikkerhedsreglen"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#, python-format
+msgid ""
+"Associated %(groups)s, %(security_script)s and %(email_recipients)s will be "
+"removed from %(the_security_rule)s."
+msgstr ""
+"Tilknyttede %(groups)s, %(security_script)s og %(email_recipients)s vil "
+"blive fjernet fra %(the_security_rule)s."
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "The Groups"
+msgstr "Grupperne"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+msgid "the Security Script"
+msgstr "Sikkerhedsscriptet"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "the Email recipients"
+msgstr "E-mail-modtagerne"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/pcgroups/confirm_delete.html
+msgid "NOT"
+msgstr "IKKE"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#, python-format
+msgid ""
+"%(the_groups)s, %(the_security_script)s and %(the_email_recipients)s "
+"themselves will %(NOT)s be deleted."
+msgstr ""
+"Selve %(the_groups)s, %(the_security_script)s og %(the_email_recipients)s "
+"vil %(NOT)s blive slettet."
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "Are you sure you wish to delete the Security Rule"
+msgstr "Er du sikker på, du ønsker at slette Sikkerhedsreglen"
+
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcs/confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/users/confirm_delete.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+msgid "Confirm deletion"
+msgstr "Bekræft sletning"
+
+#: templates/system/event_rules/shared_navigation.html
+msgid "Add new security rule"
+msgstr "Tilføj ny sikkerhedsregel"
+
+#: templates/system/event_rules/shared_navigation.html
+msgid "Add new offline rule"
+msgstr "Tilføj ny offline-regel"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid "Add group to surveillance"
+msgstr "Tilføj gruppe til overvågning"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid "Remove monitored group"
+msgstr "Fjern overvåget gruppe"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid "Add email recipient"
+msgstr "Tilføj e-mail-modtager"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid "Remove recipient"
+msgstr "Fjern modtager"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+msgid "Details about"
+msgstr "Detaljer om"
+
+#: templates/system/event_rules/site_event_rules_server.html
+msgid "New offline rule"
+msgstr "Ny offline-regel"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid "empty"
+msgstr "tom"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid ""
+"If the rule does not have a Group added, the rule will apply to %(all)s "
+"Computers."
+msgstr ""
+"Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen "
+"gælde %(all)s Computere."
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+#, python-format
+msgid ""
+"If you want to temporarily disable a rule, you can create an %(empty)s Group "
+"(i.e. a Group with no Computers) and set this Group as the monitored Group."
+msgstr ""
+"Ønsker du midlertidigt at gøre en Regel inaktiv, kan du oprette en %(empty)s "
+"Gruppe (dvs. en Gruppe uden Computere) og sætte denne Gruppe som den "
+"overvågede Gruppe."
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid ""
+"If a PC is a member of a group with one or more supervisors, those "
+"supervisors will receive any email warnings related to that PC instead of "
+"the recipients set here."
+msgstr ""
+"Hvis en PC er medlem af en gruppe med en eller flere ansvarspersoner, "
+"så vil disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
+"PC i stedet for de modtagere, som er valgt her."
+
+#: templates/system/event_rules/site_event_rules_server.html
+msgid "Monitor period"
+msgstr "Overvågningsperiode"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+msgid "From"
+msgstr "Fra"
+
+#: templates/system/event_rules/site_event_rules_server.html
+msgid "Until"
+msgstr "Til"
+
+#: templates/system/event_rules/site_event_rules_server.html
+msgid "How long a PC may be offline before an event is created"
+msgstr "Hvor længe en PC må være offline, før der oprettes en hændelse"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid "Monitored groups"
+msgstr "Overvågede grupper"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+msgid "Recipient(s) of email warning"
+msgstr "Modtager(e) af e-mail-advarsel"
+
+#: templates/system/event_rules/site_security_problems.html
+msgid "New security rule"
+msgstr "Ny sikkerhedsregel"
 
 #: templates/system/jobs/info.html templates/system/jobs/restart.html
 msgid "Restart job"
@@ -1273,19 +1508,6 @@ msgstr "Slet gruppe"
 
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcgroups/site_groups.html
-#: templates/system/pcs/confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/security_problems/confirm_delete.html
-#: templates/system/security_problems/site_security_problems.html
-#: templates/system/site_two_factor.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html
-#: templates/system/wake_plan/wake_plan.html
-msgid "Note"
-msgstr "Bemærk"
-
-#: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/site_groups.html
 #: templates/system/scripts/confirm_delete.html
 msgid "Associated Scripts"
 msgstr "Tilknyttede Scripts"
@@ -1312,11 +1534,6 @@ msgid "the Scripts"
 msgstr "Scriptsene"
 
 #: templates/system/pcgroups/confirm_delete.html
-#: templates/system/security_problems/confirm_delete.html
-msgid "NOT"
-msgstr "IKKE"
-
-#: templates/system/pcgroups/confirm_delete.html
 #, python-format
 msgid "%(the_computers)s and %(the_scripts)s will %(not)s be deleted."
 msgstr "%(the_computers)s og %(the_scripts)s vil %(not)s blive slettet."
@@ -1324,16 +1541,6 @@ msgstr "%(the_computers)s og %(the_scripts)s vil %(not)s blive slettet."
 #: templates/system/pcgroups/confirm_delete.html
 msgid "Are you sure you want to delete the group "
 msgstr "Er du sikker på, at du ønsker at slette gruppen "
-
-#: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcs/confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/security_problems/confirm_delete.html
-#: templates/system/users/confirm_delete.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html
-msgid "Confirm deletion"
-msgstr "Bekræft sletning"
 
 #: templates/system/pcgroups/form.html
 msgid "New group"
@@ -1349,7 +1556,6 @@ msgid "None selected"
 msgstr "Ingen valgt"
 
 #: templates/system/pcgroups/policy_list/item.html
-#: templates/system/scripts/templates.html
 msgid "Remove"
 msgstr "Fjern"
 
@@ -1388,11 +1594,6 @@ msgid "Delete group"
 msgstr "Slet gruppe"
 
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/security_problems/site_security_problems.html
-msgid "Details about"
-msgstr "Detaljer om"
-
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 #: templates/system/scripts/form.html
 msgid "Details"
 msgstr "Detaljer"
@@ -1408,6 +1609,18 @@ msgstr "Tilføj en computer til gruppen"
 #: templates/system/pcgroups/site_groups.html
 msgid "Remove computer from the group"
 msgstr "Fjern computer fra gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Add a supervisor for the group"
+msgstr "Tilføj en ansvarsperson for gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Remove a supervisor for the group"
+msgstr "Fjern en ansvarsperson fra gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Supervisors for this group"
+msgstr "Ansvarspersoner for denne gruppe"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Associated Security Rules"
@@ -1430,15 +1643,17 @@ msgstr ""
 msgid ""
 "Editing the script arguments will make the script run again on all Computers "
 "in the Group. This can be toggled off under Site settings"
-msgstr "Redigering af inputparametre medfører, at et script køres på ny "
-"på alle Computere i Gruppen. Dette kan slås fra under Site-indstillinger"
+msgstr ""
+"Redigering af inputparametre medfører, at et script køres på ny på alle "
+"Computere i Gruppen. Dette kan slås fra under Site-indstillinger"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
 "Editing the script arguments will not make the script run again. This can be "
 "changed under Site settings"
-msgstr "Redigering af inputparametre medfører ikke, at et script køres på ny. "
-"Dette kan ændres under Site-indstillinger"
+msgstr ""
+"Redigering af inputparametre medfører ikke, at et script køres på ny. Dette "
+"kan ændres under Site-indstillinger"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
@@ -1513,33 +1728,12 @@ msgid "No computers were found"
 msgstr "Der blev ikke fundet nogen computere"
 
 #: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/create.html templates/system/scripts/update.html
-#: templates/system/security_problems/confirm_delete.html
-msgid "Security Script"
-msgstr "Sikkerhedsscript"
-
-#: templates/system/scripts/confirm_delete.html
 msgid "the Script"
 msgstr "Scriptet"
 
 #: templates/system/scripts/confirm_delete.html
 msgid "Associated Script"
 msgstr "Tilknyttet Script"
-
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/security_problems/confirm_delete.html
-msgid "the Security Script"
-msgstr "Sikkerhedsscriptet"
-
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/security_problems/confirm_delete.html
-msgid "Security Rule"
-msgstr "Sikkerhedsregel"
-
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/security_problems/confirm_delete.html
-msgid "the Security Rule"
-msgstr "Sikkerhedsreglen"
 
 #: templates/system/scripts/confirm_delete.html
 #, python-format
@@ -1721,109 +1915,6 @@ msgstr "Modtagelsestidspunkt"
 msgid "Handled by"
 msgstr "Håndteres af"
 
-#: templates/system/security_problems/confirm_delete.html
-#: templates/system/security_problems/site_security_problems.html
-msgid "Delete security rule"
-msgstr "Slet sikkerhedsregel"
-
-#: templates/system/security_problems/confirm_delete.html
-#, python-format
-msgid ""
-"If a %(security_rule)s is deleted, the related %(security_events)s will also "
-"be deleted."
-msgstr ""
-"Hvis en %(security_rule)s slettes, vil de relaterede %(security_events)s "
-"også blive slettet."
-
-#: templates/system/security_problems/confirm_delete.html
-msgid "Email recipients"
-msgstr "E-mail-modtagere"
-
-#: templates/system/security_problems/confirm_delete.html
-#, python-format
-msgid ""
-"Associated %(groups)s, %(security_script)s and %(email_recipients)s will be "
-"removed from %(the_security_rule)s."
-msgstr ""
-"Tilknyttede %(groups)s, %(security_script)s og %(email_recipients)s vil "
-"blive fjernet fra %(the_security_rule)s."
-
-#: templates/system/security_problems/confirm_delete.html
-msgid "The Groups"
-msgstr "Grupperne"
-
-#: templates/system/security_problems/confirm_delete.html
-msgid "the Email recipients"
-msgstr "E-mail-modtagerne"
-
-#: templates/system/security_problems/confirm_delete.html
-#, python-format
-msgid ""
-"%(the_groups)s, %(the_security_script)s and %(the_email_recipients)s "
-"themselves will %(NOT)s be deleted."
-msgstr ""
-"Selve %(the_groups)s, %(the_security_script)s og %(the_email_recipients)s "
-"vil %(NOT)s blive slettet."
-
-#: templates/system/security_problems/confirm_delete.html
-msgid "Are you sure you wish to delete the Security Rule"
-msgstr "Er du sikker på, du ønsker at slette Sikkerhedsreglen"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "Define new security rule"
-msgstr "Definér ny sikkerhedsregel"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "Add group to surveillance"
-msgstr "Tilføj gruppe til overvågning"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "Remove monitored group"
-msgstr "Fjern overvåget gruppe"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "Add email recipient"
-msgstr "Tilføj e-mail-modtager"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "Remove recipient"
-msgstr "Fjern modtager"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "New security rule"
-msgstr "Ny sikkerhedsregel"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "empty"
-msgstr "tom"
-
-#: templates/system/security_problems/site_security_problems.html
-#, python-format
-msgid ""
-"If the Security Rule does not have a Group added, the rule will apply to "
-"%(all)s Computers."
-msgstr ""
-"Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen "
-"gælde %(all)s Computere."
-
-#: templates/system/security_problems/site_security_problems.html
-#, python-format
-msgid ""
-"If you want to temporarily disable a rule, you can create an %(empty)s Group "
-"(i.e. a Group with no Computers) and set this Group as the monitored Group."
-msgstr ""
-"Ønsker du midlertidigt at gøre en Regel inaktiv, kan du oprette en %(empty)s "
-"Gruppe (dvs. en Gruppe uden Computere) og sætte denne Gruppe som den "
-"overvågede Gruppe."
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "Monitored groups"
-msgstr "Overvågede grupper"
-
-#: templates/system/security_problems/site_security_problems.html
-msgid "Recipient(s) of email warning"
-msgstr "Modtager(e) af e-mail-advarsel"
-
 #: templates/system/site_image_versions.html
 msgid "Newest version of"
 msgstr "Nyeste udgave af"
@@ -1921,8 +2012,12 @@ msgid "Offline"
 msgstr "Offline"
 
 #: templates/system/site_two_factor.html
-msgid "Activate: Two-factor authentication for superuser"
-msgstr "Aktivér: Totrinsbekræftelse for superuser"
+msgid "Two-factor authentication"
+msgstr "Totrinsbekræftelse"
+
+#: templates/system/site_two_factor.html
+msgid "Activate: Two-factor authentication for OS2borgerPC"
+msgstr "Aktivér: Totrinsbekræftelse for OS2borgerPC"
 
 #: templates/system/site_two_factor.html
 msgid ""
@@ -2110,10 +2205,6 @@ msgid ""
 msgstr ""
 "\"Lukkedage\" betyder at computeren slet ikke tænder automatisk den eller de "
 "dage."
-
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html
-msgid "From"
-msgstr "Fra"
 
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "To"
@@ -2337,6 +2428,10 @@ msgid "Duplicate schedule"
 msgstr "Duplikér tidsplan"
 
 #: templates/system/wake_plan/wake_plan_base.html
+msgid "On/Off schedule"
+msgstr "Tænd/Sluk tidsplan"
+
+#: templates/system/wake_plan/wake_plan_base.html
 msgid "Add new On/Off schedule"
 msgstr "Tilføj ny tænd/sluk tidsplan"
 
@@ -2546,6 +2641,21 @@ msgstr "Deaktivér"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data mangler"
+
+#~ msgid "status:Update"
+#~ msgstr "Opdatering"
+
+#~ msgid "update required"
+#~ msgstr "opdatering påkrævet"
+
+#~ msgid "Security"
+#~ msgstr "Sikkerhed"
+
+#~ msgid "Security Rules"
+#~ msgstr "Sikkerhedsregler"
+
+#~ msgid "Define new security rule"
+#~ msgstr "Definér ny sikkerhedsregel"
 
 #~ msgid "Create security rule"
 #~ msgstr "Opret sikkerhedsregel"
