@@ -3116,14 +3116,14 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
 # TODO: Rewrite these to use a common base mixin with SecurityProblem, like WakePlanBase/ExtendedMixin
 class EventRuleServerCreate(EventRuleServerBaseMixin, CreateView):
-    template_name = "system/event_rules/site_event_rule_servers.html"
+    template_name = "system/event_rules/site_event_rules_server.html"
     model = EventRuleServer
     slug_field = "site_uid"
     form_class = EventRuleServerForm
 
 
 class EventRuleServerUpdate(EventRuleServerBaseMixin, UpdateView):
-    template_name = "system/event_rules/site_event_rule_servers.html"
+    template_name = "system/event_rules/site_event_rules_server.html"
     model = EventRuleServer
     form_class = EventRuleServerForm
 

@@ -118,8 +118,3 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
   min-width: 90vh;
   height: 40vh;
 }
-
-#monitor-period input {
-  display: inline;
-  width: 100px;
-}
