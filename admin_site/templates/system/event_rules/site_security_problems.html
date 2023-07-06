@@ -37,7 +37,7 @@
                 {% translate "all"|bold as all %}
                 {% translate "empty"|italic as empty %}
                 <li>{% blocktranslate trimmed %}
-                    If the Security Rule does not have a Group added, the rule will apply to {{all}} Computers.
+                    If the rule does not have a Group added, the rule will apply to {{all}} Computers.
                     {% endblocktranslate %}</li>
                 <li>{% blocktranslate trimmed %}
                     If you want to temporarily disable a rule, you can create an {{empty}} Group (i.e. a Group with no Computers)
@@ -56,13 +56,13 @@
                 <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
 
                 {{ form.name|as_crispy_field }}
+                {{ form.security_script|as_crispy_field }}
                 {{ form.level|as_crispy_field }}
                 {{ form.description|as_crispy_field }}
 
             </fieldset>
 
             <fieldset class="col-12 col-lg-6">
-                {{ form.security_script|as_crispy_field }}
 
                 <p>
                     <label>{% translate "Monitored groups" %}</label>

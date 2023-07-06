@@ -4,7 +4,7 @@
 {% load custom_tags %}
 
 {% block specific_title %}
-{% translate "Security Rules" %}
+{% translate "Monitoring Rules" %}
 {% endblock %}
 
 {% block subnav %}
@@ -12,11 +12,11 @@
   <div class="listutils">
     <a class="btn btn-link" href="{% url 'event_rule_security_problem_new' site.uid %}">
       <span class="material-icons">add</span>
-      {% translate "Define new security rule" %}
+      {% translate "Add new security rule" %}
     </a>
     <a class="btn btn-link" href="{% url 'event_rule_server_new' site.uid %}">
       <span class="material-icons">add</span>
-      {% translate "Define new server event rule" %}
+      {% translate "Add new offline rule" %}
     </a>
   </div>
   <ul class="item-list">
@@ -24,6 +24,8 @@
       <li {% if el == selected %}class="active"{% endif %}>
         {% if el|get_model_name == "EventRuleServer" %}
           <span class='material-icons ms-3'>desktop_access_disabled</span>
+        {% else %}
+          <span class='material-icons ms-3'>gpp_maybe</span>
         {% endif %}
         <a class="item-list-link" href="{{el.get_absolute_url}}">
           {{ el.name }}
