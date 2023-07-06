@@ -8,7 +8,7 @@ This is a guideline for further customizing the site.
 
 First off, you'll need to install the NodeJS dependencies to build Bootstrap.
 **You need only do this once.**
-From [nodejs/](./) directory, install dependencies. 
+From [nodejs/](./) directory, install dependencies.
 (Assuming you have [NodeJS](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) installed.)
 ```
 $ npm install
@@ -17,11 +17,11 @@ This also installs the Bootstrap base styles, which you'll customize.
 
 ## Step 1: Edit SCSS
 
-[nodejs/src/](./src) contains the customized SASS styles. 
+[nodejs/src/](./src) contains the customized SASS styles.
 Add or edit styles in the files contained here.
 If you add a new `.scss` file, be sure to import it into [custom.scss](./src/custom.scss)
 
-Be sure to look into [_variables.scss](./src/_variables.scss). The SASS variables in this file are used to tweak Bootstrap variables in a standardized way. 
+Be sure to look into [_variables.scss](./src/_variables.scss). The SASS variables in this file are used to tweak Bootstrap variables in a standardized way.
 We highly encourage you to start any attempt at customization by just tweaking the variables. [Read more about default variables in the Bootstrap docs.](https://getbootstrap.com/docs/5.0/customize/sass/#variable-defaults)
 
 ## Step 2: Build CSS
