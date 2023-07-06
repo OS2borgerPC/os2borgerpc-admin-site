@@ -3145,31 +3145,30 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
 
     def get_queryset(self):
         site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
-        queryset = SecurityEvent.objects.all()
+        queryset = SecurityEvent.objects.filter(
+            Q(problem__site=site) | Q(event_rule_server__site=site)
+        )
         params = self.request.GET
 
-        query = {"problem__site": site}
-        query2 = {"event_rule_server__site": site}
-        if params.get("pc", None):
-            query["pc__uid"] = params["pc"]
-
         if "level" in params:
-            query["problem__level__in"] = params.getlist("level")
-            query2["event_rule_server__level__in"] = params.getlist("level")
+            queryset = queryset.filter(
+                Q(problem__level__in=params.getlist("level"))
+                | Q(event_rule_server__level__in=params.getlist("level"))
+            )
 
         if "status" in params:
-            query["status__in"] = params.getlist("status")
-            query2["status__in"] = params.getlist("status")
+            queryset = queryset.filter(status__in=params.getlist("status"))
 
         orderby = params.get("orderby", "-occurred_time")
-        if orderby not in SecurityEventSearch.VALID_ORDER_BY:
-            orderby = "-occurred_time"
+        if orderby == "name":
+            queryset = sorted(queryset, key=lambda t: t.namestr)
+        elif orderby == "-name":
+            queryset = sorted(queryset, key=lambda t: t.namestr, reverse=True)
+        else:
+            if orderby not in SecurityEventSearch.VALID_ORDER_BY:
+                orderby = "-occurred_time"
 
-        queryset = (
-            queryset.filter(**query)
-            .union(queryset.filter(**query2))
-            .order_by(orderby, "pk")
-        )
+            queryset = queryset.order_by(orderby, "pk")
 
         return queryset
 
