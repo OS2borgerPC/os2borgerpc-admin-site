@@ -9,7 +9,7 @@
 # For deployment via config-updater and saltbert these variables are needed as well:
 # CONFIG_UPDATER_USERNAME
 # CONFIG_UPDATER_PASSWORD
-# SALTBERT_TEST_PASSWORD and SALBERT_PROD_PASSWORD 
+# SALTBERT_TEST_PASSWORD and SALBERT_PROD_PASSWORD
 # (both are used as SALBERT_PASSWORD for test and prod servers respectively)
 
 include:
@@ -67,7 +67,7 @@ Lint Dockerfiles:
 
 Build app image:
   stage: build
-  needs: 
+  needs:
     - Lint Python
     - Lint Dockerfiles
   dependencies: []
@@ -105,8 +105,8 @@ Release dev:
       - develop
   script:
     - skopeo copy
-      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
-      --dest-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --src-creds=${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD}
+      --dest-creds=${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
       "docker://${IMAGE_DEV}"
 
@@ -116,7 +116,7 @@ Release rc:
     - .rules:semver-all
   script:
     - skopeo copy
-      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --src-creds=${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD}
       --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
       "docker://${RELEASE_IMAGE_TAG}"
@@ -127,12 +127,12 @@ Release master:
     - .rules:semver-core
   script:
     - skopeo copy
-      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --src-creds=${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD}
       --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
       "docker://${RELEASE_IMAGE_TAG}"
     - skopeo copy
-      --src-creds=${CI_REGISTRY_USER}:${CI_BUILD_TOKEN}
+      --src-creds=${CI_REGISTRY_USER}:${CI_REGISTRY_PASSWORD}
       --dest-creds=${RELEASE_REGISTRY_USER}:${RELEASE_REGISTRY_PASSWORD}
       "docker://${IMAGE_SHA}"
       "docker://${RELEASE_IMAGE_LATEST}"
