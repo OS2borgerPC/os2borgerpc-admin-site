@@ -115,7 +115,7 @@
           <th><input type="checkbox" id="all_events_toggle" autocomplete="off"/></th>
           <th>{% translate "Level" %}</th>
           {% translate "Rule" as rule %}
-          {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('assigned_user__username')" slug='warning' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('pk')" slug='warning' %}
           <th>{% translate "Info" %}</th>
           <th>{% translate "Device" %}</th>
           <th>{% translate "Incident time" %}</th>
