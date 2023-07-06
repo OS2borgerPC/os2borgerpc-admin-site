@@ -17,7 +17,7 @@ class Command(BaseCommand):
         now = datetime.now()
         perform_check = False
         for pc in all_pcs:
-            if pc.last_seen and (now - pc.last_seen).seconds < 600:
+            if pc.last_seen and (now - pc.last_seen).total_seconds() < 600:
                 perform_check = True
                 break
 
@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     for pc in pcs_to_check:
                         if (
                             pc.last_seen
-                            and (now - pc.last_seen).seconds
+                            and (now - pc.last_seen).total_seconds()
                             > rule.maximum_offline_period * 60
                         ):
                             try:
