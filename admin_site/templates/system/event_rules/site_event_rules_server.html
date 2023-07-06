@@ -21,7 +21,8 @@
     </h2>
     {% else %}
     <h2 class="divideheader">
-        {% translate "New server event rule" %}
+        <span class='material-icons'>desktop_access_disabled</span>
+        {% translate "New offline rule" %}
     </h2>
     {% endif %}
     {% include 'notification.html' %}
@@ -38,7 +39,7 @@
                 {% translate "all"|bold as all %}
                 {% translate "empty"|italic as empty %}
                 <li>{% blocktranslate trimmed %}
-                    If the Security Rule does not have a Group added, the rule will apply to {{all}} Computers.
+                    If the rule does not have a Group added, the rule will apply to {{all}} Computers.
                     {% endblocktranslate %}</li>
                 <li>{% blocktranslate trimmed %}
                     If you want to temporarily disable a rule, you can create an {{empty}} Group (i.e. a Group with no Computers)

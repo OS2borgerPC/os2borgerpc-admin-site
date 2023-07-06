@@ -116,17 +116,17 @@ urlpatterns = [
     ),
     # Event Rule Server
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/event_rule_servers/new/$",
+        r"^site/(?P<site_uid>[^/]+)/event_rules_server/new/$",
         EventRuleServerCreate.as_view(),
         name="event_rule_server_new",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/event_rule_servers/(?P<id>[^/]+)/delete/$",
+        r"^site/(?P<site_uid>[^/]+)/event_rules_server/(?P<id>[^/]+)/delete/$",
         EventRuleServerDelete.as_view(),
         name="event_rule_server_delete",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/event_rule_servers/(?P<id>[^/]+)/$",
+        r"^site/(?P<site_uid>[^/]+)/event_rules_server/(?P<id>[^/]+)/$",
         EventRuleServerUpdate.as_view(),
         name="event_rule_server",
     ),
