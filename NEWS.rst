@@ -1,3 +1,14 @@
+Version 5.18.0, July 6, 2023
+----------------------------
+
+- Remove execute permissions from files that don't need it
+- Policy Scripts: Add functionality to optionally rerun policy scripts when their parameters are changed.
+- SecurityProblems: Use ID instead of UID. Remove UID.
+- Fix server error when trying to access a user from another site
+- Remove gateway functionality
+- Minor improvements to /admin
+- Simplify how settings are loaded
+
 Version 5.17.0, June 6, 2023
 ----------------------------
 

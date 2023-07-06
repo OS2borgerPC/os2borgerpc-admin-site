@@ -1,3 +1,0 @@
-[flake8]
-# Use black's default line length
-max-line-length = 88

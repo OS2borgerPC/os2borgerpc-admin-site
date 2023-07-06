@@ -2366,7 +2366,10 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-        except User.DoesNotExist:
+            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
+                site__uid=self.kwargs["site_uid"]
+            )
+        except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
                 _("You have no user with the following ID: %s")
                 % self.kwargs["username"]
@@ -2648,7 +2651,9 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 self.object.configuration.update_from_request(
                     self.request.POST, "group_configuration"
                 )
-                self.object.update_policy_from_request(self.request, "group_policies")
+                updated_policy_scripts = self.object.update_policy_from_request(
+                    self.request, "group_policies"
+                )
 
                 response = super(PCGroupUpdate, self).form_valid(form)
 
@@ -2668,10 +2673,14 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     for asc in ordered_policy:
                         asc.run_on(self.request.user, new_members)
 
-                new_policy = list(new_policy)
-                new_policy.sort(key=lambda asc: asc.position)
+                if self.object.site.rerun_asc:
+                    policy_for_all = new_policy.union(updated_policy_scripts)
+                else:
+                    policy_for_all = new_policy
+                policy_for_all = list(policy_for_all)
+                policy_for_all.sort(key=lambda asc: asc.position)
                 # ... and run new policy scripts on old PCs
-                for asc in new_policy:
+                for asc in policy_for_all:
                     asc.run_on(self.request.user, surviving_members)
 
                 # If the group belongs to an active wake plan
@@ -2839,54 +2848,62 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class SecurityProblemsView(SelectionMixin, SiteView):
-    template_name = "system/security_problems/site_security_problems.html"
-    selection_class = SecurityProblem
-    class_display_name = "security_problem"
+class SecurityProblemRedirect(RedirectView, SuperAdminOrThisSiteMixin):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
 
-    def get_list(self):
-        return self.object.security_problems.all()
+        security_problems = SecurityProblem.objects.filter(site=site)
 
-    def render_to_response(self, context):
-        if "selected_security_problem" in context:
-            return HttpResponseRedirect(
-                "/site/%s/security_problems/%s/"
-                % (context["site"].uid, context["selected_security_problem"].uid)
-            )
+        if security_problems.exists():
+            security_problem = security_problems.first()
+            return security_problem.get_absolute_url()
         else:
-            """
-            return HttpResponseRedirect(
-                '/site/%s/security_problems/new/' % context['site'].uid,
-            )
-            """
-            site = context["site"]
-            context["newform"] = SecurityProblemForm()
-            user_set = User.objects.filter(bibos_profile__sites=site)
-            group_set = site.groups.all()
-            context["newform"].fields["alert_users"].queryset = user_set
-            context["newform"].fields["alert_groups"].queryset = group_set
-
-            # Limit list of scripts to only include security scripts.
-            script_set = Script.objects.filter(
-                Q(site__isnull=True) | Q(site=site),
-                is_security_script=True,
-            )
-            context["newform"].fields["security_script"].queryset = script_set
-            # Pass users and groups to context
-            # that are available for a 'new' security problem.
-            context["alert_users"] = user_set.values_list("pk", "username", "username")
-            context["alert_groups"] = group_set.values_list("pk", "name", "pk")
-
-            return super(SecurityProblemsView, self).render_to_response(context)
+            return reverse("security_problem_new", args=[site.uid])
 
 
 class SecurityProblemCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
     template_name = "system/security_problems/site_security_problems.html"
     model = SecurityProblem
-    fields = "__all__"
+    slug_field = "site_uid"
+    form_class = SecurityProblemForm
 
-    def get_success_url(self):
-        return "/site/{0}/security_problems/".format(self.kwargs["site_uid"])
+    def get_context_data(self, **kwargs):
+        context = super(SecurityProblemCreate, self).get_context_data(**kwargs)
+
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        form = context["form"]
+
+        group_set = site.groups.all()
+        selected_group_ids = form["alert_groups"].value()
+        if not selected_group_ids:
+            selected_group_ids = []
+        # template picklist requires the form pk, name, url (u)id.
+        context["available_groups"] = group_set.exclude(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+        context["selected_groups"] = group_set.filter(
+            pk__in=selected_group_ids
+        ).values_list("pk", "name", "pk")
+
+        user_set = User.objects.filter(bibos_profile__sites=site)
+        selected_user_ids = form["alert_users"].value()
+        if not selected_user_ids:
+            selected_user_ids = []
+        context["available_users"] = user_set.exclude(
+            pk__in=selected_user_ids
+        ).values_list("pk", "username", "username")
+        context["selected_users"] = user_set.filter(
+            pk__in=selected_user_ids
+        ).values_list("pk", "username", "username")
+
+        # Limit list of scripts to only include security scripts.
+        script_set = Script.objects.filter(
+            Q(site__isnull=True) | Q(site=site),
+            is_security_script=True,
+        )
+        form.fields["security_script"].queryset = script_set
+
+        return context
 
 
 class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -2897,12 +2914,12 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             return SecurityProblem.objects.get(
-                uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
+                id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
             )
         except SecurityProblem.DoesNotExist:
             raise Http404(
                 _("You have no Security Problem with the following ID: %s")
-                % self.kwargs["uid"]
+                % self.kwargs["id"]
             )
 
     def get_context_data(self, **kwargs):
@@ -2937,15 +2954,6 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
         # Extra fields
         context["selected_security_problem"] = self.object
-        context["newform"] = SecurityProblemForm()
-        context["newform"].fields["security_script"].queryset = script_set
-        context["newform"].fields["alert_users"].queryset = user_set
-        context["newform"].fields["alert_groups"].queryset = group_set
-        # Pass users and groups to context
-        # that are available for a 'new' security problem.
-        context["alert_users"] = user_set.values_list("pk", "username", "username")
-        # template picklist requires the form pk, name, url (u)id.
-        context["alert_groups"] = group_set.values_list("pk", "name", "pk")
 
         request_user = self.request.user
         context[
@@ -2957,7 +2965,7 @@ class SecurityProblemUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return context
 
     def get_success_url(self):
-        return reverse("security_problem", args=[self.object.site.uid, self.object.uid])
+        return reverse("security_problem", args=[self.object.site.uid, self.object.id])
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
@@ -2967,7 +2975,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def get_object(self, queryset=None):
         return SecurityProblem.objects.get(
-            uid=self.kwargs["uid"], site__uid=self.kwargs["site_uid"]
+            id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
         )
 
     def get_success_url(self):
@@ -3092,7 +3100,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "site_uid": site.uid,
                     "problem_name": event.problem.name,
                     "problem_url": reverse(
-                        "security_problem", args=[site.uid, event.problem.uid]
+                        "security_problem", args=[site.uid, event.problem.id]
                     ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),

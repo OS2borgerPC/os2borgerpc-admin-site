@@ -408,9 +408,26 @@ class WakeWeekPlanAdmin(admin.ModelAdmin):
         "name",
         "enabled",
         "site",
+        "sleep_state",
+        "monday_on",
+        "monday_off",
+        "tuesday_on",
+        "tuesday_off",
+        "wednesday_on",
+        "wednesday_off",
+        "thursday_on",
+        "thursday_off",
+        "friday_on",
+        "friday_off",
+        "saturday_on",
+        "saturday_off",
+        "sunday_on",
+        "sunday_off",
     )
     inlines = [PCGroupInline]
     filter_horizontal = ("wake_change_events",)
+    list_filter = ("site",)
+    search_fields = ("name",)
 
 
 class WakeWeekPlanInline(admin.TabularInline):
@@ -429,6 +446,7 @@ class WakeChangeEventAdmin(admin.ModelAdmin):
         "site",
     )
     inlines = [WakeWeekPlanInline]
+    list_filter = ("site",)
 
 
 ar = admin.site.register
