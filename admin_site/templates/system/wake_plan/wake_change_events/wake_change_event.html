@@ -7,8 +7,10 @@
     <h2 class="divideheader">
 
           {% if selected_event.type == "ALTERED_HOURS" or "altered" in request.resolver_match.url_name %}
+            <span class="material-icons me-0">schedule</span>
             {% translate "Altered opening hours" %}:
           {% else %}
+            <span class="material-icons me-0">door_front</span>
             {% translate "Closed days" %}:
           {% endif %}
       {% translate 'New exception' as new_ex %}
