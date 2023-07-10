@@ -320,7 +320,7 @@ urlpatterns = [
     # Users
     re_path(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/new_user/$", UserCreate.as_view(), name="new_user"
+        r"^site/(?P<site_uid>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
     ),
     re_path(
         r"^site/(?P<site_uid>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$",

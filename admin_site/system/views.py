@@ -2306,19 +2306,30 @@ class UsersMixin(object):
         context["sec_events"] = no_of_sec_events
         return context
 
+    def add_membership_to_context(self, context):
+        if "user_list" not in context:
+            self.add_userlist_to_context(context)
+        request_user = self.request.user
+        user_profile = request_user.bibos_profile
+        site_membership = user_profile.sitemembership_set.filter(
+            site=context["site"]
+        ).first()
+
+        if site_membership:
+            loginusertype = site_membership.site_user_type
+        else:
+            loginusertype = None
+
+        context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
+
+        context["site_membership"] = site_membership
+        return context
+
 
 class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
     form_class = UserForm
-    lookup_field = "username"
-    template_name = "system/users/create.html"
-
-    def get_form(self, form_class=None):
-        if form_class is None:
-            form_class = self.get_form_class()
-        form = super(UserCreate, self).get_form(form_class)
-        form.prefix = "create"
-        return form
+    template_name = "system/users/update.html"
 
     def get_form_kwargs(self):
         kwargs = super(UserCreate, self).get_form_kwargs()
@@ -2327,7 +2338,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def get_context_data(self, **kwargs):
         context = super(UserCreate, self).get_context_data(**kwargs)
-        self.add_userlist_to_context(context)
+        self.add_membership_to_context(context)
         return context
 
     def form_valid(self, form):
@@ -2381,30 +2392,10 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         # This line is necessary, as without it UserUpdate will think that user = selected_user
         self.context_object_name = "selected_user"
         context = super(UserUpdate, self).get_context_data(**kwargs)
-        self.add_userlist_to_context(context)
-
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-
-        request_user = self.request.user
-        user_profile = request_user.bibos_profile
-        site_membership = user_profile.sitemembership_set.filter(site=site).first()
-
-        if site_membership:
-            loginusertype = site_membership.site_user_type
-        else:
-            loginusertype = None
+        self.add_membership_to_context(context)
 
         context["selected_user"] = User.objects.get(username=self.kwargs["username"])
 
-        context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
-
-        context["create_form"] = UserForm(
-            prefix="create", language=self.request.user.bibos_profile.language
-        )
-        context["create_form"].setup_usertype_choices(
-            loginusertype, request_user.is_superuser
-        )
-        context["site_membership"] = site_membership
         return context
 
     def get_form_kwargs(self):
@@ -2461,7 +2452,6 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         context = super(UserDelete, self).get_context_data(**kwargs)
         self.add_userlist_to_context(context)
         context["selected_user"] = self.selected_user
-        context["create_form"] = UserForm(prefix="create")
 
         return context
 
