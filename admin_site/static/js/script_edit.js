@@ -62,6 +62,7 @@
                 'script-input',
                 data
             ))
+            elem.find('input.name-input')[0].required = true
             elem.find('input.mandatory-input')[0].checked = elem.find('input.mandatory-input')[0].value != "false"
             elem.find('select').val(data['value_type'])
             if (elem.find('select')[0].value == "BOOLEAN") {
