@@ -616,6 +616,10 @@ msgstr "overvågningsperiode-slut"
 msgid "maximum offline period allowed, in minutes"
 msgstr "maksimal tilladt offline-periode i minutter"
 
+#: system/models.py
+msgid "How long a PC may be offline before an event is created"
+msgstr "Hvor længe en PC må være offline, før der oprettes en hændelse"
+
 # SecurityEvent class
 #: system/models.py
 msgid "eventstatus:New"
@@ -4012,8 +4016,8 @@ msgid ""
 "If the rule does not have a Group added, the rule will apply to %(all)s "
 "Computers."
 msgstr ""
-"Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen "
-"gælde %(all)s Computere."
+"Hvis der ikke er nogen Gruppe tilknyttet Reglen, så vil Reglen gælde %(all)s "
+"Computere."
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
@@ -4033,9 +4037,19 @@ msgid ""
 "supervisors will receive any email warnings related to that PC instead of "
 "the recipients set here."
 msgstr ""
-"Hvis en PC er medlem af en gruppe med en eller flere ansvarspersoner, så vil "
+"Hvis en PC er medlem af en Gruppe med en eller flere ansvarspersoner, så vil "
 "disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
 "PC i stedet for de modtagere, som er valgt her."
+
+#: templates/system/event_rules/site_event_rules_server.html
+msgid ""
+"The rule is only active during the monitor period. We recommend choosing the "
+"period such that you avoid e.g. offline events when the PC has been shut "
+"down for the night."
+msgstr ""
+"Reglen er kun aktiv under overvågningsperioden. Vi anbefaler at vælge perioden "
+"således, at du undgår f.eks. offline-hændelser, når Computeren slukkes "
+"om natten."
 
 #: templates/system/event_rules/site_event_rules_server.html
 msgid "Monitor period"
@@ -4049,10 +4063,6 @@ msgstr "Fra"
 #: templates/system/event_rules/site_event_rules_server.html
 msgid "Until"
 msgstr "Til"
-
-#: templates/system/event_rules/site_event_rules_server.html
-msgid "How long a PC may be offline before an event is created"
-msgstr "Hvor længe en PC må være offline, før der oprettes en hændelse"
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
