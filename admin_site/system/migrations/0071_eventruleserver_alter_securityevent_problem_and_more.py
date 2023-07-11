@@ -55,6 +55,7 @@ class Migration(migrations.Migration):
                     "maximum_offline_period",
                     models.PositiveSmallIntegerField(
                         default=15,
+                        help_text="How long a PC may be offline before an event is created",
                         validators=[django.core.validators.MinValueValidator(15)],
                         verbose_name="maximum offline period allowed, in minutes",
                     ),
