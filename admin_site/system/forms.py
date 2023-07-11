@@ -280,12 +280,6 @@ class PCForm(forms.ModelForm):
         )
 
 
-class ChangelogCommentForm(forms.ModelForm):
-    class Meta:
-        model = ChangelogComment
-        fields = ["content"]
-
-
 class SecurityEventForm(forms.ModelForm):
     class Meta:
         model = SecurityEvent

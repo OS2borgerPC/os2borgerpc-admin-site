@@ -13,13 +13,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """Check if any pcs have been offline too long and send notifications"""
 
-        all_pcs = PC.objects.only("last_seen").all().order_by("-pk")
+        # all_pcs = PC.objects.only("last_seen").all().order_by("-pk")
+        # now = datetime.now()
+        # perform_check = False
+        # for pc in all_pcs:
+        #     if pc.last_seen and (now - pc.last_seen).total_seconds() < 600:
+        #         perform_check = True
+        #         break
+        perform_check = True
         now = datetime.now()
-        perform_check = False
-        for pc in all_pcs:
-            if pc.last_seen and (now - pc.last_seen).total_seconds() < 600:
-                perform_check = True
-                break
 
         if perform_check:
             logger = logging.getLogger(__name__)

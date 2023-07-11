@@ -49,6 +49,10 @@
                     If a PC is a member of a group with one or more supervisors, those supervisors will receive any email warnings
                     related to that PC instead of the recipients set here.
                     {% endblocktranslate %}</li>
+                <li>{% blocktranslate trimmed %}
+                    The rule is only active during the monitor period. We recommend choosing the period such that you avoid
+                    e.g. offline events when the PC has been shut down for the night.
+                    {% endblocktranslate %}</li>
             </ul>
         </div>
         <div class="row gx-5">
@@ -66,11 +70,6 @@
                         {{ form.monitor_period_start }}
                         <span class="px-3">{% translate "Until" %}</span>
                         {{ form.monitor_period_end }}
-                    </p>
-                    <p>
-                        <small>
-                            {% translate "How long a PC may be offline before an event is created" %}
-                        </small>
                     </p>
                 </div>
 
