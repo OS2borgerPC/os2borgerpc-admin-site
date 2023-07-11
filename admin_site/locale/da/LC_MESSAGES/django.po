@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-06 16:41+0200\n"
+"POT-Creation-Date: 2023-07-11 11:55+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -451,6 +451,10 @@ msgstr "overvågningsperiode-slut"
 msgid "maximum offline period allowed, in minutes"
 msgstr "maksimal tilladt offline-periode i minutter"
 
+#: system/models.py
+msgid "How long a PC may be offline before an event is created"
+msgstr "Hvor længe en PC må være offline, før der oprettes en hændelse"
+
 # SecurityEvent class
 #: system/models.py
 msgid "eventstatus:New"
@@ -691,6 +695,7 @@ msgid "You have no Security Problem with the following ID: %s"
 msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
 
 #: system/views.py
+#, python-format
 msgid "You have no Event Rule Server with the following ID: %s"
 msgstr "Du har ikke nogen offline-regel med følgende ID: %s"
 
@@ -1369,12 +1374,13 @@ msgstr "tom"
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
+#, python-format
 msgid ""
 "If the rule does not have a Group added, the rule will apply to %(all)s "
 "Computers."
 msgstr ""
-"Hvis der ikke er nogen Gruppe tilknyttet Sikkerhedsreglen, så vil reglen "
-"gælde %(all)s Computere."
+"Hvis der ikke er nogen Gruppe tilknyttet Reglen, så vil Reglen gælde %(all)s "
+"Computere."
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
@@ -1394,9 +1400,19 @@ msgid ""
 "supervisors will receive any email warnings related to that PC instead of "
 "the recipients set here."
 msgstr ""
-"Hvis en PC er medlem af en gruppe med en eller flere ansvarspersoner, "
-"så vil disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
+"Hvis en PC er medlem af en Gruppe med en eller flere ansvarspersoner, så vil "
+"disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
 "PC i stedet for de modtagere, som er valgt her."
+
+#: templates/system/event_rules/site_event_rules_server.html
+msgid ""
+"The rule is only active during the monitor period. We recommend choosing the "
+"period such that you avoid e.g. offline events when the PC has been shut "
+"down for the night."
+msgstr ""
+"Reglen er kun aktiv under overvågningsperioden. Vi anbefaler at vælge perioden "
+"således, at du undgår f.eks. offline-hændelser, når Computeren slukkes "
+"om natten."
 
 #: templates/system/event_rules/site_event_rules_server.html
 msgid "Monitor period"
@@ -1410,10 +1426,6 @@ msgstr "Fra"
 #: templates/system/event_rules/site_event_rules_server.html
 msgid "Until"
 msgstr "Til"
-
-#: templates/system/event_rules/site_event_rules_server.html
-msgid "How long a PC may be offline before an event is created"
-msgstr "Hvor længe en PC må være offline, før der oprettes en hændelse"
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html

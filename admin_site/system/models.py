@@ -1178,6 +1178,7 @@ class EventRuleServer(EventRuleBase):
         verbose_name=_("maximum offline period allowed, in minutes"),
         default=15,
         validators=[MinValueValidator(15)],
+        help_text=_("How long a PC may be offline before an event is created"),
     )
 
     def get_absolute_url(self):
