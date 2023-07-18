@@ -11,7 +11,7 @@
     var PolicyList = function() {
         this.scriptInputs = []
         // These two snippets of HTML should match what's inside item.html
-        this.hiddenParamField = function (name, type, mandatory, default_value) {
+        this.hiddenParamField = function (name, type, required, default_value) {
 
           return '<input class="policy-script-param'
                   + (type == 'FILE' ? ' phantom' : '')
@@ -19,7 +19,7 @@
                   + '" name="' + name
                   + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : default_value)
                   + '" data-inputtype="' + type
-                  + '"' + (mandatory ? ' required="required"' : '') + '/>'
+                  + '"' + (required == 'True' ? ' required="required"' : '') + '/>'
         }
         this.visibleParamField = function (input) {
           return '<div class="policy-script-print"><strong class="policy-script-print-name">'
@@ -155,7 +155,7 @@
           // generate the hidden input fields and divs to render the parameters for the selected script
           for(var i = 0; i < BibOS.PolicyList.scriptInputs.length; i++) {
             paramName = submitName + '_' + scriptPk + '_param_' + i
-            param_fields += this.hiddenParamField(paramName, BibOS.PolicyList.scriptInputs[i].type, BibOS.PolicyList.scriptInputs[i].mandatory, BibOS.PolicyList.scriptInputs[i].default_value)
+            param_fields += this.hiddenParamField(paramName, BibOS.PolicyList.scriptInputs[i].type, BibOS.PolicyList.scriptInputs[i].required, BibOS.PolicyList.scriptInputs[i].default_value)
             param_fields += this.visibleParamField(BibOS.PolicyList.scriptInputs[i])
           }
 
