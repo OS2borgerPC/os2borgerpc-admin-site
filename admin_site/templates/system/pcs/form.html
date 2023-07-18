@@ -97,6 +97,7 @@
           <div class="row gx-5">
 
             <fieldset class="col-12 col-lg-6">
+                {{ form.mac|as_crispy_field }}
                 {{ form.uid|as_crispy_field }}
                 {{ form.name|as_crispy_field }}
                 {{ form.description|as_crispy_field }}
