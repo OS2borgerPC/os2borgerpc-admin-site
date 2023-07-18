@@ -265,6 +265,7 @@ class PCForm(forms.ModelForm):
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["uid"].disabled = True
+            self.fields["mac"].disabled = True
 
     class Meta:
         model = PC
