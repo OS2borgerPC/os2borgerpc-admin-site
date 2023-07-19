@@ -55,9 +55,6 @@ def register_new_computer(mac, name, distribution, site, configuration):
     my_config.save()
     # And load configuration
 
-    # Update configuration with uid
-    configuration.update({"uid": uid})
-
     # Update configuration with os2 product
     # New image versions set it themselves, old don't so for those
     # we detect and set it this way
@@ -67,6 +64,14 @@ def register_new_computer(mac, name, distribution, site, configuration):
         else:
             product = "os2borgerpc kiosk"
         configuration.update({"os2_product": product})
+
+    # remove mac and uid from the configuration
+    # We don't need them saved as both attributes and configuration entries
+    try:
+        del configuration["mac"]
+        del configuration["uid"]
+    except KeyError:
+        pass
 
     for k, v in list(configuration.items()):
         entry = ConfigurationEntry(key=k, value=v, owner_configuration=my_config)

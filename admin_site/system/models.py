@@ -655,6 +655,9 @@ class PC(models.Model):
         for conf in configs:
             for entry in conf.entries.all():
                 result[entry.key] = entry.value
+        if "mac" not in result.keys():
+            result["mac"] = self.mac
+        result["uid"] = self.uid
         return result
 
     def get_merged_config_list(self, key, default=None):
