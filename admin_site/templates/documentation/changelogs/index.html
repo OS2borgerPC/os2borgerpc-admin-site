@@ -1,52 +1,54 @@
 {% extends 'documentation/index.html' %}
 
+{% load i18n %}
+
 {% block specific_content %}
-    <h1>Nyhedssiden</h1>
+    <h1>{% translate "The News site" %}</h1>
 
     <p>
-        Nyhedssiden har til formål at samle og fremvise indholdet af nye opdateringer i OS2borgerPC. <br>
-        På siden er det muligt at: <br>
+        {% translate "The purpose of the news site is to display the content of new updates for OS2borgerPC." %} <br>
+        {% translate "On the site, it is possible to:" %} <br>
         <ul>
-            <li>Se en liste over opslag, med en kort forklaring</li>
-            <li>Sortere opslag efter kategori</li>
-            <li>Søge efter opslag</li>
-            <li>Læse opslag</li>
-            <li>Kommentere på hvert opslag med den bruger man er registreret på adminsitet som</li>
+            <li>{% translate "View a list of posts with a short explanation" %}</li>
+            <li>{% translate "Sort posts based on category" %}</li>
+            <li>{% translate "Search for posts" %}</li>
+            <li>{% translate "Read posts" %}</li>
+            <li>{% translate "Comment on a post with one's admin-site user" %}</li>
         </ul>
     </p>
 
     <hr>
-    <h2>Liste af opslag</h2>
+    <h2>{% translate "List of posts" %}</h2>
     <p>
-        Når man går ind på nyhedssiden vil man blive præsenteret med en liste af opslag sorteret med de nyeste opslag først. <br>
-        Hvert opslag på listen har en kort opsummering af opdateringens indhold, samt en dato for hvornår det er blevet slået op.
+        {% translate "When you enter the news site, you will be presented with a list of posts sorted with the newest posts first." %} <br>
+        {% translate "Each post on the list has a short summary of the content of the update along with the date when the post was made." %}
     </p>
     <hr>
-    <h2>Sortering af opslag</h2>
+    <h2>{% translate "Sorting posts" %}</h2>
     <p>
-        Hvert opslag har en eller flere kategorier som listen kan sorteres efter. Dette gøres ved at vælge den relevante kategori ud
-        fra de muligheder præsenteret i toppen af siden.
+        {% blocktranslate trimmed %} Each post has one or more categories that the list can be sorted by. This is done by choosing the
+        relevant category among the options presented at the top of the page. {% endblocktranslate %}
     </p>
     <hr>
-    <h2>Søgning efter opslag</h2>
+    <h2>{% translate "Searching for posts" %}</h2>
     <p>
-        Søgefeltet i toppen af siden kan bruges til at søge i opslagene.
+        {% translate "The search bar at the top can be used to search through the posts." %}
     </p>
     <hr>
-    <h2>Detaljeret visning af et opslag</h2>
+    <h2>{% translate "Detailed view of a post" %}</h2>
     <p>
-        Hvert opslag kan udvides hvilket viser en mere detaljeret forklaring af opdateringen. <br>
+        {% translate "Each post can be expanded to show a more detailed explanation of the update." %} <br>
         <img height="500px" src="/static/docs/img/changelogs/1.png"><br>
         <img height="500px" src="/static/docs/img/changelogs/2.png"><br>
     </p>
     <hr>
-    <h2>Kommentarer på opslag</h2>
+    <h2>{% translate "Commenting on a post" %}</h2>
     <p>
-        Såfremt man er logget ind på sitet, vil man kunne tilføje kommentarer på et opslag. <br>
+        {% translate "If you are logged in to the admin-site, it is possible to add comments to a post." %} <br>
         <img src="/static/docs/img/changelogs/3.png"><br>
-        Når man tilføjer en kommentar vil ens brugernavn fremgå over kommentaren <br>
+        {% translate "When you add a comment, your username will be shown above the comment." %} <br>
         <img src="/static/docs/img/changelogs/4.png"><br>
-        Kommentarer kan også blive besvaret både af Magentas ansatte samt alle brugere tilmeldt et site. <br>
+        {% translate "Comments can also be answered by both Magenta's employees and other logged-in users." %} <br>
         <img src="/static/docs/img/changelogs/5.png"><br>
     </p>
 {% endblock %}

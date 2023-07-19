@@ -1,11 +1,12 @@
+{% load i18n %}
 <ul class="docsubnav">
     <li {% if submenu_active == 'edit' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'security_scripts/edit' %}"> Redigering af Sikkerhedsscripts</a>
+      <a href="{% url 'doc' 'security_scripts/edit' %}"> {% translate "Editing Security Scripts" %}</a>
     </li>
      <li {% if submenu_active == 'securityevents' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'security_scripts/securityevents' %}"> Sikkerhedshændelser</a>
+      <a href="{% url 'doc' 'security_scripts/securityevents' %}"> {% translate "Security Events" %}</a>
     </li>
      <li {% if submenu_active == 'securityproblems' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'security_scripts/securityproblems' %}"> Sikkerhedsregler</a>
+      <a href="{% url 'doc' 'security_scripts/securityproblems' %}"> {% translate "Security Rules" %}</a>
     </li>
 </ul>

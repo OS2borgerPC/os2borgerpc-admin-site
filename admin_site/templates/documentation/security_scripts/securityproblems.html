@@ -1,36 +1,37 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Sikkerhedsregler</h1>
+  <h1>{% translate "Security Rules" %}</h1>
   <p>
-    I oversigten "Sikkerhedsregler" vises alle definerede Sikkerhedsregler, som der holdes øje med.
-    Fra oversigten kan oprettes nye Sikkerhedsregler.<br>
-    En ny Sikkerhedsregel skal have følgende input:
+    {% blocktranslate trimmed %}
+    The overview "Security Rules" shows all the defined security rules that
+    are monitored. You can define new security rules from the overview.
+    {% endblocktranslate %}
+  <br>
+    {% translate "A new security rule must have the following input" %}:
   </p>
   <ul>
-	  <li>
-      Navn: Navnet på den pågældende sikkerhedsregel.
-	  </li>	     
-	  <li>
-      UID: Et kort og unikt navn (som bruges internt i systemet). 
-      Dette ID bruges i koden for det tilknyttede Sikkerhedsscript.
-      Hvis ikke disse to passer sammen, ved systemet ikke 
-      hvilken Sikkerhedsregel, Sikkerhedshændelsen hører til.
-	  </li>
-	  <li>
-      Beskrivelse: En beskrivende tekst, som indgår i de afsendte advarsels-e-mails.
-	  </li>
-	  <li>
-      Alvorlighedsgrad: Vælg mellem Kritisk, Høj og Normal.
-	  </li>
-	  <li>
-      Sikkerhedsscript: Sikkerhedsscriptet afvikles hver gang en maskine kontakter OS2borgerPC-admin.
-	  </li>
-	  <li>
-      Overvågede grupper: Grupperne definerer hvilke computere, den aktuelle sikkerhedsregel er aktiv for.
-	  </li>
-	  <li>
-      Modtager(e) af email-advarsel: Hvilke brugere der skal modtage advisering om advarslen per e-mail.
-	  </li>
+    <li>
+      {% translate "Name: the name of the particular security rule." %}
+	</li>
+	<li>
+      {% translate "Description: A descriptive text that is included in the sent email warnings." %}
+	</li>
+	<li>
+      {% translate "Severity level: Choose between Critical, High and Normal." %}
+	</li>
+	<li>
+      {% translate "Security Script: The Security Script is executed every time the machine checks in with the admin-site." %}
+	</li>
+	<li>
+      {% translate "Monitored groups: The groups define which computers the security rule applies to." %}
+	</li>
+	<li>
+      {% blocktranslate trimmed %}
+      Recipient(s) of email warning: The users that should receive an email about any security events
+      related to the security rule.
+      {% endblocktranslate %}
+	</li>
   </ul>
 {% endblock %}

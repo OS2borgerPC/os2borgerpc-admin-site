@@ -19,10 +19,11 @@
       {% endif %}
     </button>
 
+      {% translate "Find ..." as ph %}
     <!-- Search box -->
     <div class="mx-3 my-2">
       <div class="input-group">
-        <input id="search_form" type="search" class="form-control" placeholder="Find ...">
+        <input id="search_form" type="search" class="form-control" placeholder="{{ph}}">
         <span class="input-group-text bg-white">
           <button type="button" class="btn btn-close btn-lg" id="search-clear-btn">
             <span class="visually-hidden">{% translate "Clear the filter" %}</span>

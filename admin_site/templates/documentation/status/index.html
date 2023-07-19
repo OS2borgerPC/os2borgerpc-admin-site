@@ -1,19 +1,27 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block getting_started_active %}class="active"{% endblock %}
 
 {% block specific_content %}
-  <h1>Status</h1>
+  <h1>{% translate "Status" %}</h1>
   <p>
-    Når du logger ind i OS2borgerPC-admin bliver du præsenteret for status-billedet
-    for det site, som  din OS2borgerPC-bruger er tilknyttet. 
-    Hvis du har adgang til flere sites, skal du først vælge det site, du vil ind på.
+    {% blocktranslate trimmed %}
+    When you log in to the admin-site, you will be presented with the status screen
+    for the site that your OS2borgerPC user is associated with.
+    If you have access to multiple sites, you must first choose a site to access.
+    {% endblocktranslate %}
   </p>
-  <h2>Computere</h2>
+  <h2>{% translate "Computers" %}</h2>
   <p>
-    På denne liste vil du se info om alle computere for sitet, sorteret med nye/inaktive computere
-    <a href="{% url 'doc' 'computers/activating' %}">der venter på at blive aktiverede</a> øverst, og ellers efter
-    hvornår, de senest er set.
+    {% blocktranslate trimmed %}
+    On this list, you will be shown information about all computers for the site,
+    sorted with new/inactive computers
+    {% endblocktranslate %}
+    <a href="{% url 'doc' 'computers/activating' %}">{% translate "waiting to be activated" %} </a>
+    {% blocktranslate trimmed %}
+    at the top and otherwise by when they were last seen.
+    {% endblocktranslate %}
   </p>
-  <p>Du kan klikke på den enkelte computer for at se nærmere info om den.</p>
+  <p>{% translate "You can click on a particular computer to see mere information about it." %}</p>
 {% endblock %}

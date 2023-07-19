@@ -1,46 +1,58 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Gruppe-redigering: Stam-oplysninger og computere</h1>
+  <h1>{% translate "Editing groups: Master data and computers" %}</h1>
   <p>
-    Som standard når du klikker dig ind på en gruppe vil du få vist
-    gruppens stamdata og hvilke computere der er med i gruppen. Her kan du
-    ændre gruppens navn, beskrivelse og id, samt tilføje eller fjerne computere
-    fra gruppen. Ændringer foretaget på siden træder ikke i kræft før du
-    klikker på "Gem ændringer"-knappen i toppen af skærmbilledet.
+    {% blocktranslate trimmed %}
+    When you click on a group, you will by default be shown the group's
+    master data and any computers that belong to the group. Here you can
+    change the group's name and description as well as add or remove
+    computers from the group. The changes will not become permanent
+    until you've clicked on the button "Save changes" at the bottom of
+    the screen.
+    {% endblocktranslate %}
   </p>
-  <h2>Tilføj/fjern computere</h2>
+  <h2>{% translate "Add/remove computers" %}</h2>
   <p>
-    Til højre i skærmbilledet vises en liste over computere der er med i
-    gruppen. Du kan redigere medlemmerne af gruppen som beskrevet herunder.
+    {% blocktranslate trimmed %}
+    A list of computers that belong to the group is shown on the right side
+    of the screen. You can edit the members of the group as described below.
+    {% endblocktranslate %}
   </p>
-  <h3>Tilføj computer</h3>
+  <h3>{% translate "Add a computer" %}</h3>
   <p>
-    Du tilføjer computere ved at føre musen hen over "tilføj ny computer". Hvis
-    der findes computere som endnu ikke er medlem af gruppen vil de dukke op i
-    en liste under muse-markøren. Klik på en computer for at knytte computeren
-    til gruppen.
+    {% blocktranslate trimmed %}
+    You add computers by clicking on "Add a computer to the group". If there are
+    any computers that do not yet belong to the group, they will be shown in a list.
+    Click on a computer to add it to the group.
+    {% endblocktranslate %}
   </p>
-  <h3>Fjern computer</h3>
+  <h3>{% translate "Remove a computer" %}</h3>
   <p>
-    For at fjerne en computer skal du klikke på den i listen over
-    tilknyttede computere og vælge "Fjern computer".
+    {% blocktranslate trimmed %}
+    You remove a computer by clicking on the X to the right of the computer's
+    name in the list of computers that belong to the group.
+    {% endblocktranslate %}
   </p>
   <p>
-    Husk at ændringer til listen over computere ikke bliver permanente før du
-    har klikket på "Gem ændringer" øverst i skærmbilledet.
+    {% blocktranslate trimmed %}
+    Remember that changes to the list of computers do not become permanent
+    until you've clicked on "Save changes" at the bottom of the screen.
+    {% endblocktranslate %}
   </p>
   <p>
-    Bemærk at medlemskab af grupper kan have indflydelse på medlems-computernes
-    konfiguration. 
+    {% translate "Note that group membership can affect the computer's configuration." %}
   </p>
-  <h3>Bemærkning til brugere af Tænd/Sluk tidsplaner</h3>
+  <h3>{% translate "Notice for users of On/Off schedules" %}</h3>
   <p>
-    En computer kan kun være knyttet til en tidsplan ad gangen. Hvis gruppen er
-    knyttet til en tidsplan, og du tilføjer en eller flere computere, som er
-    knyttet til en anden tidsplan via en anden gruppe, vil de valgte computere
-    blive afvist i forbindelse med opdateringen af gruppen, når du klikker på
-    "Gem ændringer." Gyldige computere vil stadig blive tilføjet. Hvis en
-    eller flere computere afvises, vil siden oplyse om dette samt begrundelsen.
+    {% blocktranslate trimmed %}
+    A computer can only be associated with a single schedule at a time. If the
+    group is associated with a schedule and you add one or more computers that
+    are associated with a different schedule via a different group, the chosen
+    computers will be rejected as part of the update of the group when you click
+    "Save changes". Valid computers will still be added. If one or more computers
+    are rejected, the webpage will inform you of this as well as the reason.
+    {% endblocktranslate %}
   </p>
 {% endblock %}
