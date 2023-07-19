@@ -10,10 +10,10 @@
 
   {% if site_membership.site_user_type == site_membership.SITE_ADMIN or user.is_superuser %}
     <div class="listutils">
-      <button class="btn btn-link" data-bs-target="#addNewUser" type="button" data-bs-toggle="modal">
+      <a class="btn btn-link" href="{% url 'new_user' site.uid %}">
         <span class="material-icons">add</span>
         {% translate "Add new user" %}
-      </button>
+      </a>
     </div>
   {% endif %}
 
@@ -39,7 +39,11 @@
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
+      {% if selected_user %}
       <h2 class="divideheader">{% translate "Profile:" %} <em>{{ selected_user.username }}</em></h2>
+      {% else %}
+      <h2 class="divideheader">{% translate "Create new user" %}</h2>
+      {% endif %}
       {% include 'notification.html' %}
       <div>
         {% if site_membership.site_user_type != site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
@@ -67,27 +71,4 @@
   </div>
 
 
-  <!-- MODAL WINDOW FOR NEW USER REGISTRATION: -->
-
-  <div id="addNewUser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form action="{% url 'new_user' site.uid %}" name="create_user_form" id="create_user_form" method="post">
-          {% csrf_token %}
-          <div class="modal-header">
-            <h3 class="modal-title">{% translate "Add new user" %}</h3>
-            <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            {% include 'system/users/form.html' with form=create_form form_id='create_user_form' form_action=create_url %}
-          </div>
-          <div class="modal-footer">
-            {% translate "Create user" as create_name %}
-            <input type="submit" class="btn btn-primary" value="{{ create_name }}">
-            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 {% endblock %}
