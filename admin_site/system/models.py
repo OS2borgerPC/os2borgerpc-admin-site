@@ -746,18 +746,30 @@ class Script(AuditModelMixin):
         batch = Batch(site=site, script=self, name="")
         batch.save()
 
+        parameter_values = "["
+
         # Add parameters
         for i, inp in enumerate(self.ordered_inputs):
             if i < len(args):
                 value = args[i]
+                if inp.value_type == Input.PASSWORD:
+                    parameter_values += "*****, "
+                else:
+                    parameter_values += str(value) + ", "
                 if inp.value_type == Input.FILE:
                     p = BatchParameter(input=inp, batch=batch, file_value=value)
                 else:
                     p = BatchParameter(input=inp, batch=batch, string_value=value)
                 p.save()
 
+        if len(parameter_values) > 1:
+            parameter_values = parameter_values[:-2]
+        parameter_values += "]"
+
+        log_output = f"New job with arguments {parameter_values}"
+
         for pc in pc_list:
-            job = Job(batch=batch, pc=pc, user=user)
+            job = Job(batch=batch, pc=pc, user=user, log_output=log_output)
             job.save()
 
         return batch
@@ -837,10 +849,25 @@ Runs this script on several PCs, returning a batch representing this task."""
         batch.save()
         params = self.make_parameters(batch)
 
+        parameter_values = "["
+
         for p in params:
             p.save()
+            if p.file_value:
+                parameter_values += str(p.file_value) + ", "
+            elif p.input.value_type == Input.PASSWORD:
+                parameter_values += "*****, "
+            else:
+                parameter_values += str(p.string_value) + ", "
+
+        if len(parameter_values) > 1:
+            parameter_values = parameter_values[:-2]
+        parameter_values += "]"
+
+        log_output = f"New job with arguments {parameter_values}"
+
         for pc in pcs:
-            job = Job(batch=batch, pc=pc, user=user)
+            job = Job(batch=batch, pc=pc, user=user, log_output=log_output)
             job.save()
 
         return batch
