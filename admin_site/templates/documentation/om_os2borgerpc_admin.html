@@ -1,31 +1,42 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block doc_subtitle %}Om{% endblock %}
 
 {% block om_bibos_admin_active %}class="active"{% endblock %}
 
 {% block specific_content %}
-  <h1>OS2borgerPC</h1>
+  <h1>{% translate "OS2borgerPC" %}</h1>
   <p>
-    OS2borgerPC giver dig mulighed for at fjernadministre computere via
-    OS2borgerPC-administrationsinterfacet. I menuen til venstre kan du finde
-    dokumentation for de forskellige dele af systemet.
+    {% blocktranslate trimmed %}
+    OS2borgerPC enables you to remotely manage computers via the
+    OS2borgerPC administration interface. In the left-hand menu, you can
+    find documentation regarding the different parts of the system.
+    {% endblocktranslate %}
   </p>
-  <h3>Om</h3>
+  <h3>{% translate "About" %}</h3>
   <p>
-  OS2borgerPC-Admin er udviklet af <a href="http://www.magenta.dk">Magenta</a> i
-  samarbejde med bibliotekerne i Aarhus og Silkeborg.
+    {% translate "OS2borgerPC was developed by" %}
+     <a href="http://www.magenta.dk">Magenta</a>
+    {% translate "in collaboration with the libraries in Aarhus and Silkeborg." %}
   </p>
   <p>
-  OS2borgerPC er 100% open source og kan bruges og videregives i henhold til
-  betingelserne i version 3 af <a
-      href="https://www.gnu.org/licenses/gpl.html">Gnu General Public License</a>. 
-  Denne dokumentation kan anvendes og videregives i henhold til en <a
+    {% blocktranslate trimmed %}
+    OS2borgerPC is 100% Open Source and can be used and distributed in
+    accordance with the conditions in version 3 of the
+    {% endblocktranslate %}
+   <a
+      href="https://www.gnu.org/licenses/gpl.html">Gnu General Public License</a>.
+    {% translate "This documention can be used and distributed in accordance with a" %}
+   <a
       href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons
       Attribution ShareAlike License</a>.
   </p>
   <p>
-  Kildekoden til den nyeste tilgængelige version af OS2borgerPC-Admin kan altid
-  findes på <a href="https://github.com/OS2borgerPC/admin-site/">github</a>.
+    {% blocktranslate trimmed %}
+    The source code for the newest accessible version of OS2borgerPC can
+    always be found on
+    {% endblocktranslate %}
+   <a href="https://github.com/OS2borgerPC/">Github</a>.
   </p>
 {% endblock %}

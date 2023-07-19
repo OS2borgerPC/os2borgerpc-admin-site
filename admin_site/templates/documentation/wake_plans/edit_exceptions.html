@@ -1,43 +1,56 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Håndter undtagelser</h1>
+  <h1>{% translate "Handle exceptions" %}</h1>
   <p>
-    På siden til håndtering af tidsplans-undtagelser vil man til højre for
-    venstremenuen få vist en liste af tidsplans-undtagelser for det site, man er under. Man
-    kan klikke på navnet for den enkelte undtagelse for at redigere undtagelsen.
+    {% blocktranslate trimmed %}
+    On the page for handling schedule exceptions, a list of schedule exceptions
+    for the chosen site will be shown to the right of the left-hand menu. You
+    can click on the name of a particular exception in order to edit it.
+    {% endblocktranslate %}
   </p>
   <p>
-    Der findes to typer af undtagelser: Ændrede åbningstider og lukkedage.
-    De to typer har forskellige ikoner i listen over undtagelser. En undtagelse
-    med ændrede åbningstider ændrer tænd- og sluk-tidspunkterne for den valgte dato
-    eller periode. Ikonet er en åben dør. En undtagelse med lukkedage sætter de
-    tilknyttede maskiner til at være konstant slukkede den valgte dato eller periode.
-    Ikonet er en lukket dør.
+    {% blocktranslate trimmed %}
+    There are two types of exceptions: altered opening hours and closed days.
+    The two types have different icons in the list of exceptions. An
+    exception with altered opening hours changes the on and off times for the
+    chosen date or period. The icon is an open door. An exception with closed
+    days sets the associated devices to be constantly off during the chosen
+    date or period. The icon is a closed door.
+    {% endblocktranslate %}
   </p>
   <p>
-    Til højre vises redigeringsinterfacet for den valgte undtagelse. Hvis ikke der
-    er oprettet nogen undtagelser for det site, man er under, vises interfacet til
-    oprettelse af en undtagelse med ændrede åbningstider.
+    {% blocktranslate trimmed %}
+    The editing interface for the chosen exception is shown to the right. If no
+    exceptions have been created for the chosen site, the interface for creating
+    an exception with altered opening hours will be shown instead.
+    {% endblocktranslate %}
   </p>
   <p>
-    Som standard når man klikker sig ind på en undtagelse, vil man få vist
-    undtagelsens indstillinger. Her kan man ændre undtagelsens navn og den periode, hvor den er gældende.
-    En enkelt dato vælges ved at vælge samme fra og til dato. Hvis undtagelsen er af typen
-    ændrede åbningstider, vil man også kunne ændre tænd- og sluk-tidspunkterne, der er gældende
-    for undtagelsen. Ændringer foretaget på siden træder ikke i kraft, før du
-    klikker på "Gem ændringer"-knappen i bunden af skærmbilledet.
+    {% blocktranslate trimmed %}
+    By default when you click on an exception, you will be shown the settings for
+    the exception. Here, you can change the name of the exception and the period where
+    it applies. A single date is chosen by choosing the same from and to date. If
+    the exception has the type altered opening hours, it will also be possible to
+    change the on and off time that applies during the exception. Changes do not
+    become permanent until you have clicked on "Save changes" at the bottom of the screen.
+    {% endblocktranslate %}
   </p>
   <p>
-    Bemærk at hvis man ændrer indstillingerne for en undtagelse, der benyttes af en flere aktive
-    tidsplaner, vil tidsplanerne også blive opdateret, når man trykker på "Gem ændringer."
+    {% blocktranslate trimmed %}
+    Note that if you change the settings for an exception that is being used by one or
+    more schedules, those schedules will also be updated when you click on "Save changes."
+    {% endblocktranslate %}
   </p>
   <p>
-    Hvis man ønsker at oprette en ny undtagelse, skal man klikke på "Tilføj ændrede åbningstider"
-    eller "Tilføj lukning" oven over listen med tidsplaner. Dette åbner et interface, hvor
-    man skal udfylde navn og indstillinger for den valgte type undtagelse. Når man klikker på
-    gem, vil man blive viderestillet til redigeringssiden for den nyoprettede
-    undtagelse, hvor man kan fortsætte med at ændre i indstillingerne.
+    {% blocktranslate trimmed %}
+    If you wish to create a new exception, you must click on "Add altered opening hours"
+    or "Add closed days" at the top of the list of exceptions. This opens an interface
+    where you must enter the name and settings for the chosen type of exception. When
+    you click on "Create", you will be redirected to the editing interface for the newly
+    created exception, where you can continue to edit the settings.
+    {% endblocktranslate %}
   </p>
 
 {% endblock %}

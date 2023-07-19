@@ -1,47 +1,62 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Tidsplans-redigering: Tilknyttede grupper</h1>
+  <h1>{% translate "Editing schedules: Associated groups" %}</h1>
   <p>
-    Redigeringsinterfacet for en tidsplan viser en liste over grupper, der er med i
-    tidsplanen til højre i skærmbilledet. En tidsplan er gældende for alle computere
-    i de grupper, som er tilknyttet tidsplanen. En tidsplan uden tilknyttede grupper har ingen effekt.
-    Du kan redigere medlemmerne af tidsplanen som beskrevet herunder.
+    {% blocktranslate trimmed %}
+    The editing interface for a schedule shows a list of groups that are
+    included in the schedule on the right side of the screen. A schedule
+    applies to all computers in the groups that are associated with the
+    schedule. A schedule with no associated groups has no effect. You can
+    edit the members of the schedule as described below.
+    {% endblocktranslate %}
   </p>
-  <h2>Tilføj gruppe</h2>
+  <h2>{% translate "Add a group" %}</h2>
   <p>
-    Du tilføjer grupper ved at føre musen hen over "Tilføj gruppe til tidsplan". Hvis
-    der findes grupper, som endnu ikke er medlem af tidsplanen, vil de dukke op i
-    en liste under muse-markøren. Klik på en gruppe for at knytte gruppen
-    til tidsplanen.
-  </p>
-  <p>
-    Bemærk at en given gruppe/computer ikke kan være knyttet til mere end en tidsplan ad gangen.
-    Hvis du tilføjer en gruppe, som allerede er med i en anden tidsplan, vil den blive fjernet
-    fra den forrige tidsplan.
-  </p>
-  <p>
-    Hvis du forsøger at tilføje en gruppe, som indeholder en eller flere computere,
-    der er knyttet til en anden tidsplan via en anden gruppe, vil den valgte gruppe blive
-    afvist i forbindelse med opdateringen af tidsplanen, når der klikkes på "Gem ændringer."
-    Gyldige grupper vil stadig blive tilføjet. Hvis en eller flere grupper afvises, vil
-    siden oplyse om dette samt begrundelsen.
-  </p>
-  <h2>Fjern gruppe</h2>
-  <p>
-    For at fjerne en gruppe skal du klikke på krydset ud for gruppen i listen over
-    tilknyttede grupper.
+    {% blocktranslate trimmed %}
+    You add groups by clicking on "Add group to the schedule". If there are
+    any groups that do not yet belong to the schedule, they will be shown in
+    a list. Click on a group to add the group to the schedule.
+    {% endblocktranslate %}
   </p>
   <p>
-    Husk at ændringer til listen over grupper ikke bliver permanente, før du
-    har klikket på "Gem ændringer" nederst i skærmbilledet.
+    {% blocktranslate trimmed %}
+    Note that a given group/computer can only belong to a single schedule at a time.
+    If you add a group that already belongs to a different schedule, it will be removed
+    from the previous schedule.
+    {% endblocktranslate %}
   </p>
   <p>
-    Bemærk at hvis der senere tilføjes computere til en gruppe, som er medlem af en tidsplan,
-    vil disse computere også blive knyttet til tidsplanen. Hvis de computere, som forsøges tilføjet,
-    allerede er knyttet til en anden tidsplan via en anden gruppe, vil de blive afvist i forbindelse
-    med opdateringen af gruppen, når der klikkes på "Gem ændringer" på grupperedigeringsinterfacet.
-    Gyldige computere vil stadig blive tilføjet. Hvis en eller flere computere afvises, vil
-    siden oplyse om dette samt begrundelsen.
+    {% blocktranslate trimmed %}
+    If you attempt to add a group, which contains one or more computers that already
+    belong to a different schedule via a different group, the chosen group will
+    be rejected during the update of the schedule when you click "Save changes".
+    Valid groups will still be added. If one or more groups are rejected, the page
+    will inform you of this along with the reason.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Remove a group" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    In order to remove a group, you must click on the X to the right of the group
+    in the list of associated groups.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    Be aware that changes to the list of groups do not become permanent until
+    you have clicked on "Save changes" at the bottom of the screen.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    Note that if you later add computers to a group that belongs to a schedule, those
+    computers will also be associated with the schedule. If the computers that you
+    attempt to add already belong to a different schedule via a different group, they
+    will be rejected during the update of the group when you click "Save changes" on
+    the group editing interface. Valid computers will still be added. If one or more
+    computers are rejected, the page will inform you of this along with the reason.
+    {% endblocktranslate %}
   </p>
 {% endblock %}

@@ -1,83 +1,124 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_content %}
-  <h1>Konfigurationer</h1>
+  <h1>{% translate "Configurations" %}</h1>
 
   <p class="alert alert-danger">
-    Slet eller rediger ikke konfigurationer, medmindre du er sikker på, hvad du gør!
+    {% translate "Do not delete or edit configurations unless you know what you are doing!" %}
   </p>
 
   <p class="alert alert-warning">
-    Konfigurationer er funktionalitet henvendt primært til teknisk fejlfinding, systemadministratorer og scriptudviklere, og derfor formentlig ikke relevant for de fleste.
+    {% blocktranslate trimmed %}
+    Configurations are functionality aimed primarily at technical troubleshooting, system administrators
+    and script developers and thus most likely not relevant for most people.
+    {% endblocktranslate %}
   </p>
 
   <p>
-    Konfigurationer bruges til at udveksle information mellem admin-sitet og de tilknyttede computere, i begge
-    retninger.<br/>
-    Dvs. det er både muligt fra adminsitet at specificere en værdi som en eller flere computere så vil modtage,
-    og ligeledes sender en computer værdier til adminsitet.
+    {% blocktranslate trimmed %}
+    Configurations are used to exchange information between the admin-site and the registered
+    computers in both directions.
+    {% endblocktranslate %}
+    <br/>
+    {% blocktranslate trimmed %}
+    In other words, it is possible to use the admin-site to specify a value that one or more computers will
+    then receive and, similarly, a computer also sends values to the admin-site.
+    {% endblocktranslate %}
   </p>
-  <p>Generelle eksempler på anvendelsesmuligheder:</p>
+  <p>{% translate "General examples of possible uses" %}:</p>
   <ul>
-    <li>Computeren sender bl.a. information om dens hostname, netværkskortets MAC-adresse og hvor mange opdateringer og sikkerhedsopdateringer,
-      der er tilgængelig for den fra Ubuntu.<br>
-      Det kan i nogle tilfælde være relevant for systemadministratorer.</li>
-    <li>Computeren sender ligeledes information om den kører BorgerPC eller BorgerPC Kiosk, samt de specifikke versioner heraf.<br/>
-      Det kan i nogle tilfælde være relevant at vide ift. fejlfinding.</li>
-    <li>Man ønsker ifm. udviklingen af et script at sende konfiguration dertil via adminsitet, som så kan opdateres uden genkørsel af
-      scripts, eller som kan variere ml. grupper eller computere.</li>
-      Det kan i nogle tilfælde være relevant at vide for scriptudviklere.</li>
+    <li>{% blocktranslate trimmed %}
+      Among other things, the computer sends information about its hostname, the MAC-address of its network card
+      and the number of updates and security updates that are available from Ubuntu. {% endblocktranslate %}
+      <br>
+      {% translate "This information can sometimes be relevant for system administrators." %}</li>
+    <li>{% blocktranslate trimmed %}
+      The computer also sends information about whether it is running BorgerPC or BorgerPC Kiosk along with
+      the specific version.
+      {% endblocktranslate %}
+      <br>
+      {% translate "This information can sometimes be relevant during troubleshooting." %}</li>
+    <li>{% blocktranslate trimmed %}
+      As part of the development of a script, one might wish to set the configuration for the script via the admin-site,
+      which allows the configuration to be updated without rerunning the script, and also allows the configuration to
+      vary between groups and computers. {% endblocktranslate %}
+      <br>
+      {% translate "This can sometimes be relevant to know for script developers." %}</li>
   </ul>
 
   <p>
-    Langt de fleste konfigurationer styres af adminsitet fremfor på den enkelte maskine.
-    Dvs. hvis du ændrer værdien på den enkelte maskine, vil den oftest blive ændret tilbage til hvad adminsitet siger ved
-    næste tjek-ind.
+    {% blocktranslate trimmed %}
+    The majority of configurations are controlled by the admin-site rather than the individual machine.
+    This means that if you change a value on an individual machine, it will typically be changed back to the value
+    listed on the admin-site during the next check-in. {% endblocktranslate %}
   </p>
 
-  <h3>Teknisk information til systemadministratorer</h3>
+  <h3>{% translate "Technical information for system administrators" %}</h3>
 
-  <h4>Håndtering af konfigurationer</h4>
+  <h4>{% translate "Handling configurations" %}</h4>
 
   <p>
-    Klik på knappen "Tilføj konfiguration" for at tilføje en ny konfigurationsnøgle/værdi.<br/>
-    For rette eller slette en værdi, skal du klikke på <strong>Rediger</strong> eller <strong>Slet</strong> ud for den enkelte nøgle.
+    {% blocktranslate trimmed %}
+    Click the button "Add configuration" to add a new configuration key/value.
+    {% endblocktranslate %}
+    <br/>
+    {% translate "Edit"|bold as edit %}
+    {% translate "Delete"|bold as delete %}
+    {% blocktranslate trimmed %}
+    In order to edit or delete a value, you must click on {{ edit }} or {{ delete }} to the
+    right of the individual key.
+    {% endblocktranslate %}
   </p>
 
-  <h4>Konfigurationer på forskellige niveauer</h4>
+  <h4>{% translate "Configurations at different levels" %}</h4>
 
-  <p>Konfigurationer findes på tre niveauer:</p>
+  <p>{% translate "Configurations exist at three levels" %}:</p>
 
-  <p><strong>1. Site-konfigurationer</strong></p>
+  <p><strong>1. {% translate "Site configurations" %}</strong></p>
 
   <p>
-    Disse konfigurationsparametre gælder for alle computere, der er tilknyttet det valgte site.
+    {% translate "These configuration parameters are applied to all computers that belong to the chosen site." %}
   </p>
 
   <p>
-    Site konfigurationerne kan overstyres via tilpassede konfigurationsnøgler/værdier
-    på grupper og på de enkelte computere.
+    {% blocktranslate trimmed %}
+    The site configurations can be overwritten via adjusted configuration keys/values
+    on groups and individual computers. {% endblocktranslate %}
   </p>
 
-  <p><strong>2. Gruppe-konfigurationer</strong></p>
+  <p><strong>2. {% translate "Group configurations" %}</strong></p>
 
   <p>
-    Ændringer for konfigurationer på en gruppe vil påvirke alle
-    computere der er medlem af gruppen, <em>med mindre</em> den pågældende
-    konfigurationsnøgle er blevet special-tilpasset på den enkelte computer.
+    {% translate "unless"|italic as unless %}
+    {% blocktranslate trimmed %}
+    Changes to the configurations for a group will affect all computers that belong to
+    that group {{ unless }} that particular configuration key has been specially adjusted
+    for the individual computer.
+    {% endblocktranslate %}
   </p>
 
-  <p><strong>3. Computer-konfigurationer</strong></p>
+  <p><strong>3. {% translate "Computer configurations" %}</strong></p>
 
   <p>
-    Konfigurationer angivet på en computer vil altid tage præcedens over
-    site-konfiguration eller konfiguration på grupper som computeren er medlem af.
+    {% blocktranslate trimmed %}
+    Configurations set at the computer level will always take precedence over site
+    configurations or configurations for groups that the computer belongs to.
+    {% endblocktranslate %}
   </p>
 
-  <h4>Betydningen af de indbyggede konfigurationer</h4>
+  <h4>{% translate "The meaning of the built-in configurations" %}</h4>
 
   <p class="alert alert-info">
-    Alle værdier uden _ foran bestemmes af adminsitet, mens værdier med _ bestemmes af computeren / klienten.<br/>
+    {% blocktranslate trimmed %}
+    All values without _ in front are controlled by the admin-site while values with _ are controlled
+    by the computer / the client.
+    {% endblocktranslate %}
+    <br/>
+    {% blocktranslate trimmed with version="os2borgerpc_version"|bold %}
+    This means that if one were to change e.g. {{ version }} on the machine, then the value would be overwritten
+    during the next check-in with the admin-site. {% endblocktranslate %}
     Det vil i praksis sige, at ændrer man eks. <strong>os2borgerpc_version</strong> på maskinen, så vil den blive overskrevet efter næste
     tjek-ind med adminsitet.
   </p>
@@ -85,130 +126,114 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Navn</th>
-        <th>Betydning</th>
-        <th>Kommentar</th>
+        <th>{% translate "Name" %}</th>
+        <th>{% translate "Meaning" %}</th>
+        <th>{% translate "Comment" %}</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>_os2borgerpc.client_version</td>
-        <td>Versionen på OS2borgerPC-klienten</td>
-        <td>Klienten er den software der kører på maskinen, som er i kontakt med adminsitet</td>
+        <td>{% translate "The version of the OS2borgerPC-client" %}</td>
+        <td>{% translate "The client is the particular software on the machine that communicates with the admin-site" %}</td>
       </tr>
       <tr>
         <td>_os_name</td>
-        <td>Navnet på operativsystemet</td>
+        <td>{% translate "The name of the operating system" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>_os_release</td>
-        <td>Versionen af operativsystemet</td>
+        <td>{% translate "The version of the operating system" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>admin_url</td>
-        <td>Adressen til serveren der tjekkes ind hos</td>
+        <td>{% translate "The address of the server where the machine checks in" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>distribution</td>
-        <td>Navnet på operativsystemet</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>fresh_install</td>
-        <td>-</td>
-        <td>Under udfasning</td>
-      </tr>
-      <tr>
-        <td>gateway</td>
-        <td>Under udfasning: Blev brugt hvis man opsatte en gateway som mellemled ml. maskinen og adminsitet</td>
+        <td>{% translate "The name of the operating system" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>hostname</td>
-        <td>Maskinens hostname</td>
-        <td>Sættes pt. kun ifm. installationen</td>
+        <td>{% translate "The machine's hostname" %}</td>
+        <td>{% translate "Is currently only set during the registration" %}</td>
       </tr>
       <tr>
       <tr>
         <td>job_timeout</td>
-        <td>Hvor længe klienten venter på færdiggørelsen af jobs, angivet i sekunder</td>
-        <td>Hvis job_timeout løber ud stoppes processen. Det er brugbart hvis noget i systemet hænger,
-          såsom at pakkesystemet eller et script forgæves forsøger at få input fra brugeren
+        <td>{% translate "How long the client waits for a job to finish in seconds" %}</td>
+        <td>{% blocktranslate trimmed %}
+          If job_timeout is exceeded, the process is stopped.
+          This is useful if something is stuck, such as a process futilely waiting for input
+          {% endblocktranslate %}
         </td>
       </tr>
       <tr>
-        <td>mac</td>
-        <td>Netværkskortets MAC-adresse. Det er LAN-kortets MAC-adresse, der vælges, også hvis der registreres over Wi-Fi.</td>
-        <td></td>
-      </tr>
-      <tr>
         <td>os2_product</td>
-        <td>Identificerer om maskinen er en OS2borgerPC eller en OS2borgerPC Kiosk</td>
+        <td>{% translate "Indicates whether the machine is an OS2borgerPC or a OS2borgerPC Kiosk" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>os2borgerpc_version</td>
-        <td>Versionen på OS2borgerPC</td>
-        <td></td>
+        <td>{% translate "The version of the OS2borgerPC-image that was installed" %}</td>
+        <td>{% translate "Unless the machine is reinstalled, this number does not change" %}</td>
       </tr>
       <tr>
         <td>security_updates</td>
-        <td>Antallet af sikkerheds pakke-opdateringer fra Ubuntu, der er tilgængelige for maskinen</td>
+        <td>{% translate "The number of security updates from Ubuntu that are available" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>site</td>
-        <td>Hvilket site maskinen er tilknyttet</td>
+        <td>{% translate "The site that the machine belongs to" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>updates</td>
-        <td>Antallet af almindelige pakke-opdateringer fra Ubuntu, der er tilgængelige for maskinen</td>
+        <td>{% translate "The number of regular updates from Ubuntu that are available" %}</td>
         <td></td>
-      </tr>
-      <tr>
-        <td>uid</td>
-        <td>Maskinens UID</td>
-        <td>Adminsitet bruger denne til at identificere maskinen</td>
       </tr>
     </tbody>
   </table>
 
-  <h3>Teknisk information til scriptudviklere</h3>
+  <h3>{% translate "Technical information for script developers" %}</h3>
 
-  <h4>Sådan udveksles information</h4>
+  <h4>{% translate "How information is exchanged" %}</h4>
 
-  <h5>Site <span class='material-icons'>arrow_right_alt</span> Computer</h5>
+  <h5>Site <span class='material-icons'>arrow_right_alt</span> {% translate "Computer" %}</h5>
 
-  <p>Du opretter på et Site, en Gruppe eller en Computer en konfigurationsværdi, og den vil automatisk blive overført til
-  computeren, næste gang computeren tjekker ind omkring, om der er nye scripts, den skal køre.<p>
+  <p>{% blocktranslate trimmed %}
+      You create a configuration value for a Site, a Group or a computer and it will automatically be transferred
+      to the relevant computer(s) during their next check-in with the admin-site.
+      {% endblocktranslate %}<p>
 
-  <h5>Computer <span class='material-icons'>arrow_right_alt</span> Site</h5>
+  <h5>{% translate "Computer" %} <span class='material-icons'>arrow_right_alt</span> Site</h5>
 
-  <p>Fra en terminal på computeren, eller fra et script, kan du benytte disse programmer:</p>
+  <p>{% translate "From a terminal on the computer or a script, you can use these programs" %}:</p>
   <table class="table table-hover">
     <thead>
-      <tr><th>Navn</th><th>Funktionalitet</th><th>Brugseksempel</th></tr>
+      <tr><th>{% translate "Name" %}</th><th>{% translate "Function" %}</th><th>{% translate "Usage example" %}</th></tr>
     </thead>
     <tbody>
       <tr>
         <td>get_os2borgerpc_config</td>
-        <td>Henter værdien af en konfigurationværdi</td>
+        <td>{% translate "Retrieves the value of a configuration value" %}</td>
         <td>get_os2borgerpc_config site<br/> <br/>
-          Får fat i UID'et på det site, computeren er tilknyttet.</td>
+          {% translate "Retrieves the UID of the site where the computer is registered." %}</td>
       </tr>
       <tr>
         <td>set_os2borgerpc_config</td>
-        <td>Sætter værdien af en konfigurationværdi</td>
-        <td>set_os2borgerpc_config borger ja<br/> <br/>
-          Opretter en ny konfiguration kaldet borger, og sætter den til 'ja'</td>
+        <td>{% translate "Sets the value of a configuration value" %}</td>
+        <td>set_os2borgerpc_config {% translate "citizen yes" %}<br/> <br/>
+          {% translate "Creates a new configuration value with the name citizen and the value 'yes'" %}</td>
       </tr>
     </tbody>
   </table>
 
-  <p>Ovenstående programmer interagerer i praksis med filen /etc/os2borgerpc/os2borgerpc.conf</p>
+  <p>{% translate "In practice, the above programs interact with the file" %} /etc/os2borgerpc/os2borgerpc.conf</p>
 
 {% endblock %}

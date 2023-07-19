@@ -3224,13 +3224,7 @@ class DocView(TemplateView, LoginRequiredMixin):
             raise Http404
 
         # Try <docname>.html and <docname>/index.html
-        if self.request.user.bibos_profile.language == "sv":
-            name_templates = [
-                "documentation_sv/{0}.html",
-                "documentation_sv/{0}/index.html",
-            ]
-        else:
-            name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
+        name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
 
         templatename = None
         for nt in name_templates:
@@ -3252,7 +3246,7 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         # Get the links to the pdf files for the chosen language
         pdf_href = {
-            "wake_plans": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            "wake_plan_user_guide": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
             + "/static/docs/Wake_plan_user_guide",
             "os2borgerpc_installation_guide": "https://github.com/OS2borgerPC/image/raw/development/"
             + "docs/OS2BorgerPC_installation_guide",
@@ -3275,10 +3269,7 @@ class DocView(TemplateView, LoginRequiredMixin):
                 break
 
         # Add a submenu if it exists
-        if self.request.user.bibos_profile.language == "sv":
-            submenu_template = "documentation_sv/" + docnames[0] + "/__submenu__.html"
-        else:
-            submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
+        submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
         if self.template_exists(submenu_template):
             context["submenu_template"] = submenu_template
 

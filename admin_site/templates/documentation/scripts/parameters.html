@@ -1,41 +1,84 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_content %}
-  <h1>Redigering af Script-inputparametre</h1>
+  <h1>{% translate "Editing Script arguments" %}</h1>
   <p>
-    Script-inputparametre gør det muligt at angive inputparametre når et script skal
-    køres. Der er fire typer inputparametre man kan vælge i mellem:
+    {% blocktranslate trimmed %}
+    The script arguments make it possible to supply input parameters
+    when a script needs to be run. One can choose between seven different types
+    of input parameters:
+    {% endblocktranslate %}
     <ul>
       <li>
-        <strong>Streng</strong>:
-        Giver mulighed for at angive en tekst-streng, for eksempel en sti eller
-        en titel.
+        <strong>{% translate "String" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a text string such as a file path or a title.
+        {% endblocktranslate %}
       </li>
       <li>
-        <strong>Heltal</strong>:
-        Giver mulighed for at angive et positivt eller negativt heltal
+        <strong>{% translate "Integer" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a positive or negative integer
+        {% endblocktranslate %}
       </li>
       <li>
-        <strong>Dato</strong>:
-        Giver mulighed for at angive en dato og et tidspunkt
+        <strong>{% translate "Date" %}</strong>:
+        {% translate "Makes it possible to supply a date" %}
       </li>
       <li>
-        <strong>Fil</strong>:
-        Giver mulighed for at uploade en fil der vil blive sendt med når
-        scriptet skal afvikles. Scriptet vil modtage Fil-parametre som en sti
-        i det lokale filsystem der peger på filen.
+        <strong>{% translate "File" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to upload a file that will be passed along when
+        the script is being executed. The script will receive the file parameter
+        as a file path pointing at the file in the local file system.
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Boolean" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a true/false value. The script will receive
+        the value as either the string "True" or the string "False".
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Time" %}</strong>:
+        {% translate "Makes it possible to supply a time of day" %}
+      </li>
+      <li>
+        <strong>{% translate "Password" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to supply a password string. This type of parameter
+        functions like the regular string parameter except that the chosen
+        password will be hidden in the log output and all other places
+        where the chosen input parameters are displayed.
+        {% endblocktranslate %}
       </li>
     </ul>
   </p>
   <p>
-    For at tilføje en input-parameter til et script skal man klikke på knappen
-    "tilføj parameter". Dette vil tilføje en ny række i listen over inputparametre,
-    hvor man kan udfylde navn og type for inputparametren. Hvis man ønsker at fjerne
-    en parameter skal man klikke på "fjern"-linket til højre i listen.
+    {% translate "String"|bold as str %}
+    {% translate "Integer"|bold as int %}
+    {% translate "Date"|bold as date %}
+    {% translate "Time"|bold as time %}
+    {% blocktranslate trimmed %}
+    In order to add an argument to a script, you must click on the button
+    "Add arguments". This will add a new row to the list of arguments where
+    you must fill out the name and type for the argument. It is also possible
+    to specify a default value for the argument, which will be entered by default
+    when running the script or adding it as an associated script. Only arguments
+    of the types {{str}}, {{int}}, {{date}} and {{time}} can have default values. Lastly,
+    an argument can be set as required or not. Required parameters must be supplied
+    when running the script whereas non-required parameters can be left blank.
+    Boolean parameters cannot be required. If you wish to remove an argument, you
+    must click on "Remove" to the right in the list.
+    {% endblocktranslate %}
   </p>
   <p>
-    Man skal klikke på knappen "Gem ændringer" øverst på
-    script-redigerings-siden før ændringer foretaget til inputparametre træder i
-    kraft.
+    {% blocktranslate trimmed %}
+    You must click on the button "Save changes" at the bottom of the script
+    editing interface before changes to script arguments are made permanent.
+    {% endblocktranslate %}
   </p>
 {% endblock %}
