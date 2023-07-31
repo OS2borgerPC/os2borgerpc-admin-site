@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import secrets
 from datetime import datetime
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -13,7 +14,7 @@ from django.utils import translation
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeletionMixin, UpdateView, DeleteView
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
 
@@ -46,6 +47,7 @@ from account.models import (
 )
 
 from system.models import (
+    APIKey,
     AssociatedScriptParameter,
     ConfigurationEntry,
     ImageVersion,
@@ -315,7 +317,7 @@ class SiteDetailView(SiteView):
 
 class SiteSettings(UpdateView, SiteView):
     form_class = SiteForm
-    template_name = "system/site_settings.html"
+    template_name = "system/site_settings/site_settings.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -341,8 +343,95 @@ class SiteSettings(UpdateView, SiteView):
         return response
 
 
-class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
+class TwoFactor(SiteView, SiteMixin):
     template_name = "system/site_two_factor_pc.html"
+
+class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
+    # form_class = ?
+    template_name = "system/site_settings/api_keys/api_keys.html"
+    fields = "__all__"
+
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super(APIKeyUpdate, self).get_context_data(**kwargs)
+
+        context["api_keys"] = self.object.apikeys.all()
+
+        return context
+
+    # def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        # TODO: We need the value for the comment as well! So we need a form submission? Should it be form_valid after
+        # all, then?
+        new_description = request.POST["description"]
+
+        APIKey.objects.filter(id=kwargs["pk"]).update(description=new_description)
+
+        return HttpResponse("OK")
+
+
+class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
+    model = APIKey
+    fields = "__all__"
+    template_name = "system/site_settings/api_keys/partials/list.html"
+
+    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super(APIKeyCreate, self).get_context_data(**kwargs)
+
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        context["api_keys"] = APIKey.objects.filter(site=site)
+
+        return context
+
+    # def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        # Do basic method
+        # kwargs["updated"] = True
+        response = self.get(request, *args, **kwargs)
+
+        # Handle saving of data
+        super(APIKeyCreate, self).post(request, *args, **kwargs)
+
+        # Generate an API Key
+        KEY_LENGTH = 75
+        key = secrets.token_urlsafe(KEY_LENGTH)
+        while APIKey.objects.filter(key=key).count() > 0:
+            key = secrets.token_urlsafe(KEY_LENGTH)
+
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        APIKey.objects.create(key=key, site=site)
+
+        return response
+
+
+# class APIKeyDelete(DeleteView, SuperAdminOrThisSiteMixin):
+class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
+    model = APIKey
+    template_name = "system/site_settings/api_keys/partials/list.html"
+
+    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super().get_context_data(**kwargs)
+
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        context["api_keys"] = APIKey.objects.filter(site=site)
+
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        # TODO: Verify that SuperAdminOrThisSiteMixin successfully validates the request user before this is called!
+        # ...otherwise skip that mixin and write a new mixin for that purpose, or, more temporarily, handle it here?
+
+        APIKey.objects.get(id=kwargs["pk"]).delete()
+
+        return render(
+            request,
+            "system/site_settings/api_keys/partials/list.html",
+            self.get_context_data(),
+        )
 
 
 class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
@@ -514,8 +603,7 @@ class AdminTwoFactorBackupTokens(otp_views.BackupTokensView, SuperAdminOrThisSit
         return redirect(success_url)
 
 
-# Now follows all site-based views, i.e. subclasses
-# of SiteView.
+# Now follows all site-based views, i.e. subclasses of SiteView.
 class JobsView(SiteView):
     template_name = "system/jobs/site_jobs.html"
 
@@ -1251,7 +1339,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
+class PCsView(SelectionMixin, SiteView):
     """If a site ha no computers it shows a page indicating that.
     If the site has at least one computer it redirects to that."""
 

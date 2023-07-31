@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="/static/js/configlist.js"></script>
+  <script type="text/javascript" src="/static/js/configlist.js"></script>
 {% endblock %}
 
 {% block specific_content %}
@@ -19,28 +19,43 @@
       <!-- The tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="settings-tab" href="#settings" data-bs-toggle="tab" role="tab" aria-controls="settings" aria-selected="true">{% translate "Settings" %}</a>
+          <a class="nav-link active" id="settings-tab" href="#settings" data-bs-toggle="tab" role="tab" aria-controls="settings" aria-selected="true">
+            {% translate "Settings" %}
+          </a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">{% translate "Configurations" %}</a>
+          <a class="nav-link" id="configs-tab" href="#configs" data-bs-toggle="tab" role="tab" aria-controls="configs" aria-selected="false">
+            {% translate "Configurations" %}
+          </a>
         </li>
       </ul>
 
     <form method="post" name="site_settings_form" id="site_settings_form">
       {% csrf_token %}
+
+        <!-- Site Settings -->
       <div class="tab-content pb-4" style="border-radius: .33rem .33rem 0 0;">
 
         <div id="settings" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="settings-tab">
 
           <div>
+              <p class="mb-3 fs-5">
+                <a href="{% url 'api_keys' slug=site.url %}">
+                  <span class='material-icons'>vpn_key</span>
+                  Manage API keys
+                </a>
+              </p>
+
               {{ form|crispy }}
               <fieldset class="my-4"></fieldset>
           </div>
         </div>
 
+        <!-- Configs -->
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
 
-            {% csrf_token %}
+          {% comment %} TODO: Don't think this is needed because we set a csrf_token for the form above, so we don't need one in
+          each tab as well, since it's a single form? {% csrf_token %} {% endcomment %}
 
             {% include 'system/configs/list.html' with entries=site_configs cnf_id='site_configs' %}
 
@@ -48,6 +63,7 @@
             {% include 'system/configs/templates.html' %}
 
         </div>
+
         <fieldset class="mt-4">
           <button class="btn btn-primary me-3" form="site_settings_form" type="submit">{% translate "Save changes" %}</button>
           <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>

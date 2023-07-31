@@ -62,6 +62,26 @@ var BibOS
       {
         this.setupDocumentationBackLinks()
       }
+
+      // TODO: Mostly an experiment for how we could link directly to a specific tab, specifically relevant if creating
+      // an API key, because if they're supposed to be globally unique we can't just create it in JS unless we send the
+      // machine a list of all valid keys first ( xD ). So in other words we need to actually send the request to the
+      // server to generate it, and reload the page. And then you end up on site settings by default. Not ideal.
+      // This *could* be used to make other tab forms redirect to whatever the current page is as well, after pressing "Save" on
+      // the form.
+      // Alternately we don't make API keys globally unique but just site unique, but then people need to provide the
+      // site in every request as well?
+      // After this change, this example URL should go directly to site configs. It also stays focused, though, which
+      // should be removed if we decide to go with this solution
+      // http://localhost:9999/site/magenta/settings/#configs-tab
+      // In other words you trigger it based off the ID of the button activating it, rather than the ID of the tab
+      // itself.
+      if (window.location.hash) {
+        var someTabTriggerEl = document.querySelector(window.location.hash)
+        var tab = new bootstrap.Tab(someTabTriggerEl)
+        tab.show()
+      }
+
     },
     setupDocumentationBackLinks: function() {
       var ref = document.referrer || ''
