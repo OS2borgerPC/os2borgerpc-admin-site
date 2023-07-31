@@ -114,7 +114,7 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
+    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image_versions' site_uid=site.url %}">
       <span class="material-icons"> cloud_download </span> {% translate "Versions" %}
     </a>
     <hr>

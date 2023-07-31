@@ -1332,3 +1332,17 @@ class Citizen(models.Model):
                 fields=["citizen_id", "site"], name="unique_citizen_per_site"
             ),
         ]
+
+
+class APIKey(models.Model):
+    key = models.CharField(verbose_name=_("key"), max_length=100, unique=True)
+    description = models.CharField(
+        verbose_name=_("description"), max_length=100, null=True, blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name=_("created"), editable=False, auto_now_add=True
+    )
+    site = models.ForeignKey(Site, related_name="apikeys", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.key

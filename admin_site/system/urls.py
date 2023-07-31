@@ -5,6 +5,9 @@ from django.views.generic import RedirectView
 
 from system.views import (
     AdminIndex,
+    APIKeyCreate,
+    APIKeyDelete,
+    APIKeyUpdate,
     ConfigurationEntryCreate,
     ConfigurationEntryDelete,
     ConfigurationEntryUpdate,
@@ -62,7 +65,6 @@ from system.views import (
     UserUpdate,
 )
 
-from django.urls import include, path
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -131,7 +133,7 @@ urlpatterns = [
     re_path(
         r"^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/delete/",
         ScriptDelete.as_view(is_security=True),
-        name="delete_security_script",
+        name="security_script_delete",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/",
@@ -192,9 +194,10 @@ urlpatterns = [
         name="edit_configuration",
     ),
     re_path(
+        # TODO: Move delete to be after the PK for consistency
         r"^site/(?P<site_uid>[^/]+)/configuration/delete/(?P<pk>\d+)/$",
         ConfigurationEntryDelete.as_view(),
-        name="delete_configuration",
+        name="configuration_delete",
     ),
     # Computers
     re_path(r"^site/(?P<slug>[^/]+)/computers/$", PCsView.as_view(), name="computers"),
@@ -305,7 +308,7 @@ urlpatterns = [
     re_path(
         r"^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/delete/",
         ScriptDelete.as_view(),
-        name="delete_script",
+        name="script_delete",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/run/",
@@ -349,7 +352,7 @@ urlpatterns = [
             + r"(?P<username>[_\w\@\.\+\-]+)/delete/$"
         ),
         UserDelete.as_view(),
-        name="delete_user",
+        name="user_delete",
     ),
     # Documentation
     re_path(
@@ -399,11 +402,39 @@ urlpatterns = [
     re_path(
         r"^site/(?P<site_uid>[^/]+)/image-versions/$",
         ImageVersionsView.as_view(),
-        name="image-versions",
+        name="image_versions",
     ),
     re_path(
         r"^site/(?P<site_uid>[^/]+)/image-versions/(?P<platform>[^/]+)$",
         ImageVersionsView.as_view(),
-        name="image-version-major",
+        name="image_version_major",
+    ),
+    # This contains both a regular view and an HTMX view
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-keys/$",
+        APIKeyUpdate.as_view(),
+        name="api_keys",
     ),
 ]
+
+# Define HTMX URL Patterns here, and add them to the urlpatterns list
+# Basically these are views that only return partial HTML fragments rather than entire pages
+htmx_urlpatterns = [
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-keys/new/$",
+        APIKeyCreate.as_view(),
+        name="api_key_new",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/update/$",
+        APIKeyUpdate.as_view(),
+        name="api_key_update",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/delete/$",
+        APIKeyDelete.as_view(),
+        name="api_key_delete",
+    ),
+]
+
+urlpatterns += htmx_urlpatterns

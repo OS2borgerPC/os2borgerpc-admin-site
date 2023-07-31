@@ -35,11 +35,11 @@
                 </a>
                 {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
-                    <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
+                    <a class="item-list-deletable material-icons" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                       clear
                     </a>
                   {% else %}
-                    <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
+                    <a class="item-list-deletable material-icons" href="{% url 'script_delete' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                       clear
                     </a>
                   {% endif %}
@@ -59,11 +59,11 @@
                 </a>
                 {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
-                  <a class="item-list-deletable material-icons" href="{% url 'delete_security_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
+                  <a class="item-list-deletable material-icons" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                     clear
                   </a>
                   {% else %}
-                  <a class="item-list-deletable material-icons" href="{% url 'delete_script' site.uid script.pk %}" title="{% translate 'Delete script' %}">
+                  <a class="item-list-deletable material-icons" href="{% url 'script_delete' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                     clear
                   </a>
                   {% endif %}

@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from system.models import (
+    APIKey,
     AssociatedScript,
     AssociatedScriptParameter,
     Batch,
@@ -465,6 +466,10 @@ class WakeChangeEventAdmin(admin.ModelAdmin):
     list_filter = ("site",)
 
 
+class APIKeyAdmin(admin.ModelAdmin):
+    list_display = ("site", "key", "description", "created")
+
+
 ar = admin.site.register
 
 ar(AssociatedScript, AssociatedScriptAdmin)
@@ -489,3 +494,4 @@ ar(SecurityProblem, SecurityProblemAdmin)
 ar(Site, SiteAdmin)
 ar(WakeChangeEvent, WakeChangeEventAdmin)
 ar(WakeWeekPlan, WakeWeekPlanAdmin)
+ar(APIKey, APIKeyAdmin)
