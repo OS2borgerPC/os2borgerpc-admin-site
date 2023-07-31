@@ -12,7 +12,7 @@
                 url: '{% url script_url site.uid script.pk %}',
                 name: '{{ script.name }} <span class="badge bg-info">{% translate "Local" %}</span>',
                 category: 'local',
-                delete_url: '{% url 'delete_script' site.uid script.pk %}'
+                delete_url: '{% url 'script_delete' site.uid script.pk %}'
             })
         {% endfor %}
         {% for script in global_scripts %}
@@ -21,9 +21,9 @@
                 url: '{% url script_url site.uid script.pk %}',
                 name: '{{ script.name }} <span class="badge bg-primary">{% translate "Global" %}</span>',
                 category: 'global',
-                delete_url: '{% url 'delete_script' site.uid script.pk %}'
+                delete_url: '{% url 'script_delete' site.uid script.pk %}'
             })
         {% endfor %}
-    
+
     </script>
 </div>

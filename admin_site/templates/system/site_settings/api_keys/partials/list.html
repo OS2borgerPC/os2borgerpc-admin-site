@@ -1,0 +1,30 @@
+{% load i18n %}
+{% comment %}
+This file is both used to render the initial film-list, and HTMX is using it to re-render the film-list on certain
+events/changes.
+{% endcomment %}
+
+
+{% for key in api_keys %}
+  <tr>
+    <td>{{ key.key }}</td>
+    <td>
+      <form method="post">
+        <input style="width: 350px;" type="text" name="description" hx-post="{% url 'api_key_update' slug=key.site.uid pk=key.pk %}" hx-trigger="keyup changed delay:1s" value="{{ key.description|default:"" }}">
+      </form>
+    </td>
+
+    <td>
+      <p class="mb-0" style="margin-left: -.5rem;">
+        <form type="delete">
+          <button class="btn btn-sm ps-3" type="submit" hx-target="#api-keys-list" hx-delete="{% url "api_key_delete" slug=key.site.uid pk=key.pk %}" hx-confirm="{% translate "Are you sure you want to delete the following API Key?:" %} {{key.key}}">
+            <span class='material-icons'>delete</span>
+            {% translate "Delete" %}
+          </button>
+        </form>
+      </p>
+    </td>
+  </tr>
+{% empty %}
+<tr><td>There are currently no API keys</td><td></td><td></td></tr> <!-- TODO: Translation -->
+{% endfor %}

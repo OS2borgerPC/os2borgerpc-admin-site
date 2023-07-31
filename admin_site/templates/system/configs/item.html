@@ -3,11 +3,11 @@
 <tr>
   <td class="config-print-key">{{ key }}</td>
   <td class="pe-0">
-    
+
     <input class="config-pk" type="hidden" name="{{ submit_name|default:'configuration' }}" value="{{ pk }}">
     <input class="config-key" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_key" value="{{ key }}">
     <input class="config-value" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_value" value="{{ value }}">
-    
+
     {{ value }}
   </td>
   <td>
@@ -19,6 +19,6 @@
         <span class='material-icons'>delete</span>{% translate "Delete" %}
       </a>
     </p>
-  
+
   </td>
 </tr>
