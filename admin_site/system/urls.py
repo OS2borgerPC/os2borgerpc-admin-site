@@ -5,6 +5,9 @@ from django.views.generic import RedirectView
 
 from system.views import (
     AdminIndex,
+    APIKeyCreate,
+    APIKeyDelete,
+    APIKeyUpdate,
     ConfigurationEntryCreate,
     ConfigurationEntryUpdate,
     DocView,
@@ -61,7 +64,6 @@ from system.views import (
     UserUpdate,
 )
 
-from django.urls import include, path
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -130,7 +132,7 @@ urlpatterns = [
     re_path(
         r"^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/delete/",
         ScriptDelete.as_view(is_security=True),
-        name="delete_security_script",
+        name="security_script_delete",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/security_scripts/(?P<script_pk>\d+)/",
@@ -299,7 +301,7 @@ urlpatterns = [
     re_path(
         r"^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/delete/",
         ScriptDelete.as_view(),
-        name="delete_script",
+        name="script_delete",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/scripts/(?P<script_pk>\d+)/run/",
@@ -340,7 +342,7 @@ urlpatterns = [
     re_path(
         (r"^site/(?P<slug>[^/]+)/users/" + r"(?P<username>[_\w\@\.\+\-]+)/delete/$"),
         UserDelete.as_view(),
-        name="delete_user",
+        name="user_delete",
     ),
     # Documentation
     re_path(
@@ -390,11 +392,39 @@ urlpatterns = [
     re_path(
         r"^site/(?P<slug>[^/]+)/image-versions/$",
         ImageVersionsView.as_view(),
-        name="image-versions",
+        name="image_versions",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/image-versions/(?P<platform>[^/]+)$",
         ImageVersionsView.as_view(),
-        name="image-version-major",
+        name="image_version_major",
+    ),
+    # This contains both a regular view and an HTMX view
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-keys/$",
+        APIKeyUpdate.as_view(),
+        name="api_keys",
     ),
 ]
+
+# Define HTMX URL Patterns here, and add them to the urlpatterns list
+# Basically these are views that only return partial HTML fragments rather than entire pages
+htmx_urlpatterns = [
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-keys/new/$",
+        APIKeyCreate.as_view(),
+        name="api_key_new",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/update/$",
+        APIKeyUpdate.as_view(),
+        name="api_key_update",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/delete/$",
+        APIKeyDelete.as_view(),
+        name="api_key_delete",
+    ),
+]
+
+urlpatterns += htmx_urlpatterns

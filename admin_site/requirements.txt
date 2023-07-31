@@ -4,6 +4,7 @@ crispy-bootstrap5==0.6
 django-crispy-forms==1.14.0
 django-extensions==3.2.0
 django-markdownx==4.0.2
+django-ninja==0.22.2
 django-otp==1.1.6
 django-storages==1.12.3
 django-two-factor-auth[phonenumberslite]==1.14.0
