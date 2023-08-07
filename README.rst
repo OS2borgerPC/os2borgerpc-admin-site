@@ -22,7 +22,7 @@ Read the documentation for this project in docs/ or at
 The system was developed by Magenta Aps (https://www.magenta.dk) and is part of the
 OS2borgerPC project.
 
-For more info about the OS2borgerPC project, please see the
+For more information about the OS2borgerPC project, please see the
 official home page:
 
     https://os2.eu/produkt/os2borgerpc
