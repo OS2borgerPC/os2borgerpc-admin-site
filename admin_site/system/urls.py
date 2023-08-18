@@ -59,9 +59,7 @@ from system.views import (
     UserUpdate,
 )
 
-from two_factor.urls import urlpatterns as tf_urls
 from django.urls import include, path
-
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -155,7 +153,6 @@ urlpatterns = [
         AdminTwoFactorBackupTokens.as_view(),
         name="admin_otp_backup",
     ),
-    path("", include(tf_urls)),
     # Sites
     re_path(r"^$", AdminIndex.as_view(), name="index"),
     re_path(r"^sites/$", SiteList.as_view(), name="sites"),
@@ -389,6 +386,4 @@ urlpatterns = [
         ImageVersionsView.as_view(),
         name="image-version-major",
     ),
-    # Include changelog URLs
-    re_path(r"^changelog/", include("changelog.urls")),
 ]
