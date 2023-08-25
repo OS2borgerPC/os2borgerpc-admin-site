@@ -20,16 +20,9 @@ $(function(){
             $.each(dataList.results, function() {
                 var info_button = ''
                 if(this.has_info) {
-                    info_button = '<div class="d-flex" id="jobsListButtonsDiv"><div ' +
+                    info_button = '<button ' +
                         'class="btn btn-secondary jobinfobutton p-0" ' +
-                        `data-bs-title="Job-info
-                        <div id='buttonDiv' class= 'd-flex' >
-                            <div title='Kopier til udklipsholderen' class='spanDiv'>
-                            <span id='clipboardButtonTop' title='Kopier til udklipsholderen' class='material-icons fs3'>content_copy</span>
-                            </div>
-                        ${makeRestartButtonIfJobFailed(this)}
-                        <span id='closePopoverButton' title='Luk Job-info' class='material-icons fs-3'>close</span>
-                        </div>" ` + // Hvad kan jeg gøre i stedet for at gange med 100, som er en lappeløsning, når jeg har brug for at få id'et med til genstart knappen, men allerede har brugt det til id'et for kopier knappen??
+                        'data-bs-title="Job-info" ' +
                         'data-bs-toggle="popover" ' +
                         'data-bs-content="Loading..." ' +
                         'data-bs-html=true ' +
@@ -37,22 +30,8 @@ $(function(){
                         'data-bs-trigger="click" ' +
                         'data-bs-animation="true" ' +
                         'data-pk="' + this.pk + '"' +
-                        `><span class="material-icons fs-3">info
-                            </span>
-                        </div>
-                        <div>
-                        <span class='btn btn-secondary'>
-                            <div class='clipboardCopyButtonsDiv'>
-                                <span class='clipboardCopyButtons material-icons fs3' id='${this.pk}' title='Kopier log til udklipsholderen' class='material-icons fs3'>content_copy
-                                </span>
-                                <span id='messageForUserSpan${this.pk}'>
-                                </span>
-                            </div>
-                        </span>
-                    </div>
-                    </div>`
+                    '><span class="material-icons fs-3">info</span></button>'
                 }
-
                 var script_link = '<a href="' + this.script_url + '">' + this.script_name + '</a>'
                 var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + '</a>'
                 var user_link = this.user != ''? '<a href="' + this.user_url + '">' + this.user + '</a>' : 'Ingen bruger'

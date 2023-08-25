@@ -5,7 +5,7 @@
  */
 
 
-/* TODO: The contents of this file should be merged to the custom Bootstrap build 
+/* TODO: The contents of this file should be merged to the custom Bootstrap build
  or their related templates */
 
 
@@ -100,34 +100,7 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 /* Layout helpers */
 .inline {display: inline}
 
-.clipboardCopyButtonsDiv {
-  cursor: pointer;
-}
-
-.restartJobButton {
-  cursor: pointer;
-}
-
-#closePopoverButton {
-  cursor: pointer;
-}
-
-#buttonDiv {
-  float: right; 
-}
-
-.spanDiv {
-  cursor: pointer;
-}
-
-#jobInfoCloseButton {
-  float: right; 
-}
-
-#spanTagWithTextDisplayedWhenLogIsCopied {
-  visibility: hidden;
-}
-
+/* CSS fades in and out, currently only used by the job log copy button */
 .fade-in {
   animation: fadeIn ease 1s;
   animation-fill-mode: forwards;
@@ -154,6 +127,11 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
   100% {
     opacity: 0;
   }
+}
+
+/* Job log copy button */
+#log-copied-text {
+  visibility: hidden;
 }
 
 
