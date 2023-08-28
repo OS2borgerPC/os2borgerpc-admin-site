@@ -364,21 +364,13 @@ function getCookie(name) {
 }
 
 function addEventListenerForClipBoardButton(log) {
-  const btn = document.getElementById("clipboard-button")
+  let btn = document.getElementById("clipboard-button")
 
   btn.addEventListener('click', () => {
 
     navigator.clipboard.writeText(log)
 
-    // This is only shown once the log copy button is pressed
-    const logCopiedText = document.getElementById('log-copied-text')
-    logCopiedText.setAttribute("style", "visibility: visible;")
-    logCopiedText.setAttribute("class", "fade-in ps-3")
-    setTimeout(() => {
-      if (logCopiedText != null) {
-        logCopiedText.setAttribute("class", "fade-out ps-3")
-      }
-    }, 2000)
-
+    btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
+    btn.lastElementChild.classList.remove('d-none')
   })
 }

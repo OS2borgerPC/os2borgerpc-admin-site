@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-26 13:05+0200\n"
+"POT-Creation-Date: 2023-08-28 16:38+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,175 @@ msgstr "Site användare"
 #: account/models.py
 msgid "Site Admin"
 msgstr "Site-admin"
+
+#: changelog/models.py system/models.py
+msgid "name"
+msgstr "namn"
+
+#: changelog/models.py
+msgid "title"
+msgstr "titel"
+
+#: changelog/models.py system/models.py
+msgid "description"
+msgstr "beskrivning"
+
+#: changelog/models.py
+msgid "content"
+msgstr "innehåll"
+
+#: changelog/models.py system/mixins.py system/models.py
+msgid "created"
+msgstr "skapad"
+
+#: changelog/models.py
+msgid "updated"
+msgstr "uppdaterat"
+
+#: changelog/models.py
+msgid "author"
+msgstr "författare"
+
+#: changelog/models.py
+msgid "version"
+msgstr "version"
+
+#: changelog/templates/comments/form.html
+msgid "Answer to"
+msgstr "Svar till"
+
+#: changelog/templates/comments/form.html
+msgid "Write a comment"
+msgstr "Skriv en kommentar"
+
+#: changelog/templates/comments/form.html
+msgid "Add comment"
+msgstr "Lägg till en kommentar"
+
+#: changelog/templates/comments/form.html templates/system/configs/form.html
+#: templates/system/configs/templates.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/form.html
+#: templates/system/pcgroups/policy_list/templates.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/create.html templates/system/scripts/update.html
+#: templates/system/security_events/site_security_events.html
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/security_problems/site_security_problems.html
+#: templates/system/site_settings.html
+#: templates/system/users/confirm_delete.html
+#: templates/system/users/update.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+#: templates/system/wake_plan/wake_plan.html
+#: templates/two_factor/_wizard_actions.html
+#: templates/two_factor/profile/disable.html
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: changelog/templates/comments/form.html
+msgid "Please log in to add your comment"
+msgstr "Logga in för att kommentera"
+
+#: changelog/templates/comments/item.html
+msgid "On the date"
+msgstr "Den"
+
+#: changelog/templates/comments/item.html
+msgid "answered"
+msgstr "svarade"
+
+#: changelog/templates/comments/item.html
+msgid "wrote"
+msgstr "skrev"
+
+#: changelog/templates/comments/item.html
+#, python-format
+msgid "Show %(comment_comment_children_count)s answer(s)"
+msgstr "Visa %(comment_comment_children_count)s svar"
+
+#: changelog/templates/comments/item.html
+msgid "Answer"
+msgstr "Svar"
+
+#: changelog/templates/item.html changelog/templates/list.html
+msgid "News categories"
+msgstr "Nyhetskategorier"
+
+#: changelog/templates/item.html
+msgid "Related to version"
+msgstr "Relaterad till version"
+
+#: changelog/templates/item.html
+msgid "Written by"
+msgstr "Skriven av"
+
+#: changelog/templates/item.html
+msgid "Comments"
+msgstr "Kommentarer"
+
+#: changelog/templates/list.html templates/site_with_navigation.html
+msgid "News"
+msgstr "Nyheter"
+
+#: changelog/templates/list.html
+#, fuzzy
+#| msgid "Back to user profile"
+msgid "Back to previous page"
+msgstr "Tillbaka till användarprofilen"
+
+#: changelog/templates/list.html
+msgid "Search..."
+msgstr "Sök på..."
+
+#: changelog/templates/list.html
+msgid "All"
+msgstr "Alla"
+
+#: changelog/templates/list.html
+msgid "Showing news in the catagory of"
+msgstr "Visar nyheter i kategorin"
+
+#: changelog/templates/list.html
+msgid "Showing"
+msgstr "Visar"
+
+#: changelog/templates/list.html
+#: templates/system/security_problems/site_security_problems.html
+msgid "all"
+msgstr "alla"
+
+#: changelog/templates/list.html
+msgid "news"
+msgstr "nyheter"
+
+#: changelog/templates/list.html
+msgid "that matches the query"
+msgstr "som matchar sökordet"
+
+#: changelog/templates/list.html
+msgid "Read more"
+msgstr "Läs mer"
+
+#: changelog/templates/list.html
+msgid "Show"
+msgstr "Visa"
+
+#: changelog/templates/list.html
+msgid "chat"
+msgstr "chat"
+
+#: changelog/templates/list.html
+msgid "Previous"
+msgstr "Föregående"
+
+#: changelog/templates/list.html templates/system/scripts/run_step1.html
+#: templates/two_factor/_wizard_actions.html
+msgid "Next"
+msgstr "Nästa"
 
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
@@ -77,10 +246,6 @@ msgstr "De två lösenorden måste vara desamma"
 msgid "A user named \"%s\" already exists."
 msgstr "En användare med namnet \"%s\" finns redan."
 
-#: system/mixins.py system/models.py
-msgid "created"
-msgstr "skapad"
-
 #: system/mixins.py
 msgid "modified"
 msgstr "modifierad"
@@ -108,10 +273,6 @@ msgstr "Uppdatera"
 #: system/models.py
 msgid "owner configuration"
 msgstr "ägarkonfiguration"
-
-#: system/models.py
-msgid "name"
-msgstr "namn"
 
 #: system/models.py
 msgid "UID"
@@ -145,7 +306,9 @@ msgstr "Karantänperiod, när den godkända inloggningstiden används."
 
 #: system/models.py
 msgid "Automatically rerun associated scripts when you update their arguments"
-msgstr "Kör automatiskt associerade skript igen när du uppdaterar deras inputparametrar"
+msgstr ""
+"Kör automatiskt associerade skript igen när du uppdaterar deras "
+"inputparametrar"
 
 #: system/models.py
 msgid "sites with access"
@@ -290,10 +453,6 @@ msgstr "Söndag på"
 #: system/models.py
 msgid "wake change events"
 msgstr "undantag"
-
-#: system/models.py
-msgid "description"
-msgstr "beskrivning"
 
 #: system/models.py
 msgid "MAC"
@@ -468,26 +627,6 @@ msgstr "rapporterat"
 #: system/models.py
 msgid "assigned user"
 msgstr "hanteras av"
-
-#: system/models.py
-msgid "title"
-msgstr "titel"
-
-#: system/models.py
-msgid "content"
-msgstr "innehåll"
-
-#: system/models.py
-msgid "updated"
-msgstr "uppdaterat"
-
-#: system/models.py
-msgid "author"
-msgstr "författare"
-
-#: system/models.py
-msgid "version"
-msgstr "version"
 
 #: system/views.py
 #, python-format
@@ -741,7 +880,7 @@ msgstr "Skript för säkerhet"
 
 #: system/views.py templates/site_with_navigation.html
 #: templates/system/users/confirm_delete.html
-#: templates/system/users/create.html templates/system/users/update.html
+#: templates/system/users/update.html
 msgid "Users"
 msgstr "Användare"
 
@@ -868,7 +1007,6 @@ msgid "OS2borgerPC documentation"
 msgstr "Sambruk MedborgarPC dokumentation"
 
 #: templates/documentation/index.html templates/site_with_navigation.html
-#: templates/system/changelog/list.html
 msgid "Documentation"
 msgstr "Dokumentation"
 
@@ -887,10 +1025,6 @@ msgstr "Klicka här för att logga in igen"
 #: templates/site_with_navigation.html templates/system/site_list.html
 msgid "Sites"
 msgstr "Sites"
-
-#: templates/site_with_navigation.html templates/system/changelog/list.html
-msgid "News"
-msgstr "Nyheter"
 
 #: templates/site_with_navigation.html
 msgid "Security"
@@ -993,141 +1127,6 @@ msgstr "Välkommen"
 msgid "Log out"
 msgstr "Logga ut"
 
-#: templates/system/changelog/comments/form.html
-msgid "Answer to"
-msgstr "Svar till"
-
-#: templates/system/changelog/comments/form.html
-msgid "Write a comment"
-msgstr "Skriv en kommentar"
-
-#: templates/system/changelog/comments/form.html
-msgid "Add comment"
-msgstr "Lägg till en kommentar"
-
-#: templates/system/changelog/comments/form.html
-#: templates/system/configs/form.html templates/system/configs/templates.html
-#: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/form.html
-#: templates/system/pcgroups/policy_list/templates.html
-#: templates/system/pcgroups/site_groups.html
-#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/create.html templates/system/scripts/update.html
-#: templates/system/security_events/site_security_events.html
-#: templates/system/security_problems/confirm_delete.html
-#: templates/system/security_problems/site_security_problems.html
-#: templates/system/site_settings.html
-#: templates/system/users/confirm_delete.html
-#: templates/system/users/create.html templates/system/users/update.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html
-#: templates/system/wake_plan/wake_plan.html
-#: templates/two_factor/_wizard_actions.html
-#: templates/two_factor/profile/disable.html
-msgid "Cancel"
-msgstr "Avbryt"
-
-#: templates/system/changelog/comments/form.html
-msgid "Please log in to add your comment"
-msgstr "Logga in för att kommentera"
-
-#: templates/system/changelog/comments/item.html
-msgid "On the date"
-msgstr "Den"
-
-#: templates/system/changelog/comments/item.html
-msgid "answered"
-msgstr "svarade"
-
-#: templates/system/changelog/comments/item.html
-msgid "wrote"
-msgstr "skrev"
-
-#: templates/system/changelog/comments/item.html
-#, python-format
-msgid "Show %(comment_comment_children_count)s answer(s)"
-msgstr "Visa %(comment_comment_children_count)s svar"
-
-#: templates/system/changelog/comments/item.html
-msgid "Answer"
-msgstr "Svar"
-
-#: templates/system/changelog/item.html templates/system/changelog/list.html
-msgid "News categories"
-msgstr "Nyhetskategorier"
-
-#: templates/system/changelog/item.html
-msgid "Related to version"
-msgstr "Relaterad till version"
-
-#: templates/system/changelog/item.html
-msgid "Written by"
-msgstr "Skriven av"
-
-#: templates/system/changelog/item.html
-msgid "Comments"
-msgstr "Kommentarer"
-
-#: templates/system/changelog/list.html
-msgid "Back to login"
-msgstr "Tillbaka till inloggning"
-
-#: templates/system/changelog/list.html
-msgid "Help for this news site"
-msgstr "Hjælp til nyhedssiden"
-
-#: templates/system/changelog/list.html
-msgid "Search..."
-msgstr "Sök på..."
-
-#: templates/system/changelog/list.html
-msgid "All"
-msgstr "Alla"
-
-#: templates/system/changelog/list.html
-msgid "Showing news in the catagory of"
-msgstr "Visar nyheter i kategorin"
-
-#: templates/system/changelog/list.html
-msgid "Showing"
-msgstr "Visar"
-
-#: templates/system/changelog/list.html
-#: templates/system/security_problems/site_security_problems.html
-msgid "all"
-msgstr "alla"
-
-#: templates/system/changelog/list.html
-msgid "news"
-msgstr "nyheter"
-
-#: templates/system/changelog/list.html
-msgid "that matches the query"
-msgstr "som matchar sökordet"
-
-#: templates/system/changelog/list.html
-msgid "Read more"
-msgstr "Läs mer"
-
-#: templates/system/changelog/list.html
-msgid "Show"
-msgstr "Visa"
-
-#: templates/system/changelog/list.html
-msgid "chat"
-msgstr "chat"
-
-#: templates/system/changelog/list.html
-msgid "Previous"
-msgstr "Föregående"
-
-#: templates/system/changelog/list.html templates/system/scripts/run_step1.html
-#: templates/two_factor/_wizard_actions.html
-msgid "Next"
-msgstr "Nästa"
-
 #: templates/system/configs/form.html
 msgid "Edit arguments"
 msgstr "Redigera parametrar"
@@ -1202,6 +1201,14 @@ msgstr "Spara"
 #: templates/system/jobs/info.html templates/system/jobs/restart.html
 msgid "Restart job"
 msgstr "Omstart av jobb"
+
+#: templates/system/jobs/info.html
+msgid "Copy log to the clipboard"
+msgstr "Kopiera loggen till urklipp"
+
+#: templates/system/jobs/info.html
+msgid "Log copied!"
+msgstr "Loggen kopierad!"
 
 #: templates/system/jobs/info.html
 msgid "Log output"
@@ -1436,7 +1443,8 @@ msgstr ""
 msgid ""
 "Editing the script arguments will make the script run again on all Computers "
 "in the Group. This can be toggled off under Site settings"
-msgstr "Redigering av ingångsparametrar gör att ett skript körs igen på alla datorer "
+msgstr ""
+"Redigering av ingångsparametrar gör att ett skript körs igen på alla datorer "
 "i gruppen. Detta kan stängas av under Inställningar för Site"
 
 #: templates/system/pcgroups/site_groups.html
@@ -1988,14 +1996,6 @@ msgstr "Ta bort användare"
 msgid "Are you sure you want to delete the user"
 msgstr "Är du säker på att du vill ta bort användaren"
 
-#: templates/system/users/create.html
-msgid "Create new user"
-msgstr "Lägg till en ny användare"
-
-#: templates/system/users/create.html templates/system/users/update.html
-msgid "Create user"
-msgstr "Skapa en användare"
-
 #: templates/system/users/form.html
 msgid "Show Password"
 msgstr "Visa Password"
@@ -2019,6 +2019,10 @@ msgstr "Lägg till en ny användare"
 #: templates/system/users/update.html
 msgid "Profile:"
 msgstr "Profil:"
+
+#: templates/system/users/update.html
+msgid "Create new user"
+msgstr "Lägg till en ny användare"
 
 #: templates/system/users/update.html
 msgid ""
@@ -2550,6 +2554,15 @@ msgstr "Inaktivera"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data saknas"
+
+#~ msgid "Back to login"
+#~ msgstr "Tillbaka till inloggning"
+
+#~ msgid "Help for this news site"
+#~ msgstr "Hjælp til nyhedssiden"
+
+#~ msgid "Create user"
+#~ msgstr "Skapa en användare"
 
 #~ msgid "Create security rule"
 #~ msgstr "Skapa en säkerhetsregel"
