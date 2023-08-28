@@ -1,14 +1,9 @@
-{% extends site_extension %}
+{% extends "sitebase.html" %}
 
 {% load i18n %}
 
 {% block header_title %}
-
-{% if site %}
-{{site}}: {% translate "News" %}
-{% else %}
 OS2borgerPC: {% translate "News" %}
-{% endif %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -22,23 +17,17 @@ OS2borgerPC: {% translate "News" %}
 {% endblock %}
 
 
-{% block globalnav %}
-    {% if global_view %}
-        <nav id="left-menu" class="nav nav-pills utils-global">
-            <h2 class="text-light">{% translate "News" %}</h2>
-            <a href="/" class="nav-link link-light d-flex align-items-center">
-                <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
-                {% translate "Back to login" %}
-            </a>
-            <hr>
-            <h2 class="text-light">{% translate "Documentation" %}</h2>
-            <a href="{% url 'doc' 'changelogs' %}" class="nav-link link-light">
-                <span class="material-icons">help_outline</span>
-                {% translate "Help for this news site" %}
-              </a>
-        </nav>
-    {% endif %}
-    {{ block.super }}
+{% block subnav %}
+
+<nav id="left-menu" class="nav nav-pills utils-global float-start">
+    <h2 class="text-light">{% translate "News" %}</h2>
+    <a href="/" class="nav-link">
+        <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
+        {% translate "Back to previous page" %}
+    </a>
+    <hr>
+</nav>
+
 {% endblock %}
 
 
@@ -66,11 +55,7 @@ OS2borgerPC: {% translate "News" %}
                 <!-- Here the tag filters are defined. Each is a clickable button that filters the entries to show entries with that tag -->
                     <form method="GET" class="mt-2">
                         <div id="changelog-search-tag-selectors">
-                            {% if global_view %}
-                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'global-changelogs' slug='global' %}" id="Alle">{% translate "All" %}</a>
-                            {% else %}
-                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'changelogs' slug=site.url %}" id="Alle">{% translate "All" %}</a>
-                            {% endif %}
+                            <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'changelogs' %}" id="Alle">{% translate "All" %}</a>
                             {% for tag in tag_choices %}
                                 <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" id="{{ tag.pk }}" href="?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}">{{ tag.name }}</a>
                             {% endfor %}
@@ -81,8 +66,6 @@ OS2borgerPC: {% translate "News" %}
             </div>
           </div>
     </header>
-
-    <div class="clearfix"></div>
 
     <hr>
 
@@ -133,7 +116,7 @@ OS2borgerPC: {% translate "News" %}
                 </div>
             </div>
 
-            {% include "system/changelog/item.html" with entry=entry %}
+            {% include "item.html" with entry=entry %}
         {% endfor %}
     </div>
 

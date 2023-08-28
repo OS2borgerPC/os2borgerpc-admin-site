@@ -34,7 +34,7 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "changelogs" as current_url_changelogs %}
-    <a href="{% url 'changelogs' slug=site.url %}" class="nav-link link-light {{ current_url_changelogs }}">
+    <a href="{% url 'changelogs' %}" class="nav-link link-light {{ current_url_changelogs }}">
       <span class="material-icons">tips_and_updates</span>
       {% translate "News" %}
     </a>

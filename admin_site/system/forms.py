@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from system.models import (
-    ChangelogComment,
     ConfigurationEntry,
     Input,
     PC,
@@ -285,12 +284,6 @@ class SecurityProblemForm(forms.ModelForm):
     class Meta:
         model = SecurityProblem
         fields = "__all__"
-
-
-class ChangelogCommentForm(forms.ModelForm):
-    class Meta:
-        model = ChangelogComment
-        fields = ["content"]
 
 
 class SecurityEventForm(forms.ModelForm):

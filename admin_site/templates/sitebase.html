@@ -7,15 +7,15 @@
     <h1 class="siteheader">{% block  header_title %}{% endblock %}</h1>
 
     {% if user.is_authenticated %}
-  
+
       <div class="d-flex align-items-center" style="margin-top: -.25rem;">
         <span>{% translate "Welcome" %}</span>
         <div class="dropdown">
           <button class="btn btn-primary text-white dropdown-toggle px-1"
             style="box-shadow: none;"
-            type="button" 
-            id="userActionDropdown" 
-            data-bs-toggle="dropdown" 
+            type="button"
+            id="userActionDropdown"
+            data-bs-toggle="dropdown"
             aria-expanded="false">
             {{ user }}
           </button>
@@ -25,7 +25,7 @@
             </li>
           </ul>
         </div>
-        
+
       </div>
     {% endif %}
 
