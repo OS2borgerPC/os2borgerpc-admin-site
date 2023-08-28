@@ -116,7 +116,6 @@ $(function(){
                     var input = $('#jobsearch-filterform input[name=page]')
                     input.val(page)
                     jobsearch.search()
-                    addEventListenersToAllClipboardCopyButtons() // For at kopier knapperne virker når man trykker videre til de næste sider.
                 })
                 item.appendTo(pagination)
             })
