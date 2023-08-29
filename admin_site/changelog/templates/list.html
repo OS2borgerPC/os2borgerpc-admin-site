@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block header_title %}
-OS2borgerPC: {% translate "News" %}
+{% translate "OS2borgerPC" %}: {% translate "News" %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -72,7 +72,7 @@ OS2borgerPC: {% translate "News" %}
     <div class="changelog-container">
         <h3>
             {% if tag_filter %}
-                {% translate "Showing news in the catagory of" %} <strong>{{ tag_filter.name }}</strong>
+                {% translate "Showing news in the category of" %} <strong>{{ tag_filter.name }}</strong>
             {% else %}
                 {% translate "Showing" %} <strong>{% translate "all" %}</strong> {% translate "news" %}
             {% endif %}
