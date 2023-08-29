@@ -142,10 +142,8 @@ msgid "News"
 msgstr "Nyheter"
 
 #: changelog/templates/list.html
-#, fuzzy
-#| msgid "Back to user profile"
 msgid "Back to previous page"
-msgstr "Tillbaka till användarprofilen"
+msgstr "Tillbaka till föregående sida"
 
 #: changelog/templates/list.html
 msgid "Search..."
@@ -156,7 +154,7 @@ msgid "All"
 msgstr "Alla"
 
 #: changelog/templates/list.html
-msgid "Showing news in the catagory of"
+msgid "Showing news in the category of"
 msgstr "Visar nyheter i kategorin"
 
 #: changelog/templates/list.html
