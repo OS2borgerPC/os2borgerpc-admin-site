@@ -2068,7 +2068,7 @@ msgid ""
 "OS2borgerPC is 100%% Open Source and can be used and distributed in "
 "accordance with the conditions in version 3 of the"
 msgstr ""
-"Sambruk MedborgarPC är 100% öppen källkod och kan användas och avslöjas "
+"Sambruk MedborgarPC är 100%% öppen källkod och kan användas och avslöjas "
 "enligt villkor i version 3 af"
 
 #: templates/documentation/om_os2borgerpc_admin.html
