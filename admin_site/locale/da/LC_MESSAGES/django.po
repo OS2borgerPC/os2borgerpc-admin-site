@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-30 10:44+0200\n"
+"POT-Creation-Date: 2023-08-31 14:00+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -666,6 +666,15 @@ msgstr "Du skal angive mindst en pc eller gruppe"
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen computer med følgende ID: %s"
+
+#: system/views.py
+#, python-format
+msgid ""
+"Computer %s updated, but it could not be added to the group(s) %s because it "
+"already belongs to the plan %s"
+msgstr ""
+"Computer %s opdateret, men den kunne ikke tilføjes til gruppe(rne) %s, da "
+"den allerede er tilmeldt tidsplanen %s"
 
 #: system/views.py
 #, python-format
