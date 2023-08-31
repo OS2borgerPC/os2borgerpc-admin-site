@@ -1379,7 +1379,14 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
     template_name = "system/pcs/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        return PC.objects.get(uid=self.kwargs["pc_uid"])
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
+        except PC.DoesNotExist:
+            raise Http404(
+                _("You have no computer with the following ID: %s")
+                % self.kwargs["pc_uid"]
+            )
 
     def get_success_url(self):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
@@ -1954,7 +1961,16 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
     template_name = "system/wake_plan/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        plan = WakeWeekPlan.objects.get(id=self.kwargs["wake_week_plan_id"])
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            plan = WakeWeekPlan.objects.get(
+                id=self.kwargs["wake_week_plan_id"], site=site_id
+            )
+        except (WakeWeekPlan.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no Wake Week Plan with the following ID: %s")
+                % self.kwargs["wake_week_plan_id"]
+            )
         if not plan.site.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         return plan
@@ -2441,7 +2457,16 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     template_name = "system/users/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        self.selected_user = User.objects.get(username=self.kwargs["username"])
+        try:
+            self.selected_user = User.objects.get(username=self.kwargs["username"])
+            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
+                site__uid=self.kwargs["site_uid"]
+            )
+        except (User.DoesNotExist, SiteMembership.DoesNotExist):
+            raise Http404(
+                _("You have no user with the following ID: %s")
+                % self.kwargs["username"]
+            )
         return self.selected_user
 
     def get_context_data(self, **kwargs):
@@ -2792,8 +2817,19 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        site = Site.objects.get(uid=self.kwargs["site_uid"])
-        return PCGroup.objects.get(id=self.kwargs["group_id"], site=site)
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        try:
+            # Groups used to be identified by a string UID, so sometimes we get lookups for a string which caused a
+            # server error. Hence this explicit attempt to convert it to an int first.
+            id = int(self.kwargs["group_id"])
+            return PCGroup.objects.get(id=id, site=site)
+        except (PCGroup.DoesNotExist, ValueError):
+            raise Http404(
+                _(
+                    "You have no group with the following ID: %s. Try locating the group in the list of groups."
+                )
+                % self.kwargs["group_id"]
+            )
 
     def get_success_url(self):
         return "/site/{0}/groups/".format(self.kwargs["site_uid"])
