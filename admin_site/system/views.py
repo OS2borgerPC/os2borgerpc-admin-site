@@ -1351,7 +1351,58 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         pc = self.object
-        groups_pre = set(pc.pc_groups.all())
+        groups_pre = pc.pc_groups.all()
+
+        selected_groups = form.cleaned_data["pc_groups"]
+        verified_groups = selected_groups.intersection(groups_pre)
+        unverified_groups = selected_groups.difference(groups_pre).order_by("name")
+
+        previous_wake_plan = None
+        for group in groups_pre:
+            if group.wake_week_plan:
+                previous_wake_plan = group.wake_week_plan
+                break
+
+        wake_plan = None
+        for group in verified_groups:
+            if group.wake_week_plan:
+                wake_plan = group.wake_week_plan
+                break
+
+        run_wake_plan = False
+        invalid_groups_names = []
+        for group in unverified_groups:
+            group_is_valid = True
+            if wake_plan and group.wake_week_plan and wake_plan != group.wake_week_plan:
+                invalid_groups_names.append(group.name)
+                group_is_valid = False
+            elif wake_plan is None and group.wake_week_plan:
+                wake_plan = group.wake_week_plan
+                if wake_plan != previous_wake_plan:
+                    run_wake_plan = True
+            if group_is_valid:
+                verified_groups = verified_groups.union(
+                    PCGroup.objects.filter(pk=group.pk)
+                )
+
+        form.cleaned_data["pc_groups"] = verified_groups
+
+        if run_wake_plan:
+            args_set = wake_plan.get_script_arguments()
+            run_wake_plan_script(
+                self.object.site,
+                [self.object],
+                args_set,
+                self.request.user,
+                type="set",
+            )
+        elif wake_plan is None and previous_wake_plan:
+            run_wake_plan_script(
+                self.object.site,
+                [self.object],
+                [],
+                self.request.user,
+            )
 
         with transaction.atomic():
             pc.configuration.update_from_request(self.request.POST, "pc_config")
@@ -1361,17 +1412,43 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             # to them, then run their scripts (first making sure that this
             # PC is capable of doing so!)
             groups_post = set(pc.pc_groups.all())
-            new_groups = groups_post.difference(groups_pre)
+            new_groups = groups_post.difference(set(groups_pre))
             for g in new_groups:
                 policy = g.ordered_policy
                 if policy:
                     for asc in policy:
                         asc.run_on(self.request.user, [pc])
-
-        translation.activate(self.request.user.bibos_profile.language)
-        set_notification_cookie(response, _("Computer %s updated") % pc.name)
-        translation.deactivate()
+        if invalid_groups_names:
+            invalid_groups_string = self.get_notification_string(invalid_groups_names)
+            translation.activate(self.request.user.bibos_profile.language)
+            set_notification_cookie(
+                response,
+                _(
+                    "Computer %s updated, but it could not be added to the group(s) %s "
+                    "because it already belongs to the plan %s"
+                )
+                % (pc.name, invalid_groups_string, wake_plan.name),
+                error=True,
+            )
+            translation.deactivate()
+        else:
+            translation.activate(self.request.user.bibos_profile.language)
+            set_notification_cookie(response, _("Computer %s updated") % pc.name)
+            translation.deactivate()
         return response
+
+    def get_notification_string(self, names, conjunction="og"):
+        """Helper function used to generate strings for the notification displayed
+        when selected groups could not be verified."""
+        names = list(set(names))
+        if len(names) > 1:
+            string = ", ".join(names[:-1])
+            string = " ".join([string, conjunction, names[-1]])
+        elif len(names) == 1:
+            string = names[0]
+        else:
+            string = ""
+        return string
 
 
 class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
