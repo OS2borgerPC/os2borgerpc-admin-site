@@ -1,36 +1,46 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Administration af Scripts</h1>
+  <h1>{% translate "Administrating Scripts" %}</h1>
   <p>
-    Når man klikker på "Scripts" i venstremenuen vil man til højre for
-    venstremenuen få vist en liste af Scripts, og til højre for denne liste vil
-    man få vist redigeringsinterfacet for Scripts.
+    {% blocktranslate trimmed %}
+    When you click on "Scripts" in the left-hand menu, a list of scripts will
+    be shown to the right of the left-hand menu and the editing interface for
+    scripts will be shown to the right of this list.
+    {% endblocktranslate %}
   </p>
   <p>
-    Scripts er til enkeltstående handlinger, hvorimod Sikkerhedsscripts
-    holder øje med specielle hændelser.
+    {% blocktranslate trimmed %}
+    Scripts are for individual actions whereas security scripts monitor
+    special events.
+    {% endblocktranslate %}
   </p>
   <p>
-    Listen af Scripts er delt op i to dele som kan skiftes imellem ved at
-    klikke på fanebladene "Lokale scripts" og "Globale scripts" oven over
-    listen.
+    {% blocktranslate trimmed %}
+    The list of scripts is divided in two parts that one can swap between
+    by clicking on the tabs "Local scripts" and "Global scripts" above
+    the list.
+    {% endblocktranslate %}
   </p>
   <p>
-    Lokale scripts dækker over Scripts som kun kan bruges på det site man er
-    under mens Globale scripts dækker over Scripts der kan bruges på alle
-    sites.
+    {% blocktranslate trimmed %}
+    Local scripts are scripts that can only be used on the currently chosen
+    site while global scripts are scripts that can be used on all sites.
+    {% endblocktranslate %}
   </p>
   <p>
-    For hvert script har du mulighed for følgende:
+    {% translate "You have the following options for every script" %}:
     {% include 'documentation/scripts/__submenu__.html' %}
   </p>
   <p>
-    Hvis du ønsker at oprette et nyt script skal du klikke på "tilføj nyt
-    script" oven over listen med Scripts. Dette vil åbne en dialog hvor du kan
-    udfylde script navn, beskrivelse og uploade script-kode. Når du klikker på
-    den vil scriptet blive oprettet og du vil blive viderestillet til
-    redigeringssiden for det nyoprettede script, hvor du vil have mulighed for
-    at tilføje inputparametre til scriptet.
+    {% blocktranslate trimmed %}
+    If you wish to add a new script, you must click on "Add new Script"
+    above the list of scripts. This will open a modal where you can fill
+    out the name and description and upload the script code. When you
+    then click on "Create script", the script will be created, and you will
+    be redirected to the editing interface for the newly created script
+    where you can add arguments for the script.
+    {% endblocktranslate %}
   </p>
 {% endblock %}

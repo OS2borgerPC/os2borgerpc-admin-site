@@ -1,34 +1,65 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_content %}
-  <h1>Tilknyttede Scripts</h1>
+  <h1>{% translate "Associated Scripts" %}</h1>
 
   <p>
-    Du har mulighed for at tildele hver gruppe en række Tilknyttede Scripts. For at ændre de Tilknyttede Scripts for en
-    gruppe skal du klikke dig ind på gruppen og trykke på fanebladet <strong>Tilknyttede Scripts</strong>.
-    Tryk på input-feltet <strong>Tilføj script</strong> og søg efter det script du gerne vil tilknytte til gruppen, klik derefter på Scriptet og det vil blive tilføjet som Tilknyttet Script.
+    {% translate "Associated Scripts"|bold as asc %}
+    {% translate "Add script"|bold as addsc %}
+    {% blocktranslate trimmed %}
+    You have the option of assigning each group a number of associated scripts. In order to change the
+    associated scripts for a group, you must click on the group and then click the tab {{ asc }}. Select
+    the input field {{ addsc }} and search for the script that you wish to assign to the group.
+    Next, click on the script and it will be added as an Associated Script.
+    {% endblocktranslate %}
   </p>
   <p>
-    Når en computer tilføjes til en gruppe bliver alle Tilknyttede Scripts automatisk kørt.
-    Når man tilknytter et nyt Script til en gruppe, køres dette automatisk på gruppens computere.
+    {% blocktranslate trimmed %}
+    When a computer is added to a group, all Associated Scripts are automatically run on that computer.
+    When you add a new Associated Script, it will automatically be run on all computers in the group.
+    Editing the parameters of an associated script will only cause it to be rerun on the computers
+    in the group if the relevant setting under Site settings has been checked.
+    {% endblocktranslate %}
   </p>
   <p>
-    Scripts har en position der angiver i hvilken rækkefølge, de bliver kørt, og de kan have nogle inputparametre
-    de køres med.
+    {% blocktranslate trimmed %}
+    Associated Scripts have a position that determines the order in which they are run and they may have a
+    number of input parameters that they are run with.
+    {% endblocktranslate %}
   </p>
-  <p>En computer kan sagtens tilmeldes flere grupper.<br/>
-    Eksempel: Der står en computer på biblioteket og en anden i borgerservice, som skal have forskellige startsider, 
-    men som begge har samme scanner sat til. I så fald kan computerne være tilmeldt en gruppe for borgerservice og en anden for scanner-computere.</p>
+  <p>{% translate "A computer can be added to multiple groups." %}<br/>
+    {% blocktranslate trimmed %}
+    Example: There is one computer in the library and another in citizen service that should have different homepages,
+    but both be connected to the same scanner. In this case, one computer can be added to the library group and the other
+    to the citizen service group while both are added to the group for scanner computers.
+    {% endblocktranslate %}
+    </p>
   <p>
-    Vi anbefaler at bruge Tilknyttede Scripts hvor det er muligt, da det kan gøre det lettere at sætte nye
-  computere op på en afdeling, da alt man så skal gøre er at tilmelde den gruppen, og så køres de relevante Scripts
-  derpå med rette inputparametre automatisk.
+    {% blocktranslate trimmed %}
+    We recommend using Associated Scripts where possible as they make it simpler to set up new computers in
+    a department. All you need to do is to add the new computers to the group, and then the relevant scripts
+    will automatically be run on them with the correct input parameters.
+    {% endblocktranslate %}
   </p>
-  <h2>Bemærkninger</h2>
+  <h2>{% translate "Final remarks" %}</h2>
   <ul>
-    <li>Når der tilføjes eller slettes et Script i listen, vil det først blive gemt, efter tryk på <strong>Gem ændringer</strong>.</li>
-    <li>Hvis Scriptet du tilføjer benytter inputparametre, sættes værdierne for disse ved at trykke på <strong>Rediger</strong>, og dette <em>skal</em> gøres før
-      ændringerne kan gemmes. Dvs. et Script der benytter inputparametre kan ikke tilknyttes, med tomme inputparametre.</li>
-    <li>Såfremt man ønsker at ændre på inputparametre for et givent Script skal Scriptet slettes fra gruppen og tilføjes på ny med de opdaterede inputparametre.</li>
+    {% translate "Save changes"|bold as save %}
+    {% translate "Edit"|bold as edit %}
+    {% translate "must"|italic as must %}
+    <li>{% blocktranslate trimmed %}
+      When a script is added to or removed from the list, the change won't be saved until you've clicked {{save}}.
+      {% endblocktranslate %}</li>
+    <li>{% blocktranslate trimmed %}
+      If the added script requires input parameters, these parameters are set by clicking {{edit}} and this {{must}}
+      be done before the changes can be saved. I.e. a Script that requires input parameters cannot be assigned with
+      empty input parameters.
+      {% endblocktranslate %}</li>
+    <li>{% blocktranslate trimmed %}
+      You can change the input parameters for a script by clicking {{edit}}, making the desired changes and
+      then saving the changes. However, this will only cause the script to be rerun on the computers in the
+      group if the relevant setting under Site settings has been checked.
+      {% endblocktranslate %}</li>
   </ul>
 {% endblock %}

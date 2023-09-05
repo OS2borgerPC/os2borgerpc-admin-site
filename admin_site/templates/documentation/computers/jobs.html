@@ -1,11 +1,13 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Jobhistorik for computer</h1>
+  <h1>{% translate "Job history for a computer" %}</h1>
   <p>
-    Her kan du se en historik over jobs tilknyttet computeren. Du kan klikke på
-    pilene over listen for at ændre sorteringen. Hvis du klikker på info-ikonet
-    til højre på det enkelte job får du mulighed for at se log-output for
-    jobbet samt for at køre jobbet igen hvis det fejlede.
+    {% blocktranslate trimmed %}
+    Here you can see the history of jobs associated with the computer. If you click
+    on the info icon to the right on the individual job, it will be possible to
+    see the log output from the job as well as rerun the job if it failed.
+    {% endblocktranslate %}
   </p>
 {% endblock %}

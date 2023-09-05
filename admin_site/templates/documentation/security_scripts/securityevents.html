@@ -1,22 +1,29 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Sikkerhedshændelser</h1>
+  <h1>{% translate "Security Events" %}</h1>
   <p>
-	Denne oversigt viser de individuelle hændelser, som er udløst af systemet.
-	I venstre kolonne kan du vælge hvordan oversigten filtreres, altså hvilke hændelser du vil se.
-	Standard er, at du ser alle ikke-behandlede hændelser.
-	Af oversigten fremgår også hændelsernes alvorsgrad.
+	{% blocktranslate trimmed %}
+	This overview shows the individual events that have been triggered by the system.
+	In the left column, you can choose how you wish to filter the overview, i.e.
+	choose which events you wish to see. By default you will be shown all unresolved
+	events with a severity level greater than normal.
+	The severity level is also shown in the overview.
+	{% endblocktranslate %}
   </p>  
   <p>
-  Fra oversigten kan du udføre to handlinger.<br>
-  Du kan:</p>
-  <ul>
-	  <li>
-	  Markere at du tager ansvar for behandling af hændelsen. Dette skifter status til "Tildelt".
-	  </li>
-	  <li>
-	  Markere hændelsen som behandlet. Dette skifter status til "Løst".
-	  </li>
-  </ul>    
+	{% blocktranslate trimmed %}
+	From the overview you can select and handle security events. Handling an event
+	allows you to change its status and the assigned user as well as add or change
+	a note for the event. It is possible to handle multiple events simultaneously.
+	{% endblocktranslate %}
+  </p>
+  <p>
+	{% blocktranslate trimmed %}
+	The possible statuses are new (the default), assigned and resolved. The assigned
+	user can be chosen from among all users on the site you are on. It is possible
+	for an event to have no assigned user.
+	{% endblocktranslate %}
+  </p>
 {% endblock %}

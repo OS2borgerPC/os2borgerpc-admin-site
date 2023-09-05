@@ -1,35 +1,44 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block admin_groups_active %}class="active"{% endblock %}
 
 {% block specific_content %}
-  <h1>Grupper</h1>
+  <h1>{% translate "Groups" %}</h1>
   <p>
-    En OS2borgerPC-gruppe er en samling af computere der deler konfigurationsnøgler.
-    En gruppe kan også bruges til at nemt at køre et script på en samling af computere.
+    {% blocktranslate trimmed %}
+    A OS2borgerPC-group is a collection of computers that share configuration keys.
+    A group can also be used to easily run a script on multiple computers.
+    {% endblocktranslate %}
   </p>
   <p>
-    Når man klikker på Grupper i venstremenuen vil man til højre for
-    venstremenuen få vist en liste af grupper for det site man er under. Man
-    kan klikke på navnet for den enkelte gruppe for at redigere gruppen.
+    {% blocktranslate trimmed %}
+    When you click on Groups in the left-hand menu, a list of groups for the
+    site you are on will be shown to the right of the left-hand menu. You can
+    click on the name of a particular group in order to edit that group.
+    {% endblocktranslate %}
   </p>
   <p>
-    Til højre vises redigeringsinterfacet for den valgte gruppe. Hvis ikke der
-    er oprettet nogen grupper for det site man er under vises dialogen til
-    oprettelse af grupper.
+    {% blocktranslate trimmed %}
+    The interface for editing the chosen group will be shown on the right side of
+    the screen. If no groups have been created for the site you are on, the
+    form for creating groups will be shown instead.
+    {% endblocktranslate %}
   </p>
   <p>
-    Når man klikker ind på en gruppe får man mulighed for at redigere følgende:
+    {% translate "When you click on a group, you will be able to edit the following" %}:
     {% include 'documentation/groups/__submenu__.html' %}
   </p>
   <p>
-    Konfigurationer kan du læse nærmere om på siden <a href="{% url 'doc' 'configuration' %}">Konfigurationer</a>.
+    {% translate "Configurations are described on the page" %} <a href="{% url 'doc' 'configuration' %}">{% translate "Configurations" %}</a>.
   </p>
   <p>
-    Hvis man ønsker at oprette en ny gruppe skal man klikke på "tilføj ny
-    gruppe" oven over listen med grupper. Dette vil bringe en dialog op hvor
-    man skal udfylde navn, id og beskrivelse for gruppen. Når man klikker på
-    gem vil man blive viderestillet til redigeringssiden for den nyoprettede
-    gruppe, hvorfra det vil være muligt at tilføje computere til gruppen.
+    {% blocktranslate trimmed %}
+    If you wish to create a new group, you must click on "Add new group"
+    above the list of groups. This will open a modal where you must enter
+    a name and description for the group. When you click on "Create group",
+    you will be redirected to the editing interface for the newly created
+    group where it will be possible to add computers to the group.
+    {% endblocktranslate %}
   </p>
 {% endblock %}

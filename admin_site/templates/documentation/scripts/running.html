@@ -1,29 +1,38 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Afvikling af Scripts</h1>
+  <h1>{% translate "Executing Scripts" %}</h1>
   <p>
-    For at køre et script på en computer eller en gruppe af computere skal du
-    klikke på "Scripts" i venstremenuen og vælge det script du vil køre. Bemærk
-    at det kan være nødvendigt at skifte mellem fanerne "Lokale scripts" og
-    "Globale scripts" for at finde det script du leder efter. Når du har
-    valgt det script, du ønsker at køre, skal du klikke på knappen
-    "Kør script".
+    {% blocktranslate trimmed %}
+    In order to run a script on a computer or a group of computers, you must click
+    on "Scripts" in the left-hand menu and choose the script you wish to run.
+    Note that it may be necessary to swap between the tabs "Local scripts" and
+    "Global scripts" in order to find the script. When you have located the script
+    you wish to run, you must click on the button "Run script".
+    {% endblocktranslate %}
   </p>
   <p>
-    Der kommer nu en dialog, hvor du bliver bedt om at vælge de computere
-    og/eller grupper, som du ønsker at afvikle scriptet på. Klik på den enkelte
-    computer eller gruppe for at vælge/afvælge den. Du kan vælge så mange
-    computere eller grupper, som du ønsker. Valg af en gruppe vil
-    medføre, at scriptet udføres på samtlige computere der er med i gruppen.
-    Klik på "Næste", når du har foretaget dine valg.
+    {% blocktranslate trimmed %}
+    You will now be shown a modal where you will be asked to select the
+    computers and/or groups that should execute the script. Click on the
+    individual computer or group in order to select/deselect it. You can
+    choose any number of computers or groups. At the top are special
+    checkboxes that can be used to select/deselect all computers or groups.
+    Choosing a group will cause the script to be executed on all computers
+    in that group. Click "Next" once you have made your choices.
+    {% endblocktranslate %}
   </p>
   <p>
-    Du vil nu blive bedt om at udfylde inputparametre for scriptet. Udfyld felterne
-    og klik på "Kør" for at starte afviklingen af scriptet. Dette vil medføre,
-    at der bliver oprettet et job for hver computer du valgte at udføre
-    scriptet på. Du kan klikke på linket i den sidste side i dialogen for at gå
-    til <a href="{% url 'doc' 'jobs' %}">joblisten</a> og følge med
-    i afviklingen af jobs på de enkelte computere.
+    {% blocktranslate trimmed %}
+    You will now be asked to enter input parameters for the script. If an input
+    parameter has a default value, it will be entered by default. The value can
+    be changed. Fill out the fields and press "Run" in order to start the script
+    execution. This will result in a job being created for every computer that
+    the script is to be executed on. You can click on the link in the last section
+    of the modal in order to jump to
+    {% endblocktranslate %}
+     <a href="{% url 'doc' 'jobs' %}">{% translate "The job list" %}</a>
+    {% translate "and track the execution of jobs on the individual computers." %}
   </p>
 {% endblock %}

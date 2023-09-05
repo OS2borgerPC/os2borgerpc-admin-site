@@ -1,11 +1,12 @@
+{% load i18n %}
 <ul class="docsubnav">
     <li {% if submenu_active == 'edit' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'scripts/edit' %}"> Redigering af Scripts</a>
+      <a href="{% url 'doc' 'scripts/edit' %}"> {% translate "Editing Scripts" %}</a>
     </li>
     <li {% if submenu_active == 'parameters' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'scripts/parameters' %}"> Redigering af inputparametre</a>
+      <a href="{% url 'doc' 'scripts/parameters' %}"> {% translate "Editing arguments" %}</a>
     </li>
     <li {% if submenu_active == 'running' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'scripts/running' %}"> Afvikling af Scripts</a>
+      <a href="{% url 'doc' 'scripts/running' %}"> {% translate "Executing Scripts" %}</a>
     </li>
 </ul>
