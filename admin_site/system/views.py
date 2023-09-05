@@ -1389,7 +1389,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
         form.cleaned_data["pc_groups"] = verified_groups
 
-        if run_wake_plan:
+        if run_wake_plan and wake_plan.enabled:
             args_set = wake_plan.get_script_arguments()
             run_wake_plan_script(
                 self.object.site,
@@ -1398,7 +1398,11 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                 self.request.user,
                 type="set",
             )
-        elif wake_plan is None and previous_wake_plan:
+        elif (
+            (wake_plan is None or (wake_plan and not wake_plan.enabled))
+            and previous_wake_plan
+            and previous_wake_plan.enabled
+        ):
             run_wake_plan_script(
                 self.object.site,
                 [self.object],
