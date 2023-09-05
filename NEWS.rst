@@ -1,3 +1,18 @@
+Version 5.19.0, September 5, 2023
+---------------------------------
+
+- Fix wake plan not being sent/removed when adding/removing PC to/from group from PCUpdate
+- Use translations in Site documentation and update documentation
+- Fix server error when trying to access DeleteView for a nonexistent user, group, PC or wake plan
+- Add button to copy job log
+- Make job log show chosen arguments for new jobs
+- Make changelog its own app
+- Avoid saving PC MAC and UID as configurations. Show PC MAC attribute under details
+- Remove modal when creating user, instead reuse template used for UserUpdate
+- Make mandatory parameters required by the browser when editing a policy script
+- Prevent saving a script with an unnamed input, which caused a server error
+- Minor improvements to /admin
+
 Version 5.18.0, July 6, 2023
 ----------------------------
 
