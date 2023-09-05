@@ -7,7 +7,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("system", "0069_pcgroup_supervisors"),
+        ("system", "0070_pcgroup_supervisors"),
     ]
 
     operations = [
