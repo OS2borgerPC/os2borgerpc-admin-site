@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("system", "0070_remove_pc_is_update_required"),
+        ("system", "0071_remove_pc_is_update_required"),
     ]
 
     operations = [
