@@ -35,6 +35,8 @@ from django_otp import devices_for_user, user_has_device
 from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
+from system.utils import get_notification_string
+
 from account.models import (
     UserProfile,
     SiteMembership,
@@ -1419,7 +1421,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                     for asc in policy:
                         asc.run_on(self.request.user, [pc])
         if invalid_groups_names:
-            invalid_groups_string = self.get_notification_string(invalid_groups_names)
+            invalid_groups_string = get_notification_string(invalid_groups_names)
             translation.activate(self.request.user.bibos_profile.language)
             set_notification_cookie(
                 response,
@@ -1436,19 +1438,6 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             set_notification_cookie(response, _("Computer %s updated") % pc.name)
             translation.deactivate()
         return response
-
-    def get_notification_string(self, names, conjunction="og"):
-        """Helper function used to generate strings for the notification displayed
-        when selected groups could not be verified."""
-        names = list(set(names))
-        if len(names) > 1:
-            string = ", ".join(names[:-1])
-            string = " ".join([string, conjunction, names[-1]])
-        elif len(names) == 1:
-            string = names[0]
-        else:
-            string = ""
-        return string
 
 
 class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
@@ -1656,14 +1645,14 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         )
         pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
         # Generate the notification strings
-        invalid_groups_string = self.get_notification_string(invalid_groups_names)
-        pcs_with_other_plans_string = self.get_notification_string(
+        invalid_groups_string = get_notification_string(invalid_groups_names)
+        pcs_with_other_plans_string = get_notification_string(
             pcs_with_other_plans_names
         )
-        other_plans_string = self.get_notification_string(
+        other_plans_string = get_notification_string(
             other_plans_names, conjunction="eller"
         )
-        invalid_events_string = self.get_notification_string(invalid_exceptions_names)
+        invalid_events_string = get_notification_string(invalid_exceptions_names)
         return (
             pcs_in_verified_groups,
             invalid_groups_string,
@@ -1672,19 +1661,6 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             invalid_events_string,
             set(groups),
         )
-
-    def get_notification_string(self, names, conjunction="og"):
-        """Helper function used to generate strings for the notification displayed
-        when selected groups could not be verified."""
-        names = list(set(names))
-        if len(names) > 1:
-            string = ", ".join(names[:-1])
-            string = " ".join([string, conjunction, names[-1]])
-        elif len(names) == 1:
-            string = names[0]
-        else:
-            string = ""
-        return string
 
 
 class WakePlanCreate(WakePlanExtendedMixin, CreateView):
