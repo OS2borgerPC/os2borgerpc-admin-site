@@ -128,3 +128,17 @@ def always_validate_citizen(loaner_number, pincode, agency_id):
         logger.error("Agency ID / ISIL MUST be specified.")
         return 0
     return loaner_number
+
+
+def get_notification_string(python_list, conjunction="og"):
+    """Helper function used to generate human-readable strings
+    from python lists."""
+    python_list = list(set(python_list))
+    if len(python_list) > 1:
+        string = ", ".join(python_list[:-1])
+        string = " ".join([string, conjunction, python_list[-1]])
+    elif len(python_list) == 1:
+        string = python_list[0]
+    else:
+        string = ""
+    return string
