@@ -223,6 +223,7 @@ DOCUMENTATION_DIR = os.path.join(install_dir, "templates")
 LOCAL_APPS = (
     "system",
     "account",
+    "changelog",
 )
 
 THIRD_PARTY_APPS = (

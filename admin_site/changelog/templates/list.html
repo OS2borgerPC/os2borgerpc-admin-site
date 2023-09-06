@@ -1,0 +1,173 @@
+{% extends "sitebase.html" %}
+
+{% load i18n %}
+
+{% block header_title %}
+{% translate "OS2borgerPC" %}: {% translate "News" %}
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="/static/css/changelog.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/foundation.min.css">
+{% endblock %}
+
+{% block head_javascripts %}
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+    <script type="text/javascript" src="/static/js/changelog_list.js"></script>
+{% endblock %}
+
+
+{% block subnav %}
+
+<nav id="left-menu" class="nav nav-pills utils-global float-start">
+    <h2 class="text-light">{% translate "News" %}</h2>
+    <a href="/" class="nav-link">
+        <span class="material-icons" style="margin: 0 .25rem 0 -.25rem; font-size: 1.25rem;">arrow_back</span>
+        {% translate "Back to previous page" %}
+    </a>
+    <hr>
+</nav>
+
+{% endblock %}
+
+
+{% block specific_content %}
+
+<div id="changelog-container">
+    <header>
+        <div class="container">
+            <div class="row">
+              <div class="col-3">
+                <div id="filter-search">
+                    <form action="">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <span class="material-icons">search</span>
+                                <input type="search" id="search" name="search" class="form-control" style="border: 0" placeholder="{% translate 'Search...' %}">
+                            </span>
+                        </div>
+                    </form>
+                </div>
+              </div>
+              <div class="col-9">
+                <div id="filter-tags">
+                    <strong id="tags-title" class="text-muted">{% translate "News categories" %}</strong>
+                <!-- Here the tag filters are defined. Each is a clickable button that filters the entries to show entries with that tag -->
+                    <form method="GET" class="mt-2">
+                        <div id="changelog-search-tag-selectors">
+                            <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" href="{% url 'changelogs' %}" id="Alle">{% translate "All" %}</a>
+                            {% for tag in tag_choices %}
+                                <a class="btn btn-md tag-filter-btn bg-primary text-white me-2 mb-2" id="{{ tag.pk }}" href="?{% if page %}page={{ page }}&{% endif %}tag={{ tag.pk }}">{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    </header>
+
+    <hr>
+
+    <div class="changelog-container">
+        <h3>
+            {% if tag_filter %}
+                {% translate "Showing news in the category of" %} <strong>{{ tag_filter.name }}</strong>
+            {% else %}
+                {% translate "Showing" %} <strong>{% translate "all" %}</strong> {% translate "news" %}
+            {% endif %}
+            {# Note: Currently you can only search all changelogs, not based on tags #}
+            {% if search_query %}
+                {% translate "that matches the query" %} <strong>{{ search_query }}</strong>
+            {% endif %}
+        </h3>
+        {% for entry in entries %}
+            <div class="changelog-item" data-bs-target="#changelogDetails-{{ entry.pk }}" data-bs-toggle="modal" id="changelog-{{ entry.pk }}">
+                <div class="card">
+                    <header>
+                        <h2 class="card-title changelog-item-title">
+                            {{ entry.title }}
+                        </h2>
+                        <p class="changelog-item-timestamp">
+                            <strong class="timestamp-created text-muted">{{ entry.created }}</strong>
+                        </p>
+                    </header>
+                    <div class="clearfix"></div>
+                    <p>
+                    {{ entry.description }}<br/><br/>
+                        <em>{% translate "Read more" %}</em>...
+                    </p>
+                    <footer>
+                        <div class="changelog-tags">
+                            <h3>{% translate "News categories" %}</h3>
+                            <ul class="list-group-horizontal list-group">
+                                {% for tag in entry.tags.all %}
+                                    <li><span class="badge bg-primary me-2">{{ tag.name }}</span></li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                        <div class="changelog-comment-info" title="{% translate 'Show' %} ">
+                            <p>{{ entry.comments.count }} <span class="material-icons fs-2">{% translate "chat" %}</span></p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+                </div>
+            </div>
+
+            {% include "item.html" with entry=entry %}
+        {% endfor %}
+    </div>
+
+
+    <!-- pagination start -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if entries.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ entries.previous_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">{% translate "Previous" %}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% translate "Previous" %}</a>
+                </li>
+            {% endif %}
+
+            {% if entries.number|add:'-4' > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ entries.number|add:'-5' }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">&hellip;</a>
+                </li>
+            {% endif %}
+
+            {% for i in entries.paginator.page_range %}
+                {% if entries.number == i %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">
+                            <strong>
+                                <u>
+                                    {{ i }}
+                                </u>
+                            </strong>
+                        </span>
+                    </li>
+                {% elif i > entries.number|add:'-5' and i < entries.number|add:'5' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if entries.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ entries.next_page_number }}{% if tag_filter.pk %}&tag={{ tag_filter.pk }}{% endif%}">{% translate "Next" %}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% translate "Next" %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <!-- pagination end -->
+    {% endblock %}

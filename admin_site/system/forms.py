@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from system.models import (
-    ChangelogComment,
     ConfigurationEntry,
     Input,
     PC,
@@ -265,6 +264,7 @@ class PCForm(forms.ModelForm):
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["uid"].disabled = True
+            self.fields["mac"].disabled = True
 
     class Meta:
         model = PC
@@ -284,12 +284,6 @@ class SecurityProblemForm(forms.ModelForm):
     class Meta:
         model = SecurityProblem
         fields = "__all__"
-
-
-class ChangelogCommentForm(forms.ModelForm):
-    class Meta:
-        model = ChangelogComment
-        fields = ["content"]
 
 
 class SecurityEventForm(forms.ModelForm):

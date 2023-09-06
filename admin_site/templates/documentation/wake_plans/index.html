@@ -1,147 +1,204 @@
 {% extends 'documentation/index.html' %}
 {% load static %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block admin_groups_active %}class="active"{% endblock %}
 
 {% block specific_content %}
-  <h1>Strømbesparende funktioner</h1>
+  <h1>{% translate "Power saving functions" %}</h1>
   <p>
-    De strømbesparende funktioner består af et dvale-script og tænd/sluk-tidsplaner.
-    Disse funktioner kan kun anvendes af de kunder, som har tilkøbt sig adgang.
-    Alle kunder, som var med til at finansiere funktionerne, har automatisk adgang.
-    Andre kunder kan kontakte Magenta, hvis de er interesserede.
+    {% blocktranslate trimmed %}
+    The power saving functions consist of a suspend script and on/off schedules.
+    These functions can only be accessed by the customers that pay for access.
+    The customers that helped fund the functions automatically have access.
+    Other customers can contact Magenta if they are interested.
+    {% endblocktranslate %}
   </p>
   <p>
-    Dvale-scriptet er kun beregnet til brug på OS2borgerPC, mens tænd/sluk-tidsplaner
-    kan anvendes på både OS2borgerPC og OS2borgerPC Kiosk. Dvale-scriptet kan fint
-    anvendes sammen med tænd/sluk-tidsplaner.
+    {% blocktranslate trimmed %}
+    The suspend script is only intended for use on OS2borgerPC while the on/off
+    schedules can be used on both OS2borgerPC and OS2borgerPC Kiosk. The suspend
+    script can be combined with on/off schedules.
+    {% endblocktranslate %}
   </p>
   <p>
-    Hvis det er første gang du besøger denne side, vil vi foreslå at starte med at læse vores
-    <a href="{% url 'wake_plan_user_guide' %}" target="_blank">Brugerguide til strømsparefunktioner i OS2borgerPC</a>.
+    {% blocktranslate trimmed %}
+    If you are visiting this page for the first time, we recommend first reading our
+    {% endblocktranslate %}
+    <a href="{{ pdf_href|get_item:'wake_plan_user_guide' }}" target="_blank">{% translate "User guide to power saving functions in OS2borgerPC" %}</a>.
   </p>
-  <h2>Dvale-script</h2>
+  <h2>{% translate "The suspend script" %}</h2>
   <p>
-    Dvale-scriptet kan bruges til at indstille computere til at gå i dvale efter
-    et antal minutters inaktivitet. Der vises en valgfri advarsel, inden computeren går i dvale.
-    Scriptet tager fem argumenter: hvorvidt funktionen
-    skal aktiveres, antal minutter med inaktivitet før advarslen vises,
-    antal minutter med inaktivitet før maskinen går i dvale,
-    teksten i advarslen og teksten på knappen i advarslen.
-    Hvis de to sidste tekst-relaterede input ikke angives, benyttes standardtekster.
-    Scriptet logger automatisk borgeren ud, inden maskinen går i dvale.
-  </p>
-  <p>
-    Dvale-scriptet kan også sætte maskinen i dvale, hvis den står inaktiv på login-skærmen.
-    Dette kræver dog, at scriptkørsel ved login er blevet slået til via
-    scriptet <a href="{% url 'script_redirect_id' '1064' %}">Login - Slå scriptkørsel ved login til/fra</a>.
-    Advarslen vises ikke på login-skærmen.
+    {% blocktranslate trimmed %}
+    The suspend script can be used to configure computers to automatically suspend
+    after a number of minutes of inactivity. A chosen warning is displayed before
+    the computer is suspended. The script takes five arguments: whether to
+    activate the function, the number of minutes of inactivity before the warning
+    is shown, the number of minutes of inactivity before the machine suspends,
+    the text in the warning and the text on the button in the warning. If the
+    last two text-related inputs are left empty, default texts will be used.
+    The script automatically logs out the user before the machine suspends.
+    {% endblocktranslate %}
   </p>
   <p>
-    Bemærk at USB-overvågning ikke kan være aktiv, mens en computer er i dvale.
+    {% blocktranslate trimmed %}
+    The suspend script can also suspend the machine when it is inactive on the
+    login screen. However, this requires that script execution at login has been
+    enabled via the script
+    {% endblocktranslate %}
+    <a href="{% url 'script_redirect_id' '1064' %}">Login - Slå scriptkørsel ved login til/fra</a>.
+    {% translate "The warning will not be shown on the login screen." %}
   </p>
-  <h2>Tænd/Sluk tidsplaner</h2>
   <p>
-    En Tænd/Sluk tidsplan er et redskab til at planlægge og administrere
-    tænd- og sluk-tidspunkter for computerne i en eller flere grupper.
+    {% translate "Be aware that USB surveillance cannot be active while the machine is suspended." %}
+  </p>
+  <h2>{% translate "On/Off schedules" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    An on/off schedule is a tool for planning and administrating on and off
+    times for computers in one or more groups.
+    {% endblocktranslate %}
   </p>
   <p>
-    Brugen af Tænd/Sluk tidsplaner overflødiggør scriptsene
-    <a href="{% url 'script_redirect_id' '12' %}">OS2BorgerPC - Luk ned dagligt</a> og
+    {% translate "The use of On/Off schedules makes it unnecessary to use the scripts" %}
+    <a href="{% url 'script_redirect_id' '12' %}">OS2BorgerPC - Luk ned dagligt</a> {% translate "and" %}
     <a href="{% url 'script_redirect_id' '422' %}">OS2BorgerPC - Luk ned og vågn op dagligt</a>.
   </p>
   <p>
-    Når man klikker på Tænd/Sluk tidsplan i venstremenuen, vil man til højre for
-    venstremenuen få vist en liste af tidsplaner for det site, man er under. Man
-    kan klikke på navnet for den enkelte tidsplan for at redigere tidsplanen.
+    {% blocktranslate trimmed %}
+    When you click on "On/Off schedule" in the left-hand menu, a list of schedules
+    for the chosen site will be shown to the right of the left-hand menu. You
+    can click on a particular schedule in order to edit that schedule.
+    {% endblocktranslate %}
   </p>
   <p>
-    Til højre vises redigeringsinterfacet for den valgte tidsplan. Hvis ikke der
-    er oprettet nogen tidsplaner for det site, man er under, vises interfacet til
-    oprettelse af tidsplaner.
+    {% blocktranslate trimmed %}
+    The editing interface for the chosen schedule is shown on the right. If no
+    schedules have been created for the chosen site, the interface for creating
+    schedules will be shown instead.
+    {% endblocktranslate %}
   </p>
   <p>
-    Som standard når man klikker sig ind på en tidsplan, vil man få vist
-    tidsplanens indstillinger samt hvilke undtagelser og grupper, der er knyttet til tidsplanen.
-    Her kan man ændre tidsplanens navn, status, dvaletilstand og indstillinger
-    for den faste ugeplan, samt tilføje/fjerne grupper eller undtagelser
-    fra tidsplanen. Ændringer foretaget på siden træder ikke i kraft, før man
-    klikker på "Gem ændringer"-knappen i bunden af skærmbilledet.
+    {% blocktranslate trimmed %}
+    When you click on a schedule, you will by default be shown the schedule's
+    settings as well as the exceptions and groups that are associated with
+    the schedule. Here you can change the schedule's name, status, sleep state
+    and settings for the general week plan as well as add/remove groups or
+    exceptions from the schedule. Changes do not take effect until you've
+    clicked on the "Save changes"-button at the bottom of the screen.
+    {% endblocktranslate %}
   </p>
   <p>
-    Hvis man trykker på "Opret lukkedag", "Opret ændrede åbningstider" eller "Rediger undtagelser"
-    omdirigeres man til en ny side, hvor man kan oprette nye undtagelser
-    og redigere eller slette eksisterende undtagelser. De to "Opret" knapper går direkte til
-    et interface for den pågældende type undtagelse, mens "Rediger undtagelser" åbner
-    redigeringssiden for den første undtagelse for det site, man er under.
+    {% blocktranslate trimmed %}
+    If you click on "Create closed days", "Create altered opening hours" or
+    "Edit exceptions", you will be redirected to a new page where you can
+    create new exceptions and edit or delete existing exceptions. The two
+    "Create" buttons take you directly to an interface for that particular
+    type of exception while "Edit exceptions" opens the editing interface
+    for the first exception for the chosen site.
+    {% endblocktranslate %}
   </p>
   <p>
-    De forskellige redigeringsmuligheder beskrives nærmere under disse punkter:
+    {% blocktranslate trimmed %}
+    The different editing options are described more closely here:
+    {% endblocktranslate %}
     {% include 'documentation/wake_plans/__submenu__.html' %}
   </p>
   <p>
-    Hvis man ønsker at oprette en ny tidsplan, skal man klikke på "tilføj ny
-    tænd/sluk tidsplan" oven over listen med tidsplaner. Dette åbner et interface, hvor
-    man skal udfylde navn for tidsplanen og har mulighed for at redigere i indstillingerne,
-    tilføje undtagelser eller indmelde grupper. Når man klikker på
-    gem, vil man blive viderestillet til redigeringssiden for den nyoprettede
-    tidsplan, hvor man kan fortsætte med at ændre i indstillingerne, tilføje undtagelser eller indmelde grupper.
-    Hvis tidsplanen er sat til "aktiv," vil den også tage effekt, når man klikker på gem.
+    {% blocktranslate trimmed %}
+    If you wish to create a new schedule, you must click on "Add new
+    On/Off schedule" above the list of schedules. This opens an interface
+    where you must enter a name for the schedule and have the option of
+    editing the settings and adding exceptions or groups. When you click
+    on "Save changes", you will be redirected to the editing interface for
+    the newly screated schedule where you can continue to edit the settings
+    and add exceptions or groups. If the schedule status is set to "Active",
+    it will also take effect when you click on "Save changes".
+    {% endblocktranslate %}
   </p>
-  <h2>Vigtige bemærkninger</h2>
+  <h2>{% translate "Important information" %}</h2>
   <p>
-    En computer kan kun modtage en ny/opdateret tidsplan, hvis den tændt. Hvis en
-    computer tilmeldes en tidsplan, eller dens tidsplan ændres, mens den er slukket, vil
-    den først begynde at følge den nye/opdaterede tidsplan, når den har været tændt.
+    {% blocktranslate trimmed %}
+    A computer can only receive a new/updated schedule if it is on. If a
+    computer is added to a schedule or its schedule is changed while it
+    is off, it will only begin following the new/updated schedule once it
+    has been on.
+    {% endblocktranslate %}
   </p>
   <p>
-    Hvis en computer manuelt tændes efter dens sluk-tidspunkt, eller på en dag hvor den er
-    sat til at være konstant slukket, vil den først slukke automatisk på
-    sluk-tidspunktet for næste dag. Hvis der ikke findes et sluk-tidspunkt for næste dag,
-    vil den automatisk slukke 24 timer efter den blev tændt. Hvis computeren manuelt
-    slukkes igen, vil den vågne efter tidsplanen.
+    {% blocktranslate trimmed %}
+    If a computer is manually turned on after its off time or on a day where
+    it is set to be constantly off, it will not turn off automatically until
+    the off time for the next day. If no off time has been set for the next
+    day, it will turn off automatically 24 hours after it was turned on. If
+    the computer is turned off manually, it will turn on according to the
+    schedule.
+    {% endblocktranslate %}
   </p>
-  <h3>Indstilling af BIOS/UEFI</h3>
+  <h3>{% translate "BIOS/UEFI settings" %}</h3>
   <ol>
     <li>
-      Hvis BIOS er indstillet til at vågne op på et bestemt tidspunkt, når Tænd/Sluk Tidsplaner aktiveres, så vil maskinen
-      ikke følge opstartstidspunkterne i tidsplanen, men i stedet de tidspunkter, der står i BIOS. Den vil dog stadig
-      følge nedlukningstidspunkterne sat i tidsplanen.
-      Skal maskinen følge opstartstidspunkterne i tidsplanen, skal man ind i BIOS på maskinerne og slå dens styring af opstartstidspunkt
-      fra. Modificering af BIOS er generelt ikke muligt at gøre fra styresystemet, så derfor kan vi heller ikke gøre det via
-      scripts.
+      {% blocktranslate trimmed %}
+      If BIOS has been set to turn on the machine at a specific time, and
+      the machine belongs to an active On/Off schedule, then the machine
+      will not turn on according to the on times in the schedule, but
+      instead follow the times set in the BIOS. It will, however, turn off
+      according to the schedule. If you want the machine to follow the on
+      times set in the schedule then you must enter BIOS and disable the
+      BIOS control of on times. It is generally not possible to modify
+      BIOS from the OS so it cannot be done via scripts.
+      {% endblocktranslate %}
     </li>
     <li>
-      Hvis maskinerne midlertidigt mister strømmen, mens de er lukket ned efter tidsplanen, vil de stadig vågne op ifølge
-      tidsplanen. (Dvs. teknisk set så længe der stadig er strøm på CMOS-batteriet.)
-      Men hvis de mister strømmen, mens de er tændt, så vil de ikke vågne op af sig selv.
+      {% blocktranslate trimmed %}
+      If the machines temporarily lose power while they are turned off according
+      to the schedule, they will still turn on according to the schedule.
+      (So long as the CMOS battery is still charged.) However, if the machines
+      lose power while they are on, they will not turn on automatically.
+      {% endblocktranslate %}
 
-      Nogle BIOS'er har muligheden for at indstille, at maskinen gendanner dens seneste tilstand (eller tænder) bagefter,
-      hvis den mistede strømmen. Det vil vi derfor anbefale at slå til.
+      {% blocktranslate trimmed %}
+      Some BIOS systems include the option to set the machine to return to its last state
+      (or turn on) after a power failure. We recommend turning this option on.
+      {% endblocktranslate %}
 
-      Afhængigt af BIOS-version kan det se forskelligt ud, men her er et eksempel fra en NUC:
-      Fra oversigtssiden vælger du "Advanced" og dernæst "Power":
+      {% blocktranslate trimmed %}
+      The layout may differ depending on the BIOS version, but here is an example from a NUC:
+      From the overview you choose "Advanced" and then "Power":
+      {% endblocktranslate %}
       <img src="{% static 'docs/img/wake_plan/nuc_bios_start_page.jpg' %}" alt="">
-      Dernæst går du så ind og redigerer indstillingen "After Power Failure" og sætter denne til "Last State"
-      (anbefalet) eller "Power On".
+      {% blocktranslate trimmed %}
+      Next, you edit the setting "After Power Failure" and set it to "Last State"
+      (recommended) or "Power On".
+      {% endblocktranslate %}
       <img src="{% static 'docs/img/wake_plan/nuc_bios_wake_up_power_failure_setting.jpg' %}" alt="">
     </li>
   </ol>
-  <h3>Ofte stillede spørgsmål</h3>
-  <h4>1. Hvordan tilmelder jeg en enkelt-PC til en tidsplan?</h4>
-  <p>Tænd/sluk tidsplaner er designet til at fungere med grupper, og man kan derfor ikke direkte tilmelde en enkelt-PC
-     til en tidsplan. Man kan dog altid oprette en gruppe, som kun indeholder denne ene PC,
-     og tilmelde denne gruppe til tidsplanen.</p>
-  <h4>2. Hvad sker der, hvis maskinen mister strøm?</h4>
-  <p>Se punkt 2. under "Indstilling af BIOS/UEFI" længere oppe.</p>
-  <h4>3. Maskinen starter og lukker på de forkerte tidspunkter?</h4>
-  <p>Dette kan skyldes, at tiden på maskinen er indstillet forkert, eksempelvis fordi den ikke har mulighed for at
-    tidssynkronisere. Normalt tidssynkroniserer Ubuntu Linux - og flere andre styresystemer - via protokollen NTP (Network
-    Time Protocol).
-    NTP kører på port 123 over UDP, som vi derfor foreslår at åbne for i jeres netværksopsætning.
-    Hvis I ikke ønsker at åbne for trafikken på alle domæner, ville vi kunne se på at udvikle et script, der låser NTP
-    til kun at tjekke bestemte URL'er.
+  <h3>{% translate "Frequently asked questions" %}</h3>
+  <h4>{% translate "1. How do I add a single PC to a schedule?" %}</h4>
+  <p>
+    {% blocktranslate trimmed %}
+    On/Off schedules are designed to work with groups, so it is not possible to
+    directly add a single PC to a schedule. You can, however, always create
+    a group that only contains that one PC and then add that group to the
+    schedule.
+    {% endblocktranslate %}
+    </p>
+  <h4>{% translate "2. What happens if the machine experiences a power failure?" %}</h4>
+  <p>{% blocktranslate %}Check the second paragraph under "BIOS/UEFI settings" further up.{% endblocktranslate %}</p>
+  <h4>{% translate "3. The machine turns on and off at the wrong times?" %}</h4>
+  <p>
+    {% blocktranslate trimmed %}
+    This could be due to incorrect time settings on the machine, which could be caused
+    by the machine being unable to perform time synchronization. Ubuntu Linux
+    - and many other operating systems - normally performs time synchronization via the
+    protocol NTP (Network Time Protocol). NTP runs on port 123 via UDP, which we thus
+    suggest allowing in your network configuration. If you do not wish to allow
+    this traffic on all domains, we could develop a script that forces NTP to
+    only check specific URL's.
+    {% endblocktranslate %}
   </p>
-  <h4>4. Maskinen starter på de forkerte tidspunkter, men lukker planmæssigt?</h4>
-  <p>Dette kan skyldes indstillingerne sat i BIOS. Se punkt 1. under "Indstilling af BIOS/UEFI" længere oppe".</p>
+  <h4>{% translate "4. The machine turns on at the wrong times, but turns off according to schedule?" %}</h4>
+  <p>{% blocktranslate %}This could be due to the BIOS settings. Check the first paragraph under "BIOS/UEFI settings" further up.{% endblocktranslate %}</p>
 {% endblock %}

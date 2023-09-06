@@ -1,0 +1,7 @@
+<div style="margin-top: 1rem;">
+    {% for comment in comments %}
+        {% if comment.changelog.pk == entry.pk %}
+            {% include 'comments/item.html' with comment=comment %}
+        {% endif %}
+    {% endfor %}
+</div>

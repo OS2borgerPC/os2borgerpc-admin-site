@@ -1,27 +1,31 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
-{% block doc_subtitle %}Admin-systemet{% endblock %}
+{% block doc_subtitle %}{% translate "The Admin system" %}{% endblock %}
 
 {% block specific_content %}
-  <h1>Aktivering af Computer</h1>
+  <h1>{% translate "Activating a computer" %}</h1>
   <p>
-    Når du har installeret OS2borgerPC på en computer, vil den dukke op i listen over nye
-    computere under <a href="{% url 'doc' 'getting_started' %}">site-status</a>.
-    Før du kan begynde at arbejde med computeren, er det nødvendigt at aktivere den.
-    Det gør du ved at klikke på computeren og sætte et hak i fluebenet "Aktiv" og klikke på "Gem ændringer".
-    Dette kan tage lidt tid, og i den tid vil <a href="{% url 'doc' 'securityevents' %}">sikkerhedssystemet</a> ikke fungere.
-    Der kan gå op til 10 minutter til et kvarter før computeren er aktiveret.
+    {% blocktranslate trimmed %}
+    Once you have installed OS2borgerPC on a computer and registered it with the admin site,
+    it will show up on the list of new computers under{% endblocktranslate %}
+     <a href="{% url 'doc' 'getting_started' %}">site-status</a>.
+    {% translate "Before you can start working with the computer, it is necessary to activate it." %}
+    {% blocktranslate trimmed %}
+    This is done by clicking on the computer, checking the box "Activated" and then clicking "Save changes".
+    Afterward, the computer has been activated. {% endblocktranslate %}
   </p>
   <p>
-    Bortset fra selve tilmeldingen vil administrationssitet altid ignorere alle
-    henvendelser fra computere, der ikke er aktiveret. Dette er dels en praktisk
-    foranstaltning (der er ingen grund til at begynde at opdatere en computer, før man ved,
-    at den er parat), dels en sikkerhedsforanstaltning.
+    {% blocktranslate trimmed %}
+    Except from the registration itself, the admin-site will always ignore all requests from computers
+    that have not been activated. This is partially a practical measure (there is no reason to start
+    updating a computer before you know that it is ready) and partially a security measure.
+    {% endblocktranslate %}
   <p>
-    <b>Bemærk:</b> En af grundene til, at alle computere skal aktiveres manuelt,
-    er at forhindre fremmede computere i at "koble sig på" dit site
-    uden dit eller din organisations
-    vidende. Du skal derfor kun aktivere en computer, hvis du ved, at den skal være
-    der.
+    <b>{% translate "Note" %}:</b> {% blocktranslate trimmed %}
+    One of the reasons that all computers must be activated manually is to prevent foreign computers
+    from connecting to your site without you or your organization knowing.
+    As such, you should only activate a computer if you know that it is supposed to be there.
+    {% endblocktranslate %}
   </p>
 {% endblock %}

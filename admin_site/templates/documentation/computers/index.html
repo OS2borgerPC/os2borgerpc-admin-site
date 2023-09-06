@@ -1,20 +1,21 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Administration af Computer</h1>
+  <h1>{% translate "Administrating computers" %}</h1>
 
   <p>
-    Administrationssiden for en Computer har tre harmonika-faneblade med forskellige
-    funktioner, som er beskrevet herunder. Klik på det enkelte faneblad for at
-    åbne den relevante funktion.
+    {% blocktranslate trimmed %}
+    The administration page for a computer has three tabs with different functions
+    that are described helow. Click on a particular tab to open the relevant function.
+    {% endblocktranslate %}
   </p>
   <p>
-    Du kan finde dokumentation for de forskellige dele ved at følge følgende
-    links:
+    {% translate "You can find documentation for the different parts by following these links:" %}
     {% include 'documentation/computers/__submenu__.html' with submenu_active=None %}
   </p>
   <p>
-    Konfigurationer kan du læse nærmere om på siden <a href="{% url 'doc' 'configuration' %}">Konfigurationer</a>.
+    {% translate "Configurations are described on the page" %} <a href="{% url 'doc' 'configuration' %}">{% translate "Configurations" %}</a>.
   </p>
 
 {% endblock %}

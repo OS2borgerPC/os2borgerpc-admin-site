@@ -25,6 +25,7 @@ services:
             - .:/code/
             - ./dev-environment/dev-settings.ini:/user-settings.ini
             - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
+            - ./dev-environment/changelog_fixtures:/code/admin_site/changelog/fixtures/
         depends_on:
             - db
         ports:

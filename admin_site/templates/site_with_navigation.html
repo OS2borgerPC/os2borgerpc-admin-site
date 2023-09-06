@@ -34,7 +34,7 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "changelogs" as current_url_changelogs %}
-    <a href="{% url 'changelogs' slug=site.url %}" class="nav-link link-light {{ current_url_changelogs }}">
+    <a href="{% url 'changelogs' %}" class="nav-link link-light {{ current_url_changelogs }}">
       <span class="material-icons">tips_and_updates</span>
       {% translate "News" %}
     </a>
@@ -172,11 +172,11 @@ detailpage
     {% if current_url_scripts or current_url_jobs %}
       <a href="{% url 'doc' 'scripts' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
-        {% translate "Administrating scripts" %}
+        {% translate "Administrating Scripts" %}
       </a>
       <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
-        {% translate "Executing scripts" %}
+        {% translate "Executing Scripts" %}
       </a>
     {% endif %}
 

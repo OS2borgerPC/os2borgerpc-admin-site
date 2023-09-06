@@ -35,6 +35,8 @@ from django_otp import devices_for_user, user_has_device
 from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
+from system.utils import get_notification_string
+
 from account.models import (
     UserProfile,
     SiteMembership,
@@ -42,9 +44,6 @@ from account.models import (
 
 from system.models import (
     AssociatedScriptParameter,
-    Changelog,
-    ChangelogComment,
-    ChangelogTag,
     ConfigurationEntry,
     ImageVersion,
     Input,
@@ -63,7 +62,6 @@ from system.models import (
 
 # PC Status codes
 from system.forms import (
-    ChangelogCommentForm,
     ConfigurationEntryForm,
     PCForm,
     PCGroupForm,
@@ -1355,7 +1353,62 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         pc = self.object
-        groups_pre = set(pc.pc_groups.all())
+        groups_pre = pc.pc_groups.all()
+
+        selected_groups = form.cleaned_data["pc_groups"]
+        verified_groups = selected_groups.intersection(groups_pre)
+        unverified_groups = selected_groups.difference(groups_pre).order_by("name")
+
+        previous_wake_plan = None
+        for group in groups_pre:
+            if group.wake_week_plan:
+                previous_wake_plan = group.wake_week_plan
+                break
+
+        wake_plan = None
+        for group in verified_groups:
+            if group.wake_week_plan:
+                wake_plan = group.wake_week_plan
+                break
+
+        run_wake_plan = False
+        invalid_groups_names = []
+        for group in unverified_groups:
+            group_is_valid = True
+            if wake_plan and group.wake_week_plan and wake_plan != group.wake_week_plan:
+                invalid_groups_names.append(group.name)
+                group_is_valid = False
+            elif wake_plan is None and group.wake_week_plan:
+                wake_plan = group.wake_week_plan
+                if wake_plan != previous_wake_plan:
+                    run_wake_plan = True
+            if group_is_valid:
+                verified_groups = verified_groups.union(
+                    PCGroup.objects.filter(pk=group.pk)
+                )
+
+        form.cleaned_data["pc_groups"] = verified_groups
+
+        if run_wake_plan and wake_plan.enabled:
+            args_set = wake_plan.get_script_arguments()
+            run_wake_plan_script(
+                self.object.site,
+                [self.object],
+                args_set,
+                self.request.user,
+                type="set",
+            )
+        elif (
+            (wake_plan is None or (wake_plan and not wake_plan.enabled))
+            and previous_wake_plan
+            and previous_wake_plan.enabled
+        ):
+            run_wake_plan_script(
+                self.object.site,
+                [self.object],
+                [],
+                self.request.user,
+            )
 
         with transaction.atomic():
             pc.configuration.update_from_request(self.request.POST, "pc_config")
@@ -1365,16 +1418,29 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             # to them, then run their scripts (first making sure that this
             # PC is capable of doing so!)
             groups_post = set(pc.pc_groups.all())
-            new_groups = groups_post.difference(groups_pre)
+            new_groups = groups_post.difference(set(groups_pre))
             for g in new_groups:
                 policy = g.ordered_policy
                 if policy:
                     for asc in policy:
                         asc.run_on(self.request.user, [pc])
-
-        translation.activate(self.request.user.bibos_profile.language)
-        set_notification_cookie(response, _("Computer %s updated") % pc.name)
-        translation.deactivate()
+        if invalid_groups_names:
+            invalid_groups_string = get_notification_string(invalid_groups_names)
+            translation.activate(self.request.user.bibos_profile.language)
+            set_notification_cookie(
+                response,
+                _(
+                    "Computer %s updated, but it could not be added to the group(s) %s "
+                    "because it already belongs to the plan %s"
+                )
+                % (pc.name, invalid_groups_string, wake_plan.name),
+                error=True,
+            )
+            translation.deactivate()
+        else:
+            translation.activate(self.request.user.bibos_profile.language)
+            set_notification_cookie(response, _("Computer %s updated") % pc.name)
+            translation.deactivate()
         return response
 
 
@@ -1383,7 +1449,14 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
     template_name = "system/pcs/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        return PC.objects.get(uid=self.kwargs["pc_uid"])
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
+        except PC.DoesNotExist:
+            raise Http404(
+                _("You have no computer with the following ID: %s")
+                % self.kwargs["pc_uid"]
+            )
 
     def get_success_url(self):
         return "/site/{0}/computers/".format(self.kwargs["site_uid"])
@@ -1576,14 +1649,14 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         )
         pcs_in_verified_groups = PC.objects.filter(pk__in=pcs_in_verified_groups_pk)
         # Generate the notification strings
-        invalid_groups_string = self.get_notification_string(invalid_groups_names)
-        pcs_with_other_plans_string = self.get_notification_string(
+        invalid_groups_string = get_notification_string(invalid_groups_names)
+        pcs_with_other_plans_string = get_notification_string(
             pcs_with_other_plans_names
         )
-        other_plans_string = self.get_notification_string(
+        other_plans_string = get_notification_string(
             other_plans_names, conjunction="eller"
         )
-        invalid_events_string = self.get_notification_string(invalid_exceptions_names)
+        invalid_events_string = get_notification_string(invalid_exceptions_names)
         return (
             pcs_in_verified_groups,
             invalid_groups_string,
@@ -1592,19 +1665,6 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             invalid_events_string,
             set(groups),
         )
-
-    def get_notification_string(self, names, conjunction="og"):
-        """Helper function used to generate strings for the notification displayed
-        when selected groups could not be verified."""
-        names = list(set(names))
-        if len(names) > 1:
-            string = ", ".join(names[:-1])
-            string = " ".join([string, conjunction, names[-1]])
-        elif len(names) == 1:
-            string = names[0]
-        else:
-            string = ""
-        return string
 
 
 class WakePlanCreate(WakePlanExtendedMixin, CreateView):
@@ -1958,7 +2018,16 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
     template_name = "system/wake_plan/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        plan = WakeWeekPlan.objects.get(id=self.kwargs["wake_week_plan_id"])
+        try:
+            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            plan = WakeWeekPlan.objects.get(
+                id=self.kwargs["wake_week_plan_id"], site=site_id
+            )
+        except (WakeWeekPlan.DoesNotExist, ValueError):
+            raise Http404(
+                _("You have no Wake Week Plan with the following ID: %s")
+                % self.kwargs["wake_week_plan_id"]
+            )
         if not plan.site.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         return plan
@@ -2306,19 +2375,30 @@ class UsersMixin(object):
         context["sec_events"] = no_of_sec_events
         return context
 
+    def add_membership_to_context(self, context):
+        if "user_list" not in context:
+            self.add_userlist_to_context(context)
+        request_user = self.request.user
+        user_profile = request_user.bibos_profile
+        site_membership = user_profile.sitemembership_set.filter(
+            site=context["site"]
+        ).first()
+
+        if site_membership:
+            loginusertype = site_membership.site_user_type
+        else:
+            loginusertype = None
+
+        context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
+
+        context["site_membership"] = site_membership
+        return context
+
 
 class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
     form_class = UserForm
-    lookup_field = "username"
-    template_name = "system/users/create.html"
-
-    def get_form(self, form_class=None):
-        if form_class is None:
-            form_class = self.get_form_class()
-        form = super(UserCreate, self).get_form(form_class)
-        form.prefix = "create"
-        return form
+    template_name = "system/users/update.html"
 
     def get_form_kwargs(self):
         kwargs = super(UserCreate, self).get_form_kwargs()
@@ -2327,7 +2407,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def get_context_data(self, **kwargs):
         context = super(UserCreate, self).get_context_data(**kwargs)
-        self.add_userlist_to_context(context)
+        self.add_membership_to_context(context)
         return context
 
     def form_valid(self, form):
@@ -2381,30 +2461,10 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         # This line is necessary, as without it UserUpdate will think that user = selected_user
         self.context_object_name = "selected_user"
         context = super(UserUpdate, self).get_context_data(**kwargs)
-        self.add_userlist_to_context(context)
-
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-
-        request_user = self.request.user
-        user_profile = request_user.bibos_profile
-        site_membership = user_profile.sitemembership_set.filter(site=site).first()
-
-        if site_membership:
-            loginusertype = site_membership.site_user_type
-        else:
-            loginusertype = None
+        self.add_membership_to_context(context)
 
         context["selected_user"] = User.objects.get(username=self.kwargs["username"])
 
-        context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
-
-        context["create_form"] = UserForm(
-            prefix="create", language=self.request.user.bibos_profile.language
-        )
-        context["create_form"].setup_usertype_choices(
-            loginusertype, request_user.is_superuser
-        )
-        context["site_membership"] = site_membership
         return context
 
     def get_form_kwargs(self):
@@ -2454,14 +2514,22 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     template_name = "system/users/confirm_delete.html"
 
     def get_object(self, queryset=None):
-        self.selected_user = User.objects.get(username=self.kwargs["username"])
+        try:
+            self.selected_user = User.objects.get(username=self.kwargs["username"])
+            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
+                site__uid=self.kwargs["site_uid"]
+            )
+        except (User.DoesNotExist, SiteMembership.DoesNotExist):
+            raise Http404(
+                _("You have no user with the following ID: %s")
+                % self.kwargs["username"]
+            )
         return self.selected_user
 
     def get_context_data(self, **kwargs):
         context = super(UserDelete, self).get_context_data(**kwargs)
         self.add_userlist_to_context(context)
         context["selected_user"] = self.selected_user
-        context["create_form"] = UserForm(prefix="create")
 
         return context
 
@@ -2806,8 +2874,19 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        site = Site.objects.get(uid=self.kwargs["site_uid"])
-        return PCGroup.objects.get(id=self.kwargs["group_id"], site=site)
+        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        try:
+            # Groups used to be identified by a string UID, so sometimes we get lookups for a string which caused a
+            # server error. Hence this explicit attempt to convert it to an int first.
+            id = int(self.kwargs["group_id"])
+            return PCGroup.objects.get(id=id, site=site)
+        except (PCGroup.DoesNotExist, ValueError):
+            raise Http404(
+                _(
+                    "You have no group with the following ID: %s. Try locating the group in the list of groups."
+                )
+                % self.kwargs["group_id"]
+            )
 
     def get_success_url(self):
         return "/site/{0}/groups/".format(self.kwargs["site_uid"])
@@ -3202,13 +3281,7 @@ class DocView(TemplateView, LoginRequiredMixin):
             raise Http404
 
         # Try <docname>.html and <docname>/index.html
-        if self.request.user.bibos_profile.language == "sv":
-            name_templates = [
-                "documentation_sv/{0}.html",
-                "documentation_sv/{0}/index.html",
-            ]
-        else:
-            name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
+        name_templates = ["documentation/{0}.html", "documentation/{0}/index.html"]
 
         templatename = None
         for nt in name_templates:
@@ -3230,7 +3303,7 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         # Get the links to the pdf files for the chosen language
         pdf_href = {
-            "wake_plans": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            "wake_plan_user_guide": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
             + "/static/docs/Wake_plan_user_guide",
             "os2borgerpc_installation_guide": "https://github.com/OS2borgerPC/image/raw/development/"
             + "docs/OS2BorgerPC_installation_guide",
@@ -3253,10 +3326,7 @@ class DocView(TemplateView, LoginRequiredMixin):
                 break
 
         # Add a submenu if it exists
-        if self.request.user.bibos_profile.language == "sv":
-            submenu_template = "documentation_sv/" + docnames[0] + "/__submenu__.html"
-        else:
-            submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
+        submenu_template = "documentation/" + docnames[0] + "/__submenu__.html"
         if self.template_exists(submenu_template):
             context["submenu_template"] = submenu_template
 
@@ -3369,91 +3439,3 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
             context["platform_choices"] = dict(ImageVersion.platform_choices)
 
         return context
-
-
-class ChangelogListView(ListView):
-    template_name = "system/changelog/list.html"
-
-    def get_queryset(self, filter=None):
-        if filter:
-            return Changelog.objects.filter(
-                Q(author__icontains=filter)
-                | Q(title__icontains=filter)
-                | Q(content__icontains=filter)
-                | Q(description__icontains=filter)
-                | Q(version__icontains=filter)
-            )
-        return Changelog.objects.all()
-
-    def get_paginated_queryset(self, queryset, page):
-        if not page:
-            page = 1
-
-        paginator = Paginator(queryset, 5)
-        page_obj = paginator.get_page(page)
-
-        return page_obj
-
-    def get_context_data(self, **kwargs):
-        context = super(ChangelogListView, self).get_context_data(**kwargs)
-
-        context["tag_choices"] = ChangelogTag.objects.values("name", "pk")
-
-        context["page"] = self.request.GET.get("page")
-
-        # Get the search query (if any) and filter the queryset based on that
-        search_query = self.request.GET.get("search")
-
-        if search_query:
-            queryset = self.get_queryset(search_query)
-            context["search_query"] = search_query
-        else:
-            queryset = self.get_queryset()
-
-        # Filter the queryset based on which site is viewing the site if the slug is
-        # 'global' it means the user is not logged in and therefore needs a different
-        # context
-        if context["view"].kwargs.get("slug") != "global":
-            context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
-            context["site_extension"] = "site_with_navigation.html"
-            context["global_view"] = False
-            queryset = queryset.filter(Q(site=context["site"]) | Q(site=None))
-        else:
-            context["site_extension"] = "sitebase.html"
-            context["global_view"] = True
-            queryset = queryset.filter(site=None)
-
-        # Get the tag filter (if any) and filter the queryset accordingly
-        context["tag_filter"] = self.request.GET.get("tag")
-
-        if context["tag_filter"]:
-            context["tag_filter"] = ChangelogTag.objects.get(pk=context["tag_filter"])
-            queryset = queryset.filter(tags=context["tag_filter"])
-
-        # Paginate the queryset and add it to the context
-        context["entries"] = self.get_paginated_queryset(queryset, context["page"])
-
-        # Add all comments that belong to the entries on the current page to the
-        # context
-        context["comments"] = ChangelogComment.objects.filter(
-            Q(changelog__in=context["entries"].object_list) & Q(parent_comment=None)
-        ).order_by("-created")
-
-        return context
-
-    def post(self, request, *args, **kwargs):
-        req = request.POST
-
-        comment = ChangelogComment()
-
-        comment.user = get_object_or_404(User, pk=req["user"])
-        comment.changelog = get_object_or_404(Changelog, pk=req["changelog"])
-        comment.content = req["content"]
-
-        if req["parent_comment"] != "None":
-            comment.parent_comment = get_object_or_404(
-                ChangelogComment, pk=req["parent_comment"]
-            )
-
-        comment.save()
-        return redirect("changelogs", slug=kwargs["slug"])

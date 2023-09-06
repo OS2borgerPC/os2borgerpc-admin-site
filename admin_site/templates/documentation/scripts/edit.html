@@ -1,24 +1,31 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Redigering af scripts</h1>
+  <h1>{% translate "Editing Scripts" %}</h1>
   <p>
-    For at redigere et Script skal du klikke på "Scripts" i venstremenuen og
-    efterfølgende vælge Scriptet i listen over Scripts til højre for
-    venstremenuen. Bemærk at det kan være nødvendigt at skifte mellem
-    fanebladenene "Lokale scripts" og "Globale scripts" for at finde Scriptet.
+    {% blocktranslate trimmed %}
+    If you wish to edit a Script, you must click on "Scripts" in the left-hand
+    menu and then select the script in the list of scripts shown to the right
+    of the left-hand menu. Note that it may be necessary to swap between the
+    tabs "Local scripts" and "Global scripts" in order to find the script.
+    You can also search through the scripts by selecting the search field
+    "Find ..." and typing a search term. This will cause the list to display
+    all scripts whose names contain the search term.
+    {% endblocktranslate %}
   </p>
   <p>
-    Når du redigerer et Script har du mulighed for at ændre dets navn og
-    beskrivelse. Du kan også uploade en ny version af Scriptet ved at
-    udfylde feltet under "Upload scriptkode". Ændringer du har foretaget
-    træder ikke i kræft før du har klikket på "Gem ændringer" i toppen af
-    siden.
+    {% blocktranslate trimmed %}
+    When you edit a script you can change its name and description. It is
+    also possible to upload a new version of the script by clicking on the
+    tab "Code" and then selecting a file to upload. Changes do not become
+    permanent until you've clicked on "Save changes" at the bottom of the
+    screen.
+    {% endblocktranslate %}
   </p>
   <p>
-    I sidste fane har du mulighed for at
-    <a href="{% url 'doc' 'scripts/parameters' %}">tilpasse
-    inputparametre for Scriptet</a>.
+    {% translate "In the last tab, you can" %}
+    <a href="{% url 'doc' 'scripts/parameters' %}">{% translate "adjust the arguments for the script" %}</a>.
   </p>
   <p>
 {% endblock %}

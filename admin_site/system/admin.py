@@ -12,9 +12,6 @@ from system.models import (
     AssociatedScriptParameter,
     Batch,
     BatchParameter,
-    Changelog,
-    ChangelogComment,
-    ChangelogTag,
     Citizen,
     Configuration,
     ConfigurationEntry,
@@ -31,6 +28,12 @@ from system.models import (
     SecurityEvent,
     SecurityProblem,
     Site,
+)
+
+from changelog.models import (
+    Changelog,
+    ChangelogComment,
+    ChangelogTag,
 )
 
 
@@ -279,7 +282,7 @@ class PCAdmin(admin.ModelAdmin):
         )
         # PC UID is generated from a hashed MAC address
         # so by hashing the input we allow searching by MAC address.
-        maybe_uid_hash = md5(search_term.encode("utf-8")).hexdigest()
+        maybe_uid_hash = md5(search_term.encode("utf-8").lower()).hexdigest()
         queryset |= self.model.objects.filter(uid=maybe_uid_hash)
         return queryset, may_have_duplicates
 

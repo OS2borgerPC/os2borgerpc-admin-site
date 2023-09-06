@@ -5,7 +5,6 @@ from django.views.generic import RedirectView
 
 from system.views import (
     AdminIndex,
-    ChangelogListView,
     ConfigurationEntryCreate,
     ConfigurationEntryDelete,
     ConfigurationEntryUpdate,
@@ -60,9 +59,7 @@ from system.views import (
     UserUpdate,
 )
 
-from two_factor.urls import urlpatterns as tf_urls
 from django.urls import include, path
-
 
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
@@ -156,7 +153,6 @@ urlpatterns = [
         AdminTwoFactorBackupTokens.as_view(),
         name="admin_otp_backup",
     ),
-    path("", include(tf_urls)),
     # Sites
     re_path(r"^$", AdminIndex.as_view(), name="index"),
     re_path(r"^sites/$", SiteList.as_view(), name="sites"),
@@ -320,7 +316,7 @@ urlpatterns = [
     # Users
     re_path(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/new_user/$", UserCreate.as_view(), name="new_user"
+        r"^site/(?P<site_uid>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
     ),
     re_path(
         r"^site/(?P<site_uid>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$",
@@ -343,7 +339,7 @@ urlpatterns = [
     re_path(
         r"^documentation/os2borgerpc_installation_guide/",
         RedirectView.as_view(
-            url="https://github.com/OS2borgerPC/image/raw/development/"
+            url="https://github.com/OS2borgerPC/os2borgerpc-image/raw/development/"
             + "docs/OS2BorgerPC Installationsguide.pdf"
         ),
     ),
@@ -356,7 +352,7 @@ urlpatterns = [
     re_path(
         r"^documentation/wake_plan_user_guide/",
         RedirectView.as_view(
-            url="https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            url="https://github.com/OS2borgerPC/os2borgerpc-admin-site/raw/development/admin_site"
             + "/static/docs/Guide_til_brug_af_strømbesparingsfunktioner.pdf"
         ),
         name="wake_plan_user_guide",
@@ -389,16 +385,5 @@ urlpatterns = [
         r"^site/(?P<site_uid>[^/]+)/image-versions/(?P<platform>[^/]+)$",
         ImageVersionsView.as_view(),
         name="image-version-major",
-    ),
-    # Changelog
-    re_path(
-        r"^site/(?P<slug>[^/]+)/changes/",
-        ChangelogListView.as_view(),
-        name="global-changelogs",
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/changes/",
-        ChangelogListView.as_view(),
-        name="changelogs",
     ),
 ]

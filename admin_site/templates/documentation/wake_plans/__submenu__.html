@@ -1,11 +1,12 @@
+{% load i18n %}
 <ul class="docsubnav">
     <li {% if submenu_active == 'edit_groups' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'wake_plans/edit_groups' %}"> Tilknyttede Grupper</a>
+      <a href="{% url 'doc' 'wake_plans/edit_groups' %}"> {% translate "Associated Groups" %}</a>
     </li>
     <li {% if submenu_active == 'edit_settings' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'wake_plans/edit_settings' %}"> Indstillinger</a>
+      <a href="{% url 'doc' 'wake_plans/edit_settings' %}"> {% translate "Settings" %}</a>
     </li>
     <li {% if submenu_active == 'edit_exceptions' %}class="active"{% endif %}>
-      <a href="{% url 'doc' 'wake_plans/edit_exceptions' %}"> Håndter undtagelser</a>
+      <a href="{% url 'doc' 'wake_plans/edit_exceptions' %}"> {% translate "Handle exceptions" %}</a>
     </li>
 </ul>

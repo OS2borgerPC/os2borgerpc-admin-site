@@ -1,49 +1,78 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Redigering af Sikkerhedsscripts</h1>
+  <h1>{% translate "Editing Security Scripts" %}</h1>
   <p>
-    For at redigere et Sikkerhedsscript skal du klikke på "Sikkerhedsscripts" i venstremenuen og
-    efterfølgende vælge Sikkerhedsscriptet i listen til højre for
-    venstremenuen. Bemærk at det kan være nødvendigt at skifte mellem
-    fanebladenene "Lokale scripts" og "Globale scripts" for at finde Sikkerhedsscriptet.
+    {% blocktranslate trimmed %}
+    If you wish to edit a Security Script, you must click on "Security Scripts" in the
+    left-hand menu and then select the security script in the list to the right of
+    the left-hand menu. Note that it may be necessary to swap between the tabs
+    "Local scripts" and "Global scripts" in order to find the script. You can also
+    search through the security scripts by selecting the search field "Find ..." and
+    typing a search term. This will cause the list to display all security scripts
+    whose names contain the search term.
+    {% endblocktranslate %}
   </p>
   <p>
-    Når du redigerer et Sikkerhedsscript har du mulighed for at ændre dets navn og
-    beskrivelse. Du kan også uploade en ny version af Sikkerhedsscriptet ved at
-    udfylde feltet under "Upload scriptkode". Ændringer du har foretaget
-    træder ikke i kraft før du har klikket på "Gem ændringer" i toppen af
-    siden.
+    {% blocktranslate trimmed %}
+    When you edit a security script you can change its name and description. It is
+    also possible to upload a new version of the script by clicking on the
+    tab "Code" and then selecting a file to upload. Changes do not become
+    permanent until you've clicked on "Save changes" at the bottom of the
+    screen.
+    {% endblocktranslate %}
   </p>
   <p>
-    Ved Sikkerhedsscripts, skal du være opmærksom på følgende:
+    {% translate "Please note the following regarding security scripts" %}:
     <br>
-    Et Sikkerhedsscript er et script, som indsamler <a href="{% url 'doc' 'security_scripts/securityevents' %}"> sikkerhedshændelser</a>.
-    <br>
-    <br>
-    Et Sikkerhedscript tager ikke nogen inputparametre,
-    og det skal følge et bestemt format.<br>
-    Opbygningen af et Sikkerhedscript vil typisk være, at læse en mængde data
-    fra en log fil, søge efter en hændelse via et eller flere keywords, og så herefter
-    gemme oplysningerne i et bestemt format. Et Sikkerhedsscript kan være et shellscript
-    eller et pythonscript.
+    {% translate "A security script is a script that collects" %} <a href="{% url 'doc' 'security_scripts/securityevents' %}"> {% translate "Security Events" %}</a>.
     <br>
     <br>
-    Formatet ser således ud: "[Sikkerhedsregel id, Teknisk referat, De rå data]".<br>
+    {% blocktranslate trimmed %}
+    A security script does not have any input parameters, and it must
+    follow a specific format.
+    {% endblocktranslate %}
+    <br>
+    {% blocktranslate trimmed %}
+    The structure of a security script will typically involve reading an
+    amount of data from a log file, searching the data for an event based
+    on one or more keywords and then saving the information in a specific
+    format. A security script can be a shell script or a python script.
+    {% endblocktranslate %}
+    <br>
+    <br>
+    {% blocktranslate trimmed %}
+    The format looks like this: "event timestamp, security rule id, event summary,
+    complete event log".
+    {% endblocktranslate %}
+    <br>
   </p>
   <ul>
     <li>
-      Sikkerhedsreglens id finder du på siden over Sikkerhedsregler. Dit Sikkerhedsscript
-      tilhører en sikkerhedsregel og det er dennes id du skal bruge.
+      {% blocktranslate trimmed %}
+      The event timestamp is the time when the event took place.
+      It is usually obtained from the log file.
+      {% endblocktranslate %}
     </li>
     <li>
-      Det tekniske referat kan enten være noget du definerer eller en bid af det indsamlede data.
+      {% blocktranslate trimmed %}
+      The security rule id is a number found in the url for editing that specific
+      security rule. Your security script is used by a security rule and it is the
+      id of this rule that you need.
+      {% endblocktranslate %}
     </li>
     <li>
-      De rå data er alt den indsamlede data vedrørende sikkerhedshændelsen.
+      {% translate "The event summary can be something you define or a part of the collected data." %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+      The complete event log is all of the data regarding the event.
+      It is optional and can be replaced by an empty string.
+      {% endblocktranslate %}
     </li>
   </ul>
   <p>
-    Aflever formatet som et array til modulet csv_writer ved at kalde metoden write.
+    {% translate "Deliver the format as an array to the module csv_writer by calling the method write." %}
   </p>
 {% endblock %}

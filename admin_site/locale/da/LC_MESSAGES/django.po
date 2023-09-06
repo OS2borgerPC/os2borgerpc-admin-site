@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-26 13:05+0200\n"
+"POT-Creation-Date: 2023-08-31 14:00+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -15,17 +15,189 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: account/models.py system/forms.py
+#: account/models.py system/forms.py templates/documentation/users/index.html
 msgid "Language"
 msgstr "Sprog"
 
-#: account/models.py
+#: account/models.py templates/documentation/users/index.html
 msgid "Site User"
 msgstr "Site-bruger"
 
-#: account/models.py
+#: account/models.py templates/documentation/users/index.html
 msgid "Site Admin"
 msgstr "Site-admin"
+
+#: changelog/models.py system/models.py
+msgid "name"
+msgstr "navn"
+
+#: changelog/models.py
+msgid "title"
+msgstr "titel"
+
+#: changelog/models.py system/models.py
+msgid "description"
+msgstr "beskrivelse"
+
+#: changelog/models.py
+msgid "content"
+msgstr "indhold"
+
+#: changelog/models.py system/mixins.py system/models.py
+msgid "created"
+msgstr "oprettet"
+
+#: changelog/models.py
+msgid "updated"
+msgstr "opdateret"
+
+#: changelog/models.py
+msgid "author"
+msgstr "forfatter"
+
+#: changelog/models.py
+msgid "version"
+msgstr "version"
+
+#: changelog/templates/comments/form.html
+msgid "Answer to"
+msgstr "Svar til"
+
+#: changelog/templates/comments/form.html
+msgid "Write a comment"
+msgstr "Skriv en kommentar"
+
+#: changelog/templates/comments/form.html
+msgid "Add comment"
+msgstr "Tilføj kommentar"
+
+#: changelog/templates/comments/form.html templates/system/configs/form.html
+#: templates/system/configs/templates.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/form.html
+#: templates/system/pcgroups/policy_list/templates.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/create.html templates/system/scripts/update.html
+#: templates/system/security_events/site_security_events.html
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/security_problems/site_security_problems.html
+#: templates/system/site_settings.html
+#: templates/system/users/confirm_delete.html
+#: templates/system/users/update.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+#: templates/system/wake_plan/wake_plan.html
+#: templates/two_factor/_wizard_actions.html
+#: templates/two_factor/profile/disable.html
+msgid "Cancel"
+msgstr "Annuller"
+
+#: changelog/templates/comments/form.html
+msgid "Please log in to add your comment"
+msgstr "Log venligst ind for at kommentere"
+
+#: changelog/templates/comments/item.html
+msgid "On the date"
+msgstr "Den"
+
+#: changelog/templates/comments/item.html
+msgid "answered"
+msgstr "svarede"
+
+#: changelog/templates/comments/item.html
+msgid "wrote"
+msgstr "skrev"
+
+#: changelog/templates/comments/item.html
+#, python-format
+msgid "Show %(comment_comment_children_count)s answer(s)"
+msgstr "Vis %(comment_comment_children_count)s svar"
+
+#: changelog/templates/comments/item.html
+msgid "Answer"
+msgstr "Svar"
+
+#: changelog/templates/item.html changelog/templates/list.html
+msgid "News categories"
+msgstr "Nyhedskategorier"
+
+#: changelog/templates/item.html
+msgid "Related to version"
+msgstr "Relateret til version"
+
+#: changelog/templates/item.html
+msgid "Written by"
+msgstr "Skrevet af"
+
+#: changelog/templates/item.html
+msgid "Comments"
+msgstr "Kommentarer"
+
+#: changelog/templates/list.html system/views.py
+#: templates/documentation/om_os2borgerpc_admin.html
+msgid "OS2borgerPC"
+msgstr "OS2borgerPC"
+
+#: changelog/templates/list.html templates/site_with_navigation.html
+msgid "News"
+msgstr "Nyheder"
+
+#: changelog/templates/list.html
+msgid "Back to previous page"
+msgstr "Tilbage til forrige side"
+
+#: changelog/templates/list.html
+msgid "Search..."
+msgstr "Søg..."
+
+#: changelog/templates/list.html
+msgid "All"
+msgstr "Alle"
+
+#: changelog/templates/list.html
+msgid "Showing news in the category of"
+msgstr "Viser nyheder i kategorien"
+
+#: changelog/templates/list.html
+msgid "Showing"
+msgstr "Viser"
+
+#: changelog/templates/list.html
+#: templates/system/security_problems/site_security_problems.html
+msgid "all"
+msgstr "alle"
+
+#: changelog/templates/list.html
+msgid "news"
+msgstr "nyheder"
+
+#: changelog/templates/list.html
+msgid "that matches the query"
+msgstr "der matcher søgeordet"
+
+#: changelog/templates/list.html
+msgid "Read more"
+msgstr "Læs mere"
+
+#: changelog/templates/list.html
+msgid "Show"
+msgstr "Vis"
+
+#: changelog/templates/list.html
+msgid "chat"
+msgstr "chat"
+
+#: changelog/templates/list.html
+msgid "Previous"
+msgstr "Forrige"
+
+#: changelog/templates/list.html templates/system/scripts/run_step1.html
+#: templates/two_factor/_wizard_actions.html
+msgid "Next"
+msgstr "Næste"
 
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
@@ -55,11 +227,13 @@ msgstr "Antal BorgerPC computere"
 msgid "Site"
 msgstr "Site"
 
-#: system/forms.py
+#: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
 msgstr "Brugertype"
 
 #: system/forms.py system/models.py
+#: templates/documentation/scripts/parameters.html
+#: templates/documentation/users/index.html
 msgid "Password"
 msgstr "Adgangskode"
 
@@ -75,10 +249,6 @@ msgstr "De to adgangskoder skal være ens"
 #, python-format
 msgid "A user named \"%s\" already exists."
 msgstr "En bruger med navnet \"%s\" eksisterer allerede."
-
-#: system/mixins.py system/models.py
-msgid "created"
-msgstr "oprettet"
 
 #: system/mixins.py
 msgid "modified"
@@ -107,10 +277,6 @@ msgstr "Opdatering"
 #: system/models.py
 msgid "owner configuration"
 msgstr "ejer-konfiguration"
-
-#: system/models.py
-msgid "name"
-msgstr "navn"
 
 #: system/models.py
 msgid "UID"
@@ -143,7 +309,8 @@ msgstr "Karantæneperiode, når den tilladte logintid er brugt"
 
 #: system/models.py
 msgid "Automatically rerun associated scripts when you update their arguments"
-msgstr "Genkør automatisk tilknyttede scripts når I opdaterer deres inputparametre"
+msgstr ""
+"Genkør automatisk tilknyttede scripts når I opdaterer deres inputparametre"
 
 #: system/models.py
 msgid "sites with access"
@@ -290,10 +457,6 @@ msgid "wake change events"
 msgstr "undtagelser"
 
 #: system/models.py
-msgid "description"
-msgstr "beskrivelse"
-
-#: system/models.py
 msgid "MAC"
 msgstr "MAC"
 
@@ -379,28 +542,28 @@ msgstr "Kan ikke ændre status fra {0} til {1}"
 msgid "Can only restart jobs with status %s"
 msgstr "Kan kun genstarte jobs der har status %s"
 
-#: system/models.py
+#: system/models.py templates/documentation/scripts/parameters.html
 msgid "String"
 msgstr "Streng"
 
-#: system/models.py
+#: system/models.py templates/documentation/scripts/parameters.html
 msgid "Integer"
 msgstr "Heltal"
 
-#: system/models.py
+#: system/models.py templates/documentation/scripts/parameters.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Date"
 msgstr "Dato"
 
-#: system/models.py
+#: system/models.py templates/documentation/scripts/parameters.html
 msgid "File"
 msgstr "Fil"
 
-#: system/models.py
+#: system/models.py templates/documentation/scripts/parameters.html
 msgid "Boolean"
 msgstr "Afkrydsningsfelt"
 
-#: system/models.py
+#: system/models.py templates/documentation/scripts/parameters.html
 msgid "Time"
 msgstr "Tid"
 
@@ -467,26 +630,6 @@ msgstr "modtagelsestidspunkt"
 msgid "assigned user"
 msgstr "håndteres af"
 
-#: system/models.py
-msgid "title"
-msgstr "titel"
-
-#: system/models.py
-msgid "content"
-msgstr "indhold"
-
-#: system/models.py
-msgid "updated"
-msgstr "opdateret"
-
-#: system/models.py
-msgid "author"
-msgstr "forfatter"
-
-#: system/models.py
-msgid "version"
-msgstr "version"
-
 #: system/views.py
 #, python-format
 msgid "Settings for %s updated"
@@ -523,6 +666,15 @@ msgstr "Du skal angive mindst en pc eller gruppe"
 #, python-format
 msgid "You have no computer with the following ID: %s"
 msgstr "Du har ingen computer med følgende ID: %s"
+
+#: system/views.py
+#, python-format
+msgid ""
+"Computer %s updated, but it could not be added to the group(s) %s because it "
+"already belongs to the plan %s"
+msgstr ""
+"Computer %s opdateret, men den kunne ikke tilføjes til gruppe(rne) %s, da "
+"den allerede er tilmeldt tidsplanen %s"
 
 #: system/views.py
 #, python-format
@@ -685,18 +837,21 @@ msgstr "Du har ikke nogen Sikkerhedsregel med følgende ID: %s"
 msgid "The administration site"
 msgstr "Administrationssiden"
 
-#: system/views.py
+#: system/views.py templates/documentation/om_os2borgerpc_admin.html
 msgid "About"
 msgstr "Om"
 
-#: system/views.py templates/site_with_navigation.html
-#: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
+#: system/views.py templates/documentation/status/index.html
+#: templates/documentation/wake_plans/edit_settings.html
+#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
+#: templates/system/pcs/form.html
 #: templates/system/security_events/site_security_events.html
 #: templates/system/site_status.html
 msgid "Status"
 msgstr "Status"
 
-#: system/views.py templates/site_with_navigation.html
+#: system/views.py templates/documentation/status/index.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
 #: templates/system/pcs/site_pcs.html templates/system/site_list.html
@@ -706,7 +861,8 @@ msgstr "Status"
 msgid "Computers"
 msgstr "Computere"
 
-#: system/views.py templates/site_with_navigation.html
+#: system/views.py templates/documentation/groups/index.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/security_problems/confirm_delete.html
@@ -715,7 +871,7 @@ msgstr "Computere"
 msgid "Groups"
 msgstr "Grupper"
 
-#: system/views.py
+#: system/views.py templates/documentation/wake_plans/index.html
 msgid "On/Off schedules"
 msgstr "Tænd/Sluk tidsplaner"
 
@@ -725,8 +881,9 @@ msgstr "Tænd/Sluk tidsplaner"
 msgid "Jobs"
 msgstr "Jobs"
 
-#: system/views.py templates/site_with_navigation.html
-#: templates/system/scripts/header.html templates/system/site_two_factor.html
+#: system/views.py templates/documentation/users/index.html
+#: templates/site_with_navigation.html templates/system/scripts/header.html
+#: templates/system/site_two_factor.html
 msgid "Scripts"
 msgstr "Scripts"
 
@@ -735,13 +892,17 @@ msgstr "Scripts"
 msgid "Security Scripts"
 msgstr "Sikkerhedsscripts"
 
-#: system/views.py templates/site_with_navigation.html
+#: system/views.py templates/documentation/users/index.html
+#: templates/site_with_navigation.html
 #: templates/system/users/confirm_delete.html
-#: templates/system/users/create.html templates/system/users/update.html
+#: templates/system/users/update.html
 msgid "Users"
 msgstr "Brugere"
 
-#: system/views.py templates/site_with_navigation.html
+#: system/views.py templates/documentation/computers/index.html
+#: templates/documentation/configuration/index.html
+#: templates/documentation/groups/index.html
+#: templates/site_with_navigation.html
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 #: templates/system/site_settings.html
 msgid "Configurations"
@@ -751,13 +912,9 @@ msgstr "Konfigurationer"
 msgid "Setting up security surveillance (PDF)"
 msgstr "Oprettelse af Sikkerhedsovervågning (PDF)"
 
-#: system/views.py
+#: system/views.py templates/documentation/changelogs/index.html
 msgid "The News site"
 msgstr "Nyhedssiden"
-
-#: system/views.py
-msgid "OS2borgerPC"
-msgstr "OS2BorgerPC"
 
 #: system/views.py
 msgid "Installation Guide (PDF)"
@@ -779,7 +936,7 @@ msgstr "Installationsguide"
 msgid "Updating Wi-Fi setup"
 msgstr "Opdatering af Wi-Fi opsætning"
 
-#: system/views.py
+#: system/views.py templates/documentation/tech.html
 msgid "Technical Documentation"
 msgstr "Teknisk Dokumentation"
 
@@ -858,18 +1015,2705 @@ msgstr ""
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Prøv at åbne denne side i Microsoft Edge"
 
+#: templates/documentation/changelogs/index.html
+msgid ""
+"The purpose of the news site is to display the content of new updates for "
+"OS2borgerPC."
+msgstr ""
+"Nyhedssiden har til formål at samle og fremvise indholdet af nye "
+"opdateringer i OS2borgerPC."
+
+#: templates/documentation/changelogs/index.html
+msgid "On the site, it is possible to:"
+msgstr "På siden er det muligt at:"
+
+#: templates/documentation/changelogs/index.html
+msgid "View a list of posts with a short explanation"
+msgstr "Se en liste over opslag, med en kort forklaring"
+
+#: templates/documentation/changelogs/index.html
+msgid "Sort posts based on category"
+msgstr "Sortere opslag efter kategori"
+
+#: templates/documentation/changelogs/index.html
+msgid "Search for posts"
+msgstr "Søge efter opslag"
+
+#: templates/documentation/changelogs/index.html
+msgid "Read posts"
+msgstr "Læse opslag"
+
+#: templates/documentation/changelogs/index.html
+msgid "Comment on a post with one's admin-site user"
+msgstr ""
+"Kommentere på hvert opslag med den bruger man er registreret på adminsitet "
+"som"
+
+#: templates/documentation/changelogs/index.html
+msgid "List of posts"
+msgstr "Liste af opslag"
+
+#: templates/documentation/changelogs/index.html
+msgid ""
+"When you enter the news site, you will be presented with a list of posts "
+"sorted with the newest posts first."
+msgstr ""
+"Når man går ind på nyhedssiden vil man blive præsenteret med en liste af "
+"opslag sorteret med de nyeste opslag først."
+
+#: templates/documentation/changelogs/index.html
+msgid ""
+"Each post on the list has a short summary of the content of the update along "
+"with the date when the post was made."
+msgstr ""
+"Hvert opslag på listen har en kort opsummering af opdateringens indhold, "
+"samt en dato for hvornår det er blevet slået op."
+
+#: templates/documentation/changelogs/index.html
+msgid "Sorting posts"
+msgstr "Sortering af opslag"
+
+#: templates/documentation/changelogs/index.html
+msgid ""
+"Each post has one or more categories that the list can be sorted by. This is "
+"done by choosing the relevant category among the options presented at the "
+"top of the page."
+msgstr ""
+"Hvert opslag har en eller flere kategorier som listen kan sorteres efter. "
+"Dette gøres ved at vælge den relevante kategori ud fra de muligheder "
+"præsenteret i toppen af siden."
+
+#: templates/documentation/changelogs/index.html
+msgid "Searching for posts"
+msgstr "Søgning efter opslag"
+
+#: templates/documentation/changelogs/index.html
+msgid "The search bar at the top can be used to search through the posts."
+msgstr "Søgefeltet i toppen af siden kan bruges til at søge i opslagene."
+
+#: templates/documentation/changelogs/index.html
+msgid "Detailed view of a post"
+msgstr "Detaljeret visning af et opslag"
+
+#: templates/documentation/changelogs/index.html
+msgid ""
+"Each post can be expanded to show a more detailed explanation of the update."
+msgstr ""
+"Hvert opslag kan udvides hvilket viser en mere detaljeret forklaring af "
+"opdateringen."
+
+#: templates/documentation/changelogs/index.html
+msgid "Commenting on a post"
+msgstr "Kommentarer på opslag"
+
+#: templates/documentation/changelogs/index.html
+msgid ""
+"If you are logged in to the admin-site, it is possible to add comments to a "
+"post."
+msgstr ""
+"Såfremt man er logget ind på sitet, vil man kunne tilføje kommentarer på et "
+"opslag."
+
+#: templates/documentation/changelogs/index.html
+msgid "When you add a comment, your username will be shown above the comment."
+msgstr ""
+"Når man tilføjer en kommentar vil ens brugernavn fremgå over kommentaren."
+
+#: templates/documentation/changelogs/index.html
+msgid ""
+"Comments can also be answered by both Magenta's employees and other logged-"
+"in users."
+msgstr ""
+"Kommentarer kan også blive besvaret både af Magentas ansatte samt alle "
+"brugere tilmeldt et site."
+
+#: templates/documentation/computers/__submenu__.html
+#: templates/documentation/groups/__submenu__.html
+msgid "General editing"
+msgstr "Generel redigering"
+
+#: templates/documentation/computers/__submenu__.html
+#: templates/system/pcs/form.html
+msgid "Job history"
+msgstr "Jobhistorik"
+
+#: templates/documentation/computers/__submenu__.html
+msgid "Activating"
+msgstr "Aktivering"
+
+#: templates/documentation/computers/activating.html
+msgid "The Admin system"
+msgstr "Admin-systemet"
+
+#: templates/documentation/computers/activating.html
+msgid "Activating a computer"
+msgstr "Aktivering af Computer"
+
+#: templates/documentation/computers/activating.html
+msgid ""
+"Once you have installed OS2borgerPC on a computer and registered it with the "
+"admin site, it will show up on the list of new computers under"
+msgstr ""
+"Når du har installeret OS2borgerPC på en computer og registreret den på "
+"admin-sitet, vil den dukke op i listen over nye computere under"
+
+#: templates/documentation/computers/activating.html
+msgid ""
+"Before you can start working with the computer, it is necessary to activate "
+"it."
+msgstr ""
+"Før du kan begynde at arbejde med computeren, er det nødvendigt at aktivere "
+"den."
+
+#: templates/documentation/computers/activating.html
+msgid ""
+"This is done by clicking on the computer, checking the box \"Activated\" and "
+"then clicking \"Save changes\". Afterward, the computer has been activated."
+msgstr ""
+"Det gør du ved at klikke på computeren og sætte et hak i fluebenet \"Aktiv\" "
+"og klikke på \"Gem ændringer\". Derefter er computeren aktiveret."
+
+#: templates/documentation/computers/activating.html
+msgid ""
+"Except from the registration itself, the admin-site will always ignore all "
+"requests from computers that have not been activated. This is partially a "
+"practical measure (there is no reason to start updating a computer before "
+"you know that it is ready) and partially a security measure."
+msgstr ""
+"Bortset fra selve tilmeldingen vil administrationssitet altid ignorere alle "
+"henvendelser fra computere, der ikke er aktiveret. Dette er dels en praktisk "
+"foranstaltning (der er ingen grund til at begynde at opdatere en computer, "
+"før man ved, at den er parat), dels en sikkerhedsforanstaltning."
+
+#: templates/documentation/computers/activating.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/pcs/confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/security_problems/confirm_delete.html
+#: templates/system/security_problems/site_security_problems.html
+#: templates/system/site_two_factor.html
+#: templates/system/wake_plan/confirm_delete.html
+#: templates/system/wake_plan/wake_change_events/confirm_delete.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "Note"
+msgstr "Bemærk"
+
+#: templates/documentation/computers/activating.html
+msgid ""
+"One of the reasons that all computers must be activated manually is to "
+"prevent foreign computers from connecting to your site without you or your "
+"organization knowing. As such, you should only activate a computer if you "
+"know that it is supposed to be there."
+msgstr ""
+"En af grundene til, at alle computere skal aktiveres manuelt, er at "
+"forhindre fremmede computere i at \"koble sig på\" dit site uden dit eller "
+"din organisations vidende. Du skal derfor kun aktivere en computer, hvis du "
+"ved, at den skal være der."
+
+#: templates/documentation/computers/edit.html
+msgid "Computers: Master data and groups"
+msgstr "Computere: Stam-oplysninger og grupper"
+
+#: templates/documentation/computers/edit.html
+msgid ""
+"When you click on a computer, you will by default be shown the computer's "
+"master data and any group affiliations. Here you can change the computer's "
+"name and description and activate it if it has not been activated after the "
+"installation. You can also add or remove group affiliations. You must click "
+"the button \"Save changes\" before the changes take effect."
+msgstr ""
+"Når du klikker dig ind på en computer, vil du som standard få vist "
+"computerens stamdata og gruppetilhørsforhold. Her kan du ændre computerens "
+"navn og beskrivelse og aktivere den, hvis den ikke er blevet aktiveret efter "
+"installation. Du kan også tilføje og fjerne grupper, som PC'en er "
+"tilknyttet. Du skal klikke på knappen \"Gem ændringer\", før dine ændringer "
+"træder i kræft."
+
+#: templates/documentation/computers/edit.html
+msgid ""
+"You add groups by clicking on \"Add computer to group\". If there are any "
+"groups that the computer does not yet belong to, they will be shown in a "
+"list. Click on a group to add the computer to the group. You remove a group "
+"by clicking on the X to the right of the group's name in the list of group "
+"affiliations. Remember that any changes are not permanent until you've "
+"clicked on \"Save changes\" at the bottom of the screen."
+msgstr ""
+"Du tilføjer grupper ved at klikke på \"Tilføj computer til gruppe\". Hvis "
+"der findes grupper, som computeren endnu ikke er medlem, af vil de dukke op "
+"i en liste. Klik på en gruppe for at knytte computeren til gruppen. Du "
+"fjerner en gruppe ved at klikke på det X, som vises til højre for gruppens "
+"navn i listen over gruppetilhørsforhold. Husk at ændringerne ikke bliver "
+"permanente, før du har klikket på \"Gem ændringer\" nederst i skærmbilledet."
+
+#: templates/documentation/computers/edit.html
+#: templates/documentation/groups/edit.html
+msgid "Note that group membership can affect the computer's configuration."
+msgstr ""
+"Bemærk, at medlemskab af grupper kan have indflydelse på computerens "
+"konfiguration."
+
+#: templates/documentation/computers/index.html
+#: templates/site_with_navigation.html
+msgid "Administrating computers"
+msgstr "Administration af computere"
+
+#: templates/documentation/computers/index.html
+msgid ""
+"The administration page for a computer has three tabs with different "
+"functions that are described helow. Click on a particular tab to open the "
+"relevant function."
+msgstr ""
+"Administrationssiden for en Computer har tre harmonika-faneblade med "
+"forskellige funktioner, som er beskrevet herunder. Klik på det enkelte "
+"faneblad for at åbne den relevante funktion."
+
+#: templates/documentation/computers/index.html
+msgid ""
+"You can find documentation for the different parts by following these links:"
+msgstr ""
+"Du kan finde dokumentation for de forskellige dele ved at følge følgende "
+"links:"
+
+#: templates/documentation/computers/index.html
+#: templates/documentation/groups/index.html
+msgid "Configurations are described on the page"
+msgstr "Konfigurationer kan du læse nærmere om på siden"
+
+#: templates/documentation/computers/jobs.html
+msgid "Job history for a computer"
+msgstr "Jobhistorik for computer"
+
+#: templates/documentation/computers/jobs.html
+msgid ""
+"Here you can see the history of jobs associated with the computer. If you "
+"click on the info icon to the right on the individual job, it will be "
+"possible to see the log output from the job as well as rerun the job if it "
+"failed."
+msgstr ""
+"Her kan du se en historik over jobs tilknyttet computeren. Hvis du klikker "
+"på info-ikonet til højre på det enkelte job får du mulighed for at se log-"
+"output for jobbet samt for at køre jobbet igen hvis det fejlede."
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"Do not delete or edit configurations unless you know what you are doing!"
+msgstr ""
+"Slet eller rediger ikke konfigurationer, medmindre du er sikker på, hvad du "
+"gør!"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"Configurations are functionality aimed primarily at technical "
+"troubleshooting, system administrators and script developers and thus most "
+"likely not relevant for most people."
+msgstr ""
+"Konfigurationer er funktionalitet henvendt primært til teknisk fejlfinding, "
+"systemadministratorer og scriptudviklere, og derfor formentlig ikke relevant "
+"for de fleste."
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"Configurations are used to exchange information between the admin-site and "
+"the registered computers in both directions."
+msgstr ""
+"Konfigurationer bruges til at udveksle information mellem admin-sitet og de "
+"tilknyttede computere, i begge retninger."
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"In other words, it is possible to use the admin-site to specify a value that "
+"one or more computers will then receive and, similarly, a computer also "
+"sends values to the admin-site."
+msgstr ""
+"Dvs. det er både muligt fra adminsitet at specificere en værdi som en eller "
+"flere computere så vil modtage, og ligeledes sender en computer værdier til "
+"adminsitet."
+
+#: templates/documentation/configuration/index.html
+msgid "General examples of possible uses"
+msgstr "Generelle eksempler på anvendelsesmuligheder"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"Among other things, the computer sends information about its hostname, the "
+"MAC-address of its network card and the number of updates and security "
+"updates that are available from Ubuntu."
+msgstr ""
+"Computeren sender bl.a. information om dens hostname, netværkskortets MAC-"
+"adresse og hvor mange opdateringer og sikkerhedsopdateringer, der er "
+"tilgængelig for den fra Ubuntu."
+
+#: templates/documentation/configuration/index.html
+msgid "This information can sometimes be relevant for system administrators."
+msgstr "Det kan i nogle tilfælde være relevant for systemadministratorer."
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"The computer also sends information about whether it is running BorgerPC or "
+"BorgerPC Kiosk along with the specific version."
+msgstr ""
+"Computeren sender ligeledes information om den kører BorgerPC eller BorgerPC "
+"Kiosk, samt de specifikke versioner heraf."
+
+#: templates/documentation/configuration/index.html
+msgid "This information can sometimes be relevant during troubleshooting."
+msgstr "Det kan i nogle tilfælde være relevant at vide ift. fejlfinding."
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"As part of the development of a script, one might wish to set the "
+"configuration for the script via the admin-site, which allows the "
+"configuration to be updated without rerunning the script, and also allows "
+"the configuration to vary between groups and computers."
+msgstr ""
+"Man ønsker ifm. udviklingen af et script at sende konfiguration dertil via "
+"adminsitet, som så kan opdateres uden genkørsel af scripts, eller som kan "
+"variere ml. grupper eller computere."
+
+#: templates/documentation/configuration/index.html
+msgid "This can sometimes be relevant to know for script developers."
+msgstr "Det kan i nogle tilfælde være relevant at vide for scriptudviklere."
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"The majority of configurations are controlled by the admin-site rather than "
+"the individual machine. This means that if you change a value on an "
+"individual machine, it will typically be changed back to the value listed on "
+"the admin-site during the next check-in."
+msgstr ""
+"Langt de fleste konfigurationer styres af adminsitet fremfor på den enkelte "
+"maskine. Dvs. hvis du ændrer værdien på den enkelte maskine, vil den oftest "
+"blive ændret tilbage til hvad adminsitet siger ved næste tjek-ind."
+
+#: templates/documentation/configuration/index.html
+msgid "Technical information for system administrators"
+msgstr "Teknisk information til systemadministratorer"
+
+#: templates/documentation/configuration/index.html
+msgid "Handling configurations"
+msgstr "Håndtering af konfigurationer"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"Click the button \"Add configuration\" to add a new configuration key/value."
+msgstr ""
+"Klik på knappen \"Tilføj konfiguration\" for at tilføje en ny "
+"konfigurationsnøgle/værdi."
+
+#: templates/documentation/configuration/index.html
+#: templates/documentation/groups/scripts.html
+#: templates/system/configs/item.html
+#: templates/system/pcgroups/policy_list/item.html
+#: templates/system/scripts/update.html
+msgid "Edit"
+msgstr "Redigér"
+
+#: templates/documentation/configuration/index.html
+#: templates/system/configs/item.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/form.html
+msgid "Delete"
+msgstr "Slet"
+
+#: templates/documentation/configuration/index.html
+#, python-format
+msgid ""
+"In order to edit or delete a value, you must click on %(edit)s or %(delete)s "
+"to the right of the individual key."
+msgstr ""
+"For at rette eller slette en værdi, skal du klikke på %(edit)s eller "
+"%(delete)s ud for den enkelte nøgle."
+
+#: templates/documentation/configuration/index.html
+msgid "Configurations at different levels"
+msgstr "Konfigurationer på forskellige niveauer"
+
+#: templates/documentation/configuration/index.html
+msgid "Configurations exist at three levels"
+msgstr "Konfigurationer findes på tre niveauer"
+
+#: templates/documentation/configuration/index.html
+msgid "Site configurations"
+msgstr "Site-konfigurationer"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"These configuration parameters are applied to all computers that belong to "
+"the chosen site."
+msgstr ""
+"Disse konfigurationsparametre gælder for alle computere, der er tilknyttet "
+"det valgte site."
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"The site configurations can be overwritten via adjusted configuration keys/"
+"values on groups and individual computers."
+msgstr ""
+"Site-konfigurationerne kan overstyres via tilpassede konfigurationsnøgler/"
+"værdier på grupper og på de enkelte computere."
+
+#: templates/documentation/configuration/index.html
+msgid "Group configurations"
+msgstr "Gruppe-konfigurationer"
+
+#: templates/documentation/configuration/index.html
+msgid "unless"
+msgstr "medmindre"
+
+#: templates/documentation/configuration/index.html
+#, python-format
+msgid ""
+"Changes to the configurations for a group will affect all computers that "
+"belong to that group %(unless)s that particular configuration key has been "
+"specially adjusted for the individual computer."
+msgstr ""
+"Ændringer for konfigurationer på en gruppe vil påvirke alle computere der er "
+"medlem af gruppen, %(unless)s den pågældende konfigurationsnøgle er blevet "
+"special-tilpasset på den enkelte computer."
+
+#: templates/documentation/configuration/index.html
+msgid "Computer configurations"
+msgstr "Computer-konfigurationer"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"Configurations set at the computer level will always take precedence over "
+"site configurations or configurations for groups that the computer belongs "
+"to."
+msgstr ""
+"Konfigurationer angivet på en computer vil altid tage præcedens over site-"
+"konfigurationer eller konfigurationer på grupper som computeren er medlem af."
+
+#: templates/documentation/configuration/index.html
+msgid "The meaning of the built-in configurations"
+msgstr "Betydningen af de indbyggede konfigurationer"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"All values without _ in front are controlled by the admin-site while values "
+"with _ are controlled by the computer / the client."
+msgstr ""
+"Alle værdier uden _ foran bestemmes af adminsitet, mens værdier med _ "
+"bestemmes af computeren / klienten."
+
+#: templates/documentation/configuration/index.html
+#, python-format
+msgid ""
+"This means that if one were to change e.g. %(version)s on the machine, then "
+"the value would be overwritten during the next check-in with the admin-site."
+msgstr ""
+"Det vil i praksis sige, at hvis man eks. ændrer %(version)s på maskinen, så "
+"vil den blive overskrevet efter næste tjek-ind med adminsitet."
+
+#: templates/documentation/configuration/index.html
+#: templates/system/configs/templates.html templates/system/scripts/form.html
+#: templates/system/site_status.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+msgid "Name"
+msgstr "Navn"
+
+#: templates/documentation/configuration/index.html
+msgid "Meaning"
+msgstr "Betydning"
+
+#: templates/documentation/configuration/index.html
+msgid "Comment"
+msgstr "Kommentar"
+
+#: templates/documentation/configuration/index.html
+msgid "The version of the OS2borgerPC-client"
+msgstr "Versionen på OS2borgerPC-klienten"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"The client is the particular software on the machine that communicates with "
+"the admin-site"
+msgstr ""
+"Klienten er den software der kører på maskinen, som er i kontakt med "
+"adminsitet"
+
+#: templates/documentation/configuration/index.html
+msgid "The name of the operating system"
+msgstr "Navnet på operativsystemet"
+
+#: templates/documentation/configuration/index.html
+msgid "The version of the operating system"
+msgstr "Versionen af operativsystemet"
+
+#: templates/documentation/configuration/index.html
+msgid "The address of the server where the machine checks in"
+msgstr "Adressen til serveren der tjekkes ind hos"
+
+#: templates/documentation/configuration/index.html
+msgid "The machine's hostname"
+msgstr "Maskinens hostname"
+
+#: templates/documentation/configuration/index.html
+msgid "Is currently only set during the registration"
+msgstr "Sættes pt. kun ifm. registreringen"
+
+#: templates/documentation/configuration/index.html
+msgid "How long the client waits for a job to finish in seconds"
+msgstr ""
+"Hvor længe klienten venter på færdiggørelsen af jobs, angivet i sekunder"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"If job_timeout is exceeded, the process is stopped. This is useful if "
+"something is stuck, such as a process futilely waiting for input"
+msgstr ""
+"Hvis job_timeout løber ud, stoppes processen. Det er brugbart, hvis noget i "
+"systemet hænger, såsom at pakkesystemet eller et script forgæves forsøger at "
+"få input fra brugeren"
+
+#: templates/documentation/configuration/index.html
+msgid "Indicates whether the machine is an OS2borgerPC or a OS2borgerPC Kiosk"
+msgstr "Identificerer om maskinen er en OS2borgerPC eller en OS2borgerPC Kiosk"
+
+#: templates/documentation/configuration/index.html
+msgid "The version of the OS2borgerPC-image that was installed"
+msgstr "Versionen på det OS2borgerPC-image, som blev installeret"
+
+#: templates/documentation/configuration/index.html
+msgid "Unless the machine is reinstalled, this number does not change"
+msgstr "Medmindre maskinen geninstalleres, vil dette tal ikke ændre sig"
+
+#: templates/documentation/configuration/index.html
+msgid "The number of security updates from Ubuntu that are available"
+msgstr ""
+"Antallet af sikkerhedsrelaterede pakke-opdateringer fra Ubuntu, der er "
+"tilgængelige for maskinen"
+
+#: templates/documentation/configuration/index.html
+msgid "The site that the machine belongs to"
+msgstr "Hvilket site maskinen er tilknyttet"
+
+#: templates/documentation/configuration/index.html
+msgid "The number of regular updates from Ubuntu that are available"
+msgstr ""
+"Antallet af almindelige pakke-opdateringer fra Ubuntu, der er tilgængelige "
+"for maskinen"
+
+#: templates/documentation/configuration/index.html
+msgid "Technical information for script developers"
+msgstr "Teknisk information til scriptudviklere"
+
+#: templates/documentation/configuration/index.html
+msgid "How information is exchanged"
+msgstr "Sådan udveksles information"
+
+#: templates/documentation/configuration/index.html
+#: templates/system/jobs/site_jobs.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "Computer"
+msgstr "Computer"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"You create a configuration value for a Site, a Group or a computer and it "
+"will automatically be transferred to the relevant computer(s) during their "
+"next check-in with the admin-site."
+msgstr ""
+"Du opretter på et Site, en Gruppe eller en Computer en konfigurationsværdi, "
+"og den vil automatisk blive overført til de relevante computer(e), næste "
+"gang de tjekker ind på admin-sitet."
+
+#: templates/documentation/configuration/index.html
+msgid "From a terminal on the computer or a script, you can use these programs"
+msgstr ""
+"Fra en terminal på computeren, eller fra et script, kan du benytte disse "
+"programmer"
+
+#: templates/documentation/configuration/index.html
+msgid "Function"
+msgstr "Funktionalitet"
+
+#: templates/documentation/configuration/index.html
+msgid "Usage example"
+msgstr "Brugseksempel"
+
+#: templates/documentation/configuration/index.html
+msgid "Retrieves the value of a configuration value"
+msgstr "Henter værdien af en konfigurationværdi"
+
+#: templates/documentation/configuration/index.html
+msgid "Retrieves the UID of the site where the computer is registered."
+msgstr "Får fat i UID'et på det site, som computeren er tilknyttet."
+
+#: templates/documentation/configuration/index.html
+msgid "Sets the value of a configuration value"
+msgstr "Sætter værdien af en konfigurationværdi"
+
+#: templates/documentation/configuration/index.html
+msgid "citizen yes"
+msgstr "borger ja"
+
+#: templates/documentation/configuration/index.html
+msgid ""
+"Creates a new configuration value with the name citizen and the value 'yes'"
+msgstr "Opretter en ny konfiguration kaldet borger, og sætter den til 'ja'"
+
+#: templates/documentation/configuration/index.html
+msgid "In practice, the above programs interact with the file"
+msgstr "Ovenstående programmer interagerer i praksis med filen"
+
+#: templates/documentation/groups/__submenu__.html
+#: templates/documentation/groups/scripts.html
+#: templates/system/pcgroups/confirm_delete.html
+#: templates/system/pcgroups/site_groups.html
+#: templates/system/scripts/confirm_delete.html
+msgid "Associated Scripts"
+msgstr "Tilknyttede Scripts"
+
+#: templates/documentation/groups/edit.html
+msgid "Editing groups: Master data and computers"
+msgstr "Gruppe-redigering: Stam-oplysninger og computere"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"When you click on a group, you will by default be shown the group's master "
+"data and any computers that belong to the group. Here you can change the "
+"group's name and description as well as add or remove computers from the "
+"group. The changes will not become permanent until you've clicked on the "
+"button \"Save changes\" at the bottom of the screen."
+msgstr ""
+"Som standard når du klikker dig ind på en gruppe vil du få vist gruppens "
+"stamdata og hvilke computere der er med i gruppen. Her kan du ændre gruppens "
+"navn og beskrivelse, samt tilføje eller fjerne computere fra gruppen. "
+"Ændringer foretaget på siden træder ikke i kræft før du klikker på \"Gem "
+"ændringer\"-knappen i bunden af skærmbilledet."
+
+#: templates/documentation/groups/edit.html
+msgid "Add/remove computers"
+msgstr "Tilføj/fjern computere"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"A list of computers that belong to the group is shown on the right side of "
+"the screen. You can edit the members of the group as described below."
+msgstr ""
+"Til højre i skærmbilledet vises en liste over computere, der er med i "
+"gruppen. Du kan redigere medlemmerne af gruppen som beskrevet herunder."
+
+#: templates/documentation/groups/edit.html
+msgid "Add a computer"
+msgstr "Tilføj computer"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"You add computers by clicking on \"Add a computer to the group\". If there "
+"are any computers that do not yet belong to the group, they will be shown in "
+"a list. Click on a computer to add it to the group."
+msgstr ""
+"Du tilføjer computere ved at klikke på \"Tilføj en computer til gruppen\". "
+"Hvis der findes computere, som endnu ikke er medlem af gruppen vil de blive "
+"vist i en liste. Klik på en computer for at knytte computeren til gruppen."
+
+#: templates/documentation/groups/edit.html
+msgid "Remove a computer"
+msgstr "Fjern computer"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"You remove a computer by clicking on the X to the right of the computer's "
+"name in the list of computers that belong to the group."
+msgstr ""
+"For at fjerne en computer skal du klikke på X'et til højre for computerens "
+"navn i listen over computere, der er med i gruppen."
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"Remember that changes to the list of computers do not become permanent until "
+"you've clicked on \"Save changes\" at the bottom of the screen."
+msgstr ""
+"Husk at ændringer til listen over computere ikke bliver permanente før du "
+"har klikket på \"Gem ændringer\" nederst i skærmbilledet."
+
+#: templates/documentation/groups/edit.html
+msgid "Notice for users of On/Off schedules"
+msgstr "Bemærkning til brugere af Tænd/Sluk tidsplaner"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"A computer can only be associated with a single schedule at a time. If the "
+"group is associated with a schedule and you add one or more computers that "
+"are associated with a different schedule via a different group, the chosen "
+"computers will be rejected as part of the update of the group when you click "
+"\"Save changes\". Valid computers will still be added. If one or more "
+"computers are rejected, the webpage will inform you of this as well as the "
+"reason."
+msgstr ""
+"En computer kan kun være knyttet til en tidsplan ad gangen. Hvis gruppen er "
+"knyttet til en tidsplan, og du tilføjer en eller flere computere, som er "
+"knyttet til en anden tidsplan via en anden gruppe, vil de valgte computere "
+"blive afvist i forbindelse med opdateringen af gruppen, når du klikker på "
+"\"Gem ændringer.\" Gyldige computere vil stadig blive tilføjet. Hvis en "
+"eller flere computere afvises, vil siden oplyse om dette samt begrundelsen."
+
+#: templates/documentation/groups/index.html
+msgid ""
+"A OS2borgerPC-group is a collection of computers that share configuration "
+"keys. A group can also be used to easily run a script on multiple computers."
+msgstr ""
+"En OS2borgerPC-gruppe er en samling af computere der deler "
+"konfigurationsnøgler. En gruppe kan også bruges til at nemt at køre et "
+"script på en samling af computere."
+
+#: templates/documentation/groups/index.html
+msgid ""
+"When you click on Groups in the left-hand menu, a list of groups for the "
+"site you are on will be shown to the right of the left-hand menu. You can "
+"click on the name of a particular group in order to edit that group."
+msgstr ""
+"Når man klikker på Grupper i venstremenuen vil man til højre for "
+"venstremenuen få vist en liste af grupper for det site man er under. Man kan "
+"klikke på navnet for den enkelte gruppe for at redigere gruppen."
+
+#: templates/documentation/groups/index.html
+msgid ""
+"The interface for editing the chosen group will be shown on the right side "
+"of the screen. If no groups have been created for the site you are on, the "
+"form for creating groups will be shown instead."
+msgstr ""
+"Til højre vises redigeringsinterfacet for den valgte gruppe. Hvis ikke der "
+"er oprettet nogen grupper for det site man er under vises dialogen til "
+"oprettelse af grupper."
+
+#: templates/documentation/groups/index.html
+msgid "When you click on a group, you will be able to edit the following"
+msgstr ""
+"Når man klikker ind på en gruppe får man mulighed for at redigere følgende"
+
+#: templates/documentation/groups/index.html
+msgid ""
+"If you wish to create a new group, you must click on \"Add new group\" above "
+"the list of groups. This will open a modal where you must enter a name and "
+"description for the group. When you click on \"Create group\", you will be "
+"redirected to the editing interface for the newly created group where it "
+"will be possible to add computers to the group."
+msgstr ""
+"Hvis man ønsker at oprette en ny gruppe skal man klikke på \"Tilføj ny gruppe"
+"\" oven over listen med grupper. Dette vil bringe en dialog op hvor man skal "
+"udfylde navn og beskrivelse for gruppen. Når man klikker på \"Opret gruppe\" "
+"vil man blive viderestillet til redigeringssiden for den nyoprettede gruppe, "
+"hvorfra det vil være muligt at tilføje computere til gruppen."
+
+#: templates/documentation/groups/scripts.html
+#: templates/system/pcgroups/policy_list/list.html
+#: templates/system/pcgroups/policy_list/templates.html
+msgid "Add script"
+msgstr "Tilføj script"
+
+#: templates/documentation/groups/scripts.html
+#, python-format
+msgid ""
+"You have the option of assigning each group a number of associated scripts. "
+"In order to change the associated scripts for a group, you must click on the "
+"group and then click the tab %(asc)s. Select the input field %(addsc)s and "
+"search for the script that you wish to assign to the group. Next, click on "
+"the script and it will be added as an Associated Script."
+msgstr ""
+"Du har mulighed for at tildele hver gruppe en række Tilknyttede Scripts. For "
+"at ændre de Tilknyttede Scripts for en gruppe skal du klikke dig ind på "
+"gruppen og trykke på fanebladet %(asc)s. Tryk på input-feltet %(addsc)s og "
+"søg efter det script, som du gerne vil tilknytte til gruppen. Klik derefter "
+"på Scriptet og det vil blive tilføjet som Tilknyttet Script."
+
+#: templates/documentation/groups/scripts.html
+msgid ""
+"When a computer is added to a group, all Associated Scripts are "
+"automatically run on that computer. When you add a new Associated Script, it "
+"will automatically be run on all computers in the group. Editing the "
+"parameters of an associated script will only cause it to be rerun on the "
+"computers in the group if the relevant setting under Site settings has been "
+"checked."
+msgstr ""
+"Når en computer tilføjes til en gruppe bliver alle Tilknyttede Scripts "
+"automatisk kørt på den computer. Når man tilknytter et nyt Script til en "
+"gruppe, køres dette automatisk på gruppens computere. Redigering af "
+"parametrene for et Tilknyttet Script medfører kun at scriptet genkøres på "
+"alle computere i gruppen, hvis den relevante indstilling under Site-"
+"indstillinger er blevet slået til."
+
+#: templates/documentation/groups/scripts.html
+msgid ""
+"Associated Scripts have a position that determines the order in which they "
+"are run and they may have a number of input parameters that they are run "
+"with."
+msgstr ""
+"Tilknyttede Scripts har en position, der angiver i hvilken rækkefølge, de "
+"bliver kørt, og de kan have nogle inputparametre, som de køres med."
+
+#: templates/documentation/groups/scripts.html
+msgid "A computer can be added to multiple groups."
+msgstr "En computer kan sagtens tilmeldes flere grupper."
+
+#: templates/documentation/groups/scripts.html
+msgid ""
+"Example: There is one computer in the library and another in citizen service "
+"that should have different homepages, but both be connected to the same "
+"scanner. In this case, one computer can be added to the library group and "
+"the other to the citizen service group while both are added to the group for "
+"scanner computers."
+msgstr ""
+"Eksempel: Der står en computer på biblioteket og en anden i borgerservice, "
+"som skal have forskellige startsider, men som begge har samme scanner sat "
+"til. I så fald kan den ene computer være tilmeldt en gruppe for biblioteket "
+"og den anden en gruppe for borgerservice, mens begge er tilmeldt en gruppe "
+"for scanner-computere."
+
+#: templates/documentation/groups/scripts.html
+msgid ""
+"We recommend using Associated Scripts where possible as they make it simpler "
+"to set up new computers in a department. All you need to do is to add the "
+"new computers to the group, and then the relevant scripts will automatically "
+"be run on them with the correct input parameters."
+msgstr ""
+"Vi anbefaler at bruge Tilknyttede Scripts hvor det er muligt, da det kan "
+"gøre det lettere at sætte nye computere op på en afdeling. Alt man så skal "
+"gøre er at tilmelde de nye computere til gruppen, og så køres de relevante "
+"Scripts automatisk derpå med rette inputparametre."
+
+#: templates/documentation/groups/scripts.html
+msgid "Final remarks"
+msgstr "Bemærkninger"
+
+#: templates/documentation/groups/scripts.html
+#: templates/system/configs/form.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/scripts/update.html
+#: templates/system/security_problems/site_security_problems.html
+#: templates/system/site_settings.html templates/system/users/update.html
+#: templates/system/wake_plan/wake_change_events/wake_change_event.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "Save changes"
+msgstr "Gem ændringer"
+
+#: templates/documentation/groups/scripts.html
+msgid "must"
+msgstr "skal"
+
+#: templates/documentation/groups/scripts.html
+#, python-format
+msgid ""
+"When a script is added to or removed from the list, the change won't be "
+"saved until you've clicked %(save)s."
+msgstr ""
+"Når der tilføjes eller slettes et Script i listen, vil det først blive gemt, "
+"efter tryk på %(save)s."
+
+#: templates/documentation/groups/scripts.html
+#, python-format
+msgid ""
+"If the added script requires input parameters, these parameters are set by "
+"clicking %(edit)s and this %(must)s be done before the changes can be saved. "
+"I.e. a Script that requires input parameters cannot be assigned with empty "
+"input parameters."
+msgstr ""
+"Hvis Scriptet du tilføjer benytter inputparametre, sættes værdierne for "
+"disse ved at trykke på %(edit)s, og dette %(must)s gøres før ændringerne kan "
+"gemmes. Dvs. et Script der benytter inputparametre kan ikke tilknyttes, med "
+"tomme inputparametre."
+
+#: templates/documentation/groups/scripts.html
+#, python-format
+msgid ""
+"You can change the input parameters for a script by clicking %(edit)s, "
+"making the desired changes and then saving the changes. However, this will "
+"only cause the script to be rerun on the computers in the group if the "
+"relevant setting under Site settings has been checked."
+msgstr ""
+"Du kan ændre inputparametrene for et script ved at klikke på %(edit)s, "
+"foretage de ønskede ændringer og så gemme ændringerne. Dette vil dog kun "
+"medføre at scriptet genkøres på computerne i gruppen, hvis den relevante "
+"indstilling under Site-indstillinger er slået til."
+
 #: templates/documentation/index.html
 msgid "OS2borgerPC documentation"
 msgstr "OS2borgerPC dokumentation"
 
 #: templates/documentation/index.html templates/site_with_navigation.html
-#: templates/system/changelog/list.html
 msgid "Documentation"
 msgstr "Dokumentation"
 
 #: templates/documentation/index.html
 msgid "Return to admin"
 msgstr "Tilbage til admin"
+
+#: templates/documentation/jobs/index.html
+msgid "Job overview"
+msgstr "Job-oversigt"
+
+#: templates/documentation/jobs/index.html
+msgid ""
+"The job overview provides an overview of the execution of jobs on "
+"OS2borgerPC computers for the chosen site. On the left, one can choose "
+"various filters that make the list more manageable, and on the right is "
+"shown a list of jobs that match the chosen filters."
+msgstr ""
+"Job-oversigten giver et overblik over afviklingen af jobs på OS2borgerPC-"
+"computere for det valgte site. Til venstre kan man vælge diverse filtre der "
+"gør listen mere overskuelig og til højre vises en liste over jobs der "
+"matcher de valgte filtre."
+
+#: templates/documentation/jobs/index.html templates/system/jobs/site_jobs.html
+#: templates/system/security_events/site_security_events.html
+msgid "Filters"
+msgstr "Filtre"
+
+#: templates/documentation/jobs/index.html
+msgid ""
+"By clicking the checkboxes next to the different statuses, you can filter "
+"the shown jobs based on their status. By default, all statuses except "
+"\"restarted\" are checked."
+msgstr ""
+"Ved at klikke på afkrydsningsfelterne ud for de forskellige statuser kan du "
+"filtrere de viste jobs ud fra deres status. Som standard er alle statuser på "
+"nær \"Genstartet\" angivet."
+
+#: templates/documentation/jobs/index.html
+msgid ""
+"Below the checkboxes you can choose filters based on batches, computers and "
+"groups. In order to use these filters, you must click on the desired "
+"category and then select an element in the list that is displayed. The "
+"chosen element will be highlighted in orange. It is only possible to select "
+"one element per category. You can reset the filters to the default filters "
+"by clicking \"Reset filters\" at the top of the list of filters."
+msgstr ""
+"Under afkrydsningsfelterne kan du vælge filtre ud fra batches, computere og "
+"grupper. For at filtrere på disse skal du klikke på den kategori du vil "
+"filtrere og efterfølgende klikke på et element i den liste, der bliver "
+"foldet ud. Det valgte element vil blive markeret med orange. Det er kun "
+"muligt at vælge et element i hver kategori. Du kan nulstille filtrene til "
+"standardfiltrene ved at klikke på \"Nulstil filtre\" i toppen af listen med "
+"filtre."
+
+#: templates/documentation/jobs/index.html
+#: templates/documentation/scripts/running.html
+msgid "The job list"
+msgstr "Joblisten"
+
+#: templates/documentation/jobs/index.html
+msgid ""
+"The job list shows the script name, batch name, user who started the job, "
+"creation time, starting time, stopping time, status and computer name for "
+"every job that matches the chosen filters. The sorting can be changed by "
+"clicking the titles above the table."
+msgstr ""
+"Joblisten viser Script-navn, batchnavn, brugeren som startede jobbet, "
+"oprettelsestidspunkt, starttidspunkt, sluttidspunkt, status og computernavn "
+"for hvert job der matcher de valgte filtrre. Man kan ændre sorteringen ved "
+"at klikke på overskrifterne over tabellen."
+
+#: templates/documentation/jobs/index.html
+msgid ""
+"If you click on the small icon on the right of an entry in the list, you "
+"will be shown the log output from that job. If the job has not yet been "
+"executed, the log output will only contain the chosen input parameters. If "
+"the job failed, there will also be a button that you can press in order to "
+"restart the job."
+msgstr ""
+"Hvis man klikker på det lille ikon til højre på et job i listen, får man "
+"vist log-outputtet for det job. Hvis jobbet endnu ikke er blevet afviklet, "
+"indeholder log-outputtet kun de valgte inputparametre. Hvis jobbet fejlede, "
+"vil der også være en knap, som man kan trykke på for at genstarte jobbet."
+
+#: templates/documentation/jobs/index.html
+msgid "Jobs run by Magenta"
+msgstr "Jobs kørt af Magenta"
+
+#: templates/documentation/jobs/index.html
+msgid ""
+"If the user for a job is listed as \"Magenta\", it means that the job was "
+"started by the OS2borgerPC team at Magenta."
+msgstr ""
+"Hvis brugeren for et job er angivet som \"Magenta\", betyder det at jobbet "
+"blev startet af OS2borgerPC-teamet hos Magenta."
+
+#: templates/documentation/jobs/index.html
+msgid "This is used for e.g."
+msgstr "Det bruges eksempelvis til"
+
+#: templates/documentation/jobs/index.html
+msgid "Maintenance"
+msgstr "Vedligeholdelse"
+
+#: templates/documentation/jobs/index.html
+msgid "Updates"
+msgstr "Opdateringer"
+
+#: templates/documentation/jobs/index.html
+msgid "Troubleshooting and error correction"
+msgstr "Fejlfinding og -retning"
+
+#: templates/documentation/jobs/index.html
+msgid "Patching security issues (CVE's identified in Ubuntu)"
+msgstr "Lapning af sikkerhedshuller (CVE'er identificeret i Ubuntu)"
+
+#: templates/documentation/om_os2borgerpc_admin.html
+msgid ""
+"OS2borgerPC enables you to remotely manage computers via the OS2borgerPC "
+"administration interface. In the left-hand menu, you can find documentation "
+"regarding the different parts of the system."
+msgstr ""
+"OS2borgerPC giver dig mulighed for at fjernadministre computere via "
+"OS2borgerPC-administrationsinterfacet. I menuen til venstre kan du finde "
+"dokumentation for de forskellige dele af systemet."
+
+#: templates/documentation/om_os2borgerpc_admin.html
+msgid "OS2borgerPC was developed by"
+msgstr "OS2borgerPC-Admin er udviklet af"
+
+#: templates/documentation/om_os2borgerpc_admin.html
+msgid "in collaboration with the libraries in Aarhus and Silkeborg."
+msgstr "i samarbejde med bibliotekerne i Aarhus og Silkeborg."
+
+#: templates/documentation/om_os2borgerpc_admin.html
+#, python-format
+msgid ""
+"OS2borgerPC is 100%% Open Source and can be used and distributed in "
+"accordance with the conditions in version 3 of the"
+msgstr ""
+"OS2borgerPC er 100%% open source og kan bruges og videregives i henhold til "
+"betingelserne i version 3 af"
+
+#: templates/documentation/om_os2borgerpc_admin.html
+msgid "This documention can be used and distributed in accordance with a"
+msgstr "Denne dokumentation kan anvendes og videregives i henhold til en"
+
+#: templates/documentation/om_os2borgerpc_admin.html
+msgid ""
+"The source code for the newest accessible version of OS2borgerPC can always "
+"be found on"
+msgstr ""
+"Kildekoden til den nyeste tilgængelige version af OS2borgerPC-Admin kan "
+"altid findes på"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Updating the Wi-Fi password on a OS2borgerPC Kiosk"
+msgstr "Opdater kodeord på en OS2borgerPC Kiosk's Wi-Fi"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"We begin with a OS2borgerPC Kiosk, which has been started, where the browser "
+"is shown and a keyboard has been connected."
+msgstr ""
+"Vi starter på en OS2borgerPC Kiosk som er startet op, hvor browseren vises, "
+"og hvor der er sat et tastatur til."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Here, you press"
+msgstr "Herfra trykker du"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "You will then be shown a login prompt."
+msgstr "Da vil du komme til en loginprompt."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"\"marcus-01-vm\", which is shown here, is the name of my OS2borgerPC Kiosk, "
+"which will be different in your case."
+msgstr ""
+"\"marcus-01-vm\", der vises her, er navnet på min OS2borgerPC Kiosk, som vil "
+"være anderledes for dig."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Enter"
+msgstr "Enter"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"Write \"superuser\", press %(enter)s, write superuser's password and press "
+"%(enter)s again."
+msgstr ""
+"Skriv \"superuser\", tryk %(enter)s, skriv superuser's kodeord og tryk "
+"%(enter)s igen."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"Be aware that the entered password will not be shown in any way (e.g. stars "
+"as characters)."
+msgstr ""
+"Vær opmærksom på at den indtastede kode ikke vil blive vist på nogen vis "
+"(eks. stjerner som tegn)."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "You will then be shown a \"prompt\":"
+msgstr "Da vil du komme til en \"prompt\":"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "At this prompt, you write:"
+msgstr "På denne prompt skriver du:"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid "press %(enter)s, write superuser's password and press %(enter)s again."
+msgstr "tryk %(enter)s, skriv superuser's kodeord og tryk %(enter)s igen."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "You will then see the following screen."
+msgstr "Dernæst vil du blive mødt af følgende skærm."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Escape"
+msgstr "Escape"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"In this program, you use the arrow keys to navigate and %(enter)s to select "
+"an option. %(escape)s can be used to go back."
+msgstr ""
+"I dette program navigerer du rundt med piletasterne, og bruger %(enter)s til "
+"at trykke på en knap. %(escape)s kan bruges til at gå tilbage."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Edit a connection"
+msgstr "Edit a connection"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"The default option is %(eac)s so you simply press %(enter)s, which brings "
+"you here:"
+msgstr ""
+"Som udgangspunkt er %(eac)s valgt, så du trykker bare %(enter)s, hvilket "
+"bringer dig hertil:"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"The view on this page will vary, but if you had previously configured a Wi-"
+"Fi connection, it will be listed here."
+msgstr ""
+"På denne side vil det variere hvad du ser, men hvis du tidligere havde en Wi-"
+"Fi-forbindelse sat op, vil den være angivet på listen."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"Navigate to your Wi-Fi connection using the arrow keys and press %(enter)s. "
+"If you are unsure, you can enter each Wi-Fi connection in turn in order to "
+"determine the actual name of the connection (SSID)."
+msgstr ""
+"Gå ned til dit Wi-Fi-netværk med piletasterne, og tryk igen %(enter)s. Hvis "
+"du er i tvivl, kan du gå ind på hvert Wi-Fi-netværk for at se hvad navnet på "
+"netværket faktisk er (SSID)."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"You will then see the following screen. The contents of the fields will vary "
+"from system to system."
+msgstr ""
+"Da vil du komme til følgende skærm. Hvad der står i felterne vil dog variere "
+"fra system til system."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"Use the arrow keys to navigate to the password, delete it and write the new "
+"password. Next, navigate to the bottom and press OK."
+msgstr ""
+"Brug piletasterne til at gå ned til kodeordet, slet det, og skriv det nye "
+"kodeord ind. Gå derefter til bunden og tryk OK."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"You will be returned to this screen - this time, press %(escape)s to go back "
+"to the main menu."
+msgstr ""
+"Du vil være tilbage på denne skærm - denne gang trykker du %(escape)s for at "
+"gå et niveau tilbage, for at komme til hovedmenuen."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "This time, choose"
+msgstr "Denne gang vælger du"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Deactivate"
+msgstr "Deactivate"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Activate"
+msgstr "Activate"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"Find your network on the list and if there is an option to %(deactivate)s, "
+"do this via the arrow keys and %(enter)s. Next, choose %(activate)s."
+msgstr ""
+"Find dit netværk på listen, og hvis du ser muligheden for %(deactivate)s, "
+"gør du først dét, via piletasterne og %(enter)s. Derefter vælger du "
+"%(activate)s."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"The network will now be active, assuming that the configuration and password "
+"were entered correctly."
+msgstr ""
+"Herefter vil netværket være aktiveret, hvis konfigurationen og koden var "
+"indtastet korrekt."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "We are now finished with"
+msgstr "Nu er vi færdige med"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"Press %(escape)s - or alternatively use the arrow keys to choose \"Back\", "
+"press %(enter)s, choose \"Quit\" and press %(enter)s until the program is "
+"closed."
+msgstr ""
+"Tryk på %(escape)s - eller alternativt vælg først \"Back\" med piletasterne, "
+"tryk %(enter)s, vælg \"Quit\" og tryk %(enter)s, indtil programmet er lukket."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "You will now be back in the terminal, which now looks like this:"
+msgstr "Så vil du være tilbage i terminalen, som nu ser sådan her ud:"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"You can then check that the network connection is working, for instance via "
+"the following command, which uses"
+msgstr ""
+"Herefter kan du tjekke at netværksforbindelsen virker, eks. via følgende "
+"kommando, der bruger"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"If the machine is connected, you should see output similar to the above."
+msgstr "Ved netforbindelse skulle du gerne se output som ovenover."
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+#, python-format
+msgid ""
+"Write \"exit\" on the command line and press %(enter)s to log out - or press"
+msgstr ""
+"Skriv \"exit\" på kommandolinien og tryk %(enter)s for at logge ud - eller "
+"tryk"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "You will then be back here:"
+msgstr "Du vil så være tilbage hertil:"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid ""
+"Press Ctrl-Alt-F1 to return to the browser - we are now back where we "
+"started:"
+msgstr ""
+"Tryk nu Ctrl-Alt-F1 for at komme tilbage til browseren - så er vi tilbage "
+"til start:"
+
+#: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
+msgid "Done!"
+msgstr "Færdig!"
+
+#: templates/documentation/scripts/__submenu__.html
+#: templates/documentation/scripts/edit.html
+msgid "Editing Scripts"
+msgstr "Redigering af Scripts"
+
+#: templates/documentation/scripts/__submenu__.html
+msgid "Editing arguments"
+msgstr "Redigering af inputparametre"
+
+#: templates/documentation/scripts/__submenu__.html
+#: templates/documentation/scripts/running.html
+#: templates/site_with_navigation.html
+msgid "Executing Scripts"
+msgstr "Afvikling af Scripts"
+
+#: templates/documentation/scripts/edit.html
+msgid ""
+"If you wish to edit a Script, you must click on \"Scripts\" in the left-hand "
+"menu and then select the script in the list of scripts shown to the right of "
+"the left-hand menu. Note that it may be necessary to swap between the tabs "
+"\"Local scripts\" and \"Global scripts\" in order to find the script. You "
+"can also search through the scripts by selecting the search field \"Find ..."
+"\" and typing a search term. This will cause the list to display all scripts "
+"whose names contain the search term."
+msgstr ""
+"For at redigere et Script skal du klikke på \"Scripts\" i venstremenuen og "
+"efterfølgende vælge Scriptet i listen over Scripts til højre for "
+"venstremenuen. Bemærk at det kan være nødvendigt at skifte mellem "
+"fanebladenene \"Lokale scripts\" og \"Globale scripts\" for at finde "
+"Scriptet. Du kan også søge igennem alle scripts ved at vælge søgefeltet "
+"\"Find ...\" og indtaste en søgeterm. Dette vil få listen til at vise de "
+"scripts, hvis navn indeholder søgetermen."
+
+#: templates/documentation/scripts/edit.html
+msgid ""
+"When you edit a script you can change its name and description. It is also "
+"possible to upload a new version of the script by clicking on the tab \"Code"
+"\" and then selecting a file to upload. Changes do not become permanent "
+"until you've clicked on \"Save changes\" at the bottom of the screen."
+msgstr ""
+"Når du redigerer et Script har du mulighed for at ændre dets navn og "
+"beskrivelse. Du kan også uploade en ny version af Scriptet ved at klikke på "
+"fanebladet \"Kode\" og derefter vælge en fil at uploade. Ændringer du har "
+"foretaget træder ikke i kraft, før du har klikket på \"Gem ændringer\" i "
+"bunden af siden."
+
+#: templates/documentation/scripts/edit.html
+msgid "In the last tab, you can"
+msgstr "I sidste fane har du mulighed for at"
+
+#: templates/documentation/scripts/edit.html
+msgid "adjust the arguments for the script"
+msgstr "tilpasse inputparametre for Scriptet"
+
+#: templates/documentation/scripts/index.html
+#: templates/site_with_navigation.html
+msgid "Administrating Scripts"
+msgstr "Administration af Scripts"
+
+#: templates/documentation/scripts/index.html
+msgid ""
+"When you click on \"Scripts\" in the left-hand menu, a list of scripts will "
+"be shown to the right of the left-hand menu and the editing interface for "
+"scripts will be shown to the right of this list."
+msgstr ""
+"Når man klikker på \"Scripts\" i venstremenuen, vil man til højre for "
+"venstremenuen få vist en liste af Scripts, og til højre for denne liste vil "
+"man få vist redigeringsinterfacet for Scripts."
+
+#: templates/documentation/scripts/index.html
+msgid ""
+"Scripts are for individual actions whereas security scripts monitor special "
+"events."
+msgstr ""
+"Scripts er til enkeltstående handlinger, hvorimod Sikkerhedsscripts holder "
+"øje med specielle hændelser."
+
+#: templates/documentation/scripts/index.html
+msgid ""
+"The list of scripts is divided in two parts that one can swap between by "
+"clicking on the tabs \"Local scripts\" and \"Global scripts\" above the list."
+msgstr ""
+"Listen af Scripts er delt op i to dele som kan skiftes imellem ved at klikke "
+"på fanebladene \"Lokale scripts\" og \"Globale scripts\" oven over listen."
+
+#: templates/documentation/scripts/index.html
+msgid ""
+"Local scripts are scripts that can only be used on the currently chosen site "
+"while global scripts are scripts that can be used on all sites."
+msgstr ""
+"Lokale scripts dækker over Scripts, som kun kan bruges på det site man er "
+"under, mens Globale scripts dækker over Scripts, der kan bruges på alle "
+"sites."
+
+#: templates/documentation/scripts/index.html
+msgid "You have the following options for every script"
+msgstr "For hvert script har du mulighed for følgende"
+
+#: templates/documentation/scripts/index.html
+msgid ""
+"If you wish to add a new script, you must click on \"Add new Script\" above "
+"the list of scripts. This will open a modal where you can fill out the name "
+"and description and upload the script code. When you then click on \"Create "
+"script\", the script will be created, and you will be redirected to the "
+"editing interface for the newly created script where you can add arguments "
+"for the script."
+msgstr ""
+"Hvis du ønsker at oprette et nyt script skal du klikke på \"Tilføj nyt Script"
+"\" oven over listen med Scripts. Dette vil åbne en dialog hvor du kan "
+"udfylde script navn, beskrivelse og uploade script-kode. Når du derefter "
+"klikker på \"Opret Script\" vil scriptet blive oprettet, og du vil blive "
+"viderestillet til redigeringssiden for det nyoprettede script, hvor du vil "
+"have mulighed for at tilføje inputparametre til scriptet."
+
+#: templates/documentation/scripts/parameters.html
+msgid "Editing Script arguments"
+msgstr "Redigering af Script-inputparametre"
+
+#: templates/documentation/scripts/parameters.html
+msgid ""
+"The script arguments make it possible to supply input parameters when a "
+"script needs to be run. One can choose between seven different types of "
+"input parameters:"
+msgstr ""
+"Script-inputparametre gør det muligt at angive inputparametre, når et script "
+"skal køres. Der er syv typer inputparametre man kan vælge imellem:"
+
+#: templates/documentation/scripts/parameters.html
+msgid ""
+"Makes it possible to supply a text string such as a file path or a title."
+msgstr ""
+"Giver mulighed for at angive en tekst-streng, for eksempel en sti eller en "
+"titel."
+
+#: templates/documentation/scripts/parameters.html
+msgid "Makes it possible to supply a positive or negative integer"
+msgstr "Giver mulighed for at angive et positivt eller negativt heltal"
+
+#: templates/documentation/scripts/parameters.html
+msgid "Makes it possible to supply a date"
+msgstr "Giver mulighed for at angive en dato"
+
+#: templates/documentation/scripts/parameters.html
+msgid ""
+"Makes it possible to upload a file that will be passed along when the script "
+"is being executed. The script will receive the file parameter as a file path "
+"pointing at the file in the local file system."
+msgstr ""
+"Giver mulighed for at uploade en fil, der vil blive sendt med, når scriptet "
+"skal afvikles. Scriptet vil modtage Fil-parametre som en sti i det lokale "
+"filsystem, der peger på filen."
+
+#: templates/documentation/scripts/parameters.html
+msgid ""
+"Makes it possible to supply a true/false value. The script will receive the "
+"value as either the string \"True\" or the string \"False\"."
+msgstr ""
+"Giver mulighed for at angive en sand/falsk-værdi. Scriptet vil modtage "
+"værdien som enten strengen \"True\" eller strengen \"False\"."
+
+#: templates/documentation/scripts/parameters.html
+msgid "Makes it possible to supply a time of day"
+msgstr "Giver mulighed for at angive et tidspunkt"
+
+#: templates/documentation/scripts/parameters.html
+msgid ""
+"Makes it possible to supply a password string. This type of parameter "
+"functions like the regular string parameter except that the chosen password "
+"will be hidden in the log output and all other places where the chosen input "
+"parameters are displayed."
+msgstr ""
+"Giver mulighed for at angive en adgangskode. Denne type af inputparameter "
+"fungerer ligesom streng-inputparametertypen bortset fra at den valgte "
+"adgangskode vil være skjult i log-outputtet og alle andre steder hvor de "
+"valgte inputparametre vises."
+
+#: templates/documentation/scripts/parameters.html
+#, python-format
+msgid ""
+"In order to add an argument to a script, you must click on the button \"Add "
+"arguments\". This will add a new row to the list of arguments where you must "
+"fill out the name and type for the argument. It is also possible to specify "
+"a default value for the argument, which will be entered by default when "
+"running the script or adding it as an associated script. Only arguments of "
+"the types %(str)s, %(int)s, %(date)s and %(time)s can have default values. "
+"Lastly, an argument can be set as required or not. Required parameters must "
+"be supplied when running the script whereas non-required parameters can be "
+"left blank. Boolean parameters cannot be required. If you wish to remove an "
+"argument, you must click on \"Remove\" to the right in the list."
+msgstr ""
+"For at tilføje en input-parameter til et script skal man klikke på knappen "
+"\"Tilføj parametre\". Dette vil tilføje en ny række i listen over "
+"inputparametre, hvor man skal udfylde navn og type for inputparametren. Det "
+"er også muligt at angive en standardværdi for inputparameteren, som "
+"automatisk vil være angivet når man kører scriptet eller knytter det til en "
+"gruppe. Kun parametre af typerne %(str)s, %(int)s, %(date)s og %(time)s kan "
+"have standardværdier. Endelig kan en inputparameter sættes som påkrævet. "
+"Påkrævede parametre skal udfyldes, når man kører scriptet, mens ikke-"
+"påkrævede parametre kan efterlades tomme. Afkrydsningsfelter kan ikke være "
+"påkrævede. Hvis man ønsker at fjerne en parameter, skal man klikke på \"Fjern"
+"\" til højre i listen."
+
+#: templates/documentation/scripts/parameters.html
+msgid ""
+"You must click on the button \"Save changes\" at the bottom of the script "
+"editing interface before changes to script arguments are made permanent."
+msgstr ""
+"Man skal klikke på knappen \"Gem ændringer\" nederst på script-"
+"redigeringssiden før ændringer foretaget til inputparametre træder i kraft."
+
+#: templates/documentation/scripts/running.html
+msgid ""
+"In order to run a script on a computer or a group of computers, you must "
+"click on \"Scripts\" in the left-hand menu and choose the script you wish to "
+"run. Note that it may be necessary to swap between the tabs \"Local scripts"
+"\" and \"Global scripts\" in order to find the script. When you have located "
+"the script you wish to run, you must click on the button \"Run script\"."
+msgstr ""
+"For at køre et script på en computer eller en gruppe af computere skal du "
+"klikke på \"Scripts\" i venstremenuen og vælge det script du vil køre. "
+"Bemærk at det kan være nødvendigt at skifte mellem fanerne \"Lokale scripts"
+"\" og \"Globale scripts\" for at finde det script du leder efter. Når du har "
+"valgt det script, du ønsker at køre, skal du klikke på knappen \"Kør script"
+"\"."
+
+#: templates/documentation/scripts/running.html
+msgid ""
+"You will now be shown a modal where you will be asked to select the "
+"computers and/or groups that should execute the script. Click on the "
+"individual computer or group in order to select/deselect it. You can choose "
+"any number of computers or groups. At the top are special checkboxes that "
+"can be used to select/deselect all computers or groups. Choosing a group "
+"will cause the script to be executed on all computers in that group. Click "
+"\"Next\" once you have made your choices."
+msgstr ""
+"Der kommer nu en dialog, hvor du bliver bedt om at vælge de computere og/"
+"eller grupper, som du ønsker at afvikle scriptet på. Klik på den enkelte "
+"computer eller gruppe for at vælge/afvælge den. Du kan vælge så mange "
+"computere eller grupper, som du ønsker. Øverst findes særlige "
+"afkrydsningsfelter, som kan bruges til at vælge/afvælge alle computere eller "
+"grupper. Valg af en gruppe vil medføre, at scriptet udføres på samtlige "
+"computere der er med i gruppen. Klik på \"Næste\", når du har foretaget dine "
+"valg."
+
+#: templates/documentation/scripts/running.html
+msgid ""
+"You will now be asked to enter input parameters for the script. If an input "
+"parameter has a default value, it will be entered by default. The value can "
+"be changed. Fill out the fields and press \"Run\" in order to start the "
+"script execution. This will result in a job being created for every computer "
+"that the script is to be executed on. You can click on the link in the last "
+"section of the modal in order to jump to"
+msgstr ""
+"Du vil nu blive bedt om at udfylde inputparametre for scriptet. Hvis en "
+"inputparameter har en standardværdi, vil denne være angivet på forhånd. "
+"Værdien kan godt ændres. Udfyld felterne og klik på \"Kør\" for at starte "
+"afviklingen af scriptet. Dette vil medføre, at der bliver oprettet et job "
+"for hver computer du valgte at udføre scriptet på. Du kan klikke på linket i "
+"den sidste side i dialogen for at gå til"
+
+#: templates/documentation/scripts/running.html
+msgid "and track the execution of jobs on the individual computers."
+msgstr "og følge med i afviklingen af jobs på de enkelte computere."
+
+#: templates/documentation/security_scripts/__submenu__.html
+#: templates/documentation/security_scripts/edit.html
+msgid "Editing Security Scripts"
+msgstr "Redigering af Sikkerhedsscripts"
+
+#: templates/documentation/security_scripts/__submenu__.html
+#: templates/documentation/security_scripts/edit.html
+#: templates/documentation/security_scripts/securityevents.html
+#: templates/site_with_navigation.html
+#: templates/system/security_events/site_security_events.html
+#: templates/system/security_problems/confirm_delete.html
+msgid "Security Events"
+msgstr "Sikkerhedshændelser"
+
+#: templates/documentation/security_scripts/__submenu__.html
+#: templates/documentation/security_scripts/securityproblems.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
+#: templates/system/security_problems/site_security_problems.html
+msgid "Security Rules"
+msgstr "Sikkerhedsregler"
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"If you wish to edit a Security Script, you must click on \"Security Scripts"
+"\" in the left-hand menu and then select the security script in the list to "
+"the right of the left-hand menu. Note that it may be necessary to swap "
+"between the tabs \"Local scripts\" and \"Global scripts\" in order to find "
+"the script. You can also search through the security scripts by selecting "
+"the search field \"Find ...\" and typing a search term. This will cause the "
+"list to display all security scripts whose names contain the search term."
+msgstr ""
+"For at redigere et Sikkerhedsscript skal du klikke på \"Sikkerhedsscripts\" "
+"i venstremenuen og efterfølgende vælge Sikkerhedsscriptet i listen over "
+"Sikkerhedsscripts til højre for venstremenuen. Bemærk at det kan være "
+"nødvendigt at skifte mellem fanebladenene \"Lokale scripts\" og \"Globale "
+"scripts\" for at finde Sikkerhedsscriptet. Du kan også søge igennem alle "
+"Sikkerhedsscripts ved at vælge søgefeltet \"Find ...\" og indtaste en "
+"søgeterm. Dette vil få listen til at vise de Sikkerhedsscripts, hvis navn "
+"indeholder søgetermen."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"When you edit a security script you can change its name and description. It "
+"is also possible to upload a new version of the script by clicking on the "
+"tab \"Code\" and then selecting a file to upload. Changes do not become "
+"permanent until you've clicked on \"Save changes\" at the bottom of the "
+"screen."
+msgstr ""
+"Når du redigerer et Sikkerhedsscript har du mulighed for at ændre dets navn "
+"og beskrivelse. Du kan også uploade en ny version af Sikkerhedsscriptet ved "
+"at klikke på fanebladet \"Kode\" og derefter vælge en fil at uploade. "
+"Ændringer du har foretaget træder ikke i kraft, før du har klikket på \"Gem "
+"ændringer\" i bunden af siden."
+
+#: templates/documentation/security_scripts/edit.html
+msgid "Please note the following regarding security scripts"
+msgstr "Ved Sikkerhedsscripts, skal du være opmærksom på følgende"
+
+#: templates/documentation/security_scripts/edit.html
+msgid "A security script is a script that collects"
+msgstr "Et Sikkerhedsscript er et script, som indsamler"
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"A security script does not have any input parameters, and it must follow a "
+"specific format."
+msgstr ""
+"Et Sikkerhedscript tager ikke nogen inputparametre, og det skal følge et "
+"bestemt format."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"The structure of a security script will typically involve reading an amount "
+"of data from a log file, searching the data for an event based on one or "
+"more keywords and then saving the information in a specific format. A "
+"security script can be a shell script or a python script."
+msgstr ""
+"Opbygningen af et Sikkerhedscript vil typisk være, at læse en mængde data "
+"fra en log fil, søge i dataen efter en hændelse via et eller flere keywords, "
+"og så herefter gemme oplysningerne i et bestemt format. Et Sikkerhedsscript "
+"kan være et shellscript eller et pythonscript."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"The format looks like this: \"event timestamp, security rule id, event "
+"summary, complete event log\"."
+msgstr ""
+"Formatet ser således ud: \"tidsstempel for hændelsen, Sikkerhedsreglens id, "
+"hændelsesreferat, den fulde log for hændelsen\"."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"The event timestamp is the time when the event took place. It is usually "
+"obtained from the log file."
+msgstr ""
+"Tidsstemplet er det tidspunkt, hvor hændelsen fandt sted. Det fås normalt "
+"fra log-filen."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"The security rule id is a number found in the url for editing that specific "
+"security rule. Your security script is used by a security rule and it is the "
+"id of this rule that you need."
+msgstr ""
+"Sikkerhedsreglens id er et tal, som kan findes i url'en for den specifikke "
+"sikkerhedsregel. Dit Sikkerhedsscript tilhører en sikkerhedsregel, og det er "
+"dennes id du skal bruge."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"The event summary can be something you define or a part of the collected "
+"data."
+msgstr ""
+"Hændelsesreferatet kan enten være noget du definerer eller en bid af det "
+"indsamlede data."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"The complete event log is all of the data regarding the event. It is "
+"optional and can be replaced by an empty string."
+msgstr ""
+"Den fulde log for hændelsen er alt den indsamlede data vedrørende "
+"sikkerhedshændelsen. Den er valgfri og kan erstattes af en tom streng."
+
+#: templates/documentation/security_scripts/edit.html
+msgid ""
+"Deliver the format as an array to the module csv_writer by calling the "
+"method write."
+msgstr ""
+"Aflever formatet som et array til modulet csv_writer ved at kalde metoden "
+"write."
+
+#: templates/documentation/security_scripts/index.html
+#: templates/site_with_navigation.html
+msgid "Administrating security scripts"
+msgstr "Administration af sikkerhedsscripts"
+
+#: templates/documentation/security_scripts/index.html
+msgid ""
+"When you click on \"Security Scripts\" in the left-hand menu, a list of "
+"security scripts will be shown to the right of the left-hand menu and the "
+"editing interface for security scripts will be shown to the right of this "
+"list."
+msgstr ""
+"Når man klikker på \"Sikkerhedsscripts\" i venstremenuen, vil man til højre "
+"for venstremenuen få vist en liste af Sikkerhedsscripts, og til højre for "
+"denne liste vil man få vist redigeringsinterfacet for Sikkerhedsscripts."
+
+#: templates/documentation/security_scripts/index.html
+msgid ""
+"Security scripts monitor special events whereas Scripts are for individual "
+"actions."
+msgstr ""
+"Sikkerhedsscripts holder øje med specielle hændelser, hvorimod Scripts er "
+"til enkeltstående handlinger."
+
+#: templates/documentation/security_scripts/index.html
+msgid ""
+"The list of security scripts is divided in two parts that one can swap "
+"between by clicking on the tabs \"Local scripts\" and \"Global scripts\" "
+"above the list."
+msgstr ""
+"Listen af Sikkerhedsscripts er delt op i to dele som kan skiftes imellem ved "
+"at klikke på fanebladene \"Lokale scripts\" og \"Globale scripts\" oven over "
+"listen."
+
+#: templates/documentation/security_scripts/index.html
+msgid ""
+"Local scripts are security scripts that can only be used on the currently "
+"chosen site while global scripts are security scripts that can be used on "
+"all sites."
+msgstr ""
+"Lokale scripts dækker over Sikkerhedsscripts, som kun kan bruges på det site "
+"man er under, mens Globale scripts dækker over Sikkerhedsscripts, der kan "
+"bruges på alle sites."
+
+#: templates/documentation/security_scripts/index.html
+msgid "You have the following options for every security script"
+msgstr "For hvert Sikkerhedsscript har du mulighed for følgende"
+
+#: templates/documentation/security_scripts/index.html
+msgid ""
+"If you wish to add a new security script, you must click on \"Add new "
+"Security Script\" above the list of security scripts. This will open a modal "
+"where you can fill out the name and description and upload the script code. "
+"When you then click on \"Create Security Script\", the script will be "
+"created, and you will be redirected to the editing interface for the newly "
+"created security script."
+msgstr ""
+"Hvis du ønsker at oprette et nyt Sikkerhedsscript skal du klikke på \"Tilføj "
+"nyt Sikkerhedsscript\" oven over listen med Sikkerhedsscripts. Dette vil "
+"åbne en dialog hvor du kan udfylde script-navn, beskrivelse og uploade "
+"script-kode. Når du derefter klikker på \"Opret Sikkerhedsscript\" vil "
+"Sikkerhedsscriptet blive oprettet, og du vil blive viderestillet til "
+"redigeringssiden for det nyoprettede sikkerhedsscript."
+
+#: templates/documentation/security_scripts/securityevents.html
+msgid ""
+"This overview shows the individual events that have been triggered by the "
+"system. In the left column, you can choose how you wish to filter the "
+"overview, i.e. choose which events you wish to see. By default you will be "
+"shown all unresolved events with a severity level greater than normal. The "
+"severity level is also shown in the overview."
+msgstr ""
+"Denne oversigt viser de individuelle hændelser, som er udløst af systemet. I "
+"venstre kolonne kan du vælge hvordan oversigten filtreres, altså hvilke "
+"hændelser du vil se. Standard er, at du ser alle ikke-løste hændelser med en "
+"alvorlighedsgrad over normal. Af oversigten fremgår også hændelsernes "
+"alvorlighedsgrad."
+
+#: templates/documentation/security_scripts/securityevents.html
+msgid ""
+"From the overview you can select and handle security events. Handling an "
+"event allows you to change its status and the assigned user as well as add "
+"or change a note for the event. It is possible to handle multiple events "
+"simultaneously."
+msgstr ""
+"Fra oversigten kan du vælge og håndtere sikkerhedshændelser. Når du "
+"håndterer en sikkerhedshændelse, kan du ændre dens status, og hvem der står, "
+"at den håndteres af samt tilføje eller ændre en note for hændelsen. Det er "
+"muligt at håndtere flere hændelser på en gang."
+
+#: templates/documentation/security_scripts/securityevents.html
+msgid ""
+"The possible statuses are new (the default), assigned and resolved. The "
+"assigned user can be chosen from among all users on the site you are on. It "
+"is possible for an event to have no assigned user."
+msgstr ""
+"De mulige statuser er ny (standard), tildelt og løst. Brugeren som der står, "
+"at hændelsen håndteres af kan vælges blandt alle brugere på det site, man er "
+"under. Det er muligt for en hændelse ikke at have nogen bruger angivet til "
+"at håndtere den."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid ""
+"The overview \"Security Rules\" shows all the defined security rules that "
+"are monitored. You can define new security rules from the overview."
+msgstr ""
+"I oversigten \"Sikkerhedsregler\" vises alle definerede Sikkerhedsregler, "
+"som der holdes øje med. Fra oversigten kan du oprette nye Sikkerhedsregler."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid "A new security rule must have the following input"
+msgstr "En ny Sikkerhedsregel skal have følgende input"
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid "Name: the name of the particular security rule."
+msgstr "Navn: Navnet på den pågældende sikkerhedsregel."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid ""
+"Description: A descriptive text that is included in the sent email warnings."
+msgstr ""
+"Beskrivelse: En beskrivende tekst, som indgår i de afsendte advarsels-emails."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid "Severity level: Choose between Critical, High and Normal."
+msgstr "Alvorlighedsgrad: Vælg mellem Kritisk, Høj og Normal."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid ""
+"Security Script: The Security Script is executed every time the machine "
+"checks in with the admin-site."
+msgstr ""
+"Sikkerhedsscript: Sikkerhedsscriptet afvikles hver gang en maskine tjekker "
+"ind på admin-sitet."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid ""
+"Monitored groups: The groups define which computers the security rule "
+"applies to."
+msgstr ""
+"Overvågede grupper: Grupperne definerer hvilke computere, den aktuelle "
+"sikkerhedsregel er aktiv for."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid ""
+"Recipient(s) of email warning: The users that should receive an email about "
+"any security events related to the security rule."
+msgstr ""
+"Modtager(e) af email-advarsel: Hvilke brugere der skal modtage en email "
+"omkring sikkerhedshændelser relateret til denne sikkerhedsregel."
+
+#: templates/documentation/status/index.html
+msgid ""
+"When you log in to the admin-site, you will be presented with the status "
+"screen for the site that your OS2borgerPC user is associated with. If you "
+"have access to multiple sites, you must first choose a site to access."
+msgstr ""
+"Når du logger ind på admin-sitet, bliver du præsenteret for status-billedet "
+"for det site, som din OS2borgerPC-bruger er tilknyttet. Hvis du har adgang "
+"til flere sites, skal du først vælge det site, du vil ind på."
+
+#: templates/documentation/status/index.html
+msgid ""
+"On this list, you will be shown information about all computers for the "
+"site, sorted with new/inactive computers"
+msgstr ""
+"På denne liste vil du se info om alle computere for sitet, sorteret med nye/"
+"inaktive computere"
+
+#: templates/documentation/status/index.html
+msgid "waiting to be activated"
+msgstr "der venter på at blive aktiverede"
+
+#: templates/documentation/status/index.html
+msgid "at the top and otherwise by when they were last seen."
+msgstr "øverst, og ellers efter hvornår, de senest er set."
+
+#: templates/documentation/status/index.html
+msgid ""
+"You can click on a particular computer to see mere information about it."
+msgstr "Du kan klikke på den enkelte computer for at se nærmere info om den."
+
+#: templates/documentation/users/index.html templates/site_with_navigation.html
+msgid "Administrating users"
+msgstr "Administration af brugere"
+
+#: templates/documentation/users/index.html
+msgid ""
+"When you click on \"Users\" in the left-hand menu, you will be shown a list "
+"of users to the right of the left-hand menu. The editing interface for the "
+"chosen user will be shown to the right of the list. If no users exist for "
+"the chosen site, you will be shown a form for creating users instead."
+msgstr ""
+"Når du klikker på \"Brugere\" i venstre-menuen får du vist en liste af "
+"brugere til højre for venstremenuen. Til højre for listen vil blive vist "
+"redigeringsinterfacet for den valgte bruger. Hvis ikke der findes nogen "
+"brugere på det valgte site, vil interfacet til oprettelse af brugere blive "
+"vist i stedet."
+
+#: templates/documentation/users/index.html
+msgid "Editing"
+msgstr "Redigering"
+
+#: templates/documentation/users/index.html
+msgid ""
+"If you wish to edit a user, you must click on that user in the list of "
+"users. It will now be possible to change the user's username, password, "
+"email address, usertype and language. Note that only users with the usertype "
+"\"Site Admin\" can change a user's usertype. Furthermore, if your usertype "
+"is \"Site User\" and not \"Site Admin\", you will only be able to edit your "
+"own user. The fields are explained below:"
+msgstr ""
+"For at redigere en bruger skal du klikke på den pågældende bruger i listen "
+"over brugere. Du har nu mulighed for at ændre brugerens brugernavn, "
+"adgangskode, e-mail-adresse, brugertype og sprog. Bemærk at kun brugere med "
+"brugertypen \"Site-admin\" kan ændre en brugers brugertype. Hvis din "
+"brugertype er \"Site-bruger\" og ikke \"Site-admin\", vil du kun kunne "
+"redigere din egen bruger. Felterne er forklaret herunder:"
+
+#: templates/documentation/users/index.html
+msgid "Username"
+msgstr "Brugernavn"
+
+#: templates/documentation/users/index.html
+msgid ""
+"This is the username that the user must use when they log in to the admin-"
+"site. It can be no more than 150 characters long and can only contain "
+"numbers, letters and the special characters"
+msgstr ""
+"Dette er det brugernavn, som brugeren skal bruge, når de logger ind på admin-"
+"sitet. Det kan maksimalt være 150 tegn og kun indeholde tal, bogstaver og "
+"specialtegnene"
+
+#: templates/documentation/users/index.html
+#: templates/documentation/wake_plans/index.html
+msgid "and"
+msgstr "og"
+
+#: templates/documentation/users/index.html
+msgid ""
+"Here you can change the user's password. To ensure that the password is "
+"entered correctly, it must be entered twice. If the fields are left empty, "
+"the password will remain unchanged. When creating a new user, it is "
+"mandatory to specify a password."
+msgstr ""
+"Her kan man ændre brugerens adgangskode. For at sikre at adgangskoden "
+"indtastes korrekt, skal den skrives to gange. Hvis ikke felterne udfyldes, "
+"vil adgangskoden forblive uændret. Ved oprettelse af en ny bruger er det "
+"påkrævet at angive en adgangskode."
+
+#: templates/documentation/users/index.html
+msgid "Email address"
+msgstr "E-mail-adresse"
+
+#: templates/documentation/users/index.html
+msgid "Here you can enter the user's email address. It is optional."
+msgstr "Her kan du angive brugerens e-mail-adresse. Det er valgfrit."
+
+#: templates/documentation/users/index.html
+msgid "The options in this field depend on your own usertype"
+msgstr "Valgmulighederne i dette felt afhænger af din egen brugertype"
+
+#: templates/documentation/users/index.html
+msgid "Usertypes"
+msgstr "Brugertyper"
+
+#: templates/documentation/users/index.html
+#, python-format
+msgid "Only Site Admins are allowed to edit %(ut)s."
+msgstr "Kun site-admins har mulighed for at redigere %(ut)s."
+
+#: templates/documentation/users/index.html
+#, python-format
+msgid "The different %(ut)s are described further down."
+msgstr "Se informationer om de forskellige %(ut)s længere nede."
+
+#: templates/documentation/users/index.html
+msgid "The user's language setting."
+msgstr "Brugerens sprog-indstilling."
+
+#: templates/documentation/users/index.html
+msgid ""
+"Changes do not take effect until you've clicked on the button \"Save changes"
+"\" at the bottom of the page."
+msgstr ""
+"Ændringer træder ikke i kraft, før man klikker på knappen \"Gem ændringer\" "
+"nederst på siden."
+
+#: templates/documentation/users/index.html
+msgid "Creating a new user"
+msgstr "Oprettelse af ny bruger"
+
+#: templates/documentation/users/index.html
+msgid ""
+"If you wish to create a new user, you must click on the button \"Add new user"
+"\" above the list of users. This will open the form for creating a new user, "
+"which has the same fields as the interface for editing a user. When you fill "
+"out the fields and click \"Save changes\", the user will be created and you "
+"will be redirected to the editing interface for the newly created user. Only "
+"\"Site Admins\" can create new users."
+msgstr ""
+"Hvis man vil oprette en ny bruger skal man klikke på knappen \"Tilføj ny "
+"bruger\" over listen med brugere. Dette vil åbne interfacet for oprettelse "
+"af nye brugere, hvor man kan udfylde de samme oplysninger som under "
+"redigering af brugere. Ved klik på \"Gem ændringer\" vil brugeren blive "
+"oprettet, og man vil blive viderestillet til redigeringssiden for den "
+"nyoprettede bruger."
+
+#: templates/documentation/users/index.html
+msgid "Deleting a user"
+msgstr "Sletning af bruger"
+
+#: templates/documentation/users/index.html
+msgid ""
+"If you wish to delete a user, you must select the user and then click on the "
+"X to the right of the selected user in the list of users. You will then be "
+"asked to confirm the deletion and if you do so, the user will be deleted. "
+"Note that only \"Site Admins\" can delete users."
+msgstr ""
+"Hvis man ønsker at slette en bruger, skal man vælge brugeren og derefter "
+"klikke på X'et til højre for den valgte bruger i listen over brugere. Man "
+"vil efterfølgende blive bedt om at bekræfte sletningen, og hvis man gør det, "
+"vil brugeren blive slettet. Bemærk at kun \"Site-admins\" kan slette brugere."
+
+#: templates/documentation/users/index.html
+msgid "Permissions for Usertypes"
+msgstr "Rettigheder for Brugertyper"
+
+#: templates/documentation/users/index.html
+msgid "All permissions"
+msgstr "Alle rettigheder"
+
+#: templates/documentation/users/index.html
+msgid ""
+"Can edit their own user, except their usertype. Cannot create, delete or "
+"edit other users."
+msgstr ""
+"Kan redigere egen bruger, bortset fra at ændre brugertype. Kan hverken "
+"oprette, redigere eller slette andre brugere."
+
+#: templates/documentation/users/index.html
+msgid "Can run, create and edit scripts. Cannot delete scripts."
+msgstr "Kan køre, oprette og redigere scripts. Kan ikke slette dem."
+
+#: templates/documentation/users/index.html
+msgid "Can create and edit security rules. Cannot delete security rules."
+msgstr "Kan oprette og redigere sikkerhedsregler. Kan ikke slette dem."
+
+#: templates/documentation/wake_plans/__submenu__.html
+msgid "Associated Groups"
+msgstr "Tilknyttede Grupper"
+
+#: templates/documentation/wake_plans/__submenu__.html
+#: templates/system/site_settings.html
+msgid "Settings"
+msgstr "Indstillinger"
+
+#: templates/documentation/wake_plans/__submenu__.html
+#: templates/documentation/wake_plans/edit_exceptions.html
+msgid "Handle exceptions"
+msgstr "Håndter undtagelser"
+
+#: templates/documentation/wake_plans/edit_exceptions.html
+msgid ""
+"On the page for handling schedule exceptions, a list of schedule exceptions "
+"for the chosen site will be shown to the right of the left-hand menu. You "
+"can click on the name of a particular exception in order to edit it."
+msgstr ""
+"På siden til håndtering af tidsplans-undtagelser vil man til højre for "
+"venstremenuen få vist en liste af tidsplans-undtagelser for det site, man er "
+"under. Man kan klikke på navnet for den enkelte undtagelse for at redigere "
+"undtagelsen."
+
+#: templates/documentation/wake_plans/edit_exceptions.html
+msgid ""
+"There are two types of exceptions: altered opening hours and closed days. "
+"The two types have different icons in the list of exceptions. An exception "
+"with altered opening hours changes the on and off times for the chosen date "
+"or period. The icon is an open door. An exception with closed days sets the "
+"associated devices to be constantly off during the chosen date or period. "
+"The icon is a closed door."
+msgstr ""
+"Der findes to typer af undtagelser: Ændrede åbningstider og lukkedage. De to "
+"typer har forskellige ikoner i listen over undtagelser. En undtagelse med "
+"ændrede åbningstider ændrer tænd- og sluk-tidspunkterne for den valgte dato "
+"eller periode. Ikonet er en åben dør. En undtagelse med lukkedage sætter de "
+"tilknyttede maskiner til at være konstant slukkede den valgte dato eller "
+"periode. Ikonet er en lukket dør."
+
+#: templates/documentation/wake_plans/edit_exceptions.html
+msgid ""
+"The editing interface for the chosen exception is shown to the right. If no "
+"exceptions have been created for the chosen site, the interface for creating "
+"an exception with altered opening hours will be shown instead."
+msgstr ""
+"Til højre vises redigeringsinterfacet for den valgte undtagelse. Hvis ikke "
+"der er oprettet nogen undtagelser for det site, man er under, vises "
+"interfacet til oprettelse af en undtagelse med ændrede åbningstider."
+
+#: templates/documentation/wake_plans/edit_exceptions.html
+msgid ""
+"By default when you click on an exception, you will be shown the settings "
+"for the exception. Here, you can change the name of the exception and the "
+"period where it applies. A single date is chosen by choosing the same from "
+"and to date. If the exception has the type altered opening hours, it will "
+"also be possible to change the on and off time that applies during the "
+"exception. Changes do not become permanent until you have clicked on \"Save "
+"changes\" at the bottom of the screen."
+msgstr ""
+"Som standard når man klikker sig ind på en undtagelse, vil man få vist "
+"undtagelsens indstillinger. Her kan man ændre undtagelsens navn og den "
+"periode, hvor den er gældende. En enkelt dato vælges ved at vælge samme fra "
+"og til dato. Hvis undtagelsen er af typen ændrede åbningstider, vil man også "
+"kunne ændre tænd- og sluk-tidspunkterne, der er gældende for undtagelsen. "
+"Ændringer foretaget på siden træder ikke i kraft, før du klikker på \"Gem "
+"ændringer\"-knappen i bunden af skærmbilledet."
+
+#: templates/documentation/wake_plans/edit_exceptions.html
+msgid ""
+"Note that if you change the settings for an exception that is being used by "
+"one or more schedules, those schedules will also be updated when you click "
+"on \"Save changes.\""
+msgstr ""
+"Bemærk at hvis man ændrer indstillingerne for en undtagelse, der benyttes af "
+"en flere aktive tidsplaner, vil tidsplanerne også blive opdateret, når man "
+"trykker på \"Gem ændringer.\""
+
+#: templates/documentation/wake_plans/edit_exceptions.html
+msgid ""
+"If you wish to create a new exception, you must click on \"Add altered "
+"opening hours\" or \"Add closed days\" at the top of the list of exceptions. "
+"This opens an interface where you must enter the name and settings for the "
+"chosen type of exception. When you click on \"Create\", you will be "
+"redirected to the editing interface for the newly created exception, where "
+"you can continue to edit the settings."
+msgstr ""
+"Hvis man ønsker at oprette en ny undtagelse, skal man klikke på \"Tilføj "
+"ændrede åbningstider\" eller \"Tilføj lukning\" oven over listen med "
+"tidsplaner. Dette åbner et interface, hvor man skal udfylde navn og "
+"indstillinger for den valgte type undtagelse. Når man klikker på \"Opret\", "
+"vil man blive viderestillet til redigeringssiden for den nyoprettede "
+"undtagelse, hvor man kan fortsætte med at ændre i indstillingerne."
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid "Editing schedules: Associated groups"
+msgstr "Tidsplans-redigering: Tilknyttede grupper"
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid ""
+"The editing interface for a schedule shows a list of groups that are "
+"included in the schedule on the right side of the screen. A schedule applies "
+"to all computers in the groups that are associated with the schedule. A "
+"schedule with no associated groups has no effect. You can edit the members "
+"of the schedule as described below."
+msgstr ""
+"Redigeringsinterfacet for en tidsplan viser en liste over grupper, der er "
+"med i tidsplanen til højre i skærmbilledet. En tidsplan er gældende for alle "
+"computere i de grupper, som er tilknyttet tidsplanen. En tidsplan uden "
+"tilknyttede grupper har ingen effekt. Du kan redigere medlemmerne af "
+"tidsplanen som beskrevet herunder."
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid "Add a group"
+msgstr "Tilføj gruppe"
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid ""
+"You add groups by clicking on \"Add group to the schedule\". If there are "
+"any groups that do not yet belong to the schedule, they will be shown in a "
+"list. Click on a group to add the group to the schedule."
+msgstr ""
+"Du tilføjer grupper ved at klikke på \"Tilføj gruppe til tidsplan\". Hvis "
+"der findes grupper, som endnu ikke er medlem af tidsplanen, vil de blive "
+"vist i en liste. Klik på en gruppe for at knytte gruppen til tidsplanen."
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid ""
+"Note that a given group/computer can only belong to a single schedule at a "
+"time. If you add a group that already belongs to a different schedule, it "
+"will be removed from the previous schedule."
+msgstr ""
+"Bemærk at en given gruppe/computer ikke kan være knyttet til mere end en "
+"tidsplan ad gangen. Hvis du tilføjer en gruppe, som allerede er med i en "
+"anden tidsplan, vil den blive fjernet fra den forrige tidsplan."
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid ""
+"If you attempt to add a group, which contains one or more computers that "
+"already belong to a different schedule via a different group, the chosen "
+"group will be rejected during the update of the schedule when you click "
+"\"Save changes\". Valid groups will still be added. If one or more groups "
+"are rejected, the page will inform you of this along with the reason."
+msgstr ""
+"Hvis du forsøger at tilføje en gruppe, som indeholder en eller flere "
+"computere, der er knyttet til en anden tidsplan via en anden gruppe, vil den "
+"valgte gruppe blive afvist i forbindelse med opdateringen af tidsplanen, når "
+"der klikkes på \"Gem ændringer.\" Gyldige grupper vil stadig blive tilføjet. "
+"Hvis en eller flere grupper afvises, vil siden oplyse om dette samt "
+"begrundelsen."
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid "Remove a group"
+msgstr "Fjern gruppe"
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid ""
+"In order to remove a group, you must click on the X to the right of the "
+"group in the list of associated groups."
+msgstr ""
+"For at fjerne en gruppe skal du klikke på X'et til højre for gruppens navn i "
+"listen over grupper, der er knyttet til tidsplanen."
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid ""
+"Be aware that changes to the list of groups do not become permanent until "
+"you have clicked on \"Save changes\" at the bottom of the screen."
+msgstr ""
+"Husk at ændringer til listen over grupper ikke bliver permanente, før du har "
+"klikket på \"Gem ændringer\" nederst i skærmbilledet."
+
+#: templates/documentation/wake_plans/edit_groups.html
+msgid ""
+"Note that if you later add computers to a group that belongs to a schedule, "
+"those computers will also be associated with the schedule. If the computers "
+"that you attempt to add already belong to a different schedule via a "
+"different group, they will be rejected during the update of the group when "
+"you click \"Save changes\" on the group editing interface. Valid computers "
+"will still be added. If one or more computers are rejected, the page will "
+"inform you of this along with the reason."
+msgstr ""
+"Bemærk at hvis der senere tilføjes computere til en gruppe, som er medlem af "
+"en tidsplan, vil disse computere også blive knyttet til tidsplanen. Hvis de "
+"computere, som forsøges tilføjet, allerede er knyttet til en anden tidsplan "
+"via en anden gruppe, vil de blive afvist i forbindelse med opdateringen af "
+"gruppen, når der klikkes på \"Gem ændringer\" på "
+"grupperedigeringsinterfacet. Gyldige computere vil stadig blive tilføjet. "
+"Hvis en eller flere computere afvises, vil siden oplyse om dette samt "
+"begrundelsen."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid "Editing schedules: Settings"
+msgstr "Tidsplans-redigering: Indstillinger"
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"The editing interface for a schedule shows the settings for the schedule on "
+"the left side of the screen and a list of exceptions that are used by the "
+"schedule on the right side of the screen."
+msgstr ""
+"Redigeringsinterfacet for en tidsplan viser tidsplanens indstillinger til "
+"venstre i skærmbilledet, og en liste over undtagelser, der er knyttet til "
+"tidsplanen til højre i skærmbilledet."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"A schedule can be active or inactive. It will only affect the associated "
+"groups if it is active."
+msgstr ""
+"En tidsplan kan være aktiv eller inaktiv. Den har kun effekt på de indmeldte "
+"grupper, hvis den er aktiv."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid "Sleep state"
+msgstr "Dvaletilstand"
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"The chosen sleep state determines the state that the members of the schedule "
+"are placed in when they are turned off according to the schedule. In order "
+"from least to greatest energy savings, the options are standby, freeze, mem "
+"and off. We thus recommend using the sleep state off in order to achieve the "
+"greatest energy savings, but not all hardware supports this sleep state. If "
+"the sleep state off is used on a computer that does not support it, the "
+"computer will not wake automatically. It will still be possible to turn it "
+"on manually."
+msgstr ""
+"Den valgte dvaletilstand bestemmer, hvilken tilstand medlemmerne af "
+"tidsplanen lukker ned i, når de slukker efter tidsplanen. I rækkefølge fra "
+"mindste til største strømbesparing er mulighederne standby, freeze, mem og "
+"off. Vi anbefaler derfor, at man anvender dvaletilstanden off for størst "
+"mulig strømbesparing, men det er ikke alt hardware, der understøtter denne "
+"dvaletilstand. Hvis dvaletilstanden off anvendes på en computer, der ikke "
+"understøtter den, vil computeren ikke vågne igen. Den vil dog stadig kunne "
+"tændes manuelt."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid "Settings: Week plan"
+msgstr "Indstillinger: Ugeplan"
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"In the week plan, one can choose on and off times for every day of the week, "
+"or whether it should be off for the entirety of that particular day. The "
+"settings in the week plan normally apply for each of those days of the week, "
+"unless there exists an exception for that particular date."
+msgstr ""
+"I ugeplanen kan man vælge tænd- og sluk-tidspunkter for hver enkelt ugedag, "
+"eller om der skal være slukket hele den pågældende dag. Indstillingerne i "
+"ugeplanen er som udgangspunkt gældende for alle de pågældende ugedage, "
+"medmindre der findes en undtagelse for den pågældende dato."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid "Settings: Exceptions"
+msgstr "Indstillinger: Undtagelser"
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"Below the header \"Exceptions: Closed days and altered opening hours\", one "
+"can add or remove exceptions to the week plan for specific dates or periods. "
+"If an exception for a given date exists, the settings for the exception will "
+"be used instead of the week plan settings. An exception can be a change in "
+"the on and off times or a constant shutdown for a specific date or period. "
+"Exceptions are created, deleted and edited in the tab that opens when you "
+"click \"Create closed days\", \"Create altered opening hours\" or \"Edit "
+"exceptions\". The different buttons redirect to the part of the tab that is "
+"related to their name."
+msgstr ""
+"Under punktet \"Undtagelser: Lukkedage og Ændrede åbningstider\" kan man "
+"tilføje eller fjerne undtagelser til ugeplanen for specifikke datoer eller "
+"perioder. Hvis der findes en undtagelse for en given dato, vil undtagelsens "
+"indstillinger benyttes i stedet for ugeplanens indstillinger. En undtagelse "
+"kan være en ændring i tænd- og sluk-tidspunkterne eller en konstant "
+"nedlukning for en specifik dato eller periode. Undtagelser oprettes, slettes "
+"og redigeres i den fane som åbnes, når man trykker på \"Opret lukkedage\", "
+"\"Opret ændrede åbningstider\" eller \"Rediger undtagelser\". De forskellige "
+"knapper går direkte til den del af fanen, som er relateret til deres navn."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid "Add exceptions"
+msgstr "Tilføj undtagelser"
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"You add exceptions by clicking on \"Add exception to schedule\". If there "
+"are any exceptions that do not yet belong to the schedule, they will be "
+"shown in a list. Click on an exception to add the exception to the schedule."
+msgstr ""
+"Du tilføjer undtagelser ved at klikke på \"Tilknyt undtagelse til tidsplan\"."
+"Hvis der findes undtagelser, som endnu ikke er knyttet til tidsplanen, vil "
+"de blive vist i en liste. Klik på en undtagelse for at knytte undtagelsen "
+"til tidsplanen."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"If you attempt to add an exception that overlaps with one or more already "
+"added exceptions, the chosen exception will be rejected during the update of "
+"the schedule when you click \"Save changes\". Valid exceptions will still be "
+"added. If one or more exceptions are rejected, the page will inform you of "
+"this along with the reason."
+msgstr ""
+"Hvis du forsøger at tilføje en undtagelse, der overlapper med en eller flere "
+"allerede tilknyttede undtagelser, vil den valgte undtagelse blive afvist i "
+"forbindelse med opdateringen af tidsplanen, når der klikkes på \"Gem "
+"ændringer\". Gyldige undtagelser vil stadig blive tilføjet. Hvis en eller "
+"flere undtagelser afvises, vil siden oplyse om dette samt begrundelsen."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid "Remove exceptions"
+msgstr "Fjern undtagelser"
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"In order to remove an exception, you must click on the X to the right of the "
+"exception in the list of exceptions."
+msgstr ""
+"For at fjerne en undtagelse skal du klikke på X'et til højre for "
+"undtagelsens navn i listen over undtagelser, der er knyttet til tidsplanen."
+
+#: templates/documentation/wake_plans/edit_settings.html
+msgid ""
+"Be aware that changes to the settings including the list of exceptions do "
+"not become permanent until you have clicked on \"Save changes\" at the "
+"bottom of the screen."
+msgstr ""
+"Husk at ændringer i indstillingerne inklusive listen over undtagelser ikke "
+"bliver permanente, før du har klikket på \"Gem ændringer\" nederst i "
+"skærmbilledet."
+
+#: templates/documentation/wake_plans/index.html
+msgid "Power saving functions"
+msgstr "Strømbesparende funktioner"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"The power saving functions consist of a suspend script and on/off schedules. "
+"These functions can only be accessed by the customers that pay for access. "
+"The customers that helped fund the functions automatically have access. "
+"Other customers can contact Magenta if they are interested."
+msgstr ""
+"De strømbesparende funktioner består af et dvale-script og tænd/sluk-"
+"tidsplaner. Disse funktioner kan kun anvendes af de kunder, som har tilkøbt "
+"sig adgang. Alle kunder, som var med til at finansiere funktionerne, har "
+"automatisk adgang. Andre kunder kan kontakte Magenta, hvis de er "
+"interesserede."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"The suspend script is only intended for use on OS2borgerPC while the on/off "
+"schedules can be used on both OS2borgerPC and OS2borgerPC Kiosk. The suspend "
+"script can be combined with on/off schedules."
+msgstr ""
+"Dvale-scriptet er kun beregnet til brug på OS2borgerPC, mens tænd/sluk-"
+"tidsplaner kan anvendes på både OS2borgerPC og OS2borgerPC Kiosk. Dvale-"
+"scriptet kan fint anvendes sammen med tænd/sluk-tidsplaner."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"If you are visiting this page for the first time, we recommend first reading "
+"our"
+msgstr ""
+"Hvis det er første gang du besøger denne side, vil vi foreslå at starte med "
+"at læse vores"
+
+#: templates/documentation/wake_plans/index.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "User guide to power saving functions in OS2borgerPC"
+msgstr "Brugerguide til strømsparefunktioner i OS2borgerPC"
+
+#: templates/documentation/wake_plans/index.html
+msgid "The suspend script"
+msgstr "Dvale-scriptet"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"The suspend script can be used to configure computers to automatically "
+"suspend after a number of minutes of inactivity. A chosen warning is "
+"displayed before the computer is suspended. The script takes five arguments: "
+"whether to activate the function, the number of minutes of inactivity before "
+"the warning is shown, the number of minutes of inactivity before the machine "
+"suspends, the text in the warning and the text on the button in the warning. "
+"If the last two text-related inputs are left empty, default texts will be "
+"used. The script automatically logs out the user before the machine suspends."
+msgstr ""
+"Dvale-scriptet kan bruges til at indstille computere til at gå i dvale efter "
+"et antal minutters inaktivitet. Der vises en valgfri advarsel, inden "
+"computeren går i dvale. Scriptet tager fem argumenter: hvorvidt funktionen "
+"skal aktiveres, antal minutter med inaktivitet før advarslen vises, antal "
+"minutter med inaktivitet før maskinen går i dvale, teksten i advarslen og "
+"teksten på knappen i advarslen. Hvis de to sidste tekst-relaterede input "
+"ikke angives, benyttes standardtekster. Scriptet logger automatisk borgeren "
+"ud, inden maskinen går i dvale."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"The suspend script can also suspend the machine when it is inactive on the "
+"login screen. However, this requires that script execution at login has been "
+"enabled via the script"
+msgstr ""
+"Dvale-scriptet kan også sætte maskinen i dvale, hvis den står inaktiv på "
+"login-skærmen. Dette kræver dog, at scriptkørsel ved login er blevet slået "
+"til via scriptet"
+
+#: templates/documentation/wake_plans/index.html
+msgid "The warning will not be shown on the login screen."
+msgstr "Advarslen vises ikke på login-skærmen."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"Be aware that USB surveillance cannot be active while the machine is "
+"suspended."
+msgstr ""
+"Bemærk at USB-overvågning ikke kan være aktiv, mens en computer er i dvale."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"An on/off schedule is a tool for planning and administrating on and off "
+"times for computers in one or more groups."
+msgstr ""
+"En Tænd/Sluk tidsplan er et redskab til at planlægge og administrere tænd- "
+"og sluk-tidspunkter for computerne i en eller flere grupper."
+
+#: templates/documentation/wake_plans/index.html
+msgid "The use of On/Off schedules makes it unnecessary to use the scripts"
+msgstr "Brugen af Tænd/Sluk tidsplaner overflødiggør scriptsene"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"When you click on \"On/Off schedule\" in the left-hand menu, a list of "
+"schedules for the chosen site will be shown to the right of the left-hand "
+"menu. You can click on a particular schedule in order to edit that schedule."
+msgstr ""
+"Når man klikker på \"Tænd/Sluk tidsplan\" i venstremenuen, vil man til højre "
+"for venstremenuen få vist en liste af tidsplaner for det site, man er under. "
+"Man kan klikke på navnet for den enkelte tidsplan for at redigere tidsplanen."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"The editing interface for the chosen schedule is shown on the right. If no "
+"schedules have been created for the chosen site, the interface for creating "
+"schedules will be shown instead."
+msgstr ""
+"Til højre vises redigeringsinterfacet for den valgte tidsplan. Hvis ikke der "
+"er oprettet nogen tidsplaner for det site, man er under, vises interfacet "
+"til oprettelse af tidsplaner."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"When you click on a schedule, you will by default be shown the schedule's "
+"settings as well as the exceptions and groups that are associated with the "
+"schedule. Here you can change the schedule's name, status, sleep state and "
+"settings for the general week plan as well as add/remove groups or "
+"exceptions from the schedule. Changes do not take effect until you've "
+"clicked on the \"Save changes\"-button at the bottom of the screen."
+msgstr ""
+"Som standard når man klikker sig ind på en tidsplan, vil man få vist "
+"tidsplanens indstillinger samt hvilke undtagelser og grupper, der er knyttet "
+"til tidsplanen. Her kan man ændre tidsplanens navn, status, dvaletilstand og "
+"indstillinger for den faste ugeplan, samt tilføje/fjerne grupper eller "
+"undtagelser fra tidsplanen. Ændringer foretaget på siden træder ikke i "
+"kraft, før man klikker på \"Gem ændringer\"-knappen i bunden af "
+"skærmbilledet."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"If you click on \"Create closed days\", \"Create altered opening hours\" or "
+"\"Edit exceptions\", you will be redirected to a new page where you can "
+"create new exceptions and edit or delete existing exceptions. The two "
+"\"Create\" buttons take you directly to an interface for that particular "
+"type of exception while \"Edit exceptions\" opens the editing interface for "
+"the first exception for the chosen site."
+msgstr ""
+"Hvis man trykker på \"Opret lukkedag\", \"Opret ændrede åbningstider\" eller "
+"\"Rediger undtagelser\" omdirigeres man til en ny side, hvor man kan oprette "
+"nye undtagelser og redigere eller slette eksisterende undtagelser. De to "
+"\"Opret\" knapper går direkte til et interface for den pågældende type "
+"undtagelse, mens \"Rediger undtagelser\" åbner redigeringssiden for den "
+"første undtagelse for det site, man er under."
+
+#: templates/documentation/wake_plans/index.html
+msgid "The different editing options are described more closely here:"
+msgstr ""
+"De forskellige redigeringsmuligheder beskrives nærmere under disse punkter:"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"If you wish to create a new schedule, you must click on \"Add new On/Off "
+"schedule\" above the list of schedules. This opens an interface where you "
+"must enter a name for the schedule and have the option of editing the "
+"settings and adding exceptions or groups. When you click on \"Save changes"
+"\", you will be redirected to the editing interface for the newly screated "
+"schedule where you can continue to edit the settings and add exceptions or "
+"groups. If the schedule status is set to \"Active\", it will also take "
+"effect when you click on \"Save changes\"."
+msgstr ""
+"Hvis man ønsker at oprette en ny tidsplan, skal man klikke på \"Tilføj ny "
+"tænd/sluk tidsplan\" oven over listen med tidsplaner. Dette åbner et "
+"interface, hvor man skal udfylde navn for tidsplanen og har mulighed for at "
+"redigere i indstillingerne, tilføje undtagelser eller indmelde grupper. Når "
+"man klikker på \"Gem ændringer\", vil man blive viderestillet til "
+"redigeringssiden for den nyoprettede tidsplan, hvor man kan fortsætte med at "
+"ændre i indstillingerne, tilføje undtagelser eller indmelde grupper. Hvis "
+"tidsplanen er sat til \"Aktiv\" vil den også tage effekt, når man klikker på "
+"\"Gem ændringer\"."
+
+#: templates/documentation/wake_plans/index.html
+msgid "Important information"
+msgstr "Vigtige bemærkninger"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"A computer can only receive a new/updated schedule if it is on. If a "
+"computer is added to a schedule or its schedule is changed while it is off, "
+"it will only begin following the new/updated schedule once it has been on."
+msgstr ""
+"En computer kan kun modtage en ny/opdateret tidsplan, hvis den tændt. Hvis "
+"en computer tilmeldes en tidsplan, eller dens tidsplan ændres, mens den er "
+"slukket, vil den først begynde at følge den nye/opdaterede tidsplan, når den "
+"har været tændt."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"If a computer is manually turned on after its off time or on a day where it "
+"is set to be constantly off, it will not turn off automatically until the "
+"off time for the next day. If no off time has been set for the next day, it "
+"will turn off automatically 24 hours after it was turned on. If the computer "
+"is turned off manually, it will turn on according to the schedule."
+msgstr ""
+"Hvis en computer manuelt tændes efter dens sluk-tidspunkt, eller på en dag "
+"hvor den er sat til at være konstant slukket, vil den først slukke "
+"automatisk på sluk-tidspunktet for næste dag. Hvis der ikke findes et sluk-"
+"tidspunkt for næste dag, vil den automatisk slukke 24 timer efter den blev "
+"tændt. Hvis computeren manuelt slukkes igen, vil den vågne efter tidsplanen."
+
+#: templates/documentation/wake_plans/index.html
+msgid "BIOS/UEFI settings"
+msgstr "Indstilling af BIOS/UEFI"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"If BIOS has been set to turn on the machine at a specific time, and the "
+"machine belongs to an active On/Off schedule, then the machine will not turn "
+"on according to the on times in the schedule, but instead follow the times "
+"set in the BIOS. It will, however, turn off according to the schedule. If "
+"you want the machine to follow the on times set in the schedule then you "
+"must enter BIOS and disable the BIOS control of on times. It is generally "
+"not possible to modify BIOS from the OS so it cannot be done via scripts."
+msgstr ""
+"Hvis BIOS er indstillet til at vågne op på et bestemt tidspunkt, og maskinen "
+"tilhører en aktiv Tænd/Sluk Tidsplan, så vil maskinen ikke følge "
+"opstartstidspunkterne i tidsplanen, men i stedet de tidspunkter, der står i "
+"BIOS. Den vil dog stadig følge nedlukningstidspunkterne sat i tidsplanen. "
+"Skal maskinen følge opstartstidspunkterne i tidsplanen, skal man ind i BIOS "
+"på maskinerne og slå dens styring af opstartstidspunkt fra. Modificering af "
+"BIOS er generelt ikke muligt at gøre fra styresystemet, så derfor kan vi "
+"heller ikke gøre det via scripts."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"If the machines temporarily lose power while they are turned off according "
+"to the schedule, they will still turn on according to the schedule. (So long "
+"as the CMOS battery is still charged.) However, if the machines lose power "
+"while they are on, they will not turn on automatically."
+msgstr ""
+"Hvis maskinerne midlertidigt mister strømmen, mens de er lukket ned efter "
+"tidsplanen, vil de stadig vågne op ifølge tidsplanen. (Dvs. teknisk set så "
+"længe der stadig er strøm på CMOS-batteriet.) Men hvis de mister strømmen, "
+"mens de er tændt, så vil de ikke vågne op af sig selv."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"Some BIOS systems include the option to set the machine to return to its "
+"last state (or turn on) after a power failure. We recommend turning this "
+"option on."
+msgstr ""
+"Nogle BIOS'er har muligheden for at indstille, at maskinen gendanner dens "
+"seneste tilstand (eller tænder) bagefter, hvis den mistede strømmen. Det vil "
+"vi derfor anbefale at slå til."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"The layout may differ depending on the BIOS version, but here is an example "
+"from a NUC: From the overview you choose \"Advanced\" and then \"Power\":"
+msgstr ""
+"Afhængigt af BIOS-version kan det se forskelligt ud, men her er et eksempel "
+"fra en NUC: Fra oversigtssiden vælger du \"Advanced\" og dernæst \"Power\":"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"Next, you edit the setting \"After Power Failure\" and set it to \"Last State"
+"\" (recommended) or \"Power On\"."
+msgstr ""
+"Dernæst går du så ind og redigerer indstillingen \"After Power Failure\" og "
+"sætter denne til \"Last State\" (anbefalet) eller \"Power On\"."
+
+#: templates/documentation/wake_plans/index.html
+msgid "Frequently asked questions"
+msgstr "Ofte stillede spørgsmål"
+
+#: templates/documentation/wake_plans/index.html
+msgid "1. How do I add a single PC to a schedule?"
+msgstr "1. Hvordan tilmelder jeg en enkelt-PC til en tidsplan?"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"On/Off schedules are designed to work with groups, so it is not possible to "
+"directly add a single PC to a schedule. You can, however, always create a "
+"group that only contains that one PC and then add that group to the schedule."
+msgstr ""
+"Tænd/sluk tidsplaner er designet til at fungere med grupper, og man kan "
+"derfor ikke direkte tilmelde en enkelt-PC til en tidsplan. Man kan dog altid "
+"oprette en gruppe, som kun indeholder denne ene PC, og tilmelde denne gruppe "
+"til tidsplanen."
+
+#: templates/documentation/wake_plans/index.html
+msgid "2. What happens if the machine experiences a power failure?"
+msgstr "2. Hvad sker der, hvis maskinen mister strøm?"
+
+#: templates/documentation/wake_plans/index.html
+msgid "Check the second paragraph under \"BIOS/UEFI settings\" further up."
+msgstr "Se punkt 2. under \"Indstilling af BIOS/UEFI\" længere oppe."
+
+#: templates/documentation/wake_plans/index.html
+msgid "3. The machine turns on and off at the wrong times?"
+msgstr "3. Maskinen starter og lukker på de forkerte tidspunkter?"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"This could be due to incorrect time settings on the machine, which could be "
+"caused by the machine being unable to perform time synchronization. Ubuntu "
+"Linux - and many other operating systems - normally performs time "
+"synchronization via the protocol NTP (Network Time Protocol). NTP runs on "
+"port 123 via UDP, which we thus suggest allowing in your network "
+"configuration. If you do not wish to allow this traffic on all domains, we "
+"could develop a script that forces NTP to only check specific URL's."
+msgstr ""
+"Dette kan skyldes, at tiden på maskinen er indstillet forkert, eksempelvis "
+"fordi den ikke har mulighed for at tidssynkronisere. Normalt "
+"tidssynkroniserer Ubuntu Linux - og flere andre styresystemer - via "
+"protokollen NTP (Network Time Protocol). NTP kører på port 123 over UDP, som "
+"vi derfor foreslår at åbne for i jeres netværksopsætning. Hvis I ikke ønsker "
+"at åbne for trafikken på alle domæner, ville vi kunne se på at udvikle et "
+"script, der låser NTP til kun at tjekke bestemte URL'er."
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"4. The machine turns on at the wrong times, but turns off according to "
+"schedule?"
+msgstr ""
+"4. Maskinen starter på de forkerte tidspunkter, men lukker planmæssigt?"
+
+#: templates/documentation/wake_plans/index.html
+msgid ""
+"This could be due to the BIOS settings. Check the first paragraph under "
+"\"BIOS/UEFI settings\" further up."
+msgstr ""
+"Dette kan skyldes indstillingerne sat i BIOS. Se punkt 1. under "
+"\"Indstilling af BIOS/UEFI\" længere oppe."
 
 #: templates/logout.html
 msgid "You have been logged out"
@@ -883,24 +3727,9 @@ msgstr "Klik her for at logge ind igen"
 msgid "Sites"
 msgstr "Sites"
 
-#: templates/site_with_navigation.html templates/system/changelog/list.html
-msgid "News"
-msgstr "Nyheder"
-
 #: templates/site_with_navigation.html
 msgid "Security"
 msgstr "Sikkerhed"
-
-#: templates/site_with_navigation.html
-#: templates/system/security_events/site_security_events.html
-#: templates/system/security_problems/confirm_delete.html
-msgid "Security Events"
-msgstr "Sikkerhedshændelser"
-
-#: templates/site_with_navigation.html
-#: templates/system/security_problems/site_security_problems.html
-msgid "Security Rules"
-msgstr "Sikkerhedsregler"
 
 #: templates/site_with_navigation.html templates/system/site_two_factor.html
 msgid "Two-factor authentication"
@@ -933,20 +3762,12 @@ msgid "Versions"
 msgstr "Versioner"
 
 #: templates/site_with_navigation.html
-msgid "Administrating security scripts"
-msgstr "Administration af sikkerhedsscripts"
-
-#: templates/site_with_navigation.html
 msgid "Security rule definition"
 msgstr "Definition af sikkerhedsregler"
 
 #: templates/site_with_navigation.html
 msgid "Help regarding security events"
 msgstr "Hjælp til sikkerhedshændelser"
-
-#: templates/site_with_navigation.html
-msgid "Administrating computers"
-msgstr "Administration af computere"
 
 #: templates/site_with_navigation.html
 msgid "Administrating groups"
@@ -961,20 +3782,8 @@ msgid "Help regarding the job list"
 msgstr "Hjælp til joblisten"
 
 #: templates/site_with_navigation.html
-msgid "Administrating users"
-msgstr "Administration af brugere"
-
-#: templates/site_with_navigation.html
 msgid "Help regarding the news page"
 msgstr "Hjælp til nyhedssiden"
-
-#: templates/site_with_navigation.html
-msgid "Administrating scripts"
-msgstr "Administration af scripts"
-
-#: templates/site_with_navigation.html
-msgid "Executing scripts"
-msgstr "Afvikling af scripts"
 
 #: templates/site_with_navigation.html
 msgid "Read the documentation ..."
@@ -988,166 +3797,9 @@ msgstr "Velkommen"
 msgid "Log out"
 msgstr "Log ud"
 
-#: templates/system/changelog/comments/form.html
-msgid "Answer to"
-msgstr "Svar til"
-
-#: templates/system/changelog/comments/form.html
-msgid "Write a comment"
-msgstr "Skriv en kommentar"
-
-#: templates/system/changelog/comments/form.html
-msgid "Add comment"
-msgstr "Tilføj kommentar"
-
-#: templates/system/changelog/comments/form.html
-#: templates/system/configs/form.html templates/system/configs/templates.html
-#: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/form.html
-#: templates/system/pcgroups/policy_list/templates.html
-#: templates/system/pcgroups/site_groups.html
-#: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/create.html templates/system/scripts/update.html
-#: templates/system/security_events/site_security_events.html
-#: templates/system/security_problems/confirm_delete.html
-#: templates/system/security_problems/site_security_problems.html
-#: templates/system/site_settings.html
-#: templates/system/users/confirm_delete.html
-#: templates/system/users/create.html templates/system/users/update.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html
-#: templates/system/wake_plan/wake_plan.html
-#: templates/two_factor/_wizard_actions.html
-#: templates/two_factor/profile/disable.html
-msgid "Cancel"
-msgstr "Annuller"
-
-#: templates/system/changelog/comments/form.html
-msgid "Please log in to add your comment"
-msgstr "Log venligst ind for at kommentere"
-
-#: templates/system/changelog/comments/item.html
-msgid "On the date"
-msgstr "Den"
-
-#: templates/system/changelog/comments/item.html
-msgid "answered"
-msgstr "svarede"
-
-#: templates/system/changelog/comments/item.html
-msgid "wrote"
-msgstr "skrev"
-
-#: templates/system/changelog/comments/item.html
-#, python-format
-msgid "Show %(comment_comment_children_count)s answer(s)"
-msgstr "Vis %(comment_comment_children_count)s svar"
-
-#: templates/system/changelog/comments/item.html
-msgid "Answer"
-msgstr "Svar"
-
-#: templates/system/changelog/item.html templates/system/changelog/list.html
-msgid "News categories"
-msgstr "Nyhedskategorier"
-
-#: templates/system/changelog/item.html
-msgid "Related to version"
-msgstr "Relateret til version"
-
-#: templates/system/changelog/item.html
-msgid "Written by"
-msgstr "Skrevet af"
-
-#: templates/system/changelog/item.html
-msgid "Comments"
-msgstr "Kommentarer"
-
-#: templates/system/changelog/list.html
-msgid "Back to login"
-msgstr "Tilbage til login"
-
-#: templates/system/changelog/list.html
-msgid "Help for this news site"
-msgstr "Hjælp til nyhedssiden"
-
-#: templates/system/changelog/list.html
-msgid "Search..."
-msgstr "Søg..."
-
-#: templates/system/changelog/list.html
-msgid "All"
-msgstr "Alle"
-
-#: templates/system/changelog/list.html
-msgid "Showing news in the catagory of"
-msgstr "Viser nyheder i kategorien"
-
-#: templates/system/changelog/list.html
-msgid "Showing"
-msgstr "Viser"
-
-#: templates/system/changelog/list.html
-#: templates/system/security_problems/site_security_problems.html
-msgid "all"
-msgstr "alle"
-
-#: templates/system/changelog/list.html
-msgid "news"
-msgstr "nyheder"
-
-#: templates/system/changelog/list.html
-msgid "that matches the query"
-msgstr "der matcher søgeordet"
-
-#: templates/system/changelog/list.html
-msgid "Read more"
-msgstr "Læs mere"
-
-#: templates/system/changelog/list.html
-msgid "Show"
-msgstr "Vis"
-
-#: templates/system/changelog/list.html
-msgid "chat"
-msgstr "chat"
-
-#: templates/system/changelog/list.html
-msgid "Previous"
-msgstr "Forrige"
-
-#: templates/system/changelog/list.html templates/system/scripts/run_step1.html
-#: templates/two_factor/_wizard_actions.html
-msgid "Next"
-msgstr "Næste"
-
 #: templates/system/configs/form.html
 msgid "Edit arguments"
 msgstr "Redigér parameter"
-
-#: templates/system/configs/form.html
-#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/scripts/update.html
-#: templates/system/security_problems/site_security_problems.html
-#: templates/system/site_settings.html templates/system/users/update.html
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html
-#: templates/system/wake_plan/wake_plan.html
-msgid "Save changes"
-msgstr "Gem ændringer"
-
-#: templates/system/configs/item.html
-#: templates/system/pcgroups/policy_list/item.html
-#: templates/system/scripts/update.html
-msgid "Edit"
-msgstr "Redigér"
-
-#: templates/system/configs/item.html
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/form.html
-msgid "Delete"
-msgstr "Slet"
 
 #: templates/system/configs/list.html
 msgid "Key"
@@ -1183,12 +3835,6 @@ msgstr "når der indsættes i en konfigurationsliste"
 msgid "Handle configuration"
 msgstr "Håndter konfiguration"
 
-#: templates/system/configs/templates.html templates/system/scripts/form.html
-#: templates/system/site_status.html
-#: templates/system/wake_plan/wake_change_events/wake_change_event.html
-msgid "Name"
-msgstr "Navn"
-
 #: templates/system/configs/templates.html
 #: templates/system/pcgroups/policy_list/templates.html
 msgid "Save"
@@ -1197,6 +3843,14 @@ msgstr "Gem"
 #: templates/system/jobs/info.html templates/system/jobs/restart.html
 msgid "Restart job"
 msgstr "Genstart job"
+
+#: templates/system/jobs/info.html
+msgid "Copy log to the clipboard"
+msgstr "Kopier log til udklipsholderen"
+
+#: templates/system/jobs/info.html
+msgid "Log copied!"
+msgstr "Log kopieret!"
 
 #: templates/system/jobs/info.html
 msgid "Log output"
@@ -1218,11 +3872,6 @@ msgstr "Ja"
 #: templates/system/jobs/restart.html
 msgid "No"
 msgstr "Nej"
-
-#: templates/system/jobs/site_jobs.html
-#: templates/system/security_events/site_security_events.html
-msgid "Filters"
-msgstr "Filtre"
 
 #: templates/system/jobs/site_jobs.html
 #: templates/system/security_events/site_security_events.html
@@ -1258,11 +3907,6 @@ msgid "Finished"
 msgstr "Sluttet"
 
 #: templates/system/jobs/site_jobs.html
-#: templates/system/wake_plan/wake_plan.html
-msgid "Computer"
-msgstr "Computer"
-
-#: templates/system/jobs/site_jobs.html
 #: templates/system/security_events/site_security_events.html
 msgid "Loading data..."
 msgstr "Henter data..."
@@ -1270,25 +3914,6 @@ msgstr "Henter data..."
 #: templates/system/pcgroups/confirm_delete.html
 msgid "Delete group: "
 msgstr "Slet gruppe"
-
-#: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/site_groups.html
-#: templates/system/pcs/confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/security_problems/confirm_delete.html
-#: templates/system/security_problems/site_security_problems.html
-#: templates/system/site_two_factor.html
-#: templates/system/wake_plan/confirm_delete.html
-#: templates/system/wake_plan/wake_change_events/confirm_delete.html
-#: templates/system/wake_plan/wake_plan.html
-msgid "Note"
-msgstr "Bemærk"
-
-#: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/site_groups.html
-#: templates/system/scripts/confirm_delete.html
-msgid "Associated Scripts"
-msgstr "Tilknyttede Scripts"
 
 #: templates/system/pcgroups/confirm_delete.html
 msgid "the Group"
@@ -1363,11 +3988,6 @@ msgid "Arguments"
 msgstr "Inputparametre"
 
 #: templates/system/pcgroups/policy_list/list.html
-#: templates/system/pcgroups/policy_list/templates.html
-msgid "Add script"
-msgstr "Tilføj script"
-
-#: templates/system/pcgroups/policy_list/list.html
 msgid "when inserting a policy list"
 msgstr "når der indsættes i en liste af tilknyttede scripts"
 
@@ -1430,15 +4050,17 @@ msgstr ""
 msgid ""
 "Editing the script arguments will make the script run again on all Computers "
 "in the Group. This can be toggled off under Site settings"
-msgstr "Redigering af inputparametre medfører, at et script køres på ny "
-"på alle Computere i Gruppen. Dette kan slås fra under Site-indstillinger"
+msgstr ""
+"Redigering af inputparametre medfører, at et script køres på ny på alle "
+"Computere i Gruppen. Dette kan slås fra under Site-indstillinger"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
 "Editing the script arguments will not make the script run again. This can be "
 "changed under Site settings"
-msgstr "Redigering af inputparametre medfører ikke, at et script køres på ny. "
-"Dette kan ændres under Site-indstillinger"
+msgstr ""
+"Redigering af inputparametre medfører ikke, at et script køres på ny. Dette "
+"kan ændres under Site-indstillinger"
 
 #: templates/system/pcgroups/site_groups.html
 msgid ""
@@ -1491,10 +4113,6 @@ msgstr "Aldrig"
 #: templates/system/pcs/form.html
 msgid "Last security event received"
 msgstr "Seneste sikkerhedshændelse modtaget"
-
-#: templates/system/pcs/form.html
-msgid "Job history"
-msgstr "Jobhistorik"
 
 #: templates/system/pcs/form.html
 msgid "Groups the computer is a member of"
@@ -1675,6 +4293,10 @@ msgstr "Lokalt"
 #: templates/system/scripts/update.html
 msgid "Add new"
 msgstr "Tilføj nyt"
+
+#: templates/system/scripts/update.html
+msgid "Find ..."
+msgstr "Find ..."
 
 #: templates/system/scripts/update.html templates/widgets/scriptsearch.html
 msgid "Clear the filter"
@@ -1880,10 +4502,6 @@ msgstr "Administrér"
 msgid "Settings for"
 msgstr "Indstillinger for"
 
-#: templates/system/site_settings.html
-msgid "Settings"
-msgstr "Indstillinger"
-
 #: templates/system/site_status.html
 msgid "Activated:"
 msgstr "Aktiverede:"
@@ -1982,14 +4600,6 @@ msgstr "Slet bruger"
 msgid "Are you sure you want to delete the user"
 msgstr "Er du sikker på, at du vil slette brugeren"
 
-#: templates/system/users/create.html
-msgid "Create new user"
-msgstr "Tilføj ny bruger"
-
-#: templates/system/users/create.html templates/system/users/update.html
-msgid "Create user"
-msgstr "Opret bruger"
-
 #: templates/system/users/form.html
 msgid "Show Password"
 msgstr "Vis Password"
@@ -2013,6 +4623,10 @@ msgstr "Tilføj ny bruger"
 #: templates/system/users/update.html
 msgid "Profile:"
 msgstr "Profil:"
+
+#: templates/system/users/update.html
+msgid "Create new user"
+msgstr "Tilføj ny bruger"
 
 #: templates/system/users/update.html
 msgid ""
@@ -2152,10 +4766,6 @@ msgstr ""
 "at starte med at læse vores"
 
 #: templates/system/wake_plan/wake_plan.html
-msgid "User guide to power saving functions in OS2borgerPC"
-msgstr "Brugerguide til strømsparefunktioner i OS2borgerPC"
-
-#: templates/system/wake_plan/wake_plan.html
 msgid "Group"
 msgstr "Gruppe"
 
@@ -2209,7 +4819,7 @@ msgstr ""
 
 #: templates/system/wake_plan/wake_plan.html
 msgid "the suspend script."
-msgstr "Dvale-scriptet"
+msgstr "Dvale-scriptet."
 
 #: templates/system/wake_plan/wake_plan.html
 msgid "Schedule status"
@@ -2546,6 +5156,15 @@ msgstr "Deaktivér"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data mangler"
+
+#~ msgid "Back to login"
+#~ msgstr "Tilbage til login"
+
+#~ msgid "Help for this news site"
+#~ msgstr "Hjælp til nyhedssiden"
+
+#~ msgid "Create user"
+#~ msgstr "Opret bruger"
 
 #~ msgid "Create security rule"
 #~ msgstr "Opret sikkerhedsregel"

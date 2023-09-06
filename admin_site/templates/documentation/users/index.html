@@ -1,97 +1,128 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
+{% load custom_tags %}
 
 {% block specific_content %}
-  <h1>Administration af brugere</h1>
+  <h1>{% translate "Administrating users" %}</h1>
   <p>
-    Når du klikker på "Brugere" i venstre-menuen får du vist en liste af
-    brugere til højre for venstremenuen. Til højre for listen vil blive vist
-    redigeringsinterfacet for den valgte bruger. Hvis ikke der findes nogen
-    brugere på det valgte site vil der blive vist en opret-bruger dialog i
-    stedet.
+    {% blocktranslate trimmed %}
+    When you click on "Users" in the left-hand menu, you will be shown a list
+    of users to the right of the left-hand menu. The editing interface for
+    the chosen user will be shown to the right of the list. If no users
+    exist for the chosen site, you will be shown a form for creating users
+    instead.
+    {% endblocktranslate %}
   </p>
-  <h2>Redigering</h2>
+  <h2>{% translate "Editing" %}</h2>
   <p>
-    For at redigere en bruger skal du klikke på den pågældende bruger i listen
-    over brugere. Du har nu mulighed for at ændre brugerens brugernavn,
-    adgangskode, e-mail og brugertype. Felterne er forklaret herunder:
+    {% blocktranslate trimmed %}
+    If you wish to edit a user, you must click on that user in the list of
+    users. It will now be possible to change the user's username, password,
+    email address, usertype and language. Note that only users with the
+    usertype "Site Admin" can change a user's usertype. Furthermore, if
+    your usertype is "Site User" and not "Site Admin", you will only be
+    able to edit your own user. The fields are explained below:
+    {% endblocktranslate %}
   </p>
   <p>
     <ul>
       <li>
-        <strong>Brugernavn</strong>:
-        Dette er det login brugeren skal bruge når han eller hun logger ind
-        i OS2borgerPC-admin. Det må maksimalt være på 30 tegn og kun indeholde tal,
-        bogstaver og specialtegnene <strong>@</strong>, <strong>.</strong>,
-        <strong>+</strong>, <strong>-</strong> og <strong>_</strong>.
+        <strong>{% translate "Username" %}</strong>:
+        {% blocktranslate trimmed %}
+        This is the username that the user must use when they log in to the
+        admin-site. It can be no more than 150 characters long and can only
+        contain numbers, letters and the special characters
+        {% endblocktranslate %}
+        <strong>@</strong>, <strong>.</strong>,
+        <strong>+</strong>, <strong>-</strong> {% translate "and" %} <strong>_</strong>.
       </li>
       <li>
-        <strong>Adgangskode</strong>:
-        Her kan man ændre brugerens adgangskode. For at sikre at adgangskoden
-        indtastes korrekt skal den skrives to gange. Hvis ikke felterne
-        udfyldes vil adgangskoden forblive uændret. Ved oprettelse af ny
-        bruger er det påkrævet at angive en adgangskode.
+        <strong>{% translate "Password" %}</strong>:
+        {% blocktranslate trimmed %}
+        Here you can change the user's password. To ensure that the
+        password is entered correctly, it must be entered twice. If the
+        fields are left empty, the password will remain unchanged.
+        When creating a new user, it is mandatory to specify a password.
+        {% endblocktranslate %}
       </li>
       <li>
-        <strong>E-mail adresse</strong>:
-        Her skal angives brugerens e-mail-adresse.
+        <strong>{% translate "Email address" %}</strong>:
+        {% translate "Here you can enter the user's email address. It is optional." %}
       </li>
       <li>
-        <strong>Brugertype</strong>:
-        Valgmulighederne i dette felt afhænger af hvilken type bruger man selv
-        er logget ind som:<br>
-        Kun site-admins har mulighed for at redigere <em>brugertyper</em>.
+        <strong>{% translate "Usertype" %}</strong>:
+        {% translate "The options in this field depend on your own usertype" %}:
+        <br>
+        {% translate "Usertypes"|italic as ut %}
+        {% blocktranslate trimmed %}
+        Only Site Admins are allowed to edit {{ut}}.
+        {% endblocktranslate %}
         <br/>
-        Se informationer om de forskellige <em>Brugertyper</em> længere nede.
+        {% blocktranslate trimmed %}
+        The different {{ut}} are described further down.
+        {% endblocktranslate %}
+      </li>
+      <li>
+        <strong>{% translate "Language" %}</strong>:
+        {% translate "The user's language setting." %}
       </li>
     </ul>
   </p>
   <p>
-    Ændringer træder ikke i kraft før man klikker på knappen "Gem ændringer"
-    nederst på siden.
+    {% blocktranslate trimmed %}
+    Changes do not take effect until you've clicked on the button
+    "Save changes" at the bottom of the page.
+    {% endblocktranslate %}
   </p>
-  <h2>Oprettelse af ny bruger</h2>
+  <h2>{% translate "Creating a new user" %}</h2>
   <p>
-    Hvis man vil oprette en bruger skal man klikke på knappen
-    "tilføj ny bruger" over listen med brugere. Dette vil vise en dialog hvor
-    man kan udfylde de samme oplysninger som under redigering af brugere.
-    Ved klik på "Opret" vil brugeren blive oprettet og man vil blive
-    viderestillet til redigeringssiden for den nyoprettede bruger.
+    {% blocktranslate trimmed %}
+    If you wish to create a new user, you must click on the button
+    "Add new user" above the list of users. This will open the form for
+    creating a new user, which has the same fields as the interface for
+    editing a user. When you fill out the fields and click "Save changes",
+    the user will be created and you will be redirected to the editing
+    interface for the newly created user.
+    Only "Site Admins" can create new users.
+    {% endblocktranslate %}
   </p>
-  <h2>Sletning af bruger</h2>
+  <h2>{% translate "Deleting a user" %}</h2>
   <p>
-    Hvis man ønsker at slette en bruger skal man klikke på
-    "Slet bruger"-knappen i øverste højre hjørne. Man vil efterfølgende blive
-    bedt om at bekræfte sletningen og hvis man gør det vil brugeren blive
-    slettet.
+    {% blocktranslate trimmed %}
+    If you wish to delete a user, you must select the user and then click
+    on the X to the right of the selected user in the list of users. You will
+    then be asked to confirm the deletion and if you do so, the user will be
+    deleted. Note that only "Site Admins" can delete users.
+    {% endblocktranslate %}
   </p>
-  <h2>Brugertyper</h2>
+  <h2>{% translate "Permissions for Usertypes" %}</h2>
   <table class="table">
     <thead class="table-dark">
       <tr>
-        <td>Brugertype</td>
-        <td>Brugere</td>
-        <td>Scripts</td>
-        <td>Sikkerhedsregler</td>
-        <td>Grupper</td>
-        <td>Computere</td>
+        <td>{% translate "Usertype" %}</td>
+        <td>{% translate "Users" %}</td>
+        <td>{% translate "Scripts" %}</td>
+        <td>{% translate "Security Rules" %}</td>
+        <td>{% translate "Groups" %}</td>
+        <td>{% translate "Computers" %}</td>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Site-Admin</td>
-        <td>Alle rettigheder</td>
-        <td>Alle rettigheder</td>
-        <td>Alle rettigheder</td>
-        <td>Alle rettigheder</td>
-        <td>Alle rettigheder</td>
+        <td>{% translate "Site Admin" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
       </tr>
       <tr>
-        <td>Site-Bruger</td>
-        <td>Kan redigere egen bruger, bortset fra at ændre brugertype. Kan hverken oprette, redigere eller slette andre brugere.</td>
-        <td>Kan køre, oprette og redigere scripts. Kan ikke slette dem.</td>
-        <td>Kan oprette og redigere sikkerhedsregler. Kan ikke slette dem.</td>
-        <td>Alle rettigheder</td>
-        <td>Alle rettigheder</td>
+        <td>{% translate "Site User" %}</td>
+        <td>{% translate "Can edit their own user, except their usertype. Cannot create, delete or edit other users." %}</td>
+        <td>{% translate "Can run, create and edit scripts. Cannot delete scripts." %}</td>
+        <td>{% translate "Can create and edit security rules. Cannot delete security rules." %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
       </tr>
     </tbody>
   </table>

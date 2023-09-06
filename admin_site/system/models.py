@@ -655,6 +655,9 @@ class PC(models.Model):
         for conf in configs:
             for entry in conf.entries.all():
                 result[entry.key] = entry.value
+        if "mac" not in result.keys():
+            result["mac"] = self.mac
+        result["uid"] = self.uid
         return result
 
     def get_merged_config_list(self, key, default=None):
@@ -746,18 +749,30 @@ class Script(AuditModelMixin):
         batch = Batch(site=site, script=self, name="")
         batch.save()
 
+        parameter_values = "["
+
         # Add parameters
         for i, inp in enumerate(self.ordered_inputs):
             if i < len(args):
                 value = args[i]
+                if inp.value_type == Input.PASSWORD:
+                    parameter_values += "*****, "
+                else:
+                    parameter_values += str(value) + ", "
                 if inp.value_type == Input.FILE:
                     p = BatchParameter(input=inp, batch=batch, file_value=value)
                 else:
                     p = BatchParameter(input=inp, batch=batch, string_value=value)
                 p.save()
 
+        if len(parameter_values) > 1:
+            parameter_values = parameter_values[:-2]
+        parameter_values += "]"
+
+        log_output = f"New job with arguments {parameter_values}"
+
         for pc in pc_list:
-            job = Job(batch=batch, pc=pc, user=user)
+            job = Job(batch=batch, pc=pc, user=user, log_output=log_output)
             job.save()
 
         return batch
@@ -837,10 +852,25 @@ Runs this script on several PCs, returning a batch representing this task."""
         batch.save()
         params = self.make_parameters(batch)
 
+        parameter_values = "["
+
         for p in params:
             p.save()
+            if p.file_value:
+                parameter_values += str(p.file_value) + ", "
+            elif p.input.value_type == Input.PASSWORD:
+                parameter_values += "*****, "
+            else:
+                parameter_values += str(p.string_value) + ", "
+
+        if len(parameter_values) > 1:
+            parameter_values = parameter_values[:-2]
+        parameter_values += "]"
+
+        log_output = f"New job with arguments {parameter_values}"
+
         for pc in pcs:
-            job = Job(batch=batch, pc=pc, user=user)
+            job = Job(batch=batch, pc=pc, user=user, log_output=log_output)
             job.save()
 
         return batch
@@ -1251,70 +1281,3 @@ class Citizen(models.Model):
                 fields=["citizen_id", "site"], name="unique_citizen_per_site"
             ),
         ]
-
-
-# A model to sort Changelog entries into categories
-class ChangelogTag(models.Model):
-    name = models.CharField(verbose_name=_("name"), max_length=255)
-
-    class Meta:
-        ordering = ["name"]
-
-    def __str__(self):
-        return self.name
-
-
-# A model that represents one changelog entry, used to showcase changes/new features to users
-class Changelog(models.Model):
-    title = models.CharField(verbose_name=_("title"), max_length=100)
-    description = models.TextField(verbose_name=_("description"), max_length=240)
-    content = MarkdownxField(verbose_name=_("content"))
-    tags = models.ManyToManyField(ChangelogTag, related_name="changelogs", blank=True)
-    created = models.DateTimeField(verbose_name=_("created"), default=timezone.now)
-    updated = models.DateTimeField(verbose_name=_("updated"), default=timezone.now)
-    author = models.CharField(verbose_name=_("author"), max_length=255)
-    # This field should be used to denote the version number of the given product
-    # Ie 'admin-site version 1.2.3' or 'script name version 1.0'
-    version = models.CharField(verbose_name=_("version"), max_length=255)
-    site = models.ForeignKey(
-        Site, related_name="changelogs", null=True, blank=True, on_delete=models.CASCADE
-    )
-
-    def get_tags(self):
-        return self.tags.values("name", "pk")
-
-    def render_content(self):
-        # This method returns the markdown text of the 'content' field as html code.
-        return markdownify(self.content)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ["-created"]
-
-
-class ChangelogComment(models.Model):
-    content = models.TextField(verbose_name=_("content"), max_length=240)
-    created = models.DateTimeField(
-        verbose_name=_("created"), editable=False, auto_now_add=True
-    )
-    changelog = models.ForeignKey(
-        Changelog, related_name="comments", on_delete=models.CASCADE, null=True
-    )
-    user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
-    parent_comment = models.ForeignKey(
-        "self",
-        default=None,
-        null=True,
-        blank=True,
-        related_name="comment_children",
-        on_delete=models.CASCADE,
-    )
-
-    def get_user(self):
-        if self.user:
-            return User.objects.get(pk=self.user)
-
-    class Meta:
-        ordering = ["created"]

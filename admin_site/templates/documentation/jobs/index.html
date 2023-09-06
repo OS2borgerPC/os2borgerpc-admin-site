@@ -1,48 +1,64 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Job-oversigt</h1>
+  <h1>{% translate "Job overview" %}</h1>
   <p>
-    Job-oversigten giver et overblik over afviklingen af jobs på
-    OS2borgerPC-computere for det valgte site. Til venstre kan man vælge diverse
-    filtre der gør listen mere overskuelig og til højre vises en liste over
-    jobs der matcher de valgte filtre.
+    {% blocktranslate trimmed %}
+    The job overview provides an overview of the execution of jobs on OS2borgerPC
+    computers for the chosen site. On the left, one can choose various filters
+    that make the list more manageable, and on the right is shown a list of jobs
+    that match the chosen filters.
+    {% endblocktranslate %}
   </p>
-  <h2>Filtre</h2>
+  <h2>{% translate "Filters" %}</h2>
   <p>
-    Ved at klikke på afkrydsningsfelterne ud for de forskellige statuser kan du
-    filtrere de viste jobs ud fra deres status. Som standard er alle statuser
-    på nær "Udført" og "Løst" angivet.
-  </p>
-  <p>
-    Under afkrydsningsfelterne kan du vælge filtre ud fra batches, computere
-    og grupper. For at filtrere på disse skal du klikke på den kategori du vil
-    filtrere og efterfølgende klikke på et element i den liste der bliver
-    foldet ud. Det valgte element vil blive markeret med grønt. Du kan klikke
-    på det igen for at fjerne markeringen. Det er kun muligt at vælge et
-    element i hver kategori.
-  </p>
-  <h2>Joblisten</h2>
-  <p>
-    Joblisten viser Script-navn, starttidspunkt, sluttidspunkt, status,
-    computernavn og batchnavn for hvert job der matcher de valgte filtrre. Man
-    kan ændre sorteringen ved at klikke på overskrifterne over tabellen.
+    {% blocktranslate trimmed %}
+    By clicking the checkboxes next to the different statuses, you can filter
+    the shown jobs based on their status. By default, all statuses except
+    "restarted" are checked.
+    {% endblocktranslate %}
   </p>
   <p>
-    Hvis man klikker på det lille ikon til højre i listen får man mulighed for
-    at se log-output for jobs der er blevet afviklet, samt et link man kan
-    klikke på for at genstarte jobbet hvis der er tale om et fejlet job.
+    {% blocktranslate trimmed %}
+    Below the checkboxes you can choose filters based on batches, computers
+    and groups. In order to use these filters, you must click on the desired
+    category and then select an element in the list that is displayed. The
+    chosen element will be highlighted in orange. It is only possible to
+    select one element per category. You can reset the filters to the default
+    filters by clicking "Reset filters" at the top of the list of filters.
+    {% endblocktranslate %}
   </p>
-  <h2>Jobs kørt af Magenta</h2>
+  <h2>{% translate "The job list" %}</h2>
   <p>
-    Hvis der ud for et job står "Magenta" som brugernavn, betyder det at jobbet er 
-    kørt af OS2borgerPC-teamet hos Magenta.</p>
-    <p>Det bruges eksempelvis til:</p>
+    {% blocktranslate trimmed %}
+    The job list shows the script name, batch name, user who started the job,
+    creation time, starting time, stopping time, status and computer name for
+    every job that matches the chosen filters. The sorting can be changed by
+    clicking the titles above the table.
+    {% endblocktranslate %}
   </p>
+  <p>
+    {% blocktranslate trimmed %}
+    If you click on the small icon on the right of an entry in the list, you
+    will be shown the log output from that job. If the job has not yet been
+    executed, the log output will only contain the chosen input parameters.
+    If the job failed, there will also be a button that you can press in
+    order to restart the job.
+    {% endblocktranslate %}
+  </p>
+  <h2>{% translate "Jobs run by Magenta" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    If the user for a job is listed as "Magenta", it means that the job was
+    started by the OS2borgerPC team at Magenta.
+    {% endblocktranslate %}
+  </p>
+    <p>{% translate "This is used for e.g." %}:</p>
   <ul>
-    <li>Vedligeholdelse</li> 
-    <li>Opdateringer</li> 
-    <li>Fejlfinding og -retning</li> 
-    <li>Lapning af sikkerhedshuller (CVE'er identificeret i Ubuntu)</li> 
+    <li>{% translate "Maintenance" %}</li>
+    <li>{% translate "Updates" %}</li>
+    <li>{% translate "Troubleshooting and error correction" %}</li>
+    <li>{% translate "Patching security issues (CVE's identified in Ubuntu)" %}</li>
   </ul>
 {% endblock %}

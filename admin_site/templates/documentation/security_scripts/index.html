@@ -1,35 +1,46 @@
 {% extends 'documentation/index.html' %}
+{% load i18n %}
 
 {% block specific_content %}
-  <h1>Administration af Sikkerhedsscripts</h1>
+  <h1>{% translate "Administrating security scripts" %}</h1>
   <p>
-    Når man klikker på "Sikkerhedsscripts" i venstremenuen vil man til højre for
-    venstremenuen få vist en liste af Sikkerhedsscripts, og til højre for denne
-    liste vil man få vist redigeringsinterfacet for Sikkerhedsscripts.
+    {% blocktranslate trimmed %}
+    When you click on "Security Scripts" in the left-hand menu, a list of
+    security scripts will be shown to the right of the left-hand menu and
+    the editing interface for security scripts will be shown to the right
+    of this list.
+    {% endblocktranslate %}
   </p>
   <p>
-    Sikkerhedsscripts holder øje med speciel hændelse, hvorimod Scripts er til
-    enkeltstående handlinger.
+    {% blocktranslate trimmed %}
+    Security scripts monitor special events whereas Scripts are for individual actions.
+    {% endblocktranslate %}
   </p>
   <p>
-    Listen af Sikkerhedsscripts er delt op i to dele som man kan skifte imellem ved at
-    klikke på fanebladene "Lokale scripts" og "Globale scripts" oven over
-    listen.
+    {% blocktranslate trimmed %}
+    The list of security scripts is divided in two parts that one can swap between
+    by clicking on the tabs "Local scripts" and "Global scripts" above
+    the list.
+    {% endblocktranslate %}
   </p>
   <p>
-    Lokale scripts dækker over Sikkerhedsscripts som kun kan bruges på det site man er
-    under mens Globale scripts dækker over Sikkerhedsscripts der kan bruges på alle
-    sites.
+    {% blocktranslate trimmed %}
+    Local scripts are security scripts that can only be used on the currently chosen
+    site while global scripts are security scripts that can be used on all sites.
+    {% endblocktranslate %}
   </p>
   <p>
-    For hvert Sikkerhedsscript har du mulighed for følgende:
+    {% translate "You have the following options for every security script" %}:
     {% include 'documentation/security_scripts/__submenu__.html' %}
   </p>
   <p>
-    Hvis du ønsker at oprette et nyt Sikkerhedsscript skal du klikke på "tilføj nyt
-    script" oven over listen med Sikkerhedsscripts. Dette vil åbne en dialog hvor du kan
-    udfylde navn, beskrivelse og uploade Sikkerhedsscriptets kode. Når du klikker på
-    den vil Sikkerhedsscriptet blive oprettet og du vil blive viderestillet til
-    redigeringssiden for det nyoprettede Sikkerhedsscript.
+    {% blocktranslate trimmed %}
+    If you wish to add a new security script, you must click on "Add new
+    Security Script" above the list of security scripts. This will open
+    a modal where you can fill out the name and description and upload the
+    script code. When you then click on "Create Security Script", the
+    script will be created, and you will be redirected to the editing
+    interface for the newly created security script.
+    {% endblocktranslate %}
   </p>
 {% endblock %}

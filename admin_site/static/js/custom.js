@@ -245,6 +245,7 @@ var BibOS
 
       var t = this
 
+      // JOBINFOBUTTON
       $(rootElem).find('.jobinfobutton').on('show.bs.popover', function(e) {
         // hide all popovers before a new popover is shown.
         popoverTriggerList.map(function (popoverTriggerEl) {
@@ -291,6 +292,13 @@ var BibOS
           // set content from backend data and redraw popover.
           triggerElem.attr("data-bs-content", data)
           popover.setContent()
+
+          const parser = new DOMParser();
+          const dataHTML = parser.parseFromString(data, 'text/html');
+
+          const jobLog = dataHTML.getElementById("job-log").innerText
+
+          addEventListenerForClipBoardButton(jobLog)
         },
         'error': function() {
         }
@@ -303,7 +311,7 @@ var BibOS
   b.init()
   $(function() { b.onDOMReady() })
 
-  // Setup support for CSRFToken in ajax calls
+  //(Setup support for CSRFToken in ajax calls
   $.ajaxSetup({
     beforeSend: function(xhr, settings) {
       if (!b.csrfSafeMethod(settings.type) && b.sameOrigin(settings.url)) {
@@ -353,4 +361,16 @@ function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function addEventListenerForClipBoardButton(log) {
+  let btn = document.getElementById("clipboard-button")
+
+  btn.addEventListener('click', () => {
+
+    navigator.clipboard.writeText(log)
+
+    btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
+    btn.lastElementChild.classList.remove('d-none')
+  })
 }
