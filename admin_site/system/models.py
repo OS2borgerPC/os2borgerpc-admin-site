@@ -832,7 +832,7 @@ class AssociatedScript(models.Model):
 
     def make_parameters(self, batch):
         params = []
-        for i in self.script.inputs.all():
+        for i in self.script.ordered_inputs.all():
             try:
                 asp = self.parameters.get(input=i)
                 params.append(asp.make_batch_parameter(batch))
