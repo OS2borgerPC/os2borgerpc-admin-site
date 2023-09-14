@@ -58,7 +58,7 @@ from system.models import (
     SecurityEvent,
     SecurityProblem,
     EventRuleServer,
-    SecState,
+    EventLevels,
     Site,
 )
 
@@ -1345,7 +1345,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
         context["security_event"] = pc.security_events.latest_event()
         context["has_security_events"] = (
             pc.security_events.exclude(status=SecurityEvent.RESOLVED)
-            .exclude(problem__level=SecState.NORMAL)
+            .exclude(problem__level=EventLevels.NORMAL)
             .count()
             > 0
         )
@@ -3179,15 +3179,15 @@ class SecurityEventsView(SiteView):
         # First, get basic context from superclass
         context = super(SecurityEventsView, self).get_context_data(**kwargs)
         # Supply extra info as needed.
-        level_preselected = set([SecState.CRITICAL, SecState.HIGH])
+        level_preselected = set([EventLevels.CRITICAL, EventLevels.HIGH])
         context["level_choices"] = [
             {
                 "name": name,
                 "value": value,
-                "label": SecState.LEVEL_TO_LABEL[value],
+                "label": EventLevels.LEVEL_TO_LABEL[value],
                 "checked": 'checked="checked' if value in level_preselected else "",
             }
-            for (value, name) in SecState.LEVEL_CHOICES
+            for (value, name) in EventLevels.LEVEL_CHOICES
         ]
         status_preselected = set([SecurityEvent.NEW, SecurityEvent.ASSIGNED])
         context["status_choices"] = [
@@ -3296,12 +3296,12 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "reported": event.reported_time.strftime("%Y-%m-%d %H:%M:%S"),
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
-                    "level": SecState.LEVEL_TRANSLATIONS[
+                    "level": EventLevels.LEVEL_TRANSLATIONS[
                         event.problem.level
                         if event.problem
                         else event.event_rule_server.level
                     ],
-                    "level_label": SecState.LEVEL_TO_LABEL[
+                    "level_label": EventLevels.LEVEL_TO_LABEL[
                         event.problem.level
                         if event.problem
                         else event.event_rule_server.level
