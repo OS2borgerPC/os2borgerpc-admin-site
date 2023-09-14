@@ -106,12 +106,21 @@ active
             </div>
 
             {# SecurityProblem #}
-            {% if security_problems_incl_site %}
+            {% if event_rules_incl_site %}
               <div class="mt-3">
-                <p>{% translate "Associated Security Rules" %}</p>
+                <p>{% translate "Associated monitoring rules" %}</p>
                 <ul class="mt-2 list-group">
-                  {% for problem in security_problems_incl_site %}
-                    <li class="list-group-item"><a href="{% url 'event_rule_security_problem' site.uid problem.id %}">{{ problem }}</a></li>
+                  {% for e in event_rules_incl_site %}
+                    <li class="list-group-item py-3">
+                      {% if e|get_model_name == "EventRuleServer" %}
+                        <span class='material-icons me-2' title="{% translate "Offline Rule" %}">desktop_access_disabled</span>
+                        <a class="text-decoration-none" href="{% url 'event_rule_server' site.uid e.id %}">{{ e }}</a>
+                        </span>
+                      {% else %}
+                        <span class='material-icons me-2' title="{% translate "Security Problem" %}">gpp_maybe</span>
+                        <a class="text-decoration-none" href="{% url 'event_rule_security_problem' site.uid e.id %}">{{ e }}</a>
+                      {% endif %}
+                    </li>
                   {% endfor %}
                 </ul>
               </div>

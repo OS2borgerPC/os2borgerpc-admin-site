@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-05 13:26+0200\n"
+"POT-Creation-Date: 2023-09-14 16:02+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4047,9 +4047,9 @@ msgid ""
 "period such that you avoid e.g. offline events when the PC has been shut "
 "down for the night."
 msgstr ""
-"Reglen er kun aktiv under overvågningsperioden. Vi anbefaler at vælge perioden "
-"således, at du undgår f.eks. offline-hændelser, når Computeren slukkes "
-"om natten."
+"Reglen er kun aktiv under overvågningsperioden. Vi anbefaler at vælge "
+"perioden således, at du undgår f.eks. offline-hændelser, når Computeren "
+"slukkes om natten."
 
 #: templates/system/event_rules/site_event_rules_server.html
 msgid "Monitor period"
@@ -4259,8 +4259,16 @@ msgid "Supervisors for this group"
 msgstr "Ansvarspersoner for denne gruppe"
 
 #: templates/system/pcgroups/site_groups.html
-msgid "Associated Security Rules"
-msgstr "Tilknyttede Sikkerhedsregler"
+msgid "Associated monitoring rules"
+msgstr "Associerede overvågningsregler"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Offline Rule"
+msgstr "Offline-regel"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Security Problem"
+msgstr "Sikkerhedsregel"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Associated On/Off schedule"
@@ -5265,6 +5273,9 @@ msgstr "Deaktivér"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data mangler"
+
+#~ msgid "Associated Security Rules"
+#~ msgstr "Tilknyttede Sikkerhedsregler"
 
 #~ msgid "status:Update"
 #~ msgstr "Opdatering"

@@ -2652,12 +2652,21 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         form = context["form"]
         site = context["site"]
 
-        # TODO: Do we want to add EventRuleServers here as well?
         # Manually create a list of security problems to not only include those attached but also those
         # unattached which currently apply to all groups
-        context["security_problems_incl_site"] = group.securityproblem.all().union(
-            SecurityProblem.objects.filter(alert_groups=None, site=site)
+        event_rules_incl_site = list(
+            group.securityproblem.all().union(
+                SecurityProblem.objects.filter(alert_groups=None, site=site)
+            )
         )
+        event_rules_incl_site.extend(
+            list(
+                group.eventruleserver.all().union(
+                    EventRuleServer.objects.filter(alert_groups=None, site=site)
+                )
+            )
+        )
+        context["event_rules_incl_site"] = event_rules_incl_site
 
         # PC picklist related
         pc_queryset = site.pcs.filter(is_activated=True)
