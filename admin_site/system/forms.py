@@ -28,20 +28,19 @@ date_format = forms.DateInput(
 # Adds the passed-in CSS classes to CharField (type=text + textarea)
 # and the multitude of Fields that default to a <select> widget)
 def add_classes_to_form(someform, classes_to_add):
-    for field_name, field in someform.fields.items():
-        matches_select_widget = [
-            forms.ChoiceField,
-            forms.TypedChoiceField,
-            forms.MultipleChoiceField,
-            forms.TypedMultipleChoiceField,
-            forms.ModelChoiceField,
-            forms.ModelMultipleChoiceField,
-        ]
-        if type(field) in matches_select_widget + [forms.CharField]:
-            # Append if classes have already been added
-            if "class" not in field.widget.attrs:
-                field.widget.attrs["class"] = ""
-            field.widget.attrs["class"] += " " + classes_to_add
+    matches_select_widget = [
+        forms.ChoiceField,
+        forms.TypedChoiceField,
+        forms.MultipleChoiceField,
+        forms.TypedMultipleChoiceField,
+        forms.ModelChoiceField,
+        forms.ModelMultipleChoiceField,
+    ]
+    if type(field) in matches_select_widget + [forms.CharField]:
+        # Append if classes have already been added
+        if "class" not in field.widget.attrs:
+            field.widget.attrs["class"] = ""
+        field.widget.attrs["class"] += " " + classes_to_add
 
 
 class SiteForm(forms.ModelForm):
