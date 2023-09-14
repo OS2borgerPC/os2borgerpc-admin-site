@@ -76,6 +76,8 @@ from system.forms import (
     WakePlanForm,
 )
 
+# from django.forms.widgets import SecurityProblemForm
+
 
 def set_notification_cookie(response, message, error=False):
     descriptor = {"message": message, "type": "success" if not error else "error"}
@@ -2963,63 +2965,9 @@ class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
             return reverse("event_rule_security_problem_new", args=[site.uid])
 
 
-class SecurityProblemBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
-        context = super(SecurityProblemBaseMixin, self).get_context_data(**kwargs)
-
-        # For the menu: Gather all security problems and notifications rules and sort them
-        event_listeners = list(context["site"].securityproblem.all())
-        event_listeners.extend(list(context["site"].eventruleserver.all()))
-        context["event_listeners"] = sorted(event_listeners, key=lambda x: x.name)
-
-        site = context["site"]
-        form = context["form"]
-        group_set = site.groups.all()
-        selected_group_ids = form["alert_groups"].value() or []
-
-        # template picklist requires the form pk, name, url (u)id.
-        context["available_groups"] = group_set.exclude(
-            pk__in=selected_group_ids
-        ).values_list("pk", "name", "pk")
-        context["selected_groups"] = group_set.filter(
-            pk__in=selected_group_ids
-        ).values_list("pk", "name", "pk")
-
-        user_set = User.objects.filter(bibos_profile__sites=site)
-        selected_user_ids = form["alert_users"].value() or []
-
-        context["available_users"] = user_set.exclude(
-            pk__in=selected_user_ids
-        ).values_list("pk", "username", "username")
-        context["selected_users"] = user_set.filter(
-            pk__in=selected_user_ids
-        ).values_list("pk", "username", "username")
-        # Limit list of scripts to only include security scripts.
-        script_set = Script.objects.filter(
-            Q(site__isnull=True) | Q(site=site),
-            is_security_script=True,
-        )
-        form.fields["security_script"].queryset = script_set
-
-        # Extra fields
-        context["selected"] = self.object
-
-        request_user = self.request.user
-        context[
-            "site_membership"
-        ] = request_user.bibos_profile.sitemembership_set.filter(
-            site_id=site.id
-        ).first()
-
-        return context
-
-
-class EventRuleServerBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
-    # This has a LOT in common with SecurityProblemBaseMixin - ideally they were merged or they inherited from a common
-    # mixin
-
-    def get_context_data(self, **kwargs):
-        context = super(EventRuleServerBaseMixin, self).get_context_data(**kwargs)
+        context = super(EventRuleBaseMixin, self).get_context_data(**kwargs)
 
         # For the menu: Gather all security problems and notifications rules and sort them
         event_listeners = list(context["site"].securityproblem.all())
@@ -3041,7 +2989,6 @@ class EventRuleServerBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         ).values_list("pk", "name", "pk")
 
         user_set = User.objects.filter(bibos_profile__sites=site)
-
         selected_user_ids = form["alert_users"].value() or []
 
         context["available_users"] = user_set.exclude(
@@ -3050,6 +2997,17 @@ class EventRuleServerBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected_users"] = user_set.filter(
             pk__in=selected_user_ids
         ).values_list("pk", "username", "username")
+
+        # This first approach would be nicer, but SecurityProblemForm is only defined if it's a SecuirtyProblemForm
+        # It's not a Form we've overridden currently, so it's also not importable from system.forms. But maybe there's another way to import it?
+        # if type(form) is SecurityProblemForm:
+        if form.__class__.__name__ == "SecurityProblemForm":
+            # Limit list of scripts to only include security scripts.
+            script_set = Script.objects.filter(
+                Q(site__isnull=True) | Q(site=site),
+                is_security_script=True,
+            )
+            form.fields["security_script"].queryset = script_set
 
         # Extra fields
         context["selected"] = self.object
@@ -3064,13 +3022,13 @@ class EventRuleServerBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         return context
 
 
-class SecurityProblemCreate(SecurityProblemBaseMixin, CreateView):
+class SecurityProblemCreate(EventRuleBaseMixin, CreateView):
     template_name = "system/event_rules/site_security_problems.html"
     model = SecurityProblem
     fields = "__all__"
 
 
-class SecurityProblemUpdate(SecurityProblemBaseMixin, UpdateView):
+class SecurityProblemUpdate(EventRuleBaseMixin, UpdateView):
     template_name = "system/event_rules/site_security_problems.html"
     model = SecurityProblem
     fields = "__all__"
@@ -3118,15 +3076,14 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
         return response
 
 
-# TODO: Rewrite these to use a common base mixin with SecurityProblem, like WakePlanBase/ExtendedMixin
-class EventRuleServerCreate(EventRuleServerBaseMixin, CreateView):
+class EventRuleServerCreate(EventRuleBaseMixin, CreateView):
     template_name = "system/event_rules/site_event_rules_server.html"
     model = EventRuleServer
     slug_field = "site_uid"
     form_class = EventRuleServerForm
 
 
-class EventRuleServerUpdate(EventRuleServerBaseMixin, UpdateView):
+class EventRuleServerUpdate(EventRuleBaseMixin, UpdateView):
     template_name = "system/event_rules/site_event_rules_server.html"
     model = EventRuleServer
     form_class = EventRuleServerForm
