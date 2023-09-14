@@ -1322,6 +1322,7 @@ class Citizen(models.Model):
     citizen_id = models.CharField(unique=True, max_length=128)
     last_successful_login = models.DateTimeField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    logged_in = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.site} - {self.citizen_id}"

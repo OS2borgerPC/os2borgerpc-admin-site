@@ -299,7 +299,7 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
-def citizen_login(username, password, site):
+def citizen_login(username, password, site, prevent_dual_login=False):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
@@ -316,6 +316,7 @@ def citizen_login(username, password, site):
         return time_allowed
     login_validator = get_citizen_login_validator()
     citizen_id = login_validator(username, password, site.isil)
+    citizen_hash = ""
 
     if citizen_id:
         citizen_hash = hashlib.sha512(str(citizen_id).encode()).hexdigest()
@@ -331,13 +332,20 @@ def citizen_login(username, password, site):
         if citizen:
             quarantine_duration = site.user_quarantine_duration
             quarantined_from = citizen.last_successful_login + site.user_login_duration
-            if now < quarantined_from:
+            if now < quarantined_from and not citizen.logged_in:
                 time_allowed = (
                     time_allowed
                     - (now - citizen.last_successful_login).total_seconds() // 60
                 )
+                if prevent_dual_login:
+                    citizen.logged_in = True
+                citizen.save()
+            elif now < quarantined_from and citizen.logged_in:
+                citizen_hash = "logged_in"
             elif (now - quarantined_from) >= quarantine_duration:
                 citizen.last_successful_login = now
+                if prevent_dual_login:
+                    citizen.logged_in = True
                 citizen.save()
             else:
                 # (now - quarantined_from) < quarantine_duration:
@@ -352,4 +360,17 @@ def citizen_login(username, password, site):
             )
         citizen.save()
 
-    return int(time_allowed)
+    if prevent_dual_login:
+        return int(time_allowed), citizen_hash
+    else:
+        return int(time_allowed)
+
+
+def citizen_logout(citizen_hash):
+    try:
+        citizen = Citizen.objects.get(citizen_id=citizen_hash)
+        citizen.logged_in = False
+        citizen.save()
+        return 0
+    except Citizen.DoesNotExist:
+        return 1
