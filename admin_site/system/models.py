@@ -35,9 +35,8 @@ IMPORTANT = "important"
 NONE = ""
 
 
-# TODO: Find a better name for this. Consider adding SecurityEvent states to this as well if that can make sense/work
-class SecState:
-    # Security Problem levels.
+# Consider adding SecurityEvent states to this as well if that can make sense/work
+class EventLevels:
     CRITICAL = "Critical"
     HIGH = "High"
     NORMAL = "Normal"
@@ -710,7 +709,7 @@ class PC(models.Model):
         return reverse("computer", args=(self.site.uid, self.uid))
 
     def os2_product(self):
-        """Return whether a PC is running os2borgerpc or os2borgerpc kiosk."""
+        """Return whether a PC is running e.g. os2borgerpc or os2borgerpc kiosk."""
         return self.get_config_value("os2_product")
 
     def __str__(self):
@@ -1154,8 +1153,8 @@ class EventRuleBase(models.Model):
     level = models.CharField(
         verbose_name=_("level"),
         max_length=10,
-        choices=SecState.LEVEL_CHOICES,
-        default=SecState.HIGH,
+        choices=EventLevels.LEVEL_CHOICES,
+        default=EventLevels.HIGH,
     )
     site = models.ForeignKey(Site, related_name="%(class)s", on_delete=models.CASCADE)
     alert_groups = models.ManyToManyField(
@@ -1179,7 +1178,7 @@ class EventRuleBase(models.Model):
         abstract = True
 
 
-# TODO: Idea for future name change: EventRuleClient?
+# Idea for future name change: EventRuleClient?
 class SecurityProblem(EventRuleBase):
     """A security problem and the method (script) to handle it."""
 

@@ -315,7 +315,6 @@ class SecurityProblemAdmin(admin.ModelAdmin):
     list_display = ("name", "site", "level", "security_script")
 
 
-# TODO: Add relevant attributes for eventruleservers
 class EventRuleServerAdmin(admin.ModelAdmin):
     list_display = (
         "name",
