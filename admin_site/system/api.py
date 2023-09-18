@@ -69,7 +69,9 @@ def get_pc(request, pc_id):
 @paginate
 def list_events(request):
     site = get_site_from_request(request)
-    events = SecurityEvent.objects.filter(problem__site=site).order_by("-id")  # or -occurred_time
+    events = SecurityEvent.objects.filter(problem__site=site).order_by(
+        "-id"
+    )  # or -occurred_time
     if events:
         return events
     else:
