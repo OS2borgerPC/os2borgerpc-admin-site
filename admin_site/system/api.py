@@ -9,7 +9,6 @@ from .api_schemas import (
     ConfigurationEntrySchema,
     PCSchema,
     SecurityEventSchema,
-    UserSchema,
 )
 
 router = Router()
@@ -22,7 +21,7 @@ router = Router()
 def get_site_from_request(request):
     """Obtains the site based on the API Key, from the request headers"""
     key = request.headers["Authorization"].split(" ")[-1]
-    valid_key_check = APIKey.objects.get(key=key)
+    valid_key_check = APIKey.objects.filter(key=key).first()
 
     if valid_key_check:
         return valid_key_check.site
@@ -38,18 +37,26 @@ def get_site_from_request(request):
 @paginate
 def list_pcs(request):
     site = get_site_from_request(request)
-    print(site)
-    return PC.objects.filter(site=site)
+    pcs = PC.objects.filter(site=site)
+    if pcs:
+        return pcs
+    else:
+        return []
 
 
 @router.get(
     "/pc/{int:pc_id}",
-    response=PCSchema,
+    response={200: PCSchema, 204: None},
     url_name="pc",
-    description="Fetch data on a specific PC",
+    description="Fetch data on a specific PC, from a PC_ID which can be found on the PC list",
 )
 def get_pc(request, pc_id):
-    return PC.objects.filter(site=site, id=pc_id)
+    site = get_site_from_request(request)
+    pc = PC.objects.filter(site=site, id=pc_id).first()
+    if pc:
+        return 200, pc
+    else:
+        return 204, None
 
 
 # Events
@@ -62,33 +69,42 @@ def get_pc(request, pc_id):
 @paginate
 def list_events(request):
     site = get_site_from_request(request)
-    return SecurityEvent.objects.filter(site=site).order_by("-id")  # or -occurred_time
+    events = SecurityEvent.objects.filter(problem__site=site).order_by("-id")  # or -occurred_time
+    if events:
+        return events
+    else:
+        return []
 
 
 @router.get(
     "/event/{int:event_id}",
-    response=SecurityEventSchema,
+    response={200: SecurityEventSchema, 204: None},
     url_name="event",
-    description="Fetch data on a specific event, from an <EVENT ID> which can be found on the event list",
+    description="Fetch data on a specific event, from an EVENT_ID which can be found on the event list",
 )
 def get_event(request, event_id):
     site = get_site_from_request(request)
-    return SecurityEvent.objects.filter(site=site, id=event_id)
+    event = SecurityEvent.objects.filter(problem__site=site, id=event_id).first()
+    if event:
+        return 200, event
+    else:
+        return 204, None
 
 
 # Configurations
-# TODO: Do we want a list of configurations as well? In that case it needs to find them by finding the site's
-# configuration, but also go through all their groups and computers to find their related configurations. I'm thinking
-# it would be a pretty expensive operation?
 @router.get(
     "/configuration/{int:configuration_id}",
-    response=List[ConfigurationEntrySchema],
+    response={200: List[ConfigurationEntrySchema], 204: None},
     url_name="configuration",
-    description="Fetch data on a specific PC Configuration, from a <CONFIGURATION ID> which can be found via the computer endpoints. This contains extended info about a PC, such as hostname, IP etc.",
+    description="Fetch data on a specific PC Configuration, from a CONFIGURATION_ID which can be found via the computer endpoints. This contains extended info about a PC, such as hostname, IP etc.",
 )
 def get_configuration(request, configuration_id):
     site = get_site_from_request(request)
-    config = Configuration.objects.get(id=configuration_id, site=site)
-    if config.pc_set.all() or config.group_set.all() or config.site_set.all():
+    config = Configuration.objects.filter(id=configuration_id).first()
+    if config:
+        pc = config.pc_set.first()
+    if config and pc.site == site:
         conf = ConfigurationEntry.objects.filter(owner_configuration=configuration_id)
-        return conf
+        return 200, conf
+    else:
+        return 204, None

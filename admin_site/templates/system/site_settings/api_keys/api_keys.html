@@ -44,42 +44,6 @@
             </table>
           </div>
 
-          <!-- Edit modal -->
-          <div id="editconfigdialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title">{% translate "Handle API key" %}</h3>
-                  <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                  <form name="addnewconfigdialog" id="addnewconfigdialog" action="" method="post">
-
-                    <input type="hidden" name="editconfig_pk" id="editconfig_pk" value="new">
-                    <input type="hidden" name="editconfig_id" id="editconfig_id" value="">
-
-                    <fieldset>
-
-                      <p>
-                        <label for="editconfig_key" class="form-label">{% translate "Key" %}:</label>
-                        <input id="editconfig_key" maxlength="30" name="editconfig_key" type="text" value="" class="form-control" readonly>
-                      </p>
-                      <p>
-                        <label for="editconfig_comment" class="form-label">{% translate "Comment" %}:</label>
-                        <input id="editconfig_comment" maxlength="255" name="editconfig_comment" type="text" value="" class="form-control">
-                      </p>
-
-                    </fieldset>
-
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button class="btn btn-primary">{% translate "Save" %}</button> <!-- TODO: Trigger list reload with updated contents -->
-                  <button class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
   </div>
 {% endblock %}
