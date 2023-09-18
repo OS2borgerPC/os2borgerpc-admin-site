@@ -8,12 +8,6 @@ from ninja.orm import create_schema
 # PCSchema = create_schema(PC, depth=1, fields=['id', 'uid', "name", "pc_groups"])
 
 
-class UserSchema(ModelSchema):
-    class Config:
-        model = User
-        model_fields = ["id", "username", "first_name", "last_name", "email"]
-
-
 class PCSchema(ModelSchema):
     class Config:
         model = PC
