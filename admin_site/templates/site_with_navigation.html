@@ -40,33 +40,27 @@ detailpage
     </a>
 
     <hr>
-    <h2 class="text-light">{% translate "Security" %}</h2>
+    <h2 class="text-light">{% translate "Monitoring" %}</h2>
 
     {% set_css_class_active request.resolver_match.url_name "security_event" as current_url_security_events %}
     <a class="nav-link link-light {{ current_url_security_events  }}" href="{% url 'security_events' slug=site.url %}">
       <span class="material-icons">whatshot</span>
-      {% translate "Security Events" %}
+      {% translate "Events" %}
       {% if sec_events > 0 %}
         <span class="float-end badge badge-danger sec-warn-blink">{{ sec_events }}</span>
       {% endif %}
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "security_problem" as current_url_security_problems %}
-    <a class="nav-link link-light {{ current_url_security_problems }}" href="{% url 'security_problems' slug=site.url %}">
-      <span class="material-icons">gpp_maybe</span>
-      {% translate "Security Rules" %}
+    {% set_css_class_active request.resolver_match.url_name "event_rule" as current_url_event_rules %}
+    <a class="nav-link link-light {{ current_url_event_rules }}" href="{% url 'event_rules' slug=site.url %}">
+      <span class="material-icons">security</span>
+      {% translate "Monitoring Rules" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "security_script" as current_url_security_scripts %}
     <a class="nav-link link-light {{ current_url_security_scripts  }}" href="{% url 'security_scripts' slug=site.url %}">
       <span class="material-icons">code</span>
       {% translate "Security Scripts" %}
-    </a>
-
-    {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}
-    <a class="nav-link link-light {{ current_url_two_factor  }}" href="{% url 'two_factor' slug=site.url %}">
-      <span class="material-icons">pin</span>
-      {% translate "Two-factor authentication" %}
     </a>
 
     <hr>
@@ -82,15 +76,22 @@ detailpage
       <span class="material-icons">queue</span> {% translate "Groups" %}
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "wake_plan" as current_url_wake_plans %}
-    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' site_uid=site.url %}">
-      <span class="material-icons">bolt</span> {% translate "On/Off schedule" %}
-    </a>
-
     {% set_css_class_active request.resolver_match.url_name "settings" as current_url_site_settings %}
     <a class="nav-link link-light {{ current_url_site_settings  }}" href="{% url 'settings' slug=site.url %}">
       <span class="material-icons">settings</span> {% translate "Site settings" %}
     </a>
+
+    {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}
+    <a class="nav-link link-light {{ current_url_two_factor  }}" href="{% url 'two_factor' slug=site.url %}">
+      <span class="material-icons">pin</span>
+      {% translate "2FA OS2borgerPC" %}
+    </a>
+
+    {% set_css_class_active request.resolver_match.url_name "wake_plan" as current_url_wake_plans %}
+    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' site_uid=site.url %}">
+      <span class="material-icons">bolt</span> {% translate "On/Off schedules" %}
+    </a>
+
 
     <hr>
     <h2 class="text-light">{% translate "Scripting" %}</h2>
@@ -106,7 +107,7 @@ detailpage
     </a>
 
     <hr>
-    <h2 class="text-light">{% translate "Users & versions" %}</h2>
+    <h2 class="text-light">{% translate "Users & Versions" %}</h2>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
     <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
       <span class="material-icons">person</span> {% translate "Users" %}
@@ -122,7 +123,7 @@ detailpage
 
     {% if current_url_site %}
       {% comment %} Status currently has no documentation! {% endcomment %}
-    {% elif current_url_security_scripts or current_url_security_problems or current_url_security_events %}
+    {% elif current_url_security_scripts or current_url_event_rules or current_url_security_events %}
       <a href="{% url 'doc' 'security_scripts' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         {% translate "Administrating security scripts" %}

@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block specific_title %}
-{% translate "Security Events" %}
+{% translate "Events" %}
 {% endblock %}
 
 {% block head_javascripts %}
@@ -115,7 +115,7 @@
           <th><input type="checkbox" id="all_events_toggle" autocomplete="off"/></th>
           <th>{% translate "Level" %}</th>
           {% translate "Rule" as rule %}
-          {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('name')" slug='warning' %}
           <th>{% translate "Info" %}</th>
           <th>{% translate "Device" %}</th>
           <th>{% translate "Incident time" %}</th>

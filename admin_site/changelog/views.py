@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+
 # Mixin class to require login - copied from system app
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""

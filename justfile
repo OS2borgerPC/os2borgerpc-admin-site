@@ -39,12 +39,11 @@ verify-container-running container:
     exit 1
   fi
 
-bash: (verify-container-running django_container)
+bash-django: (verify-container-running django_container)
   sudo docker exec -i --tty {{django_container}} /bin/bash
 
-# Run bash in the django container without first running migrations
-# Very convenient for running migrations when the container won't start due to changes in models
-bash-no-migrate:
+# Run bash in a django container without first running migrations - convenient for e.g. makemigrations
+bash-django-skip-entrypoint:
   sudo docker-compose run --rm --entrypoint bash {{compose_django_service}}
 
 # Runs black on the python codebase
@@ -101,7 +100,7 @@ run:
 
 # Start the admin-site stack in the background and attach specifically to the django container - so python breakpoints work
 run-debug:
-  sudo docker-compose up -d {{compose_django_service}} {{compose_db_service}}
+  sudo docker-compose up -d
   sudo docker attach {{django_container}}
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)

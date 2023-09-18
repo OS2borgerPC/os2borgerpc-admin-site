@@ -15,13 +15,11 @@
   <div class="listutils">
 
     <a class="btn btn-link" href="{% url 'wake_change_event_new_altered_hours' site.uid %}">
-        <span class="material-icons">meeting_room</span>
+        <span class="material-icons">add</span>
         {% translate "Add altered opening hours" %}
     </a>
     <a class="btn btn-link" href="{% url 'wake_change_event_new_closed' site.uid %}">
-        <span class="material-icons">
-       door_front
-        </span>
+        <span class="material-icons">add</span>
         {% translate "Add closed days" %}
     </a>
   </div>
@@ -29,12 +27,12 @@
   <ul class="item-list">
       {% for event in wake_change_events_list %}
         <li class="{% if event == selected_event %}active{% endif %}">
+          {% if event.type == "CLOSED" %}
+            <span class="material-icons ms-3 me-0">door_front</span>
+          {% else %}
+            <span class="material-icons ms-3 me-0">schedule</span>
+          {% endif %}
           <a class="item-list-link" id="{{event.id}}" href="{% url 'wake_change_event' site.uid event.id %}">
-            {% if event.type == "ALTERED_HOURS" %}
-              <span class="material-icons">meeting_room</span>
-            {% else %}
-              <span class="material-icons">door_front</span>
-            {% endif %}
             {{event}}
           </a>
           {% if event == selected_event %}

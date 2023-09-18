@@ -20,9 +20,16 @@ def notify_users(security_event, security_problem, pc):
     # Subject = security name,
     # Body = description + technical summary
     email_list = []
-    alert_users = security_problem.alert_users.all()
+    supervisor_relations = pc.pc_groups.exclude(supervisors=None)
+    if supervisor_relations:
+        alert_users_pk = list(
+            set(supervisor_relations.values_list("supervisors", flat=True))
+        )
+        alert_users = User.objects.only("email").filter(pk__in=alert_users_pk)
+    else:
+        alert_users = security_problem.alert_users.only("email").all()
     for user in alert_users:
-        email_list.append(User.objects.get(id=user.id).email)
+        email_list.append(user.email)
 
     body = f"Beskrivelse af sikkerhedsadvarsel: {security_problem.description}\n"
     body += f"Kort resume af data fra log filen : {security_event.summary}"
@@ -85,7 +92,7 @@ def cicero_validate(loaner_number, pincode, agency_id):
         session_key = response.json()["sessionKey"]
         # Just debugging for the moment.
     else:
-        # TODO: Unable to authenticate with system user - log this.
+        # Unable to authenticate with system user - log this.
         message = response.json()["message"]
         logger.error(
             f"Unable to log in with configured user name and password: {message}"
