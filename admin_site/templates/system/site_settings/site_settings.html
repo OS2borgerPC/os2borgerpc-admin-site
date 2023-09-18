@@ -54,9 +54,6 @@
         <!-- Configs -->
         <div id="configs" class="tabcontent tab-pane fade" role="tabpanel" aria-labelledby="configs-tab">
 
-          {% comment %} TODO: Don't think this is needed because we set a csrf_token for the form above, so we don't need one in
-          each tab as well, since it's a single form? {% csrf_token %} {% endcomment %}
-
             {% include 'system/configs/list.html' with entries=site_configs cnf_id='site_configs' %}
 
             <!-- TODO: This include will put a form within a form. Not great.-->

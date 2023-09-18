@@ -361,8 +361,7 @@ class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
 
     # def form_valid(self, form):
     def post(self, request, *args, **kwargs):
-        # TODO: We need the value for the comment as well! So we need a form submission? Should it be form_valid after
-        # all, then?
+
         new_description = request.POST["description"]
 
         APIKey.objects.filter(id=kwargs["pk"]).update(description=new_description)
@@ -422,8 +421,6 @@ class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def delete(self, request, *args, **kwargs):
-        # TODO: Verify that SuperAdminOrThisSiteMixin successfully validates the request user before this is called!
-        # ...otherwise skip that mixin and write a new mixin for that purpose, or, more temporarily, handle it here?
 
         APIKey.objects.get(id=kwargs["pk"]).delete()
 
