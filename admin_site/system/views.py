@@ -368,7 +368,6 @@ class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
 
     # def form_valid(self, form):
     def post(self, request, *args, **kwargs):
-
         new_description = request.POST["description"]
 
         APIKey.objects.filter(id=kwargs["pk"]).update(description=new_description)
@@ -428,7 +427,6 @@ class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def delete(self, request, *args, **kwargs):
-
         APIKey.objects.get(id=kwargs["pk"]).delete()
 
         return render(
@@ -3418,8 +3416,9 @@ documentation_menu_items = [
     ("notifications", _("Notifications and offline rules")),
     ("users", _("Users")),
     ("configuration", _("Configurations")),
-    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
     ("changelogs", _("The News site")),
+    ("api", "API"),
+    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
     ("", _("OS2borgerPC")),
     ("os2borgerpc_installation_guide", _("Installation Guide (PDF)")),
     ("os2borgerpc_installation_guide_old", _("Old installation guide (PDF)")),
@@ -3469,6 +3468,9 @@ class DocView(TemplateView, LoginRequiredMixin):
         context = super(DocView, self).get_context_data(**kwargs)
         context["docmenuitems"] = documentation_menu_items
         docnames = self.docname.split("/")
+
+        # Returns the first site the user is a member of
+        context["site"] = self.request.user.bibos_profile.sites.first()
 
         context["menu_active"] = docnames[0]
 
