@@ -1,4 +1,4 @@
-from .models import ConfigurationEntry, PC, SecurityProblem, SecurityEvent, User
+from .models import ConfigurationEntry, PC, SecurityEvent
 from ninja import ModelSchema
 from ninja.orm import create_schema
 
@@ -27,11 +27,32 @@ class PCSchema(ModelSchema):
 
 # TODO: Should we fetch Security Problems as well? Maybe not, maybe just use depth1 so it shows up with its values as a foreign key instead of just an ID?
 class SecurityEventSchema(ModelSchema):
+    monitoring_rule: str
+    level: str
+    pc_name: str
+
+    @staticmethod
+    def resolve_monitoring_rule(obj):
+        if obj.problem:
+            return obj.problem.name
+        else:
+            return obj.event_rule_server.name
+
+    @staticmethod
+    def resolve_level(obj):
+        if obj.problem:
+            return obj.problem.level
+        else:
+            return obj.event_rule_server.level
+
+    @staticmethod
+    def resolve_pc_name(obj):
+        return obj.pc.name
+
     class Config:
         model = SecurityEvent
         model_fields = [
             "id",
-            "problem",
             "occurred_time",
             "reported_time",
             "pc",
