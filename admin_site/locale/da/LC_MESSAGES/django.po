@@ -1704,20 +1704,22 @@ msgid "Associated Scripts"
 msgstr "Tilknyttede Scripts"
 
 #: templates/documentation/groups/edit.html
-msgid "Editing groups: Master data and computers"
-msgstr "Gruppe-redigering: Stam-oplysninger og computere"
+msgid "Editing groups: Master data, computers and supervisors"
+msgstr "Gruppe-redigering: Stam-oplysninger, computere og ansvarspersoner"
 
 #: templates/documentation/groups/edit.html
 msgid ""
 "When you click on a group, you will by default be shown the group's master "
-"data and any computers that belong to the group. Here you can change the "
-"group's name and description as well as add or remove computers from the "
-"group. The changes will not become permanent until you've clicked on the "
-"button \"Save changes\" at the bottom of the screen."
+"data, any computers that belong to the group and any supervisors chosen "
+"for the group. Here you can change the group's name and description as well "
+"as add or remove computers or supervisors from the group. The changes will "
+"not become permanent until you've clicked on the button \"Save changes\" at "
+"the bottom of the screen."
 msgstr ""
 "Som standard når du klikker dig ind på en gruppe vil du få vist gruppens "
-"stamdata og hvilke computere der er med i gruppen. Her kan du ændre gruppens "
-"navn og beskrivelse, samt tilføje eller fjerne computere fra gruppen. "
+"stamdata, hvilke computere der er med i gruppen og hvilke ansvarspersoner "
+"der er valgt for gruppen. Her kan du ændre gruppens navn og beskrivelse, "
+"samt tilføje eller fjerne computere og ansvarspersoner fra gruppen. "
 "Ændringer foretaget på siden træder ikke i kræft før du klikker på \"Gem "
 "ændringer\"-knappen i bunden af skærmbilledet."
 
@@ -2623,8 +2625,8 @@ msgstr "Redigering af Sikkerhedsscripts"
 #: templates/documentation/security_scripts/securityevents.html
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
-msgid "Security Events"
-msgstr "Sikkerhedshændelser"
+msgid "Events"
+msgstr "Hændelser"
 
 #: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/securityproblems.html
@@ -2733,7 +2735,7 @@ msgid ""
 "optional and can be replaced by an empty string."
 msgstr ""
 "Den fulde log for hændelsen er alt den indsamlede data vedrørende "
-"sikkerhedshændelsen. Den er valgfri og kan erstattes af en tom streng."
+"hændelsen. Den er valgfri og kan erstattes af en tom streng."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
@@ -2811,7 +2813,7 @@ msgstr ""
 msgid ""
 "This overview shows the individual events that have been triggered by the "
 "system. In the left column, you can choose how you wish to filter the "
-"overview, i.e. choose which events you wish to see. By default you will be "
+"overview, i.e. choose which events you wish to see. By default, you will be "
 "shown all unresolved events with a severity level greater than normal. The "
 "severity level is also shown in the overview."
 msgstr ""
@@ -2823,13 +2825,13 @@ msgstr ""
 
 #: templates/documentation/security_scripts/securityevents.html
 msgid ""
-"From the overview you can select and handle security events. Handling an "
+"From the overview you can select and handle events. Handling an "
 "event allows you to change its status and the assigned user as well as add "
 "or change a note for the event. It is possible to handle multiple events "
 "simultaneously."
 msgstr ""
-"Fra oversigten kan du vælge og håndtere sikkerhedshændelser. Når du "
-"håndterer en sikkerhedshændelse, kan du ændre dens status, og hvem der står, "
+"Fra oversigten kan du vælge og håndtere hændelser. Når du "
+"håndterer en hændelse, kan du ændre dens status, og hvem der står, "
 "at den håndteres af samt tilføje eller ændre en note for hændelsen. Det er "
 "muligt at håndtere flere hændelser på en gang."
 
@@ -2846,53 +2848,62 @@ msgstr ""
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"The overview \"Security Rules\" shows all the defined security rules that "
-"are monitored. You can define new security rules from the overview."
+"The overview \"Monitoring Rules\" shows all the defined security rules and "
+"offline rules that are monitored. You can define new security rules from "
+"the overview by clicking on \"Add new security rule\" above the list of "
+"defined rules."
 msgstr ""
-"I oversigten \"Sikkerhedsregler\" vises alle definerede Sikkerhedsregler, "
-"som der holdes øje med. Fra oversigten kan du oprette nye Sikkerhedsregler."
+"I oversigten \"Overvågningsregler\" vises alle definerede Sikkerhedsregler og "
+"Offline-regler, som der holdes øje med. Fra oversigten kan du oprette nye "
+"Sikkerhedsregler ved at klikke på \"Tilføj ny sikkerhedsregel\" oven over "
+"listen med definerede regler."
 
 #: templates/documentation/security_scripts/securityproblems.html
-msgid "A new security rule must have the following input"
-msgstr "En ny Sikkerhedsregel skal have følgende input"
+msgid "A new security rule takes the following input"
+msgstr "En ny Sikkerhedsregel tager følgende input"
 
 #: templates/documentation/security_scripts/securityproblems.html
-msgid "Name: the name of the particular security rule."
-msgstr "Navn: Navnet på den pågældende sikkerhedsregel."
+msgid "Name (mandatory): the name of the particular security rule."
+msgstr "Navn (påkrævet): Navnet på den pågældende sikkerhedsregel."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"Description: A descriptive text that is included in the sent email warnings."
+"Description (optional): A descriptive text that is included in the sent email warnings."
 msgstr ""
-"Beskrivelse: En beskrivende tekst, som indgår i de afsendte advarsels-emails."
+"Beskrivelse (valgfri): En beskrivende tekst, som indgår i de afsendte advarsels-emails."
 
 #: templates/documentation/security_scripts/securityproblems.html
-msgid "Severity level: Choose between Critical, High and Normal."
-msgstr "Alvorlighedsgrad: Vælg mellem Kritisk, Høj og Normal."
+msgid "Severity level (mandatory): Choose between Critical, High and Normal."
+msgstr "Alvorlighedsgrad (påkrævet): Vælg mellem Kritisk, Høj og Normal."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"Security Script: The Security Script is executed every time the machine "
+"Security Script (mandatory): The Security Script is executed every time the machine "
 "checks in with the admin-site."
 msgstr ""
-"Sikkerhedsscript: Sikkerhedsscriptet afvikles hver gang en maskine tjekker "
+"Sikkerhedsscript (påkrævet): Sikkerhedsscriptet afvikles hver gang en maskine tjekker "
 "ind på admin-sitet."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"Monitored groups: The groups define which computers the security rule "
+"Monitored groups (optional): The groups define which computers the security rule "
 "applies to."
 msgstr ""
-"Overvågede grupper: Grupperne definerer hvilke computere, den aktuelle "
+"Overvågede grupper (valgfri): Grupperne definerer hvilke computere, den aktuelle "
 "sikkerhedsregel er aktiv for."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"Recipient(s) of email warning: The users that should receive an email about "
-"any security events related to the security rule."
+"Recipient(s) of email warning (optional): The users that should receive an email about "
+"any events related to the security rule. Note that if a monitored PC belongs to one or "
+"more groups with supervisors, those supervisors will receive any email warnings related "
+"to that PC instead of the recipients set here."
 msgstr ""
-"Modtager(e) af email-advarsel: Hvilke brugere der skal modtage en email "
-"omkring sikkerhedshændelser relateret til denne sikkerhedsregel."
+"Modtager(e) af email-advarsel (valgfri): Hvilke brugere der skal modtage en email "
+"omkring hændelser relateret til denne sikkerhedsregel. Bemærk at hvis en overvåget "
+"PC tilhører en eller flere grupper med ansvarspersoner, så vil disse ansvarspersoner "
+"modtage eventuelle email-advarsler relateret til den PC i stedet for de modtagere, "
+"som er valgt her."
 
 #: templates/documentation/status/index.html
 msgid ""
@@ -3768,11 +3779,6 @@ msgid "Monitoring"
 msgstr "Overvågning"
 
 #: templates/site_with_navigation.html
-#: templates/system/security_events/site_security_events.html
-msgid "Events"
-msgstr "Hændelser"
-
-#: templates/site_with_navigation.html
 #: templates/system/event_rules/shared_navigation.html
 msgid "Monitoring Rules"
 msgstr "Overvågningsregler"
@@ -3807,8 +3813,8 @@ msgid "Security rule definition"
 msgstr "Definition af sikkerhedsregler"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding security events"
-msgstr "Hjælp til sikkerhedshændelser"
+msgid "Help regarding events"
+msgstr "Hjælp til hændelser"
 
 #: templates/site_with_navigation.html
 msgid "Administrating groups"
@@ -4360,8 +4366,8 @@ msgid "Never"
 msgstr "Aldrig"
 
 #: templates/system/pcs/form.html
-msgid "Last security event received"
-msgstr "Seneste sikkerhedshændelse modtaget"
+msgid "Last event received"
+msgstr "Seneste hændelse modtaget"
 
 #: templates/system/pcs/form.html
 msgid "Groups the computer is a member of"
@@ -4536,8 +4542,8 @@ msgid "Level"
 msgstr "Alvorlighedsgrad"
 
 #: templates/system/security_events/site_security_events.html
-msgid "Edit Security Events"
-msgstr "Rediger Sikkerhedshændelser"
+msgid "Edit Events"
+msgstr "Rediger Hændelser"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Handle event"
@@ -4652,8 +4658,8 @@ msgid "Latest check-in"
 msgstr "Seneste tjek-ind"
 
 #: templates/system/site_status.html
-msgid "Latest security event received"
-msgstr "Seneste sikkerhedshændelse modtaget"
+msgid "Latest event received"
+msgstr "Seneste hændelse modtaget"
 
 #: templates/system/site_status.html
 msgid "Online"

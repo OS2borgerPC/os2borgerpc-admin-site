@@ -2,19 +2,19 @@
 {% load i18n %}
 
 {% block specific_content %}
-  <h1>{% translate "Security Events" %}</h1>
+  <h1>{% translate "Events" %}</h1>
   <p>
 	{% blocktranslate trimmed %}
 	This overview shows the individual events that have been triggered by the system.
 	In the left column, you can choose how you wish to filter the overview, i.e.
-	choose which events you wish to see. By default you will be shown all unresolved
+	choose which events you wish to see. By default, you will be shown all unresolved
 	events with a severity level greater than normal.
 	The severity level is also shown in the overview.
 	{% endblocktranslate %}
   </p>  
   <p>
 	{% blocktranslate trimmed %}
-	From the overview you can select and handle security events. Handling an event
+	From the overview you can select and handle events. Handling an event
 	allows you to change its status and the assigned user as well as add or change
 	a note for the event. It is possible to handle multiple events simultaneously.
 	{% endblocktranslate %}

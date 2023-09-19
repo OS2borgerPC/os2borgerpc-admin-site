@@ -5,32 +5,36 @@
   <h1>{% translate "Security Rules" %}</h1>
   <p>
     {% blocktranslate trimmed %}
-    The overview "Security Rules" shows all the defined security rules that
-    are monitored. You can define new security rules from the overview.
+    The overview "Monitoring Rules" shows all the defined security rules and
+    offline rules that are monitored. You can define new security
+    rules from the overview by clicking on "Add new security rule" above the
+    list of defined rules.
     {% endblocktranslate %}
   <br>
-    {% translate "A new security rule must have the following input" %}:
+    {% translate "A new security rule takes the following input" %}:
   </p>
   <ul>
     <li>
-      {% translate "Name: the name of the particular security rule." %}
+      {% translate "Name (mandatory): the name of the particular security rule." %}
+	</li>
+    <li>
+      {% translate "Security Script (mandatory): The Security Script is executed every time the machine checks in with the admin-site." %}
+	</li>
+    <li>
+      {% translate "Severity level (mandatory): Choose between Critical, High and Normal." %}
 	</li>
 	<li>
-      {% translate "Description: A descriptive text that is included in the sent email warnings." %}
+      {% translate "Description (optional): A descriptive text that is included in the sent email warnings." %}
 	</li>
 	<li>
-      {% translate "Severity level: Choose between Critical, High and Normal." %}
-	</li>
-	<li>
-      {% translate "Security Script: The Security Script is executed every time the machine checks in with the admin-site." %}
-	</li>
-	<li>
-      {% translate "Monitored groups: The groups define which computers the security rule applies to." %}
+      {% translate "Monitored groups (optional): The groups define which computers the security rule applies to." %}
 	</li>
 	<li>
       {% blocktranslate trimmed %}
-      Recipient(s) of email warning: The users that should receive an email about any security events
-      related to the security rule.
+      Recipient(s) of email warning (optional): The users that should receive an email about any events
+      related to the security rule. Note that if a monitored PC belongs to one or more groups with
+      supervisors, those supervisors will receive any email warnings related to that PC instead of the
+      recipients set here.
       {% endblocktranslate %}
 	</li>
   </ul>
