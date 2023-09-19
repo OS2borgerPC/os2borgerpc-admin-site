@@ -1,10 +1,9 @@
-from django.shortcuts import get_object_or_404
 from ninja import Router
 from typing import List
 from ninja.pagination import paginate
+from django.db.models import Q
 
-
-from .models import APIKey, Configuration, ConfigurationEntry, PC, SecurityEvent, User
+from .models import APIKey, Configuration, ConfigurationEntry, PC, SecurityEvent
 from .api_schemas import (
     ConfigurationEntrySchema,
     PCSchema,
@@ -69,7 +68,9 @@ def get_pc(request, pc_id):
 @paginate
 def list_events(request):
     site = get_site_from_request(request)
-    events = SecurityEvent.objects.filter(problem__site=site).order_by(
+    events = SecurityEvent.objects.filter(
+        Q(problem__site=site) | Q(event_rule_server__site=site)
+    ).order_by(
         "-id"
     )  # or -occurred_time
     if events:
@@ -86,7 +87,9 @@ def list_events(request):
 )
 def get_event(request, event_id):
     site = get_site_from_request(request)
-    event = SecurityEvent.objects.filter(problem__site=site, id=event_id).first()
+    event = SecurityEvent.objects.filter(
+        Q(problem__site=site) | Q(event_rule_server__site=site), id=event_id
+    ).first()
     if event:
         return 200, event
     else:
