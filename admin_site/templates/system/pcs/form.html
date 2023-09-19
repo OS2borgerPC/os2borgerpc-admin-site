@@ -65,7 +65,7 @@
           {% endif %}
         </span>
         <span class="badge bg-secondary ms-3">
-          {% translate "Last security event received" %}:
+          {% translate "Last event received" %}:
           {% if security_event %}
             {{ security_event.reported_time|timesince }} {% translate "ago" %}
           {% else %}

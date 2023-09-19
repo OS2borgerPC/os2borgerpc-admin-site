@@ -3329,6 +3329,7 @@ documentation_menu_items = [
     ("jobs", _("Jobs")),
     ("scripts", _("Scripts")),
     ("security_scripts", _("Security Scripts")),
+    ("notifications", _("Notifications and offline rules")),
     ("users", _("Users")),
     ("configuration", _("Configurations")),
     ("creating_security_problems", _("Setting up security surveillance (PDF)")),
