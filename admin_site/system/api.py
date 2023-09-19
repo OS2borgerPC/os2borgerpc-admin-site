@@ -60,7 +60,7 @@ def get_pc(request, pc_id):
 
 # Events
 @router.get(
-    "/events/",
+    "/events",
     response=List[SecurityEventSchema],
     url_name="events",
     description="Fetch list of all events (e.g. Security Events), by default limited to the 100 most recent",

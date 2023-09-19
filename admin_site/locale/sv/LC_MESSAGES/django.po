@@ -72,7 +72,7 @@ msgstr "Skriv en kommentar"
 msgid "Add comment"
 msgstr "Lägg till en kommentar"
 
-#: changelog/templates/comments/form.html templates/system/configs/form.html
+#: changelog/templates/comments/form.html
 #: templates/system/configs/templates.html
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
@@ -86,7 +86,7 @@ msgstr "Lägg till en kommentar"
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/security_events/site_security_events.html
-#: templates/system/site_settings.html
+#: templates/system/site_settings/site_settings.html
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
 #: templates/system/wake_plan/confirm_delete.html
@@ -670,6 +670,12 @@ msgstr "hanteras av"
 msgid "Changes have been saved %s"
 msgstr "Ändringar har sparats %s"
 
+#: system/models.py
+#, fuzzy
+#| msgid "Key"
+msgid "key"
+msgstr "Nyckel"
+
 #: system/views.py
 #, python-format
 msgid "Settings for %s updated"
@@ -945,28 +951,27 @@ msgid "Notifications and offline rules"
 msgstr "Aviseringar och offline-regler"
 
 #: system/views.py templates/documentation/users/index.html
-#: templates/site_with_navigation.html
-#: templates/system/users/confirm_delete.html
-#: templates/system/users/update.html
+#: templates/site_with_navigation.html templates/system/users/update.html
 msgid "Users"
 msgstr "Användare"
 
-#: system/views.py templates/documentation/computers/index.html
+#: system/views.py templates/documentation/api.html
+#: templates/documentation/computers/index.html
 #: templates/documentation/configuration/index.html
 #: templates/documentation/groups/index.html
 #: templates/site_with_navigation.html
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/site_settings.html
+#: templates/system/site_settings/site_settings.html
 msgid "Configurations"
 msgstr "Konfigurationer"
-
-#: system/views.py
-msgid "Setting up security surveillance (PDF)"
-msgstr "Skapande av säkerhetsövervakning (PDF)"
 
 #: system/views.py templates/documentation/changelogs/index.html
 msgid "The News site"
 msgstr "Nyhetssidan"
+
+#: system/views.py
+msgid "Setting up security surveillance (PDF)"
+msgstr "Skapande av säkerhetsövervakning (PDF)"
 
 #: system/views.py
 msgid "Installation Guide (PDF)"
@@ -1075,6 +1080,127 @@ msgstr ""
 #: templates/base.html templates/two_factor/_base.html
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Försök att öppna den här sidan i Microsoft Edge"
+
+#: templates/documentation/api.html
+msgid "API Key"
+msgstr ""
+
+#: templates/documentation/api.html templates/site_with_navigation.html
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "API Keys"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "PC's"
+msgstr ""
+
+#: templates/documentation/api.html
+#, fuzzy
+#| msgid "Events"
+msgid "events"
+msgstr "Incidenter"
+
+#: templates/documentation/api.html
+#, fuzzy
+#| msgid "Security Events"
+msgid "security events"
+msgstr "Säkerhetsincidenter"
+
+#: templates/documentation/api.html
+#, fuzzy
+#| msgid "Handle events"
+msgid "offline events"
+msgstr "Hantera incidenter"
+
+#: templates/documentation/api.html
+msgid "PC"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"<p> OS2borgerPC has a REST API with the root URL at <a href=\"/api/\">/api/</"
+"a> </p> <p> The documentation for this API is available at <a href=\"/api/"
+"\">/api/docs/</a> </p> <p> The documentation has information about which "
+"endpoints are available, what data is expected in the request, and what data "
+"is received in the response. </p> <p> In order to view the API documentation "
+"you have to be signed in to the admin site. </p> <p> In order to make "
+"requests to the API, you need to generate and use an %(api_key)s. </p> <p> "
+"The data available through the API includes:"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"<li>Data about %(pcs)s</li> <li>Data about %(events)s, including both "
+"%(security_events)s and %(offline_events)s</li>"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid "<li>Data about %(pc)s"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"which contain extended info about a %(pc)s, such as hostname and IP "
+"addresses</li>"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"<p> Every request to the API needs to include an %(api_key)s as part of the "
+"request. This %(api_key)s is sent as an <strong>HTTP header</strong> in the "
+"following format: </p>"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"...without the <strong>\"&lt;\"</strong> <strong>\"&gt;\"</strong> brackets. "
+"An example request to the API, with an example %(api_key)s, looks like this, "
+"using the CLI tool <code>curl</code>:"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid "API authentication: %(api_keys)s"
+msgstr ""
+
+#: templates/documentation/api.html
+#, fuzzy
+#| msgid "Site settings"
+msgid "Site Settings"
+msgstr "Inställningar för Site"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"<p> API-keys are used to allow a person or a program to retrieve data from "
+"your Site. </p> <p> If you have access to multiple Sites, you'll need to "
+"make %(api_keys)s for each of those Sites. </p> <p> You can generate, edit "
+"or delete API keys by going to %(site_settings)s and then clicking the link "
+"&nbsp;"
+msgstr ""
+
+#: templates/documentation/api.html
+#: templates/system/site_settings/site_settings.html
+msgid "Manage API keys"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"On this page you can: <ul> <li>Click \"Generate new %(api_key)s\" to "
+"generate and save a new %(api_key)s</li> <li>Write or change the comment "
+"about a given %(api_key)s. Fx. to specify who/what is using the given key."
+"<br/> Changes are saved automatically after a few seconds.</li> <li>Click "
+"\"Delete\" next to an %(api_key)s to delete and deactivate it. <br/> A "
+"confirmation popup will appear to confirm whether you want to delete it or "
+"not.</li> </ul>"
+msgstr ""
 
 #: templates/documentation/changelogs/index.html
 msgid ""
@@ -1474,6 +1600,7 @@ msgstr "Redigera"
 #: templates/system/event_rules/shared_navigation.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/form.html templates/system/scripts/templates.html
+#: templates/system/site_settings/api_keys/partials/list.html
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -1580,6 +1707,7 @@ msgid "Meaning"
 msgstr "Betydelse"
 
 #: templates/documentation/configuration/index.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -2003,11 +2131,11 @@ msgid "Final remarks"
 msgstr "Anteckningar"
 
 #: templates/documentation/groups/scripts.html
-#: templates/system/configs/form.html
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/scripts/update.html templates/system/site_settings.html
+#: templates/system/scripts/update.html
+#: templates/system/site_settings/site_settings.html
 #: templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
@@ -3286,7 +3414,7 @@ msgid "Associated Groups"
 msgstr "Associerade Grupper"
 
 #: templates/documentation/wake_plans/__submenu__.html
-#: templates/system/site_settings.html
+#: templates/system/site_settings/site_settings.html
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -3962,7 +4090,8 @@ msgstr "Övervakningsregler"
 msgid "Organizing"
 msgstr "Organisering"
 
-#: templates/site_with_navigation.html templates/system/site_settings.html
+#: templates/site_with_navigation.html
+#: templates/system/site_settings/site_settings.html
 msgid "Site settings"
 msgstr "Inställningar för Site"
 
@@ -4023,11 +4152,8 @@ msgstr "Välkommen"
 msgid "Log out"
 msgstr "Logga ut"
 
-#: templates/system/configs/form.html
-msgid "Edit arguments"
-msgstr "Redigera parametrar"
-
 #: templates/system/configs/list.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Key"
 msgstr "Nyckel"
 
@@ -4037,6 +4163,7 @@ msgstr "Värde"
 
 #: templates/system/configs/list.html
 #: templates/system/pcgroups/policy_list/list.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Actions"
 msgstr "Aktiviteter"
 
@@ -4840,7 +4967,31 @@ msgstr "Vänligen kontakta Sambruk MedborgarPC Leverantör för att få veta mer
 msgid "Administrate"
 msgstr "Hantera"
 
-#: templates/system/site_settings.html
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "API Keys for"
+msgstr ""
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid ""
+"These API keys are used to access our API. See the documentation for more "
+"info."
+msgstr ""
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "Generate new API Key"
+msgstr ""
+
+#: templates/system/site_settings/api_keys/partials/list.html
+#, fuzzy
+#| msgid "Are you sure you want to delete the group "
+msgid "Are you sure you want to delete the following API Key?:"
+msgstr "Är du säker på att du vill ta bort gruppen? "
+
+#: templates/system/site_settings/api_keys/partials/list.html
+msgid "There are currently no API keys"
+msgstr ""
+
+#: templates/system/site_settings/site_settings.html
 msgid "Settings for"
 msgstr "Inställningar för"
 
@@ -4958,6 +5109,12 @@ msgstr "Tvåstegsverifiering för superuser"
 #: templates/system/site_two_factor_pc.html
 msgid "to go to the script"
 msgstr "för att gå till skriptet"
+
+#: templates/system/users/confirm_delete.html
+#, fuzzy
+#| msgid "Delete user"
+msgid "Delete User"
+msgstr "Ta bort användare"
 
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html

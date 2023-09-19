@@ -1,0 +1,179 @@
+{% extends 'documentation/index.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block doc_subtitle %}API{% endblock %}
+
+{% block om_bibos_admin_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  {% translate "API Key" as api_key %}
+  {% translate "API Keys" as api_keys %}
+  {% translate "PC's"|bold as pcs %}
+  {% translate "events"|bold as events %}
+  {% translate "documentation"|capfirst as documentation %}
+  {% translate "security events"|bold as security_events %}
+  {% translate "offline events"|bold as offline_events %}
+  {% translate "PC"|bold as pc %}
+  {% translate "Configurations"|bold as configurations %}
+  <h1>API</h1>
+    {% blocktranslate trimmed %}
+  <p>
+    OS2borgerPC has a REST API with the root URL at <a href="/api/">/api/</a>
+  </p>
+
+  <p>
+    The documentation for this API is available at <a href="/api/docs">/api/docs</a><br/>
+    More info about this below.
+  </p>
+
+  <p>
+    In order to make requests to the API, you need to generate and use an {{api_key}}. The process is described further down the page.
+  </p>
+
+  <p>
+    The data available through the API includes:
+    {% endblocktranslate %}
+    <ul>
+      {% blocktranslate trimmed %}
+      <li>Data about {{pcs}}</li>
+      <li>Data about {{events}}, including both {{security_events}} and {{offline_events}}</li>
+      {% endblocktranslate %}
+      {% blocktranslate trimmed %}
+      <li>Data about {{pc}}
+      {% endblocktranslate %}
+       <a href="{% url 'doc' 'configuration' %}">{{configurations}}</a>,
+      {% blocktranslate trimmed %}
+       which contain extended info about a {{pc}}, such as hostname and IP addresses</li>
+      {% endblocktranslate %}
+    </ul>
+  </p>
+  {% blocktranslate trimmed %}
+
+  <p>
+    Every request to the API needs to include an {{api_key}} as part of the request. This {{api_key}} is sent as an <strong>HTTP header</strong> in the following format:
+  </p>
+    {% endblocktranslate %}
+    <pre><code class="docs-code bash">
+      Authorization: Bearer &lt;{{api_key}} Here&gt;
+    </code></pre>
+    {% blocktranslate trimmed %}
+    <p>...without the <strong>"&lt;"</strong> <strong>"&gt;"</strong> brackets.</p>
+    An example request to the API, with an example {{api_key}}, looks like this, using the CLI tool <code>curl</code>:
+    {% endblocktranslate %}
+
+    <pre><code class="docs-code bash">
+       curl --header 'Authorization: Bearer Oa5HaJT9fM7aQLN3hjjc2AG6dtbGu4Evb4PDyvl-x81wVl5jnYS9m0c3rqKuaca9Xt4ll45lmLlwob8xM8vY2rQQoH1eXgij0nF9' https://os2borgerpc-admin.magenta.dk/api/system/pcs
+    </code></pre>
+  </p>
+
+  <h3>{% blocktranslate trimmed %}API authentication: {{api_keys}}{% endblocktranslate %}</h3>
+
+  {% translate "Site Settings"|bold as site_settings %}
+  {% blocktranslate trimmed %}
+    <p>
+      API-keys are used to allow a person or a program to retrieve data from your Site.
+    </p>
+    <p>
+      If you have access to multiple Sites, you'll need to make {{api_keys}} for each of those Sites.
+    </p>
+    <p>
+      You can generate, edit or delete API keys by going to {{site_settings}} and then clicking the link &nbsp;
+  {% endblocktranslate %}
+
+      <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
+    </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+      On this page you can:
+      <ul>
+        <li>Click "Generate new {{api_key}}" to generate and save a new {{api_key}}</li>
+        <li>Write or change the comment about a given {{api_key}}. Fx. to specify who/what is using the given key.<br/> Changes are saved automatically after a few seconds.</li>
+        <li>Click "Delete" next to an {{api_key}} to delete and deactivate it. <br/> A confirmation popup will appear to confirm whether you want to delete it or not.</li>
+      </ul>
+    {% endblocktranslate %}
+  </p>
+
+  {% blocktranslate trimmed %}
+  <h3>API {{documentation}}</h3>
+
+  <p>
+    The documentation for this API is available at <a href="/api/docs">/api/docs</a><br/>
+  </p>
+  <p>
+    The documentation has information about which endpoints are available, what data is expected in the request, and what data is received in the response.
+  </p>
+  <p>
+    In order to visit and view the API documentation you have to be signed in to the admin site.
+  </p>
+  <p>
+    The documentation generally looks something like this:
+  </p>
+  {% endblocktranslate %}
+  <figure class="p-4">
+    <img src="{% static 'docs/img/api/api_docs.png' %}" width="100%">
+  </figure>
+  {% blocktranslate trimmed %}
+  <p>
+    As per the image, below the red circle numbered "1" you can see each endpoint. Each of these can be clicked to get more information
+    about it.
+  </p>
+  <p>
+    Below the red circle numbered "2", you can click to see information about what format the returned data has.
+  </p>
+  <p>
+    Next to the red circle numbered "3", you see the <strong>Authoritize</strong> button. This button can be used to test
+    out the API directly from the documentation, as soon as you have generated an API Key.
+  </p>
+
+  {% endblocktranslate %}
+  {% blocktranslate trimmed %}
+  <h4>Testing out the API directly from the documentation</h4>
+
+  <p>
+    On the API {{documentation}} page, you can directly experiment with requests to the API.
+  </p>
+  <p>
+    This is how you do that:
+  </p>
+  {% endblocktranslate %}
+
+  <ol>
+    <li>
+  {% translate "In order to make a request to the API, you must first <strong>Generate an {{api_key}}</strong> on the page" %} &nbsp; <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
+    </li>
+    <li>
+      {% translate '"Copy" the API key from the API Key page' %}.
+    </li>
+    <li>
+      {% translate 'Click the "Authorize" button as seen in the screenshot above next to the circle numbered "3"' %}.
+    </li>
+    <li>
+      <figure class="p-4">
+        <img src="{% static 'docs/img/api/api_docs_test_4.png' %}" width="100%">
+        <figcaption class="text-center">{% translate '"Paste" in the API Key you copied in step 2 and click "Authorize"' %}.</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure class="p-4">
+        <img src="{% static 'docs/img/api/api_docs_test_5.png' %}" width="100%">
+        <figcaption class="text-center">{% translate "Now click the API endpoint you wish to test with to expand it. Here we pick PCs" %}.</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure class="p-4">
+        <img src="{% static 'docs/img/api/api_docs_test_6.png' %}" width="100%">
+        <figcaption class="text-center">{% translate 'Click the button called "Try it out"' %}.</figcaption>
+      </figure>
+    </li>
+    <li>
+        <img src="{% static 'docs/img/api/api_docs_test_7.png' %}" width="100%">
+        <figcaption class="text-center">{% translate 'Click the button "Execute"' %}.</figcaption>
+    </li>
+    <li>
+      {% translate "Now you'll see a response.<br/> If you got a valid response you should see the status code 200 and the relevant data returned.<br/> If not you'll get an error message" %}.
+    </li>
+  </ol>
+
+{% endblock %}
