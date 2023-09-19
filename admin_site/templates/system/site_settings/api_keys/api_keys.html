@@ -12,6 +12,12 @@
     <h2 class="divideheader">{% translate "API Keys for" %} <em>{{ site }}</em></h2>
         <!-- API Keys -->
         <div id="api">
+          <div class="alert alert-info">
+            <ul>
+              <li>{% translate "These API keys are used to access our API. See our" %} <a href='{% url 'doc' 'api' %}'>{% translate "documentation" %}</a> {% translate "for more info" %}.</li>
+              <li>{% translate "You can additionally visit the API's own docs at <a href='/api/docs'>/api/docs</a>, as long as you are signed in to the admin site" %}.</li>
+            </ul>
+          </div>
 
           <div>
             <table class="table">

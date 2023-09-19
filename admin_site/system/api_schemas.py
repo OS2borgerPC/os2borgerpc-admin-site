@@ -6,6 +6,8 @@ from ninja.orm import create_schema
 
 # UserSchema = create_schema(User, depth=1, fields=['username', 'groups'])
 # PCSchema = create_schema(PC, depth=1, fields=['id', 'uid', "name", "pc_groups"])
+# SecurityEventSchema = create_schema(SecurityEvent, depth=1, fields=['id', 'problem', "occurred_time", "reported_time",
+#                                                                    "pc", "summary", "status", "assigned_user", "note"])
 
 
 class PCSchema(ModelSchema):

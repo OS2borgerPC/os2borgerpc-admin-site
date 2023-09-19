@@ -2,6 +2,23 @@
 {% load i18n %}
 {% load custom_tags %}
 
+<!-- Syntax highlighting -->
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/foundation.min.css">
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+
+<script type="text/javascript">
+  /* Syntax highlighting */
+  const code_blocks = document.getElementsByClassName("docs-code")
+  for (cb of code_blocks) {
+    hljs.highlightElement(cb)
+  }
+  </script>
+{% endblock %}
+
 {% block header_title %}
 {% if docheading %}
   {{ docheading }}
