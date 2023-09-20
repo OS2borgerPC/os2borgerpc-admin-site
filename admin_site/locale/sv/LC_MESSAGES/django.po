@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-19 15:48+0200\n"
+"POT-Creation-Date: 2023-09-20 13:50+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1050,85 +1050,112 @@ msgstr "Försök att öppna den här sidan i Microsoft Edge"
 
 #: templates/documentation/api.html
 msgid "API Key"
-msgstr ""
+msgstr "API-nyckel"
 
 #: templates/documentation/api.html templates/site_with_navigation.html
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys"
-msgstr ""
+msgstr "API-nycklar"
 
 #: templates/documentation/api.html
 msgid "PC's"
-msgstr ""
+msgstr "PC:er"
 
-#: templates/documentation/api.html
-#, fuzzy
-#| msgid "Events"
-msgid "events"
+#: templates/documentation/api.html templates/site_with_navigation.html
+#: templates/system/security_events/site_security_events.html
+msgid "Events"
 msgstr "Incidenter"
 
 #: templates/documentation/api.html
-#, fuzzy
-#| msgid "Security Events"
-msgid "security events"
+#: templates/documentation/security_scripts/__submenu__.html
+#: templates/documentation/security_scripts/edit.html
+#: templates/documentation/security_scripts/securityevents.html
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "Security Events"
 msgstr "Säkerhetsincidenter"
 
 #: templates/documentation/api.html
-#, fuzzy
-#| msgid "Handle events"
-msgid "offline events"
-msgstr "Hantera incidenter"
+msgid "Offline Events"
+msgstr "Off-lineincidenter"
 
 #: templates/documentation/api.html
 msgid "PC"
+msgstr "PC"
+
+#: templates/documentation/api.html
+msgid "Generate an API key"
+msgstr "Generera en API-nyckel"
+
+#: templates/documentation/api.html
+msgid "OS2borgerPC has a REST API with the root URL at"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "The documentation for this API is available at"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "More info about this below."
 msgstr ""
 
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"<p> OS2borgerPC has a REST API with the root URL at <a href=\"/api/\">/api/</"
-"a> </p> <p> The documentation for this API is available at <a href=\"/api/"
-"\">/api/docs/</a> </p> <p> The documentation has information about which "
-"endpoints are available, what data is expected in the request, and what data "
-"is received in the response. </p> <p> In order to view the API documentation "
-"you have to be signed in to the admin site. </p> <p> In order to make "
-"requests to the API, you need to generate and use an %(api_key)s. </p> <p> "
-"The data available through the API includes:"
+"In order to make requests to the API, you need to generate and use an "
+"%(api_key)s. The process is described further down the page."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "The data available through the API includes:"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid "Data about %(pcs)s"
 msgstr ""
 
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"<li>Data about %(pcs)s</li> <li>Data about %(events)s, including both "
-"%(security_events)s and %(offline_events)s</li>"
+"Data about %(events)s, including both %(security_events)s and "
+"%(offline_events)s"
 msgstr ""
 
 #: templates/documentation/api.html
+msgid "Data about %(pc)s"
+msgstr "Information om %(pc)s"
+
+#: templates/documentation/api.html
 #, python-format
-msgid "<li>Data about %(pc)s"
+msgid ""
+"which contain extended info about a %(pc)s, such as hostname and IP addresses"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "HTTP header"
 msgstr ""
 
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"which contain extended info about a %(pc)s, such as hostname and IP "
-"addresses</li>"
+"Every request to the API needs to include an %(api_key)s as part of the "
+"request. This %(api_key)s is sent as an %(header)s in the following format:"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "...without the"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "brackets."
 msgstr ""
 
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"<p> Every request to the API needs to include an %(api_key)s as part of the "
-"request. This %(api_key)s is sent as an <strong>HTTP header</strong> in the "
-"following format: </p>"
-msgstr ""
-
-#: templates/documentation/api.html
-#, python-format
-msgid ""
-"...without the <strong>\"&lt;\"</strong> <strong>\"&gt;\"</strong> brackets. "
 "An example request to the API, with an example %(api_key)s, looks like this, "
-"using the CLI tool <code>curl</code>:"
+"using the CLI tool"
 msgstr ""
 
 #: templates/documentation/api.html
@@ -1136,20 +1163,29 @@ msgstr ""
 msgid "API authentication: %(api_keys)s"
 msgstr ""
 
-#: templates/documentation/api.html
-#, fuzzy
-#| msgid "Site settings"
-msgid "Site Settings"
+#: templates/documentation/api.html templates/site_with_navigation.html
+#: templates/system/site_settings/site_settings.html
+msgid "Site settings"
 msgstr "Inställningar för Site"
+
+#: templates/documentation/api.html
+msgid ""
+"API-keys are used to allow a person or a program to retrieve data from your "
+"Site."
+msgstr ""
 
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"<p> API-keys are used to allow a person or a program to retrieve data from "
-"your Site. </p> <p> If you have access to multiple Sites, you'll need to "
-"make %(api_keys)s for each of those Sites. </p> <p> You can generate, edit "
-"or delete API keys by going to %(site_settings)s and then clicking the link "
-"&nbsp;"
+"If you have access to multiple Sites, you'll need to make %(api_keys)s for "
+"each of those Sites."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"You can generate, edit or delete API keys by going to %(site_settings)s and "
+"then clicking the link"
 msgstr ""
 
 #: templates/documentation/api.html
@@ -1158,15 +1194,159 @@ msgid "Manage API keys"
 msgstr ""
 
 #: templates/documentation/api.html
+msgid "On this page you can:"
+msgstr "På den här sidan kan du:"
+
+#: templates/documentation/api.html
 #, python-format
 msgid ""
-"On this page you can: <ul> <li>Click \"Generate new %(api_key)s\" to "
-"generate and save a new %(api_key)s</li> <li>Write or change the comment "
-"about a given %(api_key)s. Fx. to specify who/what is using the given key."
-"<br/> Changes are saved automatically after a few seconds.</li> <li>Click "
-"\"Delete\" next to an %(api_key)s to delete and deactivate it. <br/> A "
-"confirmation popup will appear to confirm whether you want to delete it or "
-"not.</li> </ul>"
+"Click \"Generate new %(api_key)s\" to generate and save a new %(api_key)s"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Write or change the comment about a given %(api_key)s. Fx. to specify who/"
+"what is using the given key."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Changes are saved automatically after a few seconds."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid "Click \"Delete\" next to an %(api_key)s to delete and deactivate it."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"A confirmation popup will appear to confirm whether you want to delete it or "
+"not."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "API Documentation"
+msgstr "API Dokumentation"
+
+#: templates/documentation/api.html
+msgid ""
+"The documentation has information about which endpoints are available, what "
+"data is expected in the request, and what data is received in the response."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"In order to visit and view the API documentation you have to be signed in to "
+"the admin site."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "The documentation generally looks something like this:"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"As per the image, below the red circle numbered \"1\" you can see each "
+"endpoint. Each of these can be clicked to get more information about it."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"Below the red circle numbered \"2\", you can click to see information about "
+"what format the returned data has."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Authorize"
+msgstr "Authorize"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Next to the red circle numbered \"3\", you see the %(auth)s button. This "
+"button can be used to test out the API directly from the documentation, as "
+"soon as you have generated an API Key."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Testing out the API directly from the documentation"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"On the API Documentation page, you can directly experiment with requests to "
+"the API."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "This is how you do that:"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"In order to make a request to the API, you must first %(gen_key)s on the page"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "\"Copy\" the API key from the API Key page."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Click the %(auth)s button as seen in the screenshot above next to the circle "
+"numbered \"3\"."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then \"Close"
+"\"."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"Now click the API endpoint you wish to test with to expand it. Here we pick "
+"PCs."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Click the button called \"Try it out\"."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Click the button \"Execute\"."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Now you'll see a response. It might be necessary to scroll down a bit."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"If everything went well, you should see the status code 200 and the relevant "
+"data returned."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "If not you'll get an error message."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"The status code 204 means that no data was returned. This can happen if you "
+"e.g. try to get a specific PC and enter an id that does not match any PC on "
+"your site."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"The status code 401 \"Error: Unauthorized\" will be returned if you do not "
+"use the %(auth)s button or if you enter an invalid API key."
 msgstr ""
 
 #: templates/documentation/changelogs/index.html
@@ -2090,6 +2270,7 @@ msgid "OS2borgerPC documentation"
 msgstr "Sambruk MedborgarPC dokumentation"
 
 #: templates/documentation/index.html templates/site_with_navigation.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Documentation"
 msgstr "Dokumentation"
 
@@ -2732,14 +2913,6 @@ msgstr "och följ med vid avveckling av jobb på enskilda datorer."
 #: templates/documentation/security_scripts/edit.html
 msgid "Editing Security Scripts"
 msgstr "Redigering av Säkerhetsskript"
-
-#: templates/documentation/security_scripts/__submenu__.html
-#: templates/documentation/security_scripts/edit.html
-#: templates/documentation/security_scripts/securityevents.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-msgid "Security Events"
-msgstr "Säkerhetsincidenter"
 
 #: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/securityproblems.html
@@ -3878,11 +4051,6 @@ msgid "Monitoring"
 msgstr "Övervakning"
 
 #: templates/site_with_navigation.html
-#: templates/system/security_events/site_security_events.html
-msgid "Events"
-msgstr "Incidenter"
-
-#: templates/site_with_navigation.html
 #: templates/system/event_rules/shared_navigation.html
 msgid "Monitoring Rules"
 msgstr "Övervakningsregler"
@@ -3890,11 +4058,6 @@ msgstr "Övervakningsregler"
 #: templates/site_with_navigation.html
 msgid "Organizing"
 msgstr "Organisering"
-
-#: templates/site_with_navigation.html
-#: templates/system/site_settings/site_settings.html
-msgid "Site settings"
-msgstr "Inställningar för Site"
 
 #: templates/site_with_navigation.html
 msgid "2FA OS2borgerPC"
@@ -4738,24 +4901,33 @@ msgid "API Keys for"
 msgstr ""
 
 #: templates/system/site_settings/api_keys/api_keys.html
-msgid ""
-"These API keys are used to access our API. See the documentation for more "
-"info."
-msgstr ""
+msgid "These API keys are used to access our API. See our"
+msgstr "Dessa API-nycklar används för att komma åt vårt "
+"API. Se vår"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "for more info."
+msgstr "for mer information."
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "You can additionally visit the API's own docs at"
+msgstr "Du kan dessutom besöka API:ets egna docs på"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "as long as you are signed in to the admin site."
+msgstr "så länge du är inloggad på adminsidan."
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "Generate new API Key"
-msgstr ""
+msgstr "Generera ny API-nyckel"
 
 #: templates/system/site_settings/api_keys/partials/list.html
-#, fuzzy
-#| msgid "Are you sure you want to delete the group "
 msgid "Are you sure you want to delete the following API Key?:"
-msgstr "Är du säker på att du vill ta bort gruppen? "
+msgstr "Är du säker på att du vill ta bort följande API-nyckel?:"
 
 #: templates/system/site_settings/api_keys/partials/list.html
 msgid "There are currently no API keys"
-msgstr ""
+msgstr "Det finns för närvarande inga API-nycklar"
 
 #: templates/system/site_settings/site_settings.html
 msgid "Settings for"
@@ -4852,12 +5024,6 @@ msgstr ""
 #, python-format
 msgid "You can find the script \"%(name)s\" under the menu item "
 msgstr "Du hittar skriptet \"%(name)s\" under menyalternativet "
-
-#: templates/system/users/confirm_delete.html
-#, fuzzy
-#| msgid "Delete user"
-msgid "Delete User"
-msgstr "Ta bort användare"
 
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
@@ -5422,6 +5588,31 @@ msgstr "Inaktivera"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data saknas"
+
+#, fuzzy, python-format
+#~| msgid "Configurations"
+#~ msgid "%(configurations)s"
+#~ msgstr "Konfigurationer"
+
+#, fuzzy
+#~| msgid "Events"
+#~ msgid "events"
+#~ msgstr "Incidenter"
+
+#, fuzzy
+#~| msgid "Security Events"
+#~ msgid "security events"
+#~ msgstr "Säkerhetsincidenter"
+
+#, fuzzy
+#~| msgid "Site settings"
+#~ msgid "Site Settings"
+#~ msgstr "Inställningar för Site"
+
+#, fuzzy
+#~| msgid "Documentation"
+#~ msgid "documentation"
+#~ msgstr "Dokumentation"
 
 #~ msgid "Edit arguments"
 #~ msgstr "Redigera parametrar"
