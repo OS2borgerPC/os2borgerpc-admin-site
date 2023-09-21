@@ -418,3 +418,10 @@ function copy_button(el) {
     el_to_show_after_copy.classList.remove('d-none')
   })
 }
+
+function copy_api_key(event) {
+  const btn = event.currentTarget
+  btn.blur() // Remove the focus around the button after copying
+  navigator.clipboard.writeText(btn.parentElement.firstElementChild.innerText)
+  btn.parentElement.lastElementChild.classList.remove('d-none')
+}
