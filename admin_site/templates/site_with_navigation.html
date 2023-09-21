@@ -84,7 +84,7 @@ detailpage
     {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}
     <a class="nav-link link-light {{ current_url_two_factor  }}" href="{% url 'two_factor' slug=site.url %}">
       <span class="material-icons">pin</span>
-      {% translate "2FA OS2borgerPC" %}
+      {% translate "2FA on Computers" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "wake_plan" as current_url_wake_plans %}

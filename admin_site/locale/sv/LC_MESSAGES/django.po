@@ -932,7 +932,6 @@ msgstr "Jobs"
 
 #: system/views.py templates/documentation/users/index.html
 #: templates/site_with_navigation.html templates/system/scripts/header.html
-#: templates/system/site_two_factor.html
 msgid "Scripts"
 msgstr "Skript"
 
@@ -3960,8 +3959,8 @@ msgid "Site settings"
 msgstr "Inställningar för Site"
 
 #: templates/site_with_navigation.html
-msgid "2FA OS2borgerPC"
-msgstr "2FA MedborgarPC"
+msgid "2FA on Computers"
+msgstr "2FA på Datorer"
 
 #: templates/site_with_navigation.html
 msgid "Scripting"
@@ -4874,20 +4873,19 @@ msgid "Offline"
 msgstr "Offline"
 
 #: templates/system/site_two_factor.html
-msgid "Two-factor authentication"
-msgstr "Verifiering i två steg"
-
-#: templates/system/site_two_factor.html
-msgid "Activate: Two-factor authentication for OS2borgerPC"
-msgstr "Aktivera: Verifiering i två steg för Sambruk MedborgarPC"
+msgid ""
+"Enable two-factor authentication for superuser login on OS2borgerPC and "
+"OS2borgerPC Kiosk"
+msgstr "Aktivera tvåstegsverifiering for superuser inloggning på en Sambruk MedborgarPC eller en Sambruk MedborgerPC "
+"Kiosk"
 
 #: templates/system/site_two_factor.html
 msgid ""
-"This section is related to setting up two-factor authentication on an "
-"OS2borgerPC."
+"This section is related to setting up two-factor authentication for "
+"superuser on an OS2borgerPC or OS2borgerPC Kiosk computer."
 msgstr ""
-"Det här avsnittet är relaterat till att ställa in tvåstegsverifiering på en "
-"Sambruk MedborgarPC"
+"Det här avsnittet är relaterat till att ställa in tvåstegsverifiering for superuser på en "
+"Sambruk MedborgarPC eller en Sambruk MedborgarPC Kiosk"
 
 #: templates/system/site_two_factor.html
 msgid ""
@@ -4909,6 +4907,10 @@ msgid "Security key:"
 msgstr "Säkerhetsnyckel:"
 
 #: templates/system/site_two_factor.html
+msgid "Security Key copied!"
+msgstr "Säkerhetsnyckel kopierad!"
+
+#: templates/system/site_two_factor.html
 msgid "Scan the QR code from step 1 with your authenticator app"
 msgstr "Skanna QR-koden från steg 1 med din autentiseringsapp."
 
@@ -4925,9 +4927,16 @@ msgstr ""
 "Ingångsparameter."
 
 #: templates/system/site_two_factor.html
-#, python-format
-msgid "You can find the script \"%(name)s\" under the menu item "
-msgstr "Du hittar skriptet \"%(name)s\" under menyalternativet "
+msgid "Click on"
+msgstr ""
+
+#: templates/system/site_two_factor.html
+msgid "Totrinsbekræftelse for superuser"
+msgstr ""
+
+#: templates/system/site_two_factor.html
+msgid "to go to the script"
+msgstr "för att gå till skriptet"
 
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
@@ -5492,21 +5501,3 @@ msgstr "Inaktivera"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data saknas"
-
-#~ msgid "Associated Security Rules"
-#~ msgstr "Associerad säkerhetsregler"
-
-#~ msgid "status:Update"
-#~ msgstr "Uppdatera"
-
-#~ msgid "update required"
-#~ msgstr "Uppdatering krävs."
-
-#~ msgid "Security"
-#~ msgstr "Säkerhet"
-
-#~ msgid "Define new security rule"
-#~ msgstr "Definiera en ny säkerhetsregel"
-
-#~ msgid "Create security rule"
-#~ msgstr "Skapa en säkerhetsregel"
