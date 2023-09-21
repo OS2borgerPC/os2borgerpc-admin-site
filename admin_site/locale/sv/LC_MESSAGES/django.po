@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-20 13:50+0200\n"
+"POT-Creation-Date: 2023-09-21 08:48+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1123,6 +1123,7 @@ msgid ""
 msgstr ""
 
 #: templates/documentation/api.html
+#, python-format
 msgid "Data about %(pc)s"
 msgstr "Information om %(pc)s"
 
@@ -4898,12 +4899,11 @@ msgstr "Hantera"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
-msgstr ""
+msgstr "API-nycklar för"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "These API keys are used to access our API. See our"
-msgstr "Dessa API-nycklar används för att komma åt vårt "
-"API. Se vår"
+msgstr "Dessa API-nycklar används för att komma åt vårt API. Se vår"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "for more info."

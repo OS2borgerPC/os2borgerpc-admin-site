@@ -4951,7 +4951,7 @@ msgstr "Administrér"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
-msgstr ""
+msgstr "API-nøgler for"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "These API keys are used to access our API. See our"
