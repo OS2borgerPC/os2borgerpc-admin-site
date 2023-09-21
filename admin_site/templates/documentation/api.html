@@ -17,6 +17,11 @@
   {% translate "Configurations"|bold as configurations %}
   {% translate "Generate an API key"|bold as gen_key %}
   <h1>API</h1>
+  <div class="alert alert-info">
+    <ul>
+      <li>{% blocktranslate trimmed %}You need to create and send along an {{api_key}} with every request, to make successful requests to the API{% endblocktranslate %}.</li>
+    </ul>
+  </div>
   <p>
     {% translate "OS2borgerPC has a REST API with the root URL at" %} <a href="/api/">/api/</a>
   </p>
@@ -58,7 +63,7 @@
     {% endblocktranslate %}
   </p>
     <pre><code class="docs-code bash">
-      Authorization: Bearer &lt;{{api_key}} Here&gt;
+      Authorization: Bearer &lt;{{api_key}} {% translate "here" %}&gt;
     </code></pre>
     <p>{% translate "...without the" %} <strong>"&lt;"</strong> <strong>"&gt;"</strong> {% translate "brackets." %}</p>
     {% blocktranslate trimmed %}
@@ -86,7 +91,7 @@
       {% blocktranslate trimmed %}
       You can generate, edit or delete API keys by going to {{site_settings}} and then clicking the link
       {% endblocktranslate %}
-      <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
+      &nbsp; <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
     </p>
 
   <p>

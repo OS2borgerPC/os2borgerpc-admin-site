@@ -1110,6 +1110,32 @@ msgid "Generate an API key"
 msgstr "Generera en API-nyckel"
 
 #: templates/documentation/api.html
+msgid ""
+"We kindly ask that you strive to minimize the amount of requests made to the "
+"API, as well as minimizing the amount of data requested from it, to keep the "
+"stress on the adminsite at a minimum"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"Initially we have set no restrictions for the use of the API, so we're "
+"relying on sensible conduct"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"A couple of requests a minute is probably fine, but many requests every few "
+"seconds will likely quickly overload the server, if done by many"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"You need to create and send along an %(api_key)s with every request, to make "
+"successful requests to the API"
+msgstr ""
+
+#: templates/documentation/api.html
 msgid "OS2borgerPC has a REST API with the root URL at"
 msgstr ""
 
@@ -1163,6 +1189,10 @@ msgstr ""
 msgid ""
 "Every request to the API needs to include an %(api_key)s as part of the "
 "request. This %(api_key)s is sent as an %(header)s in the following format:"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "here"
 msgstr ""
 
 #: templates/documentation/api.html
@@ -5145,6 +5175,12 @@ msgstr "så länge du är inloggad på adminsidan."
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "Generate new API Key"
 msgstr "Generera ny API-nyckel"
+
+#: templates/system/site_settings/api_keys/partials/list.html
+#, fuzzy
+#| msgid "API Keys for"
+msgid "API Key copied!"
+msgstr "API-nycklar för"
 
 #: templates/system/site_settings/api_keys/partials/list.html
 msgid "Are you sure you want to delete the following API Key?:"
