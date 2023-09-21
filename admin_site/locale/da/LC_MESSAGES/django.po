@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-20 13:48+0200\n"
+"POT-Creation-Date: 2023-09-21 13:26+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1080,6 +1080,42 @@ msgid "Generate an API key"
 msgstr "Generér en API-nøgle"
 
 #: templates/documentation/api.html
+msgid ""
+"We kindly ask that you strive to minimize the amount of requests made to the "
+"API, as well as minimizing the amount of data requested from it, to keep the "
+"stress on the adminsite at a minimum"
+msgstr ""
+"Vi beder venligt om at I forsøger på at minimere antallet af forespørgsler "
+"til API'et, samt mængden af data, der efterspørges fra det, for at holde "
+"mængden af stress på adminsitet til et minimum"
+
+#: templates/documentation/api.html
+msgid ""
+"Initially we have set no restrictions for the use of the API, so we're "
+"relying on sensible conduct"
+msgstr ""
+"Til at begynde med har vi ikke sat nogen begrænsninger for brugen af "
+"API'et så vi afhænger af fornuftig anvendelse"
+
+#: templates/documentation/api.html
+msgid ""
+"A couple of requests a minute is probably fine, but many requests every few "
+"seconds will likely quickly overload the server, if done by many"
+msgstr ""
+"Et par forespørgsler i minuttet er sandsynligvis fint, men mange "
+"forespørgsler hvert andet sekund vil sandsynligvis hurtigt overbelaste serveren "
+"hvis mange gør det"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"You need to create and send along an %(api_key)s with every request, to make "
+"successful requests to the API"
+msgstr ""
+"Du skal oprette og medsende en %(api_key)s med hver forespørgsel, for at "
+"lave en succesfuld forespørgsel til API'et"
+
+#: templates/documentation/api.html
 msgid "OS2borgerPC has a REST API with the root URL at"
 msgstr "OS2borgerPC har et REST API med root URL'en"
 
@@ -1142,6 +1178,10 @@ msgstr ""
 "Alle forespørgsler til API'et skal inkludere en %(api_key)s som en del af "
 "forespørgslen. Denne %(api_key)s sendes som en %(header)s i det følgende "
 "format:"
+
+#: templates/documentation/api.html
+msgid "here"
+msgstr "her"
 
 #: templates/documentation/api.html
 msgid "...without the"
@@ -4974,6 +5014,10 @@ msgid "Generate new API Key"
 msgstr "Generer ny API-nøgle"
 
 #: templates/system/site_settings/api_keys/partials/list.html
+msgid "API Key copied!"
+msgstr "API-nøgle kopieret!"
+
+#: templates/system/site_settings/api_keys/partials/list.html
 msgid "Are you sure you want to delete the following API Key?:"
 msgstr "Er du sikker på, at du ønsker at slette følgende API-nøgle?:"
 
@@ -5643,24 +5687,3 @@ msgstr "Deaktivér"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data mangler"
-
-#~ msgid "Edit arguments"
-#~ msgstr "Redigér parameter"
-
-#~ msgid "Associated Security Rules"
-#~ msgstr "Tilknyttede Sikkerhedsregler"
-
-#~ msgid "status:Update"
-#~ msgstr "Opdatering"
-
-#~ msgid "update required"
-#~ msgstr "opdatering påkrævet"
-
-#~ msgid "Security"
-#~ msgstr "Sikkerhed"
-
-#~ msgid "Define new security rule"
-#~ msgstr "Definér ny sikkerhedsregel"
-
-#~ msgid "Create security rule"
-#~ msgstr "Opret sikkerhedsregel"

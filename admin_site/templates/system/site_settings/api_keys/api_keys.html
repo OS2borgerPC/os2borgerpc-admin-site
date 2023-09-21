@@ -10,8 +10,12 @@
   <div class="container-fluid main">
 
     <h2 class="divideheader">{% translate "API Keys for" %} <em>{{ site }}</em></h2>
-        <!-- API Keys -->
         <div id="api">
+          <div class="alert alert-warning">
+              {% translate "We kindly ask that you strive to minimize the amount of requests made to the API, as well as minimizing the amount of data requested from it, to keep the stress on the adminsite at a minimum" %}.<br/>
+              {% translate "Initially we have set no restrictions for the use of the API, so we're relying on sensible conduct" %}.<br/>
+              {% translate "A couple of requests a minute is probably fine, but many requests every few seconds will likely quickly overload the server, if done by many" %}.
+          </div>
           <div class="alert alert-info">
             <ul>
               <li>{% translate "These API keys are used to access our API. See our" %} <a href='{% url 'doc' 'api' %}'>{% translate "Documentation" %}</a> {% translate "for more info." %}</li>
@@ -49,7 +53,6 @@
               </tfoot>
             </table>
           </div>
-
         </div>
   </div>
 {% endblock %}
