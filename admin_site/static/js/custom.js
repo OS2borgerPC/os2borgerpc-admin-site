@@ -394,3 +394,10 @@ function addEventListenerForClipBoardButton(log) {
     btn.lastElementChild.classList.remove('d-none')
   })
 }
+
+function copy_api_key(event) {
+  const btn = event.currentTarget
+  btn.blur() // Remove the focus around the button after copying
+  navigator.clipboard.writeText(btn.parentElement.firstElementChild.innerText)
+  btn.parentElement.lastElementChild.classList.remove('d-none')
+}
