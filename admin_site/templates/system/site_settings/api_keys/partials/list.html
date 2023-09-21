@@ -7,7 +7,13 @@ events/changes.
 
 {% for key in api_keys %}
   <tr>
-    <td>{{ key.key }}</td>
+    <td>
+      <span>{{ key.key }}</span>
+      <button id="clipboard-button" type="button" class="btn btn-link" onclick="copy_api_key(event);">
+        <span class="material-icons">content_copy</span>
+      </button>
+      <span class="d-none">{% translate "API Key copied!" %}</span>
+    </td>
     <td>
       <form method="post">
         <input style="width: 350px;" type="text" name="description" hx-post="{% url 'api_key_update' slug=key.site.uid pk=key.pk %}" hx-trigger="keyup changed delay:1s" value="{{ key.description|default:"" }}">
