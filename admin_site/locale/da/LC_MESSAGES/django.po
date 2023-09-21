@@ -1095,7 +1095,7 @@ msgid ""
 "relying on sensible conduct"
 msgstr ""
 "Til at begynde med har vi ikke sat nogen begrænsninger for brugen af "
-"API'etså vi afhænger af fornuftig anvendelse"
+"API'et så vi afhænger af fornuftig anvendelse"
 
 #: templates/documentation/api.html
 msgid ""
