@@ -3951,8 +3951,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            5,
             8,
+            5,
             6,
             7
         ]
@@ -4058,9 +4058,9 @@
         "wake_change_events": [
             8,
             11,
-            1,
             9,
-            10
+            10,
+            1
         ]
     }
 },
@@ -4460,6 +4460,13 @@
     "pk": 4,
     "fields": {
         "name": "Desktop"
+    }
+},
+{
+    "model": "system.scripttag",
+    "pk": 5,
+    "fields": {
+        "name": "Sikkerhed"
     }
 },
 {
@@ -5556,6 +5563,27 @@
         "is_hidden": false,
         "maintained_by_magenta": false,
         "tags": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 85,
+    "fields": {
+        "created": "2023-09-21T15:52:26.994",
+        "modified": "2023-09-21T15:52:26.994",
+        "user_created": "",
+        "user_modified": "",
+        "name": "Sikkerhed - Totrinsbekræftelse for superuser",
+        "uid": "two_factor",
+        "description": "Slår tidsbaseret totrinsbekræftelse til for superuser, ved login på en borgerPC.\r\n\r\nSIKKERHEDSMÆSSIGE OVERVEJELSER:\r\nHvis der skulle være indsat en keylogger på maskinen, eller en angriber kigger over skulderen når der logges ind på superuser vil det forhindre angreb hvis totrinsbekræftelse for superuser er slået til, da kodeord til superuser i sig selv ikke er nok til at logge ind som superuser på maskinen.\r\n\r\nBESKRIVELSE:\r\nGå først ind på siden \"Totrinsbekræftelse\" i menuen til venstre her på adminsitet, for at se processen for at slå totrinsbekræftelse til.\r\n\r\nSå snart du har genereret en sikkerhedsnøgle på ovenstående side, skal dette script køres med sikkerhedsnøgle som det andet parameter.\r\n\r\nFra næste login, vil der nu for superuser være et ekstra skridt i loginprocessen efter koden, hvor der skal indtastes totrins-koden.\r\n\r\nTager det ikke effekt øjeblikkeligt efter logud, foreslås en genstart af maskinen.\r\n\r\nINPUTPARAMETRE:\r\n1. Aktivér?: \r\n      Sæt kryds for at slå totrinsbekræftelse til\r\n      Lad stå tom for at slå totrinsbekræftelse fra.\r\n2: Sikkerhedsnøgle: Sikkerhedsnøglen totrinsbekræftelse-systemet internt har brug for. \r\nSamme sikkerhedsnøgle for flere computere betyder, du kan logge ind på flere computere med samme totrins-koder, fremfor hver computer skal tilføjes individuelt til din totrinsbekræftelse-app.\r\n\r\nDet kan også være relevant at køre scriptet \"Login - Ændr login-timeout\", da det kan være svært at nå at indtaste kode og totrinsbekræftelse på de 15 sekunder der normalt går, før der logges automatisk ind på Borger-kontoen.\r\n\r\n---------------\r\n\r\nDette script er blevet testet og virker på Ubuntu 22.04.",
+        "site": null,
+        "executable_code": "script_uploads/setup_two_factor_superuser.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "tags": [
+            5
+        ]
     }
 },
 {
@@ -10423,6 +10451,30 @@
         "position": 0,
         "mandatory": false,
         "script": 84
+    }
+},
+{
+    "model": "system.input",
+    "pk": 96,
+    "fields": {
+        "name": "Aktivér?",
+        "value_type": "BOOLEAN",
+        "default_value": "True",
+        "position": 0,
+        "mandatory": false,
+        "script": 85
+    }
+},
+{
+    "model": "system.input",
+    "pk": 97,
+    "fields": {
+        "name": "Sikkerhedsnøgle",
+        "value_type": "STRING",
+        "default_value": null,
+        "position": 1,
+        "mandatory": true,
+        "script": 85
     }
 },
 {

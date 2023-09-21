@@ -927,7 +927,6 @@ msgstr "Jobs"
 
 #: system/views.py templates/documentation/users/index.html
 #: templates/site_with_navigation.html templates/system/scripts/header.html
-#: templates/system/site_two_factor.html
 msgid "Scripts"
 msgstr "Scripts"
 
@@ -3994,8 +3993,8 @@ msgid "Site settings"
 msgstr "Site-indstillinger"
 
 #: templates/site_with_navigation.html
-msgid "2FA OS2borgerPC"
-msgstr "2FA OS2borgerPC"
+msgid "2FA on Computers"
+msgstr "2FA på Computere"
 
 #: templates/site_with_navigation.html
 msgid "Scripting"
@@ -4907,20 +4906,12 @@ msgid "Offline"
 msgstr "Offline"
 
 #: templates/system/site_two_factor.html
-msgid "Two-factor authentication"
-msgstr "Totrinsbekræftelse"
-
-#: templates/system/site_two_factor.html
-msgid "Activate: Two-factor authentication for OS2borgerPC"
-msgstr "Aktivér: Totrinsbekræftelse for OS2borgerPC"
-
-#: templates/system/site_two_factor.html
 msgid ""
-"This section is related to setting up two-factor authentication on an "
-"OS2borgerPC."
+"This section is related to setting up two-factor authentication for "
+"superuser on an OS2borgerPC or OS2borgerPC Kiosk computer."
 msgstr ""
-"Denne sektion er relateret til opsætning af totrinsbekræftelse på en "
-"OS2borgerPC."
+"Denne sektion er relateret til opsætning af totrinsbekræftelse for superuser på en "
+"OS2borgerPC eller OS2borgerPC Kiosk-maskine."
 
 #: templates/system/site_two_factor.html
 msgid ""
@@ -4943,6 +4934,10 @@ msgid "Security key:"
 msgstr "Sikkerhedsnøgle:"
 
 #: templates/system/site_two_factor.html
+msgid "Security Key copied!"
+msgstr "Sikkerhedsnøgle kopieret!"
+
+#: templates/system/site_two_factor.html
 msgid "Scan the QR code from step 1 with your authenticator app"
 msgstr "Scan QR-koden fra trin 1 med din authenticator app"
 
@@ -4959,9 +4954,16 @@ msgstr ""
 "inputparameter"
 
 #: templates/system/site_two_factor.html
-#, python-format
-msgid "You can find the script \"%(name)s\" under the menu item "
-msgstr "Du kan finde scriptet \"%(name)s\" under menupunktet "
+msgid "Click on"
+msgstr ""
+
+#: templates/system/site_two_factor.html
+msgid "Totrinsbekræftelse for superuser"
+msgstr ""
+
+#: templates/system/site_two_factor.html
+msgid "to go to the script"
+msgstr "for at gå til scriptet"
 
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
@@ -5528,21 +5530,3 @@ msgstr "Deaktivér"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data mangler"
-
-#~ msgid "Associated Security Rules"
-#~ msgstr "Tilknyttede Sikkerhedsregler"
-
-#~ msgid "status:Update"
-#~ msgstr "Opdatering"
-
-#~ msgid "update required"
-#~ msgstr "opdatering påkrævet"
-
-#~ msgid "Security"
-#~ msgstr "Sikkerhed"
-
-#~ msgid "Define new security rule"
-#~ msgstr "Definér ny sikkerhedsregel"
-
-#~ msgid "Create security rule"
-#~ msgstr "Opret sikkerhedsregel"

@@ -363,6 +363,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+/* Currently only used by the job log copy button */
 function addEventListenerForClipBoardButton(log) {
   let btn = document.getElementById("clipboard-button")
 
@@ -372,5 +373,28 @@ function addEventListenerForClipBoardButton(log) {
 
     btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
     btn.lastElementChild.classList.remove('d-none')
+  })
+}
+
+/* General purpose copy button */
+/* It expects to receive a parent element containing elements with the classes:
+ * copy-btn: The button to attach the event listener to, which copies
+ * copy-text: The element containing the text to copy
+ * after-copy-text: The element containing the text to be shown after copying
+*/
+function copy_button(el) {
+  const btn = el.getElementsByClassName('copy-btn')[0]
+
+  btn.addEventListener('click', () => {
+
+    const text_to_copy = el.getElementsByClassName('copy-text')[0].innerText
+    const el_to_show_after_copy = el.getElementsByClassName('after-copy-text')[0]
+
+    // Remove the ugly focus brorder around the btn after clicking it
+    btn.blur()
+
+    navigator.clipboard.writeText(text_to_copy)
+
+    el_to_show_after_copy.classList.remove('d-none')
   })
 }
