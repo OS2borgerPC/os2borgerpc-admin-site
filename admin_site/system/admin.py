@@ -60,8 +60,20 @@ class PCInlineForConfiguration(admin.TabularInline):
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
-    fields = ["name"]
-    search_fields = ("name",)
+    def sites(self, obj):
+        return list(obj.site_set.all())
+
+    def pcgroups(self, obj):
+        return list(obj.pcgroup_set.all())
+
+    def pcs(self, obj):
+        return list(obj.pc_set.all())
+
+    list_display = ["id", "name", "pcs", "pcgroups", "sites"]
+    search_fields = (
+        "id",
+        "name",
+    )
     inlines = [
         ConfigurationEntryInline,
         SiteInlineForConfiguration,

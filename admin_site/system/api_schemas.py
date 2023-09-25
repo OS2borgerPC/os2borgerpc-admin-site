@@ -1,5 +1,5 @@
-from .models import ConfigurationEntry, PC, SecurityEvent
-from ninja import ModelSchema
+from .models import ConfigurationEntry, Job, PC, SecurityEvent
+from ninja import ModelSchema, Schema
 from ninja.orm import create_schema
 
 # Schemas are used by api.py, and it specifies things like which attributes are fetched for a given object
@@ -9,15 +9,27 @@ from ninja.orm import create_schema
 # SecurityEventSchema = create_schema(SecurityEvent, depth=1, fields=['id', 'problem', "occurred_time", "reported_time",
 #                                                                    "pc", "summary", "status", "assigned_user", "note"])
 
+# Also fetches data about all its configuration entries
+# ConfigurationSchema = create_schema(Configuration, depth=1, fields=['name'])
+
+
+class Error(Schema):
+    message: str
+
 
 class PCSchema(ModelSchema):
+    ip_addresses: str
+
+    @staticmethod
+    def resolve_ip_addresses(obj):
+        return obj.get_config_value("_ip_addresses") or ""
+
     class Config:
         model = PC
         model_fields = [
             "id",
             "uid",
             "name",
-            "description",
             "location",
             "last_seen",
             "is_activated",
@@ -56,7 +68,6 @@ class SecurityEventSchema(ModelSchema):
         model_fields = [
             "id",
             "occurred_time",
-            "reported_time",
             "pc",
             "summary",
             "status",
@@ -65,17 +76,24 @@ class SecurityEventSchema(ModelSchema):
         ]
 
 
-# Also fetches data about all its configuration entries
-# ConfigurationSchema = create_schema(Configuration, depth=1, fields=['name'])
-
-
 class ConfigurationEntrySchema(ModelSchema):
     class Config:
         model = ConfigurationEntry
         model_fields = ["key", "value"]
 
 
-# class PostOut(ModelSchema):
-#    class Config:
-#        model = Post
-#        model_fields = ["id", "author", "title", "body", "created_on"]
+class JobSchema(ModelSchema):
+    pc_name: str
+
+    @staticmethod
+    def resolve_pc_name(obj):
+        return obj.pc.name
+
+    class Config:
+        model = Job
+        model_fields = ["id", "status", "created", "started", "finished", "pc"]
+
+
+class PCLoginsSchema(Schema):
+    pc_name: str
+    logins_per_day: str
