@@ -315,7 +315,7 @@ def citizen_login(username, password, site, prevent_dual_login=False):
         logger.error(f"Site {site} does not exist - unable to proceed.")
         return time_allowed
     login_validator = get_citizen_login_validator()
-    citizen_id = login_validator(username, password, site.isil)
+    citizen_id = login_validator(username, password, site)
     citizen_hash = ""
 
     if citizen_id:
