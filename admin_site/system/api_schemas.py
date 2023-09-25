@@ -1,4 +1,4 @@
-from .models import ConfigurationEntry, PC, SecurityEvent
+from .models import ConfigurationEntry, Job, PC, SecurityEvent
 from ninja import ModelSchema
 from ninja.orm import create_schema
 
@@ -8,6 +8,9 @@ from ninja.orm import create_schema
 # PCSchema = create_schema(PC, depth=1, fields=['id', 'uid', "name", "pc_groups"])
 # SecurityEventSchema = create_schema(SecurityEvent, depth=1, fields=['id', 'problem', "occurred_time", "reported_time",
 #                                                                    "pc", "summary", "status", "assigned_user", "note"])
+
+# Also fetches data about all its configuration entries
+# ConfigurationSchema = create_schema(Configuration, depth=1, fields=['name'])
 
 
 class PCSchema(ModelSchema):
@@ -65,17 +68,19 @@ class SecurityEventSchema(ModelSchema):
         ]
 
 
-# Also fetches data about all its configuration entries
-# ConfigurationSchema = create_schema(Configuration, depth=1, fields=['name'])
-
-
 class ConfigurationEntrySchema(ModelSchema):
     class Config:
         model = ConfigurationEntry
         model_fields = ["key", "value"]
 
 
-# class PostOut(ModelSchema):
-#    class Config:
-#        model = Post
-#        model_fields = ["id", "author", "title", "body", "created_on"]
+class JobSchema(ModelSchema):
+    pc_name: str
+
+    @staticmethod
+    def resolve_pc_name(obj):
+        return obj.pc.name
+
+    class Config:
+        model = Job
+        model_fields = ["id", "status", "created", "started", "finished", "pc"]
