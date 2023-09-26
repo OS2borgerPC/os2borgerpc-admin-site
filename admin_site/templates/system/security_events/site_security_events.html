@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block specific_title %}
-{% translate "Security Events" %}
+{% translate "Events" %}
 {% endblock %}
 
 {% block head_javascripts %}
@@ -68,7 +68,7 @@
 {% endblock %}
 
 {% block specific_content %}
-<!-- Security Event Template -->
+<!-- Event Template -->
   <div class="template-container">
    <table class="table">
     <tbody id="securityeventitem-template">
@@ -92,7 +92,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="handle_events_modal_label">{% translate "Edit Security Events" %}</h5>
+        <h5 class="modal-title" id="handle_events_modal_label">{% translate "Edit Events" %}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -115,7 +115,7 @@
           <th><input type="checkbox" id="all_events_toggle" autocomplete="off"/></th>
           <th>{% translate "Level" %}</th>
           {% translate "Rule" as rule %}
-          {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('problem__name')" slug='warning' %}
+          {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('name')" slug='warning' %}
           <th>{% translate "Info" %}</th>
           <th>{% translate "Device" %}</th>
           <th>{% translate "Incident time" %}</th>

@@ -12,35 +12,27 @@ from system.models import (
     WakeWeekPlan,
     Script,
     SecurityEvent,
-    SecurityProblem,
+    EventRuleServer,
     Site,
 )
 from account.models import SiteMembership, UserProfile
 
-time_format = forms.TimeInput(attrs={"type": "time", "max": "23:59"}, format="%H:%M")
-date_format = forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d")
-
-
-# Adds the passed-in CSS classes to CharField (type=text + textarea)
-# and the multitude of Fields that default to a <select> widget)
-def add_classes_to_form(someform, classes_to_add):
-    for field_name, field in someform.fields.items():
-        matches_select_widget = [
-            forms.ChoiceField,
-            forms.TypedChoiceField,
-            forms.MultipleChoiceField,
-            forms.TypedMultipleChoiceField,
-            forms.ModelChoiceField,
-            forms.ModelMultipleChoiceField,
-        ]
-        if type(field) in matches_select_widget + [forms.CharField]:
-            # Append if classes have already been added
-            if "class" not in field.widget.attrs:
-                field.widget.attrs["class"] = ""
-            field.widget.attrs["class"] += " " + classes_to_add
+time_format = forms.TimeInput(
+    attrs={"type": "time", "max": "23:59", "class": "form-control"}, format="%H:%M"
+)
+date_format = forms.DateInput(
+    attrs={"type": "date", "class": "form-control"}, format="%Y-%m-%d"
+)
 
 
 class SiteForm(forms.ModelForm):
+    cicero_password = forms.CharField(
+        label=_("Password for Cicero API"),
+        widget=forms.PasswordInput(attrs={"class": "passwordinput"}),
+        required=False,
+        help_text=_("Necessary for customers who wish to integrate with Cicero login"),
+    )
+
     def __init__(self, *args, **kwargs):
         super(SiteForm, self).__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
@@ -271,25 +263,28 @@ class PCForm(forms.ModelForm):
         exclude = (
             "configuration",
             "site",
-            "is_update_required",
             "created",
             "last_seen",
         )
-
-
-class SecurityProblemForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SecurityProblemForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = SecurityProblem
-        fields = "__all__"
 
 
 class SecurityEventForm(forms.ModelForm):
     class Meta:
         model = SecurityEvent
         fields = ("status", "assigned_user", "note")
+
+
+class EventRuleServerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EventRuleServerForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = EventRuleServer
+        fields = "__all__"
+        widgets = {
+            "monitor_period_start": time_format,
+            "monitor_period_end": time_format,
+        }
 
 
 # Used on the Create and Update views

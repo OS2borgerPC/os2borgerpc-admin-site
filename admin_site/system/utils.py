@@ -20,9 +20,16 @@ def notify_users(security_event, security_problem, pc):
     # Subject = security name,
     # Body = description + technical summary
     email_list = []
-    alert_users = security_problem.alert_users.all()
+    supervisor_relations = pc.pc_groups.exclude(supervisors=None)
+    if supervisor_relations:
+        alert_users_pk = list(
+            set(supervisor_relations.values_list("supervisors", flat=True))
+        )
+        alert_users = User.objects.only("email").filter(pk__in=alert_users_pk)
+    else:
+        alert_users = security_problem.alert_users.only("email").all()
     for user in alert_users:
-        email_list.append(User.objects.get(id=user.id).email)
+        email_list.append(user.email)
 
     body = f"Beskrivelse af sikkerhedsadvarsel: {security_problem.description}\n"
     body += f"Kort resume af data fra log filen : {security_event.summary}"
@@ -58,7 +65,7 @@ def get_citizen_login_validator():
     return validator
 
 
-def cicero_validate(loaner_number, pincode, agency_id):
+def cicero_validate(loaner_number, pincode, site):
     """Do the actual validation against the Cicero service.
 
     If successful, this function will return the Cicero Patron ID, otherwise it
@@ -70,22 +77,22 @@ def cicero_validate(loaner_number, pincode, agency_id):
     if not regex_match:
         # logger.warning("Pincode must be a number.")
         return 0
-    if not agency_id:
+    if not site.isil:
         logger.error("Agency ID / ISIL MUST be specified.")
         return 0
     # First, get sessionKey.
     session_key_url = (
-        f"{settings.CICERO_URL}/rest/external/v1/{agency_id}/authentication/login/"
+        f"{settings.CICERO_URL}/rest/external/v1/{site.isil}/authentication/login/"
     )
     response = requests.post(
         session_key_url,
-        json={"username": settings.CICERO_USER, "password": settings.CICERO_PASSWORD},
+        json={"username": site.cicero_user, "password": site.cicero_password},
     )
     if response.ok:
         session_key = response.json()["sessionKey"]
         # Just debugging for the moment.
     else:
-        # TODO: Unable to authenticate with system user - log this.
+        # Unable to authenticate with system user - log this.
         message = response.json()["message"]
         logger.error(
             f"Unable to log in with configured user name and password: {message}"
@@ -93,7 +100,7 @@ def cicero_validate(loaner_number, pincode, agency_id):
         return 0
     # We now have a valid session key.
     loaner_auth_url = (
-        f"{settings.CICERO_URL}/rest/external/{agency_id}/patrons/authenticate/v6"
+        f"{settings.CICERO_URL}/rest/external/{site.isil}/patrons/authenticate/v6"
     )
     response = requests.post(
         loaner_auth_url,
@@ -103,7 +110,6 @@ def cicero_validate(loaner_number, pincode, agency_id):
     if response.ok:
         result = response.json()
         authenticate_status = result["authenticateStatus"]
-        print(authenticate_status)
         if authenticate_status != "VALID":
             # logger.warning(
             #    f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
@@ -112,8 +118,6 @@ def cicero_validate(loaner_number, pincode, agency_id):
         # Loaner has been successfully authenticated.
         patron_id = result["patron"]["patronId"]
         return patron_id
-
-    print(response)
 
 
 def always_validate_citizen(loaner_number, pincode, agency_id):

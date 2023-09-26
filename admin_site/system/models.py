@@ -7,10 +7,12 @@ import string
 from dateutil.relativedelta import relativedelta
 
 from django.db import models, transaction
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.validators import MinValueValidator
 
 from markdownx.utils import markdownify
 from markdownx.models import MarkdownxField
@@ -21,10 +23,9 @@ from system.managers import SecurityEventQuerySet
 """The following variables define states of objects like jobs or PCs. It is
 used for labeling in the GUI."""
 
-# States
+# PC States
 NEW = _("status:New")
 FAIL = _("status:Fail")
-UPDATE = _("status:Update")
 OK = ""
 
 # Priorities
@@ -32,6 +33,31 @@ INFO = "info"
 WARNING = "warning"
 IMPORTANT = "important"
 NONE = ""
+
+
+# Consider adding SecurityEvent states to this as well if that can make sense/work
+class EventLevels:
+    CRITICAL = "Critical"
+    HIGH = "High"
+    NORMAL = "Normal"
+
+    LEVEL_TRANSLATIONS = {
+        CRITICAL: _("securitylevel:Critical"),
+        HIGH: _("securitylevel:High"),
+        NORMAL: _("securitylevel:Normal"),
+    }
+
+    LEVEL_CHOICES = (
+        (CRITICAL, LEVEL_TRANSLATIONS[CRITICAL]),
+        (HIGH, LEVEL_TRANSLATIONS[HIGH]),
+        (NORMAL, LEVEL_TRANSLATIONS[NORMAL]),
+    )
+
+    LEVEL_TO_LABEL = {
+        CRITICAL: "label-important",
+        HIGH: "label-warning",
+        NORMAL: "label-gentle-warning",
+    }
 
 
 class Configuration(models.Model):
@@ -145,6 +171,17 @@ class Site(models.Model):
             "Necessary for customers who wish to"
             " integrate with standard library login"
         ),
+    )
+    cicero_user = models.CharField(
+        verbose_name=_("Username for Cicero API"),
+        max_length=100,
+        blank=True,
+        help_text=_("Necessary for customers who wish to integrate with Cicero login"),
+    )
+    cicero_password = models.CharField(
+        verbose_name=_("Password for Cicero API"),
+        max_length=255,
+        blank=True,
     )
     user_login_duration = models.DurationField(
         verbose_name=_("Login duration"),
@@ -457,6 +494,13 @@ class PCGroup(models.Model):
         WakeWeekPlan, related_name="groups", on_delete=models.SET_NULL, null=True
     )
 
+    supervisors = models.ManyToManyField(
+        User,
+        related_name="pc_groups",
+        verbose_name=_("supervisors"),
+        blank=True,
+    )
+
     def __str__(self):
         return self.name
 
@@ -566,8 +610,7 @@ class PCGroup(models.Model):
         return self.policy.all().order_by("position")
 
     def get_absolute_url(self):
-        site_url = self.site.get_absolute_url()
-        return "{0}/groups/{1}".format(site_url, self.url)
+        return reverse("group", args=(self.site.uid, self.id))
 
     class Meta:
         ordering = ["name"]
@@ -588,9 +631,6 @@ class PC(models.Model):
     pc_groups = models.ManyToManyField(PCGroup, related_name="pcs", blank=True)
     site = models.ForeignKey(Site, related_name="pcs", on_delete=models.CASCADE)
     is_activated = models.BooleanField(verbose_name=_("activated"), default=False)
-    is_update_required = models.BooleanField(
-        verbose_name=_("update required"), default=False
-    )
     created = models.DateTimeField(
         verbose_name=_("created"), auto_now_add=True, null=True
     )
@@ -619,9 +659,6 @@ class PC(models.Model):
     def status(self):
         if not self.is_activated:
             return self.Status(NEW, INFO)
-        elif self.is_update_required:
-            # If packages require update
-            return self.Status(UPDATE, WARNING)
         else:
             # Get a list of all jobs associated with this PC and see if any of
             # them failed.
@@ -683,7 +720,7 @@ class PC(models.Model):
         return reverse("computer", args=(self.site.uid, self.uid))
 
     def os2_product(self):
-        """Return whether a PC is running os2borgerpc or os2borgerpc kiosk."""
+        """Return whether a PC is running e.g. os2borgerpc or os2borgerpc kiosk."""
         return self.get_config_value("os2_product")
 
     def __str__(self):
@@ -832,7 +869,7 @@ class AssociatedScript(models.Model):
 
     def make_parameters(self, batch):
         params = []
-        for i in self.script.inputs.all():
+        for i in self.script.ordered_inputs.all():
             try:
                 asp = self.parameters.get(input=i)
                 params.append(asp.make_batch_parameter(batch))
@@ -1119,56 +1156,27 @@ class AssociatedScriptParameter(Parameter):
         )
 
 
-class SecurityProblem(models.Model):
-    """A security problem and the method (script) to handle it."""
-
-    # Problem levels.
-
-    NORMAL = "Normal"
-    HIGH = "High"
-    CRITICAL = "Critical"
-
-    LEVEL_TRANSLATIONS = {
-        NORMAL: _("securitylevel:Normal"),
-        HIGH: _("securitylevel:High"),
-        CRITICAL: _("securitylevel:Critical"),
-    }
-
-    LEVEL_CHOICES = (
-        (CRITICAL, LEVEL_TRANSLATIONS[CRITICAL]),
-        (HIGH, LEVEL_TRANSLATIONS[HIGH]),
-        (NORMAL, LEVEL_TRANSLATIONS[NORMAL]),
-    )
-
-    LEVEL_TO_LABEL = {
-        NORMAL: "label-gentle-warning",
-        HIGH: "label-warning",
-        CRITICAL: "label-important",
-    }
+class EventRuleBase(models.Model):
+    """Contains everything shared between SecurityProblem and EventRuleServer."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
     description = models.TextField(verbose_name=_("description"), blank=True)
     level = models.CharField(
-        verbose_name=_("level"), max_length=10, choices=LEVEL_CHOICES, default=HIGH
+        verbose_name=_("level"),
+        max_length=10,
+        choices=EventLevels.LEVEL_CHOICES,
+        default=EventLevels.HIGH,
     )
-    site = models.ForeignKey(
-        Site, related_name="security_problems", on_delete=models.CASCADE
-    )
-    security_script = models.ForeignKey(
-        Script,
-        verbose_name=_("security script"),
-        related_name="security_problems",
-        on_delete=models.CASCADE,
-    )
+    site = models.ForeignKey(Site, related_name="%(class)s", on_delete=models.CASCADE)
     alert_groups = models.ManyToManyField(
         PCGroup,
-        related_name="security_problems",
+        related_name="%(class)s",
         verbose_name=_("alert groups"),
         blank=True,
     )
     alert_users = models.ManyToManyField(
         User,
-        related_name="security_problems",
+        related_name="%(class)s",
         verbose_name=_("alert users"),
         blank=True,
     )
@@ -1176,12 +1184,45 @@ class SecurityProblem(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        site_url = self.site.get_absolute_url()
-        return "{0}/security_problems/{1}".format(site_url, self.id)
-
     class Meta:
         ordering = ["name"]
+        abstract = True
+
+
+# Idea for future name change: EventRuleClient?
+class SecurityProblem(EventRuleBase):
+    """A security problem and the method (script) to handle it."""
+
+    security_script = models.ForeignKey(
+        Script,
+        verbose_name=_("security script"),
+        related_name="security_problems",
+        on_delete=models.CASCADE,
+    )
+
+    def get_absolute_url(self):
+        return reverse("event_rule_security_problem", args=(self.site.uid, self.id))
+
+
+class EventRuleServer(EventRuleBase):
+    """A model representing a different type of SecurityProblem. A regular SecurityProblem is a script sent to the
+    computer which does some work and then conditionally reports alerts to the adminsite.
+    An EventRuleServer is instead the adminsite doing some work and conditionally creating an alert.
+    Example task: Check whether a computer hasn't been offline more than X amount of time.
+    """
+
+    monitor_period_start = models.TimeField(verbose_name=_("monitor period start"))
+    monitor_period_end = models.TimeField(verbose_name=_("monitor period end"))
+    # If implementing more EventRuleServer's this field would likely be made optional:
+    maximum_offline_period = models.PositiveSmallIntegerField(
+        verbose_name=_("maximum offline period allowed, in minutes"),
+        default=15,
+        validators=[MinValueValidator(15)],
+        help_text=_("How long a PC may be offline before an event is created"),
+    )
+
+    def get_absolute_url(self):
+        return reverse("event_rule_server", args=(self.site.uid, self.id))
 
 
 class SecurityEvent(models.Model):
@@ -1213,7 +1254,12 @@ class SecurityEvent(models.Model):
         ASSIGNED: "bg-secondary",
         RESOLVED: "bg-success",
     }
-    problem = models.ForeignKey(SecurityProblem, null=False, on_delete=models.CASCADE)
+    problem = models.ForeignKey(
+        SecurityProblem, null=True, blank=True, on_delete=models.CASCADE
+    )
+    event_rule_server = models.ForeignKey(
+        EventRuleServer, null=True, blank=True, on_delete=models.CASCADE
+    )
     # The time the problem was reported in the log file
     occurred_time = models.DateTimeField(verbose_name=_("occurred"))
     # The time the problem was submitted to the system
@@ -1231,8 +1277,24 @@ class SecurityEvent(models.Model):
     )
     note = models.TextField(blank=True)
 
+    @property
+    def namestr(self):
+        return str(self)
+
     def __str__(self):
-        return "{0}: {1}".format(self.problem.name, self.id)
+        if self.problem:
+            return "{0}: {1}".format(self.problem.name, self.id)
+        else:
+            return "{0}: {1}".format(self.event_rule_server.name, self.id)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=Q(problem__isnull=False, event_rule_server=None)
+                | Q(problem=None, event_rule_server__isnull=False),
+                name="problem_or_rule_set",
+            ),
+        ]
 
 
 class ImageVersion(models.Model):
@@ -1271,6 +1333,7 @@ class Citizen(models.Model):
     citizen_id = models.CharField(unique=True, max_length=128)
     last_successful_login = models.DateTimeField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    logged_in = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.site} - {self.citizen_id}"

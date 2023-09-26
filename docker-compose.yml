@@ -18,6 +18,7 @@ services:
             context: .
             dockerfile: docker/Dockerfile
             target: os2borgerpc
+        image: os2borgerpcadmin
         command:
             sh -c "python manage.py initialize_database &&
                    gunicorn --reload --timeout 0 --config /code/docker/gunicorn-settings.py os2borgerpc_admin.wsgi"
@@ -34,6 +35,16 @@ services:
         tty: true
         container_name: bpc_admin_site_django
         privileged: true
+    cron-service:
+        image: os2borgerpcadmin
+        volumes:
+            - .:/code/
+            - ./dev-environment/dev-settings.ini:/user-settings.ini
+            - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
+        command: [ "supercronic", "/crontab" ]
+        entrypoint: [ ]
+        depends_on:
+            - os2borgerpc-admin
     db:
         image: postgres:latest
         restart: always

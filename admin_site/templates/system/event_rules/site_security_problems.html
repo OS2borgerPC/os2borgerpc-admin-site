@@ -1,0 +1,88 @@
+{% extends "system/event_rules/shared_navigation.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block specific_content %}
+{% translate "Add group to surveillance" as g_add %}
+{% translate "Remove monitored group" as g_remove %}
+{% translate "Add email recipient" as e_add %}
+{% translate "Remove recipient" as e_remove %}
+<div class="container-fluid main sublevelmain">
+
+    {% if selected %}
+    <h2 class="divideheader">
+        {% translate "Details about" %} <em>{{ selected.name }}</em>
+        {% comment %}
+        TODO later?
+        <a class="float-end" href="{% url 'security_problem' site_uid=site.url uid=selected.id %}" title="{% translate 'See all events for this Security Rule' %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
+        {% endcomment %}
+    </h2>
+    {% else %}
+    <h2 class="divideheader">
+        {% translate "New security rule" %}
+    </h2>
+    {% endif %}
+    {% include 'notification.html' %}
+
+    <form name="updategroupform"
+        id="updategroupform"
+        method="post"
+        class="gray-box">
+        {% csrf_token %}
+
+        <div class="alert alert-info">
+            <strong>{% translate "Note" %}</strong>
+            <ul>
+                {% translate "all"|bold as all %}
+                {% translate "empty"|italic as empty %}
+                <li>{% blocktranslate trimmed %}
+                    If the rule does not have a Group added, the rule will apply to {{all}} Computers.
+                    {% endblocktranslate %}</li>
+                <li>{% blocktranslate trimmed %}
+                    If you want to temporarily disable a rule, you can create an {{empty}} Group (i.e. a Group with no Computers)
+                    and set this Group as the monitored Group.
+                    {% endblocktranslate %}</li>
+                <li>{% blocktranslate trimmed %}
+                    If a PC is a member of a group with one or more supervisors, those supervisors will receive any email warnings
+                    related to that PC instead of the recipients set here.
+                    {% endblocktranslate %}</li>
+            </ul>
+        </div>
+        <div class="row gx-5">
+            <fieldset class="col-12 col-lg-6">
+
+                <!-- Site field -->
+                <input type="hidden" id="id_site" name="site" value="{{ site.id }}">
+
+                {{ form.name|as_crispy_field }}
+                {{ form.security_script|as_crispy_field }}
+                {{ form.level|as_crispy_field }}
+                {{ form.description|as_crispy_field }}
+
+            </fieldset>
+
+            <fieldset class="col-12 col-lg-6">
+
+                <p>
+                    <label>{% translate "Monitored groups" %}</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=g_add remove_text=g_remove site_url=site.uid target_section='groups' %}
+                </p>
+                <p>
+                    <label>{% translate "Recipient(s) of email warning" %}</label>
+                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text=e_add remove_text=e_remove site_url=site.uid target_section='users' %}
+                </p>
+
+            </fieldset>
+
+        </div>
+
+        <fieldset class="mt-3">
+            <button class="btn btn-primary me-3" type="submit">{% translate "Save changes" %}</button>
+            <button class="btn btn-secondary" type="reset">{% translate "Cancel" %}</button>
+        </fieldset>
+
+    </form>
+
+</div>
+{% endblock %}
