@@ -1,3 +1,15 @@
+Version 5.20.0, September 18, 2023
+----------------------------------
+
+- Expand Security Event / Security Rule system to cover other types of events - in this case specifically an event for when the PC's in
+  a group are offline for longer than a specified period of time.
+- Added functionality to add Supervisors to a Group who receive the notification instead of the users attached to the
+  Security Problem. This makes it possible to reuse a SecurityProblem across locations when you want different recipients for
+  the alerts per location.
+- Updated the Cicero integration to support preventing simultaneous logins by the same library user and store username/password
+  for the Cicero API in the database per site
+
+
 Version 5.19.0, September 5, 2023
 ---------------------------------
 
