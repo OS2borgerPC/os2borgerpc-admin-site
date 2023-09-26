@@ -172,6 +172,17 @@ class Site(models.Model):
             " integrate with standard library login"
         ),
     )
+    cicero_user = models.CharField(
+        verbose_name=_("Username for Cicero API"),
+        max_length=100,
+        blank=True,
+        help_text=_("Necessary for customers who wish to integrate with Cicero login"),
+    )
+    cicero_password = models.CharField(
+        verbose_name=_("Password for Cicero API"),
+        max_length=255,
+        blank=True,
+    )
     user_login_duration = models.DurationField(
         verbose_name=_("Login duration"),
         help_text=_("Login duration when integrating with library login"),
@@ -1322,6 +1333,7 @@ class Citizen(models.Model):
     citizen_id = models.CharField(unique=True, max_length=128)
     last_successful_login = models.DateTimeField()
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    logged_in = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.site} - {self.citizen_id}"

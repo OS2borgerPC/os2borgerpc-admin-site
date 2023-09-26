@@ -26,6 +26,13 @@ date_format = forms.DateInput(
 
 
 class SiteForm(forms.ModelForm):
+    cicero_password = forms.CharField(
+        label=_("Password for Cicero API"),
+        widget=forms.PasswordInput(attrs={"class": "passwordinput"}),
+        required=False,
+        help_text=_("Necessary for customers who wish to integrate with Cicero login"),
+    )
+
     def __init__(self, *args, **kwargs):
         super(SiteForm, self).__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)

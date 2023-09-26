@@ -65,7 +65,7 @@ def get_citizen_login_validator():
     return validator
 
 
-def cicero_validate(loaner_number, pincode, agency_id):
+def cicero_validate(loaner_number, pincode, site):
     """Do the actual validation against the Cicero service.
 
     If successful, this function will return the Cicero Patron ID, otherwise it
@@ -77,16 +77,16 @@ def cicero_validate(loaner_number, pincode, agency_id):
     if not regex_match:
         # logger.warning("Pincode must be a number.")
         return 0
-    if not agency_id:
+    if not site.isil:
         logger.error("Agency ID / ISIL MUST be specified.")
         return 0
     # First, get sessionKey.
     session_key_url = (
-        f"{settings.CICERO_URL}/rest/external/v1/{agency_id}/authentication/login/"
+        f"{settings.CICERO_URL}/rest/external/v1/{site.isil}/authentication/login/"
     )
     response = requests.post(
         session_key_url,
-        json={"username": settings.CICERO_USER, "password": settings.CICERO_PASSWORD},
+        json={"username": site.cicero_user, "password": site.cicero_password},
     )
     if response.ok:
         session_key = response.json()["sessionKey"]
@@ -100,7 +100,7 @@ def cicero_validate(loaner_number, pincode, agency_id):
         return 0
     # We now have a valid session key.
     loaner_auth_url = (
-        f"{settings.CICERO_URL}/rest/external/{agency_id}/patrons/authenticate/v6"
+        f"{settings.CICERO_URL}/rest/external/{site.isil}/patrons/authenticate/v6"
     )
     response = requests.post(
         loaner_auth_url,
@@ -110,7 +110,6 @@ def cicero_validate(loaner_number, pincode, agency_id):
     if response.ok:
         result = response.json()
         authenticate_status = result["authenticateStatus"]
-        print(authenticate_status)
         if authenticate_status != "VALID":
             # logger.warning(
             #    f"Unable to authenticate with loaner ID and pin: {authenticate_status}"
@@ -119,8 +118,6 @@ def cicero_validate(loaner_number, pincode, agency_id):
         # Loaner has been successfully authenticated.
         patron_id = result["patron"]["patronId"]
         return patron_id
-
-    print(response)
 
 
 def always_validate_citizen(loaner_number, pincode, agency_id):

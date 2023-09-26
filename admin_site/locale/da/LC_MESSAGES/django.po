@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-14 16:02+0200\n"
+"POT-Creation-Date: 2023-09-26 11:02+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -230,6 +230,14 @@ msgstr "Antal BorgerPC computere"
 msgid "Site"
 msgstr "Site"
 
+#: system/forms.py system/models.py
+msgid "Password for Cicero API"
+msgstr "Password til Cicero API"
+
+#: system/forms.py system/models.py
+msgid "Necessary for customers who wish to integrate with Cicero login"
+msgstr "Nødvendigt for kunder der ønsker at integrere Cicero login"
+
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
 msgstr "Brugertype"
@@ -302,6 +310,10 @@ msgstr "Betalt for adgang indtil denne dato"
 msgid ""
 "Necessary for customers who wish to integrate with standard library login"
 msgstr "Nødvendigt for kunder der ønsker at integrere standard bibliotekslogin"
+
+#: system/models.py
+msgid "Username for Cicero API"
+msgstr "Brugernavn til Cicero API"
 
 #: system/models.py
 msgid "Login duration"
