@@ -339,14 +339,12 @@ def citizen_login(username, password, site, prevent_dual_login=False):
                 )
                 if prevent_dual_login:
                     citizen.logged_in = True
-                citizen.save()
             elif now < quarantined_from and citizen.logged_in:
                 citizen_hash = "logged_in"
             elif (now - quarantined_from) >= quarantine_duration:
                 citizen.last_successful_login = now
                 if prevent_dual_login:
                     citizen.logged_in = True
-                citizen.save()
             else:
                 # (now - quarantined_from) < quarantine_duration:
                 time_allowed = (
@@ -356,7 +354,10 @@ def citizen_login(username, password, site, prevent_dual_login=False):
         else:
             # First-time login, all good.
             citizen = Citizen(
-                citizen_id=citizen_hash, last_successful_login=now, site=site
+                citizen_id=citizen_hash,
+                last_successful_login=now,
+                site=site,
+                logged_in=True,
             )
         citizen.save()
 
