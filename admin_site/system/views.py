@@ -339,8 +339,17 @@ class SiteSettings(UpdateView, SiteView):
         kwargs["updated"] = True
         response = self.get(request, *args, **kwargs)
 
+        site = get_object_or_404(Site, uid=self.kwargs['slug'])
+        if not request.POST['cicero_password']:
+            cicero_password = site.cicero_password
+
         # Handle saving of site settings data
         super(SiteSettings, self).post(request, *args, **kwargs)
+
+        if not request.POST['cicero_password']:
+            site = get_object_or_404(Site, uid=self.kwargs['slug'])
+            site.cicero_password = cicero_password
+            site.save()
 
         # Handle saving of site configs data
         self.object.configuration.update_from_request(request.POST, "site_configs")
