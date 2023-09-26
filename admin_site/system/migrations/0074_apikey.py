@@ -6,7 +6,7 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("system", "0072_eventruleserver_alter_securityevent_problem_and_more"),
+        ("system", "0073_citizen_logged_in_and_more"),
     ]
 
     operations = [

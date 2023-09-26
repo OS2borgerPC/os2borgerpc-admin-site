@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 11:02+0200\n"
+"POT-Creation-Date: 2023-09-26 14:40+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1069,22 +1069,18 @@ msgstr "API-nøgler"
 msgid "PC's"
 msgstr "PC'er"
 
-#: templates/documentation/security_scripts/__submenu__.html
-#: templates/documentation/security_scripts/edit.html
-#: templates/documentation/security_scripts/securityevents.html
-#: templates/documentation/api.html templates/site_with_navigation.html
-#: templates/system/security_events/site_security_events.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-msgid "Events"
-msgstr "Hændelser"
-
 #: templates/documentation/api.html
 #: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/edit.html
 #: templates/documentation/security_scripts/securityevents.html
+#: templates/site_with_navigation.html
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/security_events/site_security_events.html
+msgid "Events"
+msgstr "Hændelser"
+
+#: templates/documentation/api.html
 msgid "Security Events"
 msgstr "Sikkerhedshændelser"
 
@@ -1099,33 +1095,6 @@ msgstr "PC"
 #: templates/documentation/api.html
 msgid "Generate an API key"
 msgstr "Generér en API-nøgle"
-
-#: templates/documentation/api.html
-msgid ""
-"We kindly ask that you strive to minimize the amount of requests made to the "
-"API, as well as minimizing the amount of data requested from it, to keep the "
-"stress on the adminsite at a minimum"
-msgstr ""
-"Vi beder venligt om at I forsøger på at minimere antallet af forespørgsler "
-"til API'et, samt mængden af data, der efterspørges fra det, for at holde "
-"mængden af stress på adminsitet til et minimum"
-
-#: templates/documentation/api.html
-msgid ""
-"Initially we have set no restrictions for the use of the API, so we're "
-"relying on sensible conduct"
-msgstr ""
-"Til at begynde med har vi ikke sat nogen begrænsninger for brugen af "
-"API'et så vi afhænger af fornuftig anvendelse"
-
-#: templates/documentation/api.html
-msgid ""
-"A couple of requests a minute is probably fine, but many requests every few "
-"seconds will likely quickly overload the server, if done by many"
-msgstr ""
-"Et par forespørgsler i minuttet er sandsynligvis fint, men mange "
-"forespørgsler hvert andet sekund vil sandsynligvis hurtigt overbelaste serveren "
-"hvis mange gør det"
 
 #: templates/documentation/api.html
 #, python-format
@@ -5243,7 +5212,34 @@ msgstr "Administrér"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
+msgstr "API-nøgler for"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid ""
+"We kindly ask that you strive to minimize the amount of requests made to the "
+"API, as well as minimizing the amount of data requested from it, to keep the "
+"stress on the adminsite at a minimum"
 msgstr ""
+"Vi beder venligt om at I forsøger på at minimere antallet af forespørgsler "
+"til API'et, samt mængden af data, der efterspørges fra det, for at holde "
+"mængden af stress på adminsitet til et minimum"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid ""
+"Initially we have set no restrictions for the use of the API, so we're "
+"relying on sensible conduct"
+msgstr ""
+"Til at begynde med har vi ikke sat nogen begrænsninger for brugen af API'et "
+"så vi afhænger af fornuftig anvendelse"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid ""
+"A couple of requests a minute is probably fine, but many requests every few "
+"seconds will likely quickly overload the server, if done by many"
+msgstr ""
+"Et par forespørgsler i minuttet er sandsynligvis fint, men mange "
+"forespørgsler hvert andet sekund vil sandsynligvis hurtigt overbelaste "
+"serveren hvis mange gør det"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "These API keys are used to access our API. See our"
