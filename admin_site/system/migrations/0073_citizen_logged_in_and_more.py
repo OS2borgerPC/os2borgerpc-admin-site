@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("system", "0072_eventruleserver_alter_securityevent_problem_and_more"),
     ]
