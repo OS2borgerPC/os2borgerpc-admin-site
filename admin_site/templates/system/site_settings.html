@@ -33,7 +33,7 @@
       </ul>
 
     <!--<form action="{% url 'settings' site.uid %}" -->
-    <form action="" method="post" name="site_settings_form" id="site_settings_form" action="{% url 'settings' site.uid %}">
+    <form method="post" name="site_settings_form" id="site_settings_form" action="{% url 'settings' site.uid %}">
       {% csrf_token %}
       <div class="tab-content pb-4" style="border-radius: .33rem .33rem 0 0;">
 

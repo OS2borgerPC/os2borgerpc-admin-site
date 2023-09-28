@@ -334,28 +334,19 @@ class SiteSettings(UpdateView, SiteView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
-        # Do basic method
-        kwargs["updated"] = True
-        response = self.get(request, *args, **kwargs)
-
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if not request.POST["cicero_password"]:
-            cicero_password = site.cicero_password
-
-        # Handle saving of site settings data
-        super(SiteSettings, self).post(request, *args, **kwargs)
-
-        if not request.POST["cicero_password"]:
+    def form_valid(self, form):
+        if not form.cleaned_data["cicero_password"]:
             site = get_object_or_404(Site, uid=self.kwargs["slug"])
-            site.cicero_password = cicero_password
-            site.save()
+            form.instance.cicero_password = site.cicero_password
 
-        # Handle saving of site configs data
-        self.object.configuration.update_from_request(request.POST, "site_configs")
+        self.object.configuration.update_from_request(self.request.POST, "site_configs")
+
+        response = super(SiteSettings, self).form_valid(form)
 
         translation.activate(self.request.user.bibos_profile.language)
-        set_notification_cookie(response, _("Settings for %s updated") % kwargs["slug"])
+        set_notification_cookie(
+            response, _("Settings for %s updated") % self.kwargs["slug"]
+        )
         translation.deactivate()
         return response
 
@@ -368,11 +359,13 @@ class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
     form_class = Form
 
     def get_success_url(self):
-        success_url = "/site/%s/users/%s/" % (
-            self.kwargs["slug"],
-            self.kwargs["username"],
+        return reverse(
+            "user",
+            kwargs={
+                "site_uid": self.kwargs["slug"],
+                "username": self.kwargs["username"],
+            },
         )
-        return success_url
 
     def get_context_data(self, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
@@ -400,11 +393,10 @@ class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
 
 class AdminTwoFactorSetup(otp_views.SetupView, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
-        success_url = "/site/%s/admin-two-factor/%s/setup-complete/" % (
-            self.kwargs["slug"],
-            self.kwargs["username"],
+        return reverse(
+            "admin_otp_setup_complete",
+            kwargs={"slug": self.kwargs["slug"], "username": self.kwargs["username"]},
         )
-        return success_url
 
     def get_context_data(self, form, **kwargs):
         context = super().get_context_data(form, **kwargs)
@@ -758,7 +750,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         return response
 
     def get_success_url(self):
-        return "/site/%s/jobs/" % self.kwargs["site_uid"]
+        return reverse("jobs", kwargs={"slug": self.kwargs["site_uid"]})
 
 
 class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
@@ -1471,7 +1463,7 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
             )
 
     def get_success_url(self):
-        return "/site/{0}/computers/".format(self.kwargs["site_uid"])
+        return reverse("computers", kwargs={"slug": self.kwargs["site_uid"]})
 
 
 # TODO: Rename all of these to WakeWeekPlan* now they no longer handle WakeChangeEvents.
@@ -2448,7 +2440,13 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
             raise PermissionDenied
 
     def get_success_url(self):
-        return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
+        return reverse(
+            "user",
+            kwargs={
+                "site_uid": self.kwargs["site_uid"],
+                "username": self.object.username,
+            },
+        )
 
 
 class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
@@ -2519,7 +2517,13 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             raise PermissionDenied
 
     def get_success_url(self):
-        return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
+        return reverse(
+            "user",
+            kwargs={
+                "site_uid": self.kwargs["site_uid"],
+                "username": self.object.username,
+            },
+        )
 
 
 class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
@@ -2547,7 +2551,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def get_success_url(self):
-        return "/site/%s/users/" % self.kwargs["site_uid"]
+        return reverse("users", kwargs={"slug": self.kwargs["site_uid"]})
 
     def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
@@ -2580,7 +2584,7 @@ class ConfigurationEntryCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin)
         return super(ConfigurationEntryCreate, self).form_valid(form)
 
     def get_success_url(self):
-        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
+        return reverse("settings", kwargs={"slug": self.kwargs["site_uid"]})
 
 
 class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -2588,14 +2592,7 @@ class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin)
     form_class = ConfigurationEntryForm
 
     def get_success_url(self):
-        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
-
-
-class ConfigurationEntryDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-
-    def get_success_url(self):
-        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
+        return reverse("settings", kwargs={"slug": self.kwargs["site_uid"]})
 
 
 class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
@@ -2923,7 +2920,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
             )
 
     def get_success_url(self):
-        return "/site/{0}/groups/".format(self.kwargs["site_uid"])
+        return reverse("groups", kwargs={"slug": self.kwargs["site_uid"]})
 
     def form_valid(self, form, *args, **kwargs):
         self_object = self.get_object()
@@ -3062,11 +3059,6 @@ class SecurityProblemUpdate(EventRuleBaseMixin, UpdateView):
                 % self.kwargs["id"]
             )
 
-    def get_success_url(self):
-        return reverse(
-            "event_rule_security_problem", args=[self.object.site.uid, self.object.id]
-        )
-
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
     template_name = "system/event_rules/security_problem_confirm_delete.html"
@@ -3116,9 +3108,6 @@ class EventRuleServerUpdate(EventRuleBaseMixin, UpdateView):
                 _("You have no Event Rule Server with the following ID: %s")
                 % self.kwargs["id"]
             )
-
-    def get_success_url(self):
-        return reverse("event_rule_server", args=[self.object.site.uid, self.object.id])
 
 
 class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
