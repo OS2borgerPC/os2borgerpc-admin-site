@@ -932,6 +932,10 @@ msgstr "Skript"
 msgid "Security Scripts"
 msgstr "Skript för säkerhet"
 
+#: system/views.py templates/documentation/notifications/index.html
+msgid "Notifications and offline rules"
+msgstr "Aviseringar och offline-regler"
+
 #: system/views.py templates/documentation/users/index.html
 #: templates/site_with_navigation.html
 #: templates/system/users/confirm_delete.html
@@ -1710,21 +1714,23 @@ msgid "Associated Scripts"
 msgstr "Associerade skript"
 
 #: templates/documentation/groups/edit.html
-msgid "Editing groups: Master data and computers"
-msgstr "Gruppredigering: Huvudinformation och datorer"
+msgid "Editing groups: Master data, computers and supervisors"
+msgstr "Gruppredigering: Huvudinformation, datorer och ansvariga personer"
 
 #: templates/documentation/groups/edit.html
 msgid ""
 "When you click on a group, you will by default be shown the group's master "
-"data and any computers that belong to the group. Here you can change the "
-"group's name and description as well as add or remove computers from the "
-"group. The changes will not become permanent until you've clicked on the "
-"button \"Save changes\" at the bottom of the screen."
+"data, any computers that belong to the group and any supervisors chosen for "
+"the group. Here you can change the group's name and description as well as "
+"add or remove computers or supervisors from the group. The changes will not "
+"become permanent until you've clicked on the button \"Save changes\" at the "
+"bottom of the screen."
 msgstr ""
-"När du klickar på en grupp visas som standard gruppens masterdata och vilka "
-"datorer som ingår i gruppen. Här kan du ändra gruppnamn och beskrivning samt "
-"lägga till eller ta bort datorer från gruppen. Ändringar träder inte i kraft "
-"förrän du klicka på knappen \"Spara ändringar\" längst ner på skärmen."
+"När du klickar på en grupp visas som standard gruppens masterdata, vilka "
+"datorer som ingår i gruppen och vilka ansvariga personer som valts för "
+"gruppen. Här kan du ändra gruppnamn och beskrivning samt lägga till eller ta "
+"bort datorer och ansvariga personer från gruppen. Ändringar träder inte i "
+"kraft förrän du klicka på knappen \"Spara ändringar\" längst ner på skärmen."
 
 #: templates/documentation/groups/edit.html
 msgid "Add/remove computers"
@@ -1771,6 +1777,67 @@ msgid ""
 msgstr ""
 "Kom ihåg att ändringar i listan över datorer inte blir permanenta förrän du "
 "klickade på \"Spara ändringar\" längst ner på skärmen."
+
+#: templates/documentation/groups/edit.html
+msgid "Add/remove supervisors"
+msgstr "Lägg till/ta bort ansvariga personer"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"A list of supervisors for the group is shown on the right side of the "
+"screen. You can edit the supervisors for the group as described below."
+msgstr ""
+"På höger sida av skärmen ser du en lista över ansvariga personer för "
+"gruppen. Du kan redigera de ansvariga personer för gruppen enligt "
+"beskrivningen nedan."
+
+#: templates/documentation/groups/edit.html
+msgid "Add a supervisor"
+msgstr "Lägg till en ansvarig person"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"You add supervisors by clicking on \"Add a supervisor to the group\". If "
+"there are any users on your site that are not yet supervisors for the group, "
+"they will be shown in a list. Click on a user to make them a supervisor for "
+"the group."
+msgstr ""
+"Du lägger till ansvariga personer genom att klicka på \"Lägga till en "
+"ansvarig person för gruppen\". Om det finns några användare på din site som "
+"ännu inte är ansvariga personer för gruppen, kommer de att visas i en lista. "
+"Klicka på en användare för att göra dem till ansvarig person för gruppen."
+
+#: templates/documentation/groups/edit.html
+msgid "Remove a supervisor"
+msgstr "Ta bort en ansvarig person"
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"You remove a supervisor by clicking on the X to the right of the "
+"supervisor's username in the list of supervisors for the group."
+msgstr ""
+"Du tar bort en ansvarig person genom att klicka på X:et till höger om "
+"personens användarnamn i listan över ansvariga personer för gruppen."
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"Remember that changes to the list of supervisors do not become permanent "
+"until you've clicked on \"Save changes\" at the bottom of the screen."
+msgstr ""
+"Kom ihåg att ändringar i listan över ansvariga personer inte blir permanenta "
+"förrän du klickade på \"Spara ändringar\" längst ner på skärmen."
+
+#: templates/documentation/groups/edit.html
+msgid ""
+"If a group has one or more supervisors, those supervisors will receive any "
+"email warnings or notifications related to the computers in the group "
+"instead of the recipients set on the relevant security rules or offline "
+"rules."
+msgstr ""
+"Om en grupp har en eller flera ansvariga personer, kommer dessa ansvariga "
+"personer att få alla e-postvarningar eller aviseringar relaterade til "
+"datorerna i gruppen istället för mottagarna som anges i relevanta "
+"säkerhetsregler eller offline-regler."
 
 #: templates/documentation/groups/edit.html
 msgid "Notice for users of On/Off schedules"
@@ -2091,6 +2158,103 @@ msgstr "Felsökning och rättning"
 #: templates/documentation/jobs/index.html
 msgid "Patching security issues (CVE's identified in Ubuntu)"
 msgstr "Lappa säkerhetshål (CVE'er identificeret i Ubuntu)"
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"Email notifications regarding computers that have been offline for longer "
+"than a selected period of time are generated by offline rules. If no offline "
+"rules have been defined, no notifications will be sent."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"When an offline rule detects that a PC has been offline for too long, the "
+"system will also generate an event for that PC."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"The system will only check the defined offline rules every ten minutes. It "
+"is thus possible for there to be a delay of up to ten minutes between a PC "
+"exceeding the allowed offline period and a notification being sent. This was "
+"necessary to limit the load on the admin-site."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid "Creating or editing offline rules"
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"The overview \"Monitoring Rules\" shows all the defined security rules and "
+"offline rules that are monitored. You can edit an existing offline rule by "
+"selecting it in the list. You can define a new offline rule by clicking on "
+"\"Add new offline rule\" above the list. The interface for both operations "
+"has the same form."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid "An offline rule has the following parameters:"
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid "Name (mandatory): the name of the particular offline rule."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"Monitor period (mandatory): The period during which the rule is active. It "
+"is recommended to choose this period such that you avoid receiving "
+"notifications when computers are turned off for the night."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"Maximum offline period allowed, in minutes (mandatory): The maximum period "
+"of time that a computer can be offline during the monitor period before "
+"email notifications are sent. Cannot be less than 15 minutes."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+#: templates/documentation/security_scripts/securityproblems.html
+msgid "Severity level (mandatory): Choose between Critical, High and Normal."
+msgstr "Allvarlighetsgrad (obligatorisk): Välj mellan Kritisk, Hög och Normal."
+
+#: templates/documentation/notifications/index.html
+msgid "Description (optional): A description of the particular offline rule."
+msgstr ""
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"Monitored groups (optional): The groups define which computers the offline "
+"rule applies to."
+msgstr ""
+"Övervakade grupper (frivillig): Grupperna definierar vilka datorer den "
+"aktuella offline-regeln är aktiv för."
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"Recipient(s) of email warning (optional): The users that should receive "
+"email notifications related to this offline rule. Note that if a monitored "
+"PC belongs to one or more groups with supervisors, those supervisors will "
+"receive any email notifications related to that PC instead of the recipients "
+"set here."
+msgstr ""
+"Mottagare av e-postavisering (frivillig): Vilka användare som ska få e-"
+"postaviseringar relaterade till denna offline-regel. Observera att om en "
+"övervakad dator tillhör en eller flera grupper med ansvariga personer, då "
+"kommer dessa ansvariga personer att få alla e-postaviseringar relaterade "
+"till det PC istället för de mottagare som valts här."
+
+#: templates/documentation/notifications/index.html
+msgid ""
+"Any changes made to an offline rule will not take effect until you have "
+"clicked on \"Save changes\" at the bottom of the screen. Similarly, you must "
+"click on \"Save changes\" to finish creating a new offline rule once you "
+"have filled out the mandatory parameters. You can verify that the offline "
+"rule has been created by checking if it appears in the list of monitored "
+"rules."
+msgstr ""
 
 #: templates/documentation/om_os2borgerpc_admin.html
 msgid ""
@@ -2621,10 +2785,12 @@ msgstr "Redigering av Säkerhetsskript"
 #: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/edit.html
 #: templates/documentation/security_scripts/securityevents.html
+#: templates/site_with_navigation.html
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
-msgid "Security Events"
-msgstr "Säkerhetsincidenter"
+#: templates/system/security_events/site_security_events.html
+msgid "Events"
+msgstr "Incidenter"
 
 #: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/securityproblems.html
@@ -2810,7 +2976,7 @@ msgstr ""
 msgid ""
 "This overview shows the individual events that have been triggered by the "
 "system. In the left column, you can choose how you wish to filter the "
-"overview, i.e. choose which events you wish to see. By default you will be "
+"overview, i.e. choose which events you wish to see. By default, you will be "
 "shown all unresolved events with a severity level greater than normal. The "
 "severity level is also shown in the overview."
 msgstr ""
@@ -2822,15 +2988,14 @@ msgstr ""
 
 #: templates/documentation/security_scripts/securityevents.html
 msgid ""
-"From the overview you can select and handle security events. Handling an "
-"event allows you to change its status and the assigned user as well as add "
-"or change a note for the event. It is possible to handle multiple events "
-"simultaneously."
+"From the overview you can select and handle events. Handling an event allows "
+"you to change its status and the assigned user as well as add or change a "
+"note for the event. It is possible to handle multiple events simultaneously."
 msgstr ""
-"Från översikten kan du välja och hantera säkerhetsincidenter. Genom att "
-"hantera en incident kan du ändra dess status och den tilldelade användaren "
-"samt lägga till eller ändra en anteckning för incidenten. Det är möjligt att "
-"hantera flera incidenter samtidigt."
+"Från översikten kan du välja och hantera incidenter. Genom att hantera en "
+"incident kan du ändra dess status och den tilldelade användaren samt lägga "
+"till eller ändra en anteckning för incidenten. Det är möjligt att hantera "
+"flera incidenter samtidigt."
 
 #: templates/documentation/security_scripts/securityevents.html
 msgid ""
@@ -2844,53 +3009,63 @@ msgstr ""
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"The overview \"Security Rules\" shows all the defined security rules that "
-"are monitored. You can define new security rules from the overview."
+"The overview \"Monitoring Rules\" shows all the defined security rules and "
+"offline rules that are monitored. You can define new security rules from the "
+"overview by clicking on \"Add new security rule\" above the list of defined "
+"rules. You can edit an existing security rule by selecting it in the list. "
+"The interface for both operations has the same form."
 msgstr ""
-"Översikten \"Säkerhetsregler\" visar alla definierade säkerhetsregler som "
-"övervakas. Från översikten kan skapas nya säkerhetsregler."
+"Översikten \"Övervakningsregler\" visar alla definierade säkerhetsregler och "
+"offline-regler som övervakas. Från översikten kan skapas nya säkerhetsregler "
+"genom att klicka på \"Lägg till ny säkerhetsregel\" ovanför listan med "
+"definierade regler. Du kan redigera en befintlig säkerhetsregel genom att "
+"välja den i listan. Gränssnittet för båda operationerna har samma form."
 
 #: templates/documentation/security_scripts/securityproblems.html
-msgid "A new security rule must have the following input"
-msgstr "En ny säkerhetsregel måste ha följande indata"
+msgid "A new security rule takes the following input"
+msgstr "En ny säkerhetsregel tar följande indata"
 
 #: templates/documentation/security_scripts/securityproblems.html
-msgid "Name: the name of the particular security rule."
-msgstr "Namn: Namnet på säkerhetsregeln i fråga."
+msgid "Name (mandatory): the name of the particular security rule."
+msgstr "Namn (obligatorisk): Namnet på säkerhetsregeln i fråga."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"Description: A descriptive text that is included in the sent email warnings."
+"Security Script (mandatory): The Security Script is executed every time the "
+"machine checks in with the admin-site."
 msgstr ""
-"Beskrivning: Beskrivande text som ingår i de skickade varningsmeddelandena."
-
-#: templates/documentation/security_scripts/securityproblems.html
-msgid "Severity level: Choose between Critical, High and Normal."
-msgstr "Allvarlighetsgrad: Välj mellan Kritisk, Hög och Normal."
-
-#: templates/documentation/security_scripts/securityproblems.html
-msgid ""
-"Security Script: The Security Script is executed every time the machine "
-"checks in with the admin-site."
-msgstr ""
-"Säkerhetsskript: Säkerhetsskriptet körs varje gång en dator checkar in på "
-"adminsidan."
+"Säkerhetsskript (obligatorisk): Säkerhetsskriptet körs varje gång en dator "
+"checkar in på adminsidan."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"Monitored groups: The groups define which computers the security rule "
-"applies to."
+"Description (optional): A descriptive text that is included in the sent "
+"email warnings."
 msgstr ""
-"Övervakade grupper: Grupperna definierar vilka datorer den aktuella "
-"säkerhetsregeln är aktiv för."
+"Beskrivning (frivillig): Beskrivande text som ingår i de skickade "
+"varningsmeddelandena."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
-"Recipient(s) of email warning: The users that should receive an email about "
-"any security events related to the security rule."
+"Monitored groups (optional): The groups define which computers the security "
+"rule applies to."
 msgstr ""
-"Mottagare av e-postavisering: Vilka användare som ska få ett e-"
-"postmeddelande om säkerhetsincidenter relaterade till denna säkerhetsregel."
+"Övervakade grupper (frivillig): Grupperna definierar vilka datorer den "
+"aktuella säkerhetsregeln är aktiv för."
+
+#: templates/documentation/security_scripts/securityproblems.html
+msgid ""
+"Recipient(s) of email warning (optional): The users that should receive an "
+"email about any events related to the security rule. Note that if a "
+"monitored PC belongs to one or more groups with supervisors, those "
+"supervisors will receive any email warnings related to that PC instead of "
+"the recipients set here."
+msgstr ""
+"Mottagare av e-postavisering (frivillig): Vilka användare som ska få ett e-"
+"postmeddelande om incidenter relaterade till denna säkerhetsregel. Observera "
+"att om en övervakad dator tillhör en eller flera grupper med ansvariga "
+"personer, då kommer dessa ansvariga personer att få alla e-postvarningar "
+"relaterade till det PC istället för de mottagare som valts här."
 
 #: templates/documentation/status/index.html
 msgid ""
@@ -3763,11 +3938,6 @@ msgid "Monitoring"
 msgstr "Övervakning"
 
 #: templates/site_with_navigation.html
-#: templates/system/security_events/site_security_events.html
-msgid "Events"
-msgstr "Incidenter"
-
-#: templates/site_with_navigation.html
 #: templates/system/event_rules/shared_navigation.html
 msgid "Monitoring Rules"
 msgstr "Övervakningsregler"
@@ -3802,8 +3972,12 @@ msgid "Security rule definition"
 msgstr "Definition av säkerhetsregler"
 
 #: templates/site_with_navigation.html
-msgid "Help regarding security events"
-msgstr "Hjälp vid säkerhetsincidenter"
+msgid "Offline rule definition"
+msgstr "Definition av offline-regler"
+
+#: templates/site_with_navigation.html
+msgid "Help regarding events"
+msgstr "Hjälp vid incidenter"
 
 #: templates/site_with_navigation.html
 msgid "Administrating groups"
@@ -3877,32 +4051,22 @@ msgid "Save"
 msgstr "Spara"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-msgid "Delete security rule"
-msgstr "Ta bort säkerhetsregeln"
+msgid "Delete offline rule"
+msgstr "Ta bort offline-regel"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
-msgid "Security Rule"
-msgstr "Säkerhetsregel"
+#: templates/system/pcgroups/site_groups.html
+msgid "Offline Rule"
+msgstr "Offline-regel"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
 #, python-format
 msgid ""
-"If a %(security_rule)s is deleted, the related %(security_events)s will also "
-"be deleted."
+"If a %(offline_rule)s is deleted, the related %(events)s will also be "
+"deleted."
 msgstr ""
-"Om en %(security_rule)s raderas, kommer de relaterade %(security_events)s "
-"också raderas."
-
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
-#: templates/system/scripts/create.html templates/system/scripts/update.html
-msgid "Security Script"
-msgstr "Säkerhetsskript"
+"Om en %(offline_rule)s raderas, kommer de relaterade %(events)s också "
+"raderas."
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
@@ -3910,31 +4074,22 @@ msgid "Email recipients"
 msgstr "E-postmottagare"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
-msgid "the Security Rule"
-msgstr "Säkerhetsregeln"
+msgid "the Offline Rule"
+msgstr "Offline-regeln"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
 #, python-format
 msgid ""
-"Associated %(groups)s, %(security_script)s and %(email_recipients)s will be "
-"removed from %(the_security_rule)s."
+"Associated %(groups)s and %(email_recipients)s will be removed from "
+"%(the_offline_rule)s."
 msgstr ""
-"Associerade %(groups)s, %(security_script)s och%(email_recipients)s kommer "
-"atttas bort från %(the_security_rule)s."
+"Associerade %(groups)s och %(email_recipients)s kommer att tas bort från "
+"%(the_offline_rule)s."
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
 msgid "The Groups"
 msgstr "Grupperna"
-
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/scripts/confirm_delete.html
-msgid "the Security Script"
-msgstr "Säkerhetsskriptet"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
@@ -3948,19 +4103,16 @@ msgid "NOT"
 msgstr "INTE"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
 #, python-format
 msgid ""
-"%(the_groups)s, %(the_security_script)s and %(the_email_recipients)s "
-"themselves will %(NOT)s be deleted."
+"%(the_groups)s and %(the_email_recipients)s themselves will %(NOT)s be "
+"deleted."
 msgstr ""
-"Själva %(the_groups)s, %(the_security_script)s og %(the_email_recipients)s "
-"kommer %(NOT)s raderas."
+"Själva %(the_groups)s och %(the_email_recipients)s kommer %(NOT)s raderas."
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-msgid "Are you sure you wish to delete the Security Rule"
-msgstr "Är du säker på att du vill ta bort säkerhetsregeln?"
+msgid "Are you sure you wish to delete the Offline Rule"
+msgstr "Är du säker på att du vill radera Offline-regeln"
 
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
@@ -3972,6 +4124,62 @@ msgstr "Är du säker på att du vill ta bort säkerhetsregeln?"
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 msgid "Confirm deletion"
 msgstr "Bekräfta radering"
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "Delete security rule"
+msgstr "Ta bort säkerhetsregeln"
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+msgid "Security Rule"
+msgstr "Säkerhetsregel"
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#, python-format
+msgid ""
+"If a %(security_rule)s is deleted, the related %(events)s will also be "
+"deleted."
+msgstr ""
+"Om en %(security_rule)s raderas, kommer de relaterade %(events)s också "
+"raderas."
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+#: templates/system/scripts/create.html templates/system/scripts/update.html
+msgid "Security Script"
+msgstr "Säkerhetsskript"
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+msgid "the Security Rule"
+msgstr "Säkerhetsregeln"
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#, python-format
+msgid ""
+"Associated %(groups)s, %(security_script)s and %(email_recipients)s will be "
+"removed from %(the_security_rule)s."
+msgstr ""
+"Associerade %(groups)s, %(security_script)s och %(email_recipients)s kommer "
+"att tas bort från %(the_security_rule)s."
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/scripts/confirm_delete.html
+msgid "the Security Script"
+msgstr "Säkerhetsskriptet"
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#, python-format
+msgid ""
+"%(the_groups)s, %(the_security_script)s and %(the_email_recipients)s "
+"themselves will %(NOT)s be deleted."
+msgstr ""
+"Själva %(the_groups)s, %(the_security_script)s og %(the_email_recipients)s "
+"kommer %(NOT)s raderas."
+
+#: templates/system/event_rules/security_problem_confirm_delete.html
+msgid "Are you sure you wish to delete the Security Rule"
+msgstr "Är du säker på att du vill ta bort Säkerhetsregeln"
 
 #: templates/system/event_rules/shared_navigation.html
 msgid "Add new security rule"
@@ -4188,7 +4396,7 @@ msgstr "%(the_computers)s og %(the_scripts)s kommer %(not)s raderas.."
 
 #: templates/system/pcgroups/confirm_delete.html
 msgid "Are you sure you want to delete the group "
-msgstr "Är du säker på att du vill ta bort gruppen? "
+msgstr "Är du säker på att du vill ta bort gruppen "
 
 #: templates/system/pcgroups/form.html
 msgid "New group"
@@ -4270,10 +4478,6 @@ msgid "Associated monitoring rules"
 msgstr "Associerad övervakningsregler"
 
 #: templates/system/pcgroups/site_groups.html
-msgid "Offline Rule"
-msgstr "Offline-regel"
-
-#: templates/system/pcgroups/site_groups.html
 msgid "Security Problem"
 msgstr "Säkerhetsregel"
 
@@ -4325,7 +4529,7 @@ msgstr "Datorns hela jobbhistorik kommer också att raderas"
 
 #: templates/system/pcs/confirm_delete.html
 msgid "Are you sure you want to delete the computer"
-msgstr "Är du säker på att du vill radera datorn?"
+msgstr "Är du säker på att du vill radera datorn"
 
 #: templates/system/pcs/form.html
 msgid "There are no computers"
@@ -4356,8 +4560,8 @@ msgid "Never"
 msgstr "Aldrig"
 
 #: templates/system/pcs/form.html
-msgid "Last security event received"
-msgstr "Senaste säkerhetsincidenten har tagits emot"
+msgid "Last event received"
+msgstr "Senaste incidenten har tagits emot"
 
 #: templates/system/pcs/form.html
 msgid "Groups the computer is a member of"
@@ -4532,8 +4736,8 @@ msgid "Level"
 msgstr "Svårighetsgrad"
 
 #: templates/system/security_events/site_security_events.html
-msgid "Edit Security Events"
-msgstr "Redigera säkerhetsincidenter"
+msgid "Edit Events"
+msgstr "Redigera Incidenter"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Handle event"
@@ -4648,8 +4852,8 @@ msgid "Latest check-in"
 msgstr "Senaste incheckning"
 
 #: templates/system/site_status.html
-msgid "Latest security event received"
-msgstr "Senaste säkerhetsincidenten har tagits emot"
+msgid "Latest event received"
+msgstr "Senaste incidenten har tagits emot"
 
 #: templates/system/site_status.html
 msgid "Online"
@@ -4781,7 +4985,7 @@ msgstr ""
 
 #: templates/system/wake_plan/confirm_delete.html
 msgid "Are you sure you wish to delete the On/Off schedule"
-msgstr "Är du säker på att du vill radera På/Av schemat?"
+msgstr "Är du säker på att du vill radera På/Av schemat"
 
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event_base.html
@@ -4805,7 +5009,7 @@ msgstr ""
 
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 msgid "Are you sure you wish to delete the Exception"
-msgstr "Är du säker på att du vill ta bort undantaget?"
+msgstr "Är du säker på att du vill ta bort undantaget"
 
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 msgid "Altered opening hours"
