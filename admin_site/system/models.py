@@ -250,7 +250,7 @@ class Site(models.Model):
         pass
 
     def get_absolute_url(self):
-        return "/site/{0}".format(self.url)
+        return reverse("settings", kwargs={"slug": self.uid})
 
 
 class FeaturePermission(models.Model):
