@@ -2,7 +2,6 @@
 import os
 import json
 from datetime import datetime
-from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -10,7 +9,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
-from django.utils import translation
+from django.utils import translation 
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
 
@@ -35,7 +34,7 @@ from django_otp import devices_for_user, user_has_device
 from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
-from system.utils import get_notification_string
+from system.utils import get_notification_string, notification_changes_saved, set_notification_cookie
 
 from account.models import (
     UserProfile,
@@ -77,12 +76,6 @@ from system.forms import (
 )
 
 # from django.forms.widgets import SecurityProblemForm
-
-
-def set_notification_cookie(response, message, error=False):
-    descriptor = {"message": message, "type": "success" if not error else "error"}
-
-    response.set_cookie("bibos-notification", quote(json.dumps(descriptor), safe=""))
 
 
 def run_wake_plan_script(site, pcs, args, user, type="remove"):
@@ -3035,6 +3028,13 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         ).first()
 
         return context
+
+    def form_valid(self, form):
+        response = super(__class__, self).form_valid(form)
+
+        notification_changes_saved(response, self.request.user.bibos_profile.language)
+
+        return response
 
 
 class SecurityProblemCreate(EventRuleBaseMixin, CreateView):
