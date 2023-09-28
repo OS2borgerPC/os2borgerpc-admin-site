@@ -75,15 +75,13 @@ from system.forms import (
     WakePlanForm,
 )
 
-# from django.forms.widgets import SecurityProblemForm
-
 
 def run_wake_plan_script(site, pcs, args, user, type="remove"):
     if type == "set":
         script = Script.objects.get(uid="wake_plan_set")
     else:
         script = Script.objects.get(uid="wake_plan_remove")
-    batch = script.run_on(site, pcs, *args, user=user)
+    script.run_on(site, pcs, *args, user=user)
 
 
 def otp_check(
