@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
-from django.utils import translation 
+from django.utils import translation
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
 
@@ -34,7 +34,11 @@ from django_otp import devices_for_user, user_has_device
 from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
-from system.utils import get_notification_string, notification_changes_saved, set_notification_cookie
+from system.utils import (
+    get_notification_string,
+    notification_changes_saved,
+    set_notification_cookie,
+)
 
 from account.models import (
     UserProfile,
