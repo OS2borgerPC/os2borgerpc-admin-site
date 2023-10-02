@@ -10,12 +10,6 @@
 <script type="text/javascript" src="/static/js/configlist.js"></script>
 {% endblock %}
 
-<!--
-<a style="border: none; border-left: 2px solid" class="border-warning btn btn-light btn-lg" href="{% url 'edit_site' slug=site.url %}">
-  <span class='material-icons'>edit</span>
-</a>
--->
-
 {% block specific_content %}
   <div class="container-fluid main">
 
@@ -32,8 +26,7 @@
         </li>
       </ul>
 
-    <!--<form action="{% url 'settings' site.uid %}" -->
-    <form action="" method="post" name="site_settings_form" id="site_settings_form" action="{% url 'settings' site.uid %}">
+    <form method="post" name="site_settings_form" id="site_settings_form">
       {% csrf_token %}
       <div class="tab-content pb-4" style="border-radius: .33rem .33rem 0 0;">
 

@@ -1,15 +1,19 @@
 """Utility methods for the OS2borgerPC project."""
 
-import requests
+import json
 import logging
-import traceback
 import re
+import requests
+import traceback
+from urllib.parse import quote
 
 from importlib import import_module
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+from django.utils import translation
+from django.utils.translation import gettext_lazy as _
 
 
 def notify_users(security_event, security_problem, pc):
@@ -146,3 +150,17 @@ def get_notification_string(python_list, conjunction="og"):
     else:
         string = ""
     return string
+
+
+def set_notification_cookie(response, message, error=False):
+    descriptor = {"message": message, "type": "success" if not error else "error"}
+
+    response.set_cookie("page-notification", quote(json.dumps(descriptor), safe=""))
+
+
+def notification_changes_saved(response, bibos_profile_language):
+    translation.activate(bibos_profile_language)
+    set_notification_cookie(response, _("Changes have been saved %s") % "")
+    translation.deactivate()
+
+    return response

@@ -6,7 +6,6 @@ from django.views.generic import RedirectView
 from system.views import (
     AdminIndex,
     ConfigurationEntryCreate,
-    ConfigurationEntryDelete,
     ConfigurationEntryUpdate,
     DocView,
     ImageVersionsView,
@@ -190,11 +189,6 @@ urlpatterns = [
         r"^site/(?P<site_uid>[^/]+)/configuration/edit/(?P<pk>\d+)/$",
         ConfigurationEntryUpdate.as_view(),
         name="edit_configuration",
-    ),
-    re_path(
-        r"^site/(?P<site_uid>[^/]+)/configuration/delete/(?P<pk>\d+)/$",
-        ConfigurationEntryDelete.as_view(),
-        name="delete_configuration",
     ),
     # Computers
     re_path(r"^site/(?P<slug>[^/]+)/computers/$", PCsView.as_view(), name="computers"),

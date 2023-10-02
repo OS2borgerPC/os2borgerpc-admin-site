@@ -37,11 +37,11 @@ var BibOS
 
       $('#editconfig_value').attr('maxlength', 4096)
 
-      var m = document.cookie.match(/\bbibos-notification\s*=\s*([^;]+)/)
+      var m = document.cookie.match(/\bpage-notification\s*=\s*([^;]+)/)
       if(m) {
         try {
           var descriptor = JSON.parse(decodeURIComponent(m[1]))
-          notification = $('.bibos-notification').first()
+          notification = $('.page-notification').first()
           if (descriptor["type"] == "error") {
             notification.addClass("alert-danger")
           } else {
@@ -55,7 +55,7 @@ var BibOS
              broken cookie */
           console.error(e)
         }
-        document.cookie = 'bibos-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
+        document.cookie = 'page-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
       }
 
       if(location.href.match(documentation_match))
