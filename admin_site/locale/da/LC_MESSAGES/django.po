@@ -4907,11 +4907,19 @@ msgstr "Offline"
 
 #: templates/system/site_two_factor.html
 msgid ""
+"Enable two-factor authentication for superuser login on OS2borgerPC and "
+"OS2borgerPC Kiosk"
+msgstr ""
+"Aktiver totrinsbekræftelse for superuser-login på OS2borgerPC og "
+"OS2borgerPC Kiosk"
+
+#: templates/system/site_two_factor.html
+msgid ""
 "This section is related to setting up two-factor authentication for "
 "superuser on an OS2borgerPC or OS2borgerPC Kiosk computer."
 msgstr ""
-"Denne sektion er relateret til opsætning af totrinsbekræftelse for superuser på en "
-"OS2borgerPC eller OS2borgerPC Kiosk-maskine."
+"Denne sektion er relateret til opsætning af totrinsbekræftelse for superuser "
+"på en OS2borgerPC eller OS2borgerPC Kiosk-maskine."
 
 #: templates/system/site_two_factor.html
 msgid ""
@@ -4955,11 +4963,11 @@ msgstr ""
 
 #: templates/system/site_two_factor.html
 msgid "Click on"
-msgstr ""
+msgstr "Klik på"
 
 #: templates/system/site_two_factor.html
-msgid "Totrinsbekræftelse for superuser"
-msgstr ""
+msgid "Two-factor authentication for superuser"
+msgstr "Totrinsbekræftelse for superuser"
 
 #: templates/system/site_two_factor.html
 msgid "to go to the script"

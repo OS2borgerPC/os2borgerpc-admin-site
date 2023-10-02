@@ -4928,11 +4928,11 @@ msgstr ""
 
 #: templates/system/site_two_factor.html
 msgid "Click on"
-msgstr ""
+msgstr "Klicka på"
 
 #: templates/system/site_two_factor.html
-msgid "Totrinsbekræftelse for superuser"
-msgstr ""
+msgid "Two-factor authentication for superuser"
+msgstr "Tvåstegsverifiering för superuser"
 
 #: templates/system/site_two_factor.html
 msgid "to go to the script"
