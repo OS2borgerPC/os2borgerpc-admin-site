@@ -79,13 +79,13 @@
       <!-- The three tabs on the page: -->
       <ul class="nav nav-tabs" role="tablist" id="pc-tabs">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="details-tab" href="#details" role="tab" aria-controls="details" aria-selected="true">{% translate "Details" %}</a>
+          <a class="nav-link active" id="details-tab" href="#details" role="tab" data-bs-toggle="tab" aria-controls="details" aria-selected="true">{% translate "Details" %}</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="jobs-tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="false">{% translate "Job history" %}</a>
+          <a class="nav-link" id="jobs-tab" href="#jobs" role="tab" data-bs-toggle="tab" aria-controls="jobs" aria-selected="false">{% translate "Job history" %}</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="configs-tabs" href="#configs" role="tab" aria-controls="configs" aria-selected="false">{% translate "Configurations" %}</a>
+          <a class="nav-link" id="configs-tabs" href="#configs" role="tab" data-bs-toggle="tab" aria-controls="configs" aria-selected="false">{% translate "Configurations" %}</a>
         </li>
       </ul>
 
@@ -93,7 +93,7 @@
       <div class="tab-content">
 
         <div id="details" class="tabcontent tab-pane fade show active" role="tabpanel" aria-labelledby="details-tab">
-      
+
           <div class="row gx-5">
 
             <fieldset class="col-12 col-lg-6">
@@ -146,29 +146,24 @@
           <table id="computer_jobs_table" class="table jobtable">
             <thead>
               <tr>
-                {% translate "Script" as script_label %}
-                {% translate "Created" as created_label %}
-                {% translate "Started" as started_label %}
-                {% translate "Finished" as finished_label %}
-                {% translate "Status" as status_label %}
-                {% include 'widgets/orderby_th_reload.html' with key='batch__script__name' label=script_label anchor='#jobs' %}
-                {% include 'widgets/orderby_th_reload.html' with key='created' label=created_label anchor='#jobs' %}
-                {% include 'widgets/orderby_th_reload.html' with key='started' label=started_label anchor='#jobs' %}
-                {% include 'widgets/orderby_th_reload.html' with key='finished' label=finished_label anchor='#jobs' %}
-                {% include 'widgets/orderby_th_reload.html' with key='status' label=status_label anchor='#jobs' %}
-                <th></th> {# Job-info-button #}
+                <th>{% translate "Script" %}</th>
+                <th>{% translate "Created" %}</th>
+                <th>{% translate "Started" %}</th>
+                <th>{% translate "Finished" %}</th>
+                <th>{% translate "Status" %}</th>
+                <th>{% translate "Info" %}</th> {# Job-info-button #}
               </tr>
             </thead>
             {% for job in joblist %}
             <tr class="muted">
-              <td class="{% if orderby_key == 'batch__script__name' %}orderby-highligt{% endif %}">
+              <td>
                   <a href="{% url 'script' site.uid job.batch.script.pk %}"><strong>{{job.batch.script.name}}</strong></a>
                   <span class="batch">{{job.batch.name}}</span>
               </td>
-              <td class="{% if orderby_key == 'created' %}orderby-highligt{% endif %}">{{job.created|default:'-'}}</td>
-              <td class="{% if orderby_key == 'started' %}orderby-highligt{% endif %}">{{job.started|default:'-'}}</td>
-              <td class="{% if orderby_key == 'finished' %}orderby-highligt{% endif %}">{{job.finished|default:'-'}}</td>
-              <td class="{% if orderby_key == 'status' %}orderby-highligt{% endif %}"><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
+              <td>{{job.created|default:'-'}}</td>
+              <td>{{job.started|default:'-'}}</td>
+              <td>{{job.finished|default:'-'}}</td>
+              <td><span class="badge {{job.status_label}}">{{job.status_translated}}</span></td>
               <td>
                 {% if job.has_info %}
                   <button type="button" class="btn jobinfobutton p-0" data-pk="{{ job.pk }}" data-bs-toggle="popover" data-bs-content="Loading..." data-bs-html="true" data-bs-placement="left" data-bs-trigger="click" data-bs-animation="true">
@@ -185,25 +180,9 @@
       </div>
 
       <script>
-        // Hack to ensure that when sorting jobs table,
-        // the "Jobhistorik" tab opens on window load:
         window.addEventListener('load', function() {
-          // Manually initialize javascript for tabs
-          var triggerTabList = [].slice.call(document.querySelectorAll('#pc-tabs a'))
-          triggerTabList.forEach(function (triggerEl) {
-            var tabTrigger = new bootstrap.Tab(triggerEl)
-            triggerEl.addEventListener('click', function (event) {
-              tabTrigger.show()
-            })
-          })
           // Initialize job info buttons on load.
           BibOS.setupJobInfoButtons($(".jobtable"))
-
-          // Open #jobs tab if the url contains this hash
-          if (location.hash === '#jobs') {
-            var triggerEl = document.getElementById('jobs-tab')
-            bootstrap.Tab.getInstance(triggerEl).show()
-          }
         })
       </script>
     </form>
