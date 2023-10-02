@@ -160,7 +160,7 @@ def set_notification_cookie(response, message, error=False):
 
 def notification_changes_saved(response, bibos_profile_language):
     translation.activate(bibos_profile_language)
-    set_notification_cookie(response, _("Changes have been saved"))
+    set_notification_cookie(response, _("Changes have been saved %s") % "")
     translation.deactivate()
 
     return response
