@@ -3340,6 +3340,8 @@ documentation_menu_items = [
     ("", _("OS2borgerPC Kiosk")),
     ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
     ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
+    ("", _("Audit")),
+    ("audit_doc", _("FAQ (PDF)")),
     ("", _("Technical Documentation")),
     ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
     ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
@@ -3396,6 +3398,8 @@ class DocView(TemplateView, LoginRequiredMixin):
             + "docs/OS2BorgerPC_installation_guide_old",
             "creating_security_problems": "https://raw.githubusercontent.com/OS2borgerPC/admin-site/development/"
             + "admin_site/static/docs/OS2BorgerPC_security_rules",
+            "audit_doc": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Audit_doc"
         }
         for key in pdf_href:
             pdf_href[key] += "_" + self.request.user.bibos_profile.language + ".pdf"

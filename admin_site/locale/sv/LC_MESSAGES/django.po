@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-11 10:13+0200\n"
+"POT-Creation-Date: 2023-10-11 11:09+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -987,6 +987,14 @@ msgstr "Installationsguide"
 #: system/views.py
 msgid "Updating Wi-Fi setup"
 msgstr "Uppdaterar Wi-Fi inställningar"
+
+#: system/views.py
+msgid "Audit"
+msgstr "Revision"
+
+#: system/views.py
+msgid "FAQ (PDF)"
+msgstr "Vanliga frågor (PDF)"
 
 #: system/views.py templates/documentation/tech.html
 msgid "Technical Documentation"
