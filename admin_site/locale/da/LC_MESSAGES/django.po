@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-02 13:38+0200\n"
+"POT-Creation-Date: 2023-10-11 09:34+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -201,6 +201,11 @@ msgstr "Forrige"
 #: templates/two_factor/_wizard_actions.html
 msgid "Next"
 msgstr "Næste"
+
+#: changelog/views.py
+#, python-format
+msgid "There is no news category with the following ID: %s"
+msgstr "Der findes ingen nyhedskategori med følgende ID: %s"
 
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
@@ -658,6 +663,7 @@ msgid "assigned user"
 msgstr "håndteres af"
 
 #: system/utils.py
+#, python-format
 msgid "Changes have been saved %s"
 msgstr "Ændringerne er blevet gemt %s"
 
@@ -4611,6 +4617,11 @@ msgstr "Tilføj computer til gruppe"
 msgid "Remove computer from group"
 msgstr "Fjern computer fra gruppe"
 
+#: templates/system/pcs/form.html
+#: templates/system/security_events/site_security_events.html
+msgid "Info"
+msgstr "Info"
+
 #: templates/system/pcs/site_pcs.html
 msgid "No computers were found"
 msgstr "Der blev ikke fundet nogen computere"
@@ -4786,10 +4797,6 @@ msgstr "Håndter hændelser"
 #: templates/system/security_events/site_security_events.html
 msgid "Rule"
 msgstr "Regel"
-
-#: templates/system/security_events/site_security_events.html
-msgid "Info"
-msgstr "Info"
 
 #: templates/system/security_events/site_security_events.html
 msgid "Device"

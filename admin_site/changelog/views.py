@@ -13,6 +13,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.http import Http404
+from django.utils.translation import gettext_lazy as _
 
 
 # Mixin class to require login - copied from system app
@@ -67,8 +69,16 @@ class ChangelogListView(ListView):
         context["tag_filter"] = self.request.GET.get("tag")
 
         if context["tag_filter"]:
-            context["tag_filter"] = ChangelogTag.objects.get(pk=context["tag_filter"])
-            queryset = queryset.filter(tags=context["tag_filter"])
+            try:
+                context["tag_filter"] = ChangelogTag.objects.get(
+                    pk=context["tag_filter"]
+                )
+                queryset = queryset.filter(tags=context["tag_filter"])
+            except ChangelogTag.DoesNotExist:
+                raise Http404(
+                    _("There is no news category with the following ID: %s")
+                    % context["tag_filter"]
+                )
 
         # Paginate the queryset and add it to the context
         context["entries"] = self.get_paginated_queryset(queryset, context["page"])
