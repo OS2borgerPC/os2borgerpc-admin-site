@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-11 09:34+0200\n"
+"POT-Creation-Date: 2023-10-11 10:13+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1246,7 +1246,7 @@ msgstr ""
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -4872,53 +4872,66 @@ msgstr "Online"
 msgid "Offline"
 msgstr "Offline"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Enable two-factor authentication for superuser login on OS2borgerPC and "
 "OS2borgerPC Kiosk"
-msgstr "Aktivera tvåstegsverifiering for superuser inloggning på en Sambruk MedborgarPC eller en Sambruk MedborgerPC "
-"Kiosk"
+msgstr ""
+"Aktivera tvåstegsverifiering for superuser inloggning på en Sambruk "
+"MedborgarPC eller en Sambruk MedborgerPC Kiosk"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "This section is related to setting up two-factor authentication for "
 "superuser on an OS2borgerPC or OS2borgerPC Kiosk computer."
 msgstr ""
-"Det här avsnittet är relaterat till att ställa in tvåstegsverifiering for superuser på en "
-"Sambruk MedborgarPC eller en Sambruk MedborgarPC Kiosk"
+"Det här avsnittet är relaterat till att ställa in tvåstegsverifiering for "
+"superuser på en Sambruk MedborgarPC eller en Sambruk MedborgarPC Kiosk"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Two-factor authentication on your admin-site profile is administered from "
 "the Users-section."
 msgstr ""
 "Tvåstegsverifiering på din admin-site profil hanteras från användarsektionen."
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Create security key and QR"
 msgstr "Skapa säkerhetsnyckel och QR"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Generate security key and QR"
 msgstr "Generera säkerhetsnyckel och QR"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Security key:"
 msgstr "Säkerhetsnyckel:"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Security Key copied!"
 msgstr "Säkerhetsnyckel kopierad!"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Scan the QR code from step 1 with your authenticator app"
 msgstr "Skanna QR-koden från steg 1 med din autentiseringsapp."
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Some examples of authenticator apps are:"
 msgstr "Autentiseringsappen kan användas till exempel:"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
+msgid "App"
+msgstr "App"
+
+#: templates/system/site_two_factor_pc.html
+msgid "Platform"
+msgstr "Plattform"
+
+#: templates/system/site_two_factor_pc.html
+msgid "Open Source"
+msgstr "Öppen Källa"
+
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Copy the security key from step 1 and run the two-factor script with it as "
 "input"
@@ -4926,15 +4939,15 @@ msgstr ""
 "Kopiera säkerhetsnyckeln från steg 1 och kör tvåstegsskriptet med den som "
 "Ingångsparameter."
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Click on"
 msgstr "Klicka på"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Two-factor authentication for superuser"
 msgstr "Tvåstegsverifiering för superuser"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "to go to the script"
 msgstr "för att gå till skriptet"
 

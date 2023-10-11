@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-11 09:34+0200\n"
+"POT-Creation-Date: 2023-10-11 10:13+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1241,7 +1241,7 @@ msgstr ""
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -4905,15 +4905,15 @@ msgstr "Online"
 msgid "Offline"
 msgstr "Offline"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Enable two-factor authentication for superuser login on OS2borgerPC and "
 "OS2borgerPC Kiosk"
 msgstr ""
-"Aktiver totrinsbekræftelse for superuser-login på OS2borgerPC og "
-"OS2borgerPC Kiosk"
+"Aktiver totrinsbekræftelse for superuser-login på OS2borgerPC og OS2borgerPC "
+"Kiosk"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "This section is related to setting up two-factor authentication for "
 "superuser on an OS2borgerPC or OS2borgerPC Kiosk computer."
@@ -4921,7 +4921,7 @@ msgstr ""
 "Denne sektion er relateret til opsætning af totrinsbekræftelse for superuser "
 "på en OS2borgerPC eller OS2borgerPC Kiosk-maskine."
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Two-factor authentication on your admin-site profile is administered from "
 "the Users-section."
@@ -4929,31 +4929,43 @@ msgstr ""
 "Totrinsbekræftelse på din admin-site profil administreres fra sektionen "
 "Brugere."
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Create security key and QR"
 msgstr "Opret sikkerhedsnøgle og QR"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Generate security key and QR"
 msgstr "Generér sikkerhedsnøgle og QR"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Security key:"
 msgstr "Sikkerhedsnøgle:"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Security Key copied!"
 msgstr "Sikkerhedsnøgle kopieret!"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Scan the QR code from step 1 with your authenticator app"
 msgstr "Scan QR-koden fra trin 1 med din authenticator app"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Some examples of authenticator apps are:"
 msgstr "Som authenticator app kan eksempelvis bruges:"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
+msgid "App"
+msgstr "App"
+
+#: templates/system/site_two_factor_pc.html
+msgid "Platform"
+msgstr "Platform"
+
+#: templates/system/site_two_factor_pc.html
+msgid "Open Source"
+msgstr "Open Source"
+
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Copy the security key from step 1 and run the two-factor script with it as "
 "input"
@@ -4961,15 +4973,15 @@ msgstr ""
 "Kopier sikkerhedsnøglen fra trin 1 og kør totrinsscriptet med den som "
 "inputparameter"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Click on"
 msgstr "Klik på"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Two-factor authentication for superuser"
 msgstr "Totrinsbekræftelse for superuser"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "to go to the script"
 msgstr "for at gå til scriptet"
 

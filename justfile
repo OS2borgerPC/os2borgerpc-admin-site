@@ -104,7 +104,7 @@ run-debug:
   sudo docker attach {{django_container}}
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)
-translations-make-messages: (verify-container-running django_container)
+translations-make-messages: (verify-container-running django_container) fix-permissions
   @just managepy makemessages --all --ignore venv --add-location file
   @just managepy makemessages --all --ignore venv --add-location file -d djangojs
 
