@@ -1,7 +1,7 @@
 {% extends "site_with_navigation.html" %}
 {% load i18n %}
 {% block specific_title %}
-{% translate "Two-factor authentication" %}
+{% translate "Enable two-factor authentication for superuser login on OS2borgerPC and OS2borgerPC Kiosk" %}
 {% endblock %}
 
 {% block head_javascripts %}
@@ -18,13 +18,13 @@
 
 {% block specific_content %}
   <div class="container-fluid main">
-    <h2 class="divideheader"> {% translate "Activate: Two-factor authentication for OS2borgerPC" %} </h2>
+
     <div class="tab-content">
       <div class="alert alert-info">
         <strong>{% translate "Note" %}</strong>
         <ul>
           <li>{% blocktranslate trimmed %}
-            This section is related to setting up two-factor authentication on an OS2borgerPC.
+            This section is related to setting up two-factor authentication for superuser on an OS2borgerPC or OS2borgerPC Kiosk computer.
           {% endblocktranslate %}</li>
           <li>{% blocktranslate trimmed %}
             Two-factor authentication on your admin-site profile is administered from the Users-section.
@@ -38,29 +38,66 @@
         <button class="btn btn-secondary my-3" name="generate-security-key-qr" id="generate-security-key-qr">
           {% translate "Generate security key and QR" %}
         </button>
-        <p class='mb-0 d-none' id='key-text'>{% translate "Security key:" %}</p>
-        <!-- Koden skal være i base32 - 26 tegn bestående af A-Z og 2-7 (ikke 0-9!) -->
-        <p id="security_code"></p>
-        <div id="qr"></div>
+        <div id="security-key" class="d-none">
+          <p class='mb-0' id='key-text'>{% translate "Security key:" %}</p>
+          <!-- Koden skal være i base32 - 26 tegn bestående af A-Z og 2-7 (ikke 0-9!) -->
+          <p>
+            <span id="security-text" class="copy-text"></span>
+            <button class="btn btn-link copy-btn">
+              <span class="material-icons">content_copy</span>
+            </button>
+            <span class="d-none after-copy-text">{% translate "Security Key copied!" %}</span>
+          </p>
+          <div id="qr"></div>
+        </div>
       </li>
       <li class="py-3">
         <p><strong>{% translate "Scan the QR code from step 1 with your authenticator app" %}</strong></p>
         <p>{% translate "Some examples of authenticator apps are:" %}</p>
-        <ul>
-          <li><a href="https://freeotp.github.io" target="_blank">FreeOTP Authenticator</a></li>
-          <li><a href="https://authy.com" target="_blank">Authy</a></li>
-          <li><a href="https://duo.com" target="_blank">Duo Mobile</a></li>
-          <li><a href="https://www.microsoft.com/en-us/security/mobile-authenticator-app" target="_blank">Microsoft Authenticator</a></li>
-          <!-- A better link would direct to both the version on Android and IOS, but I'm not sure it currently exists? -->
-          <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator</a></li>
-          <li><a href="https://lastpass.com/auth/" target="_blank">LastPass Authenticator</a></li>
-        </ul>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>{% translate "App" %}</strong></td>
+                <td><strong>{% translate "Platform" %}</strong></td>
+                <td><strong>{% translate "Open Source" %}</strong></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://freeotp.github.io" target="_blank">FreeOTP Authenticator</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">check</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://getaegis.app/" target="_blank">Aegis Authenticator</a></td>
+                <td>Android</td>
+                <td><span class="material-icons">check</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://authy.com" target="_blank">Authy</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">close</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.microsoft.com/en-us/security/mobile-authenticator-app" target="_blank">Microsoft Authenticator</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">close</span></td>
+              </tr>
+              <!-- A better link would direct to both the version on Android and IOS, but I'm not sure one currently exists? -->
+              <tr>
+                <td><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">close</span></td>
+              </tr>
+            </tbody>
+          </table>
       </li>
       <li class="py-3">
         <p><strong>{% translate "Copy the security key from step 1 and run the two-factor script with it as input" %}</strong></p>
         <p>
-          {% blocktranslate with name="Totrinsbekræftelse for superuser" %}You can find the script "{{name}}" under the menu item {% endblocktranslate %}
-          <a href="{% url 'scripts' site.uid %}" target="_blank">{% translate "Scripts" %}</a>.
+          {% translate "Click on" %}
+          <a href="{% url 'script_redirect_uid' 'two_factor' %}" target="_blank">{% translate "Two-factor authentication for superuser" %}</a>
+          {% translate "to go to the script" %}.
         </p>
       </li>
     </ol>
@@ -82,13 +119,17 @@
       for ( var i = 0; i < security_code_length; i++ ) {
         security_code += character_set.charAt(Math.floor(Math.random() * character_set_length))
       }
-      document.getElementById('key-text').classList.remove('d-none')
-      document.getElementById('security_code').innerText = security_code
+      const copy_el = document.getElementById('security-key')
+
+      copy_el.classList.remove('d-none')
+      document.getElementById('security-text').innerText = security_code
+
+      copy_button(copy_el)
     }
 
     // Update page to show the QR code
     function generate_qr() {
-      let security_code = document.getElementById('security_code').innerText
+      let security_code = document.getElementById('security-text').innerText
 
       // Normally 'any' below is the hostname, but we're setting it up on multiple machines with different
       // hostnames, but fortunately it's not important

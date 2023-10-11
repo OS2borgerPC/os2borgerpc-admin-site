@@ -347,7 +347,7 @@ class SiteSettings(UpdateView, SiteView):
 
 
 class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
-    template_name = "system/site_two_factor.html"
+    template_name = "system/site_two_factor_pc.html"
 
 
 class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
