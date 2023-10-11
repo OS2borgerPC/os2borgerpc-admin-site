@@ -54,14 +54,43 @@
       <li class="py-3">
         <p><strong>{% translate "Scan the QR code from step 1 with your authenticator app" %}</strong></p>
         <p>{% translate "Some examples of authenticator apps are:" %}</p>
-        <ul>
-          <li><a href="https://freeotp.github.io" target="_blank">FreeOTP Authenticator</a></li>
-          <li><a href="https://authy.com" target="_blank">Authy</a></li>
-          <li><a href="https://duo.com" target="_blank">Duo Mobile</a></li>
-          <li><a href="https://www.microsoft.com/en-us/security/mobile-authenticator-app" target="_blank">Microsoft Authenticator</a></li>
-          <!-- A better link would direct to both the version on Android and IOS, but I'm not sure one currently exists? -->
-          <li><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator</a></li>
-        </ul>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>{% translate "App" %}</strong></td>
+                <td><strong>{% translate "Platform" %}</strong></td>
+                <td><strong>{% translate "Open Source" %}</strong></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://freeotp.github.io" target="_blank">FreeOTP Authenticator</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">check</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://getaegis.app/" target="_blank">Aegis Authenticator</a></td>
+                <td>Android</td>
+                <td><span class="material-icons">check</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://authy.com" target="_blank">Authy</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">close</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.microsoft.com/en-us/security/mobile-authenticator-app" target="_blank">Microsoft Authenticator</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">close</span></td>
+              </tr>
+              <!-- A better link would direct to both the version on Android and IOS, but I'm not sure one currently exists? -->
+              <tr>
+                <td><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Google Authenticator</a></td>
+                <td>Android, IOS</td>
+                <td><span class="material-icons">close</span></td>
+              </tr>
+            </tbody>
+          </table>
       </li>
       <li class="py-3">
         <p><strong>{% translate "Copy the security key from step 1 and run the two-factor script with it as input" %}</strong></p>
