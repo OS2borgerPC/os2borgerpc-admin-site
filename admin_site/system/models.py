@@ -819,14 +819,14 @@ class Script(AuditModelMixin):
         return self.inputs.all().order_by("position")
 
     def get_absolute_url(self, **kwargs):
-        if "site_uid" in kwargs:
-            site_uid = kwargs["site_uid"]
+        if "slug" in kwargs:
+            slug = kwargs["slug"]
         else:
-            site_uid = self.site.uid
+            slug = self.site.uid
         if self.is_security_script:
-            return reverse("security_script", args=(site_uid, self.pk))
+            return reverse("security_script", args=(slug, self.pk))
         else:
-            return reverse("script", args=(site_uid, self.pk))
+            return reverse("script", args=(slug, self.pk))
 
     class Meta:
         ordering = ["name"]
