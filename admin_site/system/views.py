@@ -930,6 +930,8 @@ class ScriptMixin(object):
                     par = AssociatedScriptParameter(
                         associated_script=associated_script, input=script_input
                     )
+                    if script_input.value_type == Input.BOOLEAN:
+                        par.string_value = "True"
                     par.save()
 
 
