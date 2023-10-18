@@ -571,8 +571,8 @@ msgstr "Kan inte ändra status från {0} til {1}"
 
 #: system/models.py system/views.py
 #, python-format
-msgid "Can only restart jobs with status %s"
-msgstr "Kan endast starta om jobb som har status %s"
+msgid "Can only restart jobs that are Done or Failed %s"
+msgstr "Kan endast starta om jobb som er Utförd eller Misslyckad %s"
 
 #: system/models.py templates/documentation/scripts/parameters.html
 msgid "String"
