@@ -19,7 +19,7 @@ detailpage
 
   <nav id="left-menu" class="nav nav-pills utils-global">
 
-    {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
+    {% if user.is_superuser or user.user_profile.sites.count > 1 %}
       <a href="/sites/" class="nav-link link-light" style="display: flex; flex-flow: row nowrap; align-items: center;">
         <span class="material-icons">arrow_back</span>
           {% translate "Sites" %}

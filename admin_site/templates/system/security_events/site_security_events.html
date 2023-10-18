@@ -12,7 +12,7 @@
        var security_events_update_url = "{% url 'security_events_update' site.uid %}"
        /* This cookie is used to get the correct language for event severity
        and event status */
-       var lang = "{{request.user.bibos_profile.language}}"
+       var lang = "{{request.user.user_profile.language}}"
        document.cookie = "django_language="+lang;
   </script>
   <script type="text/javascript" src="/static/js/security_events_list.js"></script>
