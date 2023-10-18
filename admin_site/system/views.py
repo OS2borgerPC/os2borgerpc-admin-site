@@ -146,8 +146,7 @@ class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
         if slug_field:
             site = get_object_or_404(Site, uid=kwargs[slug_field])
         check_function = user_passes_test(
-            lambda u: (u.is_superuser)
-            or (site and site in u.bibos_profile.sites.all()),
+            lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
             login_url="/",
         )
         wrapped_super = check_function(super(SuperAdminOrThisSiteMixin, self).dispatch)
@@ -241,7 +240,7 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
         """Redirect based on user. This view will use the RequireLogin mixin,
         so we'll always have a logged-in user."""
         user = self.request.user
-        profile = user.bibos_profile
+        profile = user.user_profile
 
         # If user only has one site, redirect to that.
         if profile.sites.count() == 1:
@@ -266,7 +265,7 @@ class SiteList(ListView, LoginRequiredMixin):
         if user.is_superuser:
             qs = Site.objects.all()
         else:
-            qs = user.bibos_profile.sites.all()
+            qs = user.user_profile.sites.all()
         return qs
 
     def get_context_data(self, **kwargs):
@@ -338,7 +337,7 @@ class SiteSettings(UpdateView, SiteView):
 
         response = super(SiteSettings, self).form_valid(form)
 
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response, _("Settings for %s updated") % self.kwargs["slug"]
         )
@@ -700,7 +699,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
     def status_fail_response(self):
         response = HttpResponseRedirect(self.get_success_url())
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("Can only restart jobs with status %s") % Job.FAILED,
@@ -735,7 +734,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
         self.object.restart(user=self.request.user)
         response = HttpResponseRedirect(self.get_success_url())
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("The script %s is being rerun on the computer %s")
@@ -1030,9 +1029,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context[
             "site_membership"
-        ] = request_user.bibos_profile.sitemembership_set.filter(
-            site_id=site.id
-        ).first()
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         return context
 
     def get_object(self, queryset=None):
@@ -1054,7 +1051,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.save_script_inputs()
             self.create_associated_script_parameters()
             response = super(ScriptUpdate, self).form_valid(form)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(response, _("Script %s updated") % self.script.name)
             translation.deactivate()
 
@@ -1088,7 +1085,7 @@ class GlobalScriptRedirectID(RedirectView, LoginRequiredMixin):
         if script.site:
             return "/"
         else:  # If the script is global
-            user_sites = user.bibos_profile.sites.all()
+            user_sites = user.user_profile.sites.all()
 
             # If a user is a member of multiple sites, just randomly pick the first one
             kwargs["slug"] = user_sites.first().uid
@@ -1109,7 +1106,7 @@ class GlobalScriptRedirectUID(RedirectView, LoginRequiredMixin):
             return "/"
         else:  # If the script is global
             # If a user is a member of multiple sites, just randomly pick the first one
-            first_site_uid = user.bibos_profile.sites.all().first().uid
+            first_site_uid = user.user_profile.sites.all().first().uid
 
             return reverse("script", args=[first_site_uid, script.pk])
 
@@ -1233,7 +1230,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         script = self.get_object()
 
         site = script.site
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -1425,7 +1422,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                         asc.run_on(self.request.user, [pc])
         if invalid_groups_names:
             invalid_groups_string = get_notification_string(invalid_groups_names)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1437,7 +1434,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             )
             translation.deactivate()
         else:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(response, _("Computer %s updated") % pc.name)
             translation.deactivate()
         return response
@@ -1514,7 +1511,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
             + "/static/docs/Wake_plan_user_guide"
             + "_"
-            + self.request.user.bibos_profile.language
+            + self.request.user.user_profile.language
             + ".pdf"
         )
 
@@ -1707,7 +1704,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
 
         # If some groups or exceptions could not be verified, display this and the reason
         if invalid_groups_string and invalid_events_string:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1726,7 +1723,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             )
             translation.deactivate()
         elif invalid_groups_string and not invalid_events_string:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1743,7 +1740,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             )
             translation.deactivate()
         elif not invalid_groups_string and invalid_events_string:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1755,7 +1752,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             )
             translation.deactivate()
         else:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response, _("PCWakePlan %s created") % self.object.name
             )
@@ -1899,7 +1896,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             # If some groups or exceptions could not be verified, display this and the reason
             if invalid_groups_string and invalid_events_string:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1918,7 +1915,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 )
                 translation.deactivate()
             elif invalid_groups_string and not invalid_events_string:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1935,7 +1932,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 )
                 translation.deactivate()
             elif not invalid_groups_string and invalid_events_string:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1947,7 +1944,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 )
                 translation.deactivate()
             else:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("PCWakePlan %s updated") % self.object.name,
@@ -2052,7 +2049,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
 
         response = super(WakePlanDelete, self).delete(form, *args, **kwargs)
 
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("Wake Week Plan %s deleted") % deleted_plan_name,
@@ -2211,7 +2208,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                                 type="set",
                             )
 
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("Wake Change Event %s updated") % self.object.name,
@@ -2220,7 +2217,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
         else:
             response = self.form_invalid(form)
             if overlapping_event:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("The chosen dates would cause overlap with event %s in plan %s")
@@ -2229,7 +2226,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                 )
                 translation.deactivate()
             else:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("The end date cannot be before the start date %s") % "",
@@ -2284,7 +2281,7 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
             response = super(WakeChangeEventCreate, self).form_valid(form)
         else:
             response = self.form_invalid(form)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("The end date cannot be before the start date %s") % "",
@@ -2379,7 +2376,7 @@ class UsersMixin(object):
         if "user_list" not in context:
             self.add_userlist_to_context(context)
         request_user = self.request.user
-        user_profile = request_user.bibos_profile
+        user_profile = request_user.user_profile
         site_membership = user_profile.sitemembership_set.filter(
             site=context["site"]
         ).first()
@@ -2402,7 +2399,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def get_form_kwargs(self):
         kwargs = super(UserCreate, self).get_form_kwargs()
-        kwargs["language"] = self.request.user.bibos_profile.language
+        kwargs["language"] = self.request.user.user_profile.language
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -2412,7 +2409,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site=site
         ).first()
 
@@ -2452,7 +2449,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
+            site_membership = self.selected_user.user_profile.sitemembership_set.get(
                 site__uid=self.kwargs["site_uid"]
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
@@ -2483,7 +2480,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
         site_membership_req_user = (
-            self.request.user.bibos_profile.sitemembership_set.filter(site=site).first()
+            self.request.user.user_profile.sitemembership_set.filter(site=site).first()
         )
         if (
             self.request.user.is_superuser
@@ -2493,7 +2490,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             self.object = form.save()
 
-            user_profile = self.object.bibos_profile
+            user_profile = self.object.user_profile
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
@@ -2502,7 +2499,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
             response = super(UserUpdate, self).form_valid(form)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response, _("User %s updated") % self.object.username
             )
@@ -2528,7 +2525,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
+            site_membership = self.selected_user.user_profile.sitemembership_set.get(
                 site__uid=self.kwargs["site_uid"]
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
@@ -2550,7 +2547,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -2559,7 +2556,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             raise PermissionDenied
         response = super(UserDelete, self).delete(form, *args, **kwargs)
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
         )
@@ -2682,7 +2679,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         ).values_list("pk", "name", "uid")
 
         # supervisor picklist related
-        user_set = User.objects.filter(bibos_profile__sites=site)
+        user_set = User.objects.filter(user_profile__sites=site)
         selected_user_ids = form["supervisors"].value()
         context["available_users"] = user_set.exclude(
             pk__in=selected_user_ids
@@ -2834,7 +2831,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     ) = self.get_notification_strings(
                         pcs_with_other_plans_names, other_plans_names
                     )
-                    translation.activate(self.request.user.bibos_profile.language)
+                    translation.activate(self.request.user.user_profile.language)
                     set_notification_cookie(
                         response,
                         _(
@@ -2850,7 +2847,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     )
                     translation.deactivate()
                 else:
-                    translation.activate(self.request.user.bibos_profile.language)
+                    translation.activate(self.request.user.user_profile.language)
                     set_notification_cookie(
                         response,
                         _("Group %s updated") % self.object.name,
@@ -2863,7 +2860,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             # HttpResponse, so make one with form_invalid()
             response = self.form_invalid(form)
             parameter = e.args[0]
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("No value was specified for the mandatory input %s" " of script %s")
@@ -2947,7 +2944,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
                 )
 
         response = super(PCGroupDelete, self).delete(form, *args, **kwargs)
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(response, _("Group %s deleted") % name)
         translation.deactivate()
         return response
@@ -2998,7 +2995,7 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
             pk__in=selected_group_ids
         ).values_list("pk", "name", "pk")
 
-        user_set = User.objects.filter(bibos_profile__sites=site)
+        user_set = User.objects.filter(user_profile__sites=site)
         selected_user_ids = form["alert_users"].value() or []
 
         context["available_users"] = user_set.exclude(
@@ -3025,16 +3022,14 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         request_user = self.request.user
         context[
             "site_membership"
-        ] = request_user.bibos_profile.sitemembership_set.filter(
-            site_id=site.id
-        ).first()
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
 
         return context
 
     def form_valid(self, form):
         response = super(__class__, self).form_valid(form)
 
-        notification_changes_saved(response, self.request.user.bibos_profile.language)
+        notification_changes_saved(response, self.request.user.user_profile.language)
 
         return response
 
@@ -3076,7 +3071,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -3126,7 +3121,7 @@ class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form, *args, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -3171,7 +3166,7 @@ class SecurityEventsView(SiteView):
 
         context["form"] = SecurityEventForm()
         qs = context["form"].fields["assigned_user"].queryset
-        qs = qs.filter(bibos_profile__sites=self.get_object())
+        qs = qs.filter(user_profile__sites=self.get_object())
         context["form"].fields["assigned_user"].queryset = qs
 
         return context
@@ -3402,7 +3397,7 @@ class DocView(TemplateView, LoginRequiredMixin):
             + "/static/docs/Audit_doc",
         }
         for key in pdf_href:
-            pdf_href[key] += "_" + self.request.user.bibos_profile.language + ".pdf"
+            pdf_href[key] += "_" + self.request.user.user_profile.language + ".pdf"
         context["pdf_href"] = pdf_href
 
         # Set heading according to chosen item

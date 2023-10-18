@@ -153,7 +153,7 @@ class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         initial = kwargs.setdefault("initial", {})
         if "instance" in kwargs and kwargs["instance"] is not None:
-            user_profile = kwargs["instance"].bibos_profile
+            user_profile = kwargs["instance"].user_profile
             site = kwargs.pop("site")
             site_membership = user_profile.sitemembership_set.get(site=site)
             initial["usertype"] = site_membership.site_user_type

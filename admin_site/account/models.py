@@ -6,11 +6,11 @@ from system.models import Site
 
 
 class UserProfile(models.Model):
-    """BibOS Admin specific user profile."""
+    """OS2borgerPC Admin specific user profile."""
 
     # This is the user to which the profile belongs
     user = models.OneToOneField(
-        User, unique=True, related_name="bibos_profile", on_delete=models.CASCADE
+        User, unique=True, related_name="user_profile", on_delete=models.CASCADE
     )
 
     sites = models.ManyToManyField(
