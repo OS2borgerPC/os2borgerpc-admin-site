@@ -88,7 +88,7 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "wake_plan" as current_url_wake_plans %}
-    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' site_uid=site.url %}">
+    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' slug=site.url %}">
       <span class="material-icons">bolt</span> {% translate "On/Off schedules" %}
     </a>
 
@@ -114,7 +114,7 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
+    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' slug=site.url %}">
       <span class="material-icons"> cloud_download </span> {% translate "Versions" %}
     </a>
     <hr>

@@ -69,12 +69,12 @@ urlpatterns = [
     # url("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     # Security events UI
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/security_events/update/$",
+        r"^site/(?P<slug>[^/]+)/security_events/update/$",
         SecurityEventsUpdate.as_view(),
         name="security_events_update",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/security_events/search/$",
+        r"^site/(?P<slug>[^/]+)/security_events/search/$",
         SecurityEventSearch.as_view(),
         name="security_event_search",
     ),
@@ -96,33 +96,33 @@ urlpatterns = [
     ),
     # Security problems
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/security_problems/new/$",
+        r"^site/(?P<slug>[^/]+)/security_problems/new/$",
         SecurityProblemCreate.as_view(),
         name="event_rule_security_problem_new",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/security_problems/(?P<id>[^/]+)/delete/$",
+        r"^site/(?P<slug>[^/]+)/security_problems/(?P<id>[^/]+)/delete/$",
         SecurityProblemDelete.as_view(),
         name="event_rule_security_problem_delete",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/security_problems/(?P<id>[^/]+)/$",
+        r"^site/(?P<slug>[^/]+)/security_problems/(?P<id>[^/]+)/$",
         SecurityProblemUpdate.as_view(),
         name="event_rule_security_problem",
     ),
     # Event Rule Server
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/event_rules_server/new/$",
+        r"^site/(?P<slug>[^/]+)/event_rules_server/new/$",
         EventRuleServerCreate.as_view(),
         name="event_rule_server_new",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/event_rules_server/(?P<id>[^/]+)/delete/$",
+        r"^site/(?P<slug>[^/]+)/event_rules_server/(?P<id>[^/]+)/delete/$",
         EventRuleServerDelete.as_view(),
         name="event_rule_server_delete",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/event_rules_server/(?P<id>[^/]+)/$",
+        r"^site/(?P<slug>[^/]+)/event_rules_server/(?P<id>[^/]+)/$",
         EventRuleServerUpdate.as_view(),
         name="event_rule_server",
     ),
@@ -181,12 +181,12 @@ urlpatterns = [
         r"^site/(?P<slug>[^/]+)/settings/$", SiteSettings.as_view(), name="settings"
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/configuration/new/$",
+        r"^site/(?P<slug>[^/]+)/configuration/new/$",
         ConfigurationEntryCreate.as_view(),
         name="new_configuration",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/configuration/edit/(?P<pk>\d+)/$",
+        r"^site/(?P<slug>[^/]+)/configuration/edit/(?P<pk>\d+)/$",
         ConfigurationEntryUpdate.as_view(),
         name="edit_configuration",
     ),
@@ -198,12 +198,12 @@ urlpatterns = [
         name="computers_json_site_summary",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/computers/(?P<pc_uid>[^/]+)/$",
+        r"^site/(?P<slug>[^/]+)/computers/(?P<pc_uid>[^/]+)/$",
         PCUpdate.as_view(),
         name="computer",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/computers/(?P<pc_uid>[^/]+)/delete/$",
+        r"^site/(?P<slug>[^/]+)/computers/(?P<pc_uid>[^/]+)/delete/$",
         PCDelete.as_view(),
         name="computer_delete",
     ),
@@ -212,85 +212,85 @@ urlpatterns = [
         r"^site/(?P<slug>[^/]+)/groups/$", PCGroupRedirect.as_view(), name="groups"
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/groups/new/$",
+        r"^site/(?P<slug>[^/]+)/groups/new/$",
         PCGroupCreate.as_view(),
         name="new_group",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_id>[^/]+)/$",
+        r"^site/(?P<slug>[^/]+)/groups/(?P<group_id>[^/]+)/$",
         PCGroupUpdate.as_view(),
         name="group",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/groups/(?P<group_id>[^/]+)/delete/$",
+        r"^site/(?P<slug>[^/]+)/groups/(?P<group_id>[^/]+)/delete/$",
         PCGroupDelete.as_view(),
         name="group_delete",
     ),
     # Wake Plans
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_plans/$",
+        r"^site/(?P<slug>[^/]+)/wake_plans/$",
         WakePlanRedirect.as_view(),
         name="wake_plans",
     ),
     # This URL needs to be above WakePlanUpdate, as otherwise that regex tries to parse the word "new" as an ID
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_plan/new/$",
+        r"^site/(?P<slug>[^/]+)/wake_plan/new/$",
         WakePlanCreate.as_view(),
         name="wake_plan_new",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/$",
+        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/$",
         WakePlanUpdate.as_view(),
         name="wake_plan",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/delete/$",
+        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/delete/$",
         WakePlanDelete.as_view(),
         name="wake_plan_delete",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/copy/$",
+        r"^site/(?P<slug>[^/]+)/wake_plan/(?P<wake_week_plan_id>[^/]+)/copy/$",
         WakePlanDuplicate.as_view(),
         name="wake_plan_duplicate",
     ),
     # Wake Change Events
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_change_events/$",
+        r"^site/(?P<slug>[^/]+)/wake_change_events/$",
         WakeChangeEventRedirect.as_view(),
         name="wake_change_events",
     ),
     # This URL needs to be above WakeChangeEventUpdate, as otherwise that regex tries to parse the word "new" as an ID
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_change_event/new_altered_hours/$",
+        r"^site/(?P<slug>[^/]+)/wake_change_event/new_altered_hours/$",
         WakeChangeEventCreate.as_view(),
         name="wake_change_event_new_altered_hours",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_change_event/new_closed/$",
+        r"^site/(?P<slug>[^/]+)/wake_change_event/new_closed/$",
         WakeChangeEventCreate.as_view(),
         name="wake_change_event_new_closed",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/$",
+        r"^site/(?P<slug>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/$",
         WakeChangeEventUpdate.as_view(),
         name="wake_change_event",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/delete/$",
+        r"^site/(?P<slug>[^/]+)/wake_change_event/(?P<wake_change_event_id>[^/]+)/delete/$",
         WakeChangeEventDelete.as_view(),
         name="wake_change_event_delete",
     ),
     # Jobs
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/jobs/search/", JobSearch.as_view(), name="jobsearch"
+        r"^site/(?P<slug>[^/]+)/jobs/search/", JobSearch.as_view(), name="jobsearch"
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/jobs/(?P<pk>\d+)/restart/",
+        r"^site/(?P<slug>[^/]+)/jobs/(?P<pk>\d+)/restart/",
         JobRestarter.as_view(),
         name="restart_job",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/jobs/(?P<pk>\d+)/info/",
+        r"^site/(?P<slug>[^/]+)/jobs/(?P<pk>\d+)/info/",
         JobInfo.as_view(),
         name="job_info",
     ),
@@ -330,18 +330,15 @@ urlpatterns = [
     # Users
     re_path(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
+        r"^site/(?P<slug>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$",
+        r"^site/(?P<slug>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$",
         UserUpdate.as_view(),
         name="user",
     ),
     re_path(
-        (
-            r"^site/(?P<site_uid>[^/]+)/users/"
-            + r"(?P<username>[_\w\@\.\+\-]+)/delete/$"
-        ),
+        (r"^site/(?P<slug>[^/]+)/users/" + r"(?P<username>[_\w\@\.\+\-]+)/delete/$"),
         UserDelete.as_view(),
         name="delete_user",
     ),
@@ -391,12 +388,12 @@ urlpatterns = [
     re_path(r"^documentation/", DocView.as_view(), name="doc_root"),
     # Image Versions
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/image-versions/$",
+        r"^site/(?P<slug>[^/]+)/image-versions/$",
         ImageVersionsView.as_view(),
         name="image-versions",
     ),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/image-versions/(?P<platform>[^/]+)$",
+        r"^site/(?P<slug>[^/]+)/image-versions/(?P<platform>[^/]+)$",
         ImageVersionsView.as_view(),
         name="image-version-major",
     ),
