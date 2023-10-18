@@ -210,7 +210,7 @@ class Site(models.Model):
     @property
     def users(self):
         users = (
-            User.objects.filter(bibos_profile__sites=self)
+            User.objects.filter(user_profile__sites=self)
             .extra(select={"lower_name": "lower(username)"})
             .order_by("lower_name")
         )

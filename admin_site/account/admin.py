@@ -30,18 +30,18 @@ class MyUserAdmin(UserAdmin):
         "sites",
         "is_staff",
         "is_active",
-        "bibos_profile",
+        "user_profile",
     )
     search_fields = ("username", "email")
 
     @transaction.atomic
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
-        if not hasattr(obj, "bibos_profile"):
+        if not hasattr(obj, "user_profile"):
             UserProfile.objects.create(user=obj)
 
     def sites(self, obj):
-        return list(obj.bibos_profile.sites.all())
+        return list(obj.user_profile.sites.all())
 
 
 class SiteMembershipInline(admin.TabularInline):
