@@ -11,9 +11,9 @@
   {% translate "API Keys" as api_keys %}
   {% translate "PC's"|bold as pcs %}
   {% translate "Events"|bold as events %}
-  {% translate "Security Events"|bold as security_events %}
-  {% translate "Offline Events"|bold as offline_events %}
   {% translate "PC"|bold as pc %}
+  {% translate "Jobs"|bold as jobs %}
+  {% translate "Logins"|bold as logins %}
   {% translate "Configurations"|bold as configurations %}
   {% translate "Generate an API key"|bold as gen_key %}
   <h1>API</h1>
@@ -34,20 +34,19 @@
   </p>
 
   <p>
-    {% translate "The data available through the API includes:" %}
+    {% translate "The API has endpoints for the following:" %}
     <ul>
-      <li>{% blocktranslate %}Data about {{pcs}}{% endblocktranslate %}</li>
-      <li>
-        {% blocktranslate trimmed %}
-        Data about {{events}}, including both {{security_events}} and {{offline_events}}
-        {% endblocktranslate %}
-      </li>
-      <li>{% blocktranslate %}Data about {{pc}}{% endblocktranslate %}
+      <li>{{pcs}}</li>
+      <li>{{events}}</li>
+      <li>{{jobs}}</li>
+      <li>{{pc}}
        <a href="{% url 'doc' 'configuration' %}">{{configurations}}</a>,
       {% blocktranslate trimmed %}
-       which contain extended info about a {{pc}}, such as hostname and IP addresses
+       which contains extended info about a {{pc}}, such as hostname and IP addresses
       {% endblocktranslate %}
       </li>
+      <li>{{pc}} {{logins}} {% blocktranslate trimmed %}which contains information about how many {{logins}} a single or
+        all computers have had on a given day{% endblocktranslate %}</li>
     </ul>
   </p>
   <p>
@@ -84,7 +83,7 @@
     </p>
     <p>
       {% blocktranslate trimmed %}
-      You can generate, edit or delete API keys by going to {{site_settings}} and then clicking the link
+      You can generate, edit or delete API keys by going to {{site_settings}} and then clicking the link&nbsp;
       {% endblocktranslate %}
       <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
     </p>

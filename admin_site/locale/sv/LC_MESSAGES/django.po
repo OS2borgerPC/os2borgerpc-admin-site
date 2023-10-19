@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-19 12:07+0200\n"
+"POT-Creation-Date: 2023-10-19 16:37+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -928,8 +928,8 @@ msgstr "Grupper"
 msgid "On/Off schedules"
 msgstr "Schema för på- och avstängning"
 
-#: system/views.py templates/site_with_navigation.html
-#: templates/system/jobs/site_jobs.html
+#: system/views.py templates/documentation/api.html
+#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
 #: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
@@ -1104,16 +1104,12 @@ msgid "Events"
 msgstr "Incidenter"
 
 #: templates/documentation/api.html
-msgid "Security Events"
-msgstr "Säkerhetsincidenter"
-
-#: templates/documentation/api.html
-msgid "Offline Events"
-msgstr "Off-lineincidenter"
-
-#: templates/documentation/api.html
 msgid "PC"
 msgstr "PC"
+
+#: templates/documentation/api.html
+msgid "Logins"
+msgstr "Inloggningar"
 
 #: templates/documentation/api.html
 msgid "Generate an API key"
@@ -1121,15 +1117,15 @@ msgstr "Generera en API-nyckel"
 
 #: templates/documentation/api.html
 msgid "OS2borgerPC has a REST API with the root URL at"
-msgstr ""
+msgstr "Sambruk MedborgarPC har ett REST API med rot-URL:n på"
 
 #: templates/documentation/api.html
 msgid "The documentation for this API is available at"
-msgstr ""
+msgstr "Dokumentationen för detta API finns på"
 
 #: templates/documentation/api.html
 msgid "More info about this below."
-msgstr ""
+msgstr "Mer info om detta nedan"
 
 #: templates/documentation/api.html
 #, python-format
@@ -1139,35 +1135,29 @@ msgid ""
 msgstr ""
 
 #: templates/documentation/api.html
-msgid "The data available through the API includes:"
-msgstr ""
-
-#: templates/documentation/api.html
-#, python-format
-msgid "Data about %(pcs)s"
-msgstr ""
+msgid "The API has endpoints for the following:"
+msgstr "Api:n har slutpunkter för följande"
 
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"Data about %(events)s, including both %(security_events)s and "
-"%(offline_events)s"
+"which contains extended info about a %(pc)s, such as hostname and IP "
+"addresses"
 msgstr ""
+"som innehåller utökad information om en %(pc)s, såsom värdnamn och IP-"
+"adresser"
 
 #: templates/documentation/api.html
-#, python-format
-msgid "Data about %(pc)s"
-msgstr "Information om %(pc)s"
-
-#: templates/documentation/api.html
-#, python-format
 msgid ""
-"which contain extended info about a %(pc)s, such as hostname and IP addresses"
+"which contains information about how many %(logins)s a single or all "
+"computers have had on a given day"
 msgstr ""
+"som innehåller information om hur många %(logins)s en enda eller alla "
+"datorer har haft en viss dag"
 
 #: templates/documentation/api.html
 msgid "HTTP header"
-msgstr ""
+msgstr "HTTP header"
 
 #: templates/documentation/api.html
 #, python-format
@@ -1178,11 +1168,11 @@ msgstr ""
 
 #: templates/documentation/api.html
 msgid "...without the"
-msgstr ""
+msgstr "...utan"
 
 #: templates/documentation/api.html
 msgid "brackets."
-msgstr ""
+msgstr "fästena"
 
 #: templates/documentation/api.html
 #, python-format
@@ -1190,11 +1180,13 @@ msgid ""
 "An example request to the API, with an example %(api_key)s, looks like this, "
 "using the CLI tool"
 msgstr ""
+"En exempelförfrågan till API:t, med ett exempel %(api_key)s, ser ut så här, "
+"med hjälp av CLI-verktyget"
 
 #: templates/documentation/api.html
 #, python-format
 msgid "API authentication: %(api_keys)s"
-msgstr ""
+msgstr "API-autentisering %(api_keys)s"
 
 #: templates/documentation/api.html templates/site_with_navigation.html
 #: templates/system/site_settings/site_settings.html
@@ -1224,7 +1216,7 @@ msgstr ""
 #: templates/documentation/api.html
 #: templates/system/site_settings/site_settings.html
 msgid "Manage API keys"
-msgstr ""
+msgstr "Hantera API-nycklar"
 
 #: templates/documentation/api.html
 msgid "On this page you can:"
@@ -1352,7 +1344,7 @@ msgstr ""
 
 #: templates/documentation/api.html
 msgid "Click the button \"Execute\"."
-msgstr ""
+msgstr "Klicka på knappen \"Kör\"."
 
 #: templates/documentation/api.html
 msgid "Now you'll see a response. It might be necessary to scroll down a bit."
