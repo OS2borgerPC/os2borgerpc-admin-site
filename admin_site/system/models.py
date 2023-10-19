@@ -1020,7 +1020,7 @@ class Job(models.Model):
         }
 
     def resolve(self):
-        if self.failed:
+        if self.finished:
             self.status = Job.RESOLVED
             self.save()
         else:
@@ -1031,8 +1031,8 @@ class Job(models.Model):
             )
 
     def restart(self, user=user):
-        if not self.failed:
-            raise Exception(_("Can only restart jobs with status %s") % (Job.FAILED))
+        if not self.finished:
+            raise Exception(_("Can only restart jobs that are Done or Failed %s") % "")
         # Create a new batch
         script = self.batch.script
         new_batch = Batch(site=self.batch.site, script=script, name="")

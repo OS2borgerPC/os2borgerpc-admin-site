@@ -782,7 +782,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
-            _("Can only restart jobs with status %s") % Job.FAILED,
+            _("Can only restart jobs that are Done or Failed %s") % "",
         )
         translation.deactivate()
         return response
@@ -791,8 +791,8 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
         self.object = self.get_object()
 
-        # Only restart jobs that have failed
-        if self.object.status != Job.FAILED:
+        # Only restart jobs that have failed or succeeded
+        if not self.object.finished:
             return self.status_fail_response()
 
         context = self.get_context_data(object=self.object)
@@ -809,7 +809,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
         self.object = self.get_object()
 
-        if self.object.status != Job.FAILED:
+        if not self.object.finished:
             return self.status_fail_response()
 
         self.object.restart(user=self.request.user)

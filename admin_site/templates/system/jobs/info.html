@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% if job.failed %}
+{% if job.finished %}
   <a class="btn btn-primary mb-3" href="{% url 'restart_job' site.uid job.pk %}">
       <span>
           <span class="material-icons">
