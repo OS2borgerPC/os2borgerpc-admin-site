@@ -201,7 +201,7 @@ class Site(models.Model):
         verbose_name=_(
             "Automatically rerun associated scripts when you update their arguments"
         ),
-        default=False,
+        default=True,
     )
 
     class Meta:
