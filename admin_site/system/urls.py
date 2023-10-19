@@ -390,12 +390,12 @@ urlpatterns = [
     re_path(r"^documentation/", DocView.as_view(), name="doc_root"),
     # Image Versions
     re_path(
-        r"^site/(?P<slug>[^/]+)/image-versions/$",
+        r"^site/(?P<slug>[^/]+)/image_versions/$",
         ImageVersionsView.as_view(),
         name="image_versions",
     ),
     re_path(
-        r"^site/(?P<slug>[^/]+)/image-versions/(?P<platform>[^/]+)$",
+        r"^site/(?P<slug>[^/]+)/image_versions/(?P<platform>[^/]+)$",
         ImageVersionsView.as_view(),
         name="image_version_major",
     ),
