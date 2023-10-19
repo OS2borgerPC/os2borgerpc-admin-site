@@ -346,6 +346,7 @@ class SiteSettings(UpdateView, SiteView):
 class TwoFactor(SiteView, SiteMixin):
     template_name = "system/site_two_factor_pc.html"
 
+
 class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
     # form_class = ?
     template_name = "system/site_settings/api_keys/api_keys.html"
@@ -3464,7 +3465,7 @@ class DocView(TemplateView, LoginRequiredMixin):
         docnames = self.docname.split("/")
 
         # Returns the first site the user is a member of
-        context["site"] = self.request.user.bibos_profile.sites.first()
+        context["site"] = self.request.user.user_profile.sites.first()
 
         context["menu_active"] = docnames[0]
 

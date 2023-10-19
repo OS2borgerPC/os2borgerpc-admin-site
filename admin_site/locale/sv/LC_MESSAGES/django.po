@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-11 11:09+0200\n"
+"POT-Creation-Date: 2023-10-19 12:07+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -665,16 +665,14 @@ msgstr "rapporterat"
 msgid "assigned user"
 msgstr "hanteras av"
 
+#: system/models.py
+msgid "key"
+msgstr "Nyckel"
+
 #: system/utils.py
 #, python-format
 msgid "Changes have been saved %s"
 msgstr "Ändringar har sparats %s"
-
-#: system/models.py
-#, fuzzy
-#| msgid "Key"
-msgid "key"
-msgstr "Nyckel"
 
 #: system/views.py
 #, python-format
@@ -1094,17 +1092,18 @@ msgstr "API-nycklar"
 msgid "PC's"
 msgstr "PC:er"
 
-#: templates/documentation/api.html templates/site_with_navigation.html
+#: templates/documentation/api.html
+#: templates/documentation/security_scripts/__submenu__.html
+#: templates/documentation/security_scripts/edit.html
+#: templates/documentation/security_scripts/securityevents.html
+#: templates/site_with_navigation.html
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/security_events/site_security_events.html
 msgid "Events"
 msgstr "Incidenter"
 
 #: templates/documentation/api.html
-#: templates/documentation/security_scripts/__submenu__.html
-#: templates/documentation/security_scripts/edit.html
-#: templates/documentation/security_scripts/securityevents.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
 msgid "Security Events"
 msgstr "Säkerhetsincidenter"
 
@@ -1156,6 +1155,7 @@ msgid ""
 msgstr ""
 
 #: templates/documentation/api.html
+#, python-format
 msgid "Data about %(pc)s"
 msgstr "Information om %(pc)s"
 
@@ -3108,16 +3108,6 @@ msgid "Editing Security Scripts"
 msgstr "Redigering av Säkerhetsskript"
 
 #: templates/documentation/security_scripts/__submenu__.html
-#: templates/documentation/security_scripts/edit.html
-#: templates/documentation/security_scripts/securityevents.html
-#: templates/site_with_navigation.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/security_events/site_security_events.html
-msgid "Events"
-msgstr "Incidenter"
-
-#: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/securityproblems.html
 #: templates/documentation/users/index.html
 msgid "Security Rules"
@@ -4272,11 +4262,6 @@ msgid "Organizing"
 msgstr "Organisering"
 
 #: templates/site_with_navigation.html
-#: templates/system/site_settings/site_settings.html
-msgid "Site settings"
-msgstr "Inställningar för Site"
-
-#: templates/site_with_navigation.html
 msgid "2FA on Computers"
 msgstr "2FA på Datorer"
 
@@ -5150,12 +5135,11 @@ msgstr "Hantera"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
-msgstr ""
+msgstr "API-nycklar för"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "These API keys are used to access our API. See our"
-msgstr "Dessa API-nycklar används för att komma åt vårt "
-"API. Se vår"
+msgstr "Dessa API-nycklar används för att komma åt vårt API. Se vår"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "for more info."
@@ -5172,6 +5156,10 @@ msgstr "så länge du är inloggad på adminsidan."
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "Generate new API Key"
 msgstr "Generera ny API-nyckel"
+
+#: templates/system/site_settings/api_keys/partials/list.html
+msgid "API Key copied!"
+msgstr "API-nyckel kopierad!"
 
 #: templates/system/site_settings/api_keys/partials/list.html
 msgid "Are you sure you want to delete the following API Key?:"
