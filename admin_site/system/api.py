@@ -35,7 +35,7 @@ router = Router()
 # We've wanted to combine @pagination with sending status codes in responses, but when used together it didn't work.
 # In those cases we've instead used an empty list, instead of sending a specific HTTP response for "No content"
 
-# TODO: Not sure what role "url_name" plays TBH
+# Not sure what role "url_name" plays TBH
 # The function name isn't important functionally, but it DOES determine what
 # the endpoint is called in /api/docs (e.g. "list_users" becomes "List Users")
 
@@ -92,7 +92,6 @@ def list_pcs(request):
 
 # Events
 # If no from_date: Default to three months ago, if no to_date, assume today.
-# TODO: Write descriptions to the user about valid event levels and statuses
 @router.get(
     "/events",
     response=List[SecurityEventSchema],
@@ -240,13 +239,11 @@ def get_jobs(
         "-id"
     )  # or -created, but ID is probably faster
 
-    # TODO: Test if this works. Otherwise do this: return jobs if jobs else []
     return jobs or []
 
 
 # Individual endpoints moved down here for now, as they may not be needed:
 
-# TODO: Should we delete the individual endpoints and only have the lists?
 # I think individual elements can make sense if we show less data per element on the list, and then use the individual endpoints to
 # show more detailed information, but then they need somewhat different schema
 # @router.get(
