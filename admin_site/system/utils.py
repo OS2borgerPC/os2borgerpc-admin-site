@@ -158,8 +158,8 @@ def set_notification_cookie(response, message, error=False):
     response.set_cookie("page-notification", quote(json.dumps(descriptor), safe=""))
 
 
-def notification_changes_saved(response, bibos_profile_language):
-    translation.activate(bibos_profile_language)
+def notification_changes_saved(response, user_profile_language):
+    translation.activate(user_profile_language)
     set_notification_cookie(response, _("Changes have been saved %s") % "")
     translation.deactivate()
 

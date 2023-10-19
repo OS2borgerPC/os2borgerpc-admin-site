@@ -12,14 +12,12 @@ from .models import (
     APIKey,
     Configuration,
     ConfigurationEntry,
-    EventLevels,
     Job,
     PC,
     SecurityEvent,
 )
 from .api_schemas import (
     ConfigurationEntrySchema,
-    Error,
     JobSchema,
     PCSchema,
     PCLoginsSchema,
@@ -119,8 +117,11 @@ def list_events(
     # Do we filter on do occurred_time, reported_time or created? Or multiple of them? Maybe occurred?
     events = SecurityEvent.objects.filter(
         (Q(problem__site=site) | Q(event_rule_server__site=site)),
-        occurred_time__range=[from_date, to_date],
-        status=status,
+        occurred_time__range=[
+            from_date,
+            to_date + relativedelta(days=1),
+        ],  # +1 to include the full to_date
+        status=status.upper(),
     ).order_by(
         "-id"
     )  # or -occurred_time, but ID is probably faster
@@ -175,7 +176,6 @@ def get_pcs_logins_per_day(
             pc_names_with_logins.append({"pc_name": pc.name, "logins_per_day": logins})
 
     if pc_names_with_logins:
-        print(type(pc_names_with_logins[0]))  # TODO: Debugging
         return 200, pc_names_with_logins
     else:
         return 204, None
@@ -206,7 +206,6 @@ def get_pc_logins_per_day(
             validate_sensible_dates(from_date, to_date)
             logins = filter_logins(logins, from_date, to_date)
 
-        print(type({"pc_name": pc.name, "logins_per_day": logins}))
         return 200, {"pc_name": pc.name, "logins_per_day": logins}
     elif pc:
         return 200, {"pc_name": pc.name, "logins_per_day": ""}
@@ -232,7 +231,11 @@ def get_jobs(
     validate_sensible_dates(from_date, to_date)
     site = get_site_from_request(request)
     jobs = Job.objects.filter(
-        batch__site=site, created__range=[from_date, to_date]
+        batch__site=site,
+        created__range=[
+            from_date,
+            to_date + relativedelta(days=1),
+        ],  # +1 to include the full to_date
     ).order_by(
         "-id"
     )  # or -created, but ID is probably faster

@@ -8,7 +8,7 @@
     {% if site_allowed %}
       {% for platform_choice, platform_readable in platform_choices.items %}
       <li class="{% if platform_choice|slugify == selected_platform.0|slugify %}active{% endif %}">
-      <a class="item-list-link" href="/site/{{ site.url }}/image-versions/{{ platform_choice|slugify }}">
+      <a class="item-list-link" href="/site/{{ site.url }}/image_versions/{{ platform_choice|slugify }}">
         <span clas="d-flex align-items-center">
           {{ platform_readable }}
         </span>

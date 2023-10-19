@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-11 11:09+0200\n"
+"POT-Creation-Date: 2023-10-19 12:07+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -662,14 +662,14 @@ msgstr "modtagelsestidspunkt"
 msgid "assigned user"
 msgstr "håndteres af"
 
+#: system/models.py
+msgid "key"
+msgstr "nøgle"
+
 #: system/utils.py
 #, python-format
 msgid "Changes have been saved %s"
 msgstr "Ændringerne er blevet gemt %s"
-
-#: system/models.py
-msgid "key"
-msgstr "nøgle"
 
 #: system/views.py
 #, python-format
@@ -1086,17 +1086,18 @@ msgstr "API-nøgler"
 msgid "PC's"
 msgstr "PC'er"
 
-#: templates/documentation/api.html templates/site_with_navigation.html
+#: templates/documentation/api.html
+#: templates/documentation/security_scripts/__submenu__.html
+#: templates/documentation/security_scripts/edit.html
+#: templates/documentation/security_scripts/securityevents.html
+#: templates/site_with_navigation.html
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
 #: templates/system/security_events/site_security_events.html
 msgid "Events"
 msgstr "Hændelser"
 
 #: templates/documentation/api.html
-#: templates/documentation/security_scripts/__submenu__.html
-#: templates/documentation/security_scripts/edit.html
-#: templates/documentation/security_scripts/securityevents.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
 msgid "Security Events"
 msgstr "Sikkerhedshændelser"
 
@@ -3184,16 +3185,6 @@ msgid "Editing Security Scripts"
 msgstr "Redigering af Sikkerhedsscripts"
 
 #: templates/documentation/security_scripts/__submenu__.html
-#: templates/documentation/security_scripts/edit.html
-#: templates/documentation/security_scripts/securityevents.html
-#: templates/site_with_navigation.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/security_events/site_security_events.html
-msgid "Events"
-msgstr "Hændelser"
-
-#: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/securityproblems.html
 #: templates/documentation/users/index.html
 msgid "Security Rules"
@@ -4354,11 +4345,6 @@ msgid "Organizing"
 msgstr "Organisering"
 
 #: templates/site_with_navigation.html
-#: templates/system/site_settings/site_settings.html
-msgid "Site settings"
-msgstr "Site-indstillinger"
-
-#: templates/site_with_navigation.html
 msgid "2FA on Computers"
 msgstr "2FA på Computere"
 
@@ -5231,7 +5217,7 @@ msgstr "Administrér"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
-msgstr ""
+msgstr "API-nøgler for"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "These API keys are used to access our API. See our"
@@ -5252,6 +5238,10 @@ msgstr "så længe du er logget ind på admin-sitet."
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "Generate new API Key"
 msgstr "Generer ny API-nøgle"
+
+#: templates/system/site_settings/api_keys/partials/list.html
+msgid "API Key copied!"
+msgstr "API-nøgle kopieret!"
 
 #: templates/system/site_settings/api_keys/partials/list.html
 msgid "Are you sure you want to delete the following API Key?:"
