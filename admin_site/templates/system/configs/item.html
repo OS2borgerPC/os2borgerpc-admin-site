@@ -8,7 +8,7 @@
     <input class="config-key" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_key" value="{{ key }}">
     <input class="config-value" type="hidden" name="{{ submit_name|default:'configuration' }}_{{ pk }}_value" value="{{ value }}">
     
-    {{ value }}
+    <span class="config-print-value">{{ value }}</span>
   </td>
   <td>
     <p class="mb-0" style="margin-left: -.5rem;">
