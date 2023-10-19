@@ -26,7 +26,7 @@
         </a>
         {% if listed_user == selected_user and site_membership.site_user_type == site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
           {% translate "Delete user" as delete_name %}
-          <a class="item-list-deletable material-icons" href="{% url 'delete_user' site.uid selected_user.username %}" title="{{ delete_name }}">
+          <a class="item-list-deletable material-icons" href="{% url 'user_delete' site.uid selected_user.username %}" title="{{ delete_name }}">
             clear
           </a>
         {% endif %}

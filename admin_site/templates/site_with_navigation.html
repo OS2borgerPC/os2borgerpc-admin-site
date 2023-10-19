@@ -77,6 +77,10 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "settings" as current_url_site_settings %}
+    {# API Keys page is technically a page under site settings currently, but settings is not in the URL, soo #}
+    {% if not current_url_site_settings %}
+      {% set_css_class_active request.resolver_match.url_name "api_keys" as current_url_site_settings %}
+    {% endif %}
     <a class="nav-link link-light {{ current_url_site_settings  }}" href="{% url 'settings' slug=site.url %}">
       <span class="material-icons">settings</span> {% translate "Site settings" %}
     </a>
@@ -114,7 +118,7 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' slug=site.url %}">
+    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image_versions' slug=site.url %}">
       <span class="material-icons"> cloud_download </span> {% translate "Versions" %}
     </a>
     <hr>
@@ -182,6 +186,13 @@ detailpage
       <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         {% translate "Executing Scripts" %}
+      </a>
+    {% endif %}
+
+    {% if current_url_site_settings %}
+      <a href="{% url 'doc' 'api' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        {% translate "API Keys" %}
       </a>
     {% endif %}
 

@@ -1,0 +1,235 @@
+{% extends 'documentation/index.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block doc_subtitle %}API{% endblock %}
+
+{% block om_bibos_admin_active %}class="active"{% endblock %}
+
+{% block specific_content %}
+  {% translate "API Key" as api_key %}
+  {% translate "API Keys" as api_keys %}
+  {% translate "PC's"|bold as pcs %}
+  {% translate "Events"|bold as events %}
+  {% translate "Security Events"|bold as security_events %}
+  {% translate "Offline Events"|bold as offline_events %}
+  {% translate "PC"|bold as pc %}
+  {% translate "Configurations"|bold as configurations %}
+  {% translate "Generate an API key"|bold as gen_key %}
+  <h1>API</h1>
+  <p>
+    {% translate "OS2borgerPC has a REST API with the root URL at" %} <a href="/api/">/api/</a>
+  </p>
+
+  <p>
+    {% translate "The documentation for this API is available at" %} <a href="/api/docs">/api/docs</a><br/>
+    {% translate "More info about this below." %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+    In order to make requests to the API, you need to generate and use an {{api_key}}.
+    The process is described further down the page.
+    {% endblocktranslate %}
+  </p>
+
+  <p>
+    {% translate "The data available through the API includes:" %}
+    <ul>
+      <li>{% blocktranslate %}Data about {{pcs}}{% endblocktranslate %}</li>
+      <li>
+        {% blocktranslate trimmed %}
+        Data about {{events}}, including both {{security_events}} and {{offline_events}}
+        {% endblocktranslate %}
+      </li>
+      <li>{% blocktranslate %}Data about {{pc}}{% endblocktranslate %}
+       <a href="{% url 'doc' 'configuration' %}">{{configurations}}</a>,
+      {% blocktranslate trimmed %}
+       which contain extended info about a {{pc}}, such as hostname and IP addresses
+      {% endblocktranslate %}
+      </li>
+    </ul>
+  </p>
+  <p>
+    {% translate "HTTP header"|bold as header %}
+    {% blocktranslate trimmed %}
+    Every request to the API needs to include an {{api_key}} as part of the request.
+    This {{api_key}} is sent as an {{header}} in the following format:
+    {% endblocktranslate %}
+  </p>
+    <pre><code class="docs-code bash">
+      Authorization: Bearer &lt;{{api_key}} Here&gt;
+    </code></pre>
+    <p>{% translate "...without the" %} <strong>"&lt;"</strong> <strong>"&gt;"</strong> {% translate "brackets." %}</p>
+    {% blocktranslate trimmed %}
+    An example request to the API, with an example {{api_key}}, looks like this, using the CLI tool
+    {% endblocktranslate %}
+    <code>curl</code>:
+
+    <pre><code class="docs-code bash">
+       curl --header 'Authorization: Bearer Oa5HaJT9fM7aQLN3hjjc2AG6dtbGu4Evb4PDyvl-x81wVl5jnYS9m0c3rqKuaca9Xt4ll45lmLlwob8xM8vY2rQQoH1eXgij0nF9' https://os2borgerpc-admin.magenta.dk/api/system/pcs
+    </code></pre>
+  </p>
+
+  <h3>{% blocktranslate %}API authentication: {{api_keys}}{% endblocktranslate %}</h3>
+
+  {% translate "Site settings"|bold as site_settings %}
+    <p>
+      {% translate "API-keys are used to allow a person or a program to retrieve data from your Site." %}
+    </p>
+    <p>
+      {% blocktranslate trimmed %}
+      If you have access to multiple Sites, you'll need to make {{api_keys}} for each of those Sites.
+      {% endblocktranslate %}
+    </p>
+    <p>
+      {% blocktranslate trimmed %}
+      You can generate, edit or delete API keys by going to {{site_settings}} and then clicking the link
+      {% endblocktranslate %}
+      <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
+    </p>
+
+  <p>
+      {% translate "On this page you can:" %}
+      <ul>
+        <li>
+          {% blocktranslate trimmed %}
+          Click "Generate new {{api_key}}" to generate and save a new {{api_key}}
+          {% endblocktranslate %}
+        </li>
+        <li>
+          {% blocktranslate trimmed %}
+          Write or change the comment about a given {{api_key}}.
+          Fx. to specify who/what is using the given key.
+          {% endblocktranslate %}
+          <br/>
+          {% translate "Changes are saved automatically after a few seconds." %}
+        </li>
+        <li>
+          {% blocktranslate trimmed %}
+          Click "Delete" next to an {{api_key}} to delete and deactivate it.
+          {% endblocktranslate %}
+          <br/>
+          {% translate "A confirmation popup will appear to confirm whether you want to delete it or not." %}
+        </li>
+      </ul>
+  </p>
+
+  <h3>{% translate "API Documentation" %}</h3>
+
+  <p>
+    {% translate "The documentation for this API is available at" %} <a href="/api/docs">/api/docs</a><br/>
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    The documentation has information about which endpoints are available,
+    what data is expected in the request, and what data is received in the response.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    In order to visit and view the API documentation you have to be signed in to the admin site.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "The documentation generally looks something like this:" %}
+  </p>
+  <figure class="p-4">
+    <img src="{% static 'docs/img/api/api_docs.png' %}" width="100%">
+  </figure>
+  <p>
+    {% blocktranslate trimmed %}
+    As per the image, below the red circle numbered "1" you can see each endpoint.
+    Each of these can be clicked to get more information about it.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+    Below the red circle numbered "2", you can click to see information about
+    what format the returned data has.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "Authorize"|bold as auth %}
+    {% blocktranslate trimmed %}
+    Next to the red circle numbered "3", you see the {{auth}} button.
+    This button can be used to test out the API directly from the documentation,
+    as soon as you have generated an API Key.
+    {% endblocktranslate %}
+  </p>
+  <h4>{% translate "Testing out the API directly from the documentation" %}</h4>
+
+  <p>
+    {% blocktranslate trimmed %}
+    On the API Documentation page, you can directly experiment with requests to the API.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% translate "This is how you do that:" %}
+  </p>
+
+  <ol>
+    <li>
+      {% blocktranslate trimmed %}
+      In order to make a request to the API, you must first {{gen_key}}
+      on the page
+      {% endblocktranslate %}
+   &nbsp;  <a href="{% url 'api_keys' slug=site.url %}"> <span class='material-icons'>vpn_key</span> {% translate "Manage API keys" %} </a>
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+      "Copy" the API key from the API Key page.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+      Click the {{auth}} button as seen in the screenshot above next to the circle numbered "3".
+      {% endblocktranslate %}
+    </li>
+    <li>
+      <figure class="p-4">
+        <img src="{% static 'docs/img/api/api_docs_test_4.png' %}" width="100%">
+        <figcaption class="text-center">{% blocktranslate %}"Paste" in the API Key you copied in step 2 and click {{auth}} then "Close".{% endblocktranslate %}</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure class="p-4">
+        <img src="{% static 'docs/img/api/api_docs_test_5.png' %}" width="100%">
+        <figcaption class="text-center">{% translate "Now click the API endpoint you wish to test with to expand it. Here we pick PCs." %}</figcaption>
+      </figure>
+    </li>
+    <li>
+      <figure class="p-4">
+        <img src="{% static 'docs/img/api/api_docs_test_6.png' %}" width="100%">
+        <figcaption class="text-center">{% blocktranslate %}Click the button called "Try it out".{% endblocktranslate %}</figcaption>
+      </figure>
+    </li>
+    <li>
+        <img src="{% static 'docs/img/api/api_docs_test_7.png' %}" width="100%">
+        <figcaption class="text-center">{% blocktranslate %}Click the button "Execute".{% endblocktranslate %}</figcaption>
+    </li>
+    <li>
+      {% translate "Now you'll see a response. It might be necessary to scroll down a bit." %}
+      <br/>
+      {% blocktranslate trimmed %}
+      If everything went well, you should see the status code 200
+      and the relevant data returned.
+      {% endblocktranslate %}
+      <br/>
+      {% translate "If not you'll get an error message." %}
+      <br/>
+      {% blocktranslate trimmed %}
+      The status code 204 means that no data was returned.
+      This can happen if you e.g. try to get a specific PC and
+      enter an id that does not match any PC on your site.
+      {% endblocktranslate %}
+      <br/>
+      {% blocktranslate trimmed %}
+      The status code 401 "Error: Unauthorized" will be returned
+      if you do not use the {{auth}} button or if you enter an
+      invalid API key.
+      {% endblocktranslate %}
+    </li>
+  </ol>
+
+{% endblock %}

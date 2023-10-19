@@ -1375,7 +1375,7 @@
     "pk": 216,
     "fields": {
         "key": "q",
-        "value": "5",
+        "value": "54aeqq",
         "owner_configuration": 1
     }
 },
@@ -3369,6 +3369,60 @@
     }
 },
 {
+    "model": "system.configurationentry",
+    "pk": 502,
+    "fields": {
+        "key": "hey",
+        "value": "heya",
+        "owner_configuration": 35
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 503,
+    "fields": {
+        "key": "werwerw",
+        "value": "werwerw",
+        "owner_configuration": 17
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 504,
+    "fields": {
+        "key": "login_counts",
+        "value": "2023-10-10: 4, 2023-10-11: 4, 2023-10-12: 3, 2023-10-16: 0",
+        "owner_configuration": 55
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 505,
+    "fields": {
+        "key": "login_counts",
+        "value": "2023-10-10: 2, 2023-10-11: 1, 2023-10-12: 6, 2023-10-16: 11",
+        "owner_configuration": 17
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 506,
+    "fields": {
+        "key": "_ip_addresses",
+        "value": "172.17.0.1 172.18.0.1 192.168.49.1 172.16.20.228",
+        "owner_configuration": 17
+    }
+},
+{
+    "model": "system.configurationentry",
+    "pk": 507,
+    "fields": {
+        "key": "_ip_addresses",
+        "value": "172.17.0.1 172.18.0.1 192.168.49.1 172.16.20.228",
+        "owner_configuration": 55
+    }
+},
+{
     "model": "system.site",
     "pk": 1,
     "fields": {
@@ -4200,13 +4254,13 @@
         "mac": "",
         "name": "pc1",
         "uid": "pc1",
-        "description": "doner",
+        "description": "dette er en beskrivelse",
         "configuration": 17,
         "site": 1,
         "is_activated": true,
         "created": "2021-01-21T08:50:37.470",
         "last_seen": "2021-01-21T09:05:02",
-        "location": "",
+        "location": "dette er en placering",
         "pc_groups": [
             10
         ]
@@ -4615,7 +4669,7 @@
     "pk": 9,
     "fields": {
         "created": "2021-08-10T09:12:51.835",
-        "modified": "2023-05-08T14:12:46.883",
+        "modified": "2023-10-19T10:08:36.038",
         "user_created": "",
         "user_modified": "magenta",
         "name": "Chrome - Skift startside",
@@ -6123,6 +6177,15 @@
     "fields": {
         "name": "Gruppe4",
         "script": 84,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 61,
+    "fields": {
+        "name": "",
+        "script": 3,
         "site": 1
     }
 },
@@ -9674,6 +9737,20 @@
     }
 },
 {
+    "model": "system.job",
+    "pk": 245,
+    "fields": {
+        "status": "NEW",
+        "log_output": "",
+        "created": "2023-09-28T15:53:28.134",
+        "started": null,
+        "finished": null,
+        "user": 35,
+        "batch": 61,
+        "pc": 23
+    }
+},
+{
     "model": "system.input",
     "pk": 1,
     "fields": {
@@ -10478,6 +10555,18 @@
     }
 },
 {
+    "model": "system.input",
+    "pk": 98,
+    "fields": {
+        "name": "hey",
+        "value_type": "BOOLEAN",
+        "default_value": "",
+        "position": 1,
+        "mandatory": false,
+        "script": 9
+    }
+},
+{
     "model": "system.batchparameter",
     "pk": 1,
     "fields": {
@@ -10625,6 +10714,26 @@
         "file_value": "",
         "input": 95,
         "associated_script": 37
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 13,
+    "fields": {
+        "string_value": "True",
+        "file_value": "",
+        "input": 98,
+        "associated_script": 7
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 14,
+    "fields": {
+        "string_value": "True",
+        "file_value": "",
+        "input": 98,
+        "associated_script": 16
     }
 },
 {
@@ -10843,6 +10952,36 @@
         "os": "Ubuntu 20.04",
         "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
         "image_upload": "images/os2borgerpc-3.1.1.iso"
+    }
+},
+{
+    "model": "system.apikey",
+    "pk": 1,
+    "fields": {
+        "key": "hS-JDWzFJnQGnWKweZvBFHAxFHLCl0NQPTC00tQHxHJPqPymA_7cDeLRD3g2MMXRzU9HRru7igFFa7YQhL-ojw0H7T2H-4MOb_Y9",
+        "description": "Test 1",
+        "created": "2023-10-05T16:21:27.808",
+        "site": 1
+    }
+},
+{
+    "model": "system.apikey",
+    "pk": 2,
+    "fields": {
+        "key": "2H9YvYKtMnID2mV3Wd8ALt22ExQVLZbynTaGmkBnYLcf2s3islSEUM2ZBR53kfeylCgmzEqN0IOnXDF7t12SdMxlON96bgSh2W-m",
+        "description": "Nøgle 2",
+        "created": "2023-10-05T16:21:30.811",
+        "site": 1
+    }
+},
+{
+    "model": "system.apikey",
+    "pk": 3,
+    "fields": {
+        "key": "FhAqjLFoqqXrBiyI8-OotUsERGjUZGJYoTRt1KO6q1rED5P3doGnnuvLbI9_-rUA8xEWYJJp2wcCLOfDuMHJXI0KPcD692sfmvZY",
+        "description": "Magenta Test's nøgle",
+        "created": "2023-10-05T16:24:15.241",
+        "site": 9
     }
 }
 ]

@@ -62,6 +62,23 @@ var BibOS
       {
         this.setupDocumentationBackLinks()
       }
+
+      // TODO: With this we can link directly to a specific tab
+      // The functionality can be used to make tab forms redirect to whatever the current tab is, after pressing "Save" on
+      // the form.
+      // Example: This URL should go directly to site configs. It also stays focused, though, which
+      // should be removed if we decide to go with this solution
+      // http://localhost:9999/site/magenta/settings/#configs-tab
+      // In other words you trigger it based off the ID of the button activating it, rather than the ID of the tab
+      // itself.
+      if (window.location.hash) {
+        var someTabTriggerEl = document.querySelector(window.location.hash)
+        var tab = new bootstrap.Tab(someTabTriggerEl)
+        tab.show()
+        // Now remove the tab's highlighting
+        tab._element.blur()
+      }
+
     },
     setupDocumentationBackLinks: function() {
       var ref = document.referrer || ''
@@ -397,4 +414,11 @@ function copy_button(el) {
 
     el_to_show_after_copy.classList.remove('d-none')
   })
+}
+
+function copy_api_key(event) {
+  const btn = event.currentTarget
+  btn.blur() // Remove the focus around the button after copying
+  navigator.clipboard.writeText(btn.parentElement.firstElementChild.innerText)
+  btn.parentElement.lastElementChild.classList.remove('d-none')
 }
