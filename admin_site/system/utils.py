@@ -54,14 +54,14 @@ def notify_users(security_event, security_problem, pc):
     return True
 
 
-def get_citizen_login_validator():
+def get_citizen_login_api_validator():
     """Get the function used to validate library user login.
 
     The validator must take three parameters - username, password and a site
     identity. It will return a unique ID of the authenticated user if
     successful, and something that evaluates to false if unsuccesful.
     """
-    path, function = settings.CITIZEN_LOGIN_VALIDATOR.rsplit(".", 1)
+    path, function = settings.CITIZEN_LOGIN_API_VALIDATOR.rsplit(".", 1)
 
     module = import_module(path)
     validator = getattr(module, function)
@@ -90,7 +90,10 @@ def cicero_validate(loaner_number, pincode, site):
     )
     response = requests.post(
         session_key_url,
-        json={"username": site.cicero_user, "password": site.cicero_password},
+        json={
+            "username": site.citizen_login_api_user,
+            "password": site.citizen_login_api_password,
+        },
     )
     if response.ok:
         session_key = response.json()["sessionKey"]

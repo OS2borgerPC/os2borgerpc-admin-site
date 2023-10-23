@@ -50,6 +50,7 @@ from system.models import (
     APIKey,
     AssociatedScriptParameter,
     ConfigurationEntry,
+    FeaturePermission,
     ImageVersion,
     Input,
     Job,
@@ -879,12 +880,12 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        if self.site.feature_permission.filter(uid="wake_plan"):
-            scripts = self.scripts.filter(
-                Q(is_hidden=False) | Q(uid="suspend_after_time")
-            )
-        else:
-            scripts = self.scripts.filter(is_hidden=False)
+        scripts = self.scripts.filter(is_hidden=False)
+
+        # Append scripts the site has permissions for
+        for fp in context["site"].feature_permission.all():
+            scripts = scripts | fp.scripts.all()
+
         local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
         global_scripts = scripts.filter(site=None)

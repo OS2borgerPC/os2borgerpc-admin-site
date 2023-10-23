@@ -13,7 +13,7 @@ from system.models import PC, Site, Configuration, ConfigurationEntry
 from system.models import Job, SecurityProblem, SecurityEvent
 from system.models import Citizen
 
-from system.utils import get_citizen_login_validator
+from system.utils import get_citizen_login_api_validator
 
 logger = logging.getLogger(__name__)
 
@@ -314,7 +314,7 @@ def citizen_login(username, password, site, prevent_dual_login=False):
     except Site.DoesNotExist:
         logger.error(f"Site {site} does not exist - unable to proceed.")
         return time_allowed
-    login_validator = get_citizen_login_validator()
+    login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""
 
