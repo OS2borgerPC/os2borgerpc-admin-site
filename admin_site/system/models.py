@@ -172,14 +172,16 @@ class Site(models.Model):
             " integrate with standard library login"
         ),
     )
-    cicero_user = models.CharField(
-        verbose_name=_("Username for Cicero API"),
+    citizen_login_api_user = models.CharField(
+        verbose_name=_("Username for login API (e.g. Cicero)"),
         max_length=100,
         blank=True,
-        help_text=_("Necessary for customers who wish to integrate with Cicero login"),
+        help_text=_(
+            "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
+        ),
     )
-    cicero_password = models.CharField(
-        verbose_name=_("Password for Cicero API"),
+    citizen_login_api_password = models.CharField(
+        verbose_name=_("Password for login API (e.g. Cicero)"),
         max_length=255,
         blank=True,
     )
@@ -774,6 +776,13 @@ class Script(AuditModelMixin):
         null=False,
     )
     tags = models.ManyToManyField(ScriptTag, related_name="scripts", blank=True)
+    feature_permission = models.ForeignKey(
+        FeaturePermission,
+        related_name="scripts",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
 
     @property
     def is_global(self):
