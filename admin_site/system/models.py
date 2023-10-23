@@ -201,7 +201,7 @@ class Site(models.Model):
         verbose_name=_(
             "Automatically rerun associated scripts when you update their arguments"
         ),
-        default=False,
+        default=True,
     )
 
     class Meta:
@@ -210,7 +210,7 @@ class Site(models.Model):
     @property
     def users(self):
         users = (
-            User.objects.filter(bibos_profile__sites=self)
+            User.objects.filter(user_profile__sites=self)
             .extra(select={"lower_name": "lower(username)"})
             .order_by("lower_name")
         )
@@ -250,7 +250,7 @@ class Site(models.Model):
         pass
 
     def get_absolute_url(self):
-        return "/site/{0}".format(self.url)
+        return reverse("settings", kwargs={"slug": self.uid})
 
 
 class FeaturePermission(models.Model):
@@ -819,14 +819,14 @@ class Script(AuditModelMixin):
         return self.inputs.all().order_by("position")
 
     def get_absolute_url(self, **kwargs):
-        if "site_uid" in kwargs:
-            site_uid = kwargs["site_uid"]
+        if "slug" in kwargs:
+            slug = kwargs["slug"]
         else:
-            site_uid = self.site.uid
+            slug = self.site.uid
         if self.is_security_script:
-            return reverse("security_script", args=(site_uid, self.pk))
+            return reverse("security_script", args=(slug, self.pk))
         else:
-            return reverse("script", args=(site_uid, self.pk))
+            return reverse("script", args=(slug, self.pk))
 
     class Meta:
         ordering = ["name"]
@@ -1020,7 +1020,7 @@ class Job(models.Model):
         }
 
     def resolve(self):
-        if self.failed:
+        if self.finished:
             self.status = Job.RESOLVED
             self.save()
         else:
@@ -1031,8 +1031,8 @@ class Job(models.Model):
             )
 
     def restart(self, user=user):
-        if not self.failed:
-            raise Exception(_("Can only restart jobs with status %s") % (Job.FAILED))
+        if not self.finished:
+            raise Exception(_("Can only restart jobs that are Done or Failed %s") % "")
         # Create a new batch
         script = self.batch.script
         new_batch = Batch(site=self.batch.site, script=script, name="")
@@ -1344,3 +1344,17 @@ class Citizen(models.Model):
                 fields=["citizen_id", "site"], name="unique_citizen_per_site"
             ),
         ]
+
+
+class APIKey(models.Model):
+    key = models.CharField(verbose_name=_("key"), max_length=100, unique=True)
+    description = models.CharField(
+        verbose_name=_("description"), max_length=100, null=True, blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name=_("created"), editable=False, auto_now_add=True
+    )
+    site = models.ForeignKey(Site, related_name="apikeys", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.key

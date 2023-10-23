@@ -19,7 +19,7 @@ detailpage
 
   <nav id="left-menu" class="nav nav-pills utils-global">
 
-    {% if user.is_superuser or user.bibos_profile.sites.count > 1 %}
+    {% if user.is_superuser or user.user_profile.sites.count > 1 %}
       <a href="/sites/" class="nav-link link-light" style="display: flex; flex-flow: row nowrap; align-items: center;">
         <span class="material-icons">arrow_back</span>
           {% translate "Sites" %}
@@ -77,6 +77,10 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "settings" as current_url_site_settings %}
+    {# API Keys page is technically a page under site settings currently, but settings is not in the URL, soo #}
+    {% if not current_url_site_settings %}
+      {% set_css_class_active request.resolver_match.url_name "api_keys" as current_url_site_settings %}
+    {% endif %}
     <a class="nav-link link-light {{ current_url_site_settings  }}" href="{% url 'settings' slug=site.url %}">
       <span class="material-icons">settings</span> {% translate "Site settings" %}
     </a>
@@ -84,11 +88,11 @@ detailpage
     {% set_css_class_active request.resolver_match.url_name "two_factor" as current_url_two_factor %}
     <a class="nav-link link-light {{ current_url_two_factor  }}" href="{% url 'two_factor' slug=site.url %}">
       <span class="material-icons">pin</span>
-      {% translate "2FA OS2borgerPC" %}
+      {% translate "2FA on Computers" %}
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "wake_plan" as current_url_wake_plans %}
-    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' site_uid=site.url %}">
+    <a class="nav-link link-light {{current_url_wake_plans}}" href="{% url 'wake_plans' slug=site.url %}">
       <span class="material-icons">bolt</span> {% translate "On/Off schedules" %}
     </a>
 
@@ -113,8 +117,8 @@ detailpage
       <span class="material-icons">person</span> {% translate "Users" %}
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "image-version" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image-versions' site_uid=site.url %}">
+    {% set_css_class_active request.resolver_match.url_name "image_version" as current_url_image_versions %}
+    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image_versions' slug=site.url %}">
       <span class="material-icons"> cloud_download </span> {% translate "Versions" %}
     </a>
     <hr>
@@ -182,6 +186,13 @@ detailpage
       <a href="{% url 'doc' 'scripts/running' %}" class="nav-link link-light">
         <span class='material-icons'>help_outline</span>
         {% translate "Executing Scripts" %}
+      </a>
+    {% endif %}
+
+    {% if current_url_site_settings %}
+      <a href="{% url 'doc' 'api' %}" class="nav-link link-light">
+        <span class='material-icons'>help_outline</span>
+        {% translate "API Keys" %}
       </a>
     {% endif %}
 

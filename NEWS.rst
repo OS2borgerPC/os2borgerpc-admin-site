@@ -1,3 +1,16 @@
+Version 5.21.0, Oktober 23, 2023
+--------------------------------
+
+- Add a new Django Ninja API, available at /api/, a page to generate API keys, and related documentation
+- Fix bug: Scripts with new checkbox parameters now get a valid default value in the places where its associated: True
+- Default to rerunning associated scripts with changed parameters on new sites
+- Make it possible to rerun all completed jobs, not only those that failed
+- Add FAQ for commonly asked auditor questions
+- UX improvements on the two factor for superuser page
+- Remove sorting on the jobs list for a single computer (it didn't work anyway)
+- Fix bug: Updated configuration values are now reflected immediately in the list,
+  instead of having to press "Save changes" first.
+
 Version 5.20.0, September 18, 2023
 ----------------------------------
 
@@ -8,7 +21,6 @@ Version 5.20.0, September 18, 2023
   the alerts per location.
 - Updated the Cicero integration to support preventing simultaneous logins by the same library user and store username/password
   for the Cicero API in the database per site
-
 
 Version 5.19.0, September 5, 2023
 ---------------------------------

@@ -1,0 +1,55 @@
+{% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block specific_title %}
+{% translate "API Keys" %}
+{% endblock %}
+
+{% block specific_content %}
+  <div class="container-fluid main">
+
+    <h2 class="divideheader">{% translate "API Keys for" %} <em>{{ site }}</em></h2>
+        <!-- API Keys -->
+        <div id="api">
+          <div class="alert alert-info">
+            <ul>
+              <li>{% translate "These API keys are used to access our API. See our" %} <a href='{% url 'doc' 'api' %}'>{% translate "Documentation" %}</a> {% translate "for more info." %}</li>
+              <li>{% translate "You can additionally visit the API's own docs at" %} <a href='/api/docs'>/api/docs</a>, {% translate "as long as you are signed in to the admin site." %}</li>
+            </ul>
+          </div>
+
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{% translate "Key" %}</th>
+                  <th>{% translate "Comment" %}</th>
+                  <th>{% translate "Actions" %}</th>
+                </tr>
+              </thead>
+
+              <!-- hx-target below points to this container element for replacing  -->
+              <tbody id="api-keys-list">
+                {% include "system/site_settings/api_keys/partials/list.html" %}
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <td colspan="3">
+                    <form method="post">
+                      {% csrf_token %}
+                      <button class="d-flex align-items-center btn-primary" type="submit" hx-post="{% url 'api_key_new' slug=site.uid %}" hx-target="#api-keys-list">
+                        <span class="material-icons me-1">add</span>
+                        {% translate "Generate new API Key" %}
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+        </div>
+  </div>
+{% endblock %}

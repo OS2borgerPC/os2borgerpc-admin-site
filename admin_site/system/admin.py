@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from system.models import (
+    APIKey,
     AssociatedScript,
     AssociatedScriptParameter,
     Batch,
@@ -59,8 +60,20 @@ class PCInlineForConfiguration(admin.TabularInline):
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
-    fields = ["name"]
-    search_fields = ("name",)
+    def sites(self, obj):
+        return list(obj.site_set.all())
+
+    def pcgroups(self, obj):
+        return list(obj.pcgroup_set.all())
+
+    def pcs(self, obj):
+        return list(obj.pc_set.all())
+
+    list_display = ["id", "name", "pcs", "pcgroups", "sites"]
+    search_fields = (
+        "id",
+        "name",
+    )
     inlines = [
         ConfigurationEntryInline,
         SiteInlineForConfiguration,
@@ -465,6 +478,10 @@ class WakeChangeEventAdmin(admin.ModelAdmin):
     list_filter = ("site",)
 
 
+class APIKeyAdmin(admin.ModelAdmin):
+    list_display = ("site", "key", "description", "created")
+
+
 ar = admin.site.register
 
 ar(AssociatedScript, AssociatedScriptAdmin)
@@ -489,3 +506,4 @@ ar(SecurityProblem, SecurityProblemAdmin)
 ar(Site, SiteAdmin)
 ar(WakeChangeEvent, WakeChangeEventAdmin)
 ar(WakeWeekPlan, WakeWeekPlanAdmin)
+ar(APIKey, APIKeyAdmin)

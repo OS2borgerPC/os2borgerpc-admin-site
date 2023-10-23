@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 11:02+0200\n"
+"POT-Creation-Date: 2023-10-19 16:37+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgstr "Skriv en kommentar"
 msgid "Add comment"
 msgstr "Lägg till en kommentar"
 
-#: changelog/templates/comments/form.html templates/system/configs/form.html
+#: changelog/templates/comments/form.html
 #: templates/system/configs/templates.html
 #: templates/system/event_rules/event_rule_server_confirm_delete.html
 #: templates/system/event_rules/security_problem_confirm_delete.html
@@ -86,7 +86,7 @@ msgstr "Lägg till en kommentar"
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/security_events/site_security_events.html
-#: templates/system/site_settings.html
+#: templates/system/site_settings/site_settings.html
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
 #: templates/system/wake_plan/confirm_delete.html
@@ -203,6 +203,11 @@ msgstr "Föregående"
 msgid "Next"
 msgstr "Nästa"
 
+#: changelog/views.py
+#, python-format
+msgid "There is no news category with the following ID: %s"
+msgstr "Det finns ingen nyhetskategori med följande ID: %s"
+
 #: system/admin.py templates/system/scripts/search_result.html
 msgid "Global"
 msgstr "Global"
@@ -237,8 +242,7 @@ msgstr "Lösenord för Cicero API"
 
 #: system/forms.py system/models.py
 msgid "Necessary for customers who wish to integrate with Cicero login"
-msgstr ""
-"Nödvändigt för kunder som vill integrera inloggning till Cicero"
+msgstr "Nödvändigt för kunder som vill integrera inloggning till Cicero"
 
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
@@ -567,8 +571,8 @@ msgstr "Kan inte ändra status från {0} til {1}"
 
 #: system/models.py system/views.py
 #, python-format
-msgid "Can only restart jobs with status %s"
-msgstr "Kan endast starta om jobb som har status %s"
+msgid "Can only restart jobs that are Done or Failed %s"
+msgstr "Kan endast starta om jobb som er Utförd eller Misslyckad %s"
 
 #: system/models.py templates/documentation/scripts/parameters.html
 msgid "String"
@@ -660,6 +664,15 @@ msgstr "rapporterat"
 #: system/models.py
 msgid "assigned user"
 msgstr "hanteras av"
+
+#: system/models.py
+msgid "key"
+msgstr "Nyckel"
+
+#: system/utils.py
+#, python-format
+msgid "Changes have been saved %s"
+msgstr "Ändringar har sparats %s"
 
 #: system/views.py
 #, python-format
@@ -915,15 +928,14 @@ msgstr "Grupper"
 msgid "On/Off schedules"
 msgstr "Schema för på- och avstängning"
 
-#: system/views.py templates/site_with_navigation.html
-#: templates/system/jobs/site_jobs.html
+#: system/views.py templates/documentation/api.html
+#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
 #: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
 
 #: system/views.py templates/documentation/users/index.html
 #: templates/site_with_navigation.html templates/system/scripts/header.html
-#: templates/system/site_two_factor.html
 msgid "Scripts"
 msgstr "Skript"
 
@@ -937,28 +949,27 @@ msgid "Notifications and offline rules"
 msgstr "Aviseringar och offline-regler"
 
 #: system/views.py templates/documentation/users/index.html
-#: templates/site_with_navigation.html
-#: templates/system/users/confirm_delete.html
-#: templates/system/users/update.html
+#: templates/site_with_navigation.html templates/system/users/update.html
 msgid "Users"
 msgstr "Användare"
 
-#: system/views.py templates/documentation/computers/index.html
+#: system/views.py templates/documentation/api.html
+#: templates/documentation/computers/index.html
 #: templates/documentation/configuration/index.html
 #: templates/documentation/groups/index.html
 #: templates/site_with_navigation.html
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/site_settings.html
+#: templates/system/site_settings/site_settings.html
 msgid "Configurations"
 msgstr "Konfigurationer"
-
-#: system/views.py
-msgid "Setting up security surveillance (PDF)"
-msgstr "Skapande av säkerhetsövervakning (PDF)"
 
 #: system/views.py templates/documentation/changelogs/index.html
 msgid "The News site"
 msgstr "Nyhetssidan"
+
+#: system/views.py
+msgid "Setting up security surveillance (PDF)"
+msgstr "Skapande av säkerhetsövervakning (PDF)"
 
 #: system/views.py
 msgid "Installation Guide (PDF)"
@@ -979,6 +990,14 @@ msgstr "Installationsguide"
 #: system/views.py
 msgid "Updating Wi-Fi setup"
 msgstr "Uppdaterar Wi-Fi inställningar"
+
+#: system/views.py
+msgid "Audit"
+msgstr "Revision"
+
+#: system/views.py
+msgid "FAQ (PDF)"
+msgstr "Vanliga frågor (PDF)"
 
 #: system/views.py templates/documentation/tech.html
 msgid "Technical Documentation"
@@ -1059,6 +1078,301 @@ msgstr ""
 #: templates/base.html templates/two_factor/_base.html
 msgid "Try opening this website in Microsoft Edge"
 msgstr "Försök att öppna den här sidan i Microsoft Edge"
+
+#: templates/documentation/api.html
+msgid "API Key"
+msgstr "API-nyckel"
+
+#: templates/documentation/api.html templates/site_with_navigation.html
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "API Keys"
+msgstr "API-nycklar"
+
+#: templates/documentation/api.html
+msgid "PC's"
+msgstr "PC:er"
+
+#: templates/documentation/api.html
+#: templates/documentation/security_scripts/__submenu__.html
+#: templates/documentation/security_scripts/edit.html
+#: templates/documentation/security_scripts/securityevents.html
+#: templates/site_with_navigation.html
+#: templates/system/event_rules/event_rule_server_confirm_delete.html
+#: templates/system/event_rules/security_problem_confirm_delete.html
+#: templates/system/security_events/site_security_events.html
+msgid "Events"
+msgstr "Incidenter"
+
+#: templates/documentation/api.html
+msgid "PC"
+msgstr "PC"
+
+#: templates/documentation/api.html
+msgid "Logins"
+msgstr "Inloggningar"
+
+#: templates/documentation/api.html
+msgid "Generate an API key"
+msgstr "Generera en API-nyckel"
+
+#: templates/documentation/api.html
+msgid "OS2borgerPC has a REST API with the root URL at"
+msgstr "Sambruk MedborgarPC har ett REST API med rot-URL:n på"
+
+#: templates/documentation/api.html
+msgid "The documentation for this API is available at"
+msgstr "Dokumentationen för detta API finns på"
+
+#: templates/documentation/api.html
+msgid "More info about this below."
+msgstr "Mer info om detta nedan"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"In order to make requests to the API, you need to generate and use an "
+"%(api_key)s. The process is described further down the page."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "The API has endpoints for the following:"
+msgstr "Api:n har slutpunkter för följande"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"which contains extended info about a %(pc)s, such as hostname and IP "
+"addresses"
+msgstr ""
+"som innehåller utökad information om en %(pc)s, såsom värdnamn och IP-"
+"adresser"
+
+#: templates/documentation/api.html
+msgid ""
+"which contains information about how many %(logins)s a single or all "
+"computers have had on a given day"
+msgstr ""
+"som innehåller information om hur många %(logins)s en enda eller alla "
+"datorer har haft en viss dag"
+
+#: templates/documentation/api.html
+msgid "HTTP header"
+msgstr "HTTP header"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Every request to the API needs to include an %(api_key)s as part of the "
+"request. This %(api_key)s is sent as an %(header)s in the following format:"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "...without the"
+msgstr "...utan"
+
+#: templates/documentation/api.html
+msgid "brackets."
+msgstr "fästena"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"An example request to the API, with an example %(api_key)s, looks like this, "
+"using the CLI tool"
+msgstr ""
+"En exempelförfrågan till API:t, med ett exempel %(api_key)s, ser ut så här, "
+"med hjälp av CLI-verktyget"
+
+#: templates/documentation/api.html
+#, python-format
+msgid "API authentication: %(api_keys)s"
+msgstr "API-autentisering %(api_keys)s"
+
+#: templates/documentation/api.html templates/site_with_navigation.html
+#: templates/system/site_settings/site_settings.html
+msgid "Site settings"
+msgstr "Inställningar för Site"
+
+#: templates/documentation/api.html
+msgid ""
+"API-keys are used to allow a person or a program to retrieve data from your "
+"Site."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"If you have access to multiple Sites, you'll need to make %(api_keys)s for "
+"each of those Sites."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"You can generate, edit or delete API keys by going to %(site_settings)s and "
+"then clicking the link"
+msgstr ""
+
+#: templates/documentation/api.html
+#: templates/system/site_settings/site_settings.html
+msgid "Manage API keys"
+msgstr "Hantera API-nycklar"
+
+#: templates/documentation/api.html
+msgid "On this page you can:"
+msgstr "På den här sidan kan du:"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Click \"Generate new %(api_key)s\" to generate and save a new %(api_key)s"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Write or change the comment about a given %(api_key)s. Fx. to specify who/"
+"what is using the given key."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Changes are saved automatically after a few seconds."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid "Click \"Delete\" next to an %(api_key)s to delete and deactivate it."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"A confirmation popup will appear to confirm whether you want to delete it or "
+"not."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "API Documentation"
+msgstr "API Dokumentation"
+
+#: templates/documentation/api.html
+msgid ""
+"The documentation has information about which endpoints are available, what "
+"data is expected in the request, and what data is received in the response."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"In order to visit and view the API documentation you have to be signed in to "
+"the admin site."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "The documentation generally looks something like this:"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"As per the image, below the red circle numbered \"1\" you can see each "
+"endpoint. Each of these can be clicked to get more information about it."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"Below the red circle numbered \"2\", you can click to see information about "
+"what format the returned data has."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Authorize"
+msgstr "Authorize"
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Next to the red circle numbered \"3\", you see the %(auth)s button. This "
+"button can be used to test out the API directly from the documentation, as "
+"soon as you have generated an API Key."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Testing out the API directly from the documentation"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"On the API Documentation page, you can directly experiment with requests to "
+"the API."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "This is how you do that:"
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"In order to make a request to the API, you must first %(gen_key)s on the page"
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "\"Copy\" the API key from the API Key page."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"Click the %(auth)s button as seen in the screenshot above next to the circle "
+"numbered \"3\"."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then \"Close"
+"\"."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"Now click the API endpoint you wish to test with to expand it. Here we pick "
+"PCs."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Click the button called \"Try it out\"."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "Click the button \"Execute\"."
+msgstr "Klicka på knappen \"Kör\"."
+
+#: templates/documentation/api.html
+msgid "Now you'll see a response. It might be necessary to scroll down a bit."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"If everything went well, you should see the status code 200 and the relevant "
+"data returned."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid "If not you'll get an error message."
+msgstr ""
+
+#: templates/documentation/api.html
+msgid ""
+"The status code 204 means that no data was returned. This can happen if you "
+"e.g. try to get a specific PC and enter an id that does not match any PC on "
+"your site."
+msgstr ""
+
+#: templates/documentation/api.html
+#, python-format
+msgid ""
+"The status code 401 \"Error: Unauthorized\" will be returned if you do not "
+"use the %(auth)s button or if you enter an invalid API key."
+msgstr ""
 
 #: templates/documentation/changelogs/index.html
 msgid ""
@@ -1238,7 +1552,7 @@ msgstr ""
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -1458,6 +1772,7 @@ msgstr "Redigera"
 #: templates/system/event_rules/shared_navigation.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/scripts/form.html templates/system/scripts/templates.html
+#: templates/system/site_settings/api_keys/partials/list.html
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -1564,6 +1879,7 @@ msgid "Meaning"
 msgstr "Betydelse"
 
 #: templates/documentation/configuration/index.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -1987,11 +2303,11 @@ msgid "Final remarks"
 msgstr "Anteckningar"
 
 #: templates/documentation/groups/scripts.html
-#: templates/system/configs/form.html
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
-#: templates/system/scripts/update.html templates/system/site_settings.html
+#: templates/system/scripts/update.html
+#: templates/system/site_settings/site_settings.html
 #: templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
@@ -2042,6 +2358,7 @@ msgid "OS2borgerPC documentation"
 msgstr "Sambruk MedborgarPC dokumentation"
 
 #: templates/documentation/index.html templates/site_with_navigation.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Documentation"
 msgstr "Dokumentation"
 
@@ -2783,16 +3100,6 @@ msgid "Editing Security Scripts"
 msgstr "Redigering av Säkerhetsskript"
 
 #: templates/documentation/security_scripts/__submenu__.html
-#: templates/documentation/security_scripts/edit.html
-#: templates/documentation/security_scripts/securityevents.html
-#: templates/site_with_navigation.html
-#: templates/system/event_rules/event_rule_server_confirm_delete.html
-#: templates/system/event_rules/security_problem_confirm_delete.html
-#: templates/system/security_events/site_security_events.html
-msgid "Events"
-msgstr "Incidenter"
-
-#: templates/documentation/security_scripts/__submenu__.html
 #: templates/documentation/security_scripts/securityproblems.html
 #: templates/documentation/users/index.html
 msgid "Security Rules"
@@ -3270,7 +3577,7 @@ msgid "Associated Groups"
 msgstr "Associerade Grupper"
 
 #: templates/documentation/wake_plans/__submenu__.html
-#: templates/system/site_settings.html
+#: templates/system/site_settings/site_settings.html
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -3946,13 +4253,9 @@ msgstr "Övervakningsregler"
 msgid "Organizing"
 msgstr "Organisering"
 
-#: templates/site_with_navigation.html templates/system/site_settings.html
-msgid "Site settings"
-msgstr "Inställningar för Site"
-
 #: templates/site_with_navigation.html
-msgid "2FA OS2borgerPC"
-msgstr "2FA MedborgarPC"
+msgid "2FA on Computers"
+msgstr "2FA på Datorer"
 
 #: templates/site_with_navigation.html
 msgid "Scripting"
@@ -4007,11 +4310,8 @@ msgstr "Välkommen"
 msgid "Log out"
 msgstr "Logga ut"
 
-#: templates/system/configs/form.html
-msgid "Edit arguments"
-msgstr "Redigera parametrar"
-
 #: templates/system/configs/list.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Key"
 msgstr "Nyckel"
 
@@ -4021,6 +4321,7 @@ msgstr "Värde"
 
 #: templates/system/configs/list.html
 #: templates/system/pcgroups/policy_list/list.html
+#: templates/system/site_settings/api_keys/api_keys.html
 msgid "Actions"
 msgstr "Aktiviteter"
 
@@ -4575,6 +4876,11 @@ msgstr "Lägg till dator i gruppen"
 msgid "Remove computer from group"
 msgstr "Ta bort datorn från gruppen"
 
+#: templates/system/pcs/form.html
+#: templates/system/security_events/site_security_events.html
+msgid "Info"
+msgstr "Info"
+
 #: templates/system/pcs/site_pcs.html
 msgid "No computers were found"
 msgstr "Inga datorer hittades"
@@ -4752,10 +5058,6 @@ msgid "Rule"
 msgstr "Regel"
 
 #: templates/system/security_events/site_security_events.html
-msgid "Info"
-msgstr "Info"
-
-#: templates/system/security_events/site_security_events.html
 msgid "Device"
 msgstr "Maskin"
 
@@ -4823,7 +5125,43 @@ msgstr "Vänligen kontakta Sambruk MedborgarPC Leverantör för att få veta mer
 msgid "Administrate"
 msgstr "Hantera"
 
-#: templates/system/site_settings.html
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "API Keys for"
+msgstr "API-nycklar för"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "These API keys are used to access our API. See our"
+msgstr "Dessa API-nycklar används för att komma åt vårt API. Se vår"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "for more info."
+msgstr "for mer information."
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "You can additionally visit the API's own docs at"
+msgstr "Du kan dessutom besöka API:ets egna docs på"
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "as long as you are signed in to the admin site."
+msgstr "så länge du är inloggad på adminsidan."
+
+#: templates/system/site_settings/api_keys/api_keys.html
+msgid "Generate new API Key"
+msgstr "Generera ny API-nyckel"
+
+#: templates/system/site_settings/api_keys/partials/list.html
+msgid "API Key copied!"
+msgstr "API-nyckel kopierad!"
+
+#: templates/system/site_settings/api_keys/partials/list.html
+msgid "Are you sure you want to delete the following API Key?:"
+msgstr "Är du säker på att du vill ta bort följande API-nyckel?:"
+
+#: templates/system/site_settings/api_keys/partials/list.html
+msgid "There are currently no API keys"
+msgstr "Det finns för närvarande inga API-nycklar"
+
+#: templates/system/site_settings/site_settings.html
 msgid "Settings for"
 msgstr "Inställningar för"
 
@@ -4863,50 +5201,66 @@ msgstr "Online"
 msgid "Offline"
 msgstr "Offline"
 
-#: templates/system/site_two_factor.html
-msgid "Two-factor authentication"
-msgstr "Verifiering i två steg"
-
-#: templates/system/site_two_factor.html
-msgid "Activate: Two-factor authentication for OS2borgerPC"
-msgstr "Aktivera: Verifiering i två steg för Sambruk MedborgarPC"
-
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid ""
-"This section is related to setting up two-factor authentication on an "
-"OS2borgerPC."
+"Enable two-factor authentication for superuser login on OS2borgerPC and "
+"OS2borgerPC Kiosk"
 msgstr ""
-"Det här avsnittet är relaterat till att ställa in tvåstegsverifiering på en "
-"Sambruk MedborgarPC"
+"Aktivera tvåstegsverifiering for superuser inloggning på en Sambruk "
+"MedborgarPC eller en Sambruk MedborgerPC Kiosk"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
+msgid ""
+"This section is related to setting up two-factor authentication for "
+"superuser on an OS2borgerPC or OS2borgerPC Kiosk computer."
+msgstr ""
+"Det här avsnittet är relaterat till att ställa in tvåstegsverifiering for "
+"superuser på en Sambruk MedborgarPC eller en Sambruk MedborgarPC Kiosk"
+
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Two-factor authentication on your admin-site profile is administered from "
 "the Users-section."
 msgstr ""
 "Tvåstegsverifiering på din admin-site profil hanteras från användarsektionen."
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Create security key and QR"
 msgstr "Skapa säkerhetsnyckel och QR"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Generate security key and QR"
 msgstr "Generera säkerhetsnyckel och QR"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Security key:"
 msgstr "Säkerhetsnyckel:"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
+msgid "Security Key copied!"
+msgstr "Säkerhetsnyckel kopierad!"
+
+#: templates/system/site_two_factor_pc.html
 msgid "Scan the QR code from step 1 with your authenticator app"
 msgstr "Skanna QR-koden från steg 1 med din autentiseringsapp."
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
 msgid "Some examples of authenticator apps are:"
 msgstr "Autentiseringsappen kan användas till exempel:"
 
-#: templates/system/site_two_factor.html
+#: templates/system/site_two_factor_pc.html
+msgid "App"
+msgstr "App"
+
+#: templates/system/site_two_factor_pc.html
+msgid "Platform"
+msgstr "Plattform"
+
+#: templates/system/site_two_factor_pc.html
+msgid "Open Source"
+msgstr "Öppen Källa"
+
+#: templates/system/site_two_factor_pc.html
 msgid ""
 "Copy the security key from step 1 and run the two-factor script with it as "
 "input"
@@ -4914,10 +5268,17 @@ msgstr ""
 "Kopiera säkerhetsnyckeln från steg 1 och kör tvåstegsskriptet med den som "
 "Ingångsparameter."
 
-#: templates/system/site_two_factor.html
-#, python-format
-msgid "You can find the script \"%(name)s\" under the menu item "
-msgstr "Du hittar skriptet \"%(name)s\" under menyalternativet "
+#: templates/system/site_two_factor_pc.html
+msgid "Click on"
+msgstr "Klicka på"
+
+#: templates/system/site_two_factor_pc.html
+msgid "Two-factor authentication for superuser"
+msgstr "Tvåstegsverifiering för superuser"
+
+#: templates/system/site_two_factor_pc.html
+msgid "to go to the script"
+msgstr "för att gå till skriptet"
 
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
@@ -5482,21 +5843,3 @@ msgstr "Inaktivera"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data saknas"
-
-#~ msgid "Associated Security Rules"
-#~ msgstr "Associerad säkerhetsregler"
-
-#~ msgid "status:Update"
-#~ msgstr "Uppdatera"
-
-#~ msgid "update required"
-#~ msgstr "Uppdatering krävs."
-
-#~ msgid "Security"
-#~ msgstr "Säkerhet"
-
-#~ msgid "Define new security rule"
-#~ msgstr "Definiera en ny säkerhetsregel"
-
-#~ msgid "Create security rule"
-#~ msgstr "Skapa en säkerhetsregel"

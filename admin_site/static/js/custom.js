@@ -37,11 +37,11 @@ var BibOS
 
       $('#editconfig_value').attr('maxlength', 4096)
 
-      var m = document.cookie.match(/\bbibos-notification\s*=\s*([^;]+)/)
+      var m = document.cookie.match(/\bpage-notification\s*=\s*([^;]+)/)
       if(m) {
         try {
           var descriptor = JSON.parse(decodeURIComponent(m[1]))
-          notification = $('.bibos-notification').first()
+          notification = $('.page-notification').first()
           if (descriptor["type"] == "error") {
             notification.addClass("alert-danger")
           } else {
@@ -55,13 +55,29 @@ var BibOS
              broken cookie */
           console.error(e)
         }
-        document.cookie = 'bibos-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
+        document.cookie = 'page-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
       }
 
       if(location.href.match(documentation_match))
       {
         this.setupDocumentationBackLinks()
       }
+
+      // TODO: With this we can link directly to a specific tab
+      // The functionality can be used to make tab forms redirect to whatever the current tab is, after pressing "Save" on
+      // the form.
+      // Example: This URL should go directly to site configs:
+      // http://localhost:9999/site/magenta/settings/#configs-tab
+      // In other words you trigger it based off the ID of the button activating it, rather than the ID of the tab
+      // itself.
+      if (window.location.hash) {
+        var someTabTriggerEl = document.querySelector(window.location.hash)
+        var tab = new bootstrap.Tab(someTabTriggerEl)
+        tab.show()
+        // Now remove the tab's highlighting
+        tab._element.blur()
+      }
+
     },
     setupDocumentationBackLinks: function() {
       var ref = document.referrer || ''
@@ -363,6 +379,7 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+/* Currently only used by the job log copy button */
 function addEventListenerForClipBoardButton(log) {
   let btn = document.getElementById("clipboard-button")
 
@@ -373,4 +390,34 @@ function addEventListenerForClipBoardButton(log) {
     btn.getElementsByClassName("copy-btn-text-orig")[0].classList.add('d-none')
     btn.lastElementChild.classList.remove('d-none')
   })
+}
+
+/* General purpose copy button */
+/* It expects to receive a parent element containing elements with the classes:
+ * copy-btn: The button to attach the event listener to, which copies
+ * copy-text: The element containing the text to copy
+ * after-copy-text: The element containing the text to be shown after copying
+*/
+function copy_button(el) {
+  const btn = el.getElementsByClassName('copy-btn')[0]
+
+  btn.addEventListener('click', () => {
+
+    const text_to_copy = el.getElementsByClassName('copy-text')[0].innerText
+    const el_to_show_after_copy = el.getElementsByClassName('after-copy-text')[0]
+
+    // Remove the ugly focus brorder around the btn after clicking it
+    btn.blur()
+
+    navigator.clipboard.writeText(text_to_copy)
+
+    el_to_show_after_copy.classList.remove('d-none')
+  })
+}
+
+function copy_api_key(event) {
+  const btn = event.currentTarget
+  btn.blur() // Remove the focus around the button after copying
+  navigator.clipboard.writeText(btn.parentElement.firstElementChild.innerText)
+  btn.parentElement.lastElementChild.classList.remove('d-none')
 }

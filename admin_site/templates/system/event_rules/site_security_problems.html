@@ -12,14 +12,16 @@
 
     {% if selected %}
     <h2 class="divideheader">
+        <span class='material-icons'>gpp_maybe</span>
         {% translate "Details about" %} <em>{{ selected.name }}</em>
         {% comment %}
         TODO later?
-        <a class="float-end" href="{% url 'security_problem' site_uid=site.url uid=selected.id %}" title="{% translate 'See all events for this Security Rule' %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
+        <a class="float-end" href="{% url 'security_problem' slug=site.url uid=selected.id %}" title="{% translate 'See all events for this Security Rule' %}"><span class="badge badge-important"><icon class="icon-fire icon-white"></icon></span></a>
         {% endcomment %}
     </h2>
     {% else %}
     <h2 class="divideheader">
+        <span class='material-icons'>gpp_maybe</span>
         {% translate "New security rule" %}
     </h2>
     {% endif %}

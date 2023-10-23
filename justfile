@@ -104,7 +104,7 @@ run-debug:
   sudo docker attach {{django_container}}
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)
-translations-make-messages: (verify-container-running django_container)
+translations-make-messages: (verify-container-running django_container) fix-permissions
   @just managepy makemessages --all --ignore venv --add-location file
   @just managepy makemessages --all --ignore venv --add-location file -d djangojs
 
@@ -117,7 +117,6 @@ update-test-data: (verify-container-running django_container)
   sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
   sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
   sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
-  printf '%s' 'NOTE: This may add unwanted log output to the top of the files! Verify and clean them up before commiting if so.'
 
 # Create a graph of the django models to a file named models_graphed.png
 graph-models: (verify-container-running django_container)

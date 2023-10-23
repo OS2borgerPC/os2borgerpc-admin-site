@@ -61,7 +61,7 @@
     })
     /* This cookie is used to get the correct language for text
        changed by js */
-    var lang = "{{request.user.bibos_profile.language}}"
+    var lang = "{{request.user.user_profile.language}}"
     document.cookie = "django_language="+lang;
   </script>
   <script src="{% static 'js/wake_plan.js' %}"></script>

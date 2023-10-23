@@ -1,5 +1,5 @@
 {% load i18n %}
-{% language request.user.bibos_profile.language %}
+{% language request.user.user_profile.language %}
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -17,7 +17,8 @@
   {% block head_javascripts %}{% endblock %}
 </head>
 
-<body class="{% block page_type_class %}{% endblock %}">
+<!-- HTMX setup (hx-headers) -->
+<body class="{% block page_type_class %}{% endblock %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
   <div id="adm-wrapper">
     <div id="adm-globalnav">
@@ -48,6 +49,8 @@
   <script src="/static/js/bootstrap-table.min.js"></script>
   <script src="/static/js/bootstrap-table-da-DK.min.js"></script>
   <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@1.9.4"></script>
   {% block javascripts %}{% endblock %}
 </body>
 </html>

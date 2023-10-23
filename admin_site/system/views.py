@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import secrets
 from datetime import datetime
-from urllib.parse import quote
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -14,7 +14,7 @@ from django.utils import translation
 from django.contrib.auth.models import User
 from django.urls import resolve, reverse
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeletionMixin, UpdateView, DeleteView
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
 
@@ -35,7 +35,11 @@ from django_otp import devices_for_user, user_has_device
 from django_otp.plugins.otp_static.models import StaticToken
 from django.forms import Form
 
-from system.utils import get_notification_string
+from system.utils import (
+    get_notification_string,
+    notification_changes_saved,
+    set_notification_cookie,
+)
 
 from account.models import (
     UserProfile,
@@ -43,6 +47,7 @@ from account.models import (
 )
 
 from system.models import (
+    APIKey,
     AssociatedScriptParameter,
     ConfigurationEntry,
     ImageVersion,
@@ -76,21 +81,13 @@ from system.forms import (
     WakePlanForm,
 )
 
-# from django.forms.widgets import SecurityProblemForm
-
-
-def set_notification_cookie(response, message, error=False):
-    descriptor = {"message": message, "type": "success" if not error else "error"}
-
-    response.set_cookie("bibos-notification", quote(json.dumps(descriptor), safe=""))
-
 
 def run_wake_plan_script(site, pcs, args, user, type="remove"):
     if type == "set":
         script = Script.objects.get(uid="wake_plan_set")
     else:
         script = Script.objects.get(uid="wake_plan_remove")
-    batch = script.run_on(site, pcs, *args, user=user)
+    script.run_on(site, pcs, *args, user=user)
 
 
 def otp_check(
@@ -142,17 +139,14 @@ class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
         """Limit access to super users or users belonging to THIS site."""
         site = None
         slug_field = None
-        # Find out which field is used as site slug
-        if "site_uid" in kwargs:
-            slug_field = "site_uid"
-        elif "slug" in kwargs:
+        # Check if a site slug is included in the url
+        if "slug" in kwargs:
             slug_field = "slug"
         # If none given, give up
         if slug_field:
             site = get_object_or_404(Site, uid=kwargs[slug_field])
         check_function = user_passes_test(
-            lambda u: (u.is_superuser)
-            or (site and site in u.bibos_profile.sites.all()),
+            lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
             login_url="/",
         )
         wrapped_super = check_function(super(SuperAdminOrThisSiteMixin, self).dispatch)
@@ -225,11 +219,9 @@ class JSONResponseMixin:
 class SiteMixin(View):
     """Mixin class to extract site UID from URL"""
 
-    site_uid = "site_uid"
-
     def get_context_data(self, **kwargs):
         context = super(SiteMixin, self).get_context_data(**kwargs)
-        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site"] = site
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(site).count()
@@ -246,7 +238,7 @@ class AdminIndex(RedirectView, LoginRequiredMixin):
         """Redirect based on user. This view will use the RequireLogin mixin,
         so we'll always have a logged-in user."""
         user = self.request.user
-        profile = user.bibos_profile
+        profile = user.user_profile
 
         # If user only has one site, redirect to that.
         if profile.sites.count() == 1:
@@ -271,7 +263,7 @@ class SiteList(ListView, LoginRequiredMixin):
         if user.is_superuser:
             qs = Site.objects.all()
         else:
-            qs = user.bibos_profile.sites.all()
+            qs = user.user_profile.sites.all()
         return qs
 
     def get_context_data(self, **kwargs):
@@ -325,7 +317,7 @@ class SiteDetailView(SiteView):
 
 class SiteSettings(UpdateView, SiteView):
     form_class = SiteForm
-    template_name = "system/site_settings.html"
+    template_name = "system/site_settings/site_settings.html"
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -334,45 +326,121 @@ class SiteSettings(UpdateView, SiteView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
-        # Do basic method
-        kwargs["updated"] = True
-        response = self.get(request, *args, **kwargs)
-
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if not request.POST["cicero_password"]:
-            cicero_password = site.cicero_password
-
-        # Handle saving of site settings data
-        super(SiteSettings, self).post(request, *args, **kwargs)
-
-        if not request.POST["cicero_password"]:
+    def form_valid(self, form):
+        if not form.cleaned_data["cicero_password"]:
             site = get_object_or_404(Site, uid=self.kwargs["slug"])
-            site.cicero_password = cicero_password
-            site.save()
+            form.instance.cicero_password = site.cicero_password
 
-        # Handle saving of site configs data
-        self.object.configuration.update_from_request(request.POST, "site_configs")
+        self.object.configuration.update_from_request(self.request.POST, "site_configs")
 
-        translation.activate(self.request.user.bibos_profile.language)
-        set_notification_cookie(response, _("Settings for %s updated") % kwargs["slug"])
+        response = super(SiteSettings, self).form_valid(form)
+
+        translation.activate(self.request.user.user_profile.language)
+        set_notification_cookie(
+            response, _("Settings for %s updated") % self.kwargs["slug"]
+        )
         translation.deactivate()
         return response
 
 
-class TwoFactor(SiteView, SuperAdminOrThisSiteMixin, SiteMixin):
-    template_name = "system/site_two_factor.html"
+class TwoFactor(SiteView, SiteMixin):
+    template_name = "system/site_two_factor_pc.html"
+
+
+class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
+    # form_class = ?
+    template_name = "system/site_settings/api_keys/api_keys.html"
+    fields = "__all__"
+
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super(APIKeyUpdate, self).get_context_data(**kwargs)
+
+        context["api_keys"] = self.object.apikeys.all()
+
+        return context
+
+    # def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        new_description = request.POST["description"]
+
+        APIKey.objects.filter(id=kwargs["pk"]).update(description=new_description)
+
+        return HttpResponse("OK")
+
+
+class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
+    model = APIKey
+    fields = "__all__"
+    template_name = "system/site_settings/api_keys/partials/list.html"
+
+    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super(APIKeyCreate, self).get_context_data(**kwargs)
+
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        context["api_keys"] = APIKey.objects.filter(site=site)
+
+        return context
+
+    # def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        # Do basic method
+        # kwargs["updated"] = True
+        response = self.get(request, *args, **kwargs)
+
+        # Handle saving of data
+        super(APIKeyCreate, self).post(request, *args, **kwargs)
+
+        # Generate an API Key
+        KEY_LENGTH = 75
+        key = secrets.token_urlsafe(KEY_LENGTH)
+        while APIKey.objects.filter(key=key).count() > 0:
+            key = secrets.token_urlsafe(KEY_LENGTH)
+
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        APIKey.objects.create(key=key, site=site)
+
+        return response
+
+
+# class APIKeyDelete(DeleteView, SuperAdminOrThisSiteMixin):
+class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
+    model = APIKey
+    template_name = "system/site_settings/api_keys/partials/list.html"
+
+    # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
+    def get_context_data(self, **kwargs):
+        # First, get basic context from superclass
+        context = super().get_context_data(**kwargs)
+
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        context["api_keys"] = APIKey.objects.filter(site=site)
+
+        return context
+
+    def delete(self, request, *args, **kwargs):
+        APIKey.objects.get(id=kwargs["pk"]).delete()
+
+        return render(
+            request,
+            "system/site_settings/api_keys/partials/list.html",
+            self.get_context_data(),
+        )
 
 
 class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
     form_class = Form
 
     def get_success_url(self):
-        success_url = "/site/%s/users/%s/" % (
-            self.kwargs["slug"],
-            self.kwargs["username"],
+        return reverse(
+            "user",
+            kwargs={
+                "slug": self.kwargs["slug"],
+                "username": self.kwargs["username"],
+            },
         )
-        return success_url
 
     def get_context_data(self, **kwargs):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
@@ -400,11 +468,10 @@ class AdminTwoFactorDisable(otp_views.DisableView, SuperAdminOrThisSiteMixin):
 
 class AdminTwoFactorSetup(otp_views.SetupView, SuperAdminOrThisSiteMixin):
     def get_success_url(self):
-        success_url = "/site/%s/admin-two-factor/%s/setup-complete/" % (
-            self.kwargs["slug"],
-            self.kwargs["username"],
+        return reverse(
+            "admin_otp_setup_complete",
+            kwargs={"slug": self.kwargs["slug"], "username": self.kwargs["username"]},
         )
-        return success_url
 
     def get_context_data(self, form, **kwargs):
         context = super().get_context_data(form, **kwargs)
@@ -532,8 +599,7 @@ class AdminTwoFactorBackupTokens(otp_views.BackupTokensView, SuperAdminOrThisSit
         return redirect(success_url)
 
 
-# Now follows all site-based views, i.e. subclasses
-# of SiteView.
+# Now follows all site-based views, i.e. subclasses of SiteView.
 class JobsView(SiteView):
     template_name = "system/jobs/site_jobs.html"
 
@@ -596,7 +662,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
         return self.render_to_json_response(context, **response_kwargs)
 
     def get_queryset(self):
-        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         if not self.request.user.is_superuser:
             queryset = Job.objects.filter(
                 Q(batch__script__is_hidden=False)
@@ -713,20 +779,20 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
     def status_fail_response(self):
         response = HttpResponseRedirect(self.get_success_url())
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
-            _("Can only restart jobs with status %s") % Job.FAILED,
+            _("Can only restart jobs that are Done or Failed %s") % "",
         )
         translation.deactivate()
         return response
 
     def get(self, request, *args, **kwargs):
-        self.site = get_object_or_404(Site, uid=kwargs["site_uid"])
+        self.site = get_object_or_404(Site, uid=kwargs["slug"])
         self.object = self.get_object()
 
-        # Only restart jobs that have failed
-        if self.object.status != Job.FAILED:
+        # Only restart jobs that have failed or succeeded
+        if not self.object.finished:
             return self.status_fail_response()
 
         context = self.get_context_data(object=self.object)
@@ -740,15 +806,15 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         return context
 
     def post(self, request, *args, **kwargs):
-        self.site = get_object_or_404(Site, uid=kwargs["site_uid"])
+        self.site = get_object_or_404(Site, uid=kwargs["slug"])
         self.object = self.get_object()
 
-        if self.object.status != Job.FAILED:
+        if not self.object.finished:
             return self.status_fail_response()
 
         self.object.restart(user=self.request.user)
         response = HttpResponseRedirect(self.get_success_url())
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("The script %s is being rerun on the computer %s")
@@ -758,7 +824,7 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
         return response
 
     def get_success_url(self):
-        return "/site/%s/jobs/" % self.kwargs["site_uid"]
+        return reverse("jobs", kwargs={"slug": self.kwargs["slug"]})
 
 
 class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
@@ -766,7 +832,7 @@ class JobInfo(DetailView, SuperAdminOrThisSiteMixin):
     model = Job
 
     def get(self, request, *args, **kwargs):
-        self.site = get_object_or_404(Site, uid=kwargs["site_uid"])
+        self.site = get_object_or_404(Site, uid=kwargs["slug"])
         return super(JobInfo, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -948,6 +1014,8 @@ class ScriptMixin(object):
                     par = AssociatedScriptParameter(
                         associated_script=associated_script, input=script_input
                     )
+                    if script_input.value_type == Input.BOOLEAN:
+                        par.string_value = "True"
                     par.save()
 
 
@@ -965,7 +1033,7 @@ class ScriptRedirect(RedirectView, SuperAdminOrThisSiteMixin):
 
         if scripts.exists():
             script = scripts.first()
-            return script.get_absolute_url(site_uid=site.uid)
+            return script.get_absolute_url(slug=site.uid)
         else:
             return (
                 reverse("new_security_script", args=[site.uid])
@@ -1043,9 +1111,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context[
             "site_membership"
-        ] = request_user.bibos_profile.sitemembership_set.filter(
-            site_id=site.id
-        ).first()
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         return context
 
     def get_object(self, queryset=None):
@@ -1067,7 +1133,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.save_script_inputs()
             self.create_associated_script_parameters()
             response = super(ScriptUpdate, self).form_valid(form)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(response, _("Script %s updated") % self.script.name)
             translation.deactivate()
 
@@ -1101,7 +1167,7 @@ class GlobalScriptRedirectID(RedirectView, LoginRequiredMixin):
         if script.site:
             return "/"
         else:  # If the script is global
-            user_sites = user.bibos_profile.sites.all()
+            user_sites = user.user_profile.sites.all()
 
             # If a user is a member of multiple sites, just randomly pick the first one
             kwargs["slug"] = user_sites.first().uid
@@ -1122,9 +1188,9 @@ class GlobalScriptRedirectUID(RedirectView, LoginRequiredMixin):
             return "/"
         else:  # If the script is global
             # If a user is a member of multiple sites, just randomly pick the first one
-            first_site_uid = user.bibos_profile.sites.all().first().uid
+            first_slug = user.user_profile.sites.all().first().uid
 
-            return reverse("script", args=[first_site_uid, script.pk])
+            return reverse("script", args=[first_slug, script.pk])
 
 
 class ScriptRun(SiteView):
@@ -1246,7 +1312,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         script = self.get_object()
 
         site = script.site
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -1269,7 +1335,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         return response
 
 
-class PCsView(SelectionMixin, SiteView, SuperAdminOrThisSiteMixin):
+class PCsView(SelectionMixin, SiteView):
     """If a site ha no computers it shows a page indicating that.
     If the site has at least one computer it redirects to that."""
 
@@ -1308,7 +1374,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def get_object(self, queryset=None):
         try:
-            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
             raise Http404(
@@ -1438,7 +1504,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                         asc.run_on(self.request.user, [pc])
         if invalid_groups_names:
             invalid_groups_string = get_notification_string(invalid_groups_names)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1450,7 +1516,7 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
             )
             translation.deactivate()
         else:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(response, _("Computer %s updated") % pc.name)
             translation.deactivate()
         return response
@@ -1462,7 +1528,7 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
 
     def get_object(self, queryset=None):
         try:
-            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
             return PC.objects.get(uid=self.kwargs["pc_uid"], site=site_id)
         except PC.DoesNotExist:
             raise Http404(
@@ -1471,13 +1537,13 @@ class PCDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):  # {{{
             )
 
     def get_success_url(self):
-        return "/site/{0}/computers/".format(self.kwargs["site_uid"])
+        return reverse("computers", kwargs={"slug": self.kwargs["slug"]})
 
 
 # TODO: Rename all of these to WakeWeekPlan* now they no longer handle WakeChangeEvents.
 class WakePlanRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
-        site = get_object_or_404(Site, uid=kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=kwargs["slug"])
 
         wake_week_plans = WakeWeekPlan.objects.filter(site=site)
 
@@ -1493,7 +1559,7 @@ class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
     def get_context_data(self, **kwargs):
         context = super(WakePlanBaseMixin, self).get_context_data(**kwargs)
 
-        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
         plan = self.object
         context["selected_plan"] = plan
         context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
@@ -1515,7 +1581,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         context = super(WakePlanExtendedMixin, self).get_context_data(**kwargs)
 
         # These are shared between BaseMixin and ExtendedMixin - ideally they could just be inherited here
-        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
         plan = self.object
         context["selected_plan"] = plan
         context["wake_week_plans_list"] = WakeWeekPlan.objects.filter(
@@ -1527,7 +1593,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
             "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
             + "/static/docs/Wake_plan_user_guide"
             + "_"
-            + self.request.user.bibos_profile.language
+            + self.request.user.user_profile.language
             + ".pdf"
         )
 
@@ -1683,12 +1749,12 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
 class WakePlanCreate(WakePlanExtendedMixin, CreateView):
     model = WakeWeekPlan
     form_class = WakePlanForm
-    slug_field = "site_uid"
+    slug_field = "slug"
     template_name = "system/wake_plan/wake_plan.html"
 
     def form_valid(self, form):
         # The form does not allow setting the site yourself, so we insert that here
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         if not site.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         self.object = form.save(commit=False)
@@ -1720,7 +1786,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
 
         # If some groups or exceptions could not be verified, display this and the reason
         if invalid_groups_string and invalid_events_string:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1739,7 +1805,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             )
             translation.deactivate()
         elif invalid_groups_string and not invalid_events_string:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1756,7 +1822,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             )
             translation.deactivate()
         elif not invalid_groups_string and invalid_events_string:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1768,7 +1834,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
             )
             translation.deactivate()
         else:
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response, _("PCWakePlan %s created") % self.object.name
             )
@@ -1780,11 +1846,11 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
 class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
     template_name = "system/wake_plan/wake_plan.html"
     form_class = WakePlanForm
-    slug_field = "site_uid"
+    slug_field = "slug"
 
     def get_object(self, queryset=None):
         try:
-            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
             return WakeWeekPlan.objects.get(
                 id=self.kwargs["wake_week_plan_id"], site=site_id
             )
@@ -1912,7 +1978,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             # If some groups or exceptions could not be verified, display this and the reason
             if invalid_groups_string and invalid_events_string:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1931,7 +1997,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 )
                 translation.deactivate()
             elif invalid_groups_string and not invalid_events_string:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1948,7 +2014,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 )
                 translation.deactivate()
             elif not invalid_groups_string and invalid_events_string:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -1960,7 +2026,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                 )
                 translation.deactivate()
             else:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("PCWakePlan %s updated") % self.object.name,
@@ -2027,12 +2093,12 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
 class WakePlanDelete(WakePlanBaseMixin, DeleteView):
     model = WakeWeekPlan
-    # slug_field = "site_uid"
+    # slug_field = "slug"
     template_name = "system/wake_plan/confirm_delete.html"
 
     def get_object(self, queryset=None):
         try:
-            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
             plan = WakeWeekPlan.objects.get(
                 id=self.kwargs["wake_week_plan_id"], site=site_id
             )
@@ -2047,7 +2113,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
 
     def get_success_url(self):
         # I wonder if one could just call the WakeWeekPlanRedirectView directly?
-        return reverse("wake_plans", args=[self.kwargs["site_uid"]])
+        return reverse("wake_plans", args=[self.kwargs["slug"]])
 
     def form_valid(self, form, *args, **kwargs):
         deleted_plan_name = WakeWeekPlan.objects.get(
@@ -2065,7 +2131,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
 
         response = super(WakePlanDelete, self).delete(form, *args, **kwargs)
 
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("Wake Week Plan %s deleted") % deleted_plan_name,
@@ -2104,7 +2170,7 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
         new_id = object_to_copy.pk
         return reverse(
             "wake_plan",
-            kwargs={"site_uid": kwargs["site_uid"], "wake_week_plan_id": new_id},
+            kwargs={"slug": kwargs["slug"], "wake_week_plan_id": new_id},
         )
 
 
@@ -2113,7 +2179,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context = super(WakeChangeEventBaseMixin, self).get_context_data(**kwargs)
 
         # Basically in common between both Create, Update and Delete, so consider refactoring out to a Mixin
-        context["site"] = Site.objects.get(uid=self.kwargs["site_uid"])
+        context["site"] = get_object_or_404(Site, uid=self.kwargs["slug"])
         event = self.object
         context["selected_event"] = event
         # Note: The sorting here needs to be the same in WakeChangeEventRedirect
@@ -2163,7 +2229,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
 class WakeChangeEventRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
-        site = get_object_or_404(Site, uid=kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=kwargs["slug"])
 
         # Note: The sorting here needs to be the same in WakeChangeEventBaseMixin
         wake_change_events = WakeChangeEvent.objects.filter(site=site).order_by(
@@ -2180,11 +2246,11 @@ class WakeChangeEventRedirect(RedirectView):
 class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
     template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
     form_class = WakeChangeEventForm
-    slug_field = "site_uid"
+    slug_field = "slug"
 
     def get_object(self, queryset=None):
         try:
-            site_id = Site.objects.get(uid=self.kwargs["site_uid"])
+            site_id = get_object_or_404(Site, uid=self.kwargs["slug"])
             return WakeChangeEvent.objects.get(
                 id=self.kwargs["wake_change_event_id"], site=site_id
             )
@@ -2224,7 +2290,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                                 type="set",
                             )
 
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("Wake Change Event %s updated") % self.object.name,
@@ -2233,7 +2299,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
         else:
             response = self.form_invalid(form)
             if overlapping_event:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("The chosen dates would cause overlap with event %s in plan %s")
@@ -2242,7 +2308,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                 )
                 translation.deactivate()
             else:
-                translation.activate(self.request.user.bibos_profile.language)
+                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("The end date cannot be before the start date %s") % "",
@@ -2281,12 +2347,12 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
 class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
     model = WakeChangeEvent
     form_class = WakeChangeEventForm
-    slug_field = "site_uid"
+    slug_field = "slug"
     template_name = "system/wake_plan/wake_change_events/wake_change_event.html"
 
     def form_valid(self, form):
         # The form does not allow setting the site yourself, so we insert that here
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         if not site.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         self.object = form.save(commit=False)
@@ -2297,7 +2363,7 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
             response = super(WakeChangeEventCreate, self).form_valid(form)
         else:
             response = self.form_invalid(form)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("The end date cannot be before the start date %s") % "",
@@ -2313,7 +2379,7 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
 
 class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
     model = WakeChangeEvent
-    slug_field = "site_uid"
+    slug_field = "slug"
     template_name = "system/wake_plan/wake_change_events/confirm_delete.html"
 
     def get_object(self, queryset=None):
@@ -2323,7 +2389,7 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
         return event
 
     def get_success_url(self):
-        return reverse("wake_change_events", args=[self.kwargs["site_uid"]])
+        return reverse("wake_change_events", args=[self.kwargs["slug"]])
 
     def form_valid(self, form, *args, **kwargs):
         # Update all pcs belonging to active plans that used this event
@@ -2364,7 +2430,7 @@ class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
                 destination_user = users_on_site.first().username
 
             return reverse(
-                "user", kwargs={"site_uid": site.uid, "username": destination_user}
+                "user", kwargs={"slug": site.uid, "username": destination_user}
             )
 
         else:
@@ -2373,7 +2439,7 @@ class UserRedirect(RedirectView, SuperAdminOrThisSiteMixin):
 
 class UsersMixin(object):
     def add_site_to_context(self, context):
-        self.site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        self.site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site"] = self.site
         return context
 
@@ -2392,7 +2458,7 @@ class UsersMixin(object):
         if "user_list" not in context:
             self.add_userlist_to_context(context)
         request_user = self.request.user
-        user_profile = request_user.bibos_profile
+        user_profile = request_user.user_profile
         site_membership = user_profile.sitemembership_set.filter(
             site=context["site"]
         ).first()
@@ -2415,7 +2481,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def get_form_kwargs(self):
         kwargs = super(UserCreate, self).get_form_kwargs()
-        kwargs["language"] = self.request.user.bibos_profile.language
+        kwargs["language"] = self.request.user.user_profile.language
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -2424,8 +2490,8 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site=site
         ).first()
 
@@ -2448,7 +2514,13 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
             raise PermissionDenied
 
     def get_success_url(self):
-        return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
+        return reverse(
+            "user",
+            kwargs={
+                "slug": self.kwargs["slug"],
+                "username": self.object.username,
+            },
+        )
 
 
 class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
@@ -2459,8 +2531,8 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
-                site__uid=self.kwargs["site_uid"]
+            site_membership = self.selected_user.user_profile.sitemembership_set.get(
+                site__uid=self.kwargs["slug"]
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
@@ -2482,15 +2554,15 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def get_form_kwargs(self):
         kwargs = super(UserUpdate, self).get_form_kwargs()
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         kwargs["site"] = site
 
         return kwargs
 
     def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         site_membership_req_user = (
-            self.request.user.bibos_profile.sitemembership_set.filter(site=site).first()
+            self.request.user.user_profile.sitemembership_set.filter(site=site).first()
         )
         if (
             self.request.user.is_superuser
@@ -2500,7 +2572,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             self.object = form.save()
 
-            user_profile = self.object.bibos_profile
+            user_profile = self.object.user_profile
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
@@ -2509,7 +2581,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
             response = super(UserUpdate, self).form_valid(form)
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response, _("User %s updated") % self.object.username
             )
@@ -2519,7 +2591,13 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             raise PermissionDenied
 
     def get_success_url(self):
-        return "/site/%s/users/%s/" % (self.kwargs["site_uid"], self.object.username)
+        return reverse(
+            "user",
+            kwargs={
+                "slug": self.kwargs["slug"],
+                "username": self.object.username,
+            },
+        )
 
 
 class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
@@ -2529,8 +2607,8 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
-            site_membership = self.selected_user.bibos_profile.sitemembership_set.get(
-                site__uid=self.kwargs["site_uid"]
+            site_membership = self.selected_user.user_profile.sitemembership_set.get(
+                site__uid=self.kwargs["slug"]
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
@@ -2547,11 +2625,11 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def get_success_url(self):
-        return "/site/%s/users/" % self.kwargs["site_uid"]
+        return reverse("users", kwargs={"slug": self.kwargs["slug"]})
 
     def form_valid(self, form, *args, **kwargs):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -2560,7 +2638,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             raise PermissionDenied
         response = super(UserDelete, self).delete(form, *args, **kwargs)
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
         )
@@ -2573,14 +2651,14 @@ class ConfigurationEntryCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin)
     form_class = ConfigurationEntryForm
 
     def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         self.object = form.save(commit=False)
         self.object.owner_configuration = site.configuration
 
         return super(ConfigurationEntryCreate, self).form_valid(form)
 
     def get_success_url(self):
-        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
+        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
 
 
 class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
@@ -2588,14 +2666,7 @@ class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin)
     form_class = ConfigurationEntryForm
 
     def get_success_url(self):
-        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
-
-
-class ConfigurationEntryDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-
-    def get_success_url(self):
-        return "/site/{0}/settings/".format(self.kwargs["site_uid"])
+        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
 
 
 class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
@@ -2627,7 +2698,7 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         self.object = form.save(commit=False)
         self.object.site = site
 
@@ -2640,7 +2711,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         try:
             # Groups used to be identified by a string UID, so sometimes we get lookups for a string which caused a
             # server error. Hence this explicit attempt to convert it to an int first.
@@ -2690,7 +2761,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         ).values_list("pk", "name", "uid")
 
         # supervisor picklist related
-        user_set = User.objects.filter(bibos_profile__sites=site)
+        user_set = User.objects.filter(user_profile__sites=site)
         selected_user_ids = form["supervisors"].value()
         context["available_users"] = user_set.exclude(
             pk__in=selected_user_ids
@@ -2842,7 +2913,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     ) = self.get_notification_strings(
                         pcs_with_other_plans_names, other_plans_names
                     )
-                    translation.activate(self.request.user.bibos_profile.language)
+                    translation.activate(self.request.user.user_profile.language)
                     set_notification_cookie(
                         response,
                         _(
@@ -2858,7 +2929,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     )
                     translation.deactivate()
                 else:
-                    translation.activate(self.request.user.bibos_profile.language)
+                    translation.activate(self.request.user.user_profile.language)
                     set_notification_cookie(
                         response,
                         _("Group %s updated") % self.object.name,
@@ -2871,7 +2942,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             # HttpResponse, so make one with form_invalid()
             response = self.form_invalid(form)
             parameter = e.args[0]
-            translation.activate(self.request.user.bibos_profile.language)
+            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("No value was specified for the mandatory input %s" " of script %s")
@@ -2908,7 +2979,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
     model = PCGroup
 
     def get_object(self, queryset=None):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         try:
             # Groups used to be identified by a string UID, so sometimes we get lookups for a string which caused a
             # server error. Hence this explicit attempt to convert it to an int first.
@@ -2923,7 +2994,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
             )
 
     def get_success_url(self):
-        return "/site/{0}/groups/".format(self.kwargs["site_uid"])
+        return reverse("groups", kwargs={"slug": self.kwargs["slug"]})
 
     def form_valid(self, form, *args, **kwargs):
         self_object = self.get_object()
@@ -2955,7 +3026,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
                 )
 
         response = super(PCGroupDelete, self).delete(form, *args, **kwargs)
-        translation.activate(self.request.user.bibos_profile.language)
+        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(response, _("Group %s deleted") % name)
         translation.deactivate()
         return response
@@ -3006,7 +3077,7 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
             pk__in=selected_group_ids
         ).values_list("pk", "name", "pk")
 
-        user_set = User.objects.filter(bibos_profile__sites=site)
+        user_set = User.objects.filter(user_profile__sites=site)
         selected_user_ids = form["alert_users"].value() or []
 
         context["available_users"] = user_set.exclude(
@@ -3033,11 +3104,16 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         request_user = self.request.user
         context[
             "site_membership"
-        ] = request_user.bibos_profile.sitemembership_set.filter(
-            site_id=site.id
-        ).first()
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
 
         return context
+
+    def form_valid(self, form):
+        response = super(__class__, self).form_valid(form)
+
+        notification_changes_saved(response, self.request.user.user_profile.language)
+
+        return response
 
 
 class SecurityProblemCreate(EventRuleBaseMixin, CreateView):
@@ -3054,18 +3130,13 @@ class SecurityProblemUpdate(EventRuleBaseMixin, UpdateView):
     def get_object(self, queryset=None):
         try:
             return SecurityProblem.objects.get(
-                id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
+                id=self.kwargs["id"], site__uid=self.kwargs["slug"]
             )
         except SecurityProblem.DoesNotExist:
             raise Http404(
                 _("You have no Security Problem with the following ID: %s")
                 % self.kwargs["id"]
             )
-
-    def get_success_url(self):
-        return reverse(
-            "event_rule_security_problem", args=[self.object.site.uid, self.object.id]
-        )
 
 
 class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
@@ -3074,15 +3145,15 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def get_object(self, queryset=None):
         return SecurityProblem.objects.get(
-            id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
+            id=self.kwargs["id"], site__uid=self.kwargs["slug"]
         )
 
     def get_success_url(self):
-        return reverse("event_rules", args=[self.kwargs["site_uid"]])
+        return reverse("event_rules", args=[self.kwargs["slug"]])
 
     def form_valid(self, form, *args, **kwargs):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -3097,7 +3168,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 class EventRuleServerCreate(EventRuleBaseMixin, CreateView):
     template_name = "system/event_rules/site_event_rules_server.html"
     model = EventRuleServer
-    slug_field = "site_uid"
+    slug_field = "slug"
     form_class = EventRuleServerForm
 
 
@@ -3109,16 +3180,13 @@ class EventRuleServerUpdate(EventRuleBaseMixin, UpdateView):
     def get_object(self, queryset=None):
         try:
             return EventRuleServer.objects.get(
-                id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
+                id=self.kwargs["id"], site__uid=self.kwargs["slug"]
             )
         except EventRuleServer.DoesNotExist:
             raise Http404(
                 _("You have no Event Rule Server with the following ID: %s")
                 % self.kwargs["id"]
             )
-
-    def get_success_url(self):
-        return reverse("event_rule_server", args=[self.object.site.uid, self.object.id])
 
 
 class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
@@ -3127,15 +3195,15 @@ class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
 
     def get_object(self, queryset=None):
         return EventRuleServer.objects.get(
-            id=self.kwargs["id"], site__uid=self.kwargs["site_uid"]
+            id=self.kwargs["id"], site__uid=self.kwargs["slug"]
         )
 
     def get_success_url(self):
-        return reverse("event_rules", args=[self.kwargs["site_uid"]])
+        return reverse("event_rules", args=[self.kwargs["slug"]])
 
     def form_valid(self, form, *args, **kwargs):
-        site = get_object_or_404(Site, uid=self.kwargs["site_uid"])
-        site_membership = self.request.user.bibos_profile.sitemembership_set.filter(
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site_id=site.id
         ).first()
         if (
@@ -3180,7 +3248,7 @@ class SecurityEventsView(SiteView):
 
         context["form"] = SecurityEventForm()
         qs = context["form"].fields["assigned_user"].queryset
-        qs = qs.filter(bibos_profile__sites=self.get_object())
+        qs = qs.filter(user_profile__sites=self.get_object())
         context["form"].fields["assigned_user"].queryset = qs
 
         return context
@@ -3198,7 +3266,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
         return self.render_to_json_response(context, **response_kwargs)
 
     def get_queryset(self):
-        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         queryset = SecurityEvent.objects.filter(
             Q(problem__site=site) | Q(event_rule_server__site=site)
         )
@@ -3255,7 +3323,7 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
             "results": [
                 {
                     "pk": event.pk,
-                    "site_uid": site.uid,
+                    "slug": site.uid,
                     "problem_name": event.problem.name
                     if event.problem
                     else event.event_rule_server.name,
@@ -3308,7 +3376,7 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        site = get_object_or_404(Site, uid=self.kwargs[self.site_uid])
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         params = self.request.POST
         ids = params.getlist("ids")
         queryset = queryset.filter(id__in=ids, pc__site=site)
@@ -3341,14 +3409,17 @@ documentation_menu_items = [
     ("notifications", _("Notifications and offline rules")),
     ("users", _("Users")),
     ("configuration", _("Configurations")),
-    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
     ("changelogs", _("The News site")),
+    ("api", "API"),
+    ("creating_security_problems", _("Setting up security surveillance (PDF)")),
     ("", _("OS2borgerPC")),
     ("os2borgerpc_installation_guide", _("Installation Guide (PDF)")),
     ("os2borgerpc_installation_guide_old", _("Old installation guide (PDF)")),
     ("", _("OS2borgerPC Kiosk")),
     ("os2borgerpc_kiosk_installation_guide", _("Installation Guide")),
     ("os2borgerpc_kiosk_wifi_guide", _("Updating Wi-Fi setup")),
+    ("", _("Audit")),
+    ("audit_doc", _("FAQ (PDF)")),
     ("", _("Technical Documentation")),
     ("tech/os2borgerpc-image", _("OS2borgerPC Image")),
     ("tech/os2borgerpc-admin", _("OS2borgerPC Admin Site")),
@@ -3393,6 +3464,9 @@ class DocView(TemplateView, LoginRequiredMixin):
         context["docmenuitems"] = documentation_menu_items
         docnames = self.docname.split("/")
 
+        # Returns the first site the user is a member of
+        context["site"] = self.request.user.user_profile.sites.first()
+
         context["menu_active"] = docnames[0]
 
         # Get the links to the pdf files for the chosen language
@@ -3405,9 +3479,11 @@ class DocView(TemplateView, LoginRequiredMixin):
             + "docs/OS2BorgerPC_installation_guide_old",
             "creating_security_problems": "https://raw.githubusercontent.com/OS2borgerPC/admin-site/development/"
             + "admin_site/static/docs/OS2BorgerPC_security_rules",
+            "audit_doc": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/Audit_doc",
         }
         for key in pdf_href:
-            pdf_href[key] += "_" + self.request.user.bibos_profile.language + ".pdf"
+            pdf_href[key] += "_" + self.request.user.user_profile.language + ".pdf"
         context["pdf_href"] = pdf_href
 
         # Set heading according to chosen item
@@ -3504,9 +3580,8 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ImageVersionsView, self).get_context_data(**kwargs)
 
-        site_uid = self.kwargs.get("site_uid")
-        site_obj = Site.objects.get(uid=site_uid)
-        last_pay_date = site_obj.paid_for_access_until
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        last_pay_date = site.paid_for_access_until
 
         if not last_pay_date:
             context["site_allowed"] = False
