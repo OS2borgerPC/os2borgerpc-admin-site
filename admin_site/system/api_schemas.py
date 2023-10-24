@@ -13,10 +13,6 @@ from ninja.orm import create_schema
 # ConfigurationSchema = create_schema(Configuration, depth=1, fields=['name'])
 
 
-class Error(Schema):
-    message: str
-
-
 class PCSchema(ModelSchema):
     ip_addresses: str
 

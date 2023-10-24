@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-19 12:07+0200\n"
+"POT-Creation-Date: 2023-10-19 16:37+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -923,8 +923,8 @@ msgstr "Grupper"
 msgid "On/Off schedules"
 msgstr "Tænd/Sluk tidsplaner"
 
-#: system/views.py templates/site_with_navigation.html
-#: templates/system/jobs/site_jobs.html
+#: system/views.py templates/documentation/api.html
+#: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
 #: templates/system/scripts/confirm_delete.html
 msgid "Jobs"
 msgstr "Jobs"
@@ -1098,16 +1098,12 @@ msgid "Events"
 msgstr "Hændelser"
 
 #: templates/documentation/api.html
-msgid "Security Events"
-msgstr "Sikkerhedshændelser"
-
-#: templates/documentation/api.html
-msgid "Offline Events"
-msgstr "Offline-hændelser"
-
-#: templates/documentation/api.html
 msgid "PC"
 msgstr "PC"
+
+#: templates/documentation/api.html
+msgid "Logins"
+msgstr "Logins"
 
 #: templates/documentation/api.html
 msgid "Generate an API key"
@@ -1135,33 +1131,24 @@ msgstr ""
 "%(api_key)s. Denne proces beskrives længere nede på siden."
 
 #: templates/documentation/api.html
-msgid "The data available through the API includes:"
-msgstr "Den data, som er tilgængelig gennem API'et, inkluderer:"
-
-#: templates/documentation/api.html
-#, python-format
-msgid "Data about %(pcs)s"
-msgstr "Data om %(pcs)s"
+msgid "The API has endpoints for the following:"
+msgstr "API'et har endpoints for følgende:"
 
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"Data about %(events)s, including both %(security_events)s and "
-"%(offline_events)s"
-msgstr ""
-"Data om %(events)s, inklusive %(security_events)s og %(offline_events)s"
-
-#: templates/documentation/api.html
-#, python-format
-msgid "Data about %(pc)s"
-msgstr "Data om %(pc)s"
-
-#: templates/documentation/api.html
-#, python-format
-msgid ""
-"which contain extended info about a %(pc)s, such as hostname and IP addresses"
+"which contains extended info about a %(pc)s, such as hostname and IP "
+"addresses"
 msgstr ""
 "som indeholder yderligere info om en %(pc)s, såsom hostname og IP-adresser"
+
+#: templates/documentation/api.html
+msgid ""
+"which contains information about how many %(logins)s a single or all "
+"computers have had on a given day"
+msgstr ""
+"som indeholder information omkring hvor mange %(logins)s en enkelt "
+"eller flere PC'er har haft på en given dag"
 
 #: templates/documentation/api.html
 msgid "HTTP header"
