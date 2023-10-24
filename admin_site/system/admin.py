@@ -253,9 +253,13 @@ class SiteAdmin(admin.ModelAdmin):
 
 
 class FeaturePermissionAdmin(admin.ModelAdmin):
+    def sites_with_access(self, obj):
+        return list(obj.sites.all())
+
     list_display = (
         "name",
         "uid",
+        "sites_with_access",
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
