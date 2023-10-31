@@ -306,14 +306,12 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Handler for citizen login.
-CITIZEN_LOGIN_VALIDATOR = settings.get(
-    "CITIZEN_LOGIN_VALIDATOR", "system.utils.cicero_validate"
+CITIZEN_LOGIN_API_VALIDATOR = settings.get(
+    "CITIZEN_LOGIN_API_VALIDATOR", "system.utils.cicero_validate"
 )
 
 # Cicero specific stuff.
 CICERO_URL = settings.get("CICERO_URL")
-CICERO_USER = settings.get("CICERO_USER")
-CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
 
 # All Python Markdown's officially supported extensions can be added here without
 # any extra setup.
