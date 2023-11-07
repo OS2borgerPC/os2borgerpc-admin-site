@@ -184,6 +184,9 @@ class Site(models.Model):
         verbose_name=_("Password for login API (e.g. Cicero)"),
         max_length=255,
         blank=True,
+        help_text=_(
+            "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
+        ),
     )
     user_login_duration = models.DurationField(
         verbose_name=_("Login duration"),
