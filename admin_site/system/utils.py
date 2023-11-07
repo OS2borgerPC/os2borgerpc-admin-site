@@ -79,10 +79,10 @@ def cicero_validate(loaner_number, pincode, site):
 
     regex_match = re.fullmatch(f"^\d+$", pincode)
     if not regex_match:
-        # logger.warning("Pincode must be a number.")
+        # logger.warning("{site.name}: Pincode must be a number.")
         return 0
     if not site.isil:
-        logger.error("Agency ID / ISIL MUST be specified.")
+        logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
         return 0
     # First, get sessionKey.
     session_key_url = (
@@ -102,7 +102,7 @@ def cicero_validate(loaner_number, pincode, site):
         # Unable to authenticate with system user - log this.
         message = response.json()["message"]
         logger.error(
-            f"Unable to log in with configured user name and password: {message}"
+            f"{site.name} was unable to log in with configured user name and password: {message}"
         )
         return 0
     # We now have a valid session key.
@@ -127,16 +127,16 @@ def cicero_validate(loaner_number, pincode, site):
         return patron_id
 
 
-def always_validate_citizen(loaner_number, pincode, agency_id):
+def always_validate_citizen(loaner_number, pincode, site):
     """Perform sanity checks, but always return a suitable patron ID."""
     logger = logging.getLogger(__name__)
     try:
         pincode = int(pincode)
     except ValueError:
-        # logger.warning("Pincode must be a number.")
+        logger.warning(f"{site.name}: Pincode must be a number.")
         return 0
-    if not agency_id:
-        logger.error("Agency ID / ISIL MUST be specified.")
+    if not site.isil:
+        logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
         return 0
     return loaner_number
 

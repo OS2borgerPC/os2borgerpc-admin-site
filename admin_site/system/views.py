@@ -328,9 +328,10 @@ class SiteSettings(UpdateView, SiteView):
         return context
 
     def form_valid(self, form):
-        if not form.cleaned_data["cicero_password"]:
+        # Only overwrite Cicero password if the form input for it was non-empty
+        if not form.cleaned_data["citizen_login_api_password"]:
             site = get_object_or_404(Site, uid=self.kwargs["slug"])
-            form.instance.cicero_password = site.cicero_password
+            form.instance.citizen_login_api_password = site.citizen_login_api_password
 
         self.object.configuration.update_from_request(self.request.POST, "site_configs")
 
