@@ -263,6 +263,8 @@ XMLRPC_METHODS = (
     ("system.rpc.push_security_events", "push_security_events"),
     ("system.rpc.citizen_login", "citizen_login"),
     ("system.rpc.citizen_logout", "citizen_logout"),
+    ("system.rpc.sms_login", "sms_login"),
+    ("system.rpc.sms_login_finalize", "sms_login_finalize"),
 )
 
 # A sample logging configuration. The only tangible logging

@@ -69,6 +69,70 @@ def get_citizen_login_api_validator():
     return validator
 
 
+def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=None):
+    """Validate that the user has a booking for the current time."""
+    logger = logging.getLogger(__name__)
+
+    headers = {"Authorization": f"Bearer {site.booking_api_key}"}
+    date = date_time.split(" ")[0]
+    appointment_url = (
+        f"https://easyappointments.sambruk.se/index.php/api/v1/appointments?aggregates"
+        f"&fields=start,end,customer,service&sort=+start&q={date}"
+    )
+    response = requests.get(appointment_url, headers=headers)
+    if response.ok:
+        appointments = response.json()
+    else:
+        # Unable to authenticate with system API key - log this.
+        message = response.text
+        logger.error(
+            f"{site.name} was unable to authorize with configured EasyAppointments API key: {message}"
+        )
+        return 0
+    booking_end = None
+    for appointment in appointments:
+        if (
+            (
+                (pc_name and appointment["service"]["name"].lower() == pc_name)
+                or not pc_name
+            )
+            and appointment["customer"]["phone"][-8:] == phone_number
+            and appointment["start"] < date_time < appointment["end"]
+        ):
+            booking_end = appointment["end"]
+            break
+    return booking_end
+
+
+def send_password_sms(phone_number, password, site):
+    logger = logging.getLogger(__name__)
+
+    sms_url = (
+        f"https://api.smsteknik.se/send/xml/?id=F%F6reningen+Sambruk"
+        f"&user={site.citizen_login_api_user}&pass={site.citizen_login_api_password}"
+    )
+    xml = f"""<?xml version='1.0' encoding='utf-8'?>
+        <sms-teknik>
+        <udmessage><![CDATA[Eng&#229;ngsl&#246;senordet f&#246;r datorn &#228;r {password}]]></udmessage>
+        <smssender>MedborgarPC</smssender> # This is the listed sender
+        <items>
+        <recipient>
+        <nr>+467{phone_number}</nr> # +45 is for Danish numbers, Swedish numbers should start with +467
+        </recipient>
+        </items>
+        </sms-teknik>"""
+
+    response = requests.post(sms_url, data=xml)
+    if response.text != "0:Access denied":
+        return True
+    else:
+        # Unable to authenticate with system user - log this.
+        logger.error(
+            f"{site.name} was unable to authorize with SMSTeknik with configured user name and password"
+        )
+        return False
+
+
 def cicero_validate(loaner_number, pincode, site):
     """Do the actual validation against the Cicero service.
 
