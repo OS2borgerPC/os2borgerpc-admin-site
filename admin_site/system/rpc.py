@@ -11,9 +11,13 @@ from django.db.models import Q
 
 from system.models import PC, Site, Configuration, ConfigurationEntry
 from system.models import Job, SecurityProblem, SecurityEvent
-from system.models import Citizen
+from system.models import Citizen, LoginLog
 
-from system.utils import get_citizen_login_api_validator
+from system.utils import (
+    get_citizen_login_api_validator,
+    easy_appointments_booking_validate,
+    send_password_sms,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -297,6 +301,108 @@ def push_security_events(pc_uid, events_csv):
         )
 
     return 0
+
+
+def sms_login(phone_number, password, site, require_booking=False, pc_name=None):
+    citizen_hash = ""
+    try:
+        site = Site.objects.get(uid=site)
+    except Site.DoesNotExist:
+        logger.error(f"Site {site} does not exist - unable to proceed.")
+        return 0, citizen_hash
+
+    now = datetime.now()
+    # If booking is required then the bookings determine when and how long the
+    # users can log in
+    if require_booking:
+        date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        booking_end = easy_appointments_booking_validate(
+            phone_number, date_time, site, pc_name
+        )
+        if booking_end:
+            time_allowed = (
+                datetime.strptime(booking_end, "%Y-%m-%d %H:%M:%S") - now
+            ).total_seconds() // 60
+        else:
+            if booking_end is None:
+                citizen_hash = "no_booking"
+            return 0, citizen_hash
+    # If booking is not required, use the standard quarantine system
+    else:
+        citizen_hash = hashlib.sha512(str(phone_number).encode()).hexdigest()
+        # Get previous login, if any.
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+        except Citizen.DoesNotExist:
+            citizen = None
+
+        time_allowed = site.user_login_duration.total_seconds() // 60
+
+        if citizen:
+            quarantine_duration = site.user_quarantine_duration
+            quarantined_from = citizen.last_successful_login + site.user_login_duration
+            if now < quarantined_from and not citizen.logged_in:
+                time_allowed = (
+                    time_allowed
+                    - (now - citizen.last_successful_login).total_seconds() // 60
+                )
+            elif now < quarantined_from and citizen.logged_in:
+                citizen_hash = "logged_in"
+            else:
+                # (now - quarantined_from) < quarantine_duration:
+                time_allowed = (
+                    (now - quarantined_from).total_seconds()
+                    - quarantine_duration.total_seconds()
+                ) // 60
+
+    # sms_sent = send_password_sms(phone_number, password, site)
+
+    # if not sms_sent:
+    #    citizen_hash = "sms_failed"
+
+    return int(time_allowed), citizen_hash
+
+
+def sms_login_finalize(phone_number, site, require_booking, save_log):
+    if not require_booking:
+        citizen_hash = hashlib.sha512(str(phone_number).encode()).hexdigest()
+        now = datetime.now()
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+        except Citizen.DoesNotExist:
+            citizen = None
+        if citizen:
+            quarantine_duration = site.user_quarantine_duration
+            quarantined_from = citizen.last_successful_login + site.user_login_duration
+            if now < quarantined_from and not citizen.logged_in:
+                citizen.logged_in = True
+            elif (now - quarantined_from) >= quarantine_duration:
+                citizen.last_successful_login = now
+                citizen.logged_in = True
+        else:
+            # First-time login, all good.
+            citizen = Citizen(
+                citizen_id=citizen_hash,
+                last_successful_login=now,
+                site=site,
+                logged_in=True,
+            )
+        citizen.save()
+
+    log_id = 0
+    if save_log:
+        now = datetime.now()
+        login_log = LoginLog(
+            identifier=phone_number,
+            site=site,
+            date=datetime.date(now),
+            login_time=datetime.time(now),
+            logout_time=datetime.time(now),
+        )
+        login_log.save()
+        log_id = login_log.id
+
+    return log_id
 
 
 def citizen_login(username, password, site, prevent_dual_login=False):
