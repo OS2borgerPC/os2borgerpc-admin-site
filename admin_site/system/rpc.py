@@ -309,25 +309,32 @@ def sms_login(phone_number, password, site, require_booking=False, pc_name=None)
         site = Site.objects.get(uid=site)
     except Site.DoesNotExist:
         logger.error(f"Site {site} does not exist - unable to proceed.")
-        return 0, citizen_hash
+        return int(0), citizen_hash
 
     now = datetime.now()
     # If booking is required then the bookings determine when and how long the
     # users can log in
     if require_booking:
         date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-        booking_end = easy_appointments_booking_validate(
+        # Check for a matching booking
+        booking_time, later_booking = easy_appointments_booking_validate(
             phone_number, date_time, site, pc_name
         )
-        if booking_end:
+        if booking_time:  # If a matching booking was found
             time_allowed = (
-                datetime.strptime(booking_end, "%Y-%m-%d %H:%M:%S") - now
+                datetime.strptime(booking_time, "%Y-%m-%d %H:%M:%S") - now
             ).total_seconds() // 60
+            if later_booking:  # If the matching booking starts later in the day
+                time_allowed = -time_allowed
         else:
-            if booking_end is None:
+            # booking_time will be None if no matching booking was found and
+            # 0 if the API validation failed
+            if booking_time is None:
                 citizen_hash = "no_booking"
-            return 0, citizen_hash
-    # If booking is not required, use the standard quarantine system
+            return int(0), citizen_hash
+    # If booking is not required, use the standard quarantine system.
+    # Don't update last_successful_login and logged_in until the
+    # citizen actually logs in (sms_login_finalize)
     else:
         citizen_hash = hashlib.sha512(str(phone_number).encode()).hexdigest()
         # Get previous login, if any.
@@ -355,15 +362,23 @@ def sms_login(phone_number, password, site, require_booking=False, pc_name=None)
                     - quarantine_duration.total_seconds()
                 ) // 60
 
-    # sms_sent = send_password_sms(phone_number, password, site)
+    sms_sent = send_password_sms(phone_number, password, site)
 
-    # if not sms_sent:
-    #    citizen_hash = "sms_failed"
+    if not sms_sent:
+        citizen_hash = "sms_failed"
 
     return int(time_allowed), citizen_hash
 
 
 def sms_login_finalize(phone_number, site, require_booking, save_log):
+    try:
+        site = Site.objects.get(uid=site)
+    except Site.DoesNotExist:
+        logger.error(f"Site {site} does not exist - unable to proceed.")
+        return 0
+    # If booking is not required, we use the standard quarantine system
+    # time_allowed has already been checked by sms_login, so we only need
+    # to update last_successful_login and/or logged_in
     if not require_booking:
         citizen_hash = hashlib.sha512(str(phone_number).encode()).hexdigest()
         now = datetime.now()
@@ -389,9 +404,10 @@ def sms_login_finalize(phone_number, site, require_booking, save_log):
             )
         citizen.save()
 
-    log_id = 0
+    log_id = ""
     if save_log:
         now = datetime.now()
+        # Initially, logout_time = login_time
         login_log = LoginLog(
             identifier=phone_number,
             site=site,
@@ -403,6 +419,26 @@ def sms_login_finalize(phone_number, site, require_booking, save_log):
         log_id = login_log.id
 
     return log_id
+
+
+def sms_logout(citizen_hash, log_id):
+    if log_id:
+        try:
+            # Update logout_time
+            login_log = LoginLog.objects.get(id=log_id)
+            now = datetime.now()
+            login_log.logout_time = datetime.time(now)
+            login_log.save()
+        except LoginLog.DoesNotExist:
+            pass
+    if citizen_hash:
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+            citizen.logged_in = False
+            citizen.save()
+        except Citizen.DoesNotExist:
+            pass
+    return 0
 
 
 def citizen_login(username, password, site, prevent_dual_login=False):

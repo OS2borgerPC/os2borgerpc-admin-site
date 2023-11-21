@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "ordering": ["date", "login_time"],
+                "ordering": ["date", "identifier", "login_time"],
             },
         ),
     ]

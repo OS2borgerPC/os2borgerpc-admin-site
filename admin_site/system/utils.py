@@ -88,20 +88,22 @@ def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=No
         logger.error(
             f"{site.name} was unable to authorize with configured EasyAppointments API key: {message}"
         )
-        return 0
-    booking_end = None
+        return 0, False
+    booking_time = None
+    later_booking = False
     for appointment in appointments:
         if (
-            (
-                (pc_name and appointment["service"]["name"].lower() == pc_name)
-                or not pc_name
-            )
-            and appointment["customer"]["phone"][-8:] == phone_number
-            and appointment["start"] < date_time < appointment["end"]
-        ):
-            booking_end = appointment["end"]
-            break
-    return booking_end
+            (pc_name and appointment["service"]["name"].lower() == pc_name)
+            or not pc_name
+        ) and appointment["customer"]["phone"][-8:] == phone_number:
+            if appointment["start"] < date_time < appointment["end"]:  # Current booking
+                booking_time = appointment["end"]
+                break
+            elif date_time < appointment["start"]:  # Future booking
+                later_booking = True
+                booking_time = appointment["start"]
+                break
+    return booking_time, later_booking
 
 
 def send_password_sms(phone_number, password, site):
@@ -109,21 +111,30 @@ def send_password_sms(phone_number, password, site):
 
     sms_url = (
         f"https://api.smsteknik.se/send/xml/?id=F%F6reningen+Sambruk"
-        f"&user={site.citizen_login_api_user}&pass={site.citizen_login_api_password}"
+        f"&user={quote(site.citizen_login_api_user)}&pass={quote(site.citizen_login_api_password)}"
     )
+    translate_table = str.maketrans({"å": r"&#229;", "ä": r"&#228;", "ö": r"&#246;"})
+    text = f"Engångslösenordet för den här MedborgarPC är {password}"
     xml = f"""<?xml version='1.0' encoding='utf-8'?>
         <sms-teknik>
-        <udmessage><![CDATA[Eng&#229;ngsl&#246;senordet f&#246;r datorn &#228;r {password}]]></udmessage>
-        <smssender>MedborgarPC</smssender> # This is the listed sender
+        <flash>true</flash> # Make it a flash sms
+        <customid>{site.name.translate(translate_table)}</customid>
+        <udmessage><![CDATA[{text.translate(translate_table)}]]></udmessage>
+        <smssender>MedborgarPC</smssender> # This is the listed sender. It is limited to 11 characters
         <items>
         <recipient>
-        <nr>+467{phone_number}</nr> # +45 is for Danish numbers, Swedish numbers should start with +467
+        <nr>+467{phone_number}</nr> # +467 is for Swedish numbers, Danish numbers should start with +45
         </recipient>
         </items>
         </sms-teknik>"""
 
     response = requests.post(sms_url, data=xml)
-    if response.text != "0:Access denied":
+    # The SMSTeknik API always returns response.ok = True even
+    # if authentication fails. Instead, status is indicated by
+    # response.text which will be an id for successful requests
+    # and 0: followed by a brief error description for failed
+    # requests
+    if response.text[:2] != "0:":
         return True
     else:
         # Unable to authenticate with system user - log this.
