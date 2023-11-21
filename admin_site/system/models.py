@@ -280,7 +280,7 @@ class LoginLog(models.Model):
         return f"{self.identifier}: {self.date}"
 
     class Meta:
-        ordering = ["date", "login_time"]
+        ordering = ["date", "identifier", "login_time"]
 
 
 class FeaturePermission(models.Model):
