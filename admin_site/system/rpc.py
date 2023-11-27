@@ -30,8 +30,10 @@ def register_new_computer(mac, name, distribution, site, configuration):
     uid = hashlib.md5(mac.encode("utf-8")).hexdigest()
 
     if PC.objects.filter(uid=uid).count():
+        name = PC.objects.get(uid=uid).name
         raise Exception(
-            "This computer is already registered with the chosen admin portal. "
+            "A computer with the same MAC address as this computer is already "
+            f"registered with the chosen admin portal under the name {name}. "
             "Start by deleting the computer on the computer list on your site "
             "and then restart the registration."
         )
