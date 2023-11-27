@@ -304,6 +304,28 @@ def push_security_events(pc_uid, events_csv):
 
 
 def sms_login(phone_number, password, site, require_booking=False, pc_name=None):
+    """Check if the user is allowed to log in and if so, send a sms with
+    the required password to the entered phone number.
+    Whether a user is allowed to log in is determined by checking for a
+    matching booking if booking is required or by checking the Citizen
+    quarantine logic if booking is not required.
+
+    Return values:
+        time < 0: User is quarantined and may login in -r minutes or
+                  their next booking starts in -r minutes.
+        time = 0: Unable to authenticate.
+        time > 0: The user is allowed r minutes of login time.
+        citizen_hash: If booking is not required and the user is allowed
+                      to log in, this will be the hashed version of their
+                      phone number.
+        Other possible values include:
+        citizen_hash = '': No special errors and booking is required.
+        citizen_hash = 'no_booking': No matching or future booking found.
+        citizen_hash = 'logged_in': The user is already logged in on
+                        another machine. This value is only used when
+                        booking is NOT required.
+        citizen_hash = 'sms_failed': Failed to authenticate with sms API."""
+
     citizen_hash = ""
     try:
         site = Site.objects.get(uid=site)
@@ -371,6 +393,16 @@ def sms_login(phone_number, password, site, require_booking=False, pc_name=None)
 
 
 def sms_login_finalize(phone_number, site, require_booking, save_log):
+    """Finalize the sms_login-process by creating a LoginLog object if
+    required and/or updating the relevant Citizen object if booking
+    is not required.
+
+    Return values:
+        log_id = '': Writing a log is not required.
+        log_id = int: If a log should be written, this will be the id
+                      of the created log object. It is used to update
+                      the logout time later."""
+
     try:
         site = Site.objects.get(uid=site)
     except Site.DoesNotExist:
@@ -422,6 +454,10 @@ def sms_login_finalize(phone_number, site, require_booking, save_log):
 
 
 def sms_logout(citizen_hash, log_id):
+    """Update the logout time of the relevant LoginLog object if
+    required and/or log out the relevant Citizen object if
+    booking is not required."""
+
     if log_id:
         try:
             # Update logout_time
