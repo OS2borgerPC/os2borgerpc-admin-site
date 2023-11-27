@@ -34,6 +34,14 @@ class SiteForm(forms.ModelForm):
             "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
         ),
     )
+    booking_api_key = forms.CharField(
+        label=_("API key for Easy!Appointments"),
+        widget=forms.PasswordInput(attrs={"class": "passwordinput"}),
+        required=False,
+        help_text=_(
+            "Necessary for customers who wish to require booking through Easy!Appointments"
+        ),
+    )
 
     def __init__(self, *args, **kwargs):
         super(SiteForm, self).__init__(*args, **kwargs)

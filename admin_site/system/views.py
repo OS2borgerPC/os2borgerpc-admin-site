@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
 from django.utils import translation
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.urls import resolve, reverse
 
 from django.views.generic.edit import CreateView, DeletionMixin, UpdateView, DeleteView
@@ -332,6 +332,10 @@ class SiteSettings(UpdateView, SiteView):
         if not form.cleaned_data["citizen_login_api_password"]:
             site = get_object_or_404(Site, uid=self.kwargs["slug"])
             form.instance.citizen_login_api_password = site.citizen_login_api_password
+        # Only overwrite the Easy!Appointments API key if the form input for it was non-empty
+        if not form.cleaned_data["booking_api_key"]:
+            site = get_object_or_404(Site, uid=self.kwargs["slug"])
+            form.instance.booking_api_key = site.booking_api_key
 
         self.object.configuration.update_from_request(self.request.POST, "site_configs")
 
@@ -2510,6 +2514,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
+            if form.cleaned_data["usertype"] == str(site_membership.SITE_ADMIN):
+                self.object.user_permissions.set(
+                    Permission.objects.filter(name="Can view login log")
+                )
+                self.object.is_staff = True
             result = super(UserCreate, self).form_valid(form)
             return result
         else:
@@ -2580,6 +2589,17 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
             site_membership.site_user_type = form.cleaned_data["usertype"]
             site_membership.save()
+            if not self.selected_user.is_superuser and form.cleaned_data[
+                "usertype"
+            ] == str(site_membership.SITE_ADMIN):
+                self.object.user_permissions.set(
+                    Permission.objects.filter(name="Can view login log")
+                )
+                self.object.is_staff = True
+            elif not self.selected_user.is_superuser and form.cleaned_data[
+                "usertype"
+            ] != str(site_membership.SITE_ADMIN):
+                self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
             response = super(UserUpdate, self).form_valid(form)
