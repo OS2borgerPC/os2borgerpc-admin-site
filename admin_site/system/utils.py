@@ -70,7 +70,19 @@ def get_citizen_login_api_validator():
 
 
 def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=None):
-    """Validate that the user has a booking for the current time."""
+    """Validate that the user has a booking for the current time
+    and returns the end time of that booking if one is found.
+    If a future booking is found, return the start time of that
+    booking and an indication that it is a future booking.
+
+    Return values:
+        booking_time = None: No matching booking was found.
+        booking_time = 0: Authentication with the API failed.
+        booking_time = datetime string: The end time of an active
+                        booking or the start time of a future booking.
+        later_booking = False: No future booking.
+        later_booking = True: The next matching booking is in the future."""
+
     logger = logging.getLogger(__name__)
 
     headers = {"Authorization": f"Bearer {site.booking_api_key}"}
@@ -107,6 +119,13 @@ def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=No
 
 
 def send_password_sms(phone_number, password, site):
+    """Makes a request to the SMSTeknik API in order to send
+    a sms with the required password to the specified number.
+
+    Return values:
+        True: Request was successful.
+        False: Authentication failed."""
+
     logger = logging.getLogger(__name__)
 
     sms_url = (
