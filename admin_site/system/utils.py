@@ -107,7 +107,7 @@ def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=No
         if (
             (pc_name and appointment["service"]["name"].lower() == pc_name)
             or not pc_name
-        ) and appointment["customer"]["phone"][-8:] == phone_number:
+        ) and appointment["customer"]["phone"][-8:] == phone_number[-8:]:
             if appointment["start"] < date_time < appointment["end"]:  # Current booking
                 booking_time = appointment["end"]
                 break
@@ -142,7 +142,7 @@ def send_password_sms(phone_number, password, site):
         <smssender>MedborgarPC</smssender> # This is the listed sender. It is limited to 11 characters
         <items>
         <recipient>
-        <nr>+467{phone_number}</nr> # +467 is for Swedish numbers, Danish numbers should start with +45
+        <nr>{phone_number}</nr>
         </recipient>
         </items>
         </sms-teknik>"""

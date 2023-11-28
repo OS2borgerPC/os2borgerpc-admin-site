@@ -312,6 +312,9 @@ def sms_login(phone_number, password, site, require_booking=False, pc_name=None)
     matching booking if booking is required or by checking the Citizen
     quarantine logic if booking is not required.
 
+    The phone number given to this function should include the
+    country code.
+
     Return values:
         time < 0: User is quarantined and may login in -r minutes or
                   their next booking starts in -r minutes.
@@ -360,7 +363,7 @@ def sms_login(phone_number, password, site, require_booking=False, pc_name=None)
     # Don't update last_successful_login and logged_in until the
     # citizen actually logs in (sms_login_finalize)
     else:
-        citizen_hash = hashlib.sha512(str(phone_number).encode()).hexdigest()
+        citizen_hash = hashlib.sha512(str(phone_number[-8:]).encode()).hexdigest()
         # Get previous login, if any.
         try:
             citizen = Citizen.objects.get(citizen_id=citizen_hash)
@@ -386,10 +389,12 @@ def sms_login(phone_number, password, site, require_booking=False, pc_name=None)
                     - quarantine_duration.total_seconds()
                 ) // 60
 
-    sms_sent = send_password_sms(phone_number, password, site)
+    # Only send a sms if they are allowed to log in
+    if time_allowed > 0:
+        sms_sent = send_password_sms(phone_number, password, site)
 
-    if not sms_sent:
-        citizen_hash = "sms_failed"
+        if not sms_sent:
+            citizen_hash = "sms_failed"
 
     return int(time_allowed), citizen_hash
 
@@ -398,6 +403,9 @@ def sms_login_finalize(phone_number, site, require_booking, save_log):
     """Finalize the sms_login-process by creating a LoginLog object if
     required and/or updating the relevant Citizen object if booking
     is not required.
+
+    The phone number given to this function should NOT include the
+    country code.
 
     Return values:
         log_id = '': Writing a log is not required.
