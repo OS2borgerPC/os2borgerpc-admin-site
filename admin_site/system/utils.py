@@ -118,7 +118,7 @@ def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=No
     return booking_time, later_booking
 
 
-def send_password_sms(phone_number, password, site):
+def send_password_sms(phone_number, message, site):
     """Makes a request to the SMSTeknik API in order to send
     a sms with the required password to the specified number.
 
@@ -133,12 +133,11 @@ def send_password_sms(phone_number, password, site):
         f"&user={quote(site.citizen_login_api_user)}&pass={quote(site.citizen_login_api_password)}"
     )
     translate_table = str.maketrans({"å": r"&#229;", "ä": r"&#228;", "ö": r"&#246;"})
-    text = f"Engångslösenordet för den här MedborgarPC är {password}"
     xml = f"""<?xml version='1.0' encoding='utf-8'?>
         <sms-teknik>
         <flash>true</flash> # Make it a flash sms
         <customid>{site.name.translate(translate_table)}</customid>
-        <udmessage><![CDATA[{text.translate(translate_table)}]]></udmessage>
+        <udmessage><![CDATA[{message.translate(translate_table)}]]></udmessage>
         <smssender>MedborgarPC</smssender> # This is the listed sender. It is limited to 11 characters
         <items>
         <recipient>
