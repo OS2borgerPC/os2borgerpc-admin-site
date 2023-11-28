@@ -305,7 +305,7 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
-def sms_login(phone_number, password, site, require_booking=False, pc_name=None):
+def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
     """Check if the user is allowed to log in and if so, send a sms with
     the required password to the entered phone number.
     Whether a user is allowed to log in is determined by checking for a
@@ -391,7 +391,7 @@ def sms_login(phone_number, password, site, require_booking=False, pc_name=None)
 
     # Only send a sms if they are allowed to log in
     if time_allowed > 0:
-        sms_sent = send_password_sms(phone_number, password, site)
+        sms_sent = send_password_sms(phone_number, message, site)
 
         if not sms_sent:
             citizen_hash = "sms_failed"
