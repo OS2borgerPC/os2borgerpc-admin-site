@@ -1,3 +1,13 @@
+Version 5.22.0, November 28, 2023
+---------------------------------
+
+- Add integration with SMSTeknik and Easy!Appointments to support login on OS2borgerPC's via sms verification
+  with or without booking via Easy!Appointments required
+- Improve the error message when reregistering a PC. Message now includes the name of the already registered PC
+- Generalize feature permission for scripts
+- Add sites to the /admin overview of feature permissions
+- Add site name to cicero validation logging
+
 Version 5.21.0, Oktober 23, 2023
 --------------------------------
 

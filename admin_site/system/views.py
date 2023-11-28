@@ -1125,8 +1125,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.script.is_hidden
             and not self.request.user.is_superuser
             and not (
-                self.site.feature_permission.filter(uid="wake_plan")
-                and self.script.uid == "suspend_after_time"
+                self.script.feature_permission in self.site.feature_permission.all()
             )
         ):
             raise PermissionDenied
