@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
 from django.utils import translation
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.urls import resolve, reverse
 
 from django.views.generic.edit import CreateView, DeletionMixin, UpdateView, DeleteView
@@ -50,6 +50,7 @@ from system.models import (
     APIKey,
     AssociatedScriptParameter,
     ConfigurationEntry,
+    FeaturePermission,
     ImageVersion,
     Input,
     Job,
@@ -327,9 +328,14 @@ class SiteSettings(UpdateView, SiteView):
         return context
 
     def form_valid(self, form):
-        if not form.cleaned_data["cicero_password"]:
+        # Only overwrite Cicero password if the form input for it was non-empty
+        if not form.cleaned_data["citizen_login_api_password"]:
             site = get_object_or_404(Site, uid=self.kwargs["slug"])
-            form.instance.cicero_password = site.cicero_password
+            form.instance.citizen_login_api_password = site.citizen_login_api_password
+        # Only overwrite the Easy!Appointments API key if the form input for it was non-empty
+        if not form.cleaned_data["booking_api_key"]:
+            site = get_object_or_404(Site, uid=self.kwargs["slug"])
+            form.instance.booking_api_key = site.booking_api_key
 
         self.object.configuration.update_from_request(self.request.POST, "site_configs")
 
@@ -879,12 +885,12 @@ class ScriptMixin(object):
         context["site"] = self.site
         context["script_tags"] = ScriptTag.objects.all()
 
-        if self.site.feature_permission.filter(uid="wake_plan"):
-            scripts = self.scripts.filter(
-                Q(is_hidden=False) | Q(uid="suspend_after_time")
-            )
-        else:
-            scripts = self.scripts.filter(is_hidden=False)
+        scripts = self.scripts.filter(is_hidden=False)
+
+        # Append scripts the site has permissions for
+        for fp in context["site"].feature_permission.all():
+            scripts = scripts | fp.scripts.all()
+
         local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
         global_scripts = scripts.filter(site=None)
@@ -1119,8 +1125,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.script.is_hidden
             and not self.request.user.is_superuser
             and not (
-                self.site.feature_permission.filter(uid="wake_plan")
-                and self.script.uid == "suspend_after_time"
+                self.script.feature_permission in self.site.feature_permission.all()
             )
         ):
             raise PermissionDenied
@@ -2508,6 +2513,11 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
+            if form.cleaned_data["usertype"] == str(site_membership.SITE_ADMIN):
+                self.object.user_permissions.set(
+                    Permission.objects.filter(name="Can view login log")
+                )
+                self.object.is_staff = True
             result = super(UserCreate, self).form_valid(form)
             return result
         else:
@@ -2578,6 +2588,17 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
             site_membership.site_user_type = form.cleaned_data["usertype"]
             site_membership.save()
+            if not self.selected_user.is_superuser and form.cleaned_data[
+                "usertype"
+            ] == str(site_membership.SITE_ADMIN):
+                self.object.user_permissions.set(
+                    Permission.objects.filter(name="Can view login log")
+                )
+                self.object.is_staff = True
+            elif not self.selected_user.is_superuser and form.cleaned_data[
+                "usertype"
+            ] != str(site_membership.SITE_ADMIN):
+                self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
             response = super(UserUpdate, self).form_valid(form)

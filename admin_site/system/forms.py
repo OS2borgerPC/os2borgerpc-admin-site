@@ -26,11 +26,21 @@ date_format = forms.DateInput(
 
 
 class SiteForm(forms.ModelForm):
-    cicero_password = forms.CharField(
-        label=_("Password for Cicero API"),
+    citizen_login_api_password = forms.CharField(
+        label=_("Password for login API (e.g. Cicero)"),
         widget=forms.PasswordInput(attrs={"class": "passwordinput"}),
         required=False,
-        help_text=_("Necessary for customers who wish to integrate with Cicero login"),
+        help_text=_(
+            "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
+        ),
+    )
+    booking_api_key = forms.CharField(
+        label=_("API key for Easy!Appointments"),
+        widget=forms.PasswordInput(attrs={"class": "passwordinput"}),
+        required=False,
+        help_text=_(
+            "Necessary for customers who wish to require booking through Easy!Appointments"
+        ),
     )
 
     def __init__(self, *args, **kwargs):

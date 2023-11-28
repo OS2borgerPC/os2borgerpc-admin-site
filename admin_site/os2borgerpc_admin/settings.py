@@ -263,6 +263,9 @@ XMLRPC_METHODS = (
     ("system.rpc.push_security_events", "push_security_events"),
     ("system.rpc.citizen_login", "citizen_login"),
     ("system.rpc.citizen_logout", "citizen_logout"),
+    ("system.rpc.sms_login", "sms_login"),
+    ("system.rpc.sms_login_finalize", "sms_login_finalize"),
+    ("system.rpc.sms_logout", "sms_logout"),
 )
 
 # A sample logging configuration. The only tangible logging
@@ -306,14 +309,12 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Handler for citizen login.
-CITIZEN_LOGIN_VALIDATOR = settings.get(
-    "CITIZEN_LOGIN_VALIDATOR", "system.utils.cicero_validate"
+CITIZEN_LOGIN_API_VALIDATOR = settings.get(
+    "CITIZEN_LOGIN_API_VALIDATOR", "system.utils.cicero_validate"
 )
 
 # Cicero specific stuff.
 CICERO_URL = settings.get("CICERO_URL")
-CICERO_USER = settings.get("CICERO_USER")
-CICERO_PASSWORD = settings.get("CICERO_PASSWORD")
 
 # All Python Markdown's officially supported extensions can be added here without
 # any extra setup.

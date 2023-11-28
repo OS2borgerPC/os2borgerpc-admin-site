@@ -11,9 +11,13 @@ from django.db.models import Q
 
 from system.models import PC, Site, Configuration, ConfigurationEntry
 from system.models import Job, SecurityProblem, SecurityEvent
-from system.models import Citizen
+from system.models import Citizen, LoginLog
 
-from system.utils import get_citizen_login_validator
+from system.utils import (
+    get_citizen_login_api_validator,
+    easy_appointments_booking_validate,
+    send_password_sms,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -26,8 +30,10 @@ def register_new_computer(mac, name, distribution, site, configuration):
     uid = hashlib.md5(mac.encode("utf-8")).hexdigest()
 
     if PC.objects.filter(uid=uid).count():
+        name = PC.objects.get(uid=uid).name
         raise Exception(
-            "This computer is already registered with the chosen admin portal. "
+            "A computer with the same MAC address as this computer is already "
+            f"registered with the chosen admin portal under the name {name}. "
             "Start by deleting the computer on the computer list on your site "
             "and then restart the registration."
         )
@@ -299,6 +305,188 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
+def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
+    """Check if the user is allowed to log in and if so, send a sms with
+    the required password to the entered phone number.
+    Whether a user is allowed to log in is determined by checking for a
+    matching booking if booking is required or by checking the Citizen
+    quarantine logic if booking is not required.
+
+    The phone number given to this function should include the
+    country code.
+
+    Return values:
+        time < 0: User is quarantined and may login in -r minutes or
+                  their next booking starts in -r minutes.
+        time = 0: Unable to authenticate.
+        time > 0: The user is allowed r minutes of login time.
+        citizen_hash: If booking is not required and the user is allowed
+                      to log in, this will be the hashed version of their
+                      phone number.
+        Other possible values include:
+        citizen_hash = '': No special errors and booking is required.
+        citizen_hash = 'no_booking': No matching or future booking found.
+        citizen_hash = 'logged_in': The user is already logged in on
+                        another machine. This value is only used when
+                        booking is NOT required.
+        citizen_hash = 'sms_failed': Failed to authenticate with sms API."""
+
+    citizen_hash = ""
+    try:
+        site = Site.objects.get(uid=site)
+    except Site.DoesNotExist:
+        logger.error(f"Site {site} does not exist - unable to proceed.")
+        return int(0), citizen_hash
+
+    now = datetime.now()
+    # If booking is required then the bookings determine when and how long the
+    # users can log in
+    if require_booking:
+        date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        # Check for a matching booking
+        booking_time, later_booking = easy_appointments_booking_validate(
+            phone_number, date_time, site, pc_name
+        )
+        if booking_time:  # If a matching booking was found
+            time_allowed = (
+                datetime.strptime(booking_time, "%Y-%m-%d %H:%M:%S") - now
+            ).total_seconds() // 60
+            if later_booking:  # If the matching booking starts later in the day
+                time_allowed = -time_allowed
+        else:
+            # booking_time will be None if no matching booking was found and
+            # 0 if the API validation failed
+            if booking_time is None:
+                citizen_hash = "no_booking"
+            return int(0), citizen_hash
+    # If booking is not required, use the standard quarantine system.
+    # Don't update last_successful_login and logged_in until the
+    # citizen actually logs in (sms_login_finalize)
+    else:
+        citizen_hash = hashlib.sha512(str(phone_number[-8:]).encode()).hexdigest()
+        # Get previous login, if any.
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+        except Citizen.DoesNotExist:
+            citizen = None
+
+        time_allowed = site.user_login_duration.total_seconds() // 60
+
+        if citizen:
+            quarantine_duration = site.user_quarantine_duration
+            quarantined_from = citizen.last_successful_login + site.user_login_duration
+            if now < quarantined_from and not citizen.logged_in:
+                time_allowed = (
+                    time_allowed
+                    - (now - citizen.last_successful_login).total_seconds() // 60
+                )
+            elif now < quarantined_from and citizen.logged_in:
+                citizen_hash = "logged_in"
+            else:
+                # (now - quarantined_from) < quarantine_duration:
+                time_allowed = (
+                    (now - quarantined_from).total_seconds()
+                    - quarantine_duration.total_seconds()
+                ) // 60
+
+    # Only send a sms if they are allowed to log in
+    if time_allowed > 0:
+        sms_sent = send_password_sms(phone_number, message, site)
+
+        if not sms_sent:
+            citizen_hash = "sms_failed"
+
+    return int(time_allowed), citizen_hash
+
+
+def sms_login_finalize(phone_number, site, require_booking, save_log):
+    """Finalize the sms_login-process by creating a LoginLog object if
+    required and/or updating the relevant Citizen object if booking
+    is not required.
+
+    The phone number given to this function should NOT include the
+    country code.
+
+    Return values:
+        log_id = '': Writing a log is not required.
+        log_id = int: If a log should be written, this will be the id
+                      of the created log object. It is used to update
+                      the logout time later."""
+
+    try:
+        site = Site.objects.get(uid=site)
+    except Site.DoesNotExist:
+        logger.error(f"Site {site} does not exist - unable to proceed.")
+        return 0
+    # If booking is not required, we use the standard quarantine system
+    # time_allowed has already been checked by sms_login, so we only need
+    # to update last_successful_login and/or logged_in
+    if not require_booking:
+        citizen_hash = hashlib.sha512(str(phone_number).encode()).hexdigest()
+        now = datetime.now()
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+        except Citizen.DoesNotExist:
+            citizen = None
+        if citizen:
+            quarantine_duration = site.user_quarantine_duration
+            quarantined_from = citizen.last_successful_login + site.user_login_duration
+            if now < quarantined_from and not citizen.logged_in:
+                citizen.logged_in = True
+            elif (now - quarantined_from) >= quarantine_duration:
+                citizen.last_successful_login = now
+                citizen.logged_in = True
+        else:
+            # First-time login, all good.
+            citizen = Citizen(
+                citizen_id=citizen_hash,
+                last_successful_login=now,
+                site=site,
+                logged_in=True,
+            )
+        citizen.save()
+
+    log_id = ""
+    if save_log:
+        now = datetime.now()
+        # Initially, logout_time = login_time
+        login_log = LoginLog(
+            identifier=phone_number,
+            site=site,
+            date=datetime.date(now),
+            login_time=datetime.time(now),
+            logout_time=datetime.time(now),
+        )
+        login_log.save()
+        log_id = login_log.id
+
+    return log_id
+
+
+def sms_logout(citizen_hash, log_id):
+    """Update the logout time of the relevant LoginLog object if
+    required and/or log out the relevant Citizen object if
+    booking is not required."""
+
+    if log_id:
+        try:
+            # Update logout_time
+            login_log = LoginLog.objects.get(id=log_id)
+            now = datetime.now()
+            login_log.logout_time = datetime.time(now)
+            login_log.save()
+        except LoginLog.DoesNotExist:
+            pass
+    if citizen_hash:
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+            citizen.logged_in = False
+            citizen.save()
+        except Citizen.DoesNotExist:
+            pass
+    return 0
+
+
 def citizen_login(username, password, site, prevent_dual_login=False):
     """Check if user is allowed to log in and give the go-ahead if so.
 
@@ -314,7 +502,7 @@ def citizen_login(username, password, site, prevent_dual_login=False):
     except Site.DoesNotExist:
         logger.error(f"Site {site} does not exist - unable to proceed.")
         return time_allowed
-    login_validator = get_citizen_login_validator()
+    login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""
 

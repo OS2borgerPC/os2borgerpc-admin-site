@@ -61,7 +61,7 @@ class EventLevels:
 
 
 class Configuration(models.Model):
-    """This class contains/represents the configuration of a Site, a
+    """This class contains/represents the configuration of a Site,
     a PC Group or a PC."""
 
     # Doesn't need any actual fields, it seems. Should not exist independently
@@ -172,16 +172,29 @@ class Site(models.Model):
             " integrate with standard library login"
         ),
     )
-    cicero_user = models.CharField(
-        verbose_name=_("Username for Cicero API"),
+    citizen_login_api_user = models.CharField(
+        verbose_name=_("Username for login API (e.g. Cicero)"),
         max_length=100,
         blank=True,
-        help_text=_("Necessary for customers who wish to integrate with Cicero login"),
+        help_text=_(
+            "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
+        ),
     )
-    cicero_password = models.CharField(
-        verbose_name=_("Password for Cicero API"),
+    citizen_login_api_password = models.CharField(
+        verbose_name=_("Password for login API (e.g. Cicero)"),
         max_length=255,
         blank=True,
+        help_text=_(
+            "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
+        ),
+    )
+    booking_api_key = models.CharField(
+        verbose_name=_("API key for Easy!Appointments"),
+        max_length=255,
+        blank=True,
+        help_text=_(
+            "Necessary for customers who wish to require booking through Easy!Appointments"
+        ),
     )
     user_login_duration = models.DurationField(
         verbose_name=_("Login duration"),
@@ -251,6 +264,23 @@ class Site(models.Model):
 
     def get_absolute_url(self):
         return reverse("settings", kwargs={"slug": self.uid})
+
+
+class LoginLog(models.Model):
+    """A log of a single login on a borgerPC containing a citizen identifier,
+    the related site, the date of login, the time of login and the time of logout."""
+
+    identifier = models.CharField(verbose_name=_("identifier"), max_length=255)
+    site = models.ForeignKey(Site, related_name="login_log", on_delete=models.CASCADE)
+    date = models.DateField(verbose_name=_("Date of login"))
+    login_time = models.TimeField(verbose_name=_("Time of login"))
+    logout_time = models.TimeField(verbose_name=_("Time of logout"), blank=True)
+
+    def __str__(self):
+        return f"{self.identifier}: {self.date}"
+
+    class Meta:
+        ordering = ["date", "identifier", "login_time"]
 
 
 class FeaturePermission(models.Model):
@@ -774,6 +804,13 @@ class Script(AuditModelMixin):
         null=False,
     )
     tags = models.ManyToManyField(ScriptTag, related_name="scripts", blank=True)
+    feature_permission = models.ForeignKey(
+        FeaturePermission,
+        related_name="scripts",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
 
     @property
     def is_global(self):

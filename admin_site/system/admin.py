@@ -20,6 +20,7 @@ from system.models import (
     ImageVersion,
     Input,
     Job,
+    LoginLog,
     EventRuleServer,
     PC,
     PCGroup,
@@ -252,10 +253,26 @@ class SiteAdmin(admin.ModelAdmin):
     number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
 
 
+class LoginLogAdmin(admin.ModelAdmin):
+    list_display = ("identifier", "date", "login_time", "logout_time")
+    list_filter = ("date",)
+    search_fields = ("identifier", "date")
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(site__in=request.user.user_profile.sites.all())
+
+
 class FeaturePermissionAdmin(admin.ModelAdmin):
+    def sites_with_access(self, obj):
+        return list(obj.sites.all())
+
     list_display = (
         "name",
         "uid",
+        "sites_with_access",
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
@@ -507,3 +524,4 @@ ar(Site, SiteAdmin)
 ar(WakeChangeEvent, WakeChangeEventAdmin)
 ar(WakeWeekPlan, WakeWeekPlanAdmin)
 ar(APIKey, APIKeyAdmin)
+ar(LoginLog, LoginLogAdmin)
