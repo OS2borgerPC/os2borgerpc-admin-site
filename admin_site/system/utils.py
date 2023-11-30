@@ -87,11 +87,17 @@ def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=No
 
     headers = {"Authorization": f"Bearer {site.booking_api_key}"}
     date = date_time.split(" ")[0]
+    if not site.isil:
+        logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
+        return 0, False
     appointment_url = (
-        f"https://easyappointments.sambruk.se/index.php/api/v1/appointments?aggregates"
+        f"https://easyappointments.{site.isil}/index.php/api/v1/appointments?aggregates"
         f"&fields=start,end,customer,service&sort=+start&q={date}"
     )
-    response = requests.get(appointment_url, headers=headers)
+    try:
+        response = requests.get(appointment_url, headers=headers)
+    except Exception:  # Likely Exceptions: socket.gaierror, NewConnectionError, MaxRetryError
+        return 0, False
     if response.ok:
         appointments = response.json()
     else:
@@ -105,7 +111,7 @@ def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=No
     later_booking = False
     for appointment in appointments:
         if (
-            (pc_name and appointment["service"]["name"].lower() == pc_name)
+            (pc_name and appointment["service"]["name"].lower() == pc_name.lower())
             or not pc_name
         ) and appointment["customer"]["phone"][-8:] == phone_number[-8:]:
             if appointment["start"] < date_time < appointment["end"]:  # Current booking
