@@ -1,3 +1,8 @@
+Version 5.22.1, November 30, 2023
+---------------------------------
+
+- Minor adjustments to integration with SMSTeknik and Easy!Appointments
+
 Version 5.22.0, November 28, 2023
 ---------------------------------
 
