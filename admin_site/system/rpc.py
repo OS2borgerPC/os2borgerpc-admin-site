@@ -422,7 +422,7 @@ def sms_login_finalize(phone_number, site, require_booking, save_log):
     # time_allowed has already been checked by sms_login, so we only need
     # to update last_successful_login and/or logged_in
     if not require_booking:
-        citizen_hash = hashlib.sha512(str(phone_number).encode()).hexdigest()
+        citizen_hash = hashlib.sha512(str(phone_number[-8:]).encode()).hexdigest()
         now = datetime.now()
         try:
             citizen = Citizen.objects.get(citizen_id=citizen_hash)
