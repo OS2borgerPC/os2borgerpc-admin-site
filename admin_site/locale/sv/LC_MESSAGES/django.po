@@ -328,7 +328,7 @@ msgstr "Betalat för tillträde fram till detta datum"
 msgid ""
 "Necessary for customers who wish to integrate with standard library login"
 msgstr ""
-"Nödvändigt för kunder som vill integrera inloggning till standardbibliotek"
+"Nödvändigt för kunder som vill integrera inloggning till standardbibliotek eller bokning"
 
 #: system/models.py
 msgid "Username for login API (e.g. Cicero)"
