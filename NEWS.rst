@@ -1,3 +1,8 @@
+Version 5.22.2, December 6, 2023
+--------------------------------
+
+- Allow arbitrary URLs for Easy!Appointments
+
 Version 5.22.1, November 30, 2023
 ---------------------------------
 
