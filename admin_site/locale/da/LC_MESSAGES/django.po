@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-23 08:45+0100\n"
+"POT-Creation-Date: 2023-12-06 09:13+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -243,8 +243,9 @@ msgstr "Password til login API (f.eks. Cicero)"
 msgid ""
 "Necessary for customers who wish to authenticate BorgerPC logins through an "
 "API (e.g. Cicero)"
-msgstr "Nødvendigt for kunder der ønsker at autentificere login på BorgerPC "
-"gennem et API (f.eks. Cicero)"
+msgstr ""
+"Nødvendigt for kunder der ønsker at autentificere login på BorgerPC gennem "
+"et API (f.eks. Cicero)"
 
 #: system/forms.py system/models.py
 msgid "API key for Easy!Appointments"
@@ -253,8 +254,8 @@ msgstr "API-nøgle til Easy!Appointments"
 #: system/forms.py system/models.py
 msgid ""
 "Necessary for customers who wish to require booking through Easy!Appointments"
-msgstr "Nødvendigt for kunder der ønsker at kræve booking gennem "
-"Easy!Appointments"
+msgstr ""
+"Nødvendigt for kunder der ønsker at kræve booking gennem Easy!Appointments"
 
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
@@ -332,6 +333,10 @@ msgstr "Nødvendigt for kunder der ønsker at integrere standard bibliotekslogin
 #: system/models.py
 msgid "Username for login API (e.g. Cicero)"
 msgstr "Brugernavn til login API (f.eks. Cicero)"
+
+#: system/models.py
+msgid "URL domain (including subdomain) for Easy!Appointments"
+msgstr "URL-domæne (inklusive subdomæne) for Easy!Appointments"
 
 #: system/models.py
 msgid "Login duration"
