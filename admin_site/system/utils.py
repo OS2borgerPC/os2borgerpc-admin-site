@@ -87,16 +87,17 @@ def easy_appointments_booking_validate(phone_number, date_time, site, pc_name=No
 
     headers = {"Authorization": f"Bearer {site.booking_api_key}"}
     date = date_time.split(" ")[0]
-    if not site.isil:
-        logger.error(f"{site.name}: Agency ID / ISIL MUST be specified.")
+    if not site.booking_api_url:
+        logger.error(f"{site.name}: Booking API URL MUST be specified.")
         return 0, False
     appointment_url = (
-        f"https://easyappointments.{site.isil}/index.php/api/v1/appointments?aggregates"
+        f"https://{site.booking_api_url}/index.php/api/v1/appointments?aggregates"
         f"&fields=start,end,customer,service&sort=+start&q={date}"
     )
     try:
         response = requests.get(appointment_url, headers=headers)
-    except Exception:  # Likely Exceptions: socket.gaierror, NewConnectionError, MaxRetryError
+    # Likely Exceptions: socket.gaierror, NewConnectionError, MaxRetryError
+    except Exception:
         return 0, False
     if response.ok:
         appointments = response.json()
