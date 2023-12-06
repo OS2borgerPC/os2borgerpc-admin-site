@@ -188,6 +188,14 @@ class Site(models.Model):
             "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
         ),
     )
+    booking_api_url = models.CharField(
+        verbose_name=_("URL domain (including subdomain) for Easy!Appointments"),
+        max_length=255,
+        blank=True,
+        help_text=_(
+            "Necessary for customers who wish to require booking through Easy!Appointments"
+        ),
+    )
     booking_api_key = models.CharField(
         verbose_name=_("API key for Easy!Appointments"),
         max_length=255,

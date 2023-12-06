@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-23 08:45+0100\n"
+"POT-Creation-Date: 2023-12-06 09:13+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -244,8 +244,9 @@ msgstr "Lösenord för inloggnings-API (t.ex. Cicero)"
 msgid ""
 "Necessary for customers who wish to authenticate BorgerPC logins through an "
 "API (e.g. Cicero)"
-msgstr "Nödvändigt för kunder som vill autentisera MedborgarPC-inloggningar "
-"via ett API (t.ex. Cicero)"
+msgstr ""
+"Nödvändigt för kunder som vill autentisera MedborgarPC-inloggningar via ett "
+"API (t.ex. Cicero)"
 
 #: system/forms.py system/models.py
 msgid "API key for Easy!Appointments"
@@ -328,11 +329,15 @@ msgstr "Betalat för tillträde fram till detta datum"
 msgid ""
 "Necessary for customers who wish to integrate with standard library login"
 msgstr ""
-"Nödvändigt för kunder som vill integrera inloggning till standardbibliotek eller bokning"
+"Nödvändigt för kunder som vill integrera inloggning till standardbibliotek"
 
 #: system/models.py
 msgid "Username for login API (e.g. Cicero)"
 msgstr "Användarnamn för inloggnings-API (t.ex. Cicero)"
+
+#: system/models.py
+msgid "URL domain (including subdomain) for Easy!Appointments"
+msgstr "URL-domän (inklusive underdomän) för Easy!Appointments"
 
 #: system/models.py
 msgid "Login duration"
@@ -1161,8 +1166,8 @@ msgid ""
 "In order to make requests to the API, you need to generate and use an "
 "%(api_key)s. The process is described further down the page."
 msgstr ""
-"För att göra förfrågningar till API:t måste du generera och använda "
-"en %(api_key)s. Processen beskrivs längre ner på sidan."
+"För att göra förfrågningar till API:t måste du generera och använda en "
+"%(api_key)s. Processen beskrivs längre ner på sidan."
 
 #: templates/documentation/api.html
 msgid "The API has endpoints for the following:"
@@ -1231,8 +1236,8 @@ msgid ""
 "API-keys are used to allow a person or a program to retrieve data from your "
 "Site."
 msgstr ""
-"API-nycklar används för att tillåta en person eller ett program att hämta data "
-"från din Site."
+"API-nycklar används för att tillåta en person eller ett program att hämta "
+"data från din Site."
 
 #: templates/documentation/api.html
 #, python-format
@@ -1275,8 +1280,8 @@ msgid ""
 "Write or change the comment about a given %(api_key)s. Fx. to specify who/"
 "what is using the given key."
 msgstr ""
-"Skriv eller ändra kommentaren om en given %(api_key)s. Fx. att ange vem/"
-"vad använder den givna nyckeln."
+"Skriv eller ändra kommentaren om en given %(api_key)s. Fx. att ange vem/vad "
+"använder den givna nyckeln."
 
 #: templates/documentation/api.html
 msgid "Changes are saved automatically after a few seconds."
@@ -1285,15 +1290,17 @@ msgstr "Ändringar sparas automatiskt efter några sekunder."
 #: templates/documentation/api.html
 #, python-format
 msgid "Click \"Delete\" next to an %(api_key)s to delete and deactivate it."
-msgstr "Klicka på \"Ta bort\" bredvid en %(api_key)s för att ta bort och "
-"inaktivera den."
+msgstr ""
+"Klicka på \"Ta bort\" bredvid en %(api_key)s för att ta bort och inaktivera "
+"den."
 
 #: templates/documentation/api.html
 msgid ""
 "A confirmation popup will appear to confirm whether you want to delete it or "
 "not."
 msgstr ""
-"En bekräftelse popup visas för att bekräfta om du vill ta bort den eller inte."
+"En bekräftelse popup visas för att bekräfta om du vill ta bort den eller "
+"inte."
 
 #: templates/documentation/api.html
 msgid "API Documentation"
@@ -1312,7 +1319,8 @@ msgid ""
 "In order to visit and view the API documentation you have to be signed in to "
 "the admin site."
 msgstr ""
-"För att besöka och se API-dokumentationen måste du vara inloggad på adminsidan."
+"För att besöka och se API-dokumentationen måste du vara inloggad på "
+"adminsidan."
 
 #: templates/documentation/api.html
 msgid "The documentation generally looks something like this:"
@@ -1369,8 +1377,7 @@ msgstr "Så här gör du:"
 #, python-format
 msgid ""
 "In order to make a request to the API, you must first %(gen_key)s on the page"
-msgstr ""
-"För att göra en begäran till API:t måste du först %(gen_key)s på sidan"
+msgstr "För att göra en begäran till API:t måste du först %(gen_key)s på sidan"
 
 #: templates/documentation/api.html
 msgid "\"Copy\" the API key from the API Key page."
@@ -1391,8 +1398,8 @@ msgid ""
 "\"Paste\" in the API Key you copied in step 2 and click %(auth)s then \"Close"
 "\"."
 msgstr ""
-"\"Klistra in\" API-nyckeln som du kopierade i steg 2 och klicka på %(auth)s och "
-"sedan \"Stäng\"."
+"\"Klistra in\" API-nyckeln som du kopierade i steg 2 och klicka på %(auth)s "
+"och sedan \"Stäng\"."
 
 #: templates/documentation/api.html
 msgid ""
@@ -1412,7 +1419,8 @@ msgstr "Klicka på knappen \"Execute\"."
 
 #: templates/documentation/api.html
 msgid "Now you'll see a response. It might be necessary to scroll down a bit."
-msgstr "Nu kommer du att se ett svar. Det kan vara nödvändigt att scrolla ner lite."
+msgstr ""
+"Nu kommer du att se ett svar. Det kan vara nödvändigt att scrolla ner lite."
 
 #: templates/documentation/api.html
 msgid ""
@@ -1431,8 +1439,8 @@ msgid ""
 "e.g. try to get a specific PC and enter an id that does not match any PC on "
 "your site."
 msgstr ""
-"Statuskoden 204 betyder att ingen data returnerades. Detta kan hända om du "
-"t.ex. försök att skaffa en specifik dator och ange ett id som inte matchar "
+"Statuskoden 204 betyder att ingen data returnerades. Detta kan hända om du t."
+"ex. försök att skaffa en specifik dator och ange ett id som inte matchar "
 "någon dator på din Site."
 
 #: templates/documentation/api.html
@@ -1441,8 +1449,8 @@ msgid ""
 "The status code 401 \"Error: Unauthorized\" will be returned if you do not "
 "use the %(auth)s button or if you enter an invalid API key."
 msgstr ""
-"Statuskoden 401 \"Error: Unauthorized\" kommer att returneras om du inte använder "
-"knappen %(auth)s eller om du anger en ogiltig API-nyckel."
+"Statuskoden 401 \"Error: Unauthorized\" kommer att returneras om du inte "
+"använder knappen %(auth)s eller om du anger en ogiltig API-nyckel."
 
 #: templates/documentation/changelogs/index.html
 msgid ""
@@ -2552,9 +2560,9 @@ msgid ""
 "than a selected period of time are generated by offline rules. If no offline "
 "rules have been defined, no notifications will be sent."
 msgstr ""
-"E-postmeddelanden om datorer som har varit offline längre än en vald tidsperiod "
-"genereras av offline-regler. Om inga offlineregler har definierats kommer inga "
-"meddelanden att skickas."
+"E-postmeddelanden om datorer som har varit offline längre än en vald "
+"tidsperiod genereras av offline-regler. Om inga offlineregler har "
+"definierats kommer inga meddelanden att skickas."
 
 #: templates/documentation/notifications/index.html
 msgid ""
@@ -2571,10 +2579,11 @@ msgid ""
 "exceeding the allowed offline period and a notification being sent. This was "
 "necessary to limit the load on the admin-site."
 msgstr ""
-"Systemet kontrollerar endast de definierade offlinereglerna var tionde minut. "
-"Det är alltså möjligt att det uppstår en fördröjning på upp till tio minuter "
-"mellan att en PC överskrider den tillåtna offlineperioden och att ett meddelande "
-"skickas. Detta var nödvändigt för att begränsa belastningen på adminsidan."
+"Systemet kontrollerar endast de definierade offlinereglerna var tionde "
+"minut. Det är alltså möjligt att det uppstår en fördröjning på upp till tio "
+"minuter mellan att en PC överskrider den tillåtna offlineperioden och att "
+"ett meddelande skickas. Detta var nödvändigt för att begränsa belastningen "
+"på adminsidan."
 
 #: templates/documentation/notifications/index.html
 msgid "Creating or editing offline rules"
@@ -2589,10 +2598,10 @@ msgid ""
 "has the same form."
 msgstr ""
 "Översikten \"Övervakningsregler\" visar alla definierade säkerhetsregler och "
-"offline-regler som övervakas. Du kan redigera en befintlig offline-regel genom "
-"att välja den i listan. Du kan definiera en ny offlineregel genom att klicka "
-"på \"Lägg till ny offline-regel\" ovanför listan. Gränssnittet för båda "
-"operationerna har samma form."
+"offline-regler som övervakas. Du kan redigera en befintlig offline-regel "
+"genom att välja den i listan. Du kan definiera en ny offlineregel genom att "
+"klicka på \"Lägg till ny offline-regel\" ovanför listan. Gränssnittet för "
+"båda operationerna har samma form."
 
 #: templates/documentation/notifications/index.html
 msgid "An offline rule has the following parameters:"
@@ -2609,8 +2618,8 @@ msgid ""
 "notifications when computers are turned off for the night."
 msgstr ""
 "Övervakningsperiod (obligatorisk): Den period under vilken regeln är aktiv. "
-"Det rekommenderas att välja denna period så att du undviker att få aviseringar "
-"när datorer är avstängda för natten."
+"Det rekommenderas att välja denna period så att du undviker att få "
+"aviseringar när datorer är avstängda för natten."
 
 #: templates/documentation/notifications/index.html
 msgid ""
@@ -2619,8 +2628,8 @@ msgid ""
 "email notifications are sent. Cannot be less than 15 minutes."
 msgstr ""
 "Högsta tillåtna offlineperiod i minuter (obligatorisk): Den maximala "
-"tidsperiod som en dator kan vara offline under övervakningsperioden innan "
-"e-postmeddelanden skickas. Kan inte vara mindre än 15 minuter."
+"tidsperiod som en dator kan vara offline under övervakningsperioden innan e-"
+"postmeddelanden skickas. Kan inte vara mindre än 15 minuter."
 
 #: templates/documentation/notifications/index.html
 #: templates/documentation/security_scripts/securityproblems.html
@@ -2629,7 +2638,8 @@ msgstr "Allvarlighetsgrad (obligatorisk): Välj mellan Kritisk, Hög och Normal.
 
 #: templates/documentation/notifications/index.html
 msgid "Description (optional): A description of the particular offline rule."
-msgstr "Beskrivning (valfritt): En beskrivning av den särskilda offline-regeln."
+msgstr ""
+"Beskrivning (valfritt): En beskrivning av den särskilda offline-regeln."
 
 #: templates/documentation/notifications/index.html
 msgid ""
@@ -2662,12 +2672,12 @@ msgid ""
 "rule has been created by checking if it appears in the list of monitored "
 "rules."
 msgstr ""
-"Eventuella ändringar som görs i en offlineregel kommer inte att träda i kraft "
-"förrän du har klickat på \"Spara ändringar\" längst ned på skärmen. På samma "
-"sätt måste du klicka på \"Spara ändringar\" för att slutföra att skapa en ny "
-"offline-regel när du har fyllt i de obligatoriska parametrarna. Du kan verifiera "
-"att offlineregeln har skapats genom att kontrollera om den visas i listan över "
-"övervakade regler."
+"Eventuella ändringar som görs i en offlineregel kommer inte att träda i "
+"kraft förrän du har klickat på \"Spara ändringar\" längst ned på skärmen. På "
+"samma sätt måste du klicka på \"Spara ändringar\" för att slutföra att skapa "
+"en ny offline-regel när du har fyllt i de obligatoriska parametrarna. Du kan "
+"verifiera att offlineregeln har skapats genom att kontrollera om den visas i "
+"listan över övervakade regler."
 
 #: templates/documentation/om_os2borgerpc_admin.html
 msgid ""
