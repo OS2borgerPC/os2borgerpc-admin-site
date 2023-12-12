@@ -3597,11 +3597,9 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     all versions released before the site's last_version datestamp).
     """
 
-    template_name = "system/site_image_versions.html"
+    template_name = "system/site_images.html"
     model = ImageVersion
-    context_object_name = "image_versions"
     selection_class = ImageVersion
-    class_display_name = "image_version"
 
     def get_context_data(self, **kwargs):
         context = super(ImageVersionsView, self).get_context_data(**kwargs)

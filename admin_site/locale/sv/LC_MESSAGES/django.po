@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-06 09:13+0100\n"
+"POT-Creation-Date: 2023-12-12 15:27+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4368,13 +4368,12 @@ msgid "Scripting"
 msgstr "Scripting"
 
 #: templates/site_with_navigation.html
-msgid "Users & Versions"
-msgstr "Användare och Versioner"
+msgid "Users & Images"
+msgstr "Användare och Images"
 
-#: templates/site_with_navigation.html
-#: templates/system/site_image_versions.html
-msgid "Versions"
-msgstr "Versioner"
+#: templates/site_with_navigation.html templates/system/site_images.html
+msgid "Images"
+msgstr ""
 
 #: templates/site_with_navigation.html
 msgid "Security rule definition"
@@ -5179,51 +5178,51 @@ msgstr "Mottagningstidpunkt"
 msgid "Handled by"
 msgstr "Hanteras av"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Newest version of"
 msgstr "Senaste upplagan av"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Version"
 msgstr "Version"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Release date"
 msgstr "Release-datum"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Operating system"
 msgstr "Operativsystem"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Release notes"
 msgstr "Udgivelsesnoter"
 
-#: templates/system/site_image_versions.html
-msgid "Download"
-msgstr "Download"
+#: templates/system/site_images.html
+msgid "Download image"
+msgstr "Download image"
 
-#: templates/system/site_image_versions.html
-msgid "No versions were found"
-msgstr "Inga versioner hittades"
+#: templates/system/site_images.html
+msgid "No images were found"
+msgstr "Inga images hittades"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Earlier versions"
 msgstr "Tidigare versioner"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "NO ACCESS"
 msgstr "INGEN TILLGÅNG"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid ""
 "Your organization has no service agreement with a OS2borgerPC provider so no "
-"versions are shown."
+"images are shown."
 msgstr ""
 "Din organisation har inget serviceavtal med en leverantör av Sambruk "
-"MedborgarPC, och därför visas inga versioner.."
+"MedborgarPC, och därför visas inga images."
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Please contact a OS2borgerPC provider to learn more."
 msgstr "Vänligen kontakta Sambruk MedborgarPC Leverantör för att få veta mer."
 
