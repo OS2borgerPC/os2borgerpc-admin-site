@@ -1,7 +1,7 @@
 {% extends "site_with_navigation.html" %}
 {% load i18n %}
 {% block specific_title %}
-  {% translate "Versions" %}
+  {% translate "Images" %}
 {% endblock %}
 {% block subnav %}
   <ul class="sublevelnav item-list">
@@ -41,12 +41,12 @@
     <span class="material-icons">
       cloud_download
     </span>
-    {% translate "Download" %}
+    {% translate "Download image" %}
   </a>
 {% endwith %}
 {% else %}
-<h2 class="divideheader">{% translate "Versions" %}</h2>
-<p>{% translate "No versions were found" %}</p>
+<h2 class="divideheader">{% translate "Images" %}</h2>
+<p>{% translate "No images were found" %}</p>
 {% endif %}
 {% if selected_platform_images.count > 1 %}
 <!-- Proceed to load remaining versions -->
@@ -63,7 +63,7 @@
         <th>{% translate "Release date" %}</th>
         <th>{% translate "Operating system" %}</th>
         <th>{% translate "Release notes" %}</th>
-        <th>{% translate "Download" %}</th>
+        <th>{% translate "Download image" %}</th>
       </tr>
     </thead>
     <tbody>
@@ -80,11 +80,11 @@
           <td>
             <a class="btn btn-sm btn-secondary text-light" href="{{ image.image_upload.url }}" download>
             <span clas="d-flex align-items-center">
-              
+
               <span class="material-icons">
                 cloud_download
               </span>
-              {% translate "Download" %}
+              {% translate "Download image" %}
             </span>
             </a>
           </td>
@@ -97,7 +97,7 @@
 {% else %}
 <h2 class="text-error"><strong>{% translate "NO ACCESS" %}</strong></h2>
 <p>
-{% translate "Your organization has no service agreement with a OS2borgerPC provider so no versions are shown." %}
+{% translate "Your organization has no service agreement with a OS2borgerPC provider so no images are shown." %}
 </p>
 <p>{% translate "Please contact a OS2borgerPC provider to learn more." %}</p>
 {% endif %}
