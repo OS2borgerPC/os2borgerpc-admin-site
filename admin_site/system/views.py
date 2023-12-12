@@ -2658,7 +2658,12 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
-        response = super(UserDelete, self).delete(form, *args, **kwargs)
+        # If the selected_user is a member of multiple sites, only remove them from this site
+        if len(self.object.user_profile.sitemembership_set.all()) > 1:
+            self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()
+            response = HttpResponseRedirect(self.get_success_url())
+        else:
+            response = super(UserDelete, self).delete(form, *args, **kwargs)
         translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
