@@ -392,12 +392,12 @@ urlpatterns = [
     re_path(
         r"^site/(?P<slug>[^/]+)/image_versions/$",
         ImageVersionsView.as_view(),
-        name="image_versions",
+        name="images",
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/image_versions/(?P<platform>[^/]+)$",
         ImageVersionsView.as_view(),
-        name="image_version_major",
+        name="images_major",
     ),
     # This contains both a regular view and an HTMX view
     re_path(
