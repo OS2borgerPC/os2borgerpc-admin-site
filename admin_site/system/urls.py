@@ -12,7 +12,6 @@ from system.views import (
     ConfigurationEntryUpdate,
     DocView,
     ImageVersionsView,
-    JSONSiteSummary,
     JobInfo,
     JobRestarter,
     JobSearch,
@@ -194,11 +193,6 @@ urlpatterns = [
     ),
     # Computers
     re_path(r"^site/(?P<slug>[^/]+)/computers/$", PCsView.as_view(), name="computers"),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/computers/json/$",
-        JSONSiteSummary.as_view(),
-        name="computers_json_site_summary",
-    ),
     re_path(
         r"^site/(?P<slug>[^/]+)/computers/(?P<pc_uid>[^/]+)/$",
         PCUpdate.as_view(),
