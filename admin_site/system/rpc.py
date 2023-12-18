@@ -133,13 +133,6 @@ def send_status_info_v2(pc_uid, job_data):
             job.log_output = jd["log_output"]
             job.save()
 
-    # 3. Check if update is required.
-    if update_required is not None:
-        updates, security_updates = list(map(int, update_required))
-        # Save update info in configuration
-        pc.configuration.update_entry("updates", updates)
-        pc.configuration.update_entry("security_updates", security_updates)
-
     pc.save()
 
     return 0
