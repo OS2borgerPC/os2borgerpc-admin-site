@@ -257,7 +257,9 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 XMLRPC_METHODS = (
     ("system.rpc.register_new_computer", "register_new_computer"),
+    ("system.rpc.register_new_computer_v2", "register_new_computer_v2"),
     ("system.rpc.send_status_info", "send_status_info"),
+    ("system.rpc.send_status_info_v2", "send_status_info_v2"),
     ("system.rpc.upload_dist_packages", "upload_dist_packages"),
     ("system.rpc.get_instructions", "get_instructions"),
     ("system.rpc.push_config_keys", "push_config_keys"),
