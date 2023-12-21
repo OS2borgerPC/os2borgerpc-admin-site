@@ -2500,6 +2500,9 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site=site
         ).first()
 
+        if self.request.user.is_superuser:
+            site_membership = self.request.user.user_profile.sitemembership_set.first()
+
         if (
             self.request.user.is_superuser
             or site_membership.site_user_type == site_membership.SITE_ADMIN
