@@ -253,7 +253,7 @@ var BibOS
         lastInsert(elem)
     },
     setupJobInfoButtons: function(rootElem) {
-      // initialize all popovers.
+      // initialize all job info popovers.
       var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
       var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
@@ -274,7 +274,7 @@ var BibOS
       })
     },
     setupSecurityEventLogInfoButtons: function(rootElem) {
-      // initialize all popovers.
+      // initialize all security event log info popovers.
       var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
       var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
@@ -421,3 +421,9 @@ function copy_api_key(event) {
   navigator.clipboard.writeText(btn.parentElement.firstElementChild.innerText)
   btn.parentElement.lastElementChild.classList.remove('d-none')
 }
+
+
+// Activate all popovers except those for job info and security event logs
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});

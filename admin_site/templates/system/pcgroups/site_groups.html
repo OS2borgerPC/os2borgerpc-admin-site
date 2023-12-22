@@ -100,6 +100,10 @@ active
               {% translate "Add a supervisor for the group" as add_s %}
               {% translate "Remove a supervisor for the group" as remove_s %}
               <label class="mt-2">{% translate "Supervisors for this group" %}</label>
+              {% translate 'This is used to control who receives the e-mails for Events, ie. Security Events or Offline Events. If one or more Supervisors are set for a given Group, these people will receive the e-mails instead of those set in the Monitoring Rule' as help_text %}
+              <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
+                help_outline
+              </button>
               {% include 'widgets/picklist.html' with submit_name='supervisors' selected_list=selected_users available_list=available_users identifier='supervisor' add_text=add_s remove_text=remove_s site_url=site.uid target_section='users' %}
             </p>
             </div>
