@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-12 15:27+0100\n"
+"POT-Creation-Date: 2023-12-22 13:42+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4878,6 +4878,17 @@ msgstr "Ta bort en ansvarig person från gruppen"
 #: templates/system/pcgroups/site_groups.html
 msgid "Supervisors for this group"
 msgstr "Ansvariga för gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid ""
+"This is used to control who receives the e-mails for Events, ie. Security "
+"Events or Offline Events. If one or more Supervisors are set for a given "
+"Group, these people will receive the e-mails instead of those set in the "
+"Monitoring Rule"
+msgstr ""
+"Detta används för att kontrollera vem som tar emot e-postmeddelanden för Incidenter - dvs. Säkerhetsincidenter och "
+"Offlineincidenter. Om en eller flera ansvariga personer är inställda för en viss grupp, kommer dessa personer att få "
+"e-postmeddelanden istället för de personer som anges som mottagare i övervakningsregeln."
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Associated monitoring rules"
