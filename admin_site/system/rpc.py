@@ -305,7 +305,7 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
-def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
+def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None):
     """Check if the user is allowed to log in and if so, send a sms with
     the required password to the entered phone number.
     Whether a user is allowed to log in is determined by checking for a
@@ -330,13 +330,22 @@ def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
                         another machine. This value is only used when
                         booking is NOT required.
         citizen_hash = 'sms_failed': Failed to authenticate with sms API."""
-
     citizen_hash = ""
     try:
-        site = Site.objects.get(uid=site)
-    except Site.DoesNotExist:
-        logger.error(f"Site {site} does not exist - unable to proceed.")
-        return int(0), citizen_hash
+        pc = PC.objects.get(uid=pc_uid)
+        if not pc.is_activated:
+            # Fail silently
+            return int(0), citizen_hash
+        site = pc.site
+    except PC.DoesNotExist:
+        # The function is ultimately supposed to exit here, but for the sake of backwards
+        # compatibility, we initially handle the old version
+        site_uid = pc_uid
+        try:
+            site = Site.objects.get(uid=site_uid)
+        except Site.DoesNotExist:
+            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
+            return int(0), citizen_hash
 
     now = datetime.now()
     # If booking is required then the bookings determine when and how long the
@@ -399,7 +408,7 @@ def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
     return int(time_allowed), citizen_hash
 
 
-def sms_login_finalize(phone_number, site, require_booking, save_log):
+def sms_login_finalize(phone_number, pc_uid, require_booking, save_log):
     """Finalize the sms_login-process by creating a LoginLog object if
     required and/or updating the relevant Citizen object if booking
     is not required.
@@ -412,12 +421,21 @@ def sms_login_finalize(phone_number, site, require_booking, save_log):
         log_id = int: If a log should be written, this will be the id
                       of the created log object. It is used to update
                       the logout time later."""
-
     try:
-        site = Site.objects.get(uid=site)
-    except Site.DoesNotExist:
-        logger.error(f"Site {site} does not exist - unable to proceed.")
-        return 0
+        pc = PC.objects.get(uid=pc_uid)
+        if not pc.is_activated:
+            # Fail silently
+            return 0
+        site = pc.site
+    except PC.DoesNotExist:
+        # The function is ultimately supposed to exit here, but for the sake of backwards
+        # compatibility, we initially handle the old version
+        site_uid = pc_uid
+        try:
+            site = Site.objects.get(uid=site_uid)
+        except Site.DoesNotExist:
+            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
+            return 0
     # If booking is not required, we use the standard quarantine system
     # time_allowed has already been checked by sms_login, so we only need
     # to update last_successful_login and/or logged_in
@@ -487,7 +505,7 @@ def sms_logout(citizen_hash, log_id):
     return 0
 
 
-def citizen_login(username, password, site, prevent_dual_login=False):
+def citizen_login(username, password, pc_uid, prevent_dual_login=False):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
@@ -498,10 +516,20 @@ def citizen_login(username, password, site, prevent_dual_login=False):
 
     time_allowed = 0
     try:
-        site = Site.objects.get(uid=site)
-    except Site.DoesNotExist:
-        logger.error(f"Site {site} does not exist - unable to proceed.")
-        return time_allowed
+        pc = PC.objects.get(uid=pc_uid)
+        if not pc.is_activated:
+            # Fail silently
+            return time_allowed
+        site = pc.site
+    except PC.DoesNotExist:
+        # The function is ultimately supposed to exit here, but for the sake of backwards
+        # compatibility, we initially handle the old version
+        site_uid = pc_uid
+        try:
+            site = Site.objects.get(uid=site_uid)
+        except Site.DoesNotExist:
+            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
+            return time_allowed
     login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""
