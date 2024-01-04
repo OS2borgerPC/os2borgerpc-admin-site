@@ -248,7 +248,8 @@
             </div>
             {% translate "Add exception to schedule" as ex_add %}
             {% translate "Remove exception from schedule" as ex_remove %}
-            {% include 'widgets/wake_plan_picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text=ex_add remove_text=ex_remove site_url=site.uid target_section='wake_change_event' %}
+            {% translate "None chosen" as empty_t %}
+            {% include 'widgets/wake_plan_picklist.html' with submit_name='wake_change_events' selected_list=selected_wake_change_events available_list=available_wake_change_events identifier='undtagelse' add_text=ex_add remove_text=ex_remove empty_text=empty_t site_url=site.uid target_section='wake_change_event' %}
 
           </fieldset>
 
@@ -266,7 +267,7 @@
             </div>
             {% translate "Add group to schedule" as g_add %}
             {% translate "Remove group from schedule" as g_remove %}
-            {% include 'widgets/wake_plan_picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=g_add remove_text=g_remove site_url=site.uid target_section='groups' %}
+            {% include 'widgets/wake_plan_picklist.html' with submit_name='groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=g_add remove_text=g_remove empty_text=empty_t site_url=site.uid target_section='groups' %}
 
           </fieldset>
 

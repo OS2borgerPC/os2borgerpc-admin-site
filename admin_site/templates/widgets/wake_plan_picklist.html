@@ -33,6 +33,7 @@ In the future consider if this can be merged back into the regular picklist, wit
             var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
             var text_add = '{{ add_text }}'
             var text_remove = '{{ remove_text }}'
+            var text_empty = '{{ empty_text }}'
             var list_el = document.getElementById(element_id)
             var options = []
 
@@ -149,7 +150,7 @@ In the future consider if this can be merged back into the regular picklist, wit
                 if (is_empty) {
                     var empty_li = document.createElement('li')
                     empty_li.className = 'list-group-item pick-list-item'
-                    empty_li.innerText = 'Ingen valgt'
+                    empty_li.innerText = text_empty
                     dom_ul.appendChild(empty_li)
                 }
                 // Checks if the document has the element to display the total of elements
