@@ -94,7 +94,17 @@ $(function(){
             pagination.empty()
             var jobsearch = this
 
-            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> Forrige</a></li>')
+            // TODO: Use django JS translations instead
+            // Dict containing the translations for the pagination buttons
+            var text_dict = {
+                "da": ["Forrige", "Næste"],
+                "en": ["Previous", "Next"],
+                "sv": ["Föregående", "Nästa"]
+            }
+            // Get the correct translation based on the django_language cookie
+            const text = text_dict[getCookie("django_language")]
+
+            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> ' + text[0] + '</a></li>')
             if (data.has_previous) {
                 previous_item.removeClass("disabled")
                 previous_item.find('a').on("click", function() {
@@ -120,7 +130,7 @@ $(function(){
                 item.appendTo(pagination)
             })
 
-            var next_item = $('<li class="page-item disabled"><a class="page-link">Næste <span class="material-icons">navigate_next</span></a></li>')
+            var next_item = $('<li class="page-item disabled"><a class="page-link">' + text[1] + ' <span class="material-icons">navigate_next</span></a></li>')
             if (data.has_next) {
                 next_item.removeClass("disabled")
                 next_item.find('a').on("click", function() {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-22 13:42+0100\n"
+"POT-Creation-Date: 2024-01-04 16:26+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -300,17 +300,20 @@ msgstr "Ny"
 msgid "status:Fail"
 msgstr "Fejlet"
 
+#. Translators: Related to security levels
 #: system/models.py
-msgid "securitylevel:Critical"
+msgid "Critical"
 msgstr "Kritisk"
 
+#. Translators: Related to security levels
 #: system/models.py
-msgid "securitylevel:High"
+msgid "High"
 msgstr "Hög"
 
 # SecurityProblem class
+#. Translators: Related to security levels
 #: system/models.py
-msgid "securitylevel:Normal"
+msgid "Normal"
 msgstr "Normal"
 
 #: system/models.py
@@ -561,28 +564,34 @@ msgstr "underhålls av Magenta"
 msgid "position"
 msgstr "position"
 
+#. Translators: Related to job or event status
 #: system/models.py
-msgid "jobstatus:New"
+msgid "New"
 msgstr "Nytt"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Submitted"
+msgid "Submitted"
 msgstr "Avsänd"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Running"
+msgid "Running"
 msgstr "Körs"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Failed"
+msgid "Failed"
 msgstr "Misslyckad"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Done"
+msgid "Done"
 msgstr "Utförd"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Resolved"
+msgid "Restarted"
 msgstr "Omstartad"
 
 #: system/models.py
@@ -674,16 +683,14 @@ msgid "How long a PC may be offline before an event is created"
 msgstr "Hur länge en dator måste vara offline innan en incident skapas"
 
 # SecurityEvent class
+#. Translators: Related to event status
 #: system/models.py
-msgid "eventstatus:New"
-msgstr "Ny"
-
-#: system/models.py
-msgid "eventstatus:Assigned"
+msgid "Assigned"
 msgstr "Tilldelad"
 
+#. Translators: Related to event status
 #: system/models.py
-msgid "eventstatus:Resolved"
+msgid "Resolved"
 msgstr "Löst"
 
 #: system/models.py
@@ -2045,6 +2052,7 @@ msgstr "Såhär utvecklas information"
 
 #: templates/documentation/configuration/index.html
 #: templates/system/jobs/site_jobs.html
+#: templates/system/security_events/site_security_events.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computer"
 msgstr "Dator"
@@ -4618,6 +4626,13 @@ msgstr "Fjärrmottagare"
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "None chosen"
+msgstr "Ingen vald"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 msgid "Details about"
 msgstr "Detaljer om"
 
@@ -4886,9 +4901,11 @@ msgid ""
 "Group, these people will receive the e-mails instead of those set in the "
 "Monitoring Rule"
 msgstr ""
-"Detta används för att kontrollera vem som tar emot e-postmeddelanden för Incidenter - dvs. Säkerhetsincidenter och "
-"Offlineincidenter. Om en eller flera ansvariga personer är inställda för en viss grupp, kommer dessa personer att få "
-"e-postmeddelanden istället för de personer som anges som mottagare i övervakningsregeln."
+"Detta används för att kontrollera vem som tar emot e-postmeddelanden för "
+"Incidenter - dvs. Säkerhetsincidenter och Offlineincidenter. Om en eller "
+"flera ansvariga personer är inställda för en viss grupp, kommer dessa "
+"personer att få e-postmeddelanden istället för de personer som anges som "
+"mottagare i övervakningsregeln."
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Associated monitoring rules"
@@ -5174,10 +5191,6 @@ msgid "Rule"
 msgstr "Regel"
 
 #: templates/system/security_events/site_security_events.html
-msgid "Device"
-msgstr "Maskin"
-
-#: templates/system/security_events/site_security_events.html
 msgid "Incident time"
 msgstr "Händelsestidpunkt"
 
@@ -5236,6 +5249,14 @@ msgstr ""
 #: templates/system/site_images.html
 msgid "Please contact a OS2borgerPC provider to learn more."
 msgstr "Vänligen kontakta Sambruk MedborgarPC Leverantör för att få veta mer."
+
+#: templates/system/site_list.html
+msgid "Total number of sites"
+msgstr "Totalt antal sites"
+
+#: templates/system/site_list.html
+msgid "Total number of computers"
+msgstr "Totalt antal datorer"
 
 #: templates/system/site_list.html
 msgid "Administrate"
@@ -5959,3 +5980,6 @@ msgstr "Inaktivera"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data saknas"
+
+#~ msgid "Device"
+#~ msgstr "Maskin"

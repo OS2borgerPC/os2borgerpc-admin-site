@@ -2,9 +2,11 @@
 {% load i18n %}
 
 {% block header_title %}
+  {% translate "Total number of sites" as total_sites %}
+  {% translate "Total number of computers" as total_pcs %}
   {% translate "Administrate" %} <em>{% translate "Sites" %}</em>
-  <span class="ms-3 badge bg-secondary" title="Antal sites i alt">{% translate "Sites" %}: {{site_list|length}}</span>
-  <span class="ms-3 badge bg-secondary" title="Antal computere i alt">{% translate "Computers" %}: {{pcs_count}}</span>
+  <span class="ms-3 badge bg-secondary" title="{{total_sites}}">{% translate "Sites" %}: {{site_list|length}}</span>
+  <span class="ms-3 badge bg-secondary" title="{{total_pcs}}">{% translate "Computers" %}: {{pcs_count}}</span>
 {% endblock %}
 
 {% block header_class %}container{% endblock %}
