@@ -22,7 +22,6 @@ from django.db import transaction
 from django.db.models import Q, F
 from django.conf import settings
 
-from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
 
 import django_otp
@@ -50,7 +49,6 @@ from system.models import (
     APIKey,
     AssociatedScriptParameter,
     ConfigurationEntry,
-    FeaturePermission,
     ImageVersion,
     Input,
     Job,
