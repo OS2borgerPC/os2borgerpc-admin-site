@@ -1,7 +1,5 @@
 import datetime
-from email.policy import default
 import random
-from statistics import mode
 import string
 
 from dateutil.relativedelta import relativedelta
@@ -13,9 +11,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.validators import MinValueValidator
-
-from markdownx.utils import markdownify
-from markdownx.models import MarkdownxField
 
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
