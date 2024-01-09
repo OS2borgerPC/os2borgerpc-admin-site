@@ -4504,7 +4504,7 @@
     "model": "system.scripttag",
     "pk": 2,
     "fields": {
-        "name": "OS2displayPC"
+        "name": "OS2borgerPC Kiosk"
     }
 },
 {
@@ -4824,7 +4824,7 @@
         "modified": "2021-08-10T09:23:42.962",
         "user_created": "",
         "user_modified": "",
-        "name": "OS2DisplayPC - Installer Chromium",
+        "name": "OS2borgerPC Kiosk - Installer Chromium",
         "uid": null,
         "description": "Installér Chromium og en minimal X.\r\n\r\nOpgradering af Chromium-install-scriptet til Ubuntu 20.04.",
         "site": null,
@@ -4845,7 +4845,7 @@
         "modified": "2021-08-10T09:23:36.807",
         "user_created": "",
         "user_modified": "",
-        "name": "OS2displayPC - Installer SSH og VNC",
+        "name": "OS2borgerPC Kiosk - Installer SSH og VNC",
         "uid": null,
         "description": "Installer SSH og VNC for fjernadgang. \r\n\r\nDu kan lave SSH-forbindelse med det almindelige Unix-password.\r\n\r\nGiv VNC-passwordet med som parameter.",
         "site": null,
@@ -4866,7 +4866,7 @@
         "modified": "2021-12-02T13:39:30.625",
         "user_created": "",
         "user_modified": "mowgli",
-        "name": "OS2displayPC - Autostart Chromium",
+        "name": "OS2borgerPC Kiosk - Autostart Chromium",
         "uid": null,
         "description": "Start Chromium i kiosk-mode og sæt start-URL-en.\r\n\r\nDer angives en forsinkelse før browseren startes, der kan hjælpe med at løse evt. timing issues (som regel virker det fint med 1 sekund, der angives ved tallet 1).\r\n\r\nSkærmens højde og bredde skal sættes til skærmens korrekte opløsning.\r\n\r\nDesuden skal der angives en orientering, som kan være \"left\", \"right\" eller \"normal\".",
         "site": null,
@@ -5478,7 +5478,7 @@
         "modified": "2021-12-02T13:40:51.799",
         "user_created": "mowgli",
         "user_modified": "mowgli",
-        "name": "OS2displayPC - Chromium - Skift startside",
+        "name": "OS2borgerPC Kiosk - Chromium - Skift startside",
         "uid": null,
         "description": "-",
         "site": 1,
@@ -10912,34 +10912,51 @@
     }
 },
 {
+    "model": "system.product",
+    "pk": 1,
+    "fields": {
+        "name": "OS2borgerPC",
+        "multilang": true
+    }
+},
+{
+    "model": "system.product",
+    "pk": 2,
+    "fields": {
+        "name": "OS2borgerPC Kiosk",
+        "multilang": false
+    }
+},
+{
     "model": "system.imageversion",
     "pk": 2,
     "fields": {
-        "platform": "BORGERPC_KIOSK",
+        "product": 2,
         "image_version": "1.0.0",
         "release_date": "2021-02-02",
         "os": "Ubuntu 20.04",
-        "release_notes": "OS2displayPC (OS2borgerPC Server) 1.0.0 med Ubuntu 20.04.",
-        "image_upload": "images/os2displaypc-1.0.0.iso"
+        "release_notes": "OS2borgerPC Kiosk 1.0.0 med Ubuntu 20.04.",
+        "image_upload": "images/os2borgerpc-kiosk-1.0.0.iso"
     }
 },
 {
     "model": "system.imageversion",
     "pk": 3,
     "fields": {
-        "platform": "BORGERPC",
+        "product": 1,
         "image_version": "3.0.0",
         "release_date": "2021-05-12",
         "os": "Ubuntu 20.04",
         "release_notes": "OS2borgerPC 3.0.0 med Ubuntu 20.04.1.",
-        "image_upload": "images/os2borgerpc-3.0.0.iso"
+        "image_upload": "images/os2borgerpc-3.0.0.iso",
+        "image_upload_multilang": "images/os2borgerpc-3.0.0m.iso"
     }
 },
 {
     "model": "system.imageversion",
     "pk": 4,
     "fields": {
-        "platform": "BORGERPC",
+        "product": 1,
         "image_version": "3.1.0",
         "release_date": "2021-05-12",
         "os": "Ubuntu 20.04",
@@ -10951,12 +10968,13 @@
     "model": "system.imageversion",
     "pk": 5,
     "fields": {
-        "platform": "BORGERPC",
+        "product": 1,
         "image_version": "3.1.1",
         "release_date": "2021-07-12",
         "os": "Ubuntu 20.04",
         "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
-        "image_upload": "images/os2borgerpc-3.1.1.iso"
+        "image_upload": "images/os2borgerpc-3.1.1.iso",
+        "image_upload_multilang": "images/os2borgerpc-3.1.1m.iso"
     }
 },
 {

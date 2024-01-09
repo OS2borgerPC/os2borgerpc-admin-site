@@ -9,6 +9,8 @@ set shell := ["bash", "-uc"]
 alias r := run
 alias rd := run-debug
 alias fp := fix-permissions
+alias tmm := translations-make-messages
+alias tcm := translations-compile-messages
 
 # Variables
 django_container := "bpc_admin_site_django"

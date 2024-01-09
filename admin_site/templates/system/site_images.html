@@ -5,101 +5,132 @@
 {% endblock %}
 {% block subnav %}
   <ul class="sublevelnav item-list">
-    {% if site_allowed %}
-      {% for platform_choice, platform_readable in platform_choices.items %}
-      <li class="{% if platform_choice|slugify == selected_platform.0|slugify %}active{% endif %}">
-      <a class="item-list-link" href="/site/{{ site.url }}/image_versions/{{ platform_choice|slugify }}">
-        <span clas="d-flex align-items-center">
-          {{ platform_readable }}
-        </span>
-      </a>
-    </li>
-  {% endfor %}
-{% endif %}
+    {% for product in products %}
+      <li class="{% if product.id == selected_product.id %}active{% endif %}">
+        <a class="item-list-link" href="/site/{{ site.url }}/image-versions/{{ product.id }}">
+          <span clas="d-flex align-items-center">
+            {{ product.name }}
+          </span>
+        </a>
+      </li>
+    {% endfor %}
 </ul>
 {% endblock %}
 {% block specific_content %}
 <div class="container-fluid main sublevelmain">
-{% if site_allowed %}
-  {% if selected_platform_images %}
+  {% if object_list %}
     <!-- First index of 'minor_versions' is the newest version -->
-    {% with selected_platform_images|first as first_obj %}
-    <h2 class="divideheader">{% translate "Newest version of" %} {{ selected_platform.1 }}</h2>
-    <dl>
-      <dt>{% translate "Version" %}</dt>
-      <dd>{{ first_obj.image_version }}</dd>
-      <dt>{% translate "Release date" %}</dt>
-      <dd>{{ first_obj.release_date }}</dd>
-      <dt>{% translate "Operating system" %}</dt>
-      <dd>{{ first_obj.os }}</dd>
-      <dt>{% translate "Release notes" %}</dt>
-      <dd>
-    <pre style="font-family: var(--bs-font-sans-serif)">{{ first_obj.release_notes }}</pre>
-    </dd>
-  </dl>
-  <a class="btn btn-md btn-success text-light" href="{{ first_obj.image_upload.url }}" download>
-    <span class="material-icons">
-      cloud_download
-    </span>
-    {% translate "Download image" %}
-  </a>
-{% endwith %}
-{% else %}
-<h2 class="divideheader">{% translate "Images" %}</h2>
-<p>{% translate "No images were found" %}</p>
-{% endif %}
-{% if selected_platform_images.count > 1 %}
-<!-- Proceed to load remaining versions -->
-<div class="accordion" id="accordionExample">
-  <div class="accordion-item">
-    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-    {% translate "Earlier versions" %}
-    </button>
-  </div>
-  <table class="table table-hover accordion-body accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-    <thead>
-      <tr>
-        <th>{% translate "Version" %}</th>
-        <th>{% translate "Release date" %}</th>
-        <th>{% translate "Operating system" %}</th>
-        <th>{% translate "Release notes" %}</th>
-        <th>{% translate "Download image" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for image in selected_platform_images|slice:"1:" %}
-        <tr>
-          <td>{{ image.image_version }}</td>
-          <td>{{ image.release_date }}</td>
-          <td>{{ image.os }}
+    {% with object_list|first as first_ver %}
+      <h2 class="divideheader">{% translate "Newest version of" %} {{ selected_product.name }}</h2>
+      <dl>
+        <dt>{% translate "Version" %}</dt>
+        <dd>{{ first_ver.image_version }}</dd>
+        <dt>{% translate "Release date" %}</dt>
+        <dd>{{ first_ver.release_date }}</dd>
+        <dt>{% translate "Operating system" %}</dt>
+        <dd>{{ first_ver.os }}</dd>
+        <dt>{% translate "Release notes" %}</dt>
+        <dd>
+          <pre style="font-family: var(--bs-font-sans-serif)">{{ first_ver.release_notes }}</pre>
+        </dd>
+      </dl>
+      {% if not selected_product.multilang or user_language == "da" %}
+        <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload.url }}" download>
+          <span class="material-icons align-middle">
+            cloud_download
+          </span>
+          <!-- The name of the language could be programatically obtained from the user's language setting? -->
+          {% translate "Download standard image" %}
+        </a>
+        {% if first_ver.image_upload_multilang != "#" %}
+        <a class="btn btn-md btn-secondary ms-4" href="{{ first_ver.image_upload_multilang.url }}" download>
+          <span class="material-icons">
+            cloud_download
+          </span>
+          {% translate "Download multi language image" %}
+        </a>
+        {% endif %}
+      {% else %}
+        {# Views ensure that all images are multilang if the language isn't Danish #}
+        <a class="btn btn-md btn-success text-light p-3 fs-5" href="{{ first_ver.image_upload_multilang.url }}" download>
+          <span class="material-icons">
+            cloud_download
+          </span>
+          {% translate "Download standard image" %}
+        </a>
+      {% endif %}
+    {% endwith %}
+  {% else %}
+    <h2 class="divideheader">{% translate "Images" %}</h2>
+    <p>{% translate "No images were found" %}</p>
+  {% endif %}
+  {% if object_list.count > 1 %}
+    <!-- Proceed to load remaining versions -->
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        {% translate "Earlier versions" %}
+        </button>
+      </div>
+      <table class="table table-hover accordion-body accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <thead>
+          <tr>
+            <th>{% translate "Version" %}</th>
+            <th>{% translate "Release date" %}</th>
+            <th>{% translate "Operating system" %}</th>
+            <th>{% translate "Release notes" %}</th>
+            <th>{% translate "Download" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for image in object_list|slice:"1:" %}
+            <tr>
+              <td>{{ image.image_version }}</td>
+              <td>{{ image.release_date }}</td>
+              <td>{{ image.os }}
 
-          </td>
-          <td>
-            <pre style="font-family: var(--bs-font-sans-serif)">{{ image.release_notes }}</pre>
-          </td>
-          <td>
-            <a class="btn btn-sm btn-secondary text-light" href="{{ image.image_upload.url }}" download>
-            <span clas="d-flex align-items-center">
+              </td>
+              <td>
+                <pre style="font-family: var(--bs-font-sans-serif)">{{ image.release_notes }}</pre>
+              </td>
+              <td>
+                {% if not selected_product.multilang or user_language == "da" %}
+                  <a class="btn btn-sm btn-secondary" href="{{ image.image_upload.url }}" download>
+                    <span clas="d-flex align-items-center">
+                      <span class="material-icons">
+                        cloud_download
+                      </span>
+                      {% translate "Download standard image" %}
+                    </span>
+                  </a>
+                  {% if image.image_upload_multilang != "#" %}
+                    <a class="btn btn-sm btn-secondary ms-3" href="{{ image.image_upload_multilang.url }}" download>
+                      <span clas="d-flex align-items-center">
 
-              <span class="material-icons">
-                cloud_download
-              </span>
-              {% translate "Download image" %}
-            </span>
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
-    {% endif %}
-</tbody>
-</table>
-</div>
-{% else %}
-<h2 class="text-error"><strong>{% translate "NO ACCESS" %}</strong></h2>
-<p>
-{% translate "Your organization has no service agreement with a OS2borgerPC provider so no images are shown." %}
-</p>
-<p>{% translate "Please contact a OS2borgerPC provider to learn more." %}</p>
-{% endif %}
+                        <span class="material-icons">
+                          cloud_download
+                        </span>
+                        {% translate "Download multi language image" %}
+                      </span>
+                    </a>
+                  {% endif %}
+                {% else %}
+                  <a class="btn btn-sm btn-secondary" href="{{ image.image_upload_multilang.url }}" download>
+                    <span clas="d-flex align-items-center">
+
+                      <span class="material-icons">
+                        cloud_download
+                      </span>
+                      {% translate "Download standard image" %}
+                    </span>
+                  </a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
 </div>
 {% endblock %}

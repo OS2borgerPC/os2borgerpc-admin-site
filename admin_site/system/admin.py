@@ -22,6 +22,7 @@ from system.models import (
     Job,
     LoginLog,
     EventRuleServer,
+    Product,
     PC,
     PCGroup,
     Script,
@@ -364,7 +365,7 @@ class ScriptTagAdmin(admin.ModelAdmin):
 
 
 class ImageVersionAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "platform", "image_version", "os", "release_date")
+    list_display = ("product", "image_version", "os", "release_date")
 
 
 class SecurityProblemAdmin(admin.ModelAdmin):
@@ -525,8 +526,25 @@ class APIKeyAdmin(admin.ModelAdmin):
     list_display = ("site", "key", "description", "created")
 
 
+class ImageVersionInline(admin.TabularInline):
+    model = ImageVersion
+    extra = 0
+
+    # Just show the image versions, no need to have them editable from here
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+class ProductAdmin(admin.ModelAdmin):
+    inlines = [ImageVersionInline]
+
+
 ar = admin.site.register
 
+ar(APIKey, APIKeyAdmin)
 ar(AssociatedScript, AssociatedScriptAdmin)
 ar(AssociatedScriptParameter, AssociatedScriptParameterAdmin)
 ar(Batch, BatchAdmin)
@@ -536,12 +554,15 @@ ar(ChangelogComment, ChangelogCommentAdmin)
 ar(ChangelogTag, ChangelogTagAdmin)
 ar(Citizen, CitizenAdmin)
 ar(Configuration, ConfigurationAdmin)
+ar(Country, CountryAdmin)
+ar(EventRuleServer, EventRuleServerAdmin)
 ar(FeaturePermission, FeaturePermissionAdmin)
 ar(ImageVersion, ImageVersionAdmin)
 ar(Job, JobAdmin)
-ar(EventRuleServer, EventRuleServerAdmin)
+ar(LoginLog, LoginLogAdmin)
 ar(PC, PCAdmin)
 ar(PCGroup, PCGroupAdmin)
+ar(Product, ProductAdmin)
 ar(Script, ScriptAdmin)
 ar(ScriptTag, ScriptTagAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
@@ -549,6 +570,3 @@ ar(SecurityProblem, SecurityProblemAdmin)
 ar(Site, SiteAdmin)
 ar(WakeChangeEvent, WakeChangeEventAdmin)
 ar(WakeWeekPlan, WakeWeekPlanAdmin)
-ar(APIKey, APIKeyAdmin)
-ar(LoginLog, LoginLogAdmin)
-ar(Country, CountryAdmin)
