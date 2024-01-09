@@ -983,7 +983,7 @@ class Job(models.Model):
     RESOLVED = "RESOLVED"
 
     STATUS_TRANSLATIONS = {
-        # Translators: Related to job or event status
+        # Translators: Related to job status
         NEW: _("New"),
         # Translators: Related to job status
         SUBMITTED: _("Submitted"),
@@ -1292,7 +1292,8 @@ class SecurityEvent(models.Model):
     RESOLVED = "RESOLVED"
 
     STATUS_TRANSLATIONS = {
-        NEW: _("New"),
+        # Translators: Related to event status
+        NEW: _("New "),
         # Translators: Related to event status
         ASSIGNED: _("Assigned"),
         # Translators: Related to event status

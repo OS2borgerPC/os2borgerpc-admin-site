@@ -9,9 +9,6 @@
 {% block head_javascripts %}
   <script type="text/javascript">
     var bibos_job_search_url = "{% url 'jobsearch' site.uid %}"
-    /* This cookie is used to get the correct language for job status */
-    var lang = "{{request.user.user_profile.language}}"
-    document.cookie = "django_language="+lang;
   </script>
   <script type="text/javascript" src="/static/js/jobs_list.js"></script>
 {% endblock %}
