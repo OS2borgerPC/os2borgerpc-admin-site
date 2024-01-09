@@ -2,8 +2,6 @@ import datetime
 import random
 import string
 
-from dateutil.relativedelta import relativedelta
-
 from django.db import models, transaction
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
@@ -696,7 +694,7 @@ class PC(models.Model):
         if not self.last_seen:
             return False
         now = timezone.now()
-        return self.last_seen >= now - relativedelta(minutes=5)
+        return self.last_seen >= now - datetime.timedelta(minutes=5)
 
     class Status:
         """This class represents the status of af PC. We may want to do
@@ -1306,7 +1304,6 @@ class EventRuleServer(EventRuleBase):
 
 
 class SecurityEvent(models.Model):
-
     """A security event is an instance of a security problem."""
 
     # Event status choices

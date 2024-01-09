@@ -5,7 +5,6 @@ import system.utils
 import hashlib
 import logging
 from datetime import datetime
-from dateutil import parser
 
 from django.conf import settings
 from django.db.models import Q
@@ -282,7 +281,7 @@ def push_security_events(pc_uid, events_csv):
             continue
 
         now = datetime.now()
-        event_occurred_time_object = parser.parse(event_date)
+        event_occurred_time_object = datetime.strptime(event_date, "%Y%m%d%H%M%S")
         security_event = SecurityEvent.objects.create(
             problem=security_problem,
             pc=pc,
