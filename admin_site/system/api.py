@@ -1,5 +1,4 @@
-from datetime import date, datetime
-from dateutil.relativedelta import relativedelta
+from datetime import date, datetime, timedelta
 from typing import List
 from django.db.models import Q
 
@@ -100,7 +99,7 @@ def list_pcs(request):
 @paginate
 def list_events(
     request,
-    from_date: date = date.today() - relativedelta(months=3),
+    from_date: date = date.today() - timedelta(days=90),
     to_date: date = date.today(),
     status=SecurityEvent.NEW,
 ):
@@ -118,7 +117,7 @@ def list_events(
         (Q(problem__site=site) | Q(event_rule_server__site=site)),
         occurred_time__range=[
             from_date,
-            to_date + relativedelta(days=1),
+            to_date + timedelta(days=1),
         ],  # +1 to include the full to_date
         status=status.upper(),
     ).order_by(
@@ -224,7 +223,7 @@ def get_pc_logins_per_day(
 @paginate
 def get_jobs(
     request,
-    from_date: date = date.today() - relativedelta(months=3),
+    from_date: date = date.today() - timedelta(days=90),
     to_date: date = date.today(),
 ):
     validate_sensible_dates(from_date, to_date)
@@ -233,7 +232,7 @@ def get_jobs(
         batch__site=site,
         created__range=[
             from_date,
-            to_date + relativedelta(days=1),
+            to_date + timedelta(days=1),
         ],  # +1 to include the full to_date
     ).order_by(
         "-id"

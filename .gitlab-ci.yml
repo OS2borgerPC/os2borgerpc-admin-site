@@ -51,6 +51,7 @@ Lint Python:
         - pip3 install black
     script:
         - cd admin_site
+        - black --version
         - black --check --diff .
 
 Lint Dockerfiles:
