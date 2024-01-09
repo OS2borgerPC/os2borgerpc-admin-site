@@ -48,6 +48,7 @@ Lint Python:
     <<: *lint-default
     before_script:
         - pip3 install -r admin_site/requirements.txt
+        - pip3 install black
     script:
         - cd admin_site
         - black --check --diff .
