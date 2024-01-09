@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-24 13:27+0200\n"
+"POT-Creation-Date: 2024-01-09 16:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +17,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: static/js/security_events_list.js:208
+#: static/js/jobs_list.js
+msgid "No user"
+msgstr "Ingen bruger"
+
+#: static/js/jobs_list.js static/js/security_events_list.js
+msgid "Previous"
+msgstr "Forrige"
+
+#: static/js/jobs_list.js static/js/security_events_list.js
+msgid "Next"
+msgstr "Næste"
+
+#: static/js/security_events_list.js
+msgid "Note set during handling:"
+msgstr "Note sat under håndtering:"
+
+#: static/js/security_events_list.js
+msgid "Info about the event"
+msgstr "Info om hændelsen"
+
+#: static/js/security_events_list.js
+msgid "Log-output from the event:"
+msgstr "Log-output fra hændelsen:"
+
+#: static/js/security_events_list.js
 msgid "Handle"
 msgstr "Håndter"
 
-#: static/js/security_events_list.js:208
+#: static/js/security_events_list.js
 msgid "out of"
 msgstr "ud af"
 
-#: static/js/security_events_list.js:208
+#: static/js/security_events_list.js
 msgid "events"
 msgstr "hændelser"
 
-#: static/js/wake_plan.js:22
+#: static/js/wake_plan.js
 msgid "On"
 msgstr "Tændt"
 
-#: static/js/wake_plan.js:31
+#: static/js/wake_plan.js
 msgid "Off"
 msgstr "Slukket"
 
-#: static/js/wake_plan.js:69
+#: static/js/wake_plan.js
 msgid "Active"
 msgstr "Aktiv"
 
-#: static/js/wake_plan.js:71
+#: static/js/wake_plan.js
 msgid "Inactive"
 msgstr "Inaktiv"

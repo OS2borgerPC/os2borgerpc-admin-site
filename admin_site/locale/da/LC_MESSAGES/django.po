@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 16:26+0100\n"
+"POT-Creation-Date: 2024-01-10 12:09+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -562,7 +562,7 @@ msgstr "vedligeholdt af Magenta"
 msgid "position"
 msgstr "position"
 
-#. Translators: Related to job or event status
+#. Translators: Related to job status
 #: system/models.py
 msgid "New"
 msgstr "Nyt"
@@ -679,6 +679,11 @@ msgstr "maksimal tilladt offline-periode i minutter"
 #: system/models.py
 msgid "How long a PC may be offline before an event is created"
 msgstr "Hvor længe en PC må være offline, før der oprettes en hændelse"
+
+#. Translators: Related to event status
+#: system/models.py
+msgid "New "
+msgstr "Ny"
 
 # SecurityEvent class
 #. Translators: Related to event status

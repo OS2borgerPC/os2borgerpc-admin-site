@@ -1,7 +1,7 @@
 from django.urls import re_path
 from django.views.generic import RedirectView
 
-# from django.views.i18n import JavaScriptCatalog
+from django.views.i18n import JavaScriptCatalog
 
 from system.views import (
     AdminIndex,
@@ -68,7 +68,7 @@ from system.views import (
 urlpatterns = [
     # TODO: Switch to using the django javascript translation system
     # For translations of strings in javascript files that are printed to the user
-    # url("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    re_path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     # Security events UI
     re_path(
         r"^site/(?P<slug>[^/]+)/security_events/update/$",

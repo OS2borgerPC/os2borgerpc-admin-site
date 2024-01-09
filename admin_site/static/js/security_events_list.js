@@ -38,21 +38,13 @@ $(function(){
         appendEntries: function(dataList) {
             var container = this.elem
 
-            var text_dict = {
-                "da": ["Info om hændelsen", "Log-output fra hændelsen:"],
-                "en": ["Info about the event", " Log output from the event:"],
-                "sv": ["Info om incidenten", "Loggutgång från incidenten:"]
-            }
-            // Get the correct translation based on the django_language cookie
-            const text = text_dict[getCookie("django_language")]
-
             $.each(dataList.results, function() {
-                const maybe_note = this.note? '<strong>Note sat ved håndtering: </strong><br>' + this.note : ''
+                const maybe_note = this.note? '<strong>' + gettext("Note set during handling:") + '</strong><br>' + this.note : ''
                 var info_button = '<button ' +
                         'class="btn btn-secondary loginfobutton p-0" ' +
-                        'data-bs-title="' + text[0] + '" ' +
+                        'data-bs-title="' + gettext("Info about the event") + '" ' +
                         'data-bs-toggle="popover" ' +
-                        'data-bs-content="' + '<strong>' + text[1] + '</strong><br/><br/><pre class=\'p-3 bg-light\'>' + this.summary + '</pre><br/>' + maybe_note + '"' +
+                        'data-bs-content="' + '<strong>' + gettext("Log-output from the event:") + '</strong><br/><br/><pre class=\'p-3 bg-light\'>' + this.summary + '</pre><br/>' + maybe_note + '"' +
                         'data-bs-html=true ' +
                         'data-bs-placement=left ' +
                         'data-bs-trigger="click" ' +
@@ -114,17 +106,7 @@ $(function(){
             pagination.empty()
             var eventsearch = this
 
-            // TODO: Use django JS translations instead
-            // Dict containing the translations for the pagination buttons
-            var text_dict = {
-                "da": ["Forrige", "Næste"],
-                "en": ["Previous", "Next"],
-                "sv": ["Föregående", "Nästa"]
-            }
-            // Get the correct translation based on the django_language cookie
-            const text = text_dict[getCookie("django_language")]
-
-            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> ' + text[0] + '</a></li>')
+            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> ' + gettext("Previous") + '</a></li>')
             if (data.has_previous) {
                 previous_item.removeClass("disabled")
                 previous_item.find('a').on("click", function() {
@@ -150,7 +132,7 @@ $(function(){
                 item.appendTo(pagination)
             })
 
-            var next_item = $('<li class="page-item disabled"><a class="page-link">' + text[1] + ' <span class="material-icons">navigate_next</span></a></li>')
+            var next_item = $('<li class="page-item disabled"><a class="page-link">' + gettext("Next") + ' <span class="material-icons">navigate_next</span></a></li>')
             if (data.has_next) {
                 next_item.removeClass("disabled")
                 next_item.find('a').on("click", function() {
@@ -221,18 +203,9 @@ function updateCounter() {
     totalEvents = document.getElementsByClassName("click-list--item").length - 1
     handleButton = document.getElementById("handle-event-button")
 
-    // TODO: Use django JS translations instead
-    // Dict containing the translations for the button
-    var text_dict = {
-        "da": ["Håndter ", " ud af ", " hændelser"],
-        "en": ["Handle ", " out of ", " events"],
-        "sv": ["Hanterar ", " av ", " incidenter"]
-    }
-    // Get the correct translation based on the django_language cookie
-    const text = text_dict[getCookie("django_language")]
     // Updates the text on the button to show how many (if any) events have been selected
-    handleButton.innerText = text[0] + ( selectedEvents > 0 ? selectedEvents + text[1] + totalEvents : "") + text[2]
-    //handleButton.innerText = gettext("Handle") + " " + ( selectedEvents > 0 ? selectedEvents + " " + gettext("out of") + " " + totalEvents : "") + " " + gettext("events")
+    //handleButton.innerText = text[0] + ( selectedEvents > 0 ? selectedEvents + text[1] + totalEvents : "") + text[2]
+    handleButton.innerText = gettext("Handle") + " " + ( selectedEvents > 0 ? selectedEvents + " " + gettext("out of") + " " + totalEvents : "") + " " + gettext("events")
 
     // Disables the button when no elements are selected
     document.getElementById("handle-event-button").disabled = ( selectedEvents == 0 )
