@@ -64,10 +64,41 @@
       {% include 'notification.html' %}
 
       {% if not is_security %}
-        <div style="float: left; margin-top: .5rem;">
+        <div class="float-start" style="margin-top: .5rem;">
+          {% comment %}
+          {% if supported_products %}
+            <p>
+              {% translate "Supported platforms" %}:
+              {{supported_products|join:", "}}
+            </p>
+          {% endif %}
+          {% endcomment %}
+
           <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#runscriptmodal">{% translate "Run script" %}</button>
         </div>
       {% endif %}
+
+      <div class="d-flex justify-content-end">
+        {% if form.instance.created %}
+          <p class="mb-3 mt-3">
+            {% translate "Created" %}: {{ form.instance.created }}
+            {% if form.instance.user_created %}
+              <span class="text-muted">({{ form.instance.user_created }})</span>
+            {% endif %}
+          </p>
+        {% endif %}
+
+        {% if form.instance.modified %}
+          <p class="mb-3 ms-3 mt-3">
+            {% translate "Modified" %}: {{ form.instance.modified }}
+            {% if form.instance.user_modified %}
+              <span class="text-muted">({{ form.instance.user_modified }})</span>
+            {% endif %}
+          </p>
+        {% endif %}
+      </div>
+
+      <div class="clearfix"></div>
 
       {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
 

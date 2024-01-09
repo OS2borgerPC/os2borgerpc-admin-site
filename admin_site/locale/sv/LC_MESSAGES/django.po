@@ -718,6 +718,10 @@ msgid "assigned user"
 msgstr "hanteras av"
 
 #: system/models.py
+msgid "product"
+msgstr "produkt"
+
+#: system/models.py
 msgid "key"
 msgstr "Nyckel"
 
@@ -4783,7 +4787,7 @@ msgid "User"
 msgstr "Användare"
 
 #: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
-#: templates/system/scripts/form.html
+#: templates/system/scripts/update.html
 msgid "Created"
 msgstr "Skapad"
 
@@ -5085,10 +5089,6 @@ msgid "Create"
 msgstr "Skapa"
 
 #: templates/system/scripts/form.html
-msgid "Modified"
-msgstr "Ändrat"
-
-#: templates/system/scripts/form.html
 msgid "Code"
 msgstr "Kod"
 
@@ -5195,6 +5195,14 @@ msgstr "Hitta ..."
 msgid "Clear the filter"
 msgstr "Rensa filter"
 
+#: templates/system/scripts/update.html
+msgid "Supported platforms"
+msgstr "Plattformar som stöds"
+
+#: templates/system/scripts/update.html
+msgid "Modified"
+msgstr "Ändrat"
+
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: templates/system/security_events/site_security_events.html
 msgid "Level"
@@ -5249,32 +5257,24 @@ msgid "Release notes"
 msgstr "Udgivelsesnoter"
 
 #: templates/system/site_images.html
-msgid "Download image"
-msgstr "Download image"
+msgid "Download standard image"
+msgstr "Download standard image"
+
+#: templates/system/site_images.html
+msgid "Download multi language image"
+msgstr "Download flerspråkig image"
 
 #: templates/system/site_images.html
 msgid "No images were found"
-msgstr "Inga images hittades"
+msgstr "Inga versioner hittades"
 
 #: templates/system/site_images.html
 msgid "Earlier versions"
 msgstr "Tidigare versioner"
 
 #: templates/system/site_images.html
-msgid "NO ACCESS"
-msgstr "INGEN TILLGÅNG"
-
-#: templates/system/site_images.html
-msgid ""
-"Your organization has no service agreement with a OS2borgerPC provider so no "
-"images are shown."
-msgstr ""
-"Din organisation har inget serviceavtal med en leverantör av Sambruk "
-"MedborgarPC, och därför visas inga images."
-
-#: templates/system/site_images.html
-msgid "Please contact a OS2borgerPC provider to learn more."
-msgstr "Vänligen kontakta Sambruk MedborgarPC Leverantör för att få veta mer."
+msgid "Download"
+msgstr "Download"
 
 #: templates/system/site_list.html
 msgid "Total number of sites"

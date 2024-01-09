@@ -53,6 +53,7 @@ from system.models import (
     Input,
     Job,
     MandatoryParameterMissingError,
+    Product,
     PC,
     PCGroup,
     WakeWeekPlan,
@@ -898,6 +899,8 @@ class ScriptMixin(object):
         context["local_scripts"] = local_scripts
         global_scripts = scripts.filter(site=None)
         context["global_scripts"] = global_scripts
+
+        context["supported_products"] = self.script.products.all()
 
         # Create a tag->scripts dict for tags that has local scripts.
         local_tag_scripts_dict = {
@@ -3509,9 +3512,19 @@ class DocView(TemplateView, LoginRequiredMixin):
         return context
 
 
-class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
+class ImageVersionRedirect(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+
+        return reverse(
+            "images-product",
+            kwargs={"slug": site.url, "product_id": Product.objects.first().id},
+        )
+
+
+class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     """Displays all of the image versions that this site has access to (i.e.,
-    all versions released before the site's last_version datestamp).
+    all versions released before the site's paid_for_access_until datestamp).
     """
 
     template_name = "system/site_images.html"
@@ -3519,33 +3532,45 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     selection_class = ImageVersion
 
     def get_context_data(self, **kwargs):
-        context = super(ImageVersionsView, self).get_context_data(**kwargs)
+        context = super(ImageVersionView, self).get_context_data(**kwargs)
 
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        last_pay_date = site.paid_for_access_until
 
-        if not last_pay_date:
-            context["site_allowed"] = False
+        selected_product = get_object_or_404(Product, id=self.kwargs.get("product_id"))
 
-        else:
-            context["site_allowed"] = True
+        # excluding versions where
+        # image release date > client's last pay date.
+        versions_accessible_by_user = (
+            ImageVersion.objects.exclude(release_date__gt=site.paid_for_access_until)
+            .filter(product=selected_product)
+            .order_by("-image_version")
+        )
 
-            # excluding versions where
-            # image release date > client's last pay date.
-            versions = ImageVersion.objects.exclude(release_date__gt=last_pay_date)
+        # If the product is multilang: Don't show images besides multilang for all languages besides danish
+        user_language = self.request.user.user_profile.language
+        if selected_product.multilang and user_language != "da":
+            versions_accessible_by_user = versions_accessible_by_user.exclude(
+                image_upload_multilang="#"
+            )  # The hash symbol is the default for the field, indicating no file was uploaded
 
-            platform_choice = self.kwargs.get(
-                "platform", ImageVersion.platform_choices[0][0]
-            ).upper()
+        products = Product.objects.all()
 
-            selected_platform = next(
-                (x for x in ImageVersion.platform_choices if x[0] == platform_choice),
-                ImageVersion.platform_choices[0][0],
+        # Swedish hacks until we do a proper translation of the database
+        # TODO: Please remove this section!
+        if user_language == "sv":
+            selected_product.name = selected_product.name.replace(
+                "OS2borgerPC", "Sambruk MedborgarPC"
             )
-            context["selected_platform"] = selected_platform
-            context["selected_platform_images"] = versions.filter(
-                platform=selected_platform[0]
-            ).order_by("-release_date", "-id")
-            context["platform_choices"] = dict(ImageVersion.platform_choices)
+            for i in versions_accessible_by_user:
+                i.product.name = i.product.name.replace(
+                    "OS2borgerPC", "Sambruk MedborgarPC"
+                )
+            for p in products:
+                p.name = p.name.replace("OS2borgerPC", "Sambruk MedborgarPC")
+
+        context["selected_product"] = selected_product
+        context["object_list"] = versions_accessible_by_user
+        context["products"] = products
+        context["user_language"] = user_language
 
         return context

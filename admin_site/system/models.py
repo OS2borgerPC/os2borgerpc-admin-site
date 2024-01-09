@@ -167,7 +167,7 @@ class Site(models.Model):
     is_testsite = models.BooleanField(verbose_name=_("Is a testsite"), default=False)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     paid_for_access_until = models.DateField(
-        verbose_name=_("Paid for access until this date"), null=True, blank=True
+        verbose_name=_("Paid for access until this date"), default=datetime.date.today
     )
     created = models.DateTimeField(
         verbose_name=_("created"), auto_now_add=True, null=True
@@ -770,8 +770,8 @@ class PC(models.Model):
     def get_absolute_url(self):
         return reverse("computer", args=(self.site.uid, self.uid))
 
-    def os2_product(self):
-        """Return whether a PC is running e.g. os2borgerpc or os2borgerpc kiosk."""
+    def product(self):
+        """Return which Product the PC is an installation of."""
         return self.get_config_value("os2_product")
 
     def __str__(self):
@@ -785,6 +785,19 @@ class ScriptTag(models.Model):
     """A tag model for scripts."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class Product(models.Model):
+    """A model for Product (e.g. OS2borgerPC or OS2borgerPC Kiosk), related to Image Versions and Scripts."""
+
+    name = models.CharField(verbose_name=_("name"), max_length=128)
+    multilang = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["name"]
@@ -831,6 +844,9 @@ class Script(AuditModelMixin):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
+    )
+    products = models.ManyToManyField(
+        Product, related_name="scripts_for_product", blank=True
     )
 
     @property
@@ -1365,31 +1381,27 @@ class SecurityEvent(models.Model):
 
 
 class ImageVersion(models.Model):
-    BORGERPC = "BORGERPC"
-    BORGERPC_KIOSK = "BORGERPC_KIOSK"
-    MEDBORGARPC = "MEDBORGARPC"
-
-    platform_choices = (
-        (BORGERPC, "OS2borgerPC"),
-        (BORGERPC_KIOSK, "OS2borgerPC Kiosk"),
-        (MEDBORGARPC, "Sambruk MedborgarPC"),
+    product = models.ForeignKey(
+        Product,
+        verbose_name=_("product"),
+        on_delete=models.PROTECT,
+        null=True,  # TODO: Migrate to make this mandatory later
     )
-
-    platform = models.CharField(max_length=128, choices=platform_choices)
-    image_version = models.CharField(unique=True, max_length=7)
+    image_version = models.CharField(max_length=7)
     release_date = models.DateField()
     os = models.CharField(verbose_name="OS", max_length=30)
     release_notes = models.TextField(max_length=1500)
     image_upload = models.FileField(upload_to="images", default="#")
+    image_upload_multilang = models.FileField(
+        upload_to="images", default="#", blank=True, null=True
+    )
 
     def __str__(self):
-        return "{0} {1}".format(
-            self.get_platform_display(),
-            self.image_version,
-        )
-
-    class Meta:
-        ordering = ["platform", "-image_version"]
+        # TODO: Delete the second path here once product has been changed to mandatory
+        if self.product and self.product.name:
+            return f"{self.product.name} {self.image_version}"
+        else:
+            return f"{self.image_version}"
 
 
 # Last_successful_login is only updated whenever the citizen user:
