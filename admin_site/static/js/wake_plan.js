@@ -12,13 +12,6 @@ function weekDayOn(el, on) {
   const END_TIME_INPUT = el.parentElement.parentElement.children[5].firstElementChild
   const ON_OFF_TEXT = el.parentElement.parentElement.children[2].firstElementChild
 
-  // Dict containing the translations for the switch
-  var text_dict = {
-      "da": ["Tændt", "Slukket"],
-      "en": ["On", "Off"],
-      "sv": ["På", "Stängd"]
-  }
-
 
   if (on) {
     START_TIME.style.visibility = "visible"
@@ -71,13 +64,6 @@ const CHECKBOX_ENABLED = document.getElementById("id_enabled")
 const CHECKBOX_ENABLED_LABEL = document.getElementById("id_enabled_label")
 if (CHECKBOX_ENABLED) { // Don't attempt to set this listener if we're on a subpage where this doesn't exist
   function setPlanStateText(on) {
-    // TODO: Use django JS translations instead
-    // Dict containing the translations for the switch
-    var text_dict = {
-        "da": ["Aktiv", "Inaktiv"],
-        "en": ["Active", "Inactive"],
-        "sv": ["Aktiv", "Inaktiv"]
-    }
 
     if (on) {
       CHECKBOX_ENABLED_LABEL.innerText = gettext("Active")
