@@ -204,7 +204,6 @@ function updateCounter() {
     handleButton = document.getElementById("handle-event-button")
 
     // Updates the text on the button to show how many (if any) events have been selected
-    //handleButton.innerText = text[0] + ( selectedEvents > 0 ? selectedEvents + text[1] + totalEvents : "") + text[2]
     handleButton.innerText = gettext("Handle") + " " + ( selectedEvents > 0 ? selectedEvents + " " + gettext("out of") + " " + totalEvents : "") + " " + gettext("events")
 
     // Disables the button when no elements are selected
