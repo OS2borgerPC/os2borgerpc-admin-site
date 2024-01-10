@@ -42,9 +42,12 @@ class EventLevels:
     NORMAL = "Normal"
 
     LEVEL_TRANSLATIONS = {
-        CRITICAL: _("securitylevel:Critical"),
-        HIGH: _("securitylevel:High"),
-        NORMAL: _("securitylevel:Normal"),
+        # Translators: Related to security levels
+        CRITICAL: _("Critical"),
+        # Translators: Related to security levels
+        HIGH: _("High"),
+        # Translators: Related to security levels
+        NORMAL: _("Normal"),
     }
 
     LEVEL_CHOICES = (
@@ -980,12 +983,18 @@ class Job(models.Model):
     RESOLVED = "RESOLVED"
 
     STATUS_TRANSLATIONS = {
-        NEW: _("jobstatus:New"),
-        SUBMITTED: _("jobstatus:Submitted"),
-        RUNNING: _("jobstatus:Running"),
-        FAILED: _("jobstatus:Failed"),
-        DONE: _("jobstatus:Done"),
-        RESOLVED: _("jobstatus:Resolved"),
+        # Translators: Related to job status
+        NEW: _("New"),
+        # Translators: Related to job status
+        SUBMITTED: _("Submitted"),
+        # Translators: Related to job status
+        RUNNING: _("Running"),
+        # Translators: Related to job status
+        FAILED: _("Failed"),
+        # Translators: Related to job status
+        DONE: _("Done"),
+        # Translators: Related to job status
+        RESOLVED: _("Restarted"),
     }
 
     STATUS_CHOICES = (
@@ -1283,9 +1292,12 @@ class SecurityEvent(models.Model):
     RESOLVED = "RESOLVED"
 
     STATUS_TRANSLATIONS = {
-        NEW: _("eventstatus:New"),
-        ASSIGNED: _("eventstatus:Assigned"),
-        RESOLVED: _("eventstatus:Resolved"),
+        # Translators: Related to event status
+        NEW: _("New "),
+        # Translators: Related to event status
+        ASSIGNED: _("Assigned"),
+        # Translators: Related to event status
+        RESOLVED: _("Resolved"),
     }
 
     STATUS_CHOICES = (

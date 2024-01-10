@@ -121,7 +121,8 @@
               </div>
               {% translate "Add computer to group" as add_c %}
               {% translate "Remove computer from group" as remove_c %}
-              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=add_c remove_text=remove_c site_url=site.uid target_section='groups' %}
+              {% translate "None chosen" as empty_t %}
+              {% include 'widgets/picklist.html' with submit_name='pc_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=add_c remove_text=remove_c empty_text=empty_t site_url=site.uid target_section='groups' %}
 
             </fieldset>
           </div>

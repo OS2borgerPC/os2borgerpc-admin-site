@@ -8,6 +8,7 @@
 {% translate "Remove monitored group" as g_remove %}
 {% translate "Add email recipient" as e_add %}
 {% translate "Remove recipient" as e_remove %}
+{% translate "None chosen" as empty_t %}
 <div class="container-fluid main sublevelmain">
 
     {% if selected %}
@@ -68,11 +69,11 @@
 
                 <p>
                     <label>{% translate "Monitored groups" %}</label>
-                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=g_add remove_text=g_remove site_url=site.uid target_section='groups' %}
+                    {% include 'widgets/picklist.html' with submit_name='alert_groups' selected_list=selected_groups available_list=available_groups identifier='gruppe' add_text=g_add remove_text=g_remove empty_text=empty_t site_url=site.uid target_section='groups' %}
                 </p>
                 <p>
                     <label>{% translate "Recipient(s) of email warning" %}</label>
-                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text=e_add remove_text=e_remove site_url=site.uid target_section='users' %}
+                    {% include 'widgets/picklist.html' with submit_name='alert_users' selected_list=selected_users available_list=available_users identifier='modtager' add_text=e_add remove_text=e_remove empty_text=empty_t site_url=site.uid target_section='users' %}
                 </p>
 
             </fieldset>

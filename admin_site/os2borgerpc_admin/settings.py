@@ -197,6 +197,7 @@ MIDDLEWARE = (
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django_otp.middleware.OTPMiddleware",
+    "os2borgerpc_admin.middlewares.user_locale_middleware",
     "django.contrib.messages.middleware.MessageMiddleware",
 )
 
