@@ -930,7 +930,7 @@ class ScriptMixin(object):
                 context["script_inputs"] = [
                     {
                         "pk": input.pk,
-                        "name": input.name,
+                        "name": input.name.replace('"', "&quot;"),
                         "value_type": input.value_type,
                         "default_value": input.default_value,
                         "mandatory": input.mandatory,
