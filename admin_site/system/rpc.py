@@ -7,6 +7,7 @@ import logging
 from datetime import datetime
 from dateutil import parser
 
+from django.conf import settings
 from django.db.models import Q
 
 from system.models import PC, Site, Configuration, ConfigurationEntry
@@ -241,35 +242,35 @@ def push_security_events(pc_uid, events_csv):
     pc = PC.objects.get(uid=pc_uid)
 
     for event in events_csv:
-        try:
-            event_date, rule_id, event_summary, event_complete_log = event.split(",")
-        except ValueError:
-            logger.exception(
-                "Security event generated ValueError, Event: %s, PC UID: %s",
-                event,
-                pc.uid,
-            )
-            return 1
+        event_split = event.split(",")
+        if len(event_split) == 3 or len(event_split) == 4:
+            event_date = event_split[0]
+            rule_id = event_split[1]
+            event_summary = event_split[2]
+        else:
+            if settings.DEBUG or "test" in settings.SERVER_EMAIL:
+                logger.exception(
+                    "Invalid security event format with %s elements, Event: %s, PC UID: %s,",
+                    len(event_split),
+                    event,
+                    pc.uid,
+                )
+            continue
 
         try:
             security_problem = SecurityProblem.objects.filter(id=rule_id).first()
         except ValueError:
-            logger.exception(
-                "Security event log contained invalid rule ID %s, Event: %s, PC UID %s",
-                rule_id,
-                str(event),
-                pc.uid,
-            )
+            if settings.DEBUG or "test" in settings.SERVER_EMAIL:
+                logger.exception(
+                    "Security event log contained invalid rule ID %s, Event: %s, PC UID %s",
+                    rule_id,
+                    str(event),
+                    pc.uid,
+                )
             continue
 
         if not security_problem:
             # Ignore ID's of SecurityProblems that don't exist
-            logger.error(
-                "Security problem with ID %s could not be found, Event: %s, PC UID %s",
-                rule_id,
-                str(event),
-                pc.uid,
-            )
             continue
 
         if not security_problem.site == pc.site:
