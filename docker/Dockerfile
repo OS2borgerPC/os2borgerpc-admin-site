@@ -96,6 +96,7 @@ COPY --from=frontend \
 # consider it a bug. See `insecure-settings.ini` for a detailed explanation.
 RUN set -ex \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
+  && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py compilemessages \
   && rm /code/docker/insecure-settings.ini
 
 # Run the server as the bpc user on port 9999
