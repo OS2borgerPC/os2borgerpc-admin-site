@@ -883,7 +883,7 @@ class ScriptMixin(object):
 
         # Append scripts the site has permissions for
         for fp in context["site"].feature_permission.all():
-            scripts = scripts | fp.scripts.all()
+            scripts = scripts | fp.scripts.filter(is_security_script=self.is_security)
 
         local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
