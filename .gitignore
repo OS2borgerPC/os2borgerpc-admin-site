@@ -26,6 +26,7 @@ node_modules/
 *.egg-info
 .env
 .idea
+*.mo
 # These files are created when running "npm run build-for-dev"
 admin_site/static/css/bootstrap.css
 admin_site/static/css/bootstrap.css.map
