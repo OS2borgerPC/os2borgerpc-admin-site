@@ -94,15 +94,6 @@ def register_new_computer(mac, name, distribution, site, configuration):
     return register_new_computer_v2(mac, name, site, configuration)
 
 
-# TODO: Function unused in clients version 1.2.0 and newer. Delete once there are no longer active clients calling it.
-def upload_dist_packages(distribution_uid, package_data):
-    """This will upload the packages and package versions for a given
-    BibOS distribution.
-    This is depreacated and will be removed when we can."""
-    # Phased out - we keep this for backwards compliance only.
-    return 0
-
-
 def send_status_info_v2(pc_uid, job_data):
     """Update the status of outstanding jobs.
     If no updates, these will be None. In that

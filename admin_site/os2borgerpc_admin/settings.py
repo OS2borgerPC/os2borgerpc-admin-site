@@ -260,7 +260,6 @@ XMLRPC_METHODS = (
     ("system.rpc.register_new_computer_v2", "register_new_computer_v2"),
     ("system.rpc.send_status_info", "send_status_info"),
     ("system.rpc.send_status_info_v2", "send_status_info_v2"),
-    ("system.rpc.upload_dist_packages", "upload_dist_packages"),
     ("system.rpc.get_instructions", "get_instructions"),
     ("system.rpc.push_config_keys", "push_config_keys"),
     ("system.rpc.push_security_events", "push_security_events"),
