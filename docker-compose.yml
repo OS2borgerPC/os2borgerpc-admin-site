@@ -22,10 +22,10 @@ services:
         command:
             sh -c "python manage.py initialize_database &&
                    python manage.py compilemessages &&
-                   gunicorn --reload --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo \
-                   --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/djangojs.mo \
-                   --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/django.mo \
-                   --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/djangojs.mo \
+                   gunicorn --reload --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo
+                   --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/djangojs.mo
+                   --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/django.mo
+                   --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/djangojs.mo
                    --timeout 0 --config /code/docker/gunicorn-settings.py os2borgerpc_admin.wsgi"
         volumes:
             - .:/code/
