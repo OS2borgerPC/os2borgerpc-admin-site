@@ -155,6 +155,7 @@ active
               <li>{% translate "Editing the script arguments will not make the script run again. This can be changed under Site settings" %}.</li>
             {% endif %}
             <li>{% translate "Computers already in the group only run newly added scripts, but Computers newly added to the Group run all the scripts on the list" %}.</li>
+            <li>{% translate "Removing a script from the Group will NOT remove the effect of the script from the Computers in the Group" %}.</li>
             </ul>
           </div>
           {% include 'system/pcgroups/policy_list/list.html' with entries=selected_group.ordered_policy policy_id='group_policies' %}
