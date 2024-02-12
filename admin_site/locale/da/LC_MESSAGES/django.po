@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 12:09+0100\n"
+"POT-Creation-Date: 2024-02-12 13:18+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -4962,6 +4962,14 @@ msgid ""
 msgstr ""
 "Eksisterende Computere i Gruppen kører kun ny-tilføjede scripts, mens ny-"
 "tilføjede Computere til Gruppen kører hele listen af scripts"
+
+#: templates/system/pcgroups/site_groups.html
+msgid ""
+"Removing a script from the Group will NOT remove the effect of the script "
+"from the Computers in the Group"
+msgstr ""
+"Hvis et script fjernes fra Gruppen, medfører det IKKE, at scriptets effekt "
+"fjernes fra Computerne i Gruppen"
 
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"

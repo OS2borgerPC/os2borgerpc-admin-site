@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 12:09+0100\n"
+"POT-Creation-Date: 2024-02-12 13:18+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4957,6 +4957,13 @@ msgid ""
 msgstr ""
 "Befintliga datorer i gruppen kör endast nyligen tillagda skript, medan nya "
 "datorer i gruppen kör hela listan med skript"
+
+#: templates/system/pcgroups/site_groups.html
+msgid ""
+"Removing a script from the Group will NOT remove the effect of the script "
+"from the Computers in the Group"
+msgstr "Att ta bort ett skript från gruppen betyder INTE att skriptets effekt "
+"tas bort från datorerna i gruppen"
 
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"
