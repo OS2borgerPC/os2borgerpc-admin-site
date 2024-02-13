@@ -44,7 +44,7 @@ bash-django: (verify-container-running django_container)
 
 # Run bash in a django container without first running migrations - convenient for e.g. makemigrations
 bash-django-skip-entrypoint:
-  sudo docker-compose run --rm --entrypoint bash {{compose_django_service}}
+  sudo docker compose run --rm --entrypoint bash {{compose_django_service}}
 
 # Runs black on the python codebase
 black:
@@ -87,20 +87,20 @@ check-deprecation-warnings: (verify-container-running django_container)
 
 # Useful if changing requirements.txt and ...?
 recreate-django:
-  sudo docker-compose up --build
+  sudo docker compose up --build
 
 # Recreate the django database, replacing what you have with what's in the fixtures
 recreate-db:
-  sudo docker-compose down --volumes
+  sudo docker compose down --volumes
 
 # Start the admin-site stack
 run:
-  sudo docker-compose up
+  sudo docker compose up
   printf '%s' "If permissions fail, verify umask and/or manually check if the permissions differ on the file mentioned, e.g. initialize.py"
 
 # Start the admin-site stack in the background and attach specifically to the django container - so python breakpoints work
 run-debug:
-  sudo docker-compose up -d
+  sudo docker compose up -d
   sudo docker attach {{django_container}}
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)
@@ -114,9 +114,9 @@ translations-compile-messages: (verify-container-running django_container)
 
 # Replace all the fixtures (test data) with what you currently have in your local adminsite db
 update-test-data: (verify-container-running django_container)
-  sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
-  sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
-  sudo docker-compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
+  sudo docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
+  sudo docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
+  sudo docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
 
 # Create a graph of the django models to a file named models_graphed.png
 graph-models: (verify-container-running django_container)
