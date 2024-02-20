@@ -150,11 +150,25 @@ class ConfigurationEntry(models.Model):
         ordering = ["key"]
 
 
+class Country(models.Model):
+    name = models.CharField(verbose_name=_("country_name"), max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
+
 class Site(models.Model):
     """A site which we wish to admin"""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
     uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
+    country = models.ForeignKey(
+        Country, related_name="sites", on_delete=models.PROTECT, null=True, default=1
+    )
+    is_testsite = models.BooleanField(default=False)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"), null=True, blank=True
