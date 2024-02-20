@@ -66,6 +66,7 @@ from system.models import (
     EventRuleServer,
     EventLevels,
     Site,
+    Country,
 )
 
 from system.forms import (
@@ -271,6 +272,11 @@ class SiteList(ListView, LoginRequiredMixin):
         context = super(SiteList, self).get_context_data(**kwargs)
         context["pcs_count"] = PC.objects.filter(site__in=self.get_queryset()).count()
         context["user"] = self.request.user
+        countries = Country.objects.all()
+        for country in countries:
+            country.normal_sites = country.sites.filter(is_testsite=False)
+            country.test_sites = country.sites.filter(is_testsite=True)
+        context["countries"] = countries
         return context
 
 

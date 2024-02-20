@@ -31,6 +31,7 @@ from system.models import (
     Site,
     WakeChangeEvent,
     WakeWeekPlan,
+    Country,
 )
 
 from changelog.models import (
@@ -333,6 +334,15 @@ class JobAdmin(admin.ModelAdmin):
     readonly_fields = ("created", "started", "finished")
 
 
+class CountryAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "pk",
+    )
+    list_filter = ("name",)
+    search_fields = ("name", "pk")
+
+
 class ScriptTagAdmin(admin.ModelAdmin):
     pass
 
@@ -525,3 +535,4 @@ ar(WakeChangeEvent, WakeChangeEventAdmin)
 ar(WakeWeekPlan, WakeWeekPlanAdmin)
 ar(APIKey, APIKeyAdmin)
 ar(LoginLog, LoginLogAdmin)
+ar(Country, CountryAdmin)
