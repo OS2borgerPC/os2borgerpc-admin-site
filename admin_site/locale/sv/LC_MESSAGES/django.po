@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-06 09:13+0100\n"
+"POT-Creation-Date: 2024-02-12 13:18+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -300,17 +300,20 @@ msgstr "Ny"
 msgid "status:Fail"
 msgstr "Fejlet"
 
+#. Translators: Related to security levels
 #: system/models.py
-msgid "securitylevel:Critical"
+msgid "Critical"
 msgstr "Kritisk"
 
+#. Translators: Related to security levels
 #: system/models.py
-msgid "securitylevel:High"
+msgid "High"
 msgstr "Hög"
 
 # SecurityProblem class
+#. Translators: Related to security levels
 #: system/models.py
-msgid "securitylevel:Normal"
+msgid "Normal"
 msgstr "Normal"
 
 #: system/models.py
@@ -561,28 +564,34 @@ msgstr "underhålls av Magenta"
 msgid "position"
 msgstr "position"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:New"
+msgid "New"
 msgstr "Nytt"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Submitted"
+msgid "Submitted"
 msgstr "Avsänd"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Running"
+msgid "Running"
 msgstr "Körs"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Failed"
+msgid "Failed"
 msgstr "Misslyckad"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Done"
+msgid "Done"
 msgstr "Utförd"
 
+#. Translators: Related to job status
 #: system/models.py
-msgid "jobstatus:Resolved"
+msgid "Restarted"
 msgstr "Omstartad"
 
 #: system/models.py
@@ -673,17 +682,20 @@ msgstr "högsta tillåtna offlineperiod i minuter"
 msgid "How long a PC may be offline before an event is created"
 msgstr "Hur länge en dator måste vara offline innan en incident skapas"
 
-# SecurityEvent class
+#. Translators: Related to event status
 #: system/models.py
-msgid "eventstatus:New"
+msgid "New "
 msgstr "Ny"
 
+# SecurityEvent class
+#. Translators: Related to event status
 #: system/models.py
-msgid "eventstatus:Assigned"
+msgid "Assigned"
 msgstr "Tilldelad"
 
+#. Translators: Related to event status
 #: system/models.py
-msgid "eventstatus:Resolved"
+msgid "Resolved"
 msgstr "Löst"
 
 #: system/models.py
@@ -2045,6 +2057,7 @@ msgstr "Såhär utvecklas information"
 
 #: templates/documentation/configuration/index.html
 #: templates/system/jobs/site_jobs.html
+#: templates/system/security_events/site_security_events.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computer"
 msgstr "Dator"
@@ -4368,13 +4381,12 @@ msgid "Scripting"
 msgstr "Scripting"
 
 #: templates/site_with_navigation.html
-msgid "Users & Versions"
-msgstr "Användare och Versioner"
+msgid "Users & Images"
+msgstr "Användare och Images"
 
-#: templates/site_with_navigation.html
-#: templates/system/site_image_versions.html
-msgid "Versions"
-msgstr "Versioner"
+#: templates/site_with_navigation.html templates/system/site_images.html
+msgid "Images"
+msgstr ""
 
 #: templates/site_with_navigation.html
 msgid "Security rule definition"
@@ -4615,6 +4627,13 @@ msgstr "Lägg till e-postmottagare"
 #: templates/system/event_rules/site_security_problems.html
 msgid "Remove recipient"
 msgstr "Fjärrmottagare"
+
+#: templates/system/event_rules/site_event_rules_server.html
+#: templates/system/event_rules/site_security_problems.html
+#: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
+#: templates/system/wake_plan/wake_plan.html
+msgid "None chosen"
+msgstr "Ingen vald"
 
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
@@ -4881,6 +4900,19 @@ msgid "Supervisors for this group"
 msgstr "Ansvariga för gruppen"
 
 #: templates/system/pcgroups/site_groups.html
+msgid ""
+"This is used to control who receives the e-mails for Events, ie. Security "
+"Events or Offline Events. If one or more Supervisors are set for a given "
+"Group, these people will receive the e-mails instead of those set in the "
+"Monitoring Rule"
+msgstr ""
+"Detta används för att kontrollera vem som tar emot e-postmeddelanden för "
+"Incidenter - dvs. Säkerhetsincidenter och Offlineincidenter. Om en eller "
+"flera ansvariga personer är inställda för en viss grupp, kommer dessa "
+"personer att få e-postmeddelanden istället för de personer som anges som "
+"mottagare i övervakningsregeln."
+
+#: templates/system/pcgroups/site_groups.html
 msgid "Associated monitoring rules"
 msgstr "Associerad övervakningsregler"
 
@@ -4925,6 +4957,13 @@ msgid ""
 msgstr ""
 "Befintliga datorer i gruppen kör endast nyligen tillagda skript, medan nya "
 "datorer i gruppen kör hela listan med skript"
+
+#: templates/system/pcgroups/site_groups.html
+msgid ""
+"Removing a script from the Group will NOT remove the effect of the script "
+"from the Computers in the Group"
+msgstr "Att ta bort ett skript från gruppen betyder INTE att skriptets effekt "
+"tas bort från datorerna i gruppen"
 
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"
@@ -5164,10 +5203,6 @@ msgid "Rule"
 msgstr "Regel"
 
 #: templates/system/security_events/site_security_events.html
-msgid "Device"
-msgstr "Maskin"
-
-#: templates/system/security_events/site_security_events.html
 msgid "Incident time"
 msgstr "Händelsestidpunkt"
 
@@ -5179,53 +5214,61 @@ msgstr "Mottagningstidpunkt"
 msgid "Handled by"
 msgstr "Hanteras av"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Newest version of"
 msgstr "Senaste upplagan av"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Version"
 msgstr "Version"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Release date"
 msgstr "Release-datum"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Operating system"
 msgstr "Operativsystem"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Release notes"
 msgstr "Udgivelsesnoter"
 
-#: templates/system/site_image_versions.html
-msgid "Download"
-msgstr "Download"
+#: templates/system/site_images.html
+msgid "Download image"
+msgstr "Download image"
 
-#: templates/system/site_image_versions.html
-msgid "No versions were found"
-msgstr "Inga versioner hittades"
+#: templates/system/site_images.html
+msgid "No images were found"
+msgstr "Inga images hittades"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Earlier versions"
 msgstr "Tidigare versioner"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "NO ACCESS"
 msgstr "INGEN TILLGÅNG"
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid ""
 "Your organization has no service agreement with a OS2borgerPC provider so no "
-"versions are shown."
+"images are shown."
 msgstr ""
 "Din organisation har inget serviceavtal med en leverantör av Sambruk "
-"MedborgarPC, och därför visas inga versioner.."
+"MedborgarPC, och därför visas inga images."
 
-#: templates/system/site_image_versions.html
+#: templates/system/site_images.html
 msgid "Please contact a OS2borgerPC provider to learn more."
 msgstr "Vänligen kontakta Sambruk MedborgarPC Leverantör för att få veta mer."
+
+#: templates/system/site_list.html
+msgid "Total number of sites"
+msgstr "Totalt antal sites"
+
+#: templates/system/site_list.html
+msgid "Total number of computers"
+msgstr "Totalt antal datorer"
 
 #: templates/system/site_list.html
 msgid "Administrate"
@@ -5949,3 +5992,6 @@ msgstr "Inaktivera"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data saknas"
+
+#~ msgid "Device"
+#~ msgstr "Maskin"

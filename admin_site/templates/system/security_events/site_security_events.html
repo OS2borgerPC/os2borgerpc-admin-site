@@ -10,10 +10,6 @@
   <script type="text/javascript">
        var security_event_search_url = "{% url 'security_event_search' site.uid %}"
        var security_events_update_url = "{% url 'security_events_update' site.uid %}"
-       /* This cookie is used to get the correct language for event severity
-       and event status */
-       var lang = "{{request.user.user_profile.language}}"
-       document.cookie = "django_language="+lang;
   </script>
   <script type="text/javascript" src="/static/js/security_events_list.js"></script>
 {% endblock %}
@@ -117,7 +113,7 @@
           {% translate "Rule" as rule %}
           {% include 'widgets/orderby_th_ajax.html' with label=rule action="BibOS.SecurityEventList.orderby('name')" slug='warning' %}
           <th>{% translate "Info" %}</th>
-          <th>{% translate "Device" %}</th>
+          <th>{% translate "Computer" %}</th>
           <th>{% translate "Incident time" %}</th>
           <th>{% translate "Time of receipt" %}</th>
           <th>{% translate "Status" %}</th>

@@ -341,11 +341,9 @@ class SiteSettings(UpdateView, SiteView):
 
         response = super(SiteSettings, self).form_valid(form)
 
-        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response, _("Settings for %s updated") % self.kwargs["slug"]
         )
-        translation.deactivate()
         return response
 
 
@@ -785,12 +783,10 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
     def status_fail_response(self):
         response = HttpResponseRedirect(self.get_success_url())
-        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("Can only restart jobs that are Done or Failed %s") % "",
         )
-        translation.deactivate()
         return response
 
     def get(self, request, *args, **kwargs):
@@ -820,13 +816,11 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
 
         self.object.restart(user=self.request.user)
         response = HttpResponseRedirect(self.get_success_url())
-        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("The script %s is being rerun on the computer %s")
             % (self.object.batch.script.name, self.object.pc.name),
         )
-        translation.deactivate()
         return response
 
     def get_success_url(self):
@@ -889,7 +883,7 @@ class ScriptMixin(object):
 
         # Append scripts the site has permissions for
         for fp in context["site"].feature_permission.all():
-            scripts = scripts | fp.scripts.all()
+            scripts = scripts | fp.scripts.filter(is_security_script=self.is_security)
 
         local_scripts = scripts.filter(site=self.site)
         context["local_scripts"] = local_scripts
@@ -936,7 +930,7 @@ class ScriptMixin(object):
                 context["script_inputs"] = [
                     {
                         "pk": input.pk,
-                        "name": input.name,
+                        "name": input.name.replace('"', "&quot;"),
                         "value_type": input.value_type,
                         "default_value": input.default_value,
                         "mandatory": input.mandatory,
@@ -1138,9 +1132,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.save_script_inputs()
             self.create_associated_script_parameters()
             response = super(ScriptUpdate, self).form_valid(form)
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(response, _("Script %s updated") % self.script.name)
-            translation.deactivate()
 
             return response
         else:
@@ -1509,7 +1501,6 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                         asc.run_on(self.request.user, [pc])
         if invalid_groups_names:
             invalid_groups_string = get_notification_string(invalid_groups_names)
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1519,11 +1510,8 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
                 % (pc.name, invalid_groups_string, wake_plan.name),
                 error=True,
             )
-            translation.deactivate()
         else:
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(response, _("Computer %s updated") % pc.name)
-            translation.deactivate()
         return response
 
 
@@ -1791,7 +1779,6 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
 
         # If some groups or exceptions could not be verified, display this and the reason
         if invalid_groups_string and invalid_events_string:
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1808,9 +1795,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
                 ),
                 error=True,
             )
-            translation.deactivate()
         elif invalid_groups_string and not invalid_events_string:
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1825,9 +1810,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
                 ),
                 error=True,
             )
-            translation.deactivate()
         elif not invalid_groups_string and invalid_events_string:
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _(
@@ -1837,13 +1820,10 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
                 % (self.object.name, invalid_events_string),
                 error=True,
             )
-            translation.deactivate()
         else:
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response, _("PCWakePlan %s created") % self.object.name
             )
-            translation.deactivate()
 
         return response
 
@@ -1983,7 +1963,6 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
 
             # If some groups or exceptions could not be verified, display this and the reason
             if invalid_groups_string and invalid_events_string:
-                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -2000,9 +1979,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                     ),
                     error=True,
                 )
-                translation.deactivate()
             elif invalid_groups_string and not invalid_events_string:
-                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -2017,9 +1994,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                     ),
                     error=True,
                 )
-                translation.deactivate()
             elif not invalid_groups_string and invalid_events_string:
-                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _(
@@ -2029,14 +2004,11 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
                     % (self.object.name, invalid_events_string),
                     error=True,
                 )
-                translation.deactivate()
             else:
-                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("PCWakePlan %s updated") % self.object.name,
                 )
-                translation.deactivate()
 
             return response
 
@@ -2136,12 +2108,10 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
 
         response = super(WakePlanDelete, self).delete(form, *args, **kwargs)
 
-        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(
             response,
             _("Wake Week Plan %s deleted") % deleted_plan_name,
         )
-        translation.deactivate()
         return response
 
 
@@ -2295,31 +2265,25 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
                                 type="set",
                             )
 
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("Wake Change Event %s updated") % self.object.name,
             )
-            translation.deactivate()
         else:
             response = self.form_invalid(form)
             if overlapping_event:
-                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("The chosen dates would cause overlap with event %s in plan %s")
                     % (overlapping_event, plan_with_overlap),
                     error=True,
                 )
-                translation.deactivate()
             else:
-                translation.activate(self.request.user.user_profile.language)
                 set_notification_cookie(
                     response,
                     _("The end date cannot be before the start date %s") % "",
                     error=True,
                 )
-                translation.deactivate()
 
         return response
 
@@ -2368,13 +2332,11 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
             response = super(WakeChangeEventCreate, self).form_valid(form)
         else:
             response = self.form_invalid(form)
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("The end date cannot be before the start date %s") % "",
                 error=True,
             )
-            translation.deactivate()
 
         return response
 
@@ -2500,6 +2462,9 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site=site
         ).first()
 
+        if self.request.user.is_superuser:
+            site_membership = self.request.user.user_profile.sitemembership_set.first()
+
         if (
             self.request.user.is_superuser
             or site_membership.site_user_type == site_membership.SITE_ADMIN
@@ -2602,11 +2567,9 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
             response = super(UserUpdate, self).form_valid(form)
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response, _("User %s updated") % self.object.username
             )
-            translation.deactivate()
             return response
         else:
             raise PermissionDenied
@@ -2658,12 +2621,15 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
             and site_membership.site_user_type != site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
-        response = super(UserDelete, self).delete(form, *args, **kwargs)
-        translation.activate(self.request.user.user_profile.language)
+        # If the selected_user is a member of multiple sites, only remove them from this site
+        if len(self.object.user_profile.sitemembership_set.all()) > 1:
+            self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()
+            response = HttpResponseRedirect(self.get_success_url())
+        else:
+            response = super(UserDelete, self).delete(form, *args, **kwargs)
         set_notification_cookie(
             response, _("User %s deleted") % self.kwargs["username"]
         )
-        translation.deactivate()
         return response
 
 
@@ -2797,16 +2763,12 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         del context["newform"].fields["pcs"]
         del context["newform"].fields["supervisors"]
 
-        if site.feature_permission.filter(uid="wake_plan"):
-            context["all_scripts"] = Script.objects.filter(
-                Q(site=site) | Q(site=None),
-                Q(is_hidden=False) | Q(uid="suspend_after_time"),
-                is_security_script=False,
-            )
-        else:
-            context["all_scripts"] = Script.objects.filter(
-                Q(site=site) | Q(site=None), is_security_script=False, is_hidden=False
-            )
+        context["all_scripts"] = Script.objects.filter(
+            Q(site=site) | Q(site=None),
+            Q(is_hidden=False)
+            | Q(feature_permission__in=site.feature_permission.all()),
+            is_security_script=False,
+        )
 
         return context
 
@@ -2934,7 +2896,6 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                     ) = self.get_notification_strings(
                         pcs_with_other_plans_names, other_plans_names
                     )
-                    translation.activate(self.request.user.user_profile.language)
                     set_notification_cookie(
                         response,
                         _(
@@ -2948,14 +2909,11 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                         ),
                         error=True,
                     )
-                    translation.deactivate()
                 else:
-                    translation.activate(self.request.user.user_profile.language)
                     set_notification_cookie(
                         response,
                         _("Group %s updated") % self.object.name,
                     )
-                    translation.deactivate()
 
                 return response
         except MandatoryParameterMissingError as e:
@@ -2963,14 +2921,12 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             # HttpResponse, so make one with form_invalid()
             response = self.form_invalid(form)
             parameter = e.args[0]
-            translation.activate(self.request.user.user_profile.language)
             set_notification_cookie(
                 response,
                 _("No value was specified for the mandatory input %s" " of script %s")
                 % (parameter.name, parameter.script.name),
                 error=True,
             )
-            translation.deactivate()
             return response
 
     def form_invalid(self, form):
@@ -3047,9 +3003,7 @@ class PCGroupDelete(SiteMixin, SuperAdminOrThisSiteMixin, DeleteView):
                 )
 
         response = super(PCGroupDelete, self).delete(form, *args, **kwargs)
-        translation.activate(self.request.user.user_profile.language)
         set_notification_cookie(response, _("Group %s deleted") % name)
-        translation.deactivate()
         return response
 
 
@@ -3592,11 +3546,9 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     all versions released before the site's last_version datestamp).
     """
 
-    template_name = "system/site_image_versions.html"
+    template_name = "system/site_images.html"
     model = ImageVersion
-    context_object_name = "image_versions"
     selection_class = ImageVersion
-    class_display_name = "image_version"
 
     def get_context_data(self, **kwargs):
         context = super(ImageVersionsView, self).get_context_data(**kwargs)

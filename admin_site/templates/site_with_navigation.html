@@ -13,7 +13,6 @@ actionpage
 detailpage
 {% endblock %}
 
-<!-- <script src="{% url 'javascript-catalog' %}"></script> -->
 
 {% block globalnav %}
 
@@ -111,15 +110,15 @@ detailpage
     </a>
 
     <hr>
-    <h2 class="text-light">{% translate "Users & Versions" %}</h2>
+    <h2 class="text-light">{% translate "Users & Images" %}</h2>
     {% set_css_class_active request.resolver_match.url_name "user" as current_url_users %}
     <a class="nav-link link-light {{ current_url_users }}" href="{% url 'users' slug=site.url %}">
       <span class="material-icons">person</span> {% translate "Users" %}
     </a>
 
-    {% set_css_class_active request.resolver_match.url_name "image_version" as current_url_image_versions %}
-    <a class="nav-link link-light {{ current_url_image_versions }}" href="{% url 'image_versions' slug=site.url %}">
-      <span class="material-icons"> cloud_download </span> {% translate "Versions" %}
+    {% set_css_class_active request.resolver_match.url_name "images" as current_url_images %}
+    <a class="nav-link link-light {{ current_url_images }}" href="{% url 'images' slug=site.url %}">
+      <span class="material-icons"> cloud_download </span> {% translate "Images" %}
     </a>
     <hr>
 
@@ -159,7 +158,7 @@ detailpage
         <span class='material-icons'>help_outline</span>
         {% translate "Administrating on/off schedules" %}
       </a>
-    {% elif current_url_image_versions %}
+    {% elif current_url_images %}
       {% comment %} Versions currently has no documentation! {% endcomment %}
     {% elif current_url_jobs %}
       <a href="{% url 'doc' 'jobs' %}" class="nav-link link-light">

@@ -34,7 +34,7 @@ $(function(){
                 }
                 var script_link = '<a href="' + this.script_url + '">' + this.script_name + '</a>'
                 var pc_link = '<a href="' + this.pc_url + '">' + this.pc_name + '</a>'
-                var user_link = this.user != ''? '<a href="' + this.user_url + '">' + this.user + '</a>' : 'Ingen bruger'
+                var user_link = this.user != ''? '<a href="' + this.user_url + '">' + this.user + '</a>' : gettext("No user")
                 var item = $(BibOS.expandTemplate(
                     'job-entry',
                     $.extend(this, {
@@ -94,7 +94,7 @@ $(function(){
             pagination.empty()
             var jobsearch = this
 
-            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> Forrige</a></li>')
+            var previous_item = $('<li class="page-item disabled"><a class="page-link"><span class="material-icons">navigate_before</span> ' + gettext("Previous") + '</a></li>')
             if (data.has_previous) {
                 previous_item.removeClass("disabled")
                 previous_item.find('a').on("click", function() {
@@ -120,7 +120,7 @@ $(function(){
                 item.appendTo(pagination)
             })
 
-            var next_item = $('<li class="page-item disabled"><a class="page-link">Næste <span class="material-icons">navigate_next</span></a></li>')
+            var next_item = $('<li class="page-item disabled"><a class="page-link">' + gettext("Next") + ' <span class="material-icons">navigate_next</span></a></li>')
             if (data.has_next) {
                 next_item.removeClass("disabled")
                 next_item.find('a').on("click", function() {

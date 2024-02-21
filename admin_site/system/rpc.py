@@ -7,6 +7,7 @@ import logging
 from datetime import datetime
 from dateutil import parser
 
+from django.conf import settings
 from django.db.models import Q
 
 from system.models import PC, Site, Configuration, ConfigurationEntry
@@ -22,7 +23,7 @@ from system.utils import (
 logger = logging.getLogger(__name__)
 
 
-def register_new_computer(mac, name, distribution, site, configuration):
+def register_new_computer_v2(mac, name, site, configuration):
     """Register a new computer with the admin system - after registration, the
     computer will be submitted for approval."""
 
@@ -88,16 +89,13 @@ def register_new_computer(mac, name, distribution, site, configuration):
     return uid
 
 
-def upload_dist_packages(distribution_uid, package_data):
-    """This will upload the packages and package versions for a given
-    BibOS distribution.
-    This is depreacated and will be removed when we can."""
-    # Phased out - we keep this for backwards compliance only.
-    return 0
+# TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
+def register_new_computer(mac, name, distribution, site, configuration):
+    return register_new_computer_v2(mac, name, site, configuration)
 
 
-def send_status_info(pc_uid, package_data, job_data, update_required):
-    """Update the status of outstanding jobs and (now deprecated) package data.
+def send_status_info_v2(pc_uid, job_data):
+    """Update the status of outstanding jobs.
     If no updates, these will be None. In that
     case, this function really works as an "I'm alive" signal."""
 
@@ -126,19 +124,17 @@ def send_status_info(pc_uid, package_data, job_data, update_required):
             job.log_output = jd["log_output"]
             job.save()
 
-    # 3. Check if update is required.
-    if update_required is not None:
-        updates, security_updates = list(map(int, update_required))
-        # Save update info in configuration
-        pc.configuration.update_entry("updates", updates)
-        pc.configuration.update_entry("security_updates", security_updates)
-
     pc.save()
 
     return 0
 
 
-def get_instructions(pc_uid, update_data=None):
+# TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
+def send_status_info(pc_uid, package_data, job_data, update_required):
+    return send_status_info_v2(pc_uid, job_data)
+
+
+def get_instructions(pc_uid):
     """This function will ask for new instructions in the form of a list of
     jobs, which will be scheduled for execution and executed upon receipt.
     These jobs will generally take the form of bash scripts."""
@@ -241,35 +237,35 @@ def push_security_events(pc_uid, events_csv):
     pc = PC.objects.get(uid=pc_uid)
 
     for event in events_csv:
-        try:
-            event_date, rule_id, event_summary, event_complete_log = event.split(",")
-        except ValueError:
-            logger.exception(
-                "Security event generated ValueError, Event: %s, PC UID: %s",
-                event,
-                pc.uid,
-            )
-            return 1
+        event_split = event.split(",")
+        if len(event_split) == 3 or len(event_split) == 4:
+            event_date = event_split[0]
+            rule_id = event_split[1]
+            event_summary = event_split[2]
+        else:
+            if settings.DEBUG or "test" in settings.SERVER_EMAIL:
+                logger.exception(
+                    "Invalid security event format with %s elements, Event: %s, PC UID: %s,",
+                    len(event_split),
+                    event,
+                    pc.uid,
+                )
+            continue
 
         try:
             security_problem = SecurityProblem.objects.filter(id=rule_id).first()
         except ValueError:
-            logger.exception(
-                "Security event log contained invalid rule ID %s, Event: %s, PC UID %s",
-                rule_id,
-                str(event),
-                pc.uid,
-            )
+            if settings.DEBUG or "test" in settings.SERVER_EMAIL:
+                logger.exception(
+                    "Security event log contained invalid rule ID %s, Event: %s, PC UID %s",
+                    rule_id,
+                    str(event),
+                    pc.uid,
+                )
             continue
 
         if not security_problem:
             # Ignore ID's of SecurityProblems that don't exist
-            logger.error(
-                "Security problem with ID %s could not be found, Event: %s, PC UID %s",
-                rule_id,
-                str(event),
-                pc.uid,
-            )
             continue
 
         if not security_problem.site == pc.site:
@@ -305,7 +301,7 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
-def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
+def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None):
     """Check if the user is allowed to log in and if so, send a sms with
     the required password to the entered phone number.
     Whether a user is allowed to log in is determined by checking for a
@@ -330,13 +326,22 @@ def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
                         another machine. This value is only used when
                         booking is NOT required.
         citizen_hash = 'sms_failed': Failed to authenticate with sms API."""
-
     citizen_hash = ""
     try:
-        site = Site.objects.get(uid=site)
-    except Site.DoesNotExist:
-        logger.error(f"Site {site} does not exist - unable to proceed.")
-        return int(0), citizen_hash
+        pc = PC.objects.get(uid=pc_uid)
+        if not pc.is_activated:
+            # Fail silently
+            return int(0), citizen_hash
+        site = pc.site
+    except PC.DoesNotExist:
+        # The function is ultimately supposed to exit here, but for the sake of backwards
+        # compatibility, we initially handle the old version
+        site_uid = pc_uid
+        try:
+            site = Site.objects.get(uid=site_uid)
+        except Site.DoesNotExist:
+            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
+            return int(0), citizen_hash
 
     now = datetime.now()
     # If booking is required then the bookings determine when and how long the
@@ -399,7 +404,7 @@ def sms_login(phone_number, message, site, require_booking=False, pc_name=None):
     return int(time_allowed), citizen_hash
 
 
-def sms_login_finalize(phone_number, site, require_booking, save_log):
+def sms_login_finalize(phone_number, pc_uid, require_booking, save_log):
     """Finalize the sms_login-process by creating a LoginLog object if
     required and/or updating the relevant Citizen object if booking
     is not required.
@@ -412,12 +417,21 @@ def sms_login_finalize(phone_number, site, require_booking, save_log):
         log_id = int: If a log should be written, this will be the id
                       of the created log object. It is used to update
                       the logout time later."""
-
     try:
-        site = Site.objects.get(uid=site)
-    except Site.DoesNotExist:
-        logger.error(f"Site {site} does not exist - unable to proceed.")
-        return 0
+        pc = PC.objects.get(uid=pc_uid)
+        if not pc.is_activated:
+            # Fail silently
+            return 0
+        site = pc.site
+    except PC.DoesNotExist:
+        # The function is ultimately supposed to exit here, but for the sake of backwards
+        # compatibility, we initially handle the old version
+        site_uid = pc_uid
+        try:
+            site = Site.objects.get(uid=site_uid)
+        except Site.DoesNotExist:
+            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
+            return 0
     # If booking is not required, we use the standard quarantine system
     # time_allowed has already been checked by sms_login, so we only need
     # to update last_successful_login and/or logged_in
@@ -487,7 +501,7 @@ def sms_logout(citizen_hash, log_id):
     return 0
 
 
-def citizen_login(username, password, site, prevent_dual_login=False):
+def citizen_login(username, password, pc_uid, prevent_dual_login=False):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
@@ -498,10 +512,20 @@ def citizen_login(username, password, site, prevent_dual_login=False):
 
     time_allowed = 0
     try:
-        site = Site.objects.get(uid=site)
-    except Site.DoesNotExist:
-        logger.error(f"Site {site} does not exist - unable to proceed.")
-        return time_allowed
+        pc = PC.objects.get(uid=pc_uid)
+        if not pc.is_activated:
+            # Fail silently
+            return time_allowed
+        site = pc.site
+    except PC.DoesNotExist:
+        # The function is ultimately supposed to exit here, but for the sake of backwards
+        # compatibility, we initially handle the old version
+        site_uid = pc_uid
+        try:
+            site = Site.objects.get(uid=site_uid)
+        except Site.DoesNotExist:
+            logger.error(f"Site {site_uid} does not exist - unable to proceed.")
+            return time_allowed
     login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""
