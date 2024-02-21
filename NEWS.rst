@@ -1,3 +1,20 @@
+Version 5.23.0, February 15, 2023
+---------------------------------
+
+- Update rpc.py functions to prepare for removing outdated logic later
+- Place .mo files in .gitignore and have the Dockerfile compile them
+- Update the handling of security events to accept 3 or 4 parameters and
+  only generate logger exceptions during development and testing
+- Add final translations. Everything but the database should now be translated
+- Add information regarding supervisors on the groups page
+- Rename "Versions" to "Images"
+- Change user deletion logic so that a user with access to multiple sites
+  will only be deleted from one site at a time
+- Update to markdownx version 4.0.7
+- Fix bug preventing scripts that require feature permissions from being associated
+- Fix bug causing scripts that require feature permissions to be shown under security scripts
+- Fix bug causing script parameter names with " to be displayed incorrectly
+
 Version 5.22.2, December 6, 2023
 --------------------------------
 
