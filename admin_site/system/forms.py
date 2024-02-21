@@ -111,7 +111,7 @@ class ScriptForm(forms.ModelForm):
 
     class Meta:
         model = Script
-        fields = "__all__"
+        exclude = ["feature_permission"]
 
 
 class ConfigurationEntryForm(forms.ModelForm):
