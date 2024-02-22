@@ -212,6 +212,12 @@ class FeaturePermissionInlineForSiteAdmin(admin.TabularInline):
     extra = 0
 
 
+class SiteInlineForCountryAdmin(admin.TabularInline):
+    model = Site
+    fields = ("name", "uid")
+    extra = 0
+
+
 class SiteAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -341,6 +347,7 @@ class CountryAdmin(admin.ModelAdmin):
     )
     list_filter = ("name",)
     search_fields = ("name", "pk")
+    inlines = [SiteInlineForCountryAdmin]
 
 
 class ScriptTagAdmin(admin.ModelAdmin):

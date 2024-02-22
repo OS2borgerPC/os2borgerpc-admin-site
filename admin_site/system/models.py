@@ -166,7 +166,7 @@ class Site(models.Model):
     name = models.CharField(verbose_name=_("name"), max_length=255)
     uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
     country = models.ForeignKey(
-        Country, related_name="sites", on_delete=models.PROTECT, null=True, default=1
+        Country, related_name="sites", on_delete=models.PROTECT, null=True
     )
     is_testsite = models.BooleanField(default=False)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
