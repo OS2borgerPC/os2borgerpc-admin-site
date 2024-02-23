@@ -273,9 +273,14 @@ class SiteList(ListView, LoginRequiredMixin):
         context["pcs_count"] = PC.objects.filter(site__in=self.get_queryset()).count()
         context["user"] = self.request.user
         countries = Country.objects.all()
+        user_sites = self.get_queryset()
         for country in countries:
-            country.normal_sites = country.sites.filter(is_testsite=False)
-            country.test_sites = country.sites.filter(is_testsite=True)
+            country.normal_sites = country.sites.filter(
+                is_testsite=False, id__in=user_sites
+            )
+            country.test_sites = country.sites.filter(
+                is_testsite=True, id__in=user_sites
+            )
         context["countries"] = countries
         return context
 

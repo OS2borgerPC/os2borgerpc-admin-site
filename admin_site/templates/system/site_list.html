@@ -14,21 +14,22 @@
 {% block specific_content %}
   <div class="container">
     <div>
-      {% if user.is_superuser %}
-        {% for country in countries %}
-        <h2 class="mt-3">{{ country.name }}</h2>
-        <h3 class="mt-3">Sites</h3>
-        {% for site in country.normal_sites %}
-          <div class="btn-group mt-3">
-            <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
-              <span class="pe-4">
-                <span class='material-icons'>home</span>
-                  {{site.name}}
-                </span>
-              <span class="material-icons">computer</span>{{site.pcs.count}}
-            </a>
-          </div>
+      {% for country in countries %}
+        {% if country.normal_sites %}  
+          <h2 class="mt-3">{{ country.name }}</h2>
+          {% for site in country.normal_sites %}
+            <div class="btn-group mt-3">
+              <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
+                <span class="pe-4">
+                  <span class='material-icons'>home</span>
+                    {{site.name}}
+                  </span>
+                <span class="material-icons">computer</span>{{site.pcs.count}}
+              </a>
+            </div>
           {% endfor %}
+        {% endif %}
+        {% if country.test_sites %}
           <h3 class="mt-3">Test Sites</h3>
           {% for site in country.test_sites %}
             <div class="btn-group mt-3">
@@ -41,20 +42,8 @@
               </a>
             </div>
           {% endfor %}
-        {% endfor %}
-      {% else %}
-        {% for site in site_list %}         
-          <div class="btn-group mt-3">
-            <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
-              <span class="pe-4">
-                <span class='material-icons'>home</span>
-                {{site.name}}
-              </span>
-            <span class="material-icons">computer</span>{{site.pcs.count}}
-            </a>
-          </div>          
-        {% endfor %}
-      {% endif %}
+        {% endif %}  
+      {% endfor %}     
     </div>
   </div>
 {% endblock %}
