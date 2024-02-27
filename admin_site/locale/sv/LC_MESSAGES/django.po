@@ -4977,6 +4977,14 @@ msgstr ""
 "Att ta bort ett skript från gruppen betyder INTE att skriptets effekt tas "
 "bort från datorerna i gruppen"
 
+#: templates/system/pcgroups/site_groups.html
+msgid "No groups created yet"
+msgstr "Inga grupper har skapats ännu"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Clik the 'Add new group' button in the menu to the left"
+msgstr "Klicka på knappen 'Lägg till ny grupp' i menyn till vänster"
+
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"
 msgstr "Radera dator"

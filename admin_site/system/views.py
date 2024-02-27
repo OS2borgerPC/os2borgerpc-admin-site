@@ -2684,15 +2684,14 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
     form_class = PCGroupForm
     model = PCGroup
     slug_field = "uid"
-    template_name = "system/pcgroups/form.html"
+    template_name = "system/pcgroups/site_groups.html"
 
     def get_context_data(self, **kwargs):
         context = super(PCGroupCreate, self).get_context_data(**kwargs)
 
-        # We don't want to edit computers yet
-        if "pcs" in context["form"].fields:
-            del context["form"].fields["pcs"]
-
+        context["newform"] = PCGroupForm()
+        del context["newform"].fields["pcs"]
+        del context["newform"].fields["supervisors"]
         return context
 
     def form_valid(self, form):
