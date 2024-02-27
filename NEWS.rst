@@ -1,4 +1,12 @@
-Version 5.23.0, February 15, 2023
+Version 5.24.0, February 27, 2024
+
+- Fix minor bug in sms login integration
+- Add country object related to sites
+- Add is_testsite attribute to sites
+- Sort site_list for superusers based on country and test status
+- Make first group creation use the same form as creation of later groups
+
+Version 5.23.0, February 15, 2024
 ---------------------------------
 
 - Update rpc.py functions to prepare for removing outdated logic later

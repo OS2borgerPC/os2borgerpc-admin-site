@@ -66,6 +66,7 @@ from system.models import (
     EventRuleServer,
     EventLevels,
     Site,
+    Country,
 )
 
 from system.forms import (
@@ -271,6 +272,16 @@ class SiteList(ListView, LoginRequiredMixin):
         context = super(SiteList, self).get_context_data(**kwargs)
         context["pcs_count"] = PC.objects.filter(site__in=self.get_queryset()).count()
         context["user"] = self.request.user
+        countries = Country.objects.all()
+        user_sites = self.get_queryset()
+        for country in countries:
+            country.normal_sites = country.sites.filter(
+                is_testsite=False, id__in=user_sites
+            )
+            country.test_sites = country.sites.filter(
+                is_testsite=True, id__in=user_sites
+            )
+        context["countries"] = countries
         return context
 
 
@@ -2673,16 +2684,23 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
     form_class = PCGroupForm
     model = PCGroup
     slug_field = "uid"
-    template_name = "system/pcgroups/form.html"
+    template_name = "system/pcgroups/site_groups.html"
 
     def get_context_data(self, **kwargs):
         context = super(PCGroupCreate, self).get_context_data(**kwargs)
 
-        # We don't want to edit computers yet
-        if "pcs" in context["form"].fields:
-            del context["form"].fields["pcs"]
-
+        context["newform"] = PCGroupForm()
+        del context["newform"].fields["pcs"]
+        del context["newform"].fields["supervisors"]
         return context
+
+    def render_to_response(self, context):
+        if context["site"].groups.all():
+            return HttpResponseRedirect(
+                reverse("groups", kwargs={"slug": self.kwargs["slug"]})
+            )
+        else:
+            return super(PCGroupCreate, self).render_to_response(context)
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])

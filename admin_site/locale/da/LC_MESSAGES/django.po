@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 13:18+0100\n"
+"POT-Creation-Date: 2024-02-27 12:00+0100\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -78,7 +78,6 @@ msgstr "Tilføj kommentar"
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/form.html
 #: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
@@ -321,8 +320,16 @@ msgid "owner configuration"
 msgstr "ejer-konfiguration"
 
 #: system/models.py
+msgid "country name"
+msgstr "landenavn"
+
+#: system/models.py
 msgid "UID"
 msgstr "UID"
+
+#: system/models.py
+msgid "Is a testsite"
+msgstr "Er en test side"
 
 #: system/models.py
 msgid "Paid for access until this date"
@@ -1403,8 +1410,8 @@ msgstr ""
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then \"Close"
-"\"."
+"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then "
+"\"Close\"."
 msgstr ""
 "\"Indsæt\" den API-nøgle, som du kopierede i skridt 2 og klik %(auth)s og "
 "derefter \"Close\"."
@@ -2305,11 +2312,12 @@ msgid ""
 "redirected to the editing interface for the newly created group where it "
 "will be possible to add computers to the group."
 msgstr ""
-"Hvis man ønsker at oprette en ny gruppe skal man klikke på \"Tilføj ny gruppe"
-"\" oven over listen med grupper. Dette vil bringe en dialog op hvor man skal "
-"udfylde navn og beskrivelse for gruppen. Når man klikker på \"Opret gruppe\" "
-"vil man blive viderestillet til redigeringssiden for den nyoprettede gruppe, "
-"hvorfra det vil være muligt at tilføje computere til gruppen."
+"Hvis man ønsker at oprette en ny gruppe skal man klikke på \"Tilføj ny "
+"gruppe\" oven over listen med grupper. Dette vil bringe en dialog op hvor "
+"man skal udfylde navn og beskrivelse for gruppen. Når man klikker på \"Opret "
+"gruppe\" vil man blive viderestillet til redigeringssiden for den "
+"nyoprettede gruppe, hvorfra det vil være muligt at tilføje computere til "
+"gruppen."
 
 #: templates/documentation/groups/scripts.html
 #: templates/system/pcgroups/policy_list/list.html
@@ -2986,9 +2994,10 @@ msgstr ""
 #: templates/documentation/scripts/edit.html
 msgid ""
 "When you edit a script you can change its name and description. It is also "
-"possible to upload a new version of the script by clicking on the tab \"Code"
-"\" and then selecting a file to upload. Changes do not become permanent "
-"until you've clicked on \"Save changes\" at the bottom of the screen."
+"possible to upload a new version of the script by clicking on the tab "
+"\"Code\" and then selecting a file to upload. Changes do not become "
+"permanent until you've clicked on \"Save changes\" at the bottom of the "
+"screen."
 msgstr ""
 "Når du redigerer et Script har du mulighed for at ændre dets navn og "
 "beskrivelse. Du kan også uploade en ny version af Scriptet ved at klikke på "
@@ -3057,8 +3066,8 @@ msgid ""
 "editing interface for the newly created script where you can add arguments "
 "for the script."
 msgstr ""
-"Hvis du ønsker at oprette et nyt script skal du klikke på \"Tilføj nyt Script"
-"\" oven over listen med Scripts. Dette vil åbne en dialog hvor du kan "
+"Hvis du ønsker at oprette et nyt script skal du klikke på \"Tilføj nyt "
+"Script\" oven over listen med Scripts. Dette vil åbne en dialog hvor du kan "
 "udfylde script navn, beskrivelse og uploade script-kode. Når du derefter "
 "klikker på \"Opret Script\" vil scriptet blive oprettet, og du vil blive "
 "viderestillet til redigeringssiden for det nyoprettede script, hvor du vil "
@@ -3149,8 +3158,8 @@ msgstr ""
 "have standardværdier. Endelig kan en inputparameter sættes som påkrævet. "
 "Påkrævede parametre skal udfyldes, når man kører scriptet, mens ikke-"
 "påkrævede parametre kan efterlades tomme. Afkrydsningsfelter kan ikke være "
-"påkrævede. Hvis man ønsker at fjerne en parameter, skal man klikke på \"Fjern"
-"\" til højre i listen."
+"påkrævede. Hvis man ønsker at fjerne en parameter, skal man klikke på "
+"\"Fjern\" til højre i listen."
 
 #: templates/documentation/scripts/parameters.html
 msgid ""
@@ -3164,16 +3173,17 @@ msgstr ""
 msgid ""
 "In order to run a script on a computer or a group of computers, you must "
 "click on \"Scripts\" in the left-hand menu and choose the script you wish to "
-"run. Note that it may be necessary to swap between the tabs \"Local scripts"
-"\" and \"Global scripts\" in order to find the script. When you have located "
-"the script you wish to run, you must click on the button \"Run script\"."
+"run. Note that it may be necessary to swap between the tabs \"Local "
+"scripts\" and \"Global scripts\" in order to find the script. When you have "
+"located the script you wish to run, you must click on the button \"Run "
+"script\"."
 msgstr ""
 "For at køre et script på en computer eller en gruppe af computere skal du "
 "klikke på \"Scripts\" i venstremenuen og vælge det script du vil køre. "
-"Bemærk at det kan være nødvendigt at skifte mellem fanerne \"Lokale scripts"
-"\" og \"Globale scripts\" for at finde det script du leder efter. Når du har "
-"valgt det script, du ønsker at køre, skal du klikke på knappen \"Kør script"
-"\"."
+"Bemærk at det kan være nødvendigt at skifte mellem fanerne \"Lokale "
+"scripts\" og \"Globale scripts\" for at finde det script du leder efter. Når "
+"du har valgt det script, du ønsker at køre, skal du klikke på knappen \"Kør "
+"script\"."
 
 #: templates/documentation/scripts/running.html
 msgid ""
@@ -3227,13 +3237,14 @@ msgstr "Sikkerhedsregler"
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
-"If you wish to edit a Security Script, you must click on \"Security Scripts"
-"\" in the left-hand menu and then select the security script in the list to "
-"the right of the left-hand menu. Note that it may be necessary to swap "
-"between the tabs \"Local scripts\" and \"Global scripts\" in order to find "
-"the script. You can also search through the security scripts by selecting "
-"the search field \"Find ...\" and typing a search term. This will cause the "
-"list to display all security scripts whose names contain the search term."
+"If you wish to edit a Security Script, you must click on \"Security "
+"Scripts\" in the left-hand menu and then select the security script in the "
+"list to the right of the left-hand menu. Note that it may be necessary to "
+"swap between the tabs \"Local scripts\" and \"Global scripts\" in order to "
+"find the script. You can also search through the security scripts by "
+"selecting the search field \"Find ...\" and typing a search term. This will "
+"cause the list to display all security scripts whose names contain the "
+"search term."
 msgstr ""
 "For at redigere et Sikkerhedsscript skal du klikke på \"Sikkerhedsscripts\" "
 "i venstremenuen og efterfølgende vælge Sikkerhedsscriptet i listen over "
@@ -3628,8 +3639,8 @@ msgstr "Brugerens sprog-indstilling."
 
 #: templates/documentation/users/index.html
 msgid ""
-"Changes do not take effect until you've clicked on the button \"Save changes"
-"\" at the bottom of the page."
+"Changes do not take effect until you've clicked on the button \"Save "
+"changes\" at the bottom of the page."
 msgstr ""
 "Ændringer træder ikke i kraft, før man klikker på knappen \"Gem ændringer\" "
 "nederst på siden."
@@ -3640,12 +3651,12 @@ msgstr "Oprettelse af ny bruger"
 
 #: templates/documentation/users/index.html
 msgid ""
-"If you wish to create a new user, you must click on the button \"Add new user"
-"\" above the list of users. This will open the form for creating a new user, "
-"which has the same fields as the interface for editing a user. When you fill "
-"out the fields and click \"Save changes\", the user will be created and you "
-"will be redirected to the editing interface for the newly created user. Only "
-"\"Site Admins\" can create new users."
+"If you wish to create a new user, you must click on the button \"Add new "
+"user\" above the list of users. This will open the form for creating a new "
+"user, which has the same fields as the interface for editing a user. When "
+"you fill out the fields and click \"Save changes\", the user will be created "
+"and you will be redirected to the editing interface for the newly created "
+"user. Only \"Site Admins\" can create new users."
 msgstr ""
 "Hvis man vil oprette en ny bruger skal man klikke på knappen \"Tilføj ny "
 "bruger\" over listen med brugere. Dette vil åbne interfacet for oprettelse "
@@ -4184,11 +4195,11 @@ msgid ""
 "If you wish to create a new schedule, you must click on \"Add new On/Off "
 "schedule\" above the list of schedules. This opens an interface where you "
 "must enter a name for the schedule and have the option of editing the "
-"settings and adding exceptions or groups. When you click on \"Save changes"
-"\", you will be redirected to the editing interface for the newly screated "
-"schedule where you can continue to edit the settings and add exceptions or "
-"groups. If the schedule status is set to \"Active\", it will also take "
-"effect when you click on \"Save changes\"."
+"settings and adding exceptions or groups. When you click on \"Save "
+"changes\", you will be redirected to the editing interface for the newly "
+"screated schedule where you can continue to edit the settings and add "
+"exceptions or groups. If the schedule status is set to \"Active\", it will "
+"also take effect when you click on \"Save changes\"."
 msgstr ""
 "Hvis man ønsker at oprette en ny tidsplan, skal man klikke på \"Tilføj ny "
 "tænd/sluk tidsplan\" oven over listen med tidsplaner. Dette åbner et "
@@ -4284,8 +4295,8 @@ msgstr ""
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"Next, you edit the setting \"After Power Failure\" and set it to \"Last State"
-"\" (recommended) or \"Power On\"."
+"Next, you edit the setting \"After Power Failure\" and set it to \"Last "
+"State\" (recommended) or \"Power On\"."
 msgstr ""
 "Dernæst går du så ind og redigerer indstillingen \"After Power Failure\" og "
 "sætter denne til \"Last State\" (anbefalet) eller \"Power On\"."
@@ -4831,15 +4842,6 @@ msgstr "%(the_computers)s og %(the_scripts)s vil %(not)s blive slettet."
 msgid "Are you sure you want to delete the group "
 msgstr "Er du sikker på, at du ønsker at slette gruppen "
 
-#: templates/system/pcgroups/form.html
-msgid "New group"
-msgstr "Ny gruppe"
-
-#: templates/system/pcgroups/form.html
-#: templates/system/pcgroups/site_groups.html
-msgid "Create group"
-msgstr "Opret gruppe"
-
 #: templates/system/pcgroups/policy_list/item.html
 msgid "None selected"
 msgstr "Ingen valgt"
@@ -4970,6 +4972,20 @@ msgid ""
 msgstr ""
 "Hvis et script fjernes fra Gruppen, medfører det IKKE, at scriptets effekt "
 "fjernes fra Computerne i Gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "No groups were found"
+msgstr "Ingen grupper blev fundet"
+
+#: templates/system/pcgroups/site_groups.html
+msgid ""
+"Clik the 'Add new group' button in the menu to the left to create a group"
+msgstr ""
+"Klik på 'Tilføj ny gruppe' knappen i menuen til venstre for at oprette en gruppe"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Create group"
+msgstr "Opret gruppe"
 
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"
@@ -5678,9 +5694,9 @@ msgstr "Inaktiv"
 #: templates/system/wake_plan/wake_plan.html
 msgid ""
 "Some sleep states save more power than others, but some hardware does not "
-"support the most power saving states. We recommend starting with \"Off"
-"\" (which saves the most power), and if that does not work then try them in "
-"the order: mem, freeze, standby"
+"support the most power saving states. We recommend starting with "
+"\"Off\" (which saves the most power), and if that does not work then try "
+"them in the order: mem, freeze, standby"
 msgstr ""
 "Nogle dvaletilstande er mere strømbesparende end andre, men noget hardware "
 "understøtter ikke de mest strømbesparende tilstande. Vi foreslår at starte "
@@ -6002,11 +6018,14 @@ msgstr "Deaktivér"
 msgid "Data is missing"
 msgstr "Data mangler"
 
+#~ msgid "New group"
+#~ msgstr "Ny gruppe"
+
+#~ msgid "No groups created yet"
+#~ msgstr "Ingen oprettede grupper"
+
 #~ msgid "Device"
 #~ msgstr "Maskine"
 
 #~ msgid "Versions"
 #~ msgstr "Versioner"
-
-#~ msgid "No versions were found"
-#~ msgstr "Ingen versioner fundet"
