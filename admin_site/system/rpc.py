@@ -387,8 +387,7 @@ def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None
                 )
             elif now < quarantined_from and citizen.logged_in:
                 citizen_hash = "logged_in"
-            else:
-                # (now - quarantined_from) < quarantine_duration:
+            elif (now - quarantined_from) < quarantine_duration:
                 time_allowed = (
                     (now - quarantined_from).total_seconds()
                     - quarantine_duration.total_seconds()
