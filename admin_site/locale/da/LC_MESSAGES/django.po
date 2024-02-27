@@ -4983,6 +4983,14 @@ msgstr ""
 "Hvis et script fjernes fra Gruppen, medfører det IKKE, at scriptets effekt "
 "fjernes fra Computerne i Gruppen"
 
+#: templates/system/pcgroups/site_groups.html
+msgid "No groups created yet"
+msgstr "Ingen oprettede grupper"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Clik the 'Add new group' button in the menu to the left"
+msgstr "Klik på 'Tilføj ny gruppe' knappen i menuen til venstre"
+
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"
 msgstr "Slet computer"
