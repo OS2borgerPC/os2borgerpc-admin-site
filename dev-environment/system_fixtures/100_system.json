@@ -3428,13 +3428,15 @@
     "fields": {
         "name": "Magenta",
         "uid": "magenta",
+        "country": 1,
         "configuration": 1,
         "paid_for_access_until": "2025-04-02",
         "created": null,
         "isil": "DK-100000",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00",
-        "rerun_asc": false
+        "rerun_asc": false,
+        "is_testsite": false
     }
 },
 {
@@ -3443,13 +3445,15 @@
     "fields": {
         "name": "Magenta Test",
         "uid": "magenta-test",
+        "country": 1,
         "configuration": 60,
         "paid_for_access_until": "2025-01-17",
         "created": null,
         "isil": "DK-100000",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00",
-        "rerun_asc": false
+        "rerun_asc": false,
+        "is_testsite": true
     }
 },
 {
@@ -3458,6 +3462,7 @@
     "fields": {
         "name": "Site3",
         "uid": "site3",
+        "country": 2,
         "configuration": 61,
         "paid_for_access_until": "2024-04-01",
         "created": null,
@@ -10982,6 +10987,20 @@
         "description": "Magenta Test's nøgle",
         "created": "2023-10-05T16:24:15.241",
         "site": 9
+    }
+},
+{
+    "model": "system.country",
+    "pk": 1,
+    "fields": {
+        "name": "Danmark"
+    }
+},
+{
+    "model": "system.country",
+    "pk": 2,
+    "fields": {
+        "name": "Sverige"
     }
 }
 ]

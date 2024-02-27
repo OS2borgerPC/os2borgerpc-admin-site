@@ -31,6 +31,7 @@ from system.models import (
     Site,
     WakeChangeEvent,
     WakeWeekPlan,
+    Country,
 )
 
 from changelog.models import (
@@ -211,6 +212,21 @@ class FeaturePermissionInlineForSiteAdmin(admin.TabularInline):
     extra = 0
 
 
+class SiteInlineForCountryAdmin(admin.TabularInline):
+    model = Site
+    fields = ("name", "uid")
+    extra = 0
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
+
+    def has_change_permission(self, request, obj):
+        return False
+
+
 class SiteAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -331,6 +347,16 @@ class JobAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     search_fields = ("batch__script__name", "user__username", "pc__name")
     readonly_fields = ("created", "started", "finished")
+
+
+class CountryAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "pk",
+    )
+    list_filter = ("name",)
+    search_fields = ("name", "pk")
+    inlines = [SiteInlineForCountryAdmin]
 
 
 class ScriptTagAdmin(admin.ModelAdmin):
@@ -525,3 +551,4 @@ ar(WakeChangeEvent, WakeChangeEventAdmin)
 ar(WakeWeekPlan, WakeWeekPlanAdmin)
 ar(APIKey, APIKeyAdmin)
 ar(LoginLog, LoginLogAdmin)
+ar(Country, CountryAdmin)
