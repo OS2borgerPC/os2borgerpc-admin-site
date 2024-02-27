@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=255, verbose_name="country name")),
             ],
-            options={
-                "ordering": ["name"],
-            },
+            options={"ordering": ["name"], "verbose_name_plural": "countries"},
         ),
         migrations.AddField(
             model_name="site",
