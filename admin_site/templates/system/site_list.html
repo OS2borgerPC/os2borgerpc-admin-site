@@ -15,16 +15,16 @@
   <div class="container">
     <div>
       {% for country in countries %}
-        {% if countries|length >= 2 %}
-           <h2 class="mt-5 fw-bold">{{ country.name }}</h2>
-      {% endif %}
-      {% if country.normal_sites %}  
+        {% if countries|length >= 2 and user.is_superuser %}
+            <h2 class="mt-5 fw-bold">{{ country.name }}</h2>
+        {% endif %}
+        {% if country.normal_sites %}  
           {% for site in country.normal_sites %}
             <div class="btn-group mt-3">
               <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
                 <span class="pe-4">
                   <span class='material-icons'>home</span>
-                    {{site.name}}
+                  {{site.name}}
                   </span>
                 <span class="material-icons">computer</span>{{site.pcs.count}}
               </a>
@@ -38,8 +38,8 @@
               <a class="btn btn-light btn-lg me-3" href="{% url 'site' slug=site.url %}" >
                 <span class="pe-4">
                   <span class='material-icons'>home</span>
-                    {{site.name}}
-                  </span>
+                  {{site.name}}
+                </span>
                 <span class="material-icons">computer</span>{{site.pcs.count}}
               </a>
             </div>
