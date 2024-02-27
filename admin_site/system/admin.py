@@ -217,6 +217,15 @@ class SiteInlineForCountryAdmin(admin.TabularInline):
     fields = ("name", "uid")
     extra = 0
 
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
+
+    def has_change_permission(self, request, obj):
+        return False
+
 
 class SiteAdmin(admin.ModelAdmin):
     list_display = (

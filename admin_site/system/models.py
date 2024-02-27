@@ -151,7 +151,7 @@ class ConfigurationEntry(models.Model):
 
 
 class Country(models.Model):
-    name = models.CharField(verbose_name=_("country_name"), max_length=255)
+    name = models.CharField(verbose_name=_("country name"), max_length=255)
 
     def __str__(self):
         return self.name
@@ -168,7 +168,7 @@ class Site(models.Model):
     country = models.ForeignKey(
         Country, related_name="sites", on_delete=models.PROTECT, null=True
     )
-    is_testsite = models.BooleanField(default=False)
+    is_testsite = models.BooleanField(verbose_name=_("Is a testsite"), default=False)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"), null=True, blank=True
