@@ -21,7 +21,7 @@ active
   <div class="listutils">
     <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addNewGroup">
       <span class="material-icons">add</span>
-        {% translate "Add new group" %}
+      {% translate "Add new group" %}
     </button>
   </div>
   <ul class="item-list">
@@ -44,6 +44,7 @@ active
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
 
+  {% if site.groups.all %}  
     <h2 class="divideheader">{% translate "Details about" %} <em>{{ selected_group.name }}</em></h2>
     {% include 'notification.html' %}
 
@@ -84,10 +85,10 @@ active
 
               {{ form.pcs.errors }}
               <div class="clearfix">
-              <label class="mb-2">{% translate "Computers in this group" %}</label>
+                <label class="mb-2">{% translate "Computers in this group" %}</label>
                 <span class="badge bg-secondary picklist-counter-badge" style="float: right;">
                   <span class="material-icons px-1">computer</span>
-                    <span id="total-pcs"></span>
+                  <span id="total-pcs"></span>
                 </span>
               </div>
               {% translate "Add a computer to the group" as add_c %}
@@ -97,16 +98,16 @@ active
 
             {# supervisor picklist #}
             <div class="mt-3">
-            <p>
-              {% translate "Add a supervisor for the group" as add_s %}
-              {% translate "Remove a supervisor for the group" as remove_s %}
-              <label class="mt-2">{% translate "Supervisors for this group" %}</label>
-              {% translate 'This is used to control who receives the e-mails for Events, ie. Security Events or Offline Events. If one or more Supervisors are set for a given Group, these people will receive the e-mails instead of those set in the Monitoring Rule' as help_text %}
-              <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
-                help_outline
-              </button>
-              {% include 'widgets/picklist.html' with submit_name='supervisors' selected_list=selected_users available_list=available_users identifier='supervisor' add_text=add_s remove_text=remove_s empty_text=empty_t site_url=site.uid target_section='users' %}
-            </p>
+              <p>
+                {% translate "Add a supervisor for the group" as add_s %}
+                {% translate "Remove a supervisor for the group" as remove_s %}
+                <label class="mt-2">{% translate "Supervisors for this group" %}</label>
+                {% translate 'This is used to control who receives the e-mails for Events, ie. Security Events or Offline Events. If one or more Supervisors are set for a given Group, these people will receive the e-mails instead of those set in the Monitoring Rule' as help_text %}
+                <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
+                  help_outline
+                </button>
+                {% include 'widgets/picklist.html' with submit_name='supervisors' selected_list=selected_users available_list=available_users identifier='supervisor' add_text=add_s remove_text=remove_s empty_text=empty_t site_url=site.uid target_section='users' %}
+              </p>
             </div>
 
             {# SecurityProblem #}
@@ -193,7 +194,11 @@ active
         }
       }
     </script>
-
+    {% else %}
+      <h2 class="divideheader">{% translate "Groups" %}</h2>
+      <p>{% translate "No groups were found" %}</p>
+      <p>{% translate "Clik the 'Add new group' button in the menu to the left to create a group" %}</p>
+    {% endif %}
     <div id="addNewGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">

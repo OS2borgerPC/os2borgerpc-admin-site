@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 11:31+0100\n"
+"POT-Creation-Date: 2024-02-27 12:00+0100\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,6 @@ msgstr "Lägg till en kommentar"
 #: templates/system/event_rules/site_event_rules_server.html
 #: templates/system/event_rules/site_security_problems.html
 #: templates/system/pcgroups/confirm_delete.html
-#: templates/system/pcgroups/form.html
 #: templates/system/pcgroups/policy_list/templates.html
 #: templates/system/pcgroups/site_groups.html
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
@@ -4835,15 +4834,6 @@ msgstr "%(the_computers)s og %(the_scripts)s kommer %(not)s raderas.."
 msgid "Are you sure you want to delete the group "
 msgstr "Är du säker på att du vill ta bort gruppen "
 
-#: templates/system/pcgroups/form.html
-msgid "New group"
-msgstr "Ny grupp"
-
-#: templates/system/pcgroups/form.html
-#: templates/system/pcgroups/site_groups.html
-msgid "Create group"
-msgstr "Skapa en grupp"
-
 #: templates/system/pcgroups/policy_list/item.html
 msgid "None selected"
 msgstr "Ingen vald"
@@ -4976,6 +4966,18 @@ msgid ""
 msgstr ""
 "Att ta bort ett skript från gruppen betyder INTE att skriptets effekt tas "
 "bort från datorerna i gruppen"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "No groups were found"
+msgstr "Inga grupper hittades"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Clik the 'Add new group' button in the menu to the left to create a group"
+msgstr "Klicka på knappen 'Lägg till ny grupp' i menyn till vänster för att skapa en grupp"
+
+#: templates/system/pcgroups/site_groups.html
+msgid "Create group"
+msgstr "Skapa en grupp"
 
 #: templates/system/pcs/confirm_delete.html templates/system/pcs/form.html
 msgid "Delete computer"
@@ -6004,6 +6006,12 @@ msgstr "Inaktivera"
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data saknas"
+
+#~ msgid "New group"
+#~ msgstr "Ny grupp"
+
+#~ msgid "No groups created yet"
+#~ msgstr "Inga grupper har skapats ännu"
 
 #~ msgid "Device"
 #~ msgstr "Maskin"
