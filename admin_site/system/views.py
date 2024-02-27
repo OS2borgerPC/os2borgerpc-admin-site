@@ -2694,6 +2694,14 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
         del context["newform"].fields["supervisors"]
         return context
 
+    def render_to_response(self, context):
+        if context["site"].groups.all():
+            return HttpResponseRedirect(
+                reverse("groups", kwargs={"slug": self.kwargs["slug"]})
+            )
+        else:
+            return super(PCGroupCreate, self).render_to_response(context)
+
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         self.object = form.save(commit=False)
