@@ -22,11 +22,10 @@
         </ul>
 
     </div>
-
     <script type="text/javascript">
 
         (function() {
-
+            
             var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
             var text_add = '{{ add_text }}'
             var text_remove = '{{ remove_text }}'
@@ -94,7 +93,7 @@
                     list_item.addEventListener('click', function() {
                         updateListHandler(item.id, true)
                     })
-                    list_item.innerText = item.name
+                    list_item.innerText = htmlDecode(item.name)
                 }
                 return list_item
             }
