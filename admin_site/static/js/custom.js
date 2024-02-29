@@ -427,3 +427,11 @@ function copy_api_key(event) {
 $(document).ready(function(){
   $('[data-toggle="popover"]').popover();
 });
+
+// This function is used in the picklist.html file, to display the names
+// correctly, if it contains chars like ' or " 
+const parser = new DOMParser()
+function htmlDecode(input) {
+  let doc = parser.parseFromString(input, "text/html")
+  return doc.documentElement.textContent
+}
