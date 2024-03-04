@@ -165,7 +165,7 @@ class ScriptAdmin(admin.ModelAdmin):
 
     def jobs_per_site_for_the_last_year(self, obj):
         now = timezone.now()
-        a_year_ago = now.replace(year=now.year - 1)
+        a_year_ago = now - timezone.timedelta(days=365)
 
         sites = Site.objects.filter(
             batches__script=obj, batches__jobs__started__gte=a_year_ago

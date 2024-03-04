@@ -3511,54 +3511,6 @@ class DocView(TemplateView, LoginRequiredMixin):
         return context
 
 
-class JSONSiteSummary(JSONResponseMixin, SiteView):
-    """Produce a JSON document summarising the state of all of the computers in
-    a site.
-    """
-
-    interesting_properties = [
-        "id",
-        "name",
-        "description",
-        "configuration_id",
-        "site_id",
-        "is_activated",
-        "created",
-        "last_seen",
-        "location",
-    ]
-
-    def render_to_response(self, context, **response_kwargs):
-        # It is necessary to overwrite the standard render_to_response method
-        # when we want to return something that should not be rendered
-        # via a Django template
-        return self.render_to_json_response(context, **response_kwargs)
-
-    def get_context_data(self, **kwargs):
-        pcs = {}
-        for p in self.object.pcs.all():
-            pc = {}
-            for pn in JSONSiteSummary.interesting_properties:
-                pv = getattr(p, pn)
-                # Don't convert these types to string representations...
-                if (
-                    pv is None
-                    or isinstance(pv, bool)
-                    or isinstance(pv, float)
-                    or isinstance(pv, int)
-                ):
-                    pass
-                # ... use the right date format for datetimes...
-                elif isinstance(pv, datetime):
-                    pv = pv.isoformat()
-                # ... and use simple string representations for everything else
-                else:
-                    pv = str(pv)
-                pc[pn] = pv
-            pcs[pc["id"]] = pc
-        return pcs
-
-
 class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     """Displays all of the image versions that this site has access to (i.e.,
     all versions released before the site's last_version datestamp).

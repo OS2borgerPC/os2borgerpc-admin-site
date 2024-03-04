@@ -1,4 +1,13 @@
+Version 5.25.0, March 04, 2024
+------------------------------
+
+- Fix picklists handling displaying html chars (e.g. quotes) correctly
+- Fix leap year bug in backend
+- Hide country and testsite from site settings
+- Delete the old primitive API
+
 Version 5.24.0, February 27, 2024
+---------------------------------
 
 - Fix minor bug in sms login integration
 - Add country object related to sites
