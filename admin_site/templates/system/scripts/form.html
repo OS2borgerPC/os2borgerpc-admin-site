@@ -2,26 +2,6 @@
 
 {% load i18n %}
 
-<div class="d-flex justify-content-end">
-  {% if form.instance.created %}
-    <p class="mb-3 mt-3">
-      {% translate "Created" %}: {{ form.instance.created }}
-      {% if form.instance.user_created %}
-        <span class="text-muted">({{ form.instance.user_created }})</span>
-      {% endif %}
-    </p>
-  {% endif %}
-
-  {% if form.instance.modified %}
-    <p class="mb-3 ms-3 mt-3">
-      {% translate "Modified" %}: {{ form.instance.modified }}
-      {% if form.instance.user_modified %}
-        <span class="text-muted">({{ form.instance.user_modified }})</span>
-      {% endif %}
-    </p>
-  {% endif %}
-</div>
-
 {% if disable_inputs != "yes" %}
   <!-- The three tabs on the page: -->
   <ul class="nav nav-tabs mt-2" role="tablist">

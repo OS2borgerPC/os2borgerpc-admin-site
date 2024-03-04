@@ -11,7 +11,8 @@ from system.views import (
     ConfigurationEntryCreate,
     ConfigurationEntryUpdate,
     DocView,
-    ImageVersionsView,
+    ImageVersionRedirect,
+    ImageVersionView,
     JobInfo,
     JobRestarter,
     JobSearch,
@@ -384,14 +385,14 @@ urlpatterns = [
     re_path(r"^documentation/", DocView.as_view(), name="doc_root"),
     # Image Versions
     re_path(
-        r"^site/(?P<slug>[^/]+)/image_versions/$",
-        ImageVersionsView.as_view(),
+        r"^site/(?P<slug>[^/]+)/image-versions/$",
+        ImageVersionRedirect.as_view(),
         name="images",
     ),
     re_path(
-        r"^site/(?P<slug>[^/]+)/image_versions/(?P<platform>[^/]+)$",
-        ImageVersionsView.as_view(),
-        name="images_major",
+        r"^site/(?P<slug>[^/]+)/image-versions/(?P<product_id>[^/]+)$",
+        ImageVersionView.as_view(),
+        name="images-product",
     ),
     # This contains both a regular view and an HTMX view
     re_path(
