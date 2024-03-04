@@ -51,7 +51,7 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = Site
-        exclude = ["configuration", "paid_for_access_until"]
+        exclude = ["configuration", "paid_for_access_until", "country", "is_testsite"]
         widgets = {
             "paid_for_access_until": forms.widgets.DateInput(attrs={"type": "date"}),
         }
