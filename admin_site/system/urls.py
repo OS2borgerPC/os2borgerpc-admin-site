@@ -354,7 +354,7 @@ urlpatterns = [
     re_path(
         r"^documentation/os2borgerpc_kiosk_installation_guide",
         RedirectView.as_view(
-            url="https://os2borgerpc-server-image.readthedocs.io/en/latest/dev.html"
+            url="https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup.html"
         ),
     ),
     re_path(
