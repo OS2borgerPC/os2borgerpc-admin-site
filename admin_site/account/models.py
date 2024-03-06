@@ -30,6 +30,10 @@ class UserProfile(models.Model):
         max_length=10,
         default=DANISH,
     )
+
+    is_hidden = models.BooleanField(
+        verbose_name=_("hidden user"), default=False, null=False
+    )
     # TODO: Add more fields/user options as needed.
     # TODO: Make before_save integrity check that SITE_USER and
     # SITE_ADMIN users MUST be associated with a site.
