@@ -1182,12 +1182,13 @@ class GlobalScriptRedirectID(RedirectView, LoginRequiredMixin):
         if script.site:
             return "/"
         else:  # If the script is global
-            user_sites = user.user_profile.sites.all()
+            # If a user is a member of multiple sites, just randomly send them to the first one
+            first_slug = user.user_profile.sites.all().first().uid
 
-            # If a user is a member of multiple sites, just randomly pick the first one
-            kwargs["slug"] = user_sites.first().uid
-
-            return super().get_redirect_url(*args, **kwargs)
+            if script.is_security_script:
+                return reverse("security_script", args=[first_slug, script.pk])
+            else:
+                return reverse("script", args=[first_slug, script.pk])
 
 
 class GlobalScriptRedirectUID(RedirectView, LoginRequiredMixin):
@@ -1202,10 +1203,13 @@ class GlobalScriptRedirectUID(RedirectView, LoginRequiredMixin):
         if script.site:
             return "/"
         else:  # If the script is global
-            # If a user is a member of multiple sites, just randomly pick the first one
+            # If a user is a member of multiple sites, just randomly send them to the first one
             first_slug = user.user_profile.sites.all().first().uid
 
-            return reverse("script", args=[first_slug, script.pk])
+            if script.is_security_script:
+                return reverse("security_script", args=[first_slug, script.pk])
+            else:
+                return reverse("script", args=[first_slug, script.pk])
 
 
 class ScriptRun(SiteView):
