@@ -758,15 +758,21 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
                 {
                     "pk": job.pk,
                     "script_name": job.batch.script.name,
-                    "started": job.started.strftime("%Y-%m-%d %H:%M:%S")
-                    if job.started
-                    else "-",
-                    "finished": job.finished.strftime("%Y-%m-%d %H:%M:%S")
-                    if job.finished
-                    else "-",
-                    "created": job.created.strftime("%Y-%m-%d %H:%M:%S")
-                    if job.created
-                    else "-",
+                    "started": (
+                        job.started.strftime("%Y-%m-%d %H:%M:%S")
+                        if job.started
+                        else "-"
+                    ),
+                    "finished": (
+                        job.finished.strftime("%Y-%m-%d %H:%M:%S")
+                        if job.finished
+                        else "-"
+                    ),
+                    "created": (
+                        job.created.strftime("%Y-%m-%d %H:%M:%S")
+                        if job.created
+                        else "-"
+                    ),
                     "status": job.status_translated + "",
                     "label": job.status_label,
                     "pc_name": job.pc.name,
@@ -1121,9 +1127,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
         return context
 
     def get_object(self, queryset=None):
@@ -3096,9 +3102,9 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected"] = self.object
 
         request_user = self.request.user
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
 
         return context
 
@@ -3318,15 +3324,21 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                 {
                     "pk": event.pk,
                     "slug": site.uid,
-                    "problem_name": event.problem.name
-                    if event.problem
-                    else event.event_rule_server.name,
-                    "problem_url": reverse(
-                        "event_rule_security_problem", args=[site.uid, event.problem.id]
-                    )
-                    if event.problem
-                    else reverse(
-                        "event_rule_server", args=[site.uid, event.event_rule_server.id]
+                    "problem_name": (
+                        event.problem.name
+                        if event.problem
+                        else event.event_rule_server.name
+                    ),
+                    "problem_url": (
+                        reverse(
+                            "event_rule_security_problem",
+                            args=[site.uid, event.problem.id],
+                        )
+                        if event.problem
+                        else reverse(
+                            "event_rule_server",
+                            args=[site.uid, event.event_rule_server.id],
+                        )
                     ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -3334,14 +3346,18 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
                     "level": EventLevels.LEVEL_TRANSLATIONS[
-                        event.problem.level
-                        if event.problem
-                        else event.event_rule_server.level
+                        (
+                            event.problem.level
+                            if event.problem
+                            else event.event_rule_server.level
+                        )
                     ],
                     "level_label": EventLevels.LEVEL_TO_LABEL[
-                        event.problem.level
-                        if event.problem
-                        else event.event_rule_server.level
+                        (
+                            event.problem.level
+                            if event.problem
+                            else event.event_rule_server.level
+                        )
                     ]
                     + "",
                     "pc_name": event.pc.name,
