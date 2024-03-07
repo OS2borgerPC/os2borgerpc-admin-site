@@ -2431,7 +2431,12 @@ class UsersMixin(object):
     def add_userlist_to_context(self, context):
         if "site" not in context:
             self.add_site_to_context(context)
-        context["user_list"] = context["site"].users
+        if self.request.user.is_superuser:
+            context["user_list"] = context["site"].users
+        else:
+            context["user_list"] = context["site"].users.filter(
+                user_profile__is_hidden=False
+            )
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(
             self.site
