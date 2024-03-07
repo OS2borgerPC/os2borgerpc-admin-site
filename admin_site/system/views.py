@@ -1169,43 +1169,29 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return reverse("script", args=[self.site.uid, self.script.pk])
 
 
-class GlobalScriptRedirectID(RedirectView, LoginRequiredMixin):
-    permanent = False
-    query_string = True
-    pattern_name = "script"
-
-    def get_redirect_url(self, *args, **kwargs):
-        user = self.request.user
-
-        script = get_object_or_404(Script, pk=kwargs["script_pk"])
-        # No need to support this for local scripts
-        if script.site:
-            return "/"
-        else:  # If the script is global
-            user_sites = user.user_profile.sites.all()
-
-            # If a user is a member of multiple sites, just randomly pick the first one
-            kwargs["slug"] = user_sites.first().uid
-
-            return super().get_redirect_url(*args, **kwargs)
-
-
-class GlobalScriptRedirectUID(RedirectView, LoginRequiredMixin):
+class GlobalScriptRedirect(RedirectView, LoginRequiredMixin):
     permanent = False
     query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
 
-        script = get_object_or_404(Script, uid=kwargs["script_uid"])
+        if "script_pk" in kwargs:
+            script = get_object_or_404(Script, id=kwargs["script_pk"])
+        else:
+            script = get_object_or_404(Script, uid=kwargs["script_uid"])
+
         # No need to support this for local scripts
         if script.site:
             return "/"
         else:  # If the script is global
-            # If a user is a member of multiple sites, just randomly pick the first one
+            # If a user is a member of multiple sites, just randomly send them to the first one
             first_slug = user.user_profile.sites.all().first().uid
 
-            return reverse("script", args=[first_slug, script.pk])
+            if script.is_security_script:
+                return reverse("security_script", args=[first_slug, script.pk])
+            else:
+                return reverse("script", args=[first_slug, script.pk])
 
 
 class ScriptRun(SiteView):
