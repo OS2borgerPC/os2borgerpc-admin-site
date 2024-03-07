@@ -38,8 +38,7 @@ from system.views import (
     ScriptRedirect,
     ScriptRun,
     ScriptUpdate,
-    GlobalScriptRedirectID,
-    GlobalScriptRedirectUID,
+    GlobalScriptRedirect,
     SecurityEventSearch,
     SecurityEventsUpdate,
     SecurityEventsView,
@@ -316,12 +315,12 @@ urlpatterns = [
     ),
     re_path(
         r"^scripts/(?P<script_pk>\d+)/",
-        GlobalScriptRedirectID.as_view(),
+        GlobalScriptRedirect.as_view(),
         name="script_redirect_id",
     ),
     re_path(
         r"^scripts/uid/(?P<script_uid>[^/]+)/",
-        GlobalScriptRedirectUID.as_view(),
+        GlobalScriptRedirect.as_view(),
         name="script_redirect_uid",
     ),
     # Users
