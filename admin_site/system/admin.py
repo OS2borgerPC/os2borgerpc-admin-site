@@ -236,6 +236,7 @@ class SiteAdmin(admin.ModelAdmin):
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",
         "paid_for_access_until",
+        "feature_permissions",
     )
     search_fields = ("name",)
     inlines = (
@@ -265,9 +266,13 @@ class SiteAdmin(admin.ModelAdmin):
     def number_of_computers(self, obj):
         return obj.pcs.count()
 
+    def feature_permissions(self, obj):
+        return list(obj.feature_permission.all())
+
     number_of_computers.short_description = _("Number of computers")
     number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
     number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
+    feature_permissions.short_description = _("Feature permissions")
 
 
 class LoginLogAdmin(admin.ModelAdmin):
@@ -293,6 +298,8 @@ class FeaturePermissionAdmin(admin.ModelAdmin):
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
+
+    sites_with_access.short_description = _("sites with access")
 
 
 class PCAdmin(admin.ModelAdmin):
