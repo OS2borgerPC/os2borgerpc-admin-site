@@ -229,6 +229,7 @@ class SiteInlineForCountryAdmin(admin.TabularInline):
 
 
 class SiteAdmin(admin.ModelAdmin):
+    list_filter = ("country",)
     list_display = (
         "name",
         "number_of_computers",
