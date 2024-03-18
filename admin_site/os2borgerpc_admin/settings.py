@@ -268,6 +268,8 @@ XMLRPC_METHODS = (
     ("system.rpc.sms_login", "sms_login"),
     ("system.rpc.sms_login_finalize", "sms_login_finalize"),
     ("system.rpc.sms_logout", "sms_logout"),
+    ("system.rpc.general_citizen_login", "general_citizen_login"),
+    ("system.rpc.general_citizen_logout", "general_citizen_logout"),
 )
 
 # A sample logging configuration. The only tangible logging
