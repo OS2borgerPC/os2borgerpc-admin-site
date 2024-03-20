@@ -17,11 +17,15 @@
                 <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="material-icons">add</span>
                 </button>
-                <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
+                <ul class="pick-list-available dropdown-menu position-absolute overflow-auto" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
             </li>
         </ul>
 
     </div>
+
+    <!-- Hidden element for 'No options' message -->
+    <li id="no-options" class="d-none" >{% trans 'No options' %}</li>
+
     <script type="text/javascript">
 
         (function() {
@@ -50,7 +54,7 @@
                     selected: false
                 })
             {% endfor %}
-
+           
             function updateListHandler(id, selected_value) {
                 var item = options.find(function(o) {
                     return o.id === id
@@ -60,41 +64,55 @@
                 }
                 renderPickList()
             }
-
+            
             function renderHiddenInput(input_value) {
                 var input = '<input type="hidden" name="{{ submit_name }}" value="' + input_value + '">'
                 return input
             }
 
-            function renderSelectedListItem(name, id, uid) {
-                var item = document.createElement('span')
-                var button = document.createElement('button')
+            function renderSelectedListItem(item) {
+                let list_item = document.createElement('li')
+                list_item.className = 'list-group-item pick-list-item'
+
+                let itemElement = document.createElement('span')
+                let button = document.createElement('button')
                 button.type = 'button'
                 button.title = text_remove
                 button.className = 'btn btn-close'
                 button.addEventListener('click', function() {
-                    updateListHandler(id, false)
+                    updateListHandler(item.id, false)
                 })
-               item.innerHTML = "<a class=\"nav-link\" href=\"/site/{{site_url}}/{{ target_section }}/" + uid  + "\">" + name + "</a>"
-                item.innerHTML += renderHiddenInput(id)
-                item.appendChild(button)
-                return item
+                let name = htmlDecode(item.name)
+                let uid = item.uid
+                let id = item.id
+                itemElement.innerHTML = `<a class="nav-link" href="/site/{{site_url}}/{{ target_section }}/${uid}">${name}</a>`
+                itemElement.innerHTML += renderHiddenInput(id)
+                itemElement.appendChild(button)
+
+                list_item.appendChild(itemElement)
+                return list_item
             }
 
-            function renderListItem(item) {
-                var list_item = document.createElement('li')
-                list_item.className = 'list-group-item pick-list-item'
-                if (item.selected) {
-                    list_item.appendChild(
-                        renderSelectedListItem(item.name, item.id, item.uid)
-                    )
-                } else {
-                    list_item.className = 'dropdown-item'
-                    list_item.addEventListener('click', function() {
-                        updateListHandler(item.id, true)
-                    })
-                    list_item.innerText = htmlDecode(item.name)
-                }
+            function renderAvailableListItem(item){
+                let list_item = document.createElement('li')
+                list_item.className = 'mt-1 dropdown-item'
+
+                let checkbox = document.createElement('input')
+                checkbox.type = 'checkbox'
+                checkbox.className = 'li-checkbox'
+                checkbox.value = item.uid
+
+                list_item.addEventListener('click', function(event) {
+                    // If the event's target is not the checkbox, click the checkbox
+                    if (event.target !== checkbox) {
+                        checkbox.click()
+                    }
+                    // Stop the propagation of the click event, so it dosent fold the dropdown
+                    event.stopPropagation()
+                })
+
+                list_item.appendChild(checkbox)
+                list_item.appendChild(document.createTextNode(htmlDecode(item.name)))
                 return list_item
             }
 
@@ -108,7 +126,7 @@
                 }
                 for (var item in list) {
                     if (list[item].selected) {
-                        dom_ul.appendChild(renderListItem(list[item]))
+                        dom_ul.appendChild(renderSelectedListItem(list[item]))
                         is_empty = false
                         total ++
                     }
@@ -126,24 +144,69 @@
             }
 
             function renderAvailableList(dom_el, list) {
-                var dom_ul = dom_el.querySelector('.pick-list-available')
-                var is_empty = true
+                let dom_ul = dom_el.querySelector('.pick-list-available')
+                let is_empty = true
                 dom_ul.innerHTML = ''
                 for (var item in list) {
                     if (!list[item].selected) {
-                        dom_ul.appendChild(renderListItem(list[item]))
+                        dom_ul.appendChild(renderAvailableListItem(list[item]))
                         is_empty = false
                     }
                 }
                 if (is_empty) {
-                    var empty_li = document.createElement('li')
-                    empty_li.className = 'dropdown-item'
-                    empty_li.innerText = 'Ingen valgmuligheder'
-                    dom_ul.appendChild(empty_li)
-                }
+                    let noOptionsElement = document.getElementById('no-options').cloneNode(true)
+                    noOptionsElement.className = 'd-block text-center'
+                    dom_ul.appendChild(noOptionsElement)
+                } else {
+                    // Div for the buttons "accept" and "cancel"
+                    let buttonDiv = document.createElement('div')
+                    buttonDiv.className = "dropdown-buttons d-flex justify-content-evenly mt-3 position-sticky"
+
+                    let acceptButton = document.createElement('button')
+                    acceptButton.type = 'button'
+                    acceptButton.className = 'btn btn-primary'
+                    acceptButton.innerHTML = '&#10004;'
+                    acceptButton.addEventListener('click', function() {
+                        addCheckedItemsToSelectedList()
+                    })
+                    buttonDiv.appendChild(acceptButton)
+
+                    let cancelButton = document.createElement('button')
+                    cancelButton.type = 'button'
+                    cancelButton.className = 'btn btn-secondary' 
+                    cancelButton.innerHTML = '&#10006;'
+                    cancelButton.addEventListener('click', function() {
+                        cancelChecksInList()
+                    })
+                    buttonDiv.appendChild(cancelButton)
+
+                    dom_ul.appendChild(buttonDiv)
+                }   
+            }
+
+            function addCheckedItemsToSelectedList() {
+                let checkboxes = document.querySelectorAll('.li-checkbox')
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        let item = options.find(o => o.uid === checkbox.value)
+                        if (item) {
+                            item.selected = true
+                        }
+                    }
+                })
+                renderPickList()
+            }
+
+            function cancelChecksInList(){
+                let checkboxes = document.querySelectorAll('.li-checkbox')
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false
+                })
             }
 
             function renderPickList() {
+                options.sort((a, b) => a.name.localeCompare(b.name))
+
                 renderAvailableList(list_el, options)
                 renderSelectedList(list_el, options)
             }
