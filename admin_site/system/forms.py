@@ -265,6 +265,12 @@ class ParameterForm(forms.Form):
                         }
                     )
                 )
+            elif inp.value_type == Input.CHOICE:
+                default_value_no_spaces = inp.default_value.replace(" ", "")
+                CHOICES = [
+                    (option, option) for option in default_value_no_spaces.split(",")
+                ]
+                self.fields[name] = forms.ChoiceField(**field_data, choices=CHOICES)
             else:
                 self.fields[name] = forms.CharField(**field_data)
 
