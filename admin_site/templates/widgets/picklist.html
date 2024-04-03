@@ -17,7 +17,7 @@
                 <button class="btn btn-link d-flex align-items-center pick-list-dropdown-btn" type="button" id="pick-list-{{ submit_name }}-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="material-icons">add</span>
                 </button>
-                <ul class="pick-list-available dropdown-menu overflow-auto" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
+                <ul class="pick-list-available dropdown-menu" aria-labelledby="pick-list-{{ submit_name }}-dropdown"></ul>
             </li>
         </ul>
 
@@ -29,7 +29,7 @@
     <script type="text/javascript">
 
         (function() {
-            
+
             var element_id = 'pick-list-{{ submit_name }}{{ unique_id }}'
             var text_add = '{{ add_text }}'
             var text_remove = '{{ remove_text }}'
@@ -54,17 +54,55 @@
                     selected: false
                 })
             {% endfor %}
-           
+
+            // Used by wake_plan.html to save the state of selected groups and exceptions to wakeplan.
+            // If save_state should be made more general, changes should be first made in the wake_plan.js, 
+            // removeDataFromSessionStorage() only reset session items, when save_state = wake_plan. 
+            if ( '{{ save_state }}') {
+                // Check if user has made changes to selected groups or wake_change_events without saving them
+                // if no changes use options from db else use options with selected from sessionStorage
+                let user_has_made_changes_to_options_string = sessionStorage.getItem('{{ save_state }}_{{ submit_name }}_user_has_made_changes_to_options')
+                let user_has_made_changes_to_options_boolean = user_has_made_changes_to_options_string === 'true'
+                
+
+                if (user_has_made_changes_to_options_boolean) {
+
+                    optionsFromSessionStorage = JSON.parse(sessionStorage.getItem('{{ save_state }}_{{ submit_name }}_options'))
+
+                    for (let i = 0; i < options.length; i++) {
+                        // *** hvis der er et element med samme uid eller pk(hvilken af de to??) som i optionsFromSessionStorage, så skal selected sættes til sidstnævnte værdi
+                        let foundElement = optionsFromSessionStorage.find((element) => {
+                            console.log(element.uid, element.name, options[i].uid)
+                            return element.uid === options[i].uid
+                        })
+
+                        if (foundElement) {
+                            options[i].selected = foundElement.selected
+                        }
+                    }
+                }
+            }    
+ 
             function updateListHandler(id, selected_value) {
                 var item = options.find(function(o) {
                     return o.id === id
                 })
                 if (item) {
                     item.selected = selected_value
+
+                    //only relevant for wake_plan.html
+                    if ( '{{ save_state }}') {
+                    // The reset of both sessionitems are handled in wake_plans.js, removeDataFromSessionStorage()
+                    sessionStorage.setItem(
+                        '{{ save_state }}_{{ submit_name }}_user_has_made_changes_to_options','true')
+
+                    sessionStorage.setItem(
+                        '{{ save_state }}_{{ submit_name }}_options',JSON.stringify(options))
+                    }
                 }
                 renderPickList()
             }
-            
+
             function renderHiddenInput(input_value) {
                 var input = '<input type="hidden" name="{{ submit_name }}" value="' + input_value + '">'
                 return input
@@ -164,8 +202,8 @@
 
                     let acceptButton = document.createElement('button')
                     acceptButton.type = 'button'
-                    acceptButton.className = 'btn btn-primary'
-                    acceptButton.innerHTML = '&#10004;'
+                    acceptButton.className = 'btn btn-primary material-icons'
+                    acceptButton.innerHTML = 'check'
                     acceptButton.addEventListener('click', function() {
                         addCheckedItemsToSelectedList()
                     })
@@ -173,15 +211,15 @@
 
                     let cancelButton = document.createElement('button')
                     cancelButton.type = 'button'
-                    cancelButton.className = 'btn btn-secondary' 
-                    cancelButton.innerHTML = '&#10006;'
+                    cancelButton.className = 'btn btn-secondary material-icons' 
+                    cancelButton.innerHTML = 'close'
                     cancelButton.addEventListener('click', function() {
                         cancelChecksInList()
                     })
                     buttonDiv.appendChild(cancelButton)
 
                     dom_ul.appendChild(buttonDiv)
-                }   
+                }
             }
 
             function addCheckedItemsToSelectedList() {
@@ -194,6 +232,16 @@
                         }
                     }
                 })
+
+                //only relevant for wake_plan.html
+                if ( '{{ save_state }}') {
+                sessionStorage.setItem(
+                    '{{ save_state }}_{{ submit_name }}_user_has_made_changes_to_options','true')  
+
+                sessionStorage.setItem(
+                    '{{ save_state }}_{{ submit_name }}_options',JSON.stringify(options)) 
+                }
+
                 renderPickList()
             }
 
