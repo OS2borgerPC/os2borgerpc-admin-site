@@ -48,6 +48,11 @@ hr {
     background-color: transparent;
 }
 
+li .dropdown-item:active {
+    background-color: transparent;
+    color: black
+}
+
 .pick-list .btn:focus {
   box-shadow: none;
 }

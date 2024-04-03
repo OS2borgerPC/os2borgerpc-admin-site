@@ -92,6 +92,7 @@ li.selected {background-color: var(--bs-gray);}
   max-height: 400px; 
   background-color: var(--bs-white);
   padding-bottom: 0px;
+  overflow: auto;
 }
 /* accept and cancel buttons */
 .dropdown-buttons {
