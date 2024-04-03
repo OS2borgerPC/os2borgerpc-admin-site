@@ -105,6 +105,8 @@
                 default_input.attr('type', 'number')
             } else if (input_type == "TIME") {
                 default_input.attr('type', 'time')
+            } else if (input_type == "TEXT_FIELD") {
+                default_input.attr('type', 'textfield')
             } else {
                 default_input[0].disabled = true
             }
@@ -136,7 +138,9 @@ function type_check(event) {
     }
     default_values[index].disabled = false
     default_values[index].value = ""
-    if (event.target.value == "STRING") {
+    if (event.target.value == "TEXT_FIELD") {
+        default_values[index].type = "textfield"
+    } else if (event.target.value == "STRING") {
         default_values[index].type = "text"
     } else if (event.target.value == "DATE") {
         default_values[index].type = "date"

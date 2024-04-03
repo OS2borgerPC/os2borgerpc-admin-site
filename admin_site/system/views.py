@@ -3100,7 +3100,6 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["site_membership"] = (
             request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         )
-
         return context
 
     def form_valid(self, form):

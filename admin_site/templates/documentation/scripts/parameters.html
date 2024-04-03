@@ -7,7 +7,7 @@
   <p>
     {% blocktranslate trimmed %}
     The script arguments make it possible to supply input parameters
-    when a script needs to be run. One can choose between seven different types
+    when a script needs to be run. One can choose between these types
     of input parameters:
     {% endblocktranslate %}
     <ul>
@@ -55,6 +55,16 @@
         where the chosen input parameters are displayed.
         {% endblocktranslate %}
       </li>
+      <li>
+        <strong>{% translate "Choices" %}</strong>:
+        {% blocktranslate trimmed %}
+        Makes it possible to make a list predefined choices. 
+        This type of parameter is useful when you want to limit the possible values that can be supplied as input. 
+        To make a list of choices, you make a comma seperated list of the values in the default value field. 
+        The choices will be displayed in the same order as they are written, 
+        if you add a comma at the end or the start of the list, it will be displayed as an empty choice.
+        {% endblocktranslate %}
+      </li>
     </ul>
   </p>
   <p>
@@ -62,13 +72,14 @@
     {% translate "Integer"|bold as int %}
     {% translate "Date"|bold as date %}
     {% translate "Time"|bold as time %}
+    {% translate "Choices"|bold as choices %}
     {% blocktranslate trimmed %}
     In order to add an argument to a script, you must click on the button
     "Add arguments". This will add a new row to the list of arguments where
     you must fill out the name and type for the argument. It is also possible
     to specify a default value for the argument, which will be entered by default
     when running the script or adding it as an associated script. Only arguments
-    of the types {{str}}, {{int}}, {{date}} and {{time}} can have default values. Lastly,
+    of the types {{str}}, {{int}}, {{date}}, {{choices}} and {{time}} can have default values. Lastly,
     an argument can be set as required or not. Required parameters must be supplied
     when running the script whereas non-required parameters can be left blank.
     Boolean parameters cannot be required. If you wish to remove an argument, you
