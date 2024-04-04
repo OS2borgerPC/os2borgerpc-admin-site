@@ -542,6 +542,7 @@ def sms_login(
     allow_idle_login=False,
     login_duration=None,
     quarantine_duration=None,
+    unlimited_access=False,
 ):
     """Check if the user is allowed to log in and if so, send a sms with
     the required password to the entered phone number.
@@ -619,7 +620,11 @@ def sms_login(
                 citizen = Citizen.objects.get(citizen_id=citizen_hash)
             except Citizen.DoesNotExist:
                 citizen = None
-            if citizen:
+            if unlimited_access:
+                # If the phone number has unlimited access
+                # then we pretend that it is always their first login
+                quarantined_from = False
+            elif citizen:
                 quarantined_from = citizen.last_successful_login + login_duration
                 if (
                     citizen.logged_in
@@ -630,10 +635,10 @@ def sms_login(
                     quarantined_from = None
                     logged_in = True
             else:
+                # This is the citizen's first login seen by the quarantine system
                 quarantined_from = False
         else:
             quarantined_from = None
-        date_time = now.strftime("%Y-%m-%d %H:%M:%S")
         # Check for a matching booking
         time_allowed, note = easy_appointments_booking_validate(
             phone_number,
@@ -663,7 +668,12 @@ def sms_login(
                 else:
                     citizen_hash = "no_booking"
             return int(0), citizen_hash
-    # If booking is not required, use the standard quarantine system.
+    # If booking is not required and the phone number has
+    # unlimited access, skip the quarantine system
+    elif unlimited_access:
+        time_allowed = login_duration.total_seconds() // 60
+    # If booking is not required and the phone number does not have
+    # unlimited access, use the standard quarantine system.
     # Don't update last_successful_login and logged_in until the
     # citizen actually logs in (sms_login_finalize)
     else:
