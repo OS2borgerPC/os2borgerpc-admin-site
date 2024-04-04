@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-07 15:47+0100\n"
+"POT-Creation-Date: 2024-04-04 14:13+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -268,6 +268,18 @@ msgid ""
 "Necessary for customers who wish to require booking through Easy!Appointments"
 msgstr "Nödvändigt för kunder som vill begära bokning via Easy!Appointments"
 
+#: system/forms.py system/models.py
+msgid "API key for login API (e.g. Quria)"
+msgstr "API-nyckel för inloggnings-API (t.ex. Quria)"
+
+#: system/forms.py system/models.py
+msgid ""
+"Necessary for customers who wish to authenticate BorgerPC logins through an "
+"API that requires an API key (e.g. Quria)"
+msgstr ""
+"Nödvändigt för kunder som vill autentisera MedborgarPC-inloggningar via ett "
+"API som kräver en API-nyckel (t.ex. Quria)"
+
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
 msgstr "Typ av användare"
@@ -346,6 +358,10 @@ msgstr "Är en testsida"
 #: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalat för tillträde fram till detta datum"
+
+#: system/models.py
+msgid "ISIL/NCIP"
+msgstr "ISIL/NCIP"
 
 #: system/models.py
 msgid ""
