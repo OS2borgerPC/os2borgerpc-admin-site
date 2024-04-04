@@ -174,9 +174,9 @@ class Site(models.Model):
     # https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre
 
     # Necessary for customers who wish to integrate with standard library login.
-    isil = models.CharField(
-        verbose_name="ISIL",
-        max_length=10,
+    agency_id = models.CharField(
+        verbose_name=_("ISIL/NCIP"),
+        max_length=50,
         blank=True,
         help_text=_(
             "Necessary for customers who wish to"
@@ -197,6 +197,15 @@ class Site(models.Model):
         blank=True,
         help_text=_(
             "Necessary for customers who wish to authenticate BorgerPC logins through an API (e.g. Cicero)"
+        ),
+    )
+    citizen_login_api_key = models.CharField(
+        verbose_name=_("API key for login API (e.g. Quria)"),
+        max_length=255,
+        blank=True,
+        help_text=_(
+            "Necessary for customers who wish to authenticate BorgerPC logins through an API "
+            "that requires an API key (e.g. Quria)"
         ),
     )
     booking_api_url = models.CharField(
