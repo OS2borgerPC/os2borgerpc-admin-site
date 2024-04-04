@@ -40,8 +40,16 @@ hr {
     color: $warning;
 }
 
-.picklist-counter-badge  {
+.pick-list-counter-badge  {
   font-size: 1.0rem;
+}
+
+.pick-list .list-group-item:active {
+    background-color: transparent;
+}
+
+.pick-list .btn:focus {
+  box-shadow: none;
 }
 
 #pc_update_form .basic-info {
