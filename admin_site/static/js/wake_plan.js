@@ -223,7 +223,6 @@ addEventListener('keydown', evt => {
 // A function to clear the session storage storing what a wake plan looks like to be able to navigate to wake
 // change events from a wake plan without losing wake plan state
 function removeDataFromSessionStorage() {
-
   sessionStorage.setItem('going_to_wake_change_events', 'false')
 
   sessionStorage.setItem('going_back_to_wake_plan', 'false')
@@ -298,12 +297,3 @@ document.getElementById('cancel-button').addEventListener("click", function(even
 //   })
 //
 // })()
-//
-// document.getElementById('submit-button').addEventListener("click", function(event){
-//   removeDataFromSessionStorage()
-// })
-//
-// document.getElementById('cancel-button').addEventListener("click", function(event){
-//   removeDataFromSessionStorage()
-//   location.reload(true) // true means it reloads from server, false will reload from cache
-// })
