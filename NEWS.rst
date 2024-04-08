@@ -1,3 +1,25 @@
+Version 5.26.0, April 08, 2024
+------------------------------
+
+- Implement the first part of a change intended to restrict scripts to
+  being run on the products that they were intended for
+- Add integration with Quria to support login on OS2borgerPC via Quria credentials.
+  This integration uses the same Easy!Appointments integration as SMS login.
+  The Quria integration is implemented via a general citizen login rpc-function
+  that can be reused for future and existing login integrations
+- Update Easy!Appointments integration to support varying login duration and quarantine duration
+  per computer as well as the option to allow idle logins (idle logins refer to citizens being able
+  to login on a computer that requires booking without having a booking if the time until the start
+  of the next booking is greater than the login duration
+- Update SMS login logic to support phone numbers with unlimited access
+- Use checkboxes when adding groups/pcs/etc. to picklists thus allowing
+  multiple simultaneous selections
+- Show feature permissions on site overview in backend
+- Fix global script redirect to work correctly for security scripts
+- Add support for hidden users that can only be seen by superusers
+- Update requirements
+- Add readthedocs.yaml
+
 Version 5.25.0, March 04, 2024
 ------------------------------
 

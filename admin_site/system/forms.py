@@ -42,6 +42,15 @@ class SiteForm(forms.ModelForm):
             "Necessary for customers who wish to require booking through Easy!Appointments"
         ),
     )
+    citizen_login_api_key = forms.CharField(
+        label=_("API key for login API (e.g. Quria)"),
+        widget=forms.PasswordInput(attrs={"class": "passwordinput"}),
+        required=False,
+        help_text=_(
+            "Necessary for customers who wish to authenticate BorgerPC logins through an API "
+            "that requires an API key (e.g. Quria)"
+        ),
+    )
 
     def __init__(self, *args, **kwargs):
         super(SiteForm, self).__init__(*args, **kwargs)
@@ -111,7 +120,7 @@ class ScriptForm(forms.ModelForm):
 
     class Meta:
         model = Script
-        exclude = ["feature_permission"]
+        exclude = ["feature_permission", "product"]
 
 
 class ConfigurationEntryForm(forms.ModelForm):

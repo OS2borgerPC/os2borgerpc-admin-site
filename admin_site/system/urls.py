@@ -11,7 +11,8 @@ from system.views import (
     ConfigurationEntryCreate,
     ConfigurationEntryUpdate,
     DocView,
-    ImageVersionsView,
+    ImageVersionRedirect,
+    ImageVersionView,
     JobInfo,
     JobRestarter,
     JobSearch,
@@ -37,8 +38,7 @@ from system.views import (
     ScriptRedirect,
     ScriptRun,
     ScriptUpdate,
-    GlobalScriptRedirectID,
-    GlobalScriptRedirectUID,
+    GlobalScriptRedirect,
     SecurityEventSearch,
     SecurityEventsUpdate,
     SecurityEventsView,
@@ -315,12 +315,12 @@ urlpatterns = [
     ),
     re_path(
         r"^scripts/(?P<script_pk>\d+)/",
-        GlobalScriptRedirectID.as_view(),
+        GlobalScriptRedirect.as_view(),
         name="script_redirect_id",
     ),
     re_path(
         r"^scripts/uid/(?P<script_uid>[^/]+)/",
-        GlobalScriptRedirectUID.as_view(),
+        GlobalScriptRedirect.as_view(),
         name="script_redirect_uid",
     ),
     # Users
@@ -353,7 +353,7 @@ urlpatterns = [
     re_path(
         r"^documentation/os2borgerpc_kiosk_installation_guide",
         RedirectView.as_view(
-            url="https://os2borgerpc-server-image.readthedocs.io/en/latest/dev.html"
+            url="https://os2borgerpc-server-image.readthedocs.io/en/latest/install_setup.html"
         ),
     ),
     re_path(
@@ -384,14 +384,14 @@ urlpatterns = [
     re_path(r"^documentation/", DocView.as_view(), name="doc_root"),
     # Image Versions
     re_path(
-        r"^site/(?P<slug>[^/]+)/image_versions/$",
-        ImageVersionsView.as_view(),
+        r"^site/(?P<slug>[^/]+)/image-versions/$",
+        ImageVersionRedirect.as_view(),
         name="images",
     ),
     re_path(
-        r"^site/(?P<slug>[^/]+)/image_versions/(?P<platform>[^/]+)$",
-        ImageVersionsView.as_view(),
-        name="images_major",
+        r"^site/(?P<slug>[^/]+)/image-versions/(?P<product_id>[^/]+)$",
+        ImageVersionView.as_view(),
+        name="images-product",
     ),
     # This contains both a regular view and an HTMX view
     re_path(

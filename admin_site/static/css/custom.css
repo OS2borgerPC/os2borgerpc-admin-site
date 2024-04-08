@@ -82,6 +82,24 @@ li.addusertrigger {position: relative;}
 li.addusertrigger:hover ul.adduserlist {display: block}
 li.selected {background-color: var(--bs-gray);}
 
+/* Picklist.html */
+
+/* checkbox */
+.li-checkbox { margin-left: 10px; margin-right: 10px;}
+
+/* picklist */
+.pick-list-available {
+  max-height: 400px; 
+  background-color: var(--bs-white);
+  padding-bottom: 0px;
+  overflow: auto;
+}
+/* accept and cancel buttons */
+.dropdown-buttons {
+  padding: 5px;
+  bottom: 0;
+  background-color: var(--bs-white);
+}
 
 /* Documentation */
 

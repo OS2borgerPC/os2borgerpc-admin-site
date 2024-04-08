@@ -4,8 +4,7 @@
 import system.utils
 import hashlib
 import logging
-from datetime import datetime
-from dateutil import parser
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.db.models import Q
@@ -18,6 +17,7 @@ from system.utils import (
     get_citizen_login_api_validator,
     easy_appointments_booking_validate,
     send_password_sms,
+    quria_login_validate,
 )
 
 logger = logging.getLogger(__name__)
@@ -282,7 +282,7 @@ def push_security_events(pc_uid, events_csv):
             continue
 
         now = datetime.now()
-        event_occurred_time_object = parser.parse(event_date)
+        event_occurred_time_object = datetime.strptime(event_date, "%Y%m%d%H%M%S")
         security_event = SecurityEvent.objects.create(
             problem=security_problem,
             pc=pc,
@@ -301,12 +301,258 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
-def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None):
+def general_citizen_login(pc_uid, integration, value_dict):
+    """Check if the user is allowed to log in by validating
+    their login via the indicated login integration.
+
+    Return values:
+        time < 0: User is quarantined and may login in -r minutes or
+                  the next booking (theirs or anothers) starts in -r
+                  minutes.
+        time = 0: Unable to authenticate.
+        time > 0: The user is allowed r minutes of login time.
+        citizen_hash: If booking is not required or idle logins are
+                      allowed and the user is allowed
+                      to log in, this will be the hashed version of their
+                      identifier (e.g. loaner number).
+        Other possible values include:
+        citizen_hash = '': No special errors and booking is required.
+        citizen_hash = 'blocked': The user credentials were correct, but
+                       the user is blocked in the relevant system (Quria)
+        citizen_hash = 'no_booking': No matching or future booking found.
+        citizen_hash = 'logged_in': The user is already logged in on
+                        another machine. This value is only used when
+                        booking is NOT required or idle logins are
+                        allowed.
+        citizen_hash = 'quarantine' : Idle logins are allowed, but the
+                       user is quarantined and does not have an active
+                       booking or a future booking that starts before
+                       the end of the quarantine.
+        citizen_hash = 'booked' : Idle logins are allowed, but the
+                       computer is currently booked by someone else.
+        citizen_hash = 'later_booking' : The user cannot log in now,
+                       but they have a booking that starts later.
+        citizen_hash = 'booking_soon' : Idle logins are allowed, but
+                       a future booking starts too soon for an idle
+                       login to be possible.
+        log_id : If a LoginLog was saved, this is the id of that object.
+                 It is used to update the logout time durin logout.
+                 If no LoginLog was saved, it will be an empty string."""
+    citizen_hash = ""
+    log_id = ""
+    time_allowed = 0
+    is_sms_booking = False
+    try:
+        pc = PC.objects.get(uid=pc_uid)
+        if not pc.is_activated:
+            # Fail silently
+            return int(time_allowed), citizen_hash, log_id
+        site = pc.site
+    except PC.DoesNotExist:
+        logger.error(f"PC {pc_uid} does not exist - unable to proceed.")
+        return int(time_allowed), citizen_hash, log_id
+
+    # Start by validating the credentials to obtain the citizen_hash, which
+    # is required for the Citizen quarantine system.
+    if integration == "quria":
+        loaner_number = value_dict["citizen_identifier"]
+        pincode = value_dict["pincode"]
+        status = quria_login_validate(site, loaner_number, pincode)
+        if status == 2:  # Patron exists and is not blocked
+            citizen_hash = hashlib.sha512(str(loaner_number).encode()).hexdigest()
+        elif status == 1:  # Patron exists but is blocked
+            return int(time_allowed), "blocked", log_id
+        else:  # Invalid loaner number or pincode
+            return int(time_allowed), citizen_hash, log_id
+
+    # Determine if a custom login_duration and/or quarantine_duration is being used
+    if "login_duration" in value_dict:
+        login_duration = timedelta(minutes=value_dict["login_duration"])
+    else:
+        login_duration = site.user_login_duration
+    if "quarantine_duration" in value_dict:
+        quarantine_duration = timedelta(minutes=value_dict["quarantine_duration"])
+    else:
+        quarantine_duration = site.user_quarantine_duration
+
+    now = datetime.now()
+    # If booking is required then the bookings determine when and how long the
+    # users can log in
+    if "require_booking" in value_dict:
+        logged_in = False
+        # If idle logins are allowed, the user can log in without a booking
+        # if their remaining login duration is less than the time until the
+        # next booking starts. The Citizen quarantine system also governs
+        # these idle logins
+        if "allow_idle_login" in value_dict:
+            try:
+                citizen = Citizen.objects.get(citizen_id=citizen_hash)
+            except Citizen.DoesNotExist:
+                citizen = None
+            if citizen:
+                quarantined_from = citizen.last_successful_login + login_duration
+                if (
+                    citizen.logged_in
+                    and not quarantined_from + quarantine_duration < now
+                ):
+                    # If the citizen is currently logged in on another computer,
+                    # idle login should not be allowed
+                    quarantined_from = None
+                    logged_in = True
+            else:
+                quarantined_from = False
+        else:
+            quarantined_from = None
+        # Check the booking system
+        time_allowed, note = easy_appointments_booking_validate(
+            value_dict["citizen_identifier"],
+            now,
+            site,
+            value_dict["pc_name"],
+            quarantined_from,
+            login_duration,
+            quarantine_duration,
+            is_sms_booking,
+        )
+        # The citizen is allowed to log in or should be informed of
+        # the time until next booking
+        # (potentially that of someone else if idle login is allowed)
+        # or the end of their quarantine
+        if time_allowed:
+            # Unless time_allowed < 0, the citizen is allowed to log in
+            if time_allowed < 0:
+                # Inform the citizen of the time until next booking
+                # or the end of their quarantine
+                citizen_hash = note
+            elif (
+                "allow_idle_login" in value_dict
+            ):  # Idle logins are allowed, update Citizen object
+                if citizen:  # Existing citizen
+                    quarantined_from = citizen.last_successful_login + login_duration
+                    if quarantined_from + quarantine_duration < now:
+                        # If they are starting a new login period, update their
+                        # last successful login
+                        citizen.last_successful_login = now
+                    citizen.logged_in = True
+                else:  # First time login
+                    citizen = Citizen(
+                        citizen_id=citizen_hash,
+                        last_successful_login=now,
+                        site=site,
+                        logged_in=True,
+                    )
+                citizen.save()
+
+        else:  # Citizen is not allowed to log in
+            citizen_hash = note
+            # time_allowed will be None if idle login is not allowed
+            # (or it is, but the citizen is quarantined or already logged in)
+            # and no matching booking was found or if idle login is allowed,
+            # but the computer is currently booked by someone else.
+            # time_allowed will be 0 if the API validation failed
+            if time_allowed is None and not note:
+                if logged_in:
+                    citizen_hash = "logged_in"
+                else:
+                    citizen_hash = "no_booking"
+            return int(0), citizen_hash, log_id
+    # If booking is not required, use the standard quarantine system.
+    else:
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+        except Citizen.DoesNotExist:
+            citizen = None
+        time_allowed = login_duration.total_seconds() // 60
+        if citizen:
+            quarantined_from = citizen.last_successful_login + login_duration
+            if now < quarantined_from and not citizen.logged_in:
+                time_allowed = (
+                    time_allowed
+                    - (now - citizen.last_successful_login).total_seconds() // 60
+                )
+                citizen.logged_in = True
+            elif now < quarantined_from and citizen.logged_in:
+                time_allowed = 0
+                citizen_hash = "logged_in"
+            elif (now - quarantined_from) >= quarantine_duration:
+                citizen.last_successful_login = now
+                citizen.logged_in = True
+            else:
+                # (now - quarantined_from) < quarantine_duration:
+                time_allowed = (
+                    (now - quarantined_from).total_seconds()
+                    - quarantine_duration.total_seconds()
+                ) // 60
+        else:
+            # First-time login, all good.
+            citizen = Citizen(
+                citizen_id=citizen_hash,
+                last_successful_login=now,
+                site=site,
+                logged_in=True,
+            )
+        citizen.save()
+
+    # Only ever save a log if the citizen was actually allowed to log in
+    if "save_log" in value_dict and time_allowed > 0:
+        # Initially, logout_time = login_time
+        login_log = LoginLog(
+            identifier=value_dict["citizen_identifier"],
+            site=site,
+            date=datetime.date(now),
+            login_time=datetime.time(now),
+            logout_time=datetime.time(now),
+        )
+        login_log.save()
+        log_id = login_log.id
+
+    return int(time_allowed), citizen_hash, log_id
+
+
+def general_citizen_logout(citizen_hash, log_id):
+    """Update the logout time of the relevant LoginLog object if
+    required and/or log out the relevant Citizen object if
+    booking is not required."""
+
+    if log_id:
+        try:
+            # Update logout_time
+            login_log = LoginLog.objects.get(id=log_id)
+            now = datetime.now()
+            login_log.logout_time = datetime.time(now)
+            login_log.save()
+        except LoginLog.DoesNotExist:
+            pass
+    if citizen_hash:
+        try:
+            citizen = Citizen.objects.get(citizen_id=citizen_hash)
+            citizen.logged_in = False
+            citizen.save()
+        except Citizen.DoesNotExist:
+            pass
+    return 0
+
+
+def sms_login(
+    phone_number,
+    message,
+    pc_uid,
+    require_booking=False,
+    pc_name=None,
+    allow_idle_login=False,
+    login_duration=None,
+    quarantine_duration=None,
+    unlimited_access=False,
+):
     """Check if the user is allowed to log in and if so, send a sms with
     the required password to the entered phone number.
     Whether a user is allowed to log in is determined by checking for a
     matching booking if booking is required or by checking the Citizen
     quarantine logic if booking is not required.
+    If booking is required and idle logins are allowed, the Citizen
+    quarantine logic will also be checked if the computer is not currently
+    booked and the time until the next booking is greater than the
+    login duration allowed by the Citizen quarantine logic.
 
     The phone number given to this function should include the
     country code.
@@ -325,7 +571,18 @@ def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None
         citizen_hash = 'logged_in': The user is already logged in on
                         another machine. This value is only used when
                         booking is NOT required.
-        citizen_hash = 'sms_failed': Failed to authenticate with sms API."""
+        citizen_hash = 'sms_failed': Failed to authenticate with sms API.
+        citizen_hash = 'quarantine' : Idle logins are allowed, but the
+                       user is quarantined and does not have an active
+                       booking or a future booking that starts before
+                       the end of the quarantine.
+        citizen_hash = 'booked' : Idle logins are allowed, but the
+                       computer is currently booked by someone else.
+        citizen_hash = 'later_booking' : The user cannot log in now,
+                       but they have a booking that starts later.
+        citizen_hash = 'booking_soon' : Idle logins are allowed, but
+                       a future booking starts too soon for an idle
+                       login to be possible."""
     citizen_hash = ""
     try:
         pc = PC.objects.get(uid=pc_uid)
@@ -343,28 +600,80 @@ def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None
             logger.error(f"Site {site_uid} does not exist - unable to proceed.")
             return int(0), citizen_hash
 
+    if login_duration:
+        login_duration = timedelta(minutes=login_duration)
+    else:
+        login_duration = site.user_login_duration
+    if quarantine_duration:
+        quarantine_duration = timedelta(minutes=quarantine_duration)
+    else:
+        quarantine_duration = site.user_quarantine_duration
+
     now = datetime.now()
     # If booking is required then the bookings determine when and how long the
     # users can log in
     if require_booking:
-        date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-        # Check for a matching booking
-        booking_time, later_booking = easy_appointments_booking_validate(
-            phone_number, date_time, site, pc_name
-        )
-        if booking_time:  # If a matching booking was found
-            time_allowed = (
-                datetime.strptime(booking_time, "%Y-%m-%d %H:%M:%S") - now
-            ).total_seconds() // 60
-            if later_booking:  # If the matching booking starts later in the day
-                time_allowed = -time_allowed
+        logged_in = False
+        if allow_idle_login:
+            citizen_hash = hashlib.sha512(str(phone_number[-8:]).encode()).hexdigest()
+            try:
+                citizen = Citizen.objects.get(citizen_id=citizen_hash)
+            except Citizen.DoesNotExist:
+                citizen = None
+            if unlimited_access:
+                # If the phone number has unlimited access
+                # then we pretend that it is always their first login
+                quarantined_from = False
+            elif citizen:
+                quarantined_from = citizen.last_successful_login + login_duration
+                if (
+                    citizen.logged_in
+                    and not quarantined_from + quarantine_duration < now
+                ):
+                    # If the citizen is currently logged in on another computer,
+                    # idle login should not be allowed
+                    quarantined_from = None
+                    logged_in = True
+            else:
+                # This is the citizen's first login seen by the quarantine system
+                quarantined_from = False
         else:
-            # booking_time will be None if no matching booking was found and
-            # 0 if the API validation failed
-            if booking_time is None:
-                citizen_hash = "no_booking"
+            quarantined_from = None
+        # Check for a matching booking
+        time_allowed, note = easy_appointments_booking_validate(
+            phone_number,
+            now,
+            site,
+            pc_name,
+            quarantined_from,
+            login_duration,
+            quarantine_duration,
+        )
+        # The citizen is allowed to log in or should be informed of
+        # the time until next booking
+        # (potentially that of someone else if idle login is allowed)
+        if time_allowed:
+            if time_allowed < 0:
+                citizen_hash = note
+        else:
+            citizen_hash = note
+            # time_allowed will be None if idle login is not allowed
+            # (or it is, but the citizen is quarantined) and no matching
+            # booking was found or if idle login is allowed, but
+            # the computer is currently booked by someone else.
+            # time_allowed will be 0 if the API validation failed
+            if time_allowed is None and not note:
+                if logged_in:
+                    citizen_hash = "logged_in"
+                else:
+                    citizen_hash = "no_booking"
             return int(0), citizen_hash
-    # If booking is not required, use the standard quarantine system.
+    # If booking is not required and the phone number has
+    # unlimited access, skip the quarantine system
+    elif unlimited_access:
+        time_allowed = login_duration.total_seconds() // 60
+    # If booking is not required and the phone number does not have
+    # unlimited access, use the standard quarantine system.
     # Don't update last_successful_login and logged_in until the
     # citizen actually logs in (sms_login_finalize)
     else:
@@ -375,11 +684,10 @@ def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None
         except Citizen.DoesNotExist:
             citizen = None
 
-        time_allowed = site.user_login_duration.total_seconds() // 60
+        time_allowed = login_duration.total_seconds() // 60
 
         if citizen:
-            quarantine_duration = site.user_quarantine_duration
-            quarantined_from = citizen.last_successful_login + site.user_login_duration
+            quarantined_from = citizen.last_successful_login + login_duration
             if now < quarantined_from and not citizen.logged_in:
                 time_allowed = (
                     time_allowed
@@ -403,7 +711,15 @@ def sms_login(phone_number, message, pc_uid, require_booking=False, pc_name=None
     return int(time_allowed), citizen_hash
 
 
-def sms_login_finalize(phone_number, pc_uid, require_booking, save_log):
+def sms_login_finalize(
+    phone_number,
+    pc_uid,
+    require_booking,
+    save_log,
+    allow_idle_login=False,
+    login_duration=None,
+    quarantine_duration=None,
+):
     """Finalize the sms_login-process by creating a LoginLog object if
     required and/or updating the relevant Citizen object if booking
     is not required.
@@ -434,16 +750,24 @@ def sms_login_finalize(phone_number, pc_uid, require_booking, save_log):
     # If booking is not required, we use the standard quarantine system
     # time_allowed has already been checked by sms_login, so we only need
     # to update last_successful_login and/or logged_in
-    if not require_booking:
+    # The standard quarantine system is also used to keep track of idle logins
+    if not require_booking or allow_idle_login:
         citizen_hash = hashlib.sha512(str(phone_number[-8:]).encode()).hexdigest()
         now = datetime.now()
         try:
             citizen = Citizen.objects.get(citizen_id=citizen_hash)
         except Citizen.DoesNotExist:
             citizen = None
-        if citizen:
+        if login_duration:
+            login_duration = timedelta(minutes=login_duration)
+        else:
+            login_duration = site.user_login_duration
+        if quarantine_duration:
+            quarantine_duration = timedelta(minutes=quarantine_duration)
+        else:
             quarantine_duration = site.user_quarantine_duration
-            quarantined_from = citizen.last_successful_login + site.user_login_duration
+        if citizen:
+            quarantined_from = citizen.last_successful_login + login_duration
             if now < quarantined_from and not citizen.logged_in:
                 citizen.logged_in = True
             elif (now - quarantined_from) >= quarantine_duration:
@@ -481,23 +805,8 @@ def sms_logout(citizen_hash, log_id):
     required and/or log out the relevant Citizen object if
     booking is not required."""
 
-    if log_id:
-        try:
-            # Update logout_time
-            login_log = LoginLog.objects.get(id=log_id)
-            now = datetime.now()
-            login_log.logout_time = datetime.time(now)
-            login_log.save()
-        except LoginLog.DoesNotExist:
-            pass
-    if citizen_hash:
-        try:
-            citizen = Citizen.objects.get(citizen_id=citizen_hash)
-            citizen.logged_in = False
-            citizen.save()
-        except Citizen.DoesNotExist:
-            pass
-    return 0
+    val = general_citizen_logout(citizen_hash, log_id)
+    return val
 
 
 def citizen_login(username, password, pc_uid, prevent_dual_login=False):
@@ -579,10 +888,5 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
 
 
 def citizen_logout(citizen_hash):
-    try:
-        citizen = Citizen.objects.get(citizen_id=citizen_hash)
-        citizen.logged_in = False
-        citizen.save()
-        return 0
-    except Citizen.DoesNotExist:
-        return 1
+    val = general_citizen_logout(citizen_hash, "")
+    return val

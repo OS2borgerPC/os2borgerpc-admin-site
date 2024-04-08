@@ -22,7 +22,6 @@ from django.db import transaction
 from django.db.models import Q, F
 from django.conf import settings
 
-from django.core.paginator import Paginator
 from django.core.exceptions import PermissionDenied
 
 import django_otp
@@ -50,11 +49,11 @@ from system.models import (
     APIKey,
     AssociatedScriptParameter,
     ConfigurationEntry,
-    FeaturePermission,
     ImageVersion,
     Input,
     Job,
     MandatoryParameterMissingError,
+    Product,
     PC,
     PCGroup,
     WakeWeekPlan,
@@ -339,7 +338,7 @@ class SiteSettings(UpdateView, SiteView):
         return context
 
     def form_valid(self, form):
-        # Only overwrite Cicero password if the form input for it was non-empty
+        # Only overwrite login API password if the form input for it was non-empty
         if not form.cleaned_data["citizen_login_api_password"]:
             site = get_object_or_404(Site, uid=self.kwargs["slug"])
             form.instance.citizen_login_api_password = site.citizen_login_api_password
@@ -347,6 +346,10 @@ class SiteSettings(UpdateView, SiteView):
         if not form.cleaned_data["booking_api_key"]:
             site = get_object_or_404(Site, uid=self.kwargs["slug"])
             form.instance.booking_api_key = site.booking_api_key
+        # Only overwrite the login API key if the form input for it was non-empty
+        if not form.cleaned_data["citizen_login_api_key"]:
+            site = get_object_or_404(Site, uid=self.kwargs["slug"])
+            form.instance.citizen_login_api_key = site.citizen_login_api_key
 
         self.object.configuration.update_from_request(self.request.POST, "site_configs")
 
@@ -759,15 +762,21 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
                 {
                     "pk": job.pk,
                     "script_name": job.batch.script.name,
-                    "started": job.started.strftime("%Y-%m-%d %H:%M:%S")
-                    if job.started
-                    else "-",
-                    "finished": job.finished.strftime("%Y-%m-%d %H:%M:%S")
-                    if job.finished
-                    else "-",
-                    "created": job.created.strftime("%Y-%m-%d %H:%M:%S")
-                    if job.created
-                    else "-",
+                    "started": (
+                        job.started.strftime("%Y-%m-%d %H:%M:%S")
+                        if job.started
+                        else "-"
+                    ),
+                    "finished": (
+                        job.finished.strftime("%Y-%m-%d %H:%M:%S")
+                        if job.finished
+                        else "-"
+                    ),
+                    "created": (
+                        job.created.strftime("%Y-%m-%d %H:%M:%S")
+                        if job.created
+                        else "-"
+                    ),
                     "status": job.status_translated + "",
                     "label": job.status_label,
                     "pc_name": job.pc.name,
@@ -900,6 +909,8 @@ class ScriptMixin(object):
         context["local_scripts"] = local_scripts
         global_scripts = scripts.filter(site=None)
         context["global_scripts"] = global_scripts
+
+        context["supported_products"] = self.script.products.all()
 
         # Create a tag->scripts dict for tags that has local scripts.
         local_tag_scripts_dict = {
@@ -1120,9 +1131,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
         return context
 
     def get_object(self, queryset=None):
@@ -1162,43 +1173,29 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             return reverse("script", args=[self.site.uid, self.script.pk])
 
 
-class GlobalScriptRedirectID(RedirectView, LoginRequiredMixin):
-    permanent = False
-    query_string = True
-    pattern_name = "script"
-
-    def get_redirect_url(self, *args, **kwargs):
-        user = self.request.user
-
-        script = get_object_or_404(Script, pk=kwargs["script_pk"])
-        # No need to support this for local scripts
-        if script.site:
-            return "/"
-        else:  # If the script is global
-            user_sites = user.user_profile.sites.all()
-
-            # If a user is a member of multiple sites, just randomly pick the first one
-            kwargs["slug"] = user_sites.first().uid
-
-            return super().get_redirect_url(*args, **kwargs)
-
-
-class GlobalScriptRedirectUID(RedirectView, LoginRequiredMixin):
+class GlobalScriptRedirect(RedirectView, LoginRequiredMixin):
     permanent = False
     query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
 
-        script = get_object_or_404(Script, uid=kwargs["script_uid"])
+        if "script_pk" in kwargs:
+            script = get_object_or_404(Script, id=kwargs["script_pk"])
+        else:
+            script = get_object_or_404(Script, uid=kwargs["script_uid"])
+
         # No need to support this for local scripts
         if script.site:
             return "/"
         else:  # If the script is global
-            # If a user is a member of multiple sites, just randomly pick the first one
+            # If a user is a member of multiple sites, just randomly send them to the first one
             first_slug = user.user_profile.sites.all().first().uid
 
-            return reverse("script", args=[first_slug, script.pk])
+            if script.is_security_script:
+                return reverse("security_script", args=[first_slug, script.pk])
+            else:
+                return reverse("script", args=[first_slug, script.pk])
 
 
 class ScriptRun(SiteView):
@@ -2424,7 +2421,12 @@ class UsersMixin(object):
     def add_userlist_to_context(self, context):
         if "site" not in context:
             self.add_site_to_context(context)
-        context["user_list"] = context["site"].users
+        if self.request.user.is_superuser:
+            context["user_list"] = context["site"].users
+        else:
+            context["user_list"] = context["site"].users.filter(
+                user_profile__is_hidden=False
+            )
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(
             self.site
@@ -3095,9 +3097,9 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected"] = self.object
 
         request_user = self.request.user
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
 
         return context
 
@@ -3317,15 +3319,21 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                 {
                     "pk": event.pk,
                     "slug": site.uid,
-                    "problem_name": event.problem.name
-                    if event.problem
-                    else event.event_rule_server.name,
-                    "problem_url": reverse(
-                        "event_rule_security_problem", args=[site.uid, event.problem.id]
-                    )
-                    if event.problem
-                    else reverse(
-                        "event_rule_server", args=[site.uid, event.event_rule_server.id]
+                    "problem_name": (
+                        event.problem.name
+                        if event.problem
+                        else event.event_rule_server.name
+                    ),
+                    "problem_url": (
+                        reverse(
+                            "event_rule_security_problem",
+                            args=[site.uid, event.problem.id],
+                        )
+                        if event.problem
+                        else reverse(
+                            "event_rule_server",
+                            args=[site.uid, event.event_rule_server.id],
+                        )
                     ),
                     "pc_id": event.pc.id,
                     "occurred": event.occurred_time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -3333,14 +3341,18 @@ class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
                     "status": event.get_status_display(),
                     "status_label": event.STATUS_TO_LABEL[event.status],
                     "level": EventLevels.LEVEL_TRANSLATIONS[
-                        event.problem.level
-                        if event.problem
-                        else event.event_rule_server.level
+                        (
+                            event.problem.level
+                            if event.problem
+                            else event.event_rule_server.level
+                        )
                     ],
                     "level_label": EventLevels.LEVEL_TO_LABEL[
-                        event.problem.level
-                        if event.problem
-                        else event.event_rule_server.level
+                        (
+                            event.problem.level
+                            if event.problem
+                            else event.event_rule_server.level
+                        )
                     ]
                     + "",
                     "pc_name": event.pc.name,
@@ -3511,9 +3523,19 @@ class DocView(TemplateView, LoginRequiredMixin):
         return context
 
 
-class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
+class ImageVersionRedirect(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+
+        return reverse(
+            "images-product",
+            kwargs={"slug": site.url, "product_id": Product.objects.first().id},
+        )
+
+
+class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     """Displays all of the image versions that this site has access to (i.e.,
-    all versions released before the site's last_version datestamp).
+    all versions released before the site's paid_for_access_until datestamp).
     """
 
     template_name = "system/site_images.html"
@@ -3521,33 +3543,45 @@ class ImageVersionsView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
     selection_class = ImageVersion
 
     def get_context_data(self, **kwargs):
-        context = super(ImageVersionsView, self).get_context_data(**kwargs)
+        context = super(ImageVersionView, self).get_context_data(**kwargs)
 
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        last_pay_date = site.paid_for_access_until
 
-        if not last_pay_date:
-            context["site_allowed"] = False
+        selected_product = get_object_or_404(Product, id=self.kwargs.get("product_id"))
 
-        else:
-            context["site_allowed"] = True
+        # excluding versions where
+        # image release date > client's last pay date.
+        versions_accessible_by_user = (
+            ImageVersion.objects.exclude(release_date__gt=site.paid_for_access_until)
+            .filter(product=selected_product)
+            .order_by("-image_version")
+        )
 
-            # excluding versions where
-            # image release date > client's last pay date.
-            versions = ImageVersion.objects.exclude(release_date__gt=last_pay_date)
+        # If the product is multilang: Don't show images besides multilang for all languages besides danish
+        user_language = self.request.user.user_profile.language
+        if selected_product.multilang and user_language != "da":
+            versions_accessible_by_user = versions_accessible_by_user.exclude(
+                image_upload_multilang="#"
+            )  # The hash symbol is the default for the field, indicating no file was uploaded
 
-            platform_choice = self.kwargs.get(
-                "platform", ImageVersion.platform_choices[0][0]
-            ).upper()
+        products = Product.objects.all()
 
-            selected_platform = next(
-                (x for x in ImageVersion.platform_choices if x[0] == platform_choice),
-                ImageVersion.platform_choices[0][0],
+        # Swedish hacks until we do a proper translation of the database
+        # TODO: Please remove this section!
+        if user_language == "sv":
+            selected_product.name = selected_product.name.replace(
+                "OS2borgerPC", "Sambruk MedborgarPC"
             )
-            context["selected_platform"] = selected_platform
-            context["selected_platform_images"] = versions.filter(
-                platform=selected_platform[0]
-            ).order_by("-release_date", "-id")
-            context["platform_choices"] = dict(ImageVersion.platform_choices)
+            for i in versions_accessible_by_user:
+                i.product.name = i.product.name.replace(
+                    "OS2borgerPC", "Sambruk MedborgarPC"
+                )
+            for p in products:
+                p.name = p.name.replace("OS2borgerPC", "Sambruk MedborgarPC")
+
+        context["selected_product"] = selected_product
+        context["object_list"] = versions_accessible_by_user
+        context["products"] = products
+        context["user_language"] = user_language
 
         return context

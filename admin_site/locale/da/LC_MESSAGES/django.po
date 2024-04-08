@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 12:00+0100\n"
+"POT-Creation-Date: 2024-04-04 14:13+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -18,6 +18,10 @@ msgstr ""
 #: account/models.py system/forms.py templates/documentation/users/index.html
 msgid "Language"
 msgstr "Sprog"
+
+#: account/models.py
+msgid "hidden user"
+msgstr "skjult bruger"
 
 #: account/models.py templates/documentation/users/index.html
 msgid "Site User"
@@ -231,6 +235,14 @@ msgid "Number of BorgerPC computers"
 msgstr "Antal BorgerPC computere"
 
 #: system/admin.py
+msgid "Feature permissions"
+msgstr "Feature-adgange"
+
+#: system/admin.py system/models.py
+msgid "sites with access"
+msgstr "sites med adgang"
+
+#: system/admin.py
 msgid "Site"
 msgstr "Site"
 
@@ -255,6 +267,18 @@ msgid ""
 "Necessary for customers who wish to require booking through Easy!Appointments"
 msgstr ""
 "Nødvendigt for kunder der ønsker at kræve booking gennem Easy!Appointments"
+
+#: system/forms.py system/models.py
+msgid "API key for login API (e.g. Quria)"
+msgstr "API-nøgle til login API (f.eks. Quria)"
+
+#: system/forms.py system/models.py
+msgid ""
+"Necessary for customers who wish to authenticate BorgerPC logins through an "
+"API that requires an API key (e.g. Quria)"
+msgstr ""
+"Nødvendigt for kunder der ønsker at autentificere login på BorgerPC gennem "
+"et API, der kræver en API-nøgle (f.eks. Quria)"
 
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
@@ -336,6 +360,10 @@ msgid "Paid for access until this date"
 msgstr "Betalt for adgang indtil denne dato"
 
 #: system/models.py
+msgid "ISIL/NCIP"
+msgstr "ISIL/NCIP"
+
+#: system/models.py
 msgid ""
 "Necessary for customers who wish to integrate with standard library login"
 msgstr "Nødvendigt for kunder der ønsker at integrere standard bibliotekslogin"
@@ -384,10 +412,6 @@ msgstr "Tidspunkt for login"
 #: system/models.py
 msgid "Time of logout"
 msgstr "Tidspunkt for logud"
-
-#: system/models.py
-msgid "sites with access"
-msgstr "sites med adgang"
 
 #: system/models.py
 msgid "event_type:Altered Hours"
@@ -714,6 +738,10 @@ msgstr "modtagelsestidspunkt"
 #: system/models.py
 msgid "assigned user"
 msgstr "håndteres af"
+
+#: system/models.py
+msgid "product"
+msgstr "produkt"
 
 #: system/models.py
 msgid "key"
@@ -4791,7 +4819,7 @@ msgid "User"
 msgstr "Bruger"
 
 #: templates/system/jobs/site_jobs.html templates/system/pcs/form.html
-#: templates/system/scripts/form.html
+#: templates/system/scripts/update.html
 msgid "Created"
 msgstr "Oprettet"
 
@@ -4981,7 +5009,8 @@ msgstr "Ingen grupper blev fundet"
 msgid ""
 "Clik the 'Add new group' button in the menu to the left to create a group"
 msgstr ""
-"Klik på 'Tilføj ny gruppe' knappen i menuen til venstre for at oprette en gruppe"
+"Klik på 'Tilføj ny gruppe' knappen i menuen til venstre for at oprette en "
+"gruppe"
 
 #: templates/system/pcgroups/site_groups.html
 msgid "Create group"
@@ -5093,10 +5122,6 @@ msgid "Create"
 msgstr "Opret"
 
 #: templates/system/scripts/form.html
-msgid "Modified"
-msgstr "Ændret"
-
-#: templates/system/scripts/form.html
 msgid "Code"
 msgstr "Kode"
 
@@ -5203,6 +5228,10 @@ msgstr "Find ..."
 msgid "Clear the filter"
 msgstr "Ryd filter"
 
+#: templates/system/scripts/update.html
+msgid "Modified"
+msgstr "Ændret"
+
 # Konsistens ml. navn i sikkerhedsregel og sikkerhedshændelse
 #: templates/system/security_events/site_security_events.html
 msgid "Level"
@@ -5257,8 +5286,12 @@ msgid "Release notes"
 msgstr "Udgivelsesnoter"
 
 #: templates/system/site_images.html
-msgid "Download image"
-msgstr "Download image"
+msgid "Download standard image"
+msgstr "Download standard-image"
+
+#: templates/system/site_images.html
+msgid "Download multi language image"
+msgstr "Download flersprogs-image"
 
 #: templates/system/site_images.html
 msgid "No images were found"
@@ -5269,20 +5302,8 @@ msgid "Earlier versions"
 msgstr "Tidligere versioner"
 
 #: templates/system/site_images.html
-msgid "NO ACCESS"
-msgstr "INGEN ADGANG"
-
-#: templates/system/site_images.html
-msgid ""
-"Your organization has no service agreement with a OS2borgerPC provider so no "
-"images are shown."
-msgstr ""
-"Din organisation har ikke nogen serviceaftale med en OS2borgerpc leverandør, "
-"og derfor vises ingen images."
-
-#: templates/system/site_images.html
-msgid "Please contact a OS2borgerPC provider to learn more."
-msgstr "Kontakt venligst OS2borgerPC leverandør for at høre mere."
+msgid "Download"
+msgstr "Download"
 
 #: templates/system/site_list.html
 msgid "Total number of sites"
@@ -6013,10 +6034,17 @@ msgstr ""
 msgid "Disable"
 msgstr "Deaktivér"
 
+#: templates/widgets/picklist.html
+msgid "No options"
+msgstr "Ingen muligheder"
+
 #: templates/widgets/picklist.html templates/widgets/scriptsearch.html
 #: templates/widgets/wake_plan_picklist.html
 msgid "Data is missing"
 msgstr "Data mangler"
+
+#~ msgid "Supported platforms"
+#~ msgstr "Understøttede platforme"
 
 #~ msgid "New group"
 #~ msgstr "Ny gruppe"
