@@ -94,7 +94,10 @@ def quria_login_validate(site, loaner_number, pincode):
         return status
     else:
         # Unable to authenticate with system API key - log this.
-        message = response.json()["message"]
+        try:
+            message = response.json()["message"]
+        except ValueError:
+            message = "Invalid NCIP"
         logger.error(
             f"{site.name} was unable to log in with configured API key: {message}"
         )
