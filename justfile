@@ -106,9 +106,14 @@ run-debug:
   sudo docker attach {{django_container}}
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)
+# --no-obsolete removes unused translations, --add-location file is there to make diffs clearer by skipping line
+# numbers, so a change early in views.py doesn't make makemessages update hundreds of line references
+# TODO: makemessages sometimes suddenly makes changes to where it line wraps, making diffs hard to read. Seemingly there's
+# no hard line wrap set, and the only option is to disable line wrap completely which doesn't seem ideal. Hopefully a
+# future Django version provides a solution.
 translations-make-messages: (verify-container-running django_container) fix-permissions
-  @just managepy makemessages --all --ignore venv --add-location file
-  @just managepy makemessages --all --ignore venv --add-location file -d djangojs
+  @just managepy makemessages --all --ignore venv --add-location file --no-obsolete
+  @just managepy makemessages --all --ignore venv --add-location file --no-obsolete -d djangojs
 
 # Run django's compile-messages (usually after make-messages) for translations
 translations-compile-messages: (verify-container-running django_container)
