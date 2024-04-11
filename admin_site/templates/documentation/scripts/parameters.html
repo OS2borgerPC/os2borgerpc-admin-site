@@ -58,10 +58,10 @@
       <li>
         <strong>{% translate "Choices" %}</strong>:
         {% blocktranslate trimmed %}
-        Makes it possible to make a list predefined choices. 
+        Makes it possible to make a list of predefined choices.
         This type of parameter is useful when you want to limit the possible values that can be supplied as input. 
-        To make a list of choices, you make a comma seperated list of the values in the default value field. 
-        The choices will be displayed in the same order as they are written, 
+        To make a list of choices, you make a comma separated list of the values in the default value field.
+        The choices will be displayed in the same order as they are written, and
         if you add a comma at the end or the start of the list, it will be displayed as an empty choice.
         {% endblocktranslate %}
       </li>
@@ -82,7 +82,7 @@
     of the types {{str}}, {{int}}, {{date}}, {{choices}} and {{time}} can have default values. Lastly,
     an argument can be set as required or not. Required parameters must be supplied
     when running the script whereas non-required parameters can be left blank.
-    Boolean parameters cannot be required. If you wish to remove an argument, you
+    Booleans and choices cannot be required. If you wish to remove an argument, you
     must click on "Remove" to the right in the list.
     {% endblocktranslate %}
   </p>
