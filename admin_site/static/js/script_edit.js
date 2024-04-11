@@ -65,7 +65,7 @@
             elem.find('input.name-input')[0].required = true
             elem.find('input.mandatory-input')[0].checked = elem.find('input.mandatory-input')[0].value != "false"
             elem.find('select').val(data['value_type'])
-            if (elem.find('select')[0].value == "BOOLEAN") {
+            if (elem.find('select')[0].value == "BOOLEAN" || elem.find('select')[0].value == "TEXT_FIELD") {
                 elem.find('input.mandatory-input')[0].disabled = true
             }
             elem.find('select')[0].addEventListener("change", type_check)
@@ -105,6 +105,8 @@
                 default_input.attr('type', 'number')
             } else if (input_type == "TIME") {
                 default_input.attr('type', 'time')
+            } else if (input_type == "TEXT_FIELD") {
+                default_input.attr('type', 'textfield')
             } else {
                 default_input[0].disabled = true
             }
@@ -127,7 +129,7 @@ function type_check(event) {
     index = event.target.name.slice(13, -5), ++index
     checkboxes = document.getElementsByClassName("mandatory-input")
     default_values = document.getElementsByClassName("default-input")
-    if (event.target.value == "BOOLEAN") {
+    if (event.target.value == "BOOLEAN" || event.target.value == "TEXT_FIELD") {
         checkboxes[index].checked = false
         checkboxes[index].disabled = true
     } else {
@@ -136,7 +138,9 @@ function type_check(event) {
     }
     default_values[index].disabled = false
     default_values[index].value = ""
-    if (event.target.value == "STRING") {
+    if (event.target.value == "TEXT_FIELD") {
+        default_values[index].type = "textfield"
+    } else if (event.target.value == "STRING") {
         default_values[index].type = "text"
     } else if (event.target.value == "DATE") {
         default_values[index].type = "date"
