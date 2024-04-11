@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("system", "0082_product_alter_imageversion_options_and_more"),
+        ("system", "0083_site_citizen_login_api_key_alter_site_isil"),
     ]
 
     operations = [
