@@ -1,3 +1,11 @@
+Version 5.27.0, April 10, 2024
+------------------------------
+
+- Fix bug that prevented jobs related to scripts requiring feature permissions from showing correctly
+- Update to Django version 4.2.11
+- Add new input parameter type: choices, which give a list of choices
+- Make makemessages use the no-obsolete flag
+
 Version 5.26.0, April 08, 2024
 ------------------------------
 
