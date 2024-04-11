@@ -684,7 +684,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
         if not self.request.user.is_superuser:
             queryset = Job.objects.filter(
                 Q(batch__script__is_hidden=False)
-                | Q(batch__script__uid="suspend_after_time")
+                | Q(batch__script__feature_permission__in=site.feature_permission.all())
             )
         else:
             queryset = Job.objects.all()
@@ -3100,7 +3100,6 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["site_membership"] = (
             request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         )
-
         return context
 
     def form_valid(self, form):

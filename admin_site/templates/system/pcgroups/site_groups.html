@@ -101,7 +101,8 @@ active
               <p>
                 {% translate "Add a supervisor for the group" as add_s %}
                 {% translate "Remove a supervisor for the group" as remove_s %}
-                <label class="mt-2">{% translate "Supervisors for this group" %}</label>
+
+                <label class="mt-2">{% translate "Supervisors for the group" %}</label>
                 {% translate 'This is used to control who receives the e-mails for Events, ie. Security Events or Offline Events. If one or more Supervisors are set for a given Group, these people will receive the e-mails instead of those set in the Monitoring Rule' as help_text %}
                 <button type="button" class="material-icons btn align-middle" data-container="body" title='{{help_text}}' data-toggle="popover" data-placement="right">
                   help_outline
@@ -113,7 +114,7 @@ active
             {# SecurityProblem #}
             {% if event_rules_incl_site %}
               <div class="mt-3">
-                <p>{% translate "Associated monitoring rules" %}</p>
+                <p>{% translate "Effective monitoring rules for the group" %}</p>
                 <ul class="mt-2 list-group">
                   {% for e in event_rules_incl_site %}
                     <li class="list-group-item py-3">
