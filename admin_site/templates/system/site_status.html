@@ -9,9 +9,9 @@
   <div class="container-fluid main sublevelmain" style="overflow-x: auto;">
     <h2 class="divideheader">
       {% translate "Computers" %}
-      <span class="ms-3 badge bg-secondary">{% translate "Activated:" %} {{ activated_pcs }} / {{ total_pcs }}</span>
+      <span class="ms-3 badge bg-secondary text-dark">{% translate "Activated:" %} {{ activated_pcs }} / {{ total_pcs }}</span>
       {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
-      <span class="ms-3 badge bg-secondary">{% translate "Online:" %} {{ online_pcs }} / {{ total_pcs }}</span>
+      <span class="ms-3 badge bg-secondary text-dark">{% translate "Online:" %} {{ online_pcs }} / {{ total_pcs }}</span>
     </h2>
     <table class="table caption-top" data-toggle="table" data-classes="table table-bordered" id="site-status-table">
       <thead>

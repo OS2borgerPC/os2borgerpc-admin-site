@@ -4,7 +4,7 @@
 {% block header %}
   <header class="d-flex justify-content-between {% block header_class %}{% endblock %}">
 
-    <h1 class="siteheader">{% block  header_title %}{% endblock %}</h1>
+    <h1 class="siteheader w-100">{% block header_title %}{% endblock %}</h1>
 
     {% if user.is_authenticated %}
 

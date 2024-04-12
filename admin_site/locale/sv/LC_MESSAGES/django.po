@@ -5322,8 +5322,6 @@ msgid "Administrate"
 msgstr "Hantera"
 
 #: templates/system/site_list.html
-#, fuzzy
-#| msgid "Related to version"
 msgid "Admin site version"
 msgstr "Adminsida-version"
 
