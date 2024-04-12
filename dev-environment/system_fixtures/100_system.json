@@ -4040,8 +4040,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            5,
             8,
+            5,
             6,
             7
         ]
@@ -6393,7 +6393,7 @@
     "fields": {
         "group": 10,
         "script": 9,
-        "position": 1
+        "position": 2
     }
 },
 {
@@ -6411,7 +6411,7 @@
     "fields": {
         "group": 10,
         "script": 8,
-        "position": 2
+        "position": 3
     }
 },
 {
@@ -6420,7 +6420,7 @@
     "fields": {
         "group": 10,
         "script": 6,
-        "position": 3
+        "position": 4
     }
 },
 {
@@ -6429,7 +6429,7 @@
     "fields": {
         "group": 10,
         "script": 7,
-        "position": 4
+        "position": 5
     }
 },
 {
@@ -6438,7 +6438,7 @@
     "fields": {
         "group": 10,
         "script": 10,
-        "position": 5
+        "position": 6
     }
 },
 {
@@ -6447,7 +6447,7 @@
     "fields": {
         "group": 10,
         "script": 9,
-        "position": 6
+        "position": 7
     }
 },
 {
@@ -6456,7 +6456,7 @@
     "fields": {
         "group": 10,
         "script": 27,
-        "position": 7
+        "position": 8
     }
 },
 {
@@ -6465,7 +6465,7 @@
     "fields": {
         "group": 10,
         "script": 31,
-        "position": 8
+        "position": 9
     }
 },
 {
@@ -6609,7 +6609,7 @@
     "fields": {
         "group": 10,
         "script": 36,
-        "position": 9
+        "position": 10
     }
 },
 {
@@ -6618,7 +6618,16 @@
     "fields": {
         "group": 10,
         "script": 84,
-        "position": 10
+        "position": 11
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 38,
+    "fields": {
+        "group": 10,
+        "script": 86,
+        "position": 1
     }
 },
 {
@@ -10799,7 +10808,7 @@
         "value_type": "FILE",
         "default_value": "",
         "position": 3,
-        "mandatory": true,
+        "mandatory": false,
         "script": 86
     }
 },
@@ -11019,6 +11028,86 @@
         "file_value": "",
         "input": 98,
         "associated_script": 16
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 15,
+    "fields": {
+        "string_value": "hey",
+        "file_value": "",
+        "input": 99,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 16,
+    "fields": {
+        "string_value": "123",
+        "file_value": "",
+        "input": 100,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 17,
+    "fields": {
+        "string_value": "2024-04-03",
+        "file_value": "",
+        "input": 101,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 18,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 102,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 19,
+    "fields": {
+        "string_value": "True",
+        "file_value": "",
+        "input": 103,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 20,
+    "fields": {
+        "string_value": "10:20",
+        "file_value": "",
+        "input": 104,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 21,
+    "fields": {
+        "string_value": "password",
+        "file_value": "",
+        "input": 105,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 22,
+    "fields": {
+        "string_value": "Option 1",
+        "file_value": "",
+        "input": 106,
+        "associated_script": 38
     }
 },
 {

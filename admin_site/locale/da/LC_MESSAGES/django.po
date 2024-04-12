@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-11 10:48+0200\n"
+"POT-Creation-Date: 2024-04-12 14:39+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -56,12 +56,8 @@ msgid "updated"
 msgstr "opdateret"
 
 #: changelog/models.py
-msgid "author"
-msgstr "forfatter"
-
-#: changelog/models.py
-msgid "version"
-msgstr "version"
+msgid "published (visible)"
+msgstr "offentliggjort (synlig)"
 
 #: changelog/templates/comments/form.html
 msgid "Answer to"
@@ -128,14 +124,6 @@ msgstr "Svar"
 #: changelog/templates/item.html changelog/templates/list.html
 msgid "News categories"
 msgstr "Nyhedskategorier"
-
-#: changelog/templates/item.html
-msgid "Related to version"
-msgstr "Relateret til version"
-
-#: changelog/templates/item.html
-msgid "Written by"
-msgstr "Skrevet af"
 
 #: changelog/templates/item.html
 msgid "Comments"

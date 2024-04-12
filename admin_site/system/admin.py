@@ -453,15 +453,11 @@ class CitizenAdmin(admin.ModelAdmin):
 class ChangelogAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "author",
-        "version",
+        "published",
         "created",
         "updated",
     )
-    search_fields = (
-        "title",
-        "version",
-    )
+    search_fields = ("title",)
     filter_horizontal = ("tags",)
 
 
