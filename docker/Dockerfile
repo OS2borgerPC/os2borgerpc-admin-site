@@ -50,6 +50,8 @@ VOLUME /media
 
 WORKDIR /code/
 
+COPY VERSION /code/VERSION
+
 # Install requirements.
 COPY admin_site/requirements.txt /code/admin_site/requirements.txt
 RUN pip3 install --no-cache-dir -r  admin_site/requirements.txt
