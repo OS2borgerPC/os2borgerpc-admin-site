@@ -32,13 +32,12 @@ class ChangelogListView(ListView):
     def get_queryset(self, filter=None):
         if filter:
             return Changelog.objects.filter(
-                Q(author__icontains=filter)
-                | Q(title__icontains=filter)
+                Q(title__icontains=filter)
                 | Q(content__icontains=filter)
-                | Q(description__icontains=filter)
-                | Q(version__icontains=filter)
+                | Q(description__icontains=filter),
+                Q(published=True),
             )
-        return Changelog.objects.all()
+        return Changelog.objects.filter(published=True)
 
     def get_paginated_queryset(self, queryset, page):
         if not page:

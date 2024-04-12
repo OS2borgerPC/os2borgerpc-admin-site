@@ -27,10 +27,7 @@ class Changelog(models.Model):
     tags = models.ManyToManyField(ChangelogTag, related_name="changelogs", blank=True)
     created = models.DateTimeField(verbose_name=_("created"), default=timezone.now)
     updated = models.DateTimeField(verbose_name=_("updated"), default=timezone.now)
-    author = models.CharField(verbose_name=_("author"), max_length=255)
-    # This field should be used to denote the version number of the given product
-    # Ie 'admin-site version 1.2.3' or 'script name version 1.0'
-    version = models.CharField(verbose_name=_("version"), max_length=255)
+    published = models.BooleanField(verbose_name=_("published (visible)"), default=True)
 
     def get_tags(self):
         return self.tags.values("name", "pk")
