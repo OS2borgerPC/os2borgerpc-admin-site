@@ -5327,8 +5327,6 @@ msgid "Administrate"
 msgstr "Administrér"
 
 #: templates/system/site_list.html
-#, fuzzy
-#| msgid "Related to version"
 msgid "Admin site version"
 msgstr "Adminsite-version"
 
