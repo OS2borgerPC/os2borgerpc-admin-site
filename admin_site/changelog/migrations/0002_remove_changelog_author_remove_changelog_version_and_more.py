@@ -21,8 +21,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="changelog",
             name="published",
-            field=models.BooleanField(
-                default=True, verbose_name="published (visible)"
-            ),
+            field=models.BooleanField(default=True, verbose_name="published (visible)"),
         ),
     ]
