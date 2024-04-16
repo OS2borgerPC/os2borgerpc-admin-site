@@ -31,14 +31,16 @@ class ChangelogListView(ListView):
 
     def get_queryset(self, filter=None):
         if filter:
-            return Changelog.objects.filter(
-                Q(author__icontains=filter)
-                | Q(title__icontains=filter)
+            changelogs = Changelog.objects.filter(
+                Q(title__icontains=filter)
                 | Q(content__icontains=filter)
                 | Q(description__icontains=filter)
-                | Q(version__icontains=filter)
             )
-        return Changelog.objects.all()
+        else:
+            changelogs = Changelog.objects.all()
+        if self.request.user.is_anonymous or not self.request.user.is_superuser:
+            changelogs = changelogs.filter(published=True)
+        return changelogs
 
     def get_paginated_queryset(self, queryset, page):
         if not page:

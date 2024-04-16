@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-11 10:48+0200\n"
+"POT-Creation-Date: 2024-04-15 10:01+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -56,12 +56,8 @@ msgid "updated"
 msgstr "uppdaterat"
 
 #: changelog/models.py
-msgid "author"
-msgstr "författare"
-
-#: changelog/models.py
-msgid "version"
-msgstr "version"
+msgid "published (visible)"
+msgstr "publicerad (synlig)"
 
 #: changelog/templates/comments/form.html
 msgid "Answer to"
@@ -130,14 +126,6 @@ msgid "News categories"
 msgstr "Nyhetskategorier"
 
 #: changelog/templates/item.html
-msgid "Related to version"
-msgstr "Relaterad till version"
-
-#: changelog/templates/item.html
-msgid "Written by"
-msgstr "Skriven av"
-
-#: changelog/templates/item.html
 msgid "Comments"
 msgstr "Kommentarer"
 
@@ -183,6 +171,10 @@ msgstr "nyheter"
 #: changelog/templates/list.html
 msgid "that matches the query"
 msgstr "som matchar sökordet"
+
+#: changelog/templates/list.html
+msgid "Draft"
+msgstr "Förslag"
 
 #: changelog/templates/list.html
 msgid "Read more"
