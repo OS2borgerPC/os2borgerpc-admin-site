@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 10:01+0200\n"
+"POT-Creation-Date: 2024-04-15 10:11+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -5320,6 +5320,10 @@ msgstr "Totalt antal datorer"
 #: templates/system/site_list.html
 msgid "Administrate"
 msgstr "Hantera"
+
+#: templates/system/site_list.html
+msgid "Admin site version"
+msgstr "Adminsida-version"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"

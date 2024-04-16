@@ -5,11 +5,16 @@
   {% translate "Total number of sites" as total_sites %}
   {% translate "Total number of computers" as total_pcs %}
   {% translate "Administrate" %} <em>{% translate "Sites" %}</em>
-  <span class="ms-3 badge bg-secondary" title="{{total_sites}}">{% translate "Sites" %}: {{site_list|length}}</span>
-  <span class="ms-3 badge bg-secondary" title="{{total_pcs}}">{% translate "Computers" %}: {{pcs_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark" title="{{total_sites}}">{% translate "Sites" %}: {{site_list|length}}</span>
+  <span class="ms-3 badge bg-secondary text-dark" title="{{total_pcs}}">{% translate "Computers" %}: {{pcs_count}}</span>
+  {% if user.is_superuser %}
+  <div class="float-end">
+    <span class="me-3 badge bg-secondary text-dark">{% translate "Admin site version" %}: {{version}}</span>
+  </div>
+  {% endif %}
 {% endblock %}
 
-{% block header_class %}container{% endblock %}
+{% block header_class %}container-fluid{% endblock %}
 
 {% block specific_content %}
   <div class="container">
