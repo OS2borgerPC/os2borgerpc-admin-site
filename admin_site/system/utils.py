@@ -305,7 +305,7 @@ def send_password_sms(phone_number, message, site):
     else:
         # Unable to authenticate with system user - log this.
         logger.error(
-            f"{site.name} was unable to authorize with SMSTeknik with configured user name and password"
+            f"{site.name} was unable to authorize with SMSTeknik with configured user name and password: {response.text}"
         )
         return False
 
