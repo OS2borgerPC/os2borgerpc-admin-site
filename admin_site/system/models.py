@@ -1124,7 +1124,14 @@ class Job(models.Model):
         script = self.batch.script
         new_batch = Batch(site=self.batch.site, script=script, name="")
         new_batch.save()
+        parameter_values = "["
         for p in self.batch.parameters.all():
+            if p.input.value_type == Input.PASSWORD:
+                parameter_values += "*****, "
+            elif p.input.value_type == Input.FILE:
+                parameter_values += str(p.file_value) + ", "
+            else:
+                parameter_values += str(p.string_value) + ", "
             new_p = BatchParameter(
                 input=p.input,
                 batch=new_batch,
@@ -1133,7 +1140,13 @@ class Job(models.Model):
             )
             new_p.save()
 
-        new_job = Job(batch=new_batch, pc=self.pc, user=user)
+        if len(parameter_values) > 1:
+            parameter_values = parameter_values[:-2]
+        parameter_values += "]"
+
+        log_output = f"New job with arguments {parameter_values}"
+
+        new_job = Job(batch=new_batch, pc=self.pc, user=user, log_output=log_output)
         new_job.save()
         self.resolve()
 
