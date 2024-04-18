@@ -1,3 +1,10 @@
+Version 5.28.0, April 18, 2024
+------------------------------
+
+- Fix CVE-2024-1135 (gunicorn) by updating it to 22.0.0
+- Make choices input parameter type work in the policy list
+- Various updates to changelogs (layouting, draft status, remove a few barely used fields)
+
 Version 5.27.0, April 10, 2024
 ------------------------------
 
