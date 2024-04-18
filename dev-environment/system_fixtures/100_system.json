@@ -3423,20 +3423,39 @@
     }
 },
 {
+    "model": "system.country",
+    "pk": 1,
+    "fields": {
+        "name": "Danmark"
+    }
+},
+{
+    "model": "system.country",
+    "pk": 2,
+    "fields": {
+        "name": "Sverige"
+    }
+},
+{
     "model": "system.site",
     "pk": 1,
     "fields": {
         "name": "Magenta",
         "uid": "magenta",
         "country": 1,
+        "is_testsite": false,
         "configuration": 1,
         "paid_for_access_until": "2025-04-02",
         "created": null,
         "agency_id": "DK-100000",
+        "citizen_login_api_user": "",
+        "citizen_login_api_password": "",
+        "citizen_login_api_key": "",
+        "booking_api_url": "",
+        "booking_api_key": "",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00",
-        "rerun_asc": false,
-        "is_testsite": false
+        "rerun_asc": false
     }
 },
 {
@@ -3446,14 +3465,19 @@
         "name": "Magenta Test",
         "uid": "magenta-test",
         "country": 1,
+        "is_testsite": true,
         "configuration": 60,
         "paid_for_access_until": "2025-01-17",
         "created": null,
         "agency_id": "DK-100000",
+        "citizen_login_api_user": "",
+        "citizen_login_api_password": "",
+        "citizen_login_api_key": "",
+        "booking_api_url": "",
+        "booking_api_key": "",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00",
-        "rerun_asc": false,
-        "is_testsite": true
+        "rerun_asc": false
     }
 },
 {
@@ -3463,10 +3487,16 @@
         "name": "Site3",
         "uid": "site3",
         "country": 2,
+        "is_testsite": false,
         "configuration": 61,
         "paid_for_access_until": "2024-04-01",
         "created": null,
         "agency_id": "",
+        "citizen_login_api_user": "",
+        "citizen_login_api_password": "",
+        "citizen_login_api_key": "",
+        "booking_api_url": "",
+        "booking_api_key": "",
         "user_login_duration": "01:00:00",
         "user_quarantine_duration": "04:00:00",
         "rerun_asc": false
@@ -4117,9 +4147,9 @@
         "wake_change_events": [
             8,
             11,
+            1,
             9,
-            10,
-            1
+            10
         ]
     }
 },
@@ -4529,6 +4559,29 @@
     }
 },
 {
+    "model": "system.scripttag",
+    "pk": 6,
+    "fields": {
+        "name": "Tilgængelighed"
+    }
+},
+{
+    "model": "system.product",
+    "pk": 1,
+    "fields": {
+        "name": "OS2borgerPC",
+        "multilang": true
+    }
+},
+{
+    "model": "system.product",
+    "pk": 2,
+    "fields": {
+        "name": "OS2borgerPC Kiosk",
+        "multilang": false
+    }
+},
+{
     "model": "system.script",
     "pk": 1,
     "fields": {
@@ -4544,7 +4597,9 @@
         "is_security_script": true,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -4563,7 +4618,9 @@
         "is_security_script": true,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -4582,7 +4639,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -4601,9 +4660,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             3
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4622,9 +4683,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             3
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4643,9 +4706,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             3
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4664,9 +4729,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             3
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4685,9 +4752,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             3
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4706,9 +4775,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             3
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4727,9 +4798,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             4
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4748,9 +4821,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             4
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4769,9 +4844,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             4
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4790,9 +4867,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             4
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4811,9 +4890,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             2
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4832,9 +4913,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             2
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4853,9 +4936,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             2
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4874,9 +4959,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             2
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4895,9 +4982,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4916,9 +5005,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4937,9 +5028,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4958,9 +5051,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -4979,9 +5074,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5000,9 +5097,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5021,9 +5120,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5042,9 +5143,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5063,9 +5166,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5084,9 +5189,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5105,9 +5212,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5126,9 +5235,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5147,9 +5258,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5168,9 +5281,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5189,9 +5304,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5210,9 +5327,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5231,9 +5350,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5252,9 +5373,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5273,7 +5396,9 @@
         "is_security_script": true,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5292,7 +5417,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5311,7 +5438,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5330,7 +5459,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5349,7 +5480,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5368,9 +5501,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5389,9 +5524,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             4
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5410,7 +5547,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5429,7 +5568,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5448,7 +5589,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5467,7 +5610,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5486,7 +5631,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5505,9 +5652,11 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             1
-        ]
+        ],
+        "products": []
     }
 },
 {
@@ -5526,7 +5675,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5545,7 +5696,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5564,7 +5717,9 @@
         "is_security_script": true,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5583,7 +5738,9 @@
         "is_security_script": false,
         "is_hidden": true,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5602,7 +5759,9 @@
         "is_security_script": false,
         "is_hidden": true,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5621,7 +5780,9 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
-        "tags": []
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -5640,9 +5801,32 @@
         "is_security_script": false,
         "is_hidden": false,
         "maintained_by_magenta": false,
+        "feature_permission": null,
         "tags": [
             5
-        ]
+        ],
+        "products": []
+    }
+},
+{
+    "model": "system.script",
+    "pk": 86,
+    "fields": {
+        "created": "2024-04-12T13:28:30.545",
+        "modified": "2024-04-12T13:29:52.674",
+        "user_created": "magenta",
+        "user_modified": "magenta",
+        "name": "Test - Script der tager alle parametertyper",
+        "uid": null,
+        "description": "Se titel.",
+        "site": 1,
+        "executable_code": "script_uploads/emptyish.sh",
+        "is_security_script": false,
+        "is_hidden": false,
+        "maintained_by_magenta": false,
+        "feature_permission": null,
+        "tags": [],
+        "products": []
     }
 },
 {
@@ -6209,7 +6393,7 @@
     "fields": {
         "group": 10,
         "script": 9,
-        "position": 1
+        "position": 2
     }
 },
 {
@@ -6227,7 +6411,7 @@
     "fields": {
         "group": 10,
         "script": 8,
-        "position": 2
+        "position": 3
     }
 },
 {
@@ -6236,7 +6420,7 @@
     "fields": {
         "group": 10,
         "script": 6,
-        "position": 3
+        "position": 4
     }
 },
 {
@@ -6245,7 +6429,7 @@
     "fields": {
         "group": 10,
         "script": 7,
-        "position": 4
+        "position": 5
     }
 },
 {
@@ -6254,7 +6438,7 @@
     "fields": {
         "group": 10,
         "script": 10,
-        "position": 5
+        "position": 6
     }
 },
 {
@@ -6263,7 +6447,7 @@
     "fields": {
         "group": 10,
         "script": 9,
-        "position": 6
+        "position": 7
     }
 },
 {
@@ -6272,7 +6456,7 @@
     "fields": {
         "group": 10,
         "script": 27,
-        "position": 7
+        "position": 8
     }
 },
 {
@@ -6281,7 +6465,7 @@
     "fields": {
         "group": 10,
         "script": 31,
-        "position": 8
+        "position": 9
     }
 },
 {
@@ -6425,7 +6609,7 @@
     "fields": {
         "group": 10,
         "script": 36,
-        "position": 9
+        "position": 10
     }
 },
 {
@@ -6434,7 +6618,16 @@
     "fields": {
         "group": 10,
         "script": 84,
-        "position": 10
+        "position": 11
+    }
+},
+{
+    "model": "system.associatedscript",
+    "pk": 38,
+    "fields": {
+        "group": 10,
+        "script": 86,
+        "position": 1
     }
 },
 {
@@ -10572,6 +10765,102 @@
     }
 },
 {
+    "model": "system.input",
+    "pk": 99,
+    "fields": {
+        "name": "String",
+        "value_type": "STRING",
+        "default_value": "",
+        "position": 0,
+        "mandatory": true,
+        "script": 86
+    }
+},
+{
+    "model": "system.input",
+    "pk": 100,
+    "fields": {
+        "name": "Integer",
+        "value_type": "INT",
+        "default_value": "",
+        "position": 1,
+        "mandatory": true,
+        "script": 86
+    }
+},
+{
+    "model": "system.input",
+    "pk": 101,
+    "fields": {
+        "name": "Date",
+        "value_type": "DATE",
+        "default_value": "",
+        "position": 2,
+        "mandatory": true,
+        "script": 86
+    }
+},
+{
+    "model": "system.input",
+    "pk": 102,
+    "fields": {
+        "name": "File",
+        "value_type": "FILE",
+        "default_value": "",
+        "position": 3,
+        "mandatory": false,
+        "script": 86
+    }
+},
+{
+    "model": "system.input",
+    "pk": 103,
+    "fields": {
+        "name": "Checkbox",
+        "value_type": "BOOLEAN",
+        "default_value": "",
+        "position": 4,
+        "mandatory": false,
+        "script": 86
+    }
+},
+{
+    "model": "system.input",
+    "pk": 104,
+    "fields": {
+        "name": "Time",
+        "value_type": "TIME",
+        "default_value": "",
+        "position": 5,
+        "mandatory": true,
+        "script": 86
+    }
+},
+{
+    "model": "system.input",
+    "pk": 105,
+    "fields": {
+        "name": "Password",
+        "value_type": "PASSWORD",
+        "default_value": "",
+        "position": 6,
+        "mandatory": true,
+        "script": 86
+    }
+},
+{
+    "model": "system.input",
+    "pk": 106,
+    "fields": {
+        "name": "Options",
+        "value_type": "TEXT_FIELD",
+        "default_value": "Option 1, Option 2, Option 3",
+        "position": 7,
+        "mandatory": false,
+        "script": 86
+    }
+},
+{
     "model": "system.batchparameter",
     "pk": 1,
     "fields": {
@@ -10739,6 +11028,86 @@
         "file_value": "",
         "input": 98,
         "associated_script": 16
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 15,
+    "fields": {
+        "string_value": "hey",
+        "file_value": "",
+        "input": 99,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 16,
+    "fields": {
+        "string_value": "123",
+        "file_value": "",
+        "input": 100,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 17,
+    "fields": {
+        "string_value": "2024-04-03",
+        "file_value": "",
+        "input": 101,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 18,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 102,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 19,
+    "fields": {
+        "string_value": "True",
+        "file_value": "",
+        "input": 103,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 20,
+    "fields": {
+        "string_value": "10:20",
+        "file_value": "",
+        "input": 104,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 21,
+    "fields": {
+        "string_value": "password",
+        "file_value": "",
+        "input": 105,
+        "associated_script": 38
+    }
+},
+{
+    "model": "system.associatedscriptparameter",
+    "pk": 22,
+    "fields": {
+        "string_value": "Option 1",
+        "file_value": "",
+        "input": 106,
+        "associated_script": 38
     }
 },
 {
@@ -10912,22 +11281,6 @@
     }
 },
 {
-    "model": "system.product",
-    "pk": 1,
-    "fields": {
-        "name": "OS2borgerPC",
-        "multilang": true
-    }
-},
-{
-    "model": "system.product",
-    "pk": 2,
-    "fields": {
-        "name": "OS2borgerPC Kiosk",
-        "multilang": false
-    }
-},
-{
     "model": "system.imageversion",
     "pk": 2,
     "fields": {
@@ -10936,7 +11289,8 @@
         "release_date": "2021-02-02",
         "os": "Ubuntu 20.04",
         "release_notes": "OS2borgerPC Kiosk 1.0.0 med Ubuntu 20.04.",
-        "image_upload": "images/os2borgerpc-kiosk-1.0.0.iso"
+        "image_upload": "images/os2borgerpc-kiosk-1.0.0.iso",
+        "image_upload_multilang": "#"
     }
 },
 {
@@ -10961,7 +11315,8 @@
         "release_date": "2021-05-12",
         "os": "Ubuntu 20.04",
         "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
-        "image_upload": "images/os2borgerpc-3.1.0.iso"
+        "image_upload": "images/os2borgerpc-3.1.0.iso",
+        "image_upload_multilang": "#"
     }
 },
 {
@@ -11005,20 +11360,6 @@
         "description": "Magenta Test's nøgle",
         "created": "2023-10-05T16:24:15.241",
         "site": 9
-    }
-},
-{
-    "model": "system.country",
-    "pk": 1,
-    "fields": {
-        "name": "Danmark"
-    }
-},
-{
-    "model": "system.country",
-    "pk": 2,
-    "fields": {
-        "name": "Sverige"
     }
 }
 ]

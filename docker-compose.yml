@@ -9,9 +9,9 @@ services:
             npm run watch-sass
         volumes:
             - .:/code/
-            # We do not want node_modules on the host machine, so we create an
-            # additional volume for it. It is important this anonymous volume
-            # comes after the above bind to work.
+            # NOTE: We do not want node_modules on the host machine, so we
+            # create an additional volume for it. It is important this anonymous
+            # volume comes after the above bind to work.
             - /code/nodejs/node_modules/
     os2borgerpc-admin:
         build:
@@ -19,10 +19,23 @@ services:
             dockerfile: docker/Dockerfile
             target: os2borgerpc
         image: os2borgerpcadmin
+        # NOTE: --workers 1 and --max-requests 1 makes gunicorn run with only
+        # one worker + respawn it after each request to reload on changes
+        # to templates/CSS + avoid issues where different workers have cached
+        # different versions of files so one cycles between seeing different
+        # codebase versions on browser refresh!
+        # --reload by itself only reloads on changes to python files
+        # Another option is reload-extra-file on every template and CSS file,
+        # but ATM it's apparently not recursive, so a solution like this would
+        # be needed:
+        # https://github.com/benoitc/gunicorn/pull/1846#issuecomment-1862496443
+        # Open PR to make --reload-extra-file recursive:
+        # https://github.com/benoitc/gunicorn/pull/1846
         command:
             sh -c "python manage.py initialize_database &&
                    python manage.py compilemessages &&
-                   gunicorn --reload --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo
+                   gunicorn --reload --workers 1 --max-requests 1
+                   --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/django.mo
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/djangojs.mo
                    --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/django.mo
                    --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/djangojs.mo
@@ -46,16 +59,17 @@ services:
             - .:/code/
             - ./dev-environment/dev-settings.ini:/user-settings.ini
             - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
-        command: [ "supercronic", "/crontab" ]
-        entrypoint: [ ]
+        command: ["supercronic", "/crontab"]
+        entrypoint: []
         depends_on:
             - os2borgerpc-admin
     db:
         image: postgres:latest
         restart: always
         environment:
-            # Note: These values are only used in the local development environment, so it's not particularly important
-            # that they're secure
+            # NOTE: These values are only used in the local development
+            # environment, so it's not particularly important that
+            # they're secure
             POSTGRES_USER: bpc
             POSTGRES_PASSWORD: bpc
         volumes:

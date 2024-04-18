@@ -53,10 +53,10 @@
 
     <form name="pc_update_form" id="pc_update_form" action="{% url 'computer' site.uid selected_pc.uid %}" method="post">
       <div class="basic-info">
-        <span class="badge bg-secondary">
+        <span class="badge bg-secondary text-dark">
           {% translate "Registered" %}: {{ pc.created }}
         </span>
-        <span class="badge bg-secondary ms-3">
+        <span class="badge bg-secondary ms-3 text-dark">
           {% translate "Last check-in" %}:
           {% if selected_pc.last_seen %}
             {{ selected_pc.last_seen|timesince }} {% translate "ago" %}
@@ -64,7 +64,7 @@
             {% translate "Never" %}
           {% endif %}
         </span>
-        <span class="badge bg-secondary ms-3">
+        <span class="badge bg-secondary ms-3 text-dark">
           {% translate "Last event received" %}:
           {% if security_event %}
             {{ security_event.reported_time|timesince }} {% translate "ago" %}

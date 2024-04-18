@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-11 10:48+0200\n"
+"POT-Creation-Date: 2024-04-15 10:11+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -56,12 +56,8 @@ msgid "updated"
 msgstr "opdateret"
 
 #: changelog/models.py
-msgid "author"
-msgstr "forfatter"
-
-#: changelog/models.py
-msgid "version"
-msgstr "version"
+msgid "published (visible)"
+msgstr "offentliggjort (synlig)"
 
 #: changelog/templates/comments/form.html
 msgid "Answer to"
@@ -130,14 +126,6 @@ msgid "News categories"
 msgstr "Nyhedskategorier"
 
 #: changelog/templates/item.html
-msgid "Related to version"
-msgstr "Relateret til version"
-
-#: changelog/templates/item.html
-msgid "Written by"
-msgstr "Skrevet af"
-
-#: changelog/templates/item.html
 msgid "Comments"
 msgstr "Kommentarer"
 
@@ -183,6 +171,10 @@ msgstr "nyheder"
 #: changelog/templates/list.html
 msgid "that matches the query"
 msgstr "der matcher søgeordet"
+
+#: changelog/templates/list.html
+msgid "Draft"
+msgstr "Kladde"
 
 #: changelog/templates/list.html
 msgid "Read more"
@@ -5333,6 +5325,10 @@ msgstr "Antal computere i alt"
 #: templates/system/site_list.html
 msgid "Administrate"
 msgstr "Administrér"
+
+#: templates/system/site_list.html
+msgid "Admin site version"
+msgstr "Adminsite-version"
 
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"

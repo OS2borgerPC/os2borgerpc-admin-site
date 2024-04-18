@@ -355,7 +355,7 @@ class JobAdmin(admin.ModelAdmin):
     )
     list_filter = ("status",)
     search_fields = ("batch__script__name", "user__username", "pc__name")
-    readonly_fields = ("created", "started", "finished")
+    readonly_fields = ("created", "started", "finished", "batch", "pc")
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -453,15 +453,11 @@ class CitizenAdmin(admin.ModelAdmin):
 class ChangelogAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "author",
-        "version",
+        "published",
         "created",
         "updated",
     )
-    search_fields = (
-        "title",
-        "version",
-    )
+    search_fields = ("title",)
     filter_horizontal = ("tags",)
 
 

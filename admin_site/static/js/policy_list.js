@@ -17,11 +17,15 @@
                   + (type == 'FILE' ? ' phantom' : '')
                   + '" type="' + (type == 'FILE' ? 'file' : 'hidden')
                   + '" name="' + name
-                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : default_value)
+                  + '" value="' + ((type == 'BOOLEAN') ? 'True" checked="true"' : ((type == 'TEXT_FIELD') ? default_value.split(",")[0] : default_value))
+                  + (type == 'TEXT_FIELD' ? '" default_value="' + default_value : '')
                   + '" data-inputtype="' + type
                   + '"' + (required == 'True' ? ' required="required"' : '') + '/>'
         }
         this.visibleParamField = function (input) {
+          if (input.type == 'TEXT_FIELD') {
+            input.default_value = input.default_value.split(",")[0]
+          }
           return '<div class="policy-script-print"><strong class="policy-script-print-name">'
                   + input.name + ': </strong><span class="policy-script-print-value">'
                   + ((input.type == 'BOOLEAN') ? '<input type="checkbox" checked disabled>' : input.default_value)
@@ -43,6 +47,8 @@
               return 'time'
             case 'PASSWORD':
               return 'password'
+            case 'TEXT_FIELD':
+              return 'textfield'
             default:
               return 'text'
           }
@@ -111,7 +117,7 @@
             $('#addpolicyscriptdialog input').removeAttr('disabled')
             $('#addpolicyscriptdialog').modal('show')
         },
-        editScript: function(clickElem, id) {
+        editScript: function(clickElem, id, defaultValues) {
           $("#editpolicyscriptdialog .modal-body").html('') // delete old inputs
 
           // loop over all input fields in the list view, and render fields for them in the modal
@@ -121,13 +127,37 @@
             var t = $(elm)
             var label = t.next('.policy-script-print').find('.policy-script-print-name')
             const type = BibOS.PolicyList.getFieldType(t.attr('data-inputtype'))
-            var newElement = $('<input/>', {
-              type: type,
-              name: "edit_" + t.attr('name'),
-              id: "edit_" + t.attr('name'),
-              checked: (type === 'checkbox' && t.val() === 'True'),
-              class: (type !== 'checkbox') ? 'form-control' : 'form-control form-check-input',
-            })
+            if ( type == "textfield") {
+              var newElement = $('<select/>', {
+                type: type,
+                name: "edit_" + t.attr('name'),
+                id: "edit_" + t.attr('name'),
+                class: "form-control",
+              })
+              /* defaultValues will be 'None' if we come directly from adding a new script.
+               This is because the values are taken from django template variable "params",
+               which will only be #PARAMS# when we come directly from adding a new script */
+              if (defaultValues != 'None') {
+                options = defaultValues[idx].split(",")
+              } else {
+                options = t.attr('default_value').split(",")
+              }
+              for (o of options) {
+                o = o.trim()
+                newElement.append($('<option/>', {
+                   html: o,
+                   value: o,
+                }))
+              }
+            } else {
+              var newElement = $('<input/>', {
+                type: type,
+                name: "edit_" + t.attr('name'),
+                id: "edit_" + t.attr('name'),
+                checked: (type === 'checkbox' && t.val() === 'True'),
+                class: (type !== 'checkbox') ? 'form-control' : 'form-control form-check-input',
+              })
+            }
             if (type == "file") {
               /* In principle, it'd be nice (for display purposes) to copy the
                  FileList from the hidden input into the modal dialog -- but
@@ -165,7 +195,7 @@
         submitEditDialog: function(policy_id) {
           var wrapper = $("#" + policy_id)
 
-          var modalInputs = $("#editpolicyscriptdialog .modal-body input")
+          var modalInputs = $("#editpolicyscriptdialog .modal-body .form-control")
           /* Check that each of our mandatory inputs has a value (or that its
              corresponding hidden input field already has a value) */
           var count = 0

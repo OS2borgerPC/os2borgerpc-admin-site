@@ -7,7 +7,9 @@
                     <h2 class="card-title">{{ entry.title }}</h2>
                     <strong class="timestamp-created text-muted">{{ entry.created }}</strong>
                 </div>
-                <p>{{ entry.render_content | safe }}</p>
+                <section class="changelog-content">
+                    <p>{{ entry.render_content | safe }}</p>
+                </section>
                 <hr class="meta-data-separator">
                 <div class="meta-info">
                     <p class="meta-header">
@@ -21,22 +23,6 @@
                         {{ tag.name }}
                     </a>
                     {% endfor %}
-                    </p>
-                    <p class="meta-header">
-                        <small>
-                            <strong class="text-muted">{% translate "Related to version" %}</strong><br/>
-                        </small>
-                        <a href="?search={{ entry.version }}">
-                            <span class="badge bg-primary">{{ entry.version }}</span>
-                        </a>
-                    </p>
-                    <p class="meta-header">
-                        <small>
-                            <strong class="text-muted">{% translate "Written by" %}</strong><br/>
-                        </small>
-                        <a href="?search={{ entry.author }}">
-                            <span class="badge bg-primary">{{ entry.author }}</span>
-                        </a>
                     </p>
                 </div>
             </div>
