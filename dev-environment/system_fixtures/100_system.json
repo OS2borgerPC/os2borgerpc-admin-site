@@ -4040,8 +4040,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            8,
             5,
+            8,
             6,
             7
         ]
@@ -6379,6 +6379,24 @@
     }
 },
 {
+    "model": "system.batch",
+    "pk": 62,
+    "fields": {
+        "name": "",
+        "script": 86,
+        "site": 1
+    }
+},
+{
+    "model": "system.batch",
+    "pk": 63,
+    "fields": {
+        "name": "",
+        "script": 86,
+        "site": 1
+    }
+},
+{
     "model": "system.associatedscript",
     "pk": 6,
     "fields": {
@@ -8144,20 +8162,6 @@
 },
 {
     "model": "system.job",
-    "pk": 109,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": null,
-        "finished": null,
-        "user": 39,
-        "batch": 20,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
     "pk": 110,
     "fields": {
         "status": "NEW",
@@ -8354,216 +8358,6 @@
 },
 {
     "model": "system.job",
-    "pk": 124,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": "2020-11-30T18:15:43.997",
-        "finished": "2020-11-30T18:15:45.997",
-        "user": 37,
-        "batch": 21,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 125,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": null,
-        "started": "2020-11-30T18:15:43.997",
-        "finished": "2020-11-30T18:15:45.997",
-        "user": 35,
-        "batch": 21,
-        "pc": 28
-    }
-},
-{
-    "model": "system.job",
-    "pk": 126,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:03:21.425",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 30,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 127,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:04:38.636",
-        "started": null,
-        "finished": null,
-        "user": 37,
-        "batch": 31,
-        "pc": 12
-    }
-},
-{
-    "model": "system.job",
-    "pk": 128,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.155",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 8
-    }
-},
-{
-    "model": "system.job",
-    "pk": 129,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.157",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 130,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.159",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 18
-    }
-},
-{
-    "model": "system.job",
-    "pk": 131,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.161",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 132,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.162",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 12
-    }
-},
-{
-    "model": "system.job",
-    "pk": 133,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.164",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 16
-    }
-},
-{
-    "model": "system.job",
-    "pk": 134,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.166",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 135,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.167",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 9
-    }
-},
-{
-    "model": "system.job",
-    "pk": 136,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.168",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 137,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.169",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 138,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.170",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 28
-    }
-},
-{
-    "model": "system.job",
     "pk": 139,
     "fields": {
         "status": "NEW",
@@ -8581,1266 +8375,6 @@
     "pk": 140,
     "fields": {
         "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T15:45:40.172",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 32,
-        "pc": 23
-    }
-},
-{
-    "model": "system.job",
-    "pk": 141,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T16:04:24.315",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 39,
-        "pc": 9
-    }
-},
-{
-    "model": "system.job",
-    "pk": 142,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-07T16:04:24.319",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 39,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 143,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:55:31.369",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 42,
-        "pc": 9
-    }
-},
-{
-    "model": "system.job",
-    "pk": 144,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:55:31.370",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 42,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 145,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:55:31.371",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 42,
-        "pc": 28
-    }
-},
-{
-    "model": "system.job",
-    "pk": 146,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:55:31.379",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 43,
-        "pc": 9
-    }
-},
-{
-    "model": "system.job",
-    "pk": 147,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:55:31.380",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 43,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 148,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:55:31.381",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 43,
-        "pc": 28
-    }
-},
-{
-    "model": "system.job",
-    "pk": 149,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.656",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 44,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 150,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.657",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 44,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 151,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.657",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 44,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 152,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.658",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 44,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 153,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.658",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 44,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 154,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.659",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 44,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 155,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.661",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 45,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 156,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.662",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 45,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 157,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.663",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 45,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 158,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.663",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 45,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 159,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.664",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 45,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 160,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.664",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 45,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 161,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.667",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 46,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 162,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.667",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 46,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 163,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.668",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 46,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 164,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.668",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 46,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 165,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.669",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 46,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 166,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.669",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 46,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 167,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.672",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 47,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 168,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.672",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 47,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 169,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.672",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 47,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 170,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.673",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 47,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 171,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.673",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 47,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 172,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.674",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 47,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 173,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.676",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 48,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 174,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.677",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 48,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 175,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.677",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 48,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 176,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.678",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 48,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 177,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.678",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 48,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 178,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.679",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 48,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 179,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.681",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 49,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 180,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.682",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 49,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 181,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.682",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 49,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 182,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.683",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 49,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 183,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.683",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 49,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 184,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.684",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 49,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 185,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.686",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 50,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 186,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.687",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 50,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 187,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.687",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 50,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 188,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.688",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 50,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 189,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.688",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 50,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 190,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.689",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 50,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 191,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.691",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 51,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 192,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.691",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 51,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 193,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.692",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 51,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 194,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.692",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 51,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 195,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.693",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 51,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 196,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.693",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 51,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 197,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.696",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 52,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 198,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.697",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 52,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 199,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.697",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 52,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 200,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.698",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 52,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 201,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.698",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 52,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 202,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.699",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 52,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 203,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.701",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 53,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 204,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.701",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 53,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 205,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.702",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 53,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 206,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.702",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 53,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 215,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.709",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 55,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 216,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.709",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 55,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 217,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.710",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 55,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 218,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.710",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 55,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 219,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.711",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 55,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 220,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.711",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 55,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 221,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.714",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 56,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 222,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.715",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 56,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 223,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.716",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 56,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 224,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.716",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 56,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 225,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.717",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 56,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 226,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.718",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 56,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 227,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.720",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 57,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 228,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.721",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 57,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 229,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.721",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 57,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 230,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.722",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 57,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 231,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.722",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 57,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 232,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.723",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 57,
-        "pc": 31
-    }
-},
-{
-    "model": "system.job",
-    "pk": 233,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.725",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 58,
-        "pc": 1
-    }
-},
-{
-    "model": "system.job",
-    "pk": 234,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.725",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 58,
-        "pc": 22
-    }
-},
-{
-    "model": "system.job",
-    "pk": 235,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.726",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 58,
-        "pc": 24
-    }
-},
-{
-    "model": "system.job",
-    "pk": 236,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.726",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 58,
-        "pc": 25
-    }
-},
-{
-    "model": "system.job",
-    "pk": 237,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2022-06-09T14:58:25.727",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 58,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 238,
-    "fields": {
-        "status": "NEW",
         "log_output": "Job imported at 2023-02-22 09:56:36.453980\n>>> Starting process '/var/lib/os2borgerpc/jobs/255106/executable' with arguments [True, True] at 2023-02-22 09:56:36.465927\n+ KIOSK=True\n+ INCOG=True\n+ LAUNCH_FILE=/usr/share/os2borgerpc/bin/start_chromium.sh\n+ POLICY_FILE=/var/snap/chromium/current/policies/managed/os2borgerpc-defaults.json\n+ POLICY_NAME_INCOG=IncognitoModeAvailability\n+ sed --in-place s/--kiosk//g /usr/share/os2borgerpc/bin/start_chromium.sh\n+ [ True = True ]\n+ sed --in-place s/KIOSK=''/KIOSK='--kiosk'/ /usr/share/os2borgerpc/bin/start_chromium.sh\n+ sed --in-place /IncognitoModeAvailability/d /var/snap/chromium/current/policies/managed/os2borgerpc-defaults.json\n+ [ True = True ]\n+ sed --in-place\n2i'IncognitoModeAvailability': 2, /var/snap/chromium/current/policies/managed/os2borgerpc-defaults.json\n>>> Succeeded at 2023-02-22 09:56:36.539923",
         "created": "2022-06-09T14:58:25.727",
         "started": null,
@@ -9852,100 +8386,58 @@
 },
 {
     "model": "system.job",
-    "pk": 239,
+    "pk": 141,
     "fields": {
         "status": "NEW",
-        "log_output": "",
-        "created": "2023-05-08T14:14:59.762",
+        "log_output": "New job with arguments [fsdfs sdfsdfs sdfs, 1, 2024-04-16, , True, 10:00, *****, ]",
+        "created": "2024-04-16T15:25:00.565",
         "started": null,
         "finished": null,
         "user": 35,
-        "batch": 59,
+        "batch": 63,
         "pc": 26
     }
 },
 {
     "model": "system.job",
-    "pk": 240,
+    "pk": 142,
     "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2023-05-08T14:14:59.764",
-        "started": null,
-        "finished": null,
+        "status": "DONE",
+        "log_output": "New job with arguments [fsdfs sdfsdfs sdfs, 1, 2024-04-16, , True, 10:00, *****, hey]",
+        "created": "2024-04-16T15:25:00.565",
+        "started": "2024-04-16T15:25:00.565",
+        "finished": "2024-04-16T15:25:00.565",
         "user": 35,
-        "batch": 59,
-        "pc": 28
+        "batch": 63,
+        "pc": 31
     }
 },
 {
     "model": "system.job",
-    "pk": 241,
+    "pk": 143,
     "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2023-05-08T14:14:59.765",
-        "started": null,
+        "status": "SUBMITTED",
+        "log_output": "New job with arguments [fsdfs sdfsdfs sdfs, 1, 2024-04-16, , True, 10:00, *****, hey]",
+        "created": "2024-04-16T15:25:00.565",
+        "started": "2024-04-16T15:25:00.565",
         "finished": null,
         "user": 35,
-        "batch": 59,
-        "pc": 23
+        "batch": 63,
+        "pc": 25
     }
 },
 {
     "model": "system.job",
-    "pk": 242,
+    "pk": 144,
     "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2023-05-08T14:18:45.340",
-        "started": null,
-        "finished": null,
+        "status": "FAILED",
+        "log_output": "New job with arguments [fsdfs sdfsdfs sdfs, 1, 2024-04-16, , True, 10:00, *****, hey]",
+        "created": "2024-04-16T15:25:00.565",
+        "started": "2024-04-16T15:25:00.565",
+        "finished": "2024-04-16T15:25:00.565",
         "user": 35,
-        "batch": 60,
-        "pc": 26
-    }
-},
-{
-    "model": "system.job",
-    "pk": 243,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2023-05-08T14:18:45.341",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 60,
-        "pc": 28
-    }
-},
-{
-    "model": "system.job",
-    "pk": 244,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2023-05-08T14:18:45.341",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 60,
-        "pc": 23
-    }
-},
-{
-    "model": "system.job",
-    "pk": 245,
-    "fields": {
-        "status": "NEW",
-        "log_output": "",
-        "created": "2023-09-28T15:53:28.134",
-        "started": null,
-        "finished": null,
-        "user": 35,
-        "batch": 61,
-        "pc": 23
+        "batch": 63,
+        "pc": 16
     }
 },
 {
@@ -10948,6 +9440,166 @@
         "file_value": "",
         "input": 95,
         "batch": 60
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 10,
+    "fields": {
+        "string_value": "sdfs",
+        "file_value": "",
+        "input": 99,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 11,
+    "fields": {
+        "string_value": "123",
+        "file_value": "",
+        "input": 100,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 12,
+    "fields": {
+        "string_value": "2024-04-10",
+        "file_value": "",
+        "input": 101,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 13,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 102,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 14,
+    "fields": {
+        "string_value": "True",
+        "file_value": "",
+        "input": 103,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 15,
+    "fields": {
+        "string_value": "08:00",
+        "file_value": "",
+        "input": 104,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 16,
+    "fields": {
+        "string_value": "qwe",
+        "file_value": "",
+        "input": 105,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 17,
+    "fields": {
+        "string_value": "Option 1",
+        "file_value": "",
+        "input": 106,
+        "batch": 62
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 18,
+    "fields": {
+        "string_value": "fsdfs sdfsdfs sdfs",
+        "file_value": "",
+        "input": 99,
+        "batch": 63
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 19,
+    "fields": {
+        "string_value": "1",
+        "file_value": "",
+        "input": 100,
+        "batch": 63
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 20,
+    "fields": {
+        "string_value": "2024-04-16",
+        "file_value": "",
+        "input": 101,
+        "batch": 63
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 21,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 102,
+        "batch": 63
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 22,
+    "fields": {
+        "string_value": "True",
+        "file_value": "",
+        "input": 103,
+        "batch": 63
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 23,
+    "fields": {
+        "string_value": "10:00",
+        "file_value": "",
+        "input": 104,
+        "batch": 63
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 24,
+    "fields": {
+        "string_value": "2123",
+        "file_value": "",
+        "input": 105,
+        "batch": 63
+    }
+},
+{
+    "model": "system.batchparameter",
+    "pk": 25,
+    "fields": {
+        "string_value": "",
+        "file_value": "",
+        "input": 106,
+        "batch": 63
     }
 },
 {
