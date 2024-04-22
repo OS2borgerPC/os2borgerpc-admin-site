@@ -35,23 +35,26 @@
     after a number of minutes of inactivity. A chosen warning is displayed before
     the computer is suspended. The script takes five arguments: whether to
     activate the function, the number of minutes of inactivity before the warning
-    is shown, the number of minutes of inactivity before the machine suspends,
+    is shown, the number of minutes of inactivity before the computer suspends,
     the text in the warning and the text on the button in the warning. If the
     last two text-related inputs are left empty, default texts will be used.
-    The script automatically logs out the user before the machine suspends.
+    The script automatically logs out the user before the computer suspends.
     {% endblocktranslate %}
   </p>
   <p>
     {% blocktranslate trimmed %}
-    The suspend script can also suspend the machine when it is inactive on the
+    The suspend script can also suspend the computer when it is inactive on the
     login screen. However, this requires that script execution at login has been
     enabled via the script
     {% endblocktranslate %}
-    <a href="{% url 'script_redirect_id' '1064' %}">Login - Slå scriptkørsel ved login til/fra</a>.
-    {% translate "The warning will not be shown on the login screen." %}
+    <a href="{% url 'script_redirect_id' '1064' %}">Udfases - Slå scriptkørsel ved login til/fra</a>.
+    {% blocktranslate trimmed %}
+    Script execution at login is automatically enabled on image 5.0.0 and newer images.
+    The warning will not be shown on the login screen.
+    {% endblocktranslate %}
   </p>
   <p>
-    {% translate "Be aware that USB surveillance cannot be active while the machine is suspended." %}
+    {% translate "Be aware that USB surveillance cannot be active while the computer is suspended." %}
   </p>
   <h2>{% translate "On/Off schedules" %}</h2>
   <p>
@@ -62,8 +65,8 @@
   </p>
   <p>
     {% translate "The use of On/Off schedules makes it unnecessary to use the scripts" %}
-    <a href="{% url 'script_redirect_id' '12' %}">OS2BorgerPC - Luk ned dagligt</a> {% translate "and" %}
-    <a href="{% url 'script_redirect_id' '422' %}">OS2BorgerPC - Luk ned og vågn op dagligt</a>.
+    <a href="{% url 'script_redirect_id' '12' %}">System - Luk ned dagligt</a> {% translate "and" %}
+    <a href="{% url 'script_redirect_id' '422' %}">System - Luk ned og vågn op dagligt</a>.
   </p>
   <p>
     {% blocktranslate trimmed %}
@@ -136,35 +139,35 @@
     schedule.
     {% endblocktranslate %}
   </p>
-  <h3>{% translate "BIOS/UEFI settings" %}</h3>
+  <h3>{% translate "UEFI/BIOS settings" %}</h3>
   <ol>
     <li>
       {% blocktranslate trimmed %}
-      If BIOS has been set to turn on the machine at a specific time, and
-      the machine belongs to an active On/Off schedule, then the machine
+      If UEFI/BIOS has been set to turn on the computer at a specific time, and
+      the computer belongs to an active On/Off schedule, then the computer
       will not turn on according to the on times in the schedule, but
-      instead follow the times set in the BIOS. It will, however, turn off
-      according to the schedule. If you want the machine to follow the on
-      times set in the schedule then you must enter BIOS and disable the
-      BIOS control of on times. It is generally not possible to modify
-      BIOS from the OS so it cannot be done via scripts.
+      instead follow the times set in the UEFI/BIOS. It will, however, turn off
+      according to the schedule. If you want the computer to follow the on
+      times set in the schedule then you must enter UEFI/BIOS and disable the
+      UEFI/BIOS control of on times. It is generally not possible to modify
+      UEFI/BIOS from the OS so it cannot be done via scripts.
       {% endblocktranslate %}
     </li>
     <li>
       {% blocktranslate trimmed %}
-      If the machines temporarily lose power while they are turned off according
+      If the computers temporarily lose power while they are turned off according
       to the schedule, they will still turn on according to the schedule.
-      (So long as the CMOS battery is still charged.) However, if the machines
+      (So long as the CMOS battery is still charged.) However, if the computers
       lose power while they are on, they will not turn on automatically.
       {% endblocktranslate %}
 
       {% blocktranslate trimmed %}
-      Some BIOS systems include the option to set the machine to return to its last state
+      Some UEFI/BIOS systems include the option to set the computer to return to its last state
       (or turn on) after a power failure. We recommend turning this option on.
       {% endblocktranslate %}
 
       {% blocktranslate trimmed %}
-      The layout may differ depending on the BIOS version, but here is an example from a NUC:
+      The layout may differ depending on the UEFI/BIOS version, but here is an example from a NUC:
       From the overview you choose "Advanced" and then "Power":
       {% endblocktranslate %}
       <img src="{% static 'docs/img/wake_plan/nuc_bios_start_page.jpg' %}" alt="">
@@ -185,13 +188,13 @@
     schedule.
     {% endblocktranslate %}
     </p>
-  <h4>{% translate "2. What happens if the machine experiences a power failure?" %}</h4>
-  <p>{% blocktranslate %}Check the second paragraph under "BIOS/UEFI settings" further up.{% endblocktranslate %}</p>
-  <h4>{% translate "3. The machine turns on and off at the wrong times?" %}</h4>
+  <h4>{% translate "2. What happens if the computer experiences a power failure?" %}</h4>
+  <p>{% blocktranslate %}Check the second paragraph under "UEFI/BIOS settings" further up.{% endblocktranslate %}</p>
+  <h4>{% translate "3. The computer turns on and off at the wrong times?" %}</h4>
   <p>
     {% blocktranslate trimmed %}
-    This could be due to incorrect time settings on the machine, which could be caused
-    by the machine being unable to perform time synchronization. Ubuntu Linux
+    This could be due to incorrect time settings on the computer, which could be caused
+    by the computer being unable to perform time synchronization. Ubuntu Linux
     - and many other operating systems - normally performs time synchronization via the
     protocol NTP (Network Time Protocol). NTP runs on port 123 via UDP, which we thus
     suggest allowing in your network configuration. If you do not wish to allow
@@ -199,6 +202,6 @@
     only check specific URL's.
     {% endblocktranslate %}
   </p>
-  <h4>{% translate "4. The machine turns on at the wrong times, but turns off according to schedule?" %}</h4>
-  <p>{% blocktranslate %}This could be due to the BIOS settings. Check the first paragraph under "BIOS/UEFI settings" further up.{% endblocktranslate %}</p>
+  <h4>{% translate "4. The computer turns on at the wrong times, but turns off according to schedule?" %}</h4>
+  <p>{% blocktranslate %}This could be due to the UEFI/BIOS settings. Check the first paragraph under "UEFI/BIOS settings" further up.{% endblocktranslate %}</p>
 {% endblock %}

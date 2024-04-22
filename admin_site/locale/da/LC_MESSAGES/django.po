@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 10:11+0200\n"
+"POT-Creation-Date: 2024-04-23 09:46+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -1555,8 +1555,8 @@ msgid ""
 "top of the page."
 msgstr ""
 "Hvert opslag har en eller flere kategorier som listen kan sorteres efter. "
-"Dette gøres ved at vælge den relevante kategori ud fra de muligheder "
-"præsenteret i toppen af siden."
+"Dette gøres ved at vælge den relevante kategori ud fra de muligheder som "
+"præsenteres i toppen af siden."
 
 #: templates/documentation/changelogs/index.html
 msgid "Searching for posts"
@@ -1711,17 +1711,21 @@ msgstr ""
 msgid ""
 "You add groups by clicking on \"Add computer to group\". If there are any "
 "groups that the computer does not yet belong to, they will be shown in a "
-"list. Click on a group to add the computer to the group. You remove a group "
-"by clicking on the X to the right of the group's name in the list of group "
-"affiliations. Remember that any changes are not permanent until you've "
-"clicked on \"Save changes\" at the bottom of the screen."
+"list. Click on the group(s) that you wish to add to select them and then "
+"click on the check mark beneath the list to add the computer to the "
+"group(s). You remove a group by clicking on the X to the right of the "
+"group's name in the list of group affiliations. Remember that any changes "
+"are not permanent until you've clicked on \"Save changes\" at the bottom of "
+"the screen."
 msgstr ""
 "Du tilføjer grupper ved at klikke på \"Tilføj computer til gruppe\". Hvis "
 "der findes grupper, som computeren endnu ikke er medlem, af vil de dukke op "
-"i en liste. Klik på en gruppe for at knytte computeren til gruppen. Du "
-"fjerner en gruppe ved at klikke på det X, som vises til højre for gruppens "
-"navn i listen over gruppetilhørsforhold. Husk at ændringerne ikke bliver "
-"permanente, før du har klikket på \"Gem ændringer\" nederst i skærmbilledet."
+"i en liste. Klik på de grupper, som du ønsker at tilføje for at vælge dem og "
+"klik derefter på fluebenet under listen for at tilføje computeren til "
+"grupperne. Du fjerner en gruppe ved at klikke på det X, som vises til højre "
+"for gruppens navn i listen over gruppetilhørsforhold. Husk at ændringerne "
+"ikke bliver permanente, før du har klikket på \"Gem ændringer\" nederst i "
+"skærmbilledet."
 
 #: templates/documentation/computers/edit.html
 #: templates/documentation/groups/edit.html
@@ -1766,11 +1770,12 @@ msgid ""
 "Here you can see the history of jobs associated with the computer. If you "
 "click on the info icon to the right on the individual job, it will be "
 "possible to see the log output from the job as well as rerun the job if it "
-"failed."
+"has finished (mainly relevant if it failed)."
 msgstr ""
 "Her kan du se en historik over jobs tilknyttet computeren. Hvis du klikker "
 "på info-ikonet til højre på det enkelte job får du mulighed for at se log-"
-"output for jobbet samt for at køre jobbet igen hvis det fejlede."
+"output for jobbet samt for at køre jobbet igen, hvis det er afsluttet "
+"(primært relevant hvis det fejlede)."
 
 #: templates/documentation/configuration/index.html
 msgid ""
@@ -1813,13 +1818,13 @@ msgstr "Generelle eksempler på anvendelsesmuligheder"
 
 #: templates/documentation/configuration/index.html
 msgid ""
-"Among other things, the computer sends information about its hostname, the "
-"MAC-address of its network card and the number of updates and security "
-"updates that are available from Ubuntu."
+"Among other things, the computer sends information about its hostname, its "
+"IP addresses, the current kernel version and the last time it performed "
+"automatic updates."
 msgstr ""
-"Computeren sender bl.a. information om dens hostname, netværkskortets MAC-"
-"adresse og hvor mange opdateringer og sikkerhedsopdateringer, der er "
-"tilgængelig for den fra Ubuntu."
+"Computeren sender bl.a. information om dens hostname, dens IP-addresser, den "
+"nuværende kernel-version og det sidste tidspunkt, hvor den foretog "
+"automatiske opdateringer."
 
 #: templates/documentation/configuration/index.html
 msgid "This information can sometimes be relevant for system administrators."
@@ -1855,13 +1860,13 @@ msgstr "Det kan i nogle tilfælde være relevant at vide for scriptudviklere."
 #: templates/documentation/configuration/index.html
 msgid ""
 "The majority of configurations are controlled by the admin-site rather than "
-"the individual machine. This means that if you change a value on an "
-"individual machine, it will typically be changed back to the value listed on "
-"the admin-site during the next check-in."
+"the individual computer. This means that if you change a value on an "
+"individual computer, it will typically be changed back to the value listed "
+"on the admin-site during the next check-in."
 msgstr ""
 "Langt de fleste konfigurationer styres af adminsitet fremfor på den enkelte "
-"maskine. Dvs. hvis du ændrer værdien på den enkelte maskine, vil den oftest "
-"blive ændret tilbage til hvad adminsitet siger ved næste tjek-ind."
+"computer. Dvs. hvis du ændrer værdien på den enkelte computer, vil den "
+"oftest blive ændret tilbage til hvad adminsitet siger ved næste tjek-ind."
 
 #: templates/documentation/configuration/index.html
 msgid "Technical information for system administrators"
@@ -1979,11 +1984,11 @@ msgstr ""
 #: templates/documentation/configuration/index.html
 #, python-format
 msgid ""
-"This means that if one were to change e.g. %(version)s on the machine, then "
+"This means that if one were to change e.g. %(version)s on the computer, then "
 "the value would be overwritten during the next check-in with the admin-site."
 msgstr ""
-"Det vil i praksis sige, at hvis man eks. ændrer %(version)s på maskinen, så "
-"vil den blive overskrevet efter næste tjek-ind med adminsitet."
+"Det vil i praksis sige, at hvis man eks. ændrer %(version)s på computeren, "
+"så vil den blive overskrevet efter næste tjek-ind med adminsitet."
 
 #: templates/documentation/configuration/index.html
 #: templates/system/configs/templates.html templates/system/scripts/form.html
@@ -2007,10 +2012,10 @@ msgstr "Versionen på OS2borgerPC-klienten"
 
 #: templates/documentation/configuration/index.html
 msgid ""
-"The client is the particular software on the machine that communicates with "
+"The client is the particular software on the computer that communicates with "
 "the admin-site"
 msgstr ""
-"Klienten er den software der kører på maskinen, som er i kontakt med "
+"Klienten er den software der kører på computeren, som er i kontakt med "
 "adminsitet"
 
 #: templates/documentation/configuration/index.html
@@ -2022,12 +2027,32 @@ msgid "The version of the operating system"
 msgstr "Versionen af operativsystemet"
 
 #: templates/documentation/configuration/index.html
-msgid "The address of the server where the machine checks in"
+msgid "The IP addresses of the computer"
+msgstr "Computerens IP-addresser"
+
+#: templates/documentation/configuration/index.html
+msgid "The list is not sorted"
+msgstr "Listen er ikke sorteret"
+
+#: templates/documentation/configuration/index.html
+msgid "The version of the kernel"
+msgstr "Versionen af computerens kernel"
+
+#: templates/documentation/configuration/index.html
+msgid "The time when the computer last performed automatic updates"
+msgstr "Det tidspunkt hvor computeren sidst foretog automatiske opdateringer"
+
+#: templates/documentation/configuration/index.html
+msgid "If the value is empty, the computer failed to determine the time"
+msgstr "Hvis værdien er tom, kunne computeren ikke afgøre tidspunktet"
+
+#: templates/documentation/configuration/index.html
+msgid "The address of the server where the computer checks in"
 msgstr "Adressen til serveren der tjekkes ind hos"
 
 #: templates/documentation/configuration/index.html
-msgid "The machine's hostname"
-msgstr "Maskinens hostname"
+msgid "The computer's hostname"
+msgstr "Computerens hostname"
 
 #: templates/documentation/configuration/index.html
 msgid "Is currently only set during the registration"
@@ -2048,32 +2073,21 @@ msgstr ""
 "få input fra brugeren"
 
 #: templates/documentation/configuration/index.html
-msgid "Indicates whether the machine is an OS2borgerPC or a OS2borgerPC Kiosk"
-msgstr "Identificerer om maskinen er en OS2borgerPC eller en OS2borgerPC Kiosk"
+msgid "Indicates whether the computer is an OS2borgerPC or a OS2borgerPC Kiosk"
+msgstr ""
+"Identificerer om computeren er en OS2borgerPC eller en OS2borgerPC Kiosk"
 
 #: templates/documentation/configuration/index.html
 msgid "The version of the OS2borgerPC-image that was installed"
 msgstr "Versionen på det OS2borgerPC-image, som blev installeret"
 
 #: templates/documentation/configuration/index.html
-msgid "Unless the machine is reinstalled, this number does not change"
-msgstr "Medmindre maskinen geninstalleres, vil dette tal ikke ændre sig"
+msgid "Unless the computer is reinstalled, this number does not change"
+msgstr "Medmindre computeren geninstalleres, vil dette tal ikke ændre sig"
 
 #: templates/documentation/configuration/index.html
-msgid "The number of security updates from Ubuntu that are available"
-msgstr ""
-"Antallet af sikkerhedsrelaterede pakke-opdateringer fra Ubuntu, der er "
-"tilgængelige for maskinen"
-
-#: templates/documentation/configuration/index.html
-msgid "The site that the machine belongs to"
-msgstr "Hvilket site maskinen er tilknyttet"
-
-#: templates/documentation/configuration/index.html
-msgid "The number of regular updates from Ubuntu that are available"
-msgstr ""
-"Antallet af almindelige pakke-opdateringer fra Ubuntu, der er tilgængelige "
-"for maskinen"
+msgid "The site that the computer belongs to"
+msgstr "Hvilket site computeren er tilknyttet"
 
 #: templates/documentation/configuration/index.html
 msgid "Technical information for script developers"
@@ -2187,11 +2201,15 @@ msgstr "Tilføj computer"
 msgid ""
 "You add computers by clicking on \"Add a computer to the group\". If there "
 "are any computers that do not yet belong to the group, they will be shown in "
-"a list. Click on a computer to add it to the group."
+"a list. Click on the computer(s) that you wish to add to select them and "
+"then click on the check mark beneath the list to add the computer(s) to the "
+"group."
 msgstr ""
 "Du tilføjer computere ved at klikke på \"Tilføj en computer til gruppen\". "
 "Hvis der findes computere, som endnu ikke er medlem af gruppen vil de blive "
-"vist i en liste. Klik på en computer for at knytte computeren til gruppen."
+"vist i en liste. Klik på de computere, som du ønsker at tilføje for at vælge "
+"dem og klik derefter på fluebenet under listen for at tilføje computerne til "
+"gruppen."
 
 #: templates/documentation/groups/edit.html
 msgid "Remove a computer"
@@ -2233,13 +2251,15 @@ msgstr "Tilføj en ansvarsperson"
 msgid ""
 "You add supervisors by clicking on \"Add a supervisor to the group\". If "
 "there are any users on your site that are not yet supervisors for the group, "
-"they will be shown in a list. Click on a user to make them a supervisor for "
-"the group."
+"they will be shown in a list. Click on the user(s) that you wish to make "
+"supervisors to select them and then click on the check mark beneath the list "
+"to make them supervisors for the group."
 msgstr ""
 "Du tilføjer ansvarspersoner ved at klikke på \"Tilføj en ansvarsperson for "
 "gruppen\". Hvis der findes brugere på dit site, som endnu ikke er "
-"ansvarspersoner for gruppen vil de blive vist i en liste. Klik på en bruger "
-"for at tilføje dem som ansvarsperson for gruppen."
+"ansvarspersoner for gruppen vil de blive vist i en liste. Klik på de brugere "
+"som du ønsker at gøre til ansvarspersoner for at vælge dem og klik derefter "
+"på fluebenet under listen for at gøre dem til ansvarspersoner for gruppen."
 
 #: templates/documentation/groups/edit.html
 msgid "Remove a supervisor"
@@ -2316,12 +2336,12 @@ msgstr ""
 #: templates/documentation/groups/index.html
 msgid ""
 "The interface for editing the chosen group will be shown on the right side "
-"of the screen. If no groups have been created for the site you are on, the "
-"form for creating groups will be shown instead."
+"of the screen. If no groups have been created for the site you are on, "
+"information about how to create a group will be shown instead."
 msgstr ""
 "Til højre vises redigeringsinterfacet for den valgte gruppe. Hvis ikke der "
-"er oprettet nogen grupper for det site man er under vises dialogen til "
-"oprettelse af grupper."
+"er oprettet nogen grupper for det site man er under vises information "
+"omkring hvordan man opretter en gruppe i stedet."
 
 #: templates/documentation/groups/index.html
 msgid "When you click on a group, you will be able to edit the following"
@@ -2370,14 +2390,17 @@ msgid ""
 "will automatically be run on all computers in the group. Editing the "
 "parameters of an associated script will only cause it to be rerun on the "
 "computers in the group if the relevant setting under Site settings has been "
-"checked."
+"checked. Removing an Associated Script from a group will NOT remove the "
+"effect of the script from the computers in the group."
 msgstr ""
 "Når en computer tilføjes til en gruppe bliver alle Tilknyttede Scripts "
 "automatisk kørt på den computer. Når man tilknytter et nyt Script til en "
 "gruppe, køres dette automatisk på gruppens computere. Redigering af "
 "parametrene for et Tilknyttet Script medfører kun at scriptet genkøres på "
 "alle computere i gruppen, hvis den relevante indstilling under Site-"
-"indstillinger er blevet slået til."
+"indstillinger er blevet slået til. Hvis man fjerner et tilknyttet script fra "
+"en gruppe, medfører det IKKE at scriptets effekt fjernes fra computerne i "
+"gruppen."
 
 #: templates/documentation/groups/scripts.html
 msgid ""
@@ -2556,13 +2579,14 @@ msgid ""
 "If you click on the small icon on the right of an entry in the list, you "
 "will be shown the log output from that job. If the job has not yet been "
 "executed, the log output will only contain the chosen input parameters. If "
-"the job failed, there will also be a button that you can press in order to "
-"restart the job."
+"the job has finished, there will also be a button that you can press in "
+"order to restart the job (mainly relevant if the job failed)."
 msgstr ""
 "Hvis man klikker på det lille ikon til højre på et job i listen, får man "
 "vist log-outputtet for det job. Hvis jobbet endnu ikke er blevet afviklet, "
-"indeholder log-outputtet kun de valgte inputparametre. Hvis jobbet fejlede, "
-"vil der også være en knap, som man kan trykke på for at genstarte jobbet."
+"indeholder log-outputtet kun de valgte inputparametre. Hvis jobbet er "
+"afsluttet, vil der også være en knap, som man kan trykke på for at genstarte "
+"jobbet (dette er primært relevant hvis jobbet fejlede)."
 
 #: templates/documentation/jobs/index.html
 msgid "Jobs run by Magenta"
@@ -2954,7 +2978,7 @@ msgstr ""
 
 #: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
 msgid ""
-"If the machine is connected, you should see output similar to the above."
+"If the computer is connected, you should see output similar to the above."
 msgstr "Ved netforbindelse skulle du gerne se output som ovenover."
 
 #: templates/documentation/os2borgerpc_kiosk_wifi_guide.html
@@ -2995,6 +3019,10 @@ msgstr "Redigering af inputparametre"
 #: templates/site_with_navigation.html
 msgid "Executing Scripts"
 msgstr "Afvikling af Scripts"
+
+#: templates/documentation/scripts/edit.html
+msgid "Note that only Magenta can edit global scripts."
+msgstr "Bemærk at kun Magenta kan redigere globale scripts."
 
 #: templates/documentation/scripts/edit.html
 msgid ""
@@ -3098,6 +3126,11 @@ msgstr ""
 #: templates/documentation/scripts/parameters.html
 msgid "Editing Script arguments"
 msgstr "Redigering af Script-inputparametre"
+
+#: templates/documentation/scripts/parameters.html
+msgid "Note that only Magenta can edit the parameters of global scripts."
+msgstr ""
+"Bemærk at kun Magenta kan redigere inputparametrene for globale scripts."
 
 #: templates/documentation/scripts/parameters.html
 msgid ""
@@ -3274,6 +3307,10 @@ msgid "Security Rules"
 msgstr "Sikkerhedsregler"
 
 #: templates/documentation/security_scripts/edit.html
+msgid "Note that only Magenta can edit global security scripts."
+msgstr "Bemærk at kun Magenta kan redigere globale sikkerhedsscripts."
+
+#: templates/documentation/security_scripts/edit.html
 msgid ""
 "If you wish to edit a Security Script, you must click on \"Security Scripts"
 "\" in the left-hand menu and then select the security script in the list to "
@@ -3337,10 +3374,10 @@ msgstr ""
 #: templates/documentation/security_scripts/edit.html
 msgid ""
 "The format looks like this: \"event timestamp, security rule id, event "
-"summary, complete event log\"."
+"summary\"."
 msgstr ""
 "Formatet ser således ud: \"tidsstempel for hændelsen, Sikkerhedsreglens id, "
-"hændelsesreferat, den fulde log for hændelsen\"."
+"hændelsesreferat\"."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
@@ -3367,14 +3404,6 @@ msgid ""
 msgstr ""
 "Hændelsesreferatet kan enten være noget du definerer eller en bid af det "
 "indsamlede data."
-
-#: templates/documentation/security_scripts/edit.html
-msgid ""
-"The complete event log is all of the data regarding the event. It is "
-"optional and can be replaced by an empty string."
-msgstr ""
-"Den fulde log for hændelsen er alt den indsamlede data vedrørende hændelsen. "
-"Den er valgfri og kan erstattes af en tom streng."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
@@ -3510,10 +3539,10 @@ msgstr "Navn (påkrævet): Navnet på den pågældende sikkerhedsregel."
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
 "Security Script (mandatory): The Security Script is executed every time the "
-"machine checks in with the admin-site."
+"computer checks in with the admin-site."
 msgstr ""
 "Sikkerhedsscript (påkrævet): Sikkerhedsscriptet afvikles hver gang en "
-"maskine tjekker ind på admin-sitet."
+"computer tjekker ind på admin-sitet."
 
 #: templates/documentation/security_scripts/securityproblems.html
 msgid ""
@@ -3863,11 +3892,14 @@ msgstr "Tilføj gruppe"
 msgid ""
 "You add groups by clicking on \"Add group to the schedule\". If there are "
 "any groups that do not yet belong to the schedule, they will be shown in a "
-"list. Click on a group to add the group to the schedule."
+"list. Click on the group(s) that you wish to add to select them and then "
+"click on the check mark beneath the list to add the group(s) to the schedule."
 msgstr ""
 "Du tilføjer grupper ved at klikke på \"Tilføj gruppe til tidsplan\". Hvis "
 "der findes grupper, som endnu ikke er medlem af tidsplanen, vil de blive "
-"vist i en liste. Klik på en gruppe for at knytte gruppen til tidsplanen."
+"vist i en liste. Klik på de grupper, som du ønsker at tilføje for at vælge "
+"dem og klik derefter på fluebenet under listen for at tilføje grupperne til "
+"tidsplanen."
 
 #: templates/documentation/wake_plans/edit_groups.html
 msgid ""
@@ -4029,12 +4061,15 @@ msgstr "Tilføj undtagelser"
 msgid ""
 "You add exceptions by clicking on \"Add exception to schedule\". If there "
 "are any exceptions that do not yet belong to the schedule, they will be "
-"shown in a list. Click on an exception to add the exception to the schedule."
+"shown in a list. Click on the exception(s) that you wish to add to select "
+"them and then click on the check mark beneath the list to add the "
+"exception(s) to the schedule."
 msgstr ""
 "Du tilføjer undtagelser ved at klikke på \"Tilknyt undtagelse til tidsplan\"."
 "Hvis der findes undtagelser, som endnu ikke er knyttet til tidsplanen, vil "
-"de blive vist i en liste. Klik på en undtagelse for at knytte undtagelsen "
-"til tidsplanen."
+"de blive vist i en liste. Klik på de undtagelser, som du ønsker at tilføje "
+"for at vælge dem og klik derefter på fluebenet under listen for at tilføje "
+"undtagelserne til tidsplanen."
 
 #: templates/documentation/wake_plans/edit_settings.html
 msgid ""
@@ -4122,37 +4157,42 @@ msgid ""
 "suspend after a number of minutes of inactivity. A chosen warning is "
 "displayed before the computer is suspended. The script takes five arguments: "
 "whether to activate the function, the number of minutes of inactivity before "
-"the warning is shown, the number of minutes of inactivity before the machine "
-"suspends, the text in the warning and the text on the button in the warning. "
-"If the last two text-related inputs are left empty, default texts will be "
-"used. The script automatically logs out the user before the machine suspends."
+"the warning is shown, the number of minutes of inactivity before the "
+"computer suspends, the text in the warning and the text on the button in the "
+"warning. If the last two text-related inputs are left empty, default texts "
+"will be used. The script automatically logs out the user before the computer "
+"suspends."
 msgstr ""
 "Dvale-scriptet kan bruges til at indstille computere til at gå i dvale efter "
 "et antal minutters inaktivitet. Der vises en valgfri advarsel, inden "
 "computeren går i dvale. Scriptet tager fem argumenter: hvorvidt funktionen "
 "skal aktiveres, antal minutter med inaktivitet før advarslen vises, antal "
-"minutter med inaktivitet før maskinen går i dvale, teksten i advarslen og "
+"minutter med inaktivitet før computeren går i dvale, teksten i advarslen og "
 "teksten på knappen i advarslen. Hvis de to sidste tekst-relaterede input "
 "ikke angives, benyttes standardtekster. Scriptet logger automatisk borgeren "
-"ud, inden maskinen går i dvale."
+"ud, inden computeren går i dvale."
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"The suspend script can also suspend the machine when it is inactive on the "
+"The suspend script can also suspend the computer when it is inactive on the "
 "login screen. However, this requires that script execution at login has been "
 "enabled via the script"
 msgstr ""
-"Dvale-scriptet kan også sætte maskinen i dvale, hvis den står inaktiv på "
+"Dvale-scriptet kan også sætte computeren i dvale, hvis den står inaktiv på "
 "login-skærmen. Dette kræver dog, at scriptkørsel ved login er blevet slået "
 "til via scriptet"
 
 #: templates/documentation/wake_plans/index.html
-msgid "The warning will not be shown on the login screen."
-msgstr "Advarslen vises ikke på login-skærmen."
+msgid ""
+"Script execution at login is automatically enabled on image 5.0.0 and newer "
+"images. The warning will not be shown on the login screen."
+msgstr ""
+"Scriptkørsel ved login er automatisk slået til på image 5.0.0 og nyere "
+"images. Advarslen vises ikke på login-skærmen."
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"Be aware that USB surveillance cannot be active while the machine is "
+"Be aware that USB surveillance cannot be active while the computer is "
 "suspended."
 msgstr ""
 "Bemærk at USB-overvågning ikke kan være aktiv, mens en computer er i dvale."
@@ -4278,57 +4318,60 @@ msgstr ""
 "tændt. Hvis computeren manuelt slukkes igen, vil den vågne efter tidsplanen."
 
 #: templates/documentation/wake_plans/index.html
-msgid "BIOS/UEFI settings"
-msgstr "Indstilling af BIOS/UEFI"
+msgid "UEFI/BIOS settings"
+msgstr "Indstilling af UEFI/BIOS"
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"If BIOS has been set to turn on the machine at a specific time, and the "
-"machine belongs to an active On/Off schedule, then the machine will not turn "
-"on according to the on times in the schedule, but instead follow the times "
-"set in the BIOS. It will, however, turn off according to the schedule. If "
-"you want the machine to follow the on times set in the schedule then you "
-"must enter BIOS and disable the BIOS control of on times. It is generally "
-"not possible to modify BIOS from the OS so it cannot be done via scripts."
+"If UEFI/BIOS has been set to turn on the computer at a specific time, and "
+"the computer belongs to an active On/Off schedule, then the computer will "
+"not turn on according to the on times in the schedule, but instead follow "
+"the times set in the UEFI/BIOS. It will, however, turn off according to the "
+"schedule. If you want the computer to follow the on times set in the "
+"schedule then you must enter UEFI/BIOS and disable the UEFI/BIOS control of "
+"on times. It is generally not possible to modify UEFI/BIOS from the OS so it "
+"cannot be done via scripts."
 msgstr ""
-"Hvis BIOS er indstillet til at vågne op på et bestemt tidspunkt, og maskinen "
-"tilhører en aktiv Tænd/Sluk Tidsplan, så vil maskinen ikke følge "
-"opstartstidspunkterne i tidsplanen, men i stedet de tidspunkter, der står i "
-"BIOS. Den vil dog stadig følge nedlukningstidspunkterne sat i tidsplanen. "
-"Skal maskinen følge opstartstidspunkterne i tidsplanen, skal man ind i BIOS "
-"på maskinerne og slå dens styring af opstartstidspunkt fra. Modificering af "
-"BIOS er generelt ikke muligt at gøre fra styresystemet, så derfor kan vi "
-"heller ikke gøre det via scripts."
+"Hvis UEFI/BIOS er indstillet til at vågne op på et bestemt tidspunkt, og "
+"computeren tilhører en aktiv Tænd/Sluk Tidsplan, så vil computeren ikke "
+"følge opstartstidspunkterne i tidsplanen, men i stedet de tidspunkter, der "
+"står i UEFI/BIOS. Den vil dog stadig følge nedlukningstidspunkterne sat i "
+"tidsplanen. Hvis computeren skal følge opstartstidspunkterne i tidsplanen, "
+"skal man ind i UEFI/BIOS på computeren og slå dens styring af "
+"opstartstidspunkt fra. Modificering af UEFI/BIOS er generelt ikke muligt at "
+"gøre fra styresystemet, så derfor kan vi heller ikke gøre det via scripts."
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"If the machines temporarily lose power while they are turned off according "
+"If the computers temporarily lose power while they are turned off according "
 "to the schedule, they will still turn on according to the schedule. (So long "
-"as the CMOS battery is still charged.) However, if the machines lose power "
+"as the CMOS battery is still charged.) However, if the computers lose power "
 "while they are on, they will not turn on automatically."
 msgstr ""
-"Hvis maskinerne midlertidigt mister strømmen, mens de er lukket ned efter "
+"Hvis computerne midlertidigt mister strømmen, mens de er lukket ned efter "
 "tidsplanen, vil de stadig vågne op ifølge tidsplanen. (Dvs. teknisk set så "
 "længe der stadig er strøm på CMOS-batteriet.) Men hvis de mister strømmen, "
 "mens de er tændt, så vil de ikke vågne op af sig selv."
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"Some BIOS systems include the option to set the machine to return to its "
-"last state (or turn on) after a power failure. We recommend turning this "
+"Some UEFI/BIOS systems include the option to set the computer to return to "
+"its last state (or turn on) after a power failure. We recommend turning this "
 "option on."
 msgstr ""
-"Nogle BIOS'er har muligheden for at indstille, at maskinen gendanner dens "
-"seneste tilstand (eller tænder) bagefter, hvis den mistede strømmen. Det vil "
-"vi derfor anbefale at slå til."
+"Nogle UEFI/BIOS'er har muligheden for at indstille, at computeren gendanner "
+"dens seneste tilstand (eller tænder) bagefter, hvis den mistede strømmen. "
+"Det vil vi derfor anbefale at slå til."
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"The layout may differ depending on the BIOS version, but here is an example "
-"from a NUC: From the overview you choose \"Advanced\" and then \"Power\":"
+"The layout may differ depending on the UEFI/BIOS version, but here is an "
+"example from a NUC: From the overview you choose \"Advanced\" and then "
+"\"Power\":"
 msgstr ""
-"Afhængigt af BIOS-version kan det se forskelligt ud, men her er et eksempel "
-"fra en NUC: Fra oversigtssiden vælger du \"Advanced\" og dernæst \"Power\":"
+"Afhængigt af UEFI/BIOS-version kan det se forskelligt ud, men her er et "
+"eksempel fra en NUC: Fra oversigtssiden vælger du \"Advanced\" og dernæst "
+"\"Power\":"
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
@@ -4358,28 +4401,28 @@ msgstr ""
 "til tidsplanen."
 
 #: templates/documentation/wake_plans/index.html
-msgid "2. What happens if the machine experiences a power failure?"
-msgstr "2. Hvad sker der, hvis maskinen mister strøm?"
+msgid "2. What happens if the computer experiences a power failure?"
+msgstr "2. Hvad sker der, hvis computeren mister strøm?"
 
 #: templates/documentation/wake_plans/index.html
-msgid "Check the second paragraph under \"BIOS/UEFI settings\" further up."
-msgstr "Se punkt 2. under \"Indstilling af BIOS/UEFI\" længere oppe."
+msgid "Check the second paragraph under \"UEFI/BIOS settings\" further up."
+msgstr "Se punkt 2. under \"Indstilling af UEFI/BIOS\" længere oppe."
 
 #: templates/documentation/wake_plans/index.html
-msgid "3. The machine turns on and off at the wrong times?"
-msgstr "3. Maskinen starter og lukker på de forkerte tidspunkter?"
+msgid "3. The computer turns on and off at the wrong times?"
+msgstr "3. Computeren starter og lukker på de forkerte tidspunkter?"
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"This could be due to incorrect time settings on the machine, which could be "
-"caused by the machine being unable to perform time synchronization. Ubuntu "
+"This could be due to incorrect time settings on the computer, which could be "
+"caused by the computer being unable to perform time synchronization. Ubuntu "
 "Linux - and many other operating systems - normally performs time "
 "synchronization via the protocol NTP (Network Time Protocol). NTP runs on "
 "port 123 via UDP, which we thus suggest allowing in your network "
 "configuration. If you do not wish to allow this traffic on all domains, we "
 "could develop a script that forces NTP to only check specific URL's."
 msgstr ""
-"Dette kan skyldes, at tiden på maskinen er indstillet forkert, eksempelvis "
+"Dette kan skyldes, at tiden på computeren er indstillet forkert, eksempelvis "
 "fordi den ikke har mulighed for at tidssynkronisere. Normalt "
 "tidssynkroniserer Ubuntu Linux - og flere andre styresystemer - via "
 "protokollen NTP (Network Time Protocol). NTP kører på port 123 over UDP, som "
@@ -4389,18 +4432,18 @@ msgstr ""
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"4. The machine turns on at the wrong times, but turns off according to "
+"4. The computer turns on at the wrong times, but turns off according to "
 "schedule?"
 msgstr ""
-"4. Maskinen starter på de forkerte tidspunkter, men lukker planmæssigt?"
+"4. Computeren starter på de forkerte tidspunkter, men lukker planmæssigt?"
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"This could be due to the BIOS settings. Check the first paragraph under "
-"\"BIOS/UEFI settings\" further up."
+"This could be due to the UEFI/BIOS settings. Check the first paragraph under "
+"\"UEFI/BIOS settings\" further up."
 msgstr ""
-"Dette kan skyldes indstillingerne sat i BIOS. Se punkt 1. under "
-"\"Indstilling af BIOS/UEFI\" længere oppe."
+"Dette kan skyldes indstillingerne sat i UEFI/BIOS. Se punkt 1. under "
+"\"Indstilling af UEFI/BIOS\" længere oppe."
 
 #: templates/logout.html
 msgid "You have been logged out"
