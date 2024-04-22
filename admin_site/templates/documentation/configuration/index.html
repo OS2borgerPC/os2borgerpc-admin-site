@@ -30,8 +30,8 @@
   <p>{% translate "General examples of possible uses" %}:</p>
   <ul>
     <li>{% blocktranslate trimmed %}
-      Among other things, the computer sends information about its hostname, the MAC-address of its network card
-      and the number of updates and security updates that are available from Ubuntu. {% endblocktranslate %}
+      Among other things, the computer sends information about its hostname, its IP addresses,
+      the current kernel version and the last time it performed automatic updates. {% endblocktranslate %}
       <br>
       {% translate "This information can sometimes be relevant for system administrators." %}</li>
     <li>{% blocktranslate trimmed %}
@@ -50,8 +50,8 @@
 
   <p>
     {% blocktranslate trimmed %}
-    The majority of configurations are controlled by the admin-site rather than the individual machine.
-    This means that if you change a value on an individual machine, it will typically be changed back to the value
+    The majority of configurations are controlled by the admin-site rather than the individual computer.
+    This means that if you change a value on an individual computer, it will typically be changed back to the value
     listed on the admin-site during the next check-in. {% endblocktranslate %}
   </p>
 
@@ -117,10 +117,8 @@
     {% endblocktranslate %}
     <br/>
     {% blocktranslate trimmed with version="os2borgerpc_version"|bold %}
-    This means that if one were to change e.g. {{ version }} on the machine, then the value would be overwritten
+    This means that if one were to change e.g. {{ version }} on the computer, then the value would be overwritten
     during the next check-in with the admin-site. {% endblocktranslate %}
-    Det vil i praksis sige, at ændrer man eks. <strong>os2borgerpc_version</strong> på maskinen, så vil den blive overskrevet efter næste
-    tjek-ind med adminsitet.
   </p>
 
   <table class="table table-hover">
@@ -135,7 +133,7 @@
       <tr>
         <td>_os2borgerpc.client_version</td>
         <td>{% translate "The version of the OS2borgerPC-client" %}</td>
-        <td>{% translate "The client is the particular software on the machine that communicates with the admin-site" %}</td>
+        <td>{% translate "The client is the particular software on the computer that communicates with the admin-site" %}</td>
       </tr>
       <tr>
         <td>_os_name</td>
@@ -148,8 +146,23 @@
         <td></td>
       </tr>
       <tr>
+        <td>_ip_addresses</td>
+        <td>{% translate "The IP addresses of the computer" %}</td>
+        <td>{% translate "The list is not sorted" %}</td>
+      </tr>
+      <tr>
+        <td>_kernel_version</td>
+        <td>{% translate "The version of the kernel" %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>_last_automatic_update_time</td>
+        <td>{% translate "The time when the computer last performed automatic updates" %}</td>
+        <td>{% translate "If the value is empty, the computer failed to determine the time" %}</td>
+      </tr>
+      <tr>
         <td>admin_url</td>
-        <td>{% translate "The address of the server where the machine checks in" %}</td>
+        <td>{% translate "The address of the server where the computer checks in" %}</td>
         <td></td>
       </tr>
       <tr>
@@ -159,7 +172,7 @@
       </tr>
       <tr>
         <td>hostname</td>
-        <td>{% translate "The machine's hostname" %}</td>
+        <td>{% translate "The computer's hostname" %}</td>
         <td>{% translate "Is currently only set during the registration" %}</td>
       </tr>
       <tr>
@@ -174,27 +187,17 @@
       </tr>
       <tr>
         <td>os2_product</td>
-        <td>{% translate "Indicates whether the machine is an OS2borgerPC or a OS2borgerPC Kiosk" %}</td>
+        <td>{% translate "Indicates whether the computer is an OS2borgerPC or a OS2borgerPC Kiosk" %}</td>
         <td></td>
       </tr>
       <tr>
         <td>os2borgerpc_version</td>
         <td>{% translate "The version of the OS2borgerPC-image that was installed" %}</td>
-        <td>{% translate "Unless the machine is reinstalled, this number does not change" %}</td>
-      </tr>
-      <tr>
-        <td>security_updates</td>
-        <td>{% translate "The number of security updates from Ubuntu that are available" %}</td>
-        <td></td>
+        <td>{% translate "Unless the computer is reinstalled, this number does not change" %}</td>
       </tr>
       <tr>
         <td>site</td>
-        <td>{% translate "The site that the machine belongs to" %}</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>updates</td>
-        <td>{% translate "The number of regular updates from Ubuntu that are available" %}</td>
+        <td>{% translate "The site that the computer belongs to" %}</td>
         <td></td>
       </tr>
     </tbody>

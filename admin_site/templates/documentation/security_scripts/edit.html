@@ -4,6 +4,9 @@
 {% block specific_content %}
   <h1>{% translate "Editing Security Scripts" %}</h1>
   <p>
+    {% translate "Note that only Magenta can edit global security scripts." %}
+  </p>
+  <p>
     {% blocktranslate trimmed %}
     If you wish to edit a Security Script, you must click on "Security Scripts" in the
     left-hand menu and then select the security script in the list to the right of
@@ -43,8 +46,7 @@
     <br>
     <br>
     {% blocktranslate trimmed %}
-    The format looks like this: "event timestamp, security rule id, event summary,
-    complete event log".
+    The format looks like this: "event timestamp, security rule id, event summary".
     {% endblocktranslate %}
     <br>
   </p>
@@ -64,12 +66,6 @@
     </li>
     <li>
       {% translate "The event summary can be something you define or a part of the collected data." %}
-    </li>
-    <li>
-      {% blocktranslate trimmed %}
-      The complete event log is all of the data regarding the event.
-      It is optional and can be replaced by an empty string.
-      {% endblocktranslate %}
     </li>
   </ul>
   <p>
