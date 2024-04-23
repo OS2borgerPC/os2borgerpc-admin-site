@@ -670,7 +670,6 @@ class JobsView(SiteView):
             [
                 Job.NEW,
                 Job.SUBMITTED,
-                Job.RUNNING,
                 Job.FAILED,
                 Job.DONE,
             ]
