@@ -52,6 +52,14 @@ ul.nav li ul li.active { font-style: italic; }
 
 .selected > td{ background-color: var(--bs-cyan); }
 
+.batch:not(:empty)::before { content: "(" }
+.batch:not(:empty)::after { content: ")" }
+
+#scriptform textarea {
+  min-width: 90vh;
+  height: 40vh;
+}
+
 /* Forms */
 
 input.phantom { display: none; }
@@ -119,20 +127,25 @@ div.docscontainer .nav-list>li>a:hover {background: var(--bs-gray-dark); text-de
 .inline {display: inline}
 
 
-@media screen and (max-width: 1535px) {
+/* Media queries / Responsiveness */
+
+@media screen and (max-width: 1735px) {
   /* Make jobs and computer -> jobs look decent down until around 1080px width */
   #jobsearchnav { width: 9rem; }
   .jobtable th, .jobtable td { padding: .75rem .75rem!important; }
 
+  /* Make images look better at a lower res too */
+  .images .sublevelnav {
+    width: 170px;
+  }
+
+  .images th {
+    word-wrap: anywhere;
+  }
+}
+
+@media screen and (max-width: 1535px) {
   /* Hide computer description from status page at lower resolution */
   #site-status-table th:nth-of-type(3),  #site-status-table th:nth-of-type(4),
   #site-status-table td:nth-of-type(3), #site-status-table td:nth-of-type(4) { display: none; }
-}
-
-.batch:not(:empty)::before { content: "(" }
-.batch:not(:empty)::after { content: ")" }
-
-#scriptform textarea {
-  min-width: 90vh;
-  height: 40vh;
 }
