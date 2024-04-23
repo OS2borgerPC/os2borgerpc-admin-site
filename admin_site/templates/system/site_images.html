@@ -1,8 +1,14 @@
 {% extends "site_with_navigation.html" %}
 {% load i18n %}
+
 {% block specific_title %}
   {% translate "Images" %}
 {% endblock %}
+
+{% block page_type_class %}
+images
+{% endblock %}
+
 {% block subnav %}
   <ul class="sublevelnav item-list">
     {% for product in products %}
@@ -91,7 +97,7 @@
 
               </td>
               <td>
-                <pre style="font-family: var(--bs-font-sans-serif)">{{ image.release_notes }}</pre>
+                <pre style="font-family: var(--bs-font-sans-serif); white-space: pre-wrap;">{{ image.release_notes }}</pre>
               </td>
               <td>
                 {% if not selected_product.multilang or user_language == "da" %}

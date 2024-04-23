@@ -10066,12 +10066,12 @@
     "pk": 5,
     "fields": {
         "product": 1,
-        "image_version": "3.1.1",
-        "release_date": "2021-07-12",
-        "os": "Ubuntu 20.04",
-        "release_notes": "OS2borgerPC 3.1.0 med Ubuntu 20.04.3.",
-        "image_upload": "images/os2borgerpc-3.1.1.iso",
-        "image_upload_multilang": "images/os2borgerpc-3.1.1m.iso"
+        "image_version": "5.2.0",
+        "release_date": "2024-04-23",
+        "os": "Ubuntu 22.04",
+        "release_notes": "MD5sum: f150078e1caf51b1804fa860344c0504\r\nSwedish (multi-language) MD5sum: b14dd4c6704eb4ab674e0fb9bfa3e5e6\r\n\r\nGrundlæggende:\r\n- Opgraderet til Ubuntu Desktop 22.04.3.\r\n\r\nFølgende funktionalitet er blevet indbygget:\r\n- Opdatering af klienten i forbindelse med indledende registrering\r\n- Superuser har adgang til at redigere printerindstillinger\r\n- Deaktivering af Bluetooth\r\n- Slå Wayland fra\r\n- Automatiske opdateringer (sikkerhed)\r\n- Randomiser tjek-in-tidspunkt\r\n- Sæt GRUB-kodeord (bootmanageren) til noget tilfældigt (fremfor det ikke er sat og der er fri adgang)\r\n- Kør scripts på loginskærm (forudsætning for scriptet der aktiverer numlock på loginskærm)\r\n- Fjern popup-beskeder om fremtidige Ubuntu-opgraderinger (ikke opdateringer)\r\n- Firefox: Nedlås indstillinger / policies\r\n- Installer Okular som standard PDF-læser\r\n- Sæt baggrundsbilleder på loginskærm og skrivebord\r\n- Fjern Libreoffice \"Tip of the day\"\r\n- Borger: Aktiver genveje\r\n- Borger: Fjern luk ned, genstart og dvale fra menu\r\n- Borger: Fjern \"Lås\" fra menu\r\n- Borger: Fjern \"Skift bruger\" fra menu\r\n- Borger: Fjern skriveadgang til skrivebordet\r\n- Borger: Fjern adgang til Indstillinger\r\n- Borger: Sæt Borger som forvalgt bruger på loginskærm, fremfor den \r\n   seneste loggede ind er forvalgt, som kan være superuser\r\n- Borger: Fjern Alt-F2 (Kør)\r\n- Vis hjælpeværktøjer i menuen som standard\r\n\r\nIndbygget version af OS2borgerPC-klienten: 2.4.1",
+        "image_upload": "/media/images/os2borgerpc-5.2.0.iso",
+        "image_upload_multilang": "/media/images/os2borgerpc-5.2.0M.iso"
     }
 },
 {
