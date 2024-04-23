@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-23 09:58+0200\n"
+"POT-Creation-Date: 2024-04-23 16:26+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -595,11 +595,6 @@ msgstr "Nyt"
 #: system/models.py
 msgid "Submitted"
 msgstr "Afsendt"
-
-#. Translators: Related to job status
-#: system/models.py
-msgid "Running"
-msgstr "Kører"
 
 #. Translators: Related to job status
 #: system/models.py
