@@ -1010,7 +1010,6 @@ class Job(models.Model):
     # Job status choices
     NEW = "NEW"
     SUBMITTED = "SUBMITTED"
-    RUNNING = "RUNNING"
     DONE = "DONE"
     FAILED = "FAILED"
     RESOLVED = "RESOLVED"
@@ -1020,8 +1019,6 @@ class Job(models.Model):
         NEW: _("New"),
         # Translators: Related to job status
         SUBMITTED: _("Submitted"),
-        # Translators: Related to job status
-        RUNNING: _("Running"),
         # Translators: Related to job status
         FAILED: _("Failed"),
         # Translators: Related to job status
@@ -1033,7 +1030,6 @@ class Job(models.Model):
     STATUS_CHOICES = (
         (NEW, STATUS_TRANSLATIONS[NEW]),
         (SUBMITTED, STATUS_TRANSLATIONS[SUBMITTED]),
-        (RUNNING, STATUS_TRANSLATIONS[RUNNING]),
         (FAILED, STATUS_TRANSLATIONS[FAILED]),
         (DONE, STATUS_TRANSLATIONS[DONE]),
         (RESOLVED, STATUS_TRANSLATIONS[RESOLVED]),
@@ -1043,7 +1039,6 @@ class Job(models.Model):
     STATUS_TO_LABEL = {
         NEW: "bg-secondary",
         SUBMITTED: "bg-info",
-        RUNNING: "bg-warning",
         DONE: "bg-success",
         FAILED: "bg-danger",
         RESOLVED: "bg-primary",
