@@ -109,6 +109,18 @@ li.selected {background-color: var(--bs-gray);}
   background-color: var(--bs-white);
 }
 
+.alert {
+  position: static;
+}
+
+.list-group-item {
+  position: static;
+}
+
+.translate-toast {
+  right: 10%;
+} 
+
 /* Documentation */
 
 div.docscontainer {padding-bottom: 20px;}
