@@ -1,3 +1,45 @@
+
+// This event displays the notification message in the toast element, when the page is loaded
+document.addEventListener('DOMContentLoaded', (event) => {
+  
+  // First check if there is a page-notification in the cookie with the response from the server  
+  let notification = document.cookie.match(/\bpage-notification\s*=\s*([^;]+)/)
+  
+  if(notification) {
+    try {
+
+      let descriptor = JSON.parse(decodeURIComponent(notification[1]))
+
+      // The bootstrap 5 toast html element, located in the notification.html file and must be included in the html to display the toast
+      const toastElement = document.getElementById("toast")
+      const toastBody = toastElement.firstElementChild.firstElementChild
+      
+      let toast_color="bg-success"
+      // if autoHide is set to true, the toast will disappear automatically, default is 5 seconds
+      let autoHide = true
+      
+      // Reset the toast color if the message type is error
+      if (descriptor["type"] == "error") {
+        toast_color = "bg-danger"
+        autoHide = false
+      }
+
+      toastElement.classList.add(toast_color)
+      toastBody.innerText = descriptor["message"]
+
+      const toast = new bootstrap.Toast(toastElement, {autohide: autoHide})
+      toast.show()
+
+    } catch (e) {
+      console.error(e)
+    }
+    // Set the cookie to a past date, so it will be deleted
+    document.cookie = 'page-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
+  }
+});
+
+
+
 // Set up global BibOS instance used for accessing utility methods
 var BibOS
 (function($) {
@@ -36,27 +78,6 @@ var BibOS
       })
 
       $('#editconfig_value').attr('maxlength', 4096)
-
-      var m = document.cookie.match(/\bpage-notification\s*=\s*([^;]+)/)
-      if(m) {
-        try {
-          var descriptor = JSON.parse(decodeURIComponent(m[1]))
-          notification = $('.page-notification').first()
-          if (descriptor["type"] == "error") {
-            notification.addClass("alert-danger")
-          } else {
-            notification.addClass("alert-success")
-          }
-          notification.toggleClass(["d-block", "d-none"])
-          notification.html(descriptor["message"]).fadeIn()
-        } catch (e) {
-          /* If there was an exception here, then the cookie was malformed --
-             print the exception to the console and continue, clearing the
-             broken cookie */
-          console.error(e)
-        }
-        document.cookie = 'page-notification=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
-      }
 
       if(location.href.match(documentation_match))
       {
