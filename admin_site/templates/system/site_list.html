@@ -2,20 +2,21 @@
 {% load i18n %}
 
 {% block header_title %}
-  {% translate "Total number of sites" as total_sites %}
-  {% translate "Total number of computers" as total_pcs %}
-  {% translate "Total number of BorgerPC's" as total_bpc %}
-  {% translate "Total number of Kiosk PC's" as total_kiosk %}
-  {% translate "Total number of" as total_release_before %}
-  {% translate "computers" as total_release_after %}
+  {% translate "Total number of BorgerPC's" as total_bpc_str %}
+  {% translate "Total number of Kiosk PC's" as total_kiosk_str %}
+  {% translate "Total number of" as total_release_before_str %}
+  {% translate "Computers" as computers_str %}
+  {% translate "Computers total" as computers_total_str %}
   {% translate "Administrate" %} <em>{% translate "Sites" %}</em>
-  <span class="ms-3 badge bg-secondary text-dark" title="{{total_sites}}">{% translate "Sites" %}: {{site_list|length}}</span>
-  <span class="ms-3 badge bg-secondary text-dark" title="{{total_pcs}}">{% translate "Computers" %}: {{total_pcs_count}}</span>
-  <span class="ms-3 badge bg-secondary text-dark" title="{{total_bpc}}">{% translate "OS2borgerPC" %}: {{borgerpc_count}}</span>
-  <span class="ms-3 badge bg-secondary text-dark" title="{{total_kiosk}}">{% translate "OS2borgerPC Kiosk" %}: {{borgerpc_kiosk_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark">{% translate "Sites" %}: {{site_list|length}}</span>
+  <span class="ms-3 badge bg-secondary text-dark">{{computers_total_str}}: {{total_pcs_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark">{% translate "Activated:" %} {{total_activated_pcs_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark">{% translate "Online" %}: {{total_online_pcs_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark" title="{{total_bpc_str}}">{% translate "OS2borgerPC" %}: {{borgerpc_count}}</span>
+  <span class="ms-3 badge bg-secondary text-dark" title="{{total_kiosk_str}}">{% translate "OS2borgerPC Kiosk" %}: {{borgerpc_kiosk_count}}</span>
   {% for release, release_count in releases %}
     {% if release_count > 0 %}
-      <span class="ms-3 badge bg-secondary text-dark" title="{{total_release_before}} {{release}} {{total_release_after}}">{{release}}: {{release_count}}</span>
+      <span class="ms-3 badge bg-secondary text-dark" title="{{total_release_before_str}} {{release}} {{computers_str}}">{{release}}: {{release_count}}</span>
     {% endif %}
   {% endfor %}
   {% if user.is_superuser %}
