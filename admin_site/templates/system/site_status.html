@@ -13,9 +13,9 @@
       {% translate "Total number of BorgerPC's" as total_bpc %}
       {% translate "Total number of Kiosk PC's" as total_kiosk %}
       {{computers|capfirst}}
-      <span class="ms-3 badge bg-secondary text-dark">{% translate "Activated:" %} {{ activated_pcs }} / {{ total_pcs }}</span>
+      <span class="ms-3 badge bg-secondary text-dark">{% translate "Activated:" %} {{ activated_pcs_count }} / {{ total_pcs_count }}</span>
       {# Originally this was online / activated, but it turns out a computer that isn't activated can still be online #}
-      <span class="ms-3 badge bg-secondary text-dark">{% translate "Online:" %} {{ online_pcs }} / {{ total_pcs }}</span>
+      <span class="ms-3 badge bg-secondary text-dark">{% translate "Online" %}: {{ online_pcs_count }} / {{ total_pcs_count }}</span>
       <span class="ms-3 badge bg-secondary text-dark" title="{{total_bpc}}">{% translate "OS2borgerPC" %}: {{borgerpc_count}}</span>
       <span class="ms-3 badge bg-secondary text-dark" title="{{total_kiosk}}">{% translate "OS2borgerPC Kiosk" %}: {{borgerpc_kiosk_count}}</span>
       {% for release, release_count in releases %}

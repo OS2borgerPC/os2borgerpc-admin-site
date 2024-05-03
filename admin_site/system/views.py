@@ -2,7 +2,6 @@
 import os
 import json
 import secrets
-from datetime import datetime
 
 from django.http import HttpResponseRedirect, Http404, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -10,7 +9,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
-from django.utils import translation
 from django.contrib.auth.models import User, Permission
 from django.urls import resolve, reverse
 
@@ -37,6 +35,7 @@ from django.forms import Form
 from system.utils import (
     get_notification_string,
     notification_changes_saved,
+    online_pcs_count_filter,
     set_notification_cookie,
 )
 
@@ -303,9 +302,12 @@ class SiteList(ListView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(SiteList, self).get_context_data(**kwargs)
         context = site_pcs_stats(context, self.get_queryset())
-        context["total_pcs_count"] = PC.objects.filter(
-            site__in=self.get_queryset()
+        total_pcs = PC.objects.filter(site__in=self.get_queryset())
+        context["total_pcs_count"] = len(total_pcs)
+        context["total_activated_pcs_count"] = total_pcs.filter(
+            is_activated=True
         ).count()
+        context["total_online_pcs_count"] = online_pcs_count_filter(total_pcs)
         context["user"] = self.request.user
         context["version"] = open("/code/VERSION", "r").read()
         countries = Country.objects.all()
@@ -347,19 +349,17 @@ class SiteDetailView(SiteView):
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         context = site_pcs_stats(context, [kwargs["object"]])
-        # Top level list of new PCs etc.
-        not_activated_pcs = self.object.pcs.filter(is_activated=False)
 
-        site = context["site"]
-        site_pcs = site.pcs.all()
+        site_pcs = self.object.pcs.all()
+
+        # Top level list of new PCs etc.
         context["ls_pcs"] = site_pcs.order_by(
             "is_activated", F("last_seen").desc(nulls_last=True)
         )
 
-        context["total_pcs"] = context["ls_pcs"].count()
-        context["activated_pcs"] = context["total_pcs"] - not_activated_pcs.count()
-        activated_pcs = site_pcs.filter(is_activated=True)
-        context["online_pcs"] = len([pc for pc in activated_pcs if pc.online])
+        context["total_pcs_count"] = context["ls_pcs"].count()
+        context["activated_pcs_count"] = site_pcs.filter(is_activated=True).count()
+        context["online_pcs_count"] = online_pcs_count_filter(site_pcs)
 
         return context
 

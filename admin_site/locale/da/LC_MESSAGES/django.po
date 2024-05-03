@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-23 16:26+0200\n"
+"POT-Creation-Date: 2024-05-08 16:56+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -5353,14 +5353,6 @@ msgstr "Tidligere versioner"
 msgid "Download"
 msgstr "Download"
 
-#: templates/system/site_list.html
-msgid "Total number of sites"
-msgstr "Antal sites i alt"
-
-#: templates/system/site_list.html
-msgid "Total number of computers"
-msgstr "Antal computere i alt"
-
 #: templates/system/site_list.html templates/system/site_status.html
 msgid "Total number of BorgerPC's"
 msgstr "Totalt antal BorgerPC'er"
@@ -5373,13 +5365,21 @@ msgstr "Totalt antal Kiosk PC'er"
 msgid "Total number of"
 msgstr "Totalt antal"
 
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "computers"
-msgstr "computere"
+#: templates/system/site_list.html
+msgid "Computers total"
+msgstr "Computere i alt"
 
 #: templates/system/site_list.html
 msgid "Administrate"
 msgstr "Administrér"
+
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Activated:"
+msgstr "Aktiverede:"
+
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Online"
+msgstr "Online"
 
 #: templates/system/site_list.html
 msgid "Admin site version"
@@ -5426,12 +5426,8 @@ msgid "Settings for"
 msgstr "Indstillinger for"
 
 #: templates/system/site_status.html
-msgid "Activated:"
-msgstr "Aktiverede:"
-
-#: templates/system/site_status.html
-msgid "Online:"
-msgstr "Online:"
+msgid "computers"
+msgstr "computere"
 
 #: templates/system/site_status.html
 msgid "Activated"
@@ -5452,10 +5448,6 @@ msgstr "Seneste tjek-ind"
 #: templates/system/site_status.html
 msgid "Latest event received"
 msgstr "Seneste hændelse modtaget"
-
-#: templates/system/site_status.html
-msgid "Online"
-msgstr "Online"
 
 #: templates/system/site_status.html
 msgid "Offline"
