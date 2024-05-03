@@ -408,3 +408,9 @@ def notification_changes_saved(response, user_profile_language):
     translation.deactivate()
 
     return response
+
+
+def online_pcs_count_filter(pcs):
+    """Online PCs are PCs that have checked in recently, as defined by the model function
+    This function takes a list of PCs and returns the number of those that are online"""
+    return len([pc for pc in pcs if pc.online])
