@@ -303,10 +303,12 @@ def send_password_sms(phone_number, message, site):
     if response.text[:2] != "0:":
         return True
     else:
-        # Unable to authenticate with system user - log this.
-        logger.error(
-            f"{site.name} was unable to authorize with SMSTeknik with configured user name and password: {response.text}"
-        )
+        if "no valid recipients" not in response.text.lower():
+            # Unable to authenticate with system user - log this.
+            logger.error(
+                f"{site.name} was unable to authorize with SMSTeknik "
+                f"with configured user name and password: {response.text}"
+            )
         return False
 
 
