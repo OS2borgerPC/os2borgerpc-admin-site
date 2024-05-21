@@ -38,11 +38,15 @@ def register_new_computer_v2(mac, name, site, configuration):
             "Start by deleting the computer on the computer list on your site "
             "and then restart the registration."
         )
+    # If we are here then no matching PC object exists
+    new_pc = PC(name=name, uid=uid)
     try:
-        new_pc = PC.objects.get(uid=uid)
-    except PC.DoesNotExist:
-        new_pc = PC(name=name, uid=uid)
         new_pc.site = Site.objects.get(uid=site)
+    except Site.DoesNotExist:
+        raise Exception(
+            "The chosen site UID does not match any sites on the "
+            "chosen admin portal."
+        )
 
     new_pc.is_activated = False
     new_pc.mac = mac
