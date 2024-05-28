@@ -3274,9 +3274,6 @@ class SecurityEventsView(SiteView):
             for (value, name) in SecurityEvent.STATUS_CHOICES
         ]
 
-        if "pc_uid" in self.kwargs:
-            context["pc_uid"] = self.kwargs["pc_uid"]
-
         context["form"] = SecurityEventForm()
         qs = context["form"].fields["assigned_user"].queryset
         qs = qs.filter(user_profile__sites=self.get_object())
