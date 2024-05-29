@@ -8,7 +8,7 @@
 {% block subnav %}
 <div class="sublevelnav">
 
-  {% if site_membership.site_user_type == site_membership.SITE_ADMIN or user.is_superuser %}
+  {% if site_membership.site_user_type >= site_membership.SITE_ADMIN or user.is_superuser %}
     <div class="listutils">
       <a class="btn btn-link" href="{% url 'new_user' site.uid %}">
         <span class="material-icons">add</span>
@@ -24,7 +24,7 @@
         <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
           {{ listed_user.username }}
         </a>
-        {% if listed_user == selected_user and site_membership.site_user_type == site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
+        {% if listed_user == selected_user and site_membership.site_user_type >= site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
           {% translate "Delete user" as delete_name %}
           <a class="item-list-deletable material-icons" href="{% url 'user_delete' site.uid selected_user.username %}" title="{{ delete_name }}">
             clear
@@ -46,7 +46,7 @@
       {% endif %}
       {% include 'notification.html' %}
       <div>
-        {% if site_membership.site_user_type != site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
+        {% if site_membership.site_user_type < site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
             <p> {% translate "Site users are not authorized to edit other users. Ask a site admin or Magenta for help." %}</p>
         {% else %}
             <form
