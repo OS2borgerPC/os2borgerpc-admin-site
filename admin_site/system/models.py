@@ -154,18 +154,35 @@ class Country(models.Model):
         verbose_name_plural = "countries"
 
 
+class Customer(models.Model):
+    """A customer that can have one or more sites"""
+
+    name = models.CharField(verbose_name=_("customer name"), max_length=255)
+    country = models.ForeignKey(
+        Country, related_name="customers", on_delete=models.PROTECT, null=True
+    )
+    paid_for_access_until = models.DateField(
+        verbose_name=_("Paid for access until this date"), null=True, blank=True
+    )
+    is_test_customer = models.BooleanField(
+        verbose_name=_("Is a test customer"), default=False
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
+
 class Site(models.Model):
     """A site which we wish to admin"""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
     uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
-    country = models.ForeignKey(
-        Country, related_name="sites", on_delete=models.PROTECT, null=True
-    )
-    is_testsite = models.BooleanField(verbose_name=_("Is a testsite"), default=False)
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
-    paid_for_access_until = models.DateField(
-        verbose_name=_("Paid for access until this date"), default=datetime.date.today
+    customer = models.ForeignKey(
+        Customer, related_name="sites", on_delete=models.PROTECT, null=True
     )
     created = models.DateTimeField(
         verbose_name=_("created"), auto_now_add=True, null=True
@@ -314,10 +331,10 @@ class LoginLog(models.Model):
 class FeaturePermission(models.Model):
     name = models.CharField(verbose_name=_("name"), max_length=255)
     uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
-    sites = models.ManyToManyField(
-        Site,
+    customers = models.ManyToManyField(
+        Customer,
         related_name="feature_permission",
-        verbose_name=_("sites with access"),
+        verbose_name=_("customers with access"),
         blank=True,
     )
 

@@ -16,6 +16,7 @@ from system.models import (
     Citizen,
     Configuration,
     ConfigurationEntry,
+    Customer,
     FeaturePermission,
     ImageVersion,
     Input,
@@ -208,12 +209,27 @@ class PCInlineForSiteAdmin(admin.TabularInline):
         return False
 
 
-class FeaturePermissionInlineForSiteAdmin(admin.TabularInline):
-    model = FeaturePermission.sites.through
+class FeaturePermissionInlineForCustomerAdmin(admin.TabularInline):
+    model = FeaturePermission.customers.through
     extra = 0
 
 
-class SiteInlineForCountryAdmin(admin.TabularInline):
+class CustomerInlineForCountryAdmin(admin.TabularInline):
+    model = Customer
+    fields = ("name", "is_test_customer")
+    extra = 0
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
+
+    def has_change_permission(self, request, obj):
+        return False
+
+
+class SiteInlineForCustomerAdmin(admin.TabularInline):
     model = Site
     fields = ("name", "uid")
     extra = 0
@@ -228,22 +244,43 @@ class SiteInlineForCountryAdmin(admin.TabularInline):
         return False
 
 
-class SiteAdmin(admin.ModelAdmin):
+class CustomerAdmin(admin.ModelAdmin):
     list_filter = ("country",)
+    list_display = (
+        "name",
+        "is_test_customer",
+        "number_of_computers",
+        "paid_for_access_until",
+        "feature_permissions",
+    )
+    search_fields = ("name",)
+    inlines = (
+        SiteInlineForCustomerAdmin,
+        FeaturePermissionInlineForCustomerAdmin,
+    )
+
+    def number_of_computers(self, obj):
+        computers_count = PC.objects.filter(site__customer=obj).count()
+        return computers_count
+
+    def feature_permissions(self, obj):
+        return list(obj.feature_permission.all())
+
+    number_of_computers.short_description = _("Number of computers")
+    feature_permissions.short_description = _("Feature permissions")
+
+
+class SiteAdmin(admin.ModelAdmin):
+    list_filter = ("customer",)
     list_display = (
         "name",
         "number_of_computers",
         "created",
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",
-        "paid_for_access_until",
-        "feature_permissions",
     )
     search_fields = ("name",)
-    inlines = (
-        FeaturePermissionInlineForSiteAdmin,
-        PCInlineForSiteAdmin,
-    )
+    inlines = (PCInlineForSiteAdmin,)
     readonly_fields = ("created",)
 
     def number_of_borgerpc_computers(self, obj):
@@ -267,13 +304,9 @@ class SiteAdmin(admin.ModelAdmin):
     def number_of_computers(self, obj):
         return obj.pcs.count()
 
-    def feature_permissions(self, obj):
-        return list(obj.feature_permission.all())
-
     number_of_computers.short_description = _("Number of computers")
     number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
     number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
-    feature_permissions.short_description = _("Feature permissions")
 
 
 class LoginLogAdmin(admin.ModelAdmin):
@@ -365,7 +398,7 @@ class CountryAdmin(admin.ModelAdmin):
     )
     list_filter = ("name",)
     search_fields = ("name", "pk")
-    inlines = [SiteInlineForCountryAdmin]
+    inlines = [CustomerInlineForCountryAdmin]
 
 
 class ScriptTagAdmin(admin.ModelAdmin):
@@ -559,6 +592,7 @@ ar(ChangelogTag, ChangelogTagAdmin)
 ar(Citizen, CitizenAdmin)
 ar(Configuration, ConfigurationAdmin)
 ar(Country, CountryAdmin)
+ar(Customer, CustomerAdmin)
 ar(EventRuleServer, EventRuleServerAdmin)
 ar(FeaturePermission, FeaturePermissionAdmin)
 ar(ImageVersion, ImageVersionAdmin)

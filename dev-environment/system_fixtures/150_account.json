@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
         "user": 35,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -12,7 +13,8 @@
     "pk": 2,
     "fields": {
         "user": 36,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -20,7 +22,8 @@
     "pk": 3,
     "fields": {
         "user": 37,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -28,7 +31,8 @@
     "pk": 4,
     "fields": {
         "user": 38,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -36,7 +40,8 @@
     "pk": 5,
     "fields": {
         "user": 39,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
