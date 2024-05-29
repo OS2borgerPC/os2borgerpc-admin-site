@@ -3527,15 +3527,33 @@
     }
 },
 {
+    "model": "system.customer",
+    "pk": 1,
+    "fields": {
+        "name": "Magenta",
+        "country": 1,
+        "paid_for_access_until": null,
+        "is_test_customer": false
+    }
+},
+{
+    "model": "system.customer",
+    "pk": 2,
+    "fields": {
+        "name": "Andre",
+        "country": 2,
+        "paid_for_access_until": null,
+        "is_test_customer": false
+    }
+},
+{
     "model": "system.site",
     "pk": 1,
     "fields": {
         "name": "Magenta",
         "uid": "magenta",
-        "country": 1,
-        "is_testsite": false,
         "configuration": 1,
-        "paid_for_access_until": "2025-04-02",
+        "customer": 1,
         "created": null,
         "agency_id": "DK-100000",
         "citizen_login_api_user": "",
@@ -3554,10 +3572,8 @@
     "fields": {
         "name": "Magenta Test",
         "uid": "magenta-test",
-        "country": 1,
-        "is_testsite": true,
         "configuration": 60,
-        "paid_for_access_until": "2025-01-17",
+        "customer": 1,
         "created": null,
         "agency_id": "DK-100000",
         "citizen_login_api_user": "",
@@ -3576,10 +3592,8 @@
     "fields": {
         "name": "Site3",
         "uid": "site3",
-        "country": 2,
-        "is_testsite": false,
         "configuration": 61,
-        "paid_for_access_until": "2024-04-01",
+        "customer": 2,
         "created": null,
         "agency_id": "",
         "citizen_login_api_user": "",
@@ -3598,7 +3612,7 @@
     "fields": {
         "name": "Tidsplan",
         "uid": "wake_plan",
-        "sites": [
+        "customers": [
             1
         ]
     }

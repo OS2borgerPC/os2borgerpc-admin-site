@@ -313,11 +313,15 @@ class SiteList(ListView, LoginRequiredMixin):
         countries = Country.objects.all()
         user_sites = self.get_queryset()
         for country in countries:
-            country.normal_sites = country.sites.filter(
-                is_testsite=False, id__in=user_sites
+            country.normal_sites = Site.objects.filter(
+                customer__country=country,
+                customer__is_test_customer=False,
+                id__in=user_sites,
             )
-            country.test_sites = country.sites.filter(
-                is_testsite=True, id__in=user_sites
+            country.test_sites = Site.objects.filter(
+                customer__country=country,
+                customer__is_test_customer=True,
+                id__in=user_sites,
             )
         context["countries"] = countries
         return context
@@ -721,7 +725,9 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
         if not self.request.user.is_superuser:
             queryset = Job.objects.filter(
                 Q(batch__script__is_hidden=False)
-                | Q(batch__script__feature_permission__in=site.feature_permission.all())
+                | Q(
+                    batch__script__feature_permission__in=site.customer.feature_permission.all()
+                )
             )
         else:
             queryset = Job.objects.all()
@@ -939,7 +945,7 @@ class ScriptMixin(object):
         scripts = self.scripts.filter(is_hidden=False)
 
         # Append scripts the site has permissions for
-        for fp in context["site"].feature_permission.all():
+        for fp in context["site"].customer.feature_permission.all():
             scripts = scripts | fp.scripts.filter(is_security_script=self.is_security)
 
         local_scripts = scripts.filter(site=self.site)
@@ -1178,7 +1184,8 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             self.script.is_hidden
             and not self.request.user.is_superuser
             and not (
-                self.script.feature_permission in self.site.feature_permission.all()
+                self.script.feature_permission
+                in self.site.customer.feature_permission.all()
             )
         ):
             raise PermissionDenied
@@ -1359,7 +1366,7 @@ class ScriptDelete(ScriptMixin, SuperAdminOrThisSiteMixin, DeleteView):
         ).first()
         if (
             not self.request.user.is_superuser
-            and site_membership.site_user_type != site_membership.SITE_ADMIN
+            and site_membership.site_user_type < site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
 
@@ -1606,7 +1613,7 @@ class WakePlanBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
         context["wake_plan_access"] = (
             True
-            if context["site"].feature_permission.filter(uid="wake_plan")
+            if context["site"].customer.feature_permission.filter(uid="wake_plan")
             else False
         )
 
@@ -1793,7 +1800,7 @@ class WakePlanCreate(WakePlanExtendedMixin, CreateView):
     def form_valid(self, form):
         # The form does not allow setting the site yourself, so we insert that here
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if not site.feature_permission.filter(uid="wake_plan"):
+        if not site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         self.object = form.save(commit=False)
         self.object.site = site
@@ -1891,7 +1898,7 @@ class WakePlanUpdate(WakePlanExtendedMixin, UpdateView):
             )
 
     def form_valid(self, form):
-        if not self.object.site.feature_permission.filter(uid="wake_plan"):
+        if not self.object.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         # Ensure that if a start time has been set, so has the end time - or vice versa
         f = self.request.POST
@@ -2129,7 +2136,7 @@ class WakePlanDelete(WakePlanBaseMixin, DeleteView):
                 _("You have no Wake Week Plan with the following ID: %s")
                 % self.kwargs["wake_week_plan_id"]
             )
-        if not plan.site.feature_permission.filter(uid="wake_plan"):
+        if not plan.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         return plan
 
@@ -2165,7 +2172,7 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
 
     def get_redirect_url(self, **kwargs):
         object_to_copy = WakeWeekPlan.objects.get(id=kwargs["wake_week_plan_id"])
-        if not object_to_copy.site.feature_permission.filter(uid="wake_plan"):
+        if not object_to_copy.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
 
         # Before we remove the pk we duplicate all the associated events, as they're precisely related through the pk
@@ -2212,7 +2219,7 @@ class WakeChangeEventBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
 
         context["wake_plan_access"] = (
             True
-            if context["site"].feature_permission.filter(uid="wake_plan")
+            if context["site"].customer.feature_permission.filter(uid="wake_plan")
             else False
         )
 
@@ -2281,7 +2288,7 @@ class WakeChangeEventUpdate(WakeChangeEventBaseMixin, UpdateView):
             )
 
     def form_valid(self, form):
-        if not self.object.site.feature_permission.filter(uid="wake_plan"):
+        if not self.object.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         # Capture a view of the event before the update
         event_pre = self.get_object()
@@ -2367,7 +2374,7 @@ class WakeChangeEventCreate(WakeChangeEventBaseMixin, CreateView):
     def form_valid(self, form):
         # The form does not allow setting the site yourself, so we insert that here
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        if not site.feature_permission.filter(uid="wake_plan"):
+        if not site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         self.object = form.save(commit=False)
         self.object.site = site
@@ -2396,7 +2403,7 @@ class WakeChangeEventDelete(WakeChangeEventBaseMixin, DeleteView):
 
     def get_object(self, queryset=None):
         event = WakeChangeEvent.objects.get(id=self.kwargs["wake_change_event_id"])
-        if not event.site.feature_permission.filter(uid="wake_plan"):
+        if not event.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
         return event
 
@@ -2517,7 +2524,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
         if (
             self.request.user.is_superuser
-            or site_membership.site_user_type == site_membership.SITE_ADMIN
+            or site_membership.site_user_type >= site_membership.SITE_ADMIN
         ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
@@ -2592,7 +2599,7 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
         if (
             self.request.user.is_superuser
             or site_membership_req_user.site_user_type
-            == site_membership_req_user.SITE_ADMIN
+            >= site_membership_req_user.SITE_ADMIN
             or self.request.user == self.selected_user
         ):
             self.object = form.save()
@@ -2668,7 +2675,7 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         ).first()
         if (
             not self.request.user.is_superuser
-            and site_membership.site_user_type != site_membership.SITE_ADMIN
+            and site_membership.site_user_type < site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
         # If the selected_user is a member of multiple sites, only remove them from this site
@@ -2823,7 +2830,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
         context["all_scripts"] = Script.objects.filter(
             Q(site=site) | Q(site=None),
             Q(is_hidden=False)
-            | Q(feature_permission__in=site.feature_permission.all()),
+            | Q(feature_permission__in=site.customer.feature_permission.all()),
             is_security_script=False,
         )
 
@@ -3189,7 +3196,7 @@ class SecurityProblemDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
         ).first()
         if (
             not self.request.user.is_superuser
-            and site_membership.site_user_type != site_membership.SITE_ADMIN
+            and site_membership.site_user_type < site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
         response = super(SecurityProblemDelete, self).delete(form, *args, **kwargs)
@@ -3239,7 +3246,7 @@ class EventRuleServerDelete(SiteMixin, DeleteView, SuperAdminOrThisSiteMixin):
         ).first()
         if (
             not self.request.user.is_superuser
-            and site_membership.site_user_type != site_membership.SITE_ADMIN
+            and site_membership.site_user_type < site_membership.SITE_ADMIN
         ):
             raise PermissionDenied
         response = super(EventRuleServerDelete, self).delete(form, *args, **kwargs)
@@ -3583,13 +3590,20 @@ class ImageVersionView(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 
         selected_product = get_object_or_404(Product, id=self.kwargs.get("product_id"))
 
-        # excluding versions where
+        # If client's last pay date is set, exclude versions where
         # image release date > client's last pay date.
-        versions_accessible_by_user = (
-            ImageVersion.objects.exclude(release_date__gt=site.paid_for_access_until)
-            .filter(product=selected_product)
-            .order_by("-image_version")
-        )
+        if not site.customer.paid_for_access_until:
+            versions_accessible_by_user = ImageVersion.objects.filter(
+                product=selected_product
+            ).order_by("-image_version")
+        else:
+            versions_accessible_by_user = (
+                ImageVersion.objects.exclude(
+                    release_date__gt=site.customer.paid_for_access_until
+                )
+                .filter(product=selected_product)
+                .order_by("-image_version")
+            )
 
         # If the product is multilang: Don't show images besides multilang for all languages besides danish
         user_language = self.request.user.user_profile.language
