@@ -178,7 +178,7 @@ class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
         if slug_field:
             site = get_object_or_404(Site, uid=kwargs[slug_field])
         check_function = user_passes_test(
-            lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
+            lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()) or (site and site in u.user_profile.sites.first().customer.sites.all() and u.user_profile.sitemembership_set.filter(site_user_type=SiteMembership.CUSTOMER_ADMIN)),
             login_url="/",
         )
         wrapped_super = check_function(super(SuperAdminOrThisSiteMixin, self).dispatch)
@@ -1174,9 +1174,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["site_membership"] = (
-            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
-        )
+        context[
+            "site_membership"
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         return context
 
     def get_object(self, queryset=None):
@@ -2471,6 +2471,15 @@ class UsersMixin(object):
             context["user_list"] = context["site"].users.filter(
                 user_profile__is_hidden=False
             )
+        if (
+            not self.request.user.is_superuser
+            and not self.request.user.user_profile.sitemembership_set.filter(
+                site_user_type=SiteMembership.CUSTOMER_ADMIN
+            )
+        ):
+            context["user_list"] = context["user_list"].exclude(
+                user_profile__sitemembership__site_user_type=SiteMembership.CUSTOMER_ADMIN
+            )
         # Add information about outstanding security events.
         no_of_sec_events = SecurityEvent.objects.priority_events_for_site(
             self.site
@@ -2487,7 +2496,10 @@ class UsersMixin(object):
             site=context["site"]
         ).first()
 
-        if site_membership:
+        if user_profile.sitemembership_set.filter(site_user_type=SiteMembership.CUSTOMER_ADMIN):
+            site_membership = user_profile.sitemembership_set.filter(site_user_type=SiteMembership.CUSTOMER_ADMIN).first()
+            loginusertype = SiteMembership.CUSTOMER_ADMIN
+        elif site_membership:
             loginusertype = site_membership.site_user_type
         else:
             loginusertype = None
@@ -2571,6 +2583,14 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 _("You have no user with the following ID: %s")
                 % self.kwargs["username"]
             )
+        if (
+            site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
+            and not self.request.user.is_superuser
+            and not self.request.user.user_profile.sitemembership_set.filter(
+                site_user_type=SiteMembership.CUSTOMER_ADMIN
+            )
+        ):
+            raise PermissionDenied
 
         return self.selected_user
 
@@ -2610,16 +2630,16 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             )
             site_membership.site_user_type = form.cleaned_data["usertype"]
             site_membership.save()
-            if not self.selected_user.is_superuser and form.cleaned_data[
+            if not self.selected_user.is_superuser and int(form.cleaned_data[
                 "usertype"
-            ] == str(site_membership.SITE_ADMIN):
+            ]) >= site_membership.SITE_ADMIN:
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
                 )
                 self.object.is_staff = True
-            elif not self.selected_user.is_superuser and form.cleaned_data[
+            elif not self.selected_user.is_superuser and int(form.cleaned_data[
                 "usertype"
-            ] != str(site_membership.SITE_ADMIN):
+            ]) < site_membership.SITE_ADMIN:
                 self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
@@ -2656,6 +2676,14 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
                 _("You have no user with the following ID: %s")
                 % self.kwargs["username"]
             )
+        if (
+            site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
+            and not self.request.user.is_superuser
+            and not self.request.user.user_profile.sitemembership_set.filter(
+                site_user_type=SiteMembership.CUSTOMER_ADMIN
+            )
+        ):
+            raise PermissionDenied
         return self.selected_user
 
     def get_context_data(self, **kwargs):
@@ -3141,9 +3169,9 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected"] = self.object
 
         request_user = self.request.user
-        context["site_membership"] = (
-            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
-        )
+        context[
+            "site_membership"
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         return context
 
     def form_valid(self, form):
