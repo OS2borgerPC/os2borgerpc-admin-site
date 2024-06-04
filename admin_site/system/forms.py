@@ -182,25 +182,27 @@ class UserForm(forms.ModelForm):
             language = kwargs.pop("language", None)
             if language is not None:
                 initial["language"] = language
-        self.initial_type = initial["usertype"]
         super(UserForm, self).__init__(*args, **kwargs)
 
-    def set_usertype_single_choice(self, choice_type):
+    def set_usertype_limited_choices(self, choice_type):
         self.fields["usertype"].choices = [
-            (c, l) for c, l in SiteMembership.type_choices if c == choice_type
+            (c, l) for c, l in SiteMembership.type_choices if c <= choice_type
         ]
-        self.fields["usertype"].widget.attrs["readonly"] = True
+        if choice_type == SiteMembership.SITE_USER:  # Only one choice
+            self.fields["usertype"].widget.attrs["readonly"] = True
 
     # Sets the choices in the usertype widget depending on the usertype
     # of the user currently filling out the form
     def setup_usertype_choices(self, loginuser_type, is_superuser):
-        if is_superuser or loginuser_type == SiteMembership.SITE_ADMIN:
-            # superusers and site admins can both
-            # choose site admin or site user.
+        if is_superuser or loginuser_type == SiteMembership.CUSTOMER_ADMIN:
+            # superusers and customer admins can both
+            # choose customer admin, site admin or site user.
             self.fields["usertype"].choices = SiteMembership.type_choices
         else:
-            # Set to read-only single choice
-            self.set_usertype_single_choice(self.initial_type)
+            # Other users can only choose their own user type
+            # or less privileged user types
+            # If there is only one choice, set the field to read-only
+            self.set_usertype_limited_choices(loginuser_type)
 
     def clean(self):
         cleaned_data = self.cleaned_data
