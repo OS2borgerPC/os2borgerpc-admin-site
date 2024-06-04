@@ -80,11 +80,6 @@ urlpatterns = [
         name="security_event_search",
     ),
     re_path(
-        r"^site/(?P<slug>[^/]+)/security_events/pc/(?P<pc_uid>[^/]+)/$",
-        SecurityEventsView.as_view(),
-        name="security_event_pc",
-    ),
-    re_path(
         r"^site/(?P<slug>[^/]+)/security_events/$",
         SecurityEventsView.as_view(),
         name="security_events",
