@@ -1,0 +1,30 @@
+{% extends "site_with_navigation.html" %}
+
+{% load i18n %}
+
+{% block specific_title %}
+  {% translate "Delete site" %}: {{site.name}}
+{% endblock %}
+
+{% block specific_content %}
+  <div class="container-fluid main">
+    <div class="alert alert-danger">
+      <h3>{% translate "Note" %}</h3>
+      <ul>
+        <li>{% translate "Note 1" %}.</li>
+        <li>{% translate "..." %}.</li>
+      </ul>
+    </div>
+    <p>
+      {% translate "Are you sure you want to delete the site" %}
+      <strong style="font-size: 1.25em;">{{ site.name }}</strong>
+    ?
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input class="btn btn-danger me-3" type="submit" value="{% translate 'Confirm deletion' %}">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
+    </form>
+  </div>
+{% endblock %}

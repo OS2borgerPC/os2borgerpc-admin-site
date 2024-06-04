@@ -289,6 +289,7 @@ class SiteList(ListView, LoginRequiredMixin):
 
     model = Site
     context_object_name = "site_list"
+    template_name = "system/sites/list.html"
 
     def get_queryset(self):
         user = self.request.user
@@ -325,6 +326,11 @@ class SiteList(ListView, LoginRequiredMixin):
             )
         context["countries"] = countries
         return context
+
+
+class SiteDelete(DeleteView):
+    model = Site
+    template_name = "system/sites/confirm_delete.html"
 
 
 # Base class for Site-based passive (non-form) views

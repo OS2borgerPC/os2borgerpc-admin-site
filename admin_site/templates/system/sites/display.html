@@ -1,0 +1,24 @@
+{% load i18n %}
+
+            <div class="btn-group btn-light mt-3 me-3">
+              <a class="btn btn-lg" href="{% url 'site' slug=site.url %}" >
+                <span class="pe-4">
+                  <span class='material-icons'>home</span>
+                  {{site.name}}
+                </span>
+               <span class="material-icons" title="">computer</span>{{site.pcs.count}}
+              </a>
+
+              <button class="btn btn-large dropdown-toggle" data-bs-toggle="dropdown">
+                 <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu pull-right p-2">
+                {# TODO: Add logic here so the button only appears when the number of computers is under X #}
+                {% if site_membership.site_user_type == site_membership.CUSTOMER_ADMIN %}
+                  <li>
+                    <span class='material-icons'>delete</span>
+                    <a href="{% url "site_delete" site.uid %}"><i class="icon-remove"></i>{% translate "Delete" %} {% translate "site" %}</a>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
