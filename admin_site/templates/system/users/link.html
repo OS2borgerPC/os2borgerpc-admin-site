@@ -1,4 +1,5 @@
 {% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
 {% load i18n %}
 
 {% block specific_title %}
@@ -24,19 +25,12 @@
     </div>
   {% endif %}
 
-
   <ul class="item-list">
     {% for listed_user in user_list %}
       <li class="{% if listed_user == selected_user %}active{% endif %}">
         <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
           {{ listed_user.username }}
         </a>
-        {% if listed_user == selected_user and not_customer_admin and site_membership.site_user_type >= site_membership.SITE_ADMIN or listed_user == selected_user and user.is_superuser %}
-          {% translate "Delete user" as delete_name %}
-          <a class="item-list-deletable material-icons" href="{% url 'user_delete' site.uid selected_user.username %}" title="{{ delete_name }}">
-            clear
-          </a>
-        {% endif %}
       </li>
     {% endfor %}
   </ul>
@@ -46,36 +40,26 @@
 
 {% block specific_content %}
   <div class="container-fluid main sublevelmain">
-      {% if selected_user %}
-      <h2 class="divideheader">{% translate "Profile:" %} <em>{{ selected_user.username }}</em></h2>
-      {% else %}
-      <h2 class="divideheader">{% translate "Create new user" %}</h2>
-      {% endif %}
-      {% include 'notification.html' %}
-      <div>
-        {% if site_membership.site_user_type < site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
-            <p> {% translate "Site users are not authorized to edit other users. Ask a site admin or Magenta for help." %}</p>
-        {% else %}
-            <form
-              name="update_user_form"
-              id="update_user_form"
-              method="post"
-              class="gray-box">
-              {% csrf_token %}
+    <h2 class="divideheader">{% translate "Add existing users from your other sites to the site " %}{{site.name}}</h2>
+    {% include 'notification.html' %}
+    <div>
+      <form
+       name="link_users_form"
+       id="link_users_form"
+       method="post"
+       class="gray-box">
+       {% csrf_token %}
+         {{ form.linked_users|as_crispy_field }}
+        {{ form.usertype|as_crispy_field }}
 
-              {% include 'system/users/form.html' with form_id='update_user_form' %}
-              {% translate "Save changes" as submit_name %}
+        {% translate "Save changes" as submit_name %}
 
               <fieldset class="mt-3">
                 <input type="submit" class="btn btn-primary me-3" value="{{ submit_name }}">
                 <button type="reset" class="btn btn-secondary">{% translate "Cancel" %}</button>
               </fieldset>
-
-            </form>
-        {% endif %}
-      </div>
+      </form>
     </div>
   </div>
-
 
 {% endblock %}

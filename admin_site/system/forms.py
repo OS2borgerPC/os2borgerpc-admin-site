@@ -129,6 +129,26 @@ class ConfigurationEntryForm(forms.ModelForm):
         exclude = ["owner_configuration"]
 
 
+class UserLinkForm(forms.Form):
+    linked_users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        label=_("Select users to be added to this site"),
+        help_text=_("Hold down Ctrl to select multiple users"),
+    )
+
+    usertype = forms.ChoiceField(
+        required=True,
+        choices=SiteMembership.type_choices,
+        label=_("Select the usertype that the users should be added with"),
+    )
+
+    def setup_usertype_choices(self, loginuser_type, is_superuser):
+        self.fields["usertype"].choices = [
+            (c, l) for c, l in SiteMembership.type_choices if c <= 2
+        ]
+
+
 class UserForm(forms.ModelForm):
     usertype = forms.ChoiceField(
         required=True,

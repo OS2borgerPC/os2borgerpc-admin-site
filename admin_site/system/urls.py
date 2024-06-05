@@ -60,6 +60,7 @@ from system.views import (
     AdminTwoFactorBackupTokens,
     UserCreate,
     UserDelete,
+    UserLink,
     UserRedirect,
     UserUpdate,
 )
@@ -328,6 +329,9 @@ urlpatterns = [
     re_path(r"^site/(?P<slug>[^/]+)/users/$", UserRedirect.as_view(), name="users"),
     re_path(
         r"^site/(?P<slug>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/users/link/$", UserLink.as_view(), name="link_users"
     ),
     re_path(
         r"^site/(?P<slug>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$",
