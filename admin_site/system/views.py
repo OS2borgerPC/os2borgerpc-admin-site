@@ -178,7 +178,7 @@ class SuperAdminOrThisSiteMixin(LoginRequiredMixin):
         if slug_field:
             site = get_object_or_404(Site, uid=kwargs[slug_field])
         check_function = user_passes_test(
-            lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()) or (site and site in u.user_profile.sites.first().customer.sites.all() and u.user_profile.sitemembership_set.filter(site_user_type=SiteMembership.CUSTOMER_ADMIN)),
+            lambda u: (u.is_superuser) or (site and site in u.user_profile.sites.all()),
             login_url="/",
         )
         wrapped_super = check_function(super(SuperAdminOrThisSiteMixin, self).dispatch)
@@ -2502,13 +2502,10 @@ class UsersMixin(object):
             site=context["site"]
         ).first()
 
-        if user_profile.sitemembership_set.filter(site_user_type=SiteMembership.CUSTOMER_ADMIN):
-            site_membership = user_profile.sitemembership_set.filter(site_user_type=SiteMembership.CUSTOMER_ADMIN).first()
-            loginusertype = SiteMembership.CUSTOMER_ADMIN
-        elif site_membership:
+        if site_membership:
             loginusertype = site_membership.site_user_type
         else:
-            loginusertype = None
+            loginusertype = 0
 
         context["form"].setup_usertype_choices(loginusertype, request_user.is_superuser)
 
@@ -2546,11 +2543,19 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
-            SiteMembership.objects.create(
-                user_profile=user_profile,
-                site=site,
-                site_user_type=form.cleaned_data["usertype"],
-            )
+            if int(form.cleaned_data["usertype"]) == SiteMembership.CUSTOMER_ADMIN:
+                for customer_site in site.customer.sites.all():
+                    SiteMembership.objects.create(
+                        user_profile=user_profile,
+                        site=customer_site,
+                        site_user_type=form.cleaned_data["usertype"],
+                    )
+            else:
+                SiteMembership.objects.create(
+                    user_profile=user_profile,
+                    site=site,
+                    site_user_type=form.cleaned_data["usertype"],
+                )
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
             if form.cleaned_data["usertype"] == str(site_membership.SITE_ADMIN):
@@ -2608,6 +2613,13 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
         context["selected_user"] = User.objects.get(username=self.kwargs["username"])
 
+        if context["selected_user"].user_profile.sitemembership_set.filter(
+            site_user_type=SiteMembership.CUSTOMER_ADMIN
+        ):
+            context["not_customer_admin"] = False
+        else:
+            context["not_customer_admin"] = True
+
         return context
 
     def get_form_kwargs(self):
@@ -2634,18 +2646,49 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
-            site_membership.site_user_type = form.cleaned_data["usertype"]
-            site_membership.save()
-            if not self.selected_user.is_superuser and int(form.cleaned_data[
-                "usertype"
-            ]) >= site_membership.SITE_ADMIN:
+            if (
+                site_membership.site_user_type != int(form.cleaned_data["usertype"])
+                and int(form.cleaned_data["usertype"]) == SiteMembership.CUSTOMER_ADMIN
+            ):
+                for customer_site in site.customer.sites.all():
+                    try:
+                        customer_site_membership = user_profile.sitemembership_set.get(
+                            site=customer_site
+                        )
+                        customer_site_membership.site_user_type = form.cleaned_data[
+                            "usertype"
+                        ]
+                        customer_site_membership.save()
+                    except SiteMembership.DoesNotExist:
+                        SiteMembership.objects.create(
+                            user_profile=user_profile,
+                            site=customer_site,
+                            site_user_type=form.cleaned_data["usertype"],
+                        )
+            elif (
+                site_membership.site_user_type != int(form.cleaned_data["usertype"])
+                and site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
+            ):
+                for customer_site_membership in user_profile.sitemembership_set.all():
+                    customer_site_membership.site_user_type = form.cleaned_data[
+                        "usertype"
+                    ]
+                    customer_site_membership.save()
+            else:
+                site_membership.site_user_type = form.cleaned_data["usertype"]
+                site_membership.save()
+            if (
+                not self.selected_user.is_superuser
+                and int(form.cleaned_data["usertype"]) >= site_membership.SITE_ADMIN
+            ):
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
                 )
                 self.object.is_staff = True
-            elif not self.selected_user.is_superuser and int(form.cleaned_data[
-                "usertype"
-            ]) < site_membership.SITE_ADMIN:
+            elif (
+                not self.selected_user.is_superuser
+                and int(form.cleaned_data["usertype"]) < site_membership.SITE_ADMIN
+            ):
                 self.object.is_staff = False
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
@@ -2685,9 +2728,6 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         if (
             site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
             and not self.request.user.is_superuser
-            and not self.request.user.user_profile.sitemembership_set.filter(
-                site_user_type=SiteMembership.CUSTOMER_ADMIN
-            )
         ):
             raise PermissionDenied
         return self.selected_user
