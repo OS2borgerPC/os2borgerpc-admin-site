@@ -12,7 +12,13 @@ from django.utils.html import escape
 from django.contrib.auth.models import User, Permission
 from django.urls import resolve, reverse
 
-from django.views.generic.edit import CreateView, DeletionMixin, UpdateView, DeleteView
+from django.views.generic.edit import (
+    CreateView,
+    DeletionMixin,
+    FormView,
+    UpdateView,
+    DeleteView,
+)
 from django.views.generic import View, ListView, DetailView, RedirectView, TemplateView
 from django.views.generic.list import BaseListView
 
@@ -77,6 +83,7 @@ from system.forms import (
     SecurityEventForm,
     SiteForm,
     UserForm,
+    UserLinkForm,
     WakeChangeEventForm,
     WakePlanForm,
 )
@@ -2513,6 +2520,73 @@ class UsersMixin(object):
         return context
 
 
+class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
+    form_class = UserLinkForm
+    template_name = "system/users/link.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserLink, self).get_context_data(**kwargs)
+        self.add_membership_to_context(context)
+
+        site = context["site"]
+        form = context["form"]
+
+        # user list related
+        user_profiles_for_customer_pk = site.customer.sites.values_list(
+            "user_profiles", flat=True
+        )
+
+        users_for_customer_not_on_this_site = User.objects.filter(
+            user_profile__pk__in=user_profiles_for_customer_pk
+        ).exclude(user_profile__sites=site)
+        form.fields["linked_users"].queryset = users_for_customer_not_on_this_site
+
+        return context
+
+    def form_valid(self, form):
+        # Ensure that only customer admins can use this functionality
+        if (
+            not self.request.user.is_superuser
+            and not self.request.user.user_profile.sitemembership_set.filter(
+                site_user_type=SiteMembership.CUSTOMER_ADMIN
+            )
+        ):
+            raise PermissionDenied
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        selected_users = form.cleaned_data["linked_users"]
+        selected_user_type = form.cleaned_data["usertype"]
+        selected_users_names = []
+        for user in selected_users:
+            selected_users_names.append(user.username)
+            SiteMembership.objects.create(
+                user_profile=user.user_profile,
+                site=site,
+                site_user_type=selected_user_type,
+            )
+        response = super(UserLink, self).form_valid(form)
+
+        if selected_users_names:
+            added_users_string = get_notification_string(selected_users_names)
+            set_notification_cookie(
+                response,
+                _("The user(s) %s have been added to the site %s ")
+                % (
+                    added_users_string,
+                    site.name,
+                ),
+            )
+
+        return response
+
+    def get_success_url(self):
+        return reverse(
+            "link_users",
+            kwargs={
+                "slug": self.kwargs["slug"],
+            },
+        )
+
+
 class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
     model = User
     form_class = UserForm
@@ -2756,11 +2830,16 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         if len(self.object.user_profile.sitemembership_set.all()) > 1:
             self.object.user_profile.sitemembership_set.get(site_id=site.id).delete()
             response = HttpResponseRedirect(self.get_success_url())
+            set_notification_cookie(
+                response,
+                _("User %s removed from the site %s")
+                % (self.kwargs["username"], site.name),
+            )
         else:
             response = super(UserDelete, self).delete(form, *args, **kwargs)
-        set_notification_cookie(
-            response, _("User %s deleted") % self.kwargs["username"]
-        )
+            set_notification_cookie(
+                response, _("User %s deleted") % self.kwargs["username"]
+            )
         return response
 
 
