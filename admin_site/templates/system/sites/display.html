@@ -9,16 +9,23 @@
                <span class="material-icons" title="">computer</span>{{site.pcs.count}}
               </a>
 
+              {% if site_membership.site_user_type == site_membership.CUSTOMER_ADMIN and site.customer.sites.count > 1 %}
               <button class="btn btn-large dropdown-toggle" data-bs-toggle="dropdown">
                  <span class="caret"></span>
               </button>
               <ul class="dropdown-menu pull-right p-2">
-                {# TODO: Add logic here so the button only appears when the number of computers is under X #}
-                {% if site_membership.site_user_type == site_membership.CUSTOMER_ADMIN %}
+                {% if site.pcs.count < 5 %}
                   <li>
                     <span class='material-icons'>delete</span>
-                    <a href="{% url "site_delete" site.uid %}"><i class="icon-remove"></i>{% translate "Delete" %} {% translate "site" %}</a>
-                </li>
+                    <a href="{% url "site_delete" site.uid %}"><i class="icon-remove"></i>{% translate "Delete site" %}</a>
+                  </li>
+                {% else %}
+                {% translate "This Site has 5 or more registered Computers and therefore can't be deleted" as no_delete %}
+                  <li>
+                    <span class='material-icons'>delete</span>
+                    <span class="icon-remove" title="{{no_delete}}">{% translate "Delete Site" %}</span>
+                  </li>
                 {% endif %}
               </ul>
+              {% endif %}
             </div>
