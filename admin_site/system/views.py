@@ -54,6 +54,7 @@ from system.models import (
     APIKey,
     AssociatedScriptParameter,
     ConfigurationEntry,
+    Customer,
     ImageVersion,
     Input,
     Job,
@@ -82,6 +83,7 @@ from system.forms import (
     ScriptForm,
     SecurityEventForm,
     SiteForm,
+    SiteCreateForm,
     UserForm,
     UserLinkForm,
     WakeChangeEventForm,
@@ -317,25 +319,77 @@ class SiteList(ListView, LoginRequiredMixin):
         ).count()
         context["total_online_pcs_count"] = online_pcs_count_filter(total_pcs)
         context["user"] = self.request.user
-        context[
-            "site_membership"
-        ] = self.request.user.user_profile.sitemembership_set.first()
+        context["site_membership"] = (
+            self.request.user.user_profile.sitemembership_set.first()
+        )
         context["version"] = open("/code/VERSION", "r").read()
-        countries = Country.objects.all()
         user_sites = self.get_queryset()
-        for country in countries:
-            country.normal_sites = Site.objects.filter(
-                customer__country=country,
-                customer__is_test_customer=False,
-                id__in=user_sites,
-            )
-            country.test_sites = Site.objects.filter(
-                customer__country=country,
-                customer__is_test_customer=True,
-                id__in=user_sites,
-            )
-        context["countries"] = countries
+        # The dictionary to generate the customer-site list has the following structure:
+        # {"Denmark": { "customers": [("Customer1", ["Site1, Site2"]), ("Customer2", ["Site3, Site4"])], "test_customers": ... }
+        # Handling the logic for non-superusers differently because it can be done in a much less complex way
+        if not self.request.user.is_superuser:
+            customer_name = user_sites.first().customer.name
+            country_name = user_sites.first().customer.country.name
+            is_test = user_sites.first().customer.is_test_customer
+            if is_test:
+                actual_customers = []
+                test_customers = [(customer_name, user_sites)]
+            else:
+                actual_customers = [(customer_name, user_sites)]
+                test_customers = []
+
+            context["countries_dict"] = {
+                country_name: {
+                    "actual_customers": actual_customers,
+                    "test_customers": test_customers,
+                }
+            }
+        else:
+            countries = Country.objects.all()
+            countries_dict = {}
+            for country in countries:
+                all_customers_dict = {}
+                actual_customer_list = []
+                test_customer_list = []
+                customers = Customer.objects.filter(
+                    country=country, is_test_customer=False
+                )
+                test_customers = Customer.objects.filter(
+                    country=country, is_test_customer=True
+                )
+                for customer in customers:
+                    actual_customer_list.append((customer.name, customer.sites.all()))
+                for test_customer in test_customers:
+                    test_customer_list.append(
+                        (test_customer.name, test_customer.sites.all())
+                    )
+                all_customers_dict["actual_customers"] = actual_customer_list
+                all_customers_dict["test_customers"] = test_customer_list
+                countries_dict[country.name] = all_customers_dict
+            context["countries_dict"] = countries_dict
+        context["form"] = SiteCreateForm()
         return context
+
+    def post(self, request, *args, **kwargs):
+        if request.user.user_profile.sitemembership_set.filter(
+            site_user_type=SiteMembership.CUSTOMER_ADMIN
+        ):
+            # Do basic method
+            response = self.get(request, *args, **kwargs)
+
+            # This doesn't seem totally ideal. Maybe if user or user_profile had a direct relation to customer, or??
+            customer = request.user.user_profile.sites.first().customer
+
+            # TODO: Fetch other values the new site should have based on the values on the customer object?
+            site = Site.objects.create(
+                name=request.POST["name"], uid=request.POST["uid"], customer=customer
+            )
+
+            set_notification_cookie(response, _("Site %s created") % site.name)
+
+            return response
+        else:
+            raise PermissionDenied
 
 
 class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
@@ -1257,9 +1311,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
         return context
 
     def get_object(self, queryset=None):
@@ -3364,9 +3418,9 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected"] = self.object
 
         request_user = self.request.user
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
         return context
 
     def form_valid(self, form):

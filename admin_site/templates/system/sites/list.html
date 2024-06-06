@@ -2,6 +2,8 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
+{% block page_type_class%}sites{% endblock %}
+
 {% block header_title %}
   {% translate "Total number of BorgerPC's" as total_bpc_str %}
   {% translate "Total number of Kiosk PC's" as total_kiosk_str %}
@@ -35,40 +37,68 @@
 <div class="modal fade" id="create_site_modal" tabindex="-1" aria-labelledby="create_site_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="create_site_modal_label">{% translate "Create site" %}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        {{ form|crispy }}
-      </div>
-      <div class="modal-footer">
-        <button id="create_site_save_button" type="button" class="btn btn-primary">{% translate "Create site" %}</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-      </div>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="create_site_modal_label">{% translate "Create site" %}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {{ form.non_field_errors }}
+
+            <div>
+              {{ form.name.errors }}
+              {{ form.name|as_crispy_field }}
+            </div>
+            <div class="mt-3">
+              {{ form.uid.errors }}
+              {{ form.uid|as_crispy_field }}
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button id="create_site_save_button" type="submit" class="btn btn-primary">{% translate "Create site" %}</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
   <div class="container">
     <div>
-      <button type="button" class="btn btn-primary mt-3 mb-0" data-bs-toggle="modal" data-bs-target="#create_site_modal" id="create-site-button">
-        <span class='material-icons'>add</span>
-        {% translate "Create site" %}
-      </button>
-      {% for country in countries %}
-        {% if countries|length >= 2 and user.is_superuser %}
-            <h2 class="mt-5 fw-bold">{{ country.name }}</h2>
-        {% endif %}
-        {% if country.normal_sites %}  
-          {% for site in country.normal_sites %}
-            {% include "system/sites/display.html" %}
-          {% endfor %}
-        {% endif %}
-        {% if country.test_sites %}
-          <h3 class="mt-3" style="color: #f5914d;">Test Sites</h3>
-          {% for site in country.test_sites %}
-            {% include "system/sites/display.html" %}
+      <div>
+        {% include 'notification.html' %}
+      </div>
+      {% if site_membership.site_user_type == site_membership.CUSTOMER_ADMIN %}
+        <button type="button" class="btn btn-primary mt-3 mb-0" data-bs-toggle="modal" data-bs-target="#create_site_modal" id="create-site-button">
+          <span class='material-icons'>add</span>
+          {% translate "Create site" %}
+        </button>
+      {% endif %}
+      {% for country, all_customers_in_country in countries_dict.items %}
+        <h1 class="mt-4">{{country}}</h1>
+        {% for customer in all_customers_in_country.actual_customers %}
+          {% if customer.1 %} {# Don't display the customer if they have zero sites #}
+              <div class="customer d-inline-block me-3 mt-4">
+                <small class="d-block">{{customer.0}}</small>
+                {% for site in customer.1 %} 
+                    {% include "system/sites/display.html" %}
+                {% endfor %}
+              </div>
+          {% endif %}
+        {% endfor %}
+
+        {% if all_customers_in_country.test_customers %}
+          <h2 class="mt-3">Test customers</h2>
+          {% for customer in all_customers_in_country.test_customers %}
+            {% if customer.1 %} {# Don't display the customer if they have zero sites #}
+                <div class="customer d-inline-block me-3 mt-4">
+                  <small class="d-block">{{customer.0}}</small>
+                  {% for site in customer.1 %} 
+                      {% include "system/sites/display.html" %}
+                  {% endfor %}
+                </div>
+            {% endif %}
           {% endfor %}
         {% endif %}
       {% endfor %}

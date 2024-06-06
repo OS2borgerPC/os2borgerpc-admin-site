@@ -60,10 +60,23 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = Site
-        exclude = ["configuration", "paid_for_access_until", "country", "is_testsite"]
+        exclude = [
+            "configuration",
+            "paid_for_access_until",
+            "country",
+            "is_testsite",
+            "customer",
+        ]
         widgets = {
             "paid_for_access_until": forms.widgets.DateInput(attrs={"type": "date"}),
         }
+
+
+class SiteCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Site
+        fields = ("name", "uid")
 
 
 class PCGroupForm(forms.ModelForm):

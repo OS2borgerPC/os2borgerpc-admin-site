@@ -48,7 +48,7 @@
     "model": "account.sitemembership",
     "pk": 1,
     "fields": {
-        "site_user_type": 2,
+        "site_user_type": 3,
         "site": 1,
         "user_profile": 1
     }
