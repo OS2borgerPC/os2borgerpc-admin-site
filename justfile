@@ -5,6 +5,11 @@
 # Default shell and settings used in the recipes
 set shell := ["bash", "-uc"]
 
+# Set user ID and group ID dynamically. These are in turn used in docker compose when mounting volumes.
+# This should get us closer to being able to remove "privileged", and make permissions errors (and "just fix-permissions") less relevant
+export UID := `id -u`
+export GID := `id -g`
+
 # Aliases
 alias r := run
 alias rd := run-debug
@@ -36,17 +41,17 @@ verify-container-running container:
   #!/usr/bin/env sh
   # this shebang is to prevent just complaining about whitespace
   # https://github.com/casey/just#indentation
-  if ! sudo docker ps | grep "{{container}}"; then
+  if ! docker ps | grep "{{container}}"; then
     printf  "%s\n" "Container not running. Exiting."
     exit 1
   fi
 
 bash-django: (verify-container-running django_container)
-  sudo docker exec -i --tty {{django_container}} /bin/bash
+  docker exec -i --tty {{django_container}} /bin/bash
 
 # Run bash in a django container without first running migrations - convenient for e.g. makemigrations
 bash-django-skip-entrypoint:
-  sudo docker compose run --rm --entrypoint bash {{compose_django_service}}
+  docker compose run --rm --entrypoint bash {{compose_django_service}}
 
 # Runs black on the python codebase
 black:
@@ -54,11 +59,11 @@ black:
 
 # Dump the database to a file named {{db_data_file}}
 dump-db-data: (verify-container-running django_container)
-  sudo docker exec {{django_container}} django-admin dumpdata > {{db_data_file}}
+  docker exec {{django_container}} django-admin dumpdata > {{db_data_file}}
 
 # Dump the database structure to a file named db-structure.psql
 dump-db-structure: (verify-container-running django_container)
-  sudo docker exec -i --tty {{db_container}} pg_dump -U postgres --schema-only bpc > {{db_structure_file}}
+  docker exec -i --tty {{db_container}} pg_dump -U postgres --schema-only bpc > {{db_structure_file}}
 
 # View the db file contents from a dumped db
 # it can also be viewed with fx.: jq . < out.json | view
@@ -80,30 +85,30 @@ fix-permissions:
 
 # Run arbitrary manage.py commands. Examples: makemigrations/migrate/showmigrations/shell_plus
 managepy +COMMAND: (verify-container-running django_container)
-  sudo docker exec -i --tty {{django_container}} ./manage.py {{COMMAND}}
+  docker exec -i --tty {{django_container}} ./manage.py {{COMMAND}}
 
 # Related to: https://docs.djangoproject.com/en/4.2/howto/upgrade-version/
 # Checks for any deprecation warnings in your project
 check-deprecation-warnings: (verify-container-running django_container)
-  sudo docker exec -i --tty {{django_container}} python -Wa manage.py test
+  docker exec -i --tty {{django_container}} python -Wa manage.py test
 
 # Useful if changing requirements.txt and ...?
 recreate-django:
-  sudo docker compose up --build
+  docker compose up --build
 
 # Recreate the django database, replacing what you have with what's in the fixtures
 recreate-db:
-  sudo docker compose down --volumes
+  docker compose down --volumes
 
 # Start the admin-site stack
 run:
-  sudo docker compose up
+  docker compose up
   printf '%s' "If permissions fail, verify umask and/or manually check if the permissions differ on the file mentioned, e.g. initialize.py"
 
 # Start the admin-site stack in the background and attach specifically to the django container - so python breakpoints work
 run-debug:
-  sudo docker compose up -d
-  sudo docker attach {{django_container}}
+  docker compose up -d
+  docker attach {{django_container}}
 
 # Run django's make-messages for translations, including translations for javascript files (djangojs)
 # --no-obsolete removes unused translations, --add-location file is there to make diffs clearer by skipping line
@@ -121,17 +126,17 @@ translations-compile-messages: (verify-container-running django_container)
 
 # Replace all the fixtures (test data) with what you currently have in your local adminsite db
 update-test-data: (verify-container-running django_container)
-  sudo docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
-  sudo docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
-  sudo docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
-  sudo docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 changelog > dev-environment/changelog_fixtures/100_changelog.json
+  docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 auth > dev-environment/system_fixtures/050_auth.json
+  docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 system > dev-environment/system_fixtures/100_system.json
+  docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 account > dev-environment/system_fixtures/150_account.json
+  docker compose exec -u 0 -T {{compose_django_service}} python manage.py dumpdata --indent 4 changelog > dev-environment/changelog_fixtures/100_changelog.json
 
 # Create a graph of the django models to a file named models_graphed.png
 graph-models: (verify-container-running django_container)
   # Tried using pip install instead but it kept complaining about missing graphviz binaries
-  sudo docker exec -it -u 0 {{django_container}} apt-get update
-  sudo docker exec -it -u 0 {{django_container}} apt-get install --assume-yes python3-pydotplus # alternately pytnho3-pygraphviz
-  sudo docker exec -it -u 0 {{django_container}} pip install pydotplus
+  docker exec -it -u 0 {{django_container}} apt-get update
+  docker exec -it -u 0 {{django_container}} apt-get install --assume-yes python3-pydotplus # alternately pytnho3-pygraphviz
+  docker exec -it -u 0 {{django_container}} pip install pydotplus
   @just managepy graph_models -a -g -o /tmp/{{models_output_file_name}}
-  # docker cp is not part of docker-compose, so can't docker-compose exec that
-  sudo docker cp {{django_container}}:/tmp/{{models_output_file_name}} {{models_output_file_name}}
+  # docker cp is not part of docker compose, so can't docker compose exec that
+  docker cp {{django_container}}:/tmp/{{models_output_file_name}} {{models_output_file_name}}
