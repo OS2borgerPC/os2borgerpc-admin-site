@@ -1,31 +1,33 @@
 {% load i18n %}
 
-            <div class="btn-group btn-light mt-3 me-3">
-              <a class="btn btn-lg" href="{% url 'site' slug=site.url %}" >
-                <span class="pe-4">
-                  <span class='material-icons'>home</span>
-                  {{site.name}}
-                </span>
-               <span class="material-icons" title="">computer</span>{{site.pcs.count}}
-              </a>
+          <div class="btn-group btn-light">
+            <a class="btn btn-md" href="{% url 'site' slug=site.url %}" >
+              <span class="pe-4">
+                <span class='material-icons'>home</span>
+                {{site.name}}
+              </span>
+             <span class="material-icons" title="">computer</span>{{site.pcs.count}}
+            </a>
 
-              {% if site_membership.site_user_type == site_membership.CUSTOMER_ADMIN and site.customer.sites.count > 1 %}
-              <button class="btn btn-large dropdown-toggle" data-bs-toggle="dropdown">
-                 <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu pull-right p-2">
-                {% if site.pcs.count < 5 %}
-                  <li>
+            {% if site_membership.site_user_type == site_membership.CUSTOMER_ADMIN and site.customer.sites.count > 1 %}
+            <button class="btn btn-md dropdown-toggle" data-bs-toggle="dropdown">
+               <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+              {% if site.pcs.count < 5 %}
+                <li>
+                  <a href="{% url "site_delete" site.uid %}" class="p-2 text-decoration-none">
                     <span class='material-icons'>delete</span>
-                    <a href="{% url "site_delete" site.uid %}"><i class="icon-remove"></i>{% translate "Delete site" %}</a>
-                  </li>
-                {% else %}
-                {% translate "This Site has 5 or more registered Computers and therefore can't be deleted" as no_delete %}
-                  <li>
-                    <span class='material-icons'>delete</span>
-                    <span class="icon-remove" title="{{no_delete}}">{% translate "Delete Site" %}</span>
-                  </li>
-                {% endif %}
-              </ul>
+                    {% translate "Delete site" %}
+                </a>
+                </li>
+              {% else %}
+              {% translate "This Site has 5 or more registered Computers and therefore can't be deleted" as no_delete %}
+                <li>
+                  <span class='material-icons'>delete</span>
+                  <span class="icon-remove" title="{{no_delete}}">{% translate "Delete Site" %}</span>
+                </li>
               {% endif %}
-            </div>
+            </ul>
+            {% endif %}
+          </div>
