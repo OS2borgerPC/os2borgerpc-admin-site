@@ -1,5 +1,6 @@
 import datetime
 import random
+import re
 import string
 
 from django.db import models, transaction
@@ -8,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, RegexValidator
 
 from system.mixins import AuditModelMixin
 from system.managers import SecurityEventQuerySet
@@ -179,7 +180,22 @@ class Site(models.Model):
     """A site which we wish to admin"""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    uid = models.CharField(verbose_name=_("UID"), max_length=255, unique=True)
+    uid = models.CharField(
+        verbose_name=_("UID"),
+        max_length=255,
+        unique=True,
+        # Essentially a slug_validator except that _ isn't allowed, for standardisation
+        validators=[
+            RegexValidator(
+                re.compile("^[-a-zA-Z0-9]+\\Z"),
+                "Enter a valid “uid” consisting of letters, numbers or hyphens.",
+                "invalid",
+            )
+        ],
+        help_text=_(
+            "Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes. We suggest names like <organisation> or <organisation-location> (without brackets)"
+        ),
+    )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     customer = models.ForeignKey(
         Customer, related_name="sites", on_delete=models.PROTECT, null=True
