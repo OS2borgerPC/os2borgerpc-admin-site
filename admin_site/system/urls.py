@@ -174,7 +174,7 @@ urlpatterns = [
     re_path(r"^$", AdminIndex.as_view(), name="index"),
     re_path(r"^sites/$", SiteList.as_view(), name="sites"),
     re_path(
-        r"^site/(?P<site_uid>[^/]+)/delete/$",
+        r"^site/(?P<slug>[^/]+)/delete/$",
         SiteDelete.as_view(),
         name="site_delete",
     ),

@@ -317,6 +317,9 @@ class SiteList(ListView, LoginRequiredMixin):
         ).count()
         context["total_online_pcs_count"] = online_pcs_count_filter(total_pcs)
         context["user"] = self.request.user
+        context[
+            "site_membership"
+        ] = self.request.user.user_profile.sitemembership_set.first()
         context["version"] = open("/code/VERSION", "r").read()
         countries = Country.objects.all()
         user_sites = self.get_queryset()
@@ -335,9 +338,76 @@ class SiteList(ListView, LoginRequiredMixin):
         return context
 
 
-class SiteDelete(DeleteView):
+class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
     model = Site
     template_name = "system/sites/confirm_delete.html"
+
+    def get(self, request, *args, **kwargs):
+        """
+        Overwrite the get method to ensure that customer admins
+        can't directly access the delete URL for sites with
+        5 or more computers. We do it this way to avoid
+        using PermissionDenied, which might confuse
+        some customers since customer admins do have
+        permission to delete sites.
+        """
+        # Call the super-method first so non-customer admins
+        # are shown the proper PermissionDenied
+        response = super().get(request, *args, **kwargs)
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # If the site has 5 or more computers, redirect away
+        # from this view.
+        # Also don't let them delete their last site
+        if site.pcs.count() > 4 or site.customer.sites.count() == 1:
+            return redirect("/")
+        return response
+
+    def get_object(self, queryset=None):
+        self.selected_site = get_object_or_404(Site, uid=self.kwargs["slug"])
+
+        # Only customer admins are allowed to access this view
+        if (
+            not self.request.user.is_superuser
+            and not self.request.user.user_profile.sitemembership_set.filter(
+                site_user_type=SiteMembership.CUSTOMER_ADMIN
+            )
+        ):
+            raise PermissionDenied
+
+        return self.selected_site
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteDelete, self).get_context_data(**kwargs)
+        context["selected_site"] = self.selected_site
+
+        return context
+
+    def get_success_url(self):
+        return reverse("sites")
+
+    def form_valid(self, form, *args, **kwargs):
+        if (
+            (
+                not self.request.user.is_superuser
+                and not self.request.user.user_profile.sitemembership_set.filter(
+                    site_user_type=SiteMembership.CUSTOMER_ADMIN
+                )
+            )
+            or self.selected_site.pcs.count() > 4
+            or self.selected_site.customer.sites.count() == 1
+        ):
+            # You can only get here by deliberately trying to circumvent the system,
+            # so we don't care about possibly showing PermissionDenied to a customer admin
+            raise PermissionDenied
+        # Delete any users that only existed on this site
+        for user in self.selected_site.users:
+            if len(user.user_profile.sitemembership_set.all()) == 1:
+                user.delete()
+        site_name = self.selected_site.name
+        response = super(SiteDelete, self).delete(form, *args, **kwargs)
+        set_notification_cookie(response, _("Site %s deleted") % site_name)
+
+        return response
 
 
 # Base class for Site-based passive (non-form) views
