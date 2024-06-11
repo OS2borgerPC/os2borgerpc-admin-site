@@ -52,6 +52,7 @@ from system.views import (
     SiteDetailView,
     SiteList,
     SiteCreate,
+    site_uid_available_check,
     SiteDelete,
     SiteSettings,
     TwoFactor,
@@ -429,6 +430,11 @@ htmx_urlpatterns = [
         r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/delete/$",
         APIKeyDelete.as_view(),
         name="api_key_delete",
+    ),
+    re_path(
+        r"^site/new-validate$",
+        site_uid_available_check,
+        name="site_uid_available_check",
     ),
 ]
 
