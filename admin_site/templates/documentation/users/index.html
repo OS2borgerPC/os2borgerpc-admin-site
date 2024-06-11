@@ -74,6 +74,19 @@
     "Save changes" at the bottom of the page.
     {% endblocktranslate %}
   </p>
+
+  <h2>{% translate "Add existing users to this site" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    If you are a customer admin, and you wish to add an existing user to the site, you must click on the
+    button "Add existing user" above the list of users. This will open a
+    form where you can select the user(s) you wish to add. When you have
+    found the user(s), you must choose a usertype, which can be either Site User or Site Admin,
+    and then click "Save changes".    
+    {% endblocktranslate %}
+  </p>
+
+
   <h2>{% translate "Creating a new user" %}</h2>
   <p>
     {% blocktranslate trimmed %}
@@ -83,7 +96,7 @@
     editing a user. When you fill out the fields and click "Save changes",
     the user will be created and you will be redirected to the editing
     interface for the newly created user.
-    Only "Site Admins" can create new users.
+    Both "Site Admins" and "Customer admin" can create new users.
     {% endblocktranslate %}
   </p>
   <h2>{% translate "Deleting a user" %}</h2>
@@ -92,11 +105,11 @@
     If you wish to delete a user, you must select the user and then click
     on the X to the right of the selected user in the list of users. You will
     then be asked to confirm the deletion and if you do so, the user will be
-    deleted. Note that only "Site Admins" can delete users.
+    deleted. Both "Site Admins" and "Customer Admins" can delete users.
     {% endblocktranslate %}
   </p>
   <h2>{% translate "Permissions for Usertypes" %}</h2>
-  <table class="table">
+  <table class="table w-100">
     <thead class="table-dark">
       <tr>
         <td>{% translate "Usertype" %}</td>
@@ -105,9 +118,19 @@
         <td>{% translate "Security Rules" %}</td>
         <td>{% translate "Groups" %}</td>
         <td>{% translate "Computers" %}</td>
+        <td>{% translate "Sites" %}</td>
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td>{% translate "Customer admin" %}</td>
+        <td>{% translate "All permissions, is the only one that can change a usertype to customer admin" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "Can create and delete sites" %}</td>
+      </tr>
       <tr>
         <td>{% translate "Site Admin" %}</td>
         <td>{% translate "All permissions" %}</td>
@@ -115,6 +138,7 @@
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
+        <td>{% translate "No permissions" %}</td>
       </tr>
       <tr>
         <td>{% translate "Site User" %}</td>
@@ -123,6 +147,7 @@
         <td>{% translate "Can create and edit security rules. Cannot delete security rules." %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
+        <td>{% translate "No permissions" %}</td>
       </tr>
     </tbody>
   </table>
