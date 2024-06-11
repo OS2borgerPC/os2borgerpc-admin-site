@@ -154,6 +154,15 @@ def site_pcs_stats(context, site_list):
     return context
 
 
+def site_uid_available_check(request):
+    uid = request.GET['uid']
+    uid = Site.objects.filter(uid=uid)
+    if uid:
+        return HttpResponse(_("<span class='text-danger'>This UID is already in use by another site. Please choose another.</span>") + "<script>document.getElementById('create_site_save_button').disabled = true</script>")
+    else:
+        return HttpResponse(_("This UID is not in use.") + "<script>document.getElementById('create_site_save_button').disabled = false</script>")
+
+
 # Mixin class to require login
 class LoginRequiredMixin(View):
     """Subclass in all views where login is required."""
