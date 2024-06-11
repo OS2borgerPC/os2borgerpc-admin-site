@@ -37,7 +37,7 @@
 <div class="modal fade" id="create_site_modal" tabindex="-1" aria-labelledby="create_site_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form method="POST">
+      <form method="POST" action="{% url "site_create" %}">
         {% csrf_token %}
         <div class="modal-header">
           <h5 class="modal-title" id="create_site_modal_label">{% translate "Create site" %}</h5>

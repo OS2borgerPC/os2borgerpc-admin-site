@@ -182,7 +182,7 @@ class Site(models.Model):
     name = models.CharField(verbose_name=_("name"), max_length=255)
     uid = models.CharField(
         verbose_name=_("UID"),
-        max_length=255,
+        max_length=40,
         unique=True,
         # Essentially a slug_validator except that _ isn't allowed, for standardisation
         validators=[
@@ -193,7 +193,8 @@ class Site(models.Model):
             )
         ],
         help_text=_(
-            "Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes. We suggest names like <organisation> or <organisation-location> (without brackets)"
+            """Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the length must be between 2-40 characters.
+            We suggest names like <organisation> or <organisation-location> (without brackets)"""
         ),
     )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)

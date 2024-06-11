@@ -51,6 +51,7 @@ from system.views import (
     EventRuleServerUpdate,
     SiteDetailView,
     SiteList,
+    SiteCreate,
     SiteDelete,
     SiteSettings,
     TwoFactor,
@@ -173,6 +174,11 @@ urlpatterns = [
     # Sites
     re_path(r"^$", AdminIndex.as_view(), name="index"),
     re_path(r"^sites/$", SiteList.as_view(), name="sites"),
+    re_path(
+        r"^site/new/$",
+        SiteCreate.as_view(),
+        name="site_create",
+    ),
     re_path(
         r"^site/(?P<slug>[^/]+)/delete/$",
         SiteDelete.as_view(),
