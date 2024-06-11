@@ -370,26 +370,32 @@ class SiteList(ListView, LoginRequiredMixin):
         context["form"] = SiteCreateForm()
         return context
 
-    def post(self, request, *args, **kwargs):
-        if request.user.user_profile.sitemembership_set.filter(
+
+class SiteCreate(CreateView, SuperAdminOrThisSiteMixin):
+    model = Site
+    form_class = SiteCreateForm
+
+    def form_valid(self, form):
+        if self.request.user.user_profile.sitemembership_set.filter(
             site_user_type=SiteMembership.CUSTOMER_ADMIN
         ):
-            # Do basic method
-            response = self.get(request, *args, **kwargs)
-
+            self.object = form.save(commit=False)
             # This doesn't seem totally ideal. Maybe if user or user_profile had a direct relation to customer, or??
-            customer = request.user.user_profile.sites.first().customer
+            self.object.customer = self.request.user.user_profile.sites.first().customer
 
-            # TODO: Fetch other values the new site should have based on the values on the customer object?
-            site = Site.objects.create(
-                name=request.POST["name"], uid=request.POST["uid"], customer=customer
-            )
+            response = super(SiteCreate, self).form_valid(form)
 
-            set_notification_cookie(response, _("Site %s created") % site.name)
+            set_notification_cookie(response, _("Site %s created") % self.object.name)
 
             return response
         else:
             raise PermissionDenied
+
+    def form_invalid(self, form):
+        return HttpResponseRedirect(reverse("sites"))
+
+    def get_success_url(self):
+        return reverse("sites")
 
 
 class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
