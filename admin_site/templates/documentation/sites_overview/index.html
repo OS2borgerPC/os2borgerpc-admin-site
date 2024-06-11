@@ -1,0 +1,89 @@
+{% extends 'documentation/index.html' %}
+{% load custom_tags %}
+{% load i18n %}
+
+
+
+{% block specific_content %}
+
+<h1>{% translate "Sites overveiw" %}</h2>
+    <p>
+        {% blocktranslate trimmed %}
+            The sites overview page is where you can view all you that sites you have access to. As a customer admin you can see all sites, while as a site admin or a site user,
+            you can only see the sites you have been assigned to.    
+        {% endblocktranslate %}
+    </p>
+    
+
+<h2>{% translate "Information about your sites" %}</h2>
+<p>
+    {% blocktranslate trimmed %}
+        At the top of the page, there is some information collected from across your sites.   
+    {% endblocktranslate %}
+</p>
+<p>
+    <ul>
+        <li>
+            <strong>{% translate "Sites" %}</strong>:
+            {% blocktranslate trimmed %}
+                Your total number of sites
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "Computers total" %}</strong>:
+            {% blocktranslate trimmed %}
+                Your total number of computers
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "activated" %}</strong>:
+            {% blocktranslate trimmed %}
+                Your total number of activated computers
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "Online" %}</strong>:
+            {% blocktranslate trimmed %}
+                Your total number of computers online
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "OS2borgerPC" %}</strong>:
+            {% blocktranslate trimmed %}
+                Your total number of OS2borgerPC computers
+            {% endblocktranslate %}
+        </li>      
+        <li>
+            <strong>{% translate "OS2borgerPC Kiosk" %}</strong>:
+            {% blocktranslate trimmed %}
+                Your total number of OS2borgerPC kiosk computers
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "20.04, 22.04, 24.04 ..." %}</strong>:
+            {% blocktranslate trimmed %}
+                Your total number of computers related to each version
+            {% endblocktranslate %}
+        </li>
+    </ul>
+</p>
+
+<h2>{% translate "Deleting a site" %}</h2>
+<p>
+    {% blocktranslate trimmed %}
+        To start the process of deleting a site, click on the dropdown symbol on the right side of the button, and then on 'Delete Site'. 
+        Note that if you have more than five computers associated with the site, the button will be inactive and deletion is not possible. 
+        You will need to manually remove computers for the deletion to be possible. When clicking on the 'Delete Site' button, 
+        you will be redirected to a page where you must again confirm the deletion to finalize it.
+    {% endblocktranslate %}
+<p/>
+
+<h2>{% translate "Creating a new site" %}</h2>
+<p>
+    {% blocktranslate trimmed %}
+        As a customer admin you can create a new site, by clicking on the 'Create new site' button. This will open a form where you have to 
+        choose a name and a uniqie uid, for your site. When you have filled out the information, click on the 'create site' button to create the site. 
+    {% endblocktranslate %}
+<p/>
+
+{% endblock %}

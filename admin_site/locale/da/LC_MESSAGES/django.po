@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-08 16:56+0200\n"
+"POT-Creation-Date: 2024-06-11 15:45+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -131,6 +131,7 @@ msgstr "Kommentarer"
 
 #: changelog/templates/list.html system/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
+#: templates/documentation/sites_overview/index.html
 #: templates/system/site_list.html templates/system/site_status.html
 msgid "OS2borgerPC"
 msgstr "OS2borgerPC"
@@ -554,7 +555,7 @@ msgstr "ansvarspersoner"
 msgid "MAC"
 msgstr "MAC"
 
-#: system/models.py
+#: system/models.py templates/documentation/sites_overview/index.html
 msgid "activated"
 msgstr "aktiveret"
 
@@ -960,6 +961,10 @@ msgstr "Administrationssiden"
 msgid "About"
 msgstr "Om"
 
+#: system/views.py templates/documentation/sites_overview/index.html
+msgid "Sites overveiw"
+msgstr "Site oversigt"
+
 #: system/views.py templates/documentation/status/index.html
 #: templates/documentation/wake_plans/edit_settings.html
 #: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
@@ -1046,8 +1051,8 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: system/views.py templates/system/site_list.html
-#: templates/system/site_status.html
+#: system/views.py templates/documentation/sites_overview/index.html
+#: templates/system/site_list.html templates/system/site_status.html
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
@@ -1430,8 +1435,8 @@ msgstr ""
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then \"Close"
-"\"."
+"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then "
+"\"Close\"."
 msgstr ""
 "\"Indsæt\" den API-nøgle, som du kopierede i skridt 2 og klik %(auth)s og "
 "derefter \"Close\"."
@@ -2352,11 +2357,12 @@ msgid ""
 "redirected to the editing interface for the newly created group where it "
 "will be possible to add computers to the group."
 msgstr ""
-"Hvis man ønsker at oprette en ny gruppe skal man klikke på \"Tilføj ny gruppe"
-"\" oven over listen med grupper. Dette vil bringe en dialog op hvor man skal "
-"udfylde navn og beskrivelse for gruppen. Når man klikker på \"Opret gruppe\" "
-"vil man blive viderestillet til redigeringssiden for den nyoprettede gruppe, "
-"hvorfra det vil være muligt at tilføje computere til gruppen."
+"Hvis man ønsker at oprette en ny gruppe skal man klikke på \"Tilføj ny "
+"gruppe\" oven over listen med grupper. Dette vil bringe en dialog op hvor "
+"man skal udfylde navn og beskrivelse for gruppen. Når man klikker på \"Opret "
+"gruppe\" vil man blive viderestillet til redigeringssiden for den "
+"nyoprettede gruppe, hvorfra det vil være muligt at tilføje computere til "
+"gruppen."
 
 #: templates/documentation/groups/scripts.html
 #: templates/system/pcgroups/policy_list/list.html
@@ -3041,9 +3047,10 @@ msgstr ""
 #: templates/documentation/scripts/edit.html
 msgid ""
 "When you edit a script you can change its name and description. It is also "
-"possible to upload a new version of the script by clicking on the tab \"Code"
-"\" and then selecting a file to upload. Changes do not become permanent "
-"until you've clicked on \"Save changes\" at the bottom of the screen."
+"possible to upload a new version of the script by clicking on the tab "
+"\"Code\" and then selecting a file to upload. Changes do not become "
+"permanent until you've clicked on \"Save changes\" at the bottom of the "
+"screen."
 msgstr ""
 "Når du redigerer et Script har du mulighed for at ændre dets navn og "
 "beskrivelse. Du kan også uploade en ny version af Scriptet ved at klikke på "
@@ -3112,8 +3119,8 @@ msgid ""
 "editing interface for the newly created script where you can add arguments "
 "for the script."
 msgstr ""
-"Hvis du ønsker at oprette et nyt script skal du klikke på \"Tilføj nyt Script"
-"\" oven over listen med Scripts. Dette vil åbne en dialog hvor du kan "
+"Hvis du ønsker at oprette et nyt script skal du klikke på \"Tilføj nyt "
+"Script\" oven over listen med Scripts. Dette vil åbne en dialog hvor du kan "
 "udfylde script navn, beskrivelse og uploade script-kode. Når du derefter "
 "klikker på \"Opret Script\" vil scriptet blive oprettet, og du vil blive "
 "viderestillet til redigeringssiden for det nyoprettede script, hvor du vil "
@@ -3241,16 +3248,17 @@ msgstr ""
 msgid ""
 "In order to run a script on a computer or a group of computers, you must "
 "click on \"Scripts\" in the left-hand menu and choose the script you wish to "
-"run. Note that it may be necessary to swap between the tabs \"Local scripts"
-"\" and \"Global scripts\" in order to find the script. When you have located "
-"the script you wish to run, you must click on the button \"Run script\"."
+"run. Note that it may be necessary to swap between the tabs \"Local "
+"scripts\" and \"Global scripts\" in order to find the script. When you have "
+"located the script you wish to run, you must click on the button \"Run "
+"script\"."
 msgstr ""
 "For at køre et script på en computer eller en gruppe af computere skal du "
 "klikke på \"Scripts\" i venstremenuen og vælge det script du vil køre. "
-"Bemærk at det kan være nødvendigt at skifte mellem fanerne \"Lokale scripts"
-"\" og \"Globale scripts\" for at finde det script du leder efter. Når du har "
-"valgt det script, du ønsker at køre, skal du klikke på knappen \"Kør script"
-"\"."
+"Bemærk at det kan være nødvendigt at skifte mellem fanerne \"Lokale "
+"scripts\" og \"Globale scripts\" for at finde det script du leder efter. Når "
+"du har valgt det script, du ønsker at køre, skal du klikke på knappen \"Kør "
+"script\"."
 
 #: templates/documentation/scripts/running.html
 msgid ""
@@ -3308,13 +3316,14 @@ msgstr "Bemærk at kun Magenta kan redigere globale sikkerhedsscripts."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
-"If you wish to edit a Security Script, you must click on \"Security Scripts"
-"\" in the left-hand menu and then select the security script in the list to "
-"the right of the left-hand menu. Note that it may be necessary to swap "
-"between the tabs \"Local scripts\" and \"Global scripts\" in order to find "
-"the script. You can also search through the security scripts by selecting "
-"the search field \"Find ...\" and typing a search term. This will cause the "
-"list to display all security scripts whose names contain the search term."
+"If you wish to edit a Security Script, you must click on \"Security "
+"Scripts\" in the left-hand menu and then select the security script in the "
+"list to the right of the left-hand menu. Note that it may be necessary to "
+"swap between the tabs \"Local scripts\" and \"Global scripts\" in order to "
+"find the script. You can also search through the security scripts by "
+"selecting the search field \"Find ...\" and typing a search term. This will "
+"cause the list to display all security scripts whose names contain the "
+"search term."
 msgstr ""
 "For at redigere et Sikkerhedsscript skal du klikke på \"Sikkerhedsscripts\" "
 "i venstremenuen og efterfølgende vælge Sikkerhedsscriptet i listen over "
@@ -3570,6 +3579,109 @@ msgstr ""
 "disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
 "PC i stedet for de modtagere, som er valgt her."
 
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The sites overview page is where you can view all you that sites you have "
+"access to. As a customer admin you can see all sites, while as a site admin "
+"or a site user, you can only see the sites you have been assigned to."
+msgstr ""
+"Site oversigten er hvor du kan se alle de sites, du har adgang til. Som "
+"kunde-admin kan du se alle sites, mens du som site-bruger eller site-admin, "
+"kun kan se de sites, du er blevet tilknyttet."
+
+#: templates/documentation/sites_overview/index.html
+msgid "Information about your sites"
+msgstr "Information omkring dine sites"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"At the top of the page, there is some information collected from across your "
+"sites."
+msgstr ""
+"Øverst på siden er der nogle oplysninger indsamlet på tværs af dine sites."
+
+#: templates/documentation/sites_overview/index.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
+#: templates/system/site_list.html
+msgid "Sites"
+msgstr "Sites"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of sites"
+msgstr "Samlet antal sites"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Computer total"
+msgstr "Computere i alt"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of computers"
+msgstr "Samlet antal computere"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of activated computers"
+msgstr "Samlet antal aktiverede computere"
+
+#: templates/documentation/sites_overview/index.html
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Online"
+msgstr "Online"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of computers online"
+msgstr "Samlet antal computere online"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of OS2borgerPC computers"
+msgstr "Samlet antal OS2borgerPC computere"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of OS2borgerPC kiosk computers"
+msgstr "Samlet antal OS2borgerPC kiosk computere"
+
+#: templates/documentation/sites_overview/index.html
+msgid "20.04, 22.04, 24.04 ..."
+msgstr "20.04, 22.04, 24.04 ..."
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of computers related to each version"
+msgstr "Samlet antal computere der kører den gældende version"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Deleting a site"
+msgstr "Sletning af site"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"To start the process of deleting a site, click on the dropdown symbol on the "
+"right side of the button, and then on 'Delete Site'. Note that if you have "
+"more than five computers associated with the site, the button will be "
+"inactive and deletion is not possible. You will need to manually remove "
+"computers for the deletion to be possible. When clicking on the 'Delete "
+"Site' button, you will be redirected to a page where you must again confirm "
+"the deletion to finalize it."
+msgstr ""
+"For at starte processen med at slette et site, skal du klikke på dropdown-"
+"symbolet i højre side af knappen og derefter på \"Slet site\". Bemærk at "
+"hvis du har mere end fem computere tilknyttet valgte site, vil knappen være "
+"inaktiv, og sletning er ikke mulig. Du skal derfor manuelt fjerne computere, "
+"for at sletningen er mulig. Når du klikker på knappen 'Slet site', vil du "
+"blive omdirigeret til en side, hvor du skal bekræfte sletningen. "
+
+#: templates/documentation/sites_overview/index.html
+msgid "Creating a new site"
+msgstr "Oprettelse af nyt site"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"As a customer admin you can create a new site, by clicking on the 'Create "
+"new site' button. This will open a form where you have to choose a name and "
+"a uniqie uid, for your site. When you have filled out the information, click "
+"on the 'create site' button to create the site."
+msgstr ""
+"Som kundeadministrator kan du oprette et nyt site ved at klikke på knappen 'Opret nyt site'. Dette åbner en formular, hvor du skal"
+" vælg et navn og en unik uid til dit site. Når du har udfyldt oplysningerne, skal du klikke på knappen 'opret site' for at oprette sitet."
+
 #: templates/documentation/status/index.html
 msgid ""
 "When you log in to the admin-site, you will be presented with the status "
@@ -3701,11 +3813,30 @@ msgstr "Brugerens sprog-indstilling."
 
 #: templates/documentation/users/index.html
 msgid ""
-"Changes do not take effect until you've clicked on the button \"Save changes"
-"\" at the bottom of the page."
+"Changes do not take effect until you've clicked on the button \"Save "
+"changes\" at the bottom of the page."
 msgstr ""
 "Ændringer træder ikke i kraft, før man klikker på knappen \"Gem ændringer\" "
 "nederst på siden."
+
+#: templates/documentation/users/index.html
+msgid "Add existing users to this site"
+msgstr "Tilføj eksisterende brugere til dette site"
+
+#: templates/documentation/users/index.html
+msgid ""
+"If you are a customer admin, and you wish to add an existing user to the "
+"site, you must click on the button \"Add existing user\" above the list of "
+"users. This will open a form where you can select the user(s) you wish to "
+"add. When you have found the user(s), you must choose a usertype, which can "
+"be either Site User or Site Admin, and then click \"Save changes\"."
+msgstr ""
+"Hvis du er kunde-admin og ønsker at tilføje en eksisterende bruger til "
+"sitet, skal du klikke på knappen \"Tilføj eksisterende bruger\" over listen "
+"af brugere. Dette åbner en side, hvor du kan vælge den eller de brugere, du "
+"ønsker at tilføje. Når du har fundet brugeren/brugerne, skal du vælge en "
+"brugertype, som kan være enten site-bruger eller site-admin, og klik "
+"derefter på \"Gem ændringer\"."
 
 #: templates/documentation/users/index.html
 msgid "Creating a new user"
@@ -3713,19 +3844,20 @@ msgstr "Oprettelse af ny bruger"
 
 #: templates/documentation/users/index.html
 msgid ""
-"If you wish to create a new user, you must click on the button \"Add new user"
-"\" above the list of users. This will open the form for creating a new user, "
-"which has the same fields as the interface for editing a user. When you fill "
-"out the fields and click \"Save changes\", the user will be created and you "
-"will be redirected to the editing interface for the newly created user. Only "
-"\"Site Admins\" can create new users."
+"If you wish to create a new user, you must click on the button \"Add new "
+"user\" above the list of users. This will open the form for creating a new "
+"user, which has the same fields as the interface for editing a user. When "
+"you fill out the fields and click \"Save changes\", the user will be created "
+"and you will be redirected to the editing interface for the newly created "
+"user. Both \"Site Admins\" and \"Customer admin\" can create new users."
 msgstr ""
 "Hvis man vil oprette en ny bruger skal man klikke på knappen \"Tilføj ny "
 "bruger\" over listen med brugere. Dette vil åbne interfacet for oprettelse "
 "af nye brugere, hvor man kan udfylde de samme oplysninger som under "
 "redigering af brugere. Ved klik på \"Gem ændringer\" vil brugeren blive "
 "oprettet, og man vil blive viderestillet til redigeringssiden for den "
-"nyoprettede bruger."
+"nyoprettede bruger. Både \"Site-admin\" og \"Kunde-admin\" kan oprette nye "
+"brugere."
 
 #: templates/documentation/users/index.html
 msgid "Deleting a user"
@@ -3736,20 +3868,40 @@ msgid ""
 "If you wish to delete a user, you must select the user and then click on the "
 "X to the right of the selected user in the list of users. You will then be "
 "asked to confirm the deletion and if you do so, the user will be deleted. "
-"Note that only \"Site Admins\" can delete users."
+"Both \"Site Admins\" and \"Customer Admins\" can delete users."
 msgstr ""
 "Hvis man ønsker at slette en bruger, skal man vælge brugeren og derefter "
 "klikke på X'et til højre for den valgte bruger i listen over brugere. Man "
 "vil efterfølgende blive bedt om at bekræfte sletningen, og hvis man gør det, "
-"vil brugeren blive slettet. Bemærk at kun \"Site-admins\" kan slette brugere."
+"vil brugeren blive slettet. Både \"Site-admins\" og \"Kunde-admins\" kan "
+"slette brugere."
 
 #: templates/documentation/users/index.html
 msgid "Permissions for Usertypes"
 msgstr "Rettigheder for Brugertyper"
 
 #: templates/documentation/users/index.html
+msgid "Customer admin"
+msgstr "Kunde-admin"
+
+#: templates/documentation/users/index.html
+msgid ""
+"All permissions, is the only one that can change a usertype to customer admin"
+msgstr ""
+"Alle rettigheder, og er den eneste der kan ændre en brugertype til kunde-"
+"admin"
+
+#: templates/documentation/users/index.html
 msgid "All permissions"
 msgstr "Alle rettigheder"
+
+#: templates/documentation/users/index.html
+msgid "Can create and delete sites"
+msgstr "Kan oprette og slette sites"
+
+#: templates/documentation/users/index.html
+msgid "No permissions"
+msgstr "Ingen rettigheder"
 
 #: templates/documentation/users/index.html
 msgid ""
@@ -4268,11 +4420,11 @@ msgid ""
 "If you wish to create a new schedule, you must click on \"Add new On/Off "
 "schedule\" above the list of schedules. This opens an interface where you "
 "must enter a name for the schedule and have the option of editing the "
-"settings and adding exceptions or groups. When you click on \"Save changes"
-"\", you will be redirected to the editing interface for the newly screated "
-"schedule where you can continue to edit the settings and add exceptions or "
-"groups. If the schedule status is set to \"Active\", it will also take "
-"effect when you click on \"Save changes\"."
+"settings and adding exceptions or groups. When you click on \"Save "
+"changes\", you will be redirected to the editing interface for the newly "
+"screated schedule where you can continue to edit the settings and add "
+"exceptions or groups. If the schedule status is set to \"Active\", it will "
+"also take effect when you click on \"Save changes\"."
 msgstr ""
 "Hvis man ønsker at oprette en ny tidsplan, skal man klikke på \"Tilføj ny "
 "tænd/sluk tidsplan\" oven over listen med tidsplaner. Dette åbner et "
@@ -4371,8 +4523,8 @@ msgstr ""
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"Next, you edit the setting \"After Power Failure\" and set it to \"Last State"
-"\" (recommended) or \"Power On\"."
+"Next, you edit the setting \"After Power Failure\" and set it to \"Last "
+"State\" (recommended) or \"Power On\"."
 msgstr ""
 "Dernæst går du så ind og redigerer indstillingen \"After Power Failure\" og "
 "sætter denne til \"Last State\" (anbefalet) eller \"Power On\"."
@@ -4448,10 +4600,6 @@ msgstr "Du er nu logget ud"
 #: templates/logout.html
 msgid "Click here to log in again"
 msgstr "Klik her for at logge ind igen"
-
-#: templates/site_with_navigation.html templates/system/site_list.html
-msgid "Sites"
-msgstr "Sites"
 
 #: templates/site_with_navigation.html
 msgid "Monitoring"
@@ -5377,10 +5525,6 @@ msgstr "Administrér"
 msgid "Activated:"
 msgstr "Aktiverede:"
 
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Online"
-msgstr "Online"
-
 #: templates/system/site_list.html
 msgid "Admin site version"
 msgstr "Adminsite-version"
@@ -5775,9 +5919,9 @@ msgstr "Inaktiv"
 #: templates/system/wake_plan/wake_plan.html
 msgid ""
 "Some sleep states save more power than others, but some hardware does not "
-"support the most power saving states. We recommend starting with \"Off"
-"\" (which saves the most power), and if that does not work then try them in "
-"the order: mem, freeze, standby"
+"support the most power saving states. We recommend starting with "
+"\"Off\" (which saves the most power), and if that does not work then try "
+"them in the order: mem, freeze, standby"
 msgstr ""
 "Nogle dvaletilstande er mere strømbesparende end andre, men noget hardware "
 "understøtter ikke de mest strømbesparende tilstande. Vi foreslår at starte "

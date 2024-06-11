@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-08 16:56+0200\n"
+"POT-Creation-Date: 2024-06-11 15:45+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -131,6 +131,7 @@ msgstr "Kommentarer"
 
 #: changelog/templates/list.html system/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
+#: templates/documentation/sites_overview/index.html
 #: templates/system/site_list.html templates/system/site_status.html
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
@@ -555,7 +556,7 @@ msgstr "ansvariga personer"
 msgid "MAC"
 msgstr "MAC"
 
-#: system/models.py
+#: system/models.py templates/documentation/sites_overview/index.html
 msgid "activated"
 msgstr "aktiverad"
 
@@ -963,6 +964,10 @@ msgstr "Administrationssidan"
 msgid "About"
 msgstr "Om"
 
+#: system/views.py templates/documentation/sites_overview/index.html
+msgid "Sites overveiw"
+msgstr "webbplatsöversikt"
+
 #: system/views.py templates/documentation/status/index.html
 #: templates/documentation/wake_plans/edit_settings.html
 #: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
@@ -1049,8 +1054,8 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammal installationsguide (PDF)"
 
-#: system/views.py templates/system/site_list.html
-#: templates/system/site_status.html
+#: system/views.py templates/documentation/sites_overview/index.html
+#: templates/system/site_list.html templates/system/site_status.html
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
@@ -1433,8 +1438,8 @@ msgstr ""
 #: templates/documentation/api.html
 #, python-format
 msgid ""
-"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then \"Close"
-"\"."
+"\"Paste\" in the API Key you copied in step 2 and click %(auth)s then "
+"\"Close\"."
 msgstr ""
 "\"Klistra in\" API-nyckeln som du kopierade i steg 2 och klicka på %(auth)s "
 "och sedan \"Stäng\"."
@@ -2200,11 +2205,11 @@ msgid ""
 "then click on the check mark beneath the list to add the computer(s) to the "
 "group."
 msgstr ""
-"Du lägger till datorer genom att klicka på \"Lägg till en dator til gruppen"
-"\". Om det finns några datorer som ännu inte tillhör gruppen kommer de att "
-"visas i en lista. Klicka på de datorer du vill lägga till för att välja dem "
-"och klicka sedan på bockmarkeringen under listan för att lägga till "
-"datorerna i gruppen."
+"Du lägger till datorer genom att klicka på \"Lägg till en dator til "
+"gruppen\". Om det finns några datorer som ännu inte tillhör gruppen kommer "
+"de att visas i en lista. Klicka på de datorer du vill lägga till för att "
+"välja dem och klicka sedan på bockmarkeringen under listan för att lägga "
+"till datorerna i gruppen."
 
 #: templates/documentation/groups/edit.html
 msgid "Remove a computer"
@@ -3040,9 +3045,10 @@ msgstr ""
 #: templates/documentation/scripts/edit.html
 msgid ""
 "When you edit a script you can change its name and description. It is also "
-"possible to upload a new version of the script by clicking on the tab \"Code"
-"\" and then selecting a file to upload. Changes do not become permanent "
-"until you've clicked on \"Save changes\" at the bottom of the screen."
+"possible to upload a new version of the script by clicking on the tab "
+"\"Code\" and then selecting a file to upload. Changes do not become "
+"permanent until you've clicked on \"Save changes\" at the bottom of the "
+"screen."
 msgstr ""
 "När du redigerar ett skript har du möjlighet att ändra dess namn och "
 "beskrivning. Du kan också ladda upp en ny version av skriptet genom att "
@@ -3239,9 +3245,10 @@ msgstr ""
 msgid ""
 "In order to run a script on a computer or a group of computers, you must "
 "click on \"Scripts\" in the left-hand menu and choose the script you wish to "
-"run. Note that it may be necessary to swap between the tabs \"Local scripts"
-"\" and \"Global scripts\" in order to find the script. When you have located "
-"the script you wish to run, you must click on the button \"Run script\"."
+"run. Note that it may be necessary to swap between the tabs \"Local "
+"scripts\" and \"Global scripts\" in order to find the script. When you have "
+"located the script you wish to run, you must click on the button \"Run "
+"script\"."
 msgstr ""
 "Om du vill köra ett skript på en dator eller grupp av datorer måste du "
 "klicka på \"Skript\" i den vänstra menyn och välj det skript du vill köra. "
@@ -3304,13 +3311,14 @@ msgstr "Observera att endast Magenta kan redigera globala säkerhetsskript."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
-"If you wish to edit a Security Script, you must click on \"Security Scripts"
-"\" in the left-hand menu and then select the security script in the list to "
-"the right of the left-hand menu. Note that it may be necessary to swap "
-"between the tabs \"Local scripts\" and \"Global scripts\" in order to find "
-"the script. You can also search through the security scripts by selecting "
-"the search field \"Find ...\" and typing a search term. This will cause the "
-"list to display all security scripts whose names contain the search term."
+"If you wish to edit a Security Script, you must click on \"Security "
+"Scripts\" in the left-hand menu and then select the security script in the "
+"list to the right of the left-hand menu. Note that it may be necessary to "
+"swap between the tabs \"Local scripts\" and \"Global scripts\" in order to "
+"find the script. You can also search through the security scripts by "
+"selecting the search field \"Find ...\" and typing a search term. This will "
+"cause the list to display all security scripts whose names contain the "
+"search term."
 msgstr ""
 "För att redigera ett Säkerhetsskript, klicka på \"Säkerhetsskript\" i den "
 "vänstra menyn och välj sedan Säkerhetsskriptet i listan över Säkerhetsskript "
@@ -3563,6 +3571,106 @@ msgstr ""
 "personer, då kommer dessa ansvariga personer att få alla e-postvarningar "
 "relaterade till det PC istället för de mottagare som valts här."
 
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The sites overview page is where you can view all you that sites you have "
+"access to. As a customer admin you can see all sites, while as a site admin "
+"or a site user, you can only see the sites you have been assigned to."
+msgstr ""
+"Sidan med webbplatsöversikt är där du kan se alla webbplatser du har tillgång till." 
+"Som kunde-admin kan du se alla webbplatser, medan du som site-admin eller site användare "
+"bara ser de webbplatser du har tilldelats."
+
+#: templates/documentation/sites_overview/index.html
+msgid "Information about your sites"
+msgstr "Information om dina webbplatser"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"At the top of the page, there is some information collected from across your "
+"sites."
+msgstr "Överst på sidan finns en del information som samlats in från dina webbplatser"
+
+#: templates/documentation/sites_overview/index.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
+#: templates/system/site_list.html
+msgid "Sites"
+msgstr "Sites"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of sites"
+msgstr "Ditt totala antal webbplatser"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Computers total"
+msgstr "Datorer totalt"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of computers"
+msgstr "Ditt totala antal datorer"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of activated computers"
+msgstr "Ditt totala antal aktiverade datorer"
+
+#: templates/documentation/sites_overview/index.html
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Online"
+msgstr "Online"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of computers online"
+msgstr "Ditt totala antal datorer online"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of OS2borgerPC computers"
+msgstr "Ditt totala antal Sambruk MedborgarPC"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of OS2borgerPC kiosk computers"
+msgstr "Ditt totala antal Sambruk MedborgarPC Kiosk"
+
+#: templates/documentation/sites_overview/index.html
+msgid "20.04, 22.04, 24.04 ..."
+msgstr "20.04, 22.04, 24.04 ..."
+
+#: templates/documentation/sites_overview/index.html
+msgid "Your total number of computers related to each version"
+msgstr "Ditt totala antal datorer relaterade till varje version"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Deleting a site"
+msgstr "Ta bort en webbplats"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"To start the process of deleting a site, click on the dropdown symbol on the "
+"right side of the button, and then on 'Delete Site'. Note that if you have "
+"more than five computers associated with the site, the button will be "
+"inactive and deletion is not possible. You will need to manually remove "
+"computers for the deletion to be possible. When clicking on the 'Delete "
+"Site' button, you will be redirected to a page where you must again confirm "
+"the deletion to finalize it."
+msgstr ""
+"För att starta processen med att ta bort en webbplats, klicka på rullgardinssymbolen till höger om knappen och sedan på \"Ta bort webbplats\". "
+"Observera att om du har fler än fem datorer kopplade till webbplatsen kommer knappen att vara inaktiv och radering är inte möjlig. "
+"Du måste ta bort datorer manuellt för att raderingen ska vara möjlig. "
+"När du klickar på knappen \"Ta bort webbplats\" kommer du att omdirigeras till en sida där du återigen måste bekräfta borttagningen."
+
+#: templates/documentation/sites_overview/index.html
+msgid "Creating a new site"
+msgstr "Skapa en ny webbplats"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"As a customer admin you can create a new site, by clicking on the 'Create "
+"new site' button. This will open a form where you have to choose a name and "
+"a uniqie uid, for your site. When you have filled out the information, click "
+"on the 'create site' button to create the site."
+msgstr ""
+"Som kunde-admin kan du skapa en ny webbplats genom att klicka på knappen 'Skapa ny webbplats'. Detta öppnar ett formulär där du måste" 
+" välj ett namn och en unik uid för din webbplats. När du har fyllt i informationen klickar du på knappen \"skapa webbplats\" för att skapa webbplatsen."
+
 #: templates/documentation/status/index.html
 msgid ""
 "When you log in to the admin-site, you will be presented with the status "
@@ -3695,11 +3803,28 @@ msgstr "Användarens språkinställning."
 
 #: templates/documentation/users/index.html
 msgid ""
-"Changes do not take effect until you've clicked on the button \"Save changes"
-"\" at the bottom of the page."
+"Changes do not take effect until you've clicked on the button \"Save "
+"changes\" at the bottom of the page."
 msgstr ""
 "Ändringar träder inte i kraft förrän du har klickat på knappen \"Spara "
 "ändringar\" längst ner på sidan."
+
+#: templates/documentation/users/index.html
+msgid "Add existing users to this site"
+msgstr "Lägg till befintliga användare"
+
+#: templates/documentation/users/index.html
+msgid ""
+"If you are a customer admin, and you wish to add an existing user to the "
+"site, you must click on the button \"Add existing user\" above the list of "
+"users. This will open a form where you can select the user(s) you wish to "
+"add. When you have found the user(s), you must choose a usertype, which can "
+"be either Site User or Site Admin, and then click \"Save changes\"."
+msgstr ""
+" Om du är kunde-admin och vill lägga till en befintlig användare på webbplatsen måste du klicka på knappen \"Lägg till befintlig användare\" ovanför användarlistan. " 
+"Detta öppnar ett formulär där du kan välja den eller de användare du vill lägga till. "
+"När du har hittat användaren/användarna måste du välja en användartyp," 
+"som kan vara antingen Site User eller Site Admin, och klicka sedan på \"Spara ändringar\"."
 
 #: templates/documentation/users/index.html
 msgid "Creating a new user"
@@ -3707,19 +3832,19 @@ msgstr "Skapa en ny användare"
 
 #: templates/documentation/users/index.html
 msgid ""
-"If you wish to create a new user, you must click on the button \"Add new user"
-"\" above the list of users. This will open the form for creating a new user, "
-"which has the same fields as the interface for editing a user. When you fill "
-"out the fields and click \"Save changes\", the user will be created and you "
-"will be redirected to the editing interface for the newly created user. Only "
-"\"Site Admins\" can create new users."
+"If you wish to create a new user, you must click on the button \"Add new "
+"user\" above the list of users. This will open the form for creating a new "
+"user, which has the same fields as the interface for editing a user. When "
+"you fill out the fields and click \"Save changes\", the user will be created "
+"and you will be redirected to the editing interface for the newly created "
+"user. Both \"Site Admins\" and \"Customer admin\" can create new users."
 msgstr ""
 "Om du vill skapa en ny användare klickar du på knappen \"Lägg till en ny "
 "användare\" ovanför listan över användare. Detta kommer att visa en "
 "dialogruta där du kan fylla i samma information som vid redigering av "
 "användare. När du fyller i fälten och klickar på \"Spara ändringar\", skapas "
 "användaren och du omdirigeras till redigeringsgränssnittet för den nyskapade "
-"användaren. Endast \"Site-admins\" kan skapa nya användare."
+"användaren. Både \"Site-admins\" och \"Kunde-admins\" kan skapa nya användare."
 
 #: templates/documentation/users/index.html
 msgid "Deleting a user"
@@ -3730,20 +3855,37 @@ msgid ""
 "If you wish to delete a user, you must select the user and then click on the "
 "X to the right of the selected user in the list of users. You will then be "
 "asked to confirm the deletion and if you do so, the user will be deleted. "
-"Note that only \"Site Admins\" can delete users."
+"Both \"Site Admins\" and \"Customer Admins\" can delete users."
 msgstr ""
 "Om du vill ta bort en användare måste du välja användaren och sedan klicka "
 "på X:et till höger om den valda användaren i användarlistan. Du kommer då "
 "att bli ombedd att bekräfta raderingen och om du gör det kommer användaren "
-"att raderas. Observera att endast \"Site-admins\" kan ta bort användare."
+"att raderas. Både \"Site-admins\" och \"Kunde-admins\" kan ta bort användare."
 
 #: templates/documentation/users/index.html
 msgid "Permissions for Usertypes"
 msgstr "Rättigheter för användartyper"
 
 #: templates/documentation/users/index.html
+msgid "Customer admin"
+msgstr "Kunde-admin"
+
+#: templates/documentation/users/index.html
+msgid ""
+"All permissions, is the only one that can change a usertype to customer admin"
+msgstr "Alla rättigheter, och är den enda som kan ändra en användartyp till kunde-admin"
+
+#: templates/documentation/users/index.html
 msgid "All permissions"
 msgstr "Alla rättigheter"
+
+#: templates/documentation/users/index.html
+msgid "Can create and delete sites"
+msgstr "Kan skapa och ta bort webbplatser"
+
+#: templates/documentation/users/index.html
+msgid "No permissions"
+msgstr "Inga rättigheter"
 
 #: templates/documentation/users/index.html
 msgid ""
@@ -4053,11 +4195,11 @@ msgid ""
 "them and then click on the check mark beneath the list to add the "
 "exception(s) to the schedule."
 msgstr ""
-"Du lägger till undantag genom att klicka på \"Länka undantag till tidtabellen"
-"\". Om det finns några undantag som ännu inte tillhör schemat kommer de att "
-"visas i en lista. Klicka på de undantag som du vill lägga till för att välja "
-"dem och klicka sedan på bockmarkeringen under listan för att länka "
-"undantagen till schemat."
+"Du lägger till undantag genom att klicka på \"Länka undantag till "
+"tidtabellen\". Om det finns några undantag som ännu inte tillhör schemat "
+"kommer de att visas i en lista. Klicka på de undantag som du vill lägga till "
+"för att välja dem och klicka sedan på bockmarkeringen under listan för att "
+"länka undantagen till schemat."
 
 #: templates/documentation/wake_plans/edit_settings.html
 msgid ""
@@ -4259,11 +4401,11 @@ msgid ""
 "If you wish to create a new schedule, you must click on \"Add new On/Off "
 "schedule\" above the list of schedules. This opens an interface where you "
 "must enter a name for the schedule and have the option of editing the "
-"settings and adding exceptions or groups. When you click on \"Save changes"
-"\", you will be redirected to the editing interface for the newly screated "
-"schedule where you can continue to edit the settings and add exceptions or "
-"groups. If the schedule status is set to \"Active\", it will also take "
-"effect when you click on \"Save changes\"."
+"settings and adding exceptions or groups. When you click on \"Save "
+"changes\", you will be redirected to the editing interface for the newly "
+"screated schedule where you can continue to edit the settings and add "
+"exceptions or groups. If the schedule status is set to \"Active\", it will "
+"also take effect when you click on \"Save changes\"."
 msgstr ""
 "Om du vill skapa ett nytt schema klickar du på \"Lägg till ett nytt schema "
 "för på/av\" ovanför schemalistan. Detta öppnar ett gränssnitt där du måste "
@@ -4361,8 +4503,8 @@ msgstr ""
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"Next, you edit the setting \"After Power Failure\" and set it to \"Last State"
-"\" (recommended) or \"Power On\"."
+"Next, you edit the setting \"After Power Failure\" and set it to \"Last "
+"State\" (recommended) or \"Power On\"."
 msgstr ""
 "Därefter går du in och redigerar inställningen \"After Power Failure\" och "
 "ställer in den på \"Last State\" (rekommenderas) eller \"Power On\"."
@@ -4437,10 +4579,6 @@ msgstr "Du är nu utloggad"
 #: templates/logout.html
 msgid "Click here to log in again"
 msgstr "Klicka här för att logga in igen"
-
-#: templates/site_with_navigation.html templates/system/site_list.html
-msgid "Sites"
-msgstr "Sites"
 
 #: templates/site_with_navigation.html
 msgid "Monitoring"
@@ -4887,8 +5025,8 @@ msgid ""
 "Associated %(computers)s and %(asc_scripts)s will be removed from "
 "%(the_group)s."
 msgstr ""
-"Associerade %(computers)s och %(asc_scripts)s kommer att tas bort från"
-"%(the_group)s."
+"Associerade %(computers)s och %(asc_scripts)s kommer att tas bort "
+"från%(the_group)s."
 
 #: templates/system/pcgroups/confirm_delete.html
 msgid "The Computers"
@@ -5148,8 +5286,8 @@ msgid ""
 "If %(the_security_script)s is used in a %(security_rule)s, then "
 "%(the_security_rule)s will also be deleted."
 msgstr ""
-"Om %(the_security_script)sanvänds i en %(security_rule)s, kommer"
-"%(the_security_rule)s också tas bort.."
+"Om %(the_security_script)sanvänds i en %(security_rule)s, "
+"kommer%(the_security_rule)s också tas bort.."
 
 #: templates/system/scripts/confirm_delete.html
 msgid "Are you sure you want to delete"
@@ -5357,20 +5495,12 @@ msgid "Total number of"
 msgstr "Totalt antal"
 
 #: templates/system/site_list.html
-msgid "Computers total"
-msgstr "Datorer totalt"
-
-#: templates/system/site_list.html
 msgid "Administrate"
 msgstr "Hantera"
 
 #: templates/system/site_list.html templates/system/site_status.html
 msgid "Activated:"
 msgstr "Aktiverade:"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Online"
-msgstr "Online"
 
 #: templates/system/site_list.html
 msgid "Admin site version"
@@ -5763,14 +5893,14 @@ msgstr "Inaktiv"
 #: templates/system/wake_plan/wake_plan.html
 msgid ""
 "Some sleep states save more power than others, but some hardware does not "
-"support the most power saving states. We recommend starting with \"Off"
-"\" (which saves the most power), and if that does not work then try them in "
-"the order: mem, freeze, standby"
+"support the most power saving states. We recommend starting with "
+"\"Off\" (which saves the most power), and if that does not work then try "
+"them in the order: mem, freeze, standby"
 msgstr ""
 "Vissa vilolägen är mer energieffektiva än andra, men vissa datorer har inte "
-"stöd för de mest energisparande lägena. Vi föreslår att du börjar med \"Off"
-"\" (den mest energibesparande), och om det inte fungerar försöker du med dem "
-"i ordningen: mem, freeze, standby"
+"stöd för de mest energisparande lägena. Vi föreslår att du börjar med "
+"\"Off\" (den mest energibesparande), och om det inte fungerar försöker du "
+"med dem i ordningen: mem, freeze, standby"
 
 #: templates/system/wake_plan/wake_plan.html
 msgid "Week plan"
