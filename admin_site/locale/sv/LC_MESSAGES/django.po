@@ -31,6 +31,10 @@ msgstr "Site användare"
 msgid "Site Admin"
 msgstr "Site-admin"
 
+#: account/models.py
+msgid "Customer Admin"
+msgstr "Kund-admin"
+
 #: changelog/models.py system/models.py
 msgid "name"
 msgstr "namn"
@@ -85,7 +89,8 @@ msgstr "Lägg till en kommentar"
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/security_events/site_security_events.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/confirm_delete.html
+#: templates/system/sites/confirm_delete.html templates/system/sites/list.html
+#: templates/system/users/confirm_delete.html templates/system/users/link.html
 #: templates/system/users/update.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
@@ -132,7 +137,7 @@ msgstr "Kommentarer"
 #: changelog/templates/list.html system/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "OS2borgerPC"
 msgstr "Sambruk MedborgarPC"
 
@@ -221,6 +226,10 @@ msgid "Number of computers"
 msgstr "Antal datorer"
 
 #: system/admin.py
+msgid "Feature permissions"
+msgstr "Funktionsåtkomster"
+
+#: system/admin.py
 msgid "Number of KioskPC computers"
 msgstr "Antal KioskPC-datorer"
 
@@ -229,10 +238,6 @@ msgid "Number of BorgerPC computers"
 msgstr "Antal MedborgarPC-datorer"
 
 #: system/admin.py
-msgid "Feature permissions"
-msgstr "Funktionsåtkomster"
-
-#: system/admin.py system/models.py
 msgid "sites with access"
 msgstr "sites med tillträde"
 
@@ -272,6 +277,18 @@ msgid ""
 msgstr ""
 "Nödvändigt för kunder som vill autentisera MedborgarPC-inloggningar via ett "
 "API som kräver en API-nyckel (t.ex. Quria)"
+
+#: system/forms.py
+msgid "Select users to be added to this site"
+msgstr "Välj användare som ska läggas till på detta site"
+
+#: system/forms.py
+msgid "Hold down Ctrl to select multiple users"
+msgstr "Håll ned Ctrl för att välja flera användare"
+
+#: system/forms.py
+msgid "Select the usertype that the users should be added with"
+msgstr "Välj den användartyp som användarna ska läggas till med"
 
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
@@ -341,16 +358,32 @@ msgid "country name"
 msgstr "lands namn"
 
 #: system/models.py
-msgid "UID"
-msgstr "UID"
-
-#: system/models.py
-msgid "Is a testsite"
-msgstr "Är en testsida"
+msgid "customer name"
+msgstr "kundnamn"
 
 #: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalat för tillträde fram till detta datum"
+
+#: system/models.py
+msgid "Is a test customer"
+msgstr "Är en test kund"
+
+#: system/models.py
+msgid "UID"
+msgstr "UID"
+
+#: system/models.py
+msgid ""
+"Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the "
+"length must be between 2-40 characters.\n"
+"            We suggest names like <organisation> or <organisation-location> "
+"(without brackets)"
+msgstr ""
+"Måste vara unik. Giltiga tecken är a-z, A-Z, 0-9 och bindestreck, och "
+"längden måste vara mellan 2-40 tecken.\n"
+"            Vi föreslår namn som <organisation> eller <organisation-plats> "
+"(utan parentes)"
 
 #: system/models.py
 msgid "ISIL/NCIP"
@@ -407,6 +440,10 @@ msgstr "Tid för inloggning"
 #: system/models.py
 msgid "Time of logout"
 msgstr "Tid för utloggning"
+
+#: system/models.py
+msgid "customers with access"
+msgstr "kunder med tillträde"
 
 #: system/models.py
 msgid "event_type:Altered Hours"
@@ -748,6 +785,16 @@ msgstr "Ändringar har sparats %s"
 
 #: system/views.py
 #, python-format
+msgid "Site %s created"
+msgstr "Site %s skapad"
+
+#: system/views.py
+#, python-format
+msgid "Site %s deleted"
+msgstr "Site %s raderad"
+
+#: system/views.py
+#, python-format
 msgid "Settings for %s updated"
 msgstr "Inställningar för %s uppdaterat"
 
@@ -900,6 +947,11 @@ msgstr "Datumet Till får inte vara före datumet Från %s"
 
 #: system/views.py
 #, python-format
+msgid "The user(s) %s have been added to the site %s "
+msgstr "Användarna %s har lagts till på sitet %s"
+
+#: system/views.py
+#, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ingen användare med följande ID: %s"
 
@@ -907,6 +959,11 @@ msgstr "Du har ingen användare med följande ID: %s"
 #, python-format
 msgid "User %s updated"
 msgstr "Användare %s uppdaterad"
+
+#: system/views.py
+#, python-format
+msgid "User %s removed from the site %s"
+msgstr "Användaren %s togs bort från sitet %s"
 
 #: system/views.py
 #, python-format
@@ -981,7 +1038,7 @@ msgstr "Status"
 #: templates/documentation/users/index.html templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
-#: templates/system/pcs/site_pcs.html templates/system/site_list.html
+#: templates/system/pcs/site_pcs.html templates/system/sites/list.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
@@ -1024,7 +1081,8 @@ msgid "Notifications and offline rules"
 msgstr "Aviseringar och offline-regler"
 
 #: system/views.py templates/documentation/users/index.html
-#: templates/site_with_navigation.html templates/system/users/update.html
+#: templates/site_with_navigation.html templates/system/users/link.html
+#: templates/system/users/update.html
 msgid "Users"
 msgstr "Användare"
 
@@ -1054,8 +1112,9 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammal installationsguide (PDF)"
 
-#: system/views.py templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/documentation/sites_overview/index.html
+#: system/views.py templates/system/site_status.html
+#: templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
@@ -1674,6 +1733,7 @@ msgstr ""
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/site_two_factor_pc.html
+#: templates/system/sites/confirm_delete.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -2451,7 +2511,7 @@ msgstr "Anteckningar"
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 #: templates/system/scripts/update.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/update.html
+#: templates/system/users/link.html templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Save changes"
@@ -4836,6 +4896,7 @@ msgstr "Är du säker på att du vill radera Offline-regeln"
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
+#: templates/system/sites/confirm_delete.html
 #: templates/system/users/confirm_delete.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
@@ -5555,30 +5616,6 @@ msgstr "Tidigare versioner"
 msgid "Download"
 msgstr "Download"
 
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of BorgerPC's"
-msgstr "Totalt antal MedborgarPC'er"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of Kiosk PC's"
-msgstr "Totalt antal Kiosk PC'er"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of"
-msgstr "Totalt antal"
-
-#: templates/system/site_list.html
-msgid "Administrate"
-msgstr "Hantera"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Activated:"
-msgstr "Aktiverade:"
-
-#: templates/system/site_list.html
-msgid "Admin site version"
-msgstr "Adminsida-version"
-
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
 msgstr "API-nycklar för"
@@ -5622,6 +5659,26 @@ msgstr "Inställningar för"
 #: templates/system/site_status.html
 msgid "computers"
 msgstr "datorer"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of"
+msgstr "Totalt antal"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of BorgerPC's"
+msgstr "Totalt antal MedborgarPC'er"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of Kiosk PC's"
+msgstr "Totalt antal Kiosk PC'er"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Activated:"
+msgstr "Aktiverade:"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Online"
+msgstr "Online"
 
 #: templates/system/site_status.html
 msgid "Activated"
@@ -5726,10 +5783,78 @@ msgstr "Tvåstegsverifiering för superuser"
 msgid "to go to the script"
 msgstr "för att gå till skriptet"
 
+#: templates/system/sites/confirm_delete.html
+#: templates/system/sites/display.html
+msgid "Delete Site"
+msgstr "Ta bort Site"
+
+#: templates/system/sites/confirm_delete.html
+msgid ""
+"All Computers, Groups, Jobs, Monitoring Rules, On/Off schedules, schedule "
+"exceptions, associated scripts and local (security) Scripts on the Site will "
+"also be deleted."
+msgstr ""
+"Alla Datorer, Grupper, Jobs, Övervakningsregler, Schema för på- och "
+"avstängning, schema undantag, associerade skript och lokala skript eller "
+"säkerhetsskript på Sitet kommer också att raderas."
+
+#: templates/system/sites/confirm_delete.html
+msgid ""
+"Any Users that only have access to this Site will also be deleted. Users "
+"that also have access to other Sites will not be deleted."
+msgstr ""
+"Alla användare som bara har tillgång till denna Site kommer också att "
+"raderas. Användare som också har tillgång till andra Sites kommer inte att "
+"raderas."
+
+#: templates/system/sites/confirm_delete.html
+msgid "It will NOT be possible to restore any of the deleted objects later."
+msgstr ""
+"Det kommer INTE att vara möjligt att återställa något av de raderade "
+"objekten senare."
+
+#: templates/system/sites/confirm_delete.html
+msgid "Are you sure you want to delete the Site"
+msgstr "Är du säker på att du vill ta bort Sitet"
+
+#: templates/system/sites/confirm_delete.html
+msgid "I understand and accept the consequences of deleting the Site"
+msgstr "Jag förstår och accepterar konsekvenserna av att ta bort Sitet"
+
+#: templates/system/sites/display.html
+msgid "Delete site"
+msgstr "Ta bort site"
+
+#: templates/system/sites/display.html
+msgid ""
+"This Site has 5 or more registered Computers and therefore can't be deleted"
+msgstr ""
+"Detta Site har 5 eller fler registrerade datorer och kan därfor inte raderas"
+
+#: templates/system/sites/list.html
+msgid "Computers total"
+msgstr "Datorer totalt"
+
+#: templates/system/sites/list.html
+msgid "Administrate"
+msgstr "Hantera"
+
+#: templates/system/sites/list.html
+msgid "Admin site version"
+msgstr "Adminsida-version"
+
+#: templates/system/sites/list.html
+msgid "Create site"
+msgstr "Skapa site"
+
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
 msgid "Delete user"
 msgstr "Ta bort användare"
+
+#: templates/system/users/confirm_delete.html
+msgid "Are you sure you want to remove this user from the site "
+msgstr "Är du säker på att du vill ta bort den här användaren från sitet "
 
 #: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
@@ -5751,9 +5876,17 @@ msgstr "Generera reservkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Inaktivera tvåstegsverifiering"
 
-#: templates/system/users/update.html
+#: templates/system/users/link.html templates/system/users/update.html
+msgid "Add existing users to this site"
+msgstr "Lägg till befintliga användare på den här site"
+
+#: templates/system/users/link.html templates/system/users/update.html
 msgid "Add new user"
 msgstr "Lägg till en ny användare"
+
+#: templates/system/users/link.html
+msgid "Add existing users from your other sites to the site "
+msgstr "Lägg till befintliga användare från dina andra sites till sitet "
 
 #: templates/system/users/update.html
 msgid "Profile:"
