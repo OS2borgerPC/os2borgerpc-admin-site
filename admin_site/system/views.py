@@ -311,6 +311,13 @@ class SiteList(ListView, LoginRequiredMixin):
 
     def get_queryset(self):
         user = self.request.user
+        if (
+            not user.is_superuser
+            and not user.user_profile.sites.count() > 1
+            and not user.user_profile.sitemembership_set.first().site_user_type
+            == SiteMembership.CUSTOMER_ADMIN
+        ):
+            raise PermissionDenied
         if user.is_superuser:
             qs = Site.objects.all()
         else:
@@ -328,9 +335,9 @@ class SiteList(ListView, LoginRequiredMixin):
         ).count()
         context["total_online_pcs_count"] = online_pcs_count_filter(total_pcs)
         context["user"] = self.request.user
-        context["site_membership"] = (
-            self.request.user.user_profile.sitemembership_set.first()
-        )
+        context[
+            "site_membership"
+        ] = self.request.user.user_profile.sitemembership_set.first()
         context["version"] = open("/code/VERSION", "r").read()
         user_sites = self.get_queryset()
         # The dictionary to generate the customer-site list has the following structure:
@@ -380,7 +387,7 @@ class SiteList(ListView, LoginRequiredMixin):
         return context
 
 
-class SiteCreate(CreateView, SuperAdminOrThisSiteMixin):
+class SiteCreate(CreateView, LoginRequiredMixin):
     model = Site
     form_class = SiteCreateForm
 
@@ -390,9 +397,32 @@ class SiteCreate(CreateView, SuperAdminOrThisSiteMixin):
         ):
             self.object = form.save(commit=False)
             # This doesn't seem totally ideal. Maybe if user or user_profile had a direct relation to customer, or??
-            self.object.customer = self.request.user.user_profile.sites.first().customer
+            customer = (
+                self.request.user.user_profile.sitemembership_set.filter(
+                    site_user_type=SiteMembership.CUSTOMER_ADMIN
+                )
+                .first()
+                .site.customer
+            )
+            self.object.customer = customer
 
             response = super(SiteCreate, self).form_valid(form)
+
+            # Ensure that all customer admins for the customer have access to the new Site
+            customer_admins_for_customer = list(
+                set(
+                    UserProfile.objects.filter(
+                        sites__in=customer.sites.all(),
+                        sitemembership__site_user_type=SiteMembership.CUSTOMER_ADMIN,
+                    )
+                )
+            )
+            for customer_admin in customer_admins_for_customer:
+                SiteMembership.objects.create(
+                    user_profile=customer_admin,
+                    site=self.object,
+                    site_user_type=SiteMembership.CUSTOMER_ADMIN,
+                )
 
             set_notification_cookie(response, _("Site %s created") % self.object.name)
 
@@ -1326,9 +1356,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context["site_membership"] = (
-            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
-        )
+        context[
+            "site_membership"
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         return context
 
     def get_object(self, queryset=None):
@@ -3433,9 +3463,9 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected"] = self.object
 
         request_user = self.request.user
-        context["site_membership"] = (
-            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
-        )
+        context[
+            "site_membership"
+        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
         return context
 
     def form_valid(self, form):

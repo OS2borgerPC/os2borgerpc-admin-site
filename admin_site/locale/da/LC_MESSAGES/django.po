@@ -31,6 +31,10 @@ msgstr "Site-bruger"
 msgid "Site Admin"
 msgstr "Site-admin"
 
+#: account/models.py
+msgid "Customer Admin"
+msgstr "Kunde-admin"
+
 #: changelog/models.py system/models.py
 msgid "name"
 msgstr "navn"
@@ -85,7 +89,8 @@ msgstr "Tilføj kommentar"
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/security_events/site_security_events.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/confirm_delete.html
+#: templates/system/sites/confirm_delete.html templates/system/sites/list.html
+#: templates/system/users/confirm_delete.html templates/system/users/link.html
 #: templates/system/users/update.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
@@ -132,7 +137,7 @@ msgstr "Kommentarer"
 #: changelog/templates/list.html system/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "OS2borgerPC"
 msgstr "OS2borgerPC"
 
@@ -221,6 +226,10 @@ msgid "Number of computers"
 msgstr "Antal computere"
 
 #: system/admin.py
+msgid "Feature permissions"
+msgstr "Feature-adgange"
+
+#: system/admin.py
 msgid "Number of KioskPC computers"
 msgstr "Antal KioskPC computere"
 
@@ -229,10 +238,6 @@ msgid "Number of BorgerPC computers"
 msgstr "Antal BorgerPC computere"
 
 #: system/admin.py
-msgid "Feature permissions"
-msgstr "Feature-adgange"
-
-#: system/admin.py system/models.py
 msgid "sites with access"
 msgstr "sites med adgang"
 
@@ -273,6 +278,18 @@ msgid ""
 msgstr ""
 "Nødvendigt for kunder der ønsker at autentificere login på BorgerPC gennem "
 "et API, der kræver en API-nøgle (f.eks. Quria)"
+
+#: system/forms.py
+msgid "Select users to be added to this site"
+msgstr "Vælg brugere som skal tilføjes til dette site"
+
+#: system/forms.py
+msgid "Hold down Ctrl to select multiple users"
+msgstr "Hold Ctrl nede for at vælge flere brugere"
+
+#: system/forms.py
+msgid "Select the usertype that the users should be added with"
+msgstr "Vælg den brugertype som brugerne skal tilføjes med"
 
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
@@ -342,16 +359,32 @@ msgid "country name"
 msgstr "landenavn"
 
 #: system/models.py
-msgid "UID"
-msgstr "UID"
-
-#: system/models.py
-msgid "Is a testsite"
-msgstr "Er en test side"
+msgid "customer name"
+msgstr "kundenavn"
 
 #: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalt for adgang indtil denne dato"
+
+#: system/models.py
+msgid "Is a test customer"
+msgstr "Er en test kunde"
+
+#: system/models.py
+msgid "UID"
+msgstr "UID"
+
+#: system/models.py
+msgid ""
+"Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the "
+"length must be between 2-40 characters.\n"
+"            We suggest names like <organisation> or <organisation-location> "
+"(without brackets)"
+msgstr ""
+"Skal være unikt. Gyldige tegn er a-z, A-Z, 0-9 og bindestreger, og længden "
+"skal være mellem 2-40 tegn.\n"
+"            Vi foreslår navne som <organisation> eller <organisation-"
+"lokation> (uden parenteser)"
 
 #: system/models.py
 msgid "ISIL/NCIP"
@@ -406,6 +439,10 @@ msgstr "Tidspunkt for login"
 #: system/models.py
 msgid "Time of logout"
 msgstr "Tidspunkt for logud"
+
+#: system/models.py
+msgid "customers with access"
+msgstr "kunder med adgang"
 
 #: system/models.py
 msgid "event_type:Altered Hours"
@@ -747,6 +784,16 @@ msgstr "Ændringerne er blevet gemt %s"
 
 #: system/views.py
 #, python-format
+msgid "Site %s created"
+msgstr "Site %s oprettet"
+
+#: system/views.py
+#, python-format
+msgid "Site %s deleted"
+msgstr "Site %s slettet"
+
+#: system/views.py
+#, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
 
@@ -897,6 +944,11 @@ msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
 #: system/views.py
 #, python-format
+msgid "The user(s) %s have been added to the site %s "
+msgstr "Bruger(ne) %s er blevet tilføjet til sitet %s "
+
+#: system/views.py
+#, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 
@@ -904,6 +956,11 @@ msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
+
+#: system/views.py
+#, python-format
+msgid "User %s removed from the site %s"
+msgstr "Bruger %s fjernet fra sitet %s"
 
 #: system/views.py
 #, python-format
@@ -978,7 +1035,7 @@ msgstr "Status"
 #: templates/documentation/users/index.html templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
-#: templates/system/pcs/site_pcs.html templates/system/site_list.html
+#: templates/system/pcs/site_pcs.html templates/system/sites/list.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
@@ -1021,7 +1078,8 @@ msgid "Notifications and offline rules"
 msgstr "Notifikationer og offline-regler"
 
 #: system/views.py templates/documentation/users/index.html
-#: templates/site_with_navigation.html templates/system/users/update.html
+#: templates/site_with_navigation.html templates/system/users/link.html
+#: templates/system/users/update.html
 msgid "Users"
 msgstr "Brugere"
 
@@ -1051,8 +1109,9 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: system/views.py templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/documentation/sites_overview/index.html
+#: system/views.py templates/system/site_status.html
+#: templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
@@ -1671,6 +1730,7 @@ msgstr ""
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/site_two_factor_pc.html
+#: templates/system/sites/confirm_delete.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -2452,7 +2512,7 @@ msgstr "Bemærkninger"
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 #: templates/system/scripts/update.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/update.html
+#: templates/system/users/link.html templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Save changes"
@@ -4844,6 +4904,7 @@ msgstr "Er du sikker på, at du ønsker at slette Offline-reglen"
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
+#: templates/system/sites/confirm_delete.html
 #: templates/system/users/confirm_delete.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
@@ -5561,30 +5622,6 @@ msgstr "Tidligere versioner"
 msgid "Download"
 msgstr "Download"
 
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of BorgerPC's"
-msgstr "Totalt antal BorgerPC'er"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of Kiosk PC's"
-msgstr "Totalt antal Kiosk PC'er"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of"
-msgstr "Totalt antal"
-
-#: templates/system/site_list.html
-msgid "Administrate"
-msgstr "Administrér"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Activated:"
-msgstr "Aktiverede:"
-
-#: templates/system/site_list.html
-msgid "Admin site version"
-msgstr "Adminsite-version"
-
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
 msgstr "API-nøgler for"
@@ -5628,6 +5665,26 @@ msgstr "Indstillinger for"
 #: templates/system/site_status.html
 msgid "computers"
 msgstr "computere"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of"
+msgstr "Totalt antal"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of BorgerPC's"
+msgstr "Totalt antal BorgerPC'er"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of Kiosk PC's"
+msgstr "Totalt antal Kiosk PC'er"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Activated:"
+msgstr "Aktiverede:"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Online"
+msgstr "Online"
 
 #: templates/system/site_status.html
 msgid "Activated"
@@ -5733,10 +5790,76 @@ msgstr "Totrinsbekræftelse for superuser"
 msgid "to go to the script"
 msgstr "for at gå til scriptet"
 
+#: templates/system/sites/confirm_delete.html
+#: templates/system/sites/display.html
+msgid "Delete Site"
+msgstr "Slet Site"
+
+#: templates/system/sites/confirm_delete.html
+msgid ""
+"All Computers, Groups, Jobs, Monitoring Rules, On/Off schedules, schedule "
+"exceptions, associated scripts and local (security) Scripts on the Site will "
+"also be deleted."
+msgstr ""
+"Alle Computere, Grupper, Jobs, Overvågningsregler, Tænd/Sluk tidsplaner, "
+"undtagelser fra tidsplaner, tilknyttede scripts og lokale scripts eller "
+"sikkerhedsscripts på Sitet vil også blive slettet."
+
+#: templates/system/sites/confirm_delete.html
+msgid ""
+"Any Users that only have access to this Site will also be deleted. Users "
+"that also have access to other Sites will not be deleted."
+msgstr ""
+"Alle Brugere, som kun har adgang til dette Site, vil også blive slettet. "
+"Brugere, som også har adgang til andre Sites, vil ikke blive slettet."
+
+#: templates/system/sites/confirm_delete.html
+msgid "It will NOT be possible to restore any of the deleted objects later."
+msgstr "Det vil IKKE være muligt at genskabe de slettede objekter senere."
+
+#: templates/system/sites/confirm_delete.html
+msgid "Are you sure you want to delete the Site"
+msgstr "Er du sikker på, at du vil slette Sitet"
+
+#: templates/system/sites/confirm_delete.html
+msgid "I understand and accept the consequences of deleting the Site"
+msgstr "Jeg forstår og accepterer konsekvenserne af at slette Sitet"
+
+#: templates/system/sites/display.html
+msgid "Delete site"
+msgstr "Slet site"
+
+#: templates/system/sites/display.html
+msgid ""
+"This Site has 5 or more registered Computers and therefore can't be deleted"
+msgstr ""
+"Dette Site har 5 eller flere registrerede Computere og kan derfor ikke "
+"slettes"
+
+#: templates/system/sites/list.html
+msgid "Computers total"
+msgstr "Computere i alt"
+
+#: templates/system/sites/list.html
+msgid "Administrate"
+msgstr "Administrér"
+
+#: templates/system/sites/list.html
+msgid "Admin site version"
+msgstr "Adminsite-version"
+
+#: templates/system/sites/list.html
+msgid "Create site"
+msgstr "Opret site"
+
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
 msgid "Delete user"
 msgstr "Slet bruger"
+
+#: templates/system/users/confirm_delete.html
+msgid "Are you sure you want to remove this user from the site "
+msgstr "Er du sikker på, at du vil fjerne denne bruger fra sitet "
 
 #: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
@@ -5758,9 +5881,17 @@ msgstr "Generér backupkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Deaktivér totrinsbekræftelse"
 
-#: templates/system/users/update.html
+#: templates/system/users/link.html templates/system/users/update.html
+msgid "Add existing users to this site"
+msgstr "Tilføj eksisterende brugere til dette site"
+
+#: templates/system/users/link.html templates/system/users/update.html
 msgid "Add new user"
 msgstr "Tilføj ny bruger"
+
+#: templates/system/users/link.html
+msgid "Add existing users from your other sites to the site "
+msgstr "Tilføj eksisterende brugere fra jeres andre sites til sitet "
 
 #: templates/system/users/update.html
 msgid "Profile:"
