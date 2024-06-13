@@ -377,14 +377,12 @@ msgstr "UID"
 #: system/models.py
 msgid ""
 "Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the "
-"length must be between 2-40 characters.\n"
-"            We suggest names like <organisation> or <organisation-location> "
-"(without brackets)"
+"length must be between 2-40 characters. We suggest names like <organisation> "
+"or <organisation-location> (without brackets)"
 msgstr ""
 "Skal være unikt. Gyldige tegn er a-z, A-Z, 0-9 og bindestreger, og længden "
-"skal være mellem 2-40 tegn.\n"
-"            Vi foreslår navne som <organisation> eller <organisation-"
-"lokation> (uden parenteser)"
+"skal være mellem 2-40 tegn. Vi foreslår navne som <organisation> eller "
+"<organisation-lokation> (uden parenteser)"
 
 #: system/models.py
 msgid "ISIL/NCIP"

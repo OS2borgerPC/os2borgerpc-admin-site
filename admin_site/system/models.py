@@ -193,8 +193,8 @@ class Site(models.Model):
             )
         ],
         help_text=_(
-            """Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the length must be between 2-40 characters.
-            We suggest names like <organisation> or <organisation-location> (without brackets)"""
+            "Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the length must be between 2-40 "
+            "characters. We suggest names like <organisation> or <organisation-location> (without brackets)"
         ),
     )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
