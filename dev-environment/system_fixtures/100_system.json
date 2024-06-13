@@ -280,6 +280,13 @@
     }
 },
 {
+    "model": "system.configuration",
+    "pk": 73,
+    "fields": {
+        "name": "site-2"
+    }
+},
+{
     "model": "system.configurationentry",
     "pk": 1,
     "fields": {
@@ -3564,6 +3571,16 @@
     }
 },
 {
+    "model": "system.customer",
+    "pk": 4,
+    "fields": {
+        "name": "Øvrig kunde",
+        "country": 1,
+        "paid_for_access_until": null,
+        "is_test_customer": false
+    }
+},
+{
     "model": "system.site",
     "pk": 1,
     "fields": {
@@ -3644,13 +3661,34 @@
     }
 },
 {
+    "model": "system.site",
+    "pk": 13,
+    "fields": {
+        "name": "Site 2",
+        "uid": "site-2",
+        "configuration": 73,
+        "customer": 4,
+        "created": "2024-06-13T13:49:09.421",
+        "agency_id": "",
+        "citizen_login_api_user": "",
+        "citizen_login_api_password": "",
+        "citizen_login_api_key": "",
+        "booking_api_url": "",
+        "booking_api_key": "",
+        "user_login_duration": "01:00:00",
+        "user_quarantine_duration": "04:00:00",
+        "rerun_asc": true
+    }
+},
+{
     "model": "system.featurepermission",
     "pk": 1,
     "fields": {
         "name": "Tidsplan",
         "uid": "wake_plan",
         "customers": [
-            1
+            1,
+            4
         ]
     }
 },
@@ -4181,8 +4219,8 @@
         "sunday_open": true,
         "site": 1,
         "wake_change_events": [
-            5,
             8,
+            5,
             6,
             7
         ]

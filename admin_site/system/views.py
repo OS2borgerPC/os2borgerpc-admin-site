@@ -155,12 +155,19 @@ def site_pcs_stats(context, site_list):
 
 
 def site_uid_available_check(request):
-    uid = request.GET['uid']
+    uid = request.GET["uid"]
     uid = Site.objects.filter(uid=uid)
     if uid:
-        return HttpResponse(_("<span class='text-danger'>This UID is already in use by another site. Please choose another.</span>") + "<script>document.getElementById('create_site_save_button').disabled = true</script>")
+        return HttpResponse(
+            "<span class='text-danger'>"
+            + _("The specified UID is unavailable. Please choose another.")
+            + "</span>"
+            + "<script>document.getElementById('create_site_save_button').disabled = true</script>"
+        )
     else:
-        return HttpResponse(_("This UID is not in use.") + "<script>document.getElementById('create_site_save_button').disabled = false</script>")
+        return HttpResponse(
+            "<script>document.getElementById('create_site_save_button').disabled = false</script>"
+        )
 
 
 # Mixin class to require login
@@ -335,13 +342,13 @@ class SiteList(ListView, LoginRequiredMixin):
         ).count()
         context["total_online_pcs_count"] = online_pcs_count_filter(total_pcs)
         context["user"] = self.request.user
-        context[
-            "site_membership"
-        ] = self.request.user.user_profile.sitemembership_set.first()
+        context["site_membership"] = (
+            self.request.user.user_profile.sitemembership_set.first()
+        )
         context["version"] = open("/code/VERSION", "r").read()
         user_sites = self.get_queryset()
         # The dictionary to generate the customer-site list has the following structure:
-        # {"Denmark": { "customers": [("Customer1", ["Site1, Site2"]), ("Customer2", ["Site3, Site4"])], "test_customers": ... }
+        # {"Denmark": { "customers": [("Customer1", [Site1, Site2]), ("Customer2", [Site3, Site4])], "test_customers": ... }
         # Handling the logic for non-superusers differently because it can be done in a much less complex way
         if not self.request.user.is_superuser:
             customer_name = user_sites.first().customer.name
@@ -1356,9 +1363,9 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
             context["uid"] = self.script.uid
         request_user = self.request.user
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
         return context
 
     def get_object(self, queryset=None):
@@ -3463,9 +3470,9 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         context["selected"] = self.object
 
         request_user = self.request.user
-        context[
-            "site_membership"
-        ] = request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        context["site_membership"] = (
+            request_user.user_profile.sitemembership_set.filter(site_id=site.id).first()
+        )
         return context
 
     def form_valid(self, form):
