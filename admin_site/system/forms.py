@@ -57,8 +57,6 @@ class SiteForm(forms.ModelForm):
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["uid"].widget.attrs["readonly"] = True
-            # Hide help_text here because it's not editable
-            self.fields["uid"].help_text = None
 
     class Meta:
         model = Site
@@ -80,7 +78,7 @@ class SiteCreateForm(forms.ModelForm):
         model = Site
         fields = ("name", "uid")
         widgets = {
-            "uid": forms.widgets.TextInput(attrs={"pattern": "[\-A-Za-z0-9]{2,40}"}),
+            "uid": forms.widgets.TextInput(attrs={"pattern": "[\-a-z0-9]{2,40}"}),
         }
 
 

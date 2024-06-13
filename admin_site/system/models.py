@@ -187,15 +187,12 @@ class Site(models.Model):
         # Essentially a slug_validator except that _ isn't allowed, for standardisation
         validators=[
             RegexValidator(
-                re.compile("^[-a-zA-Z0-9]+\\Z"),
-                "Enter a valid “uid” consisting of letters, numbers or hyphens.",
+                re.compile("^[-a-z0-9]+\\Z"),
+                "Enter a valid “UID” consisting of lowercase letters, numbers or hyphens.",
                 "invalid",
             )
         ],
-        help_text=_(
-            "Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the length must be between 2-40 "
-            "characters. We suggest names like <organisation> or <organisation-location> (without brackets)"
-        ),
+        help_text=_("This UID is used when registrering a PC with the admin site"),
     )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     customer = models.ForeignKey(

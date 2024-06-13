@@ -374,14 +374,8 @@ msgid "UID"
 msgstr "UID"
 
 #: system/models.py
-msgid ""
-"Must be unique. Valid characters are a-z, A-Z, 0-9 and dashes, and the "
-"length must be between 2-40 characters. We suggest names like <organisation> "
-"or <organisation-location> (without brackets)"
-msgstr ""
-"Måste vara unik. Giltiga tecken är a-z, A-Z, 0-9 och bindestreck, och "
-"längden måste vara mellan 2-40 tecken. Vi föreslår namn som <organisation> "
-"eller <organisation-plats> (utan parentes)"
+msgid "This UID is used when registrering a PC with the admin site"
+msgstr "Detta UID används när du registrerar en PC med administrationssidan"
 
 #: system/models.py
 msgid "ISIL/NCIP"
@@ -607,7 +601,7 @@ msgstr "placering"
 msgid "executable code"
 msgstr "körbar kod"
 
-#: system/models.py
+#: system/models.py templates/system/scripts/update.html
 msgid "security script"
 msgstr "säkerhetsskript"
 
@@ -780,6 +774,10 @@ msgstr "Nyckel"
 #, python-format
 msgid "Changes have been saved %s"
 msgstr "Ändringar har sparats %s"
+
+#: system/views.py
+msgid "The specified UID is unavailable. Please choose another."
+msgstr "Det angivna UID är inte tillgängligt. Välj en annan."
 
 #: system/views.py
 #, python-format
@@ -5530,6 +5528,10 @@ msgid "Add new"
 msgstr "Lägg till nya"
 
 #: templates/system/scripts/update.html
+msgid "script"
+msgstr "skript"
+
+#: templates/system/scripts/update.html
 msgid "Find ..."
 msgstr "Hitta ..."
 
@@ -5844,6 +5846,16 @@ msgstr "Adminsida-version"
 #: templates/system/sites/list.html
 msgid "Create site"
 msgstr "Skapa site"
+
+#: templates/system/sites/list.html
+msgid ""
+"Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, "
+"and the length must be between 2-40 characters. We suggest names like "
+"'organisation' or 'organisation-location' (without quotes)."
+msgstr ""
+"Måste vara unik. Giltiga tecken är a-z (endast små bokstäver), 0-9 och "
+"bindestreck, och längden måste vara mellan 2-40 tecken. Vi föreslår namn som "
+"'organisation' eller 'organisation-plats' (utan citattecken)"
 
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
