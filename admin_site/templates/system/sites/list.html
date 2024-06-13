@@ -75,7 +75,7 @@
 </div>
 
   <div class="container">
-    <div>
+    <div class="text-center mt-3">
       <div>
         {% include 'notification.html' %}
       </div>
@@ -86,7 +86,9 @@
         </button>
       {% endif %}
       {% for country, all_customers_in_country in countries_dict.items %}
-        <h1 class="mt-4">{{country}}</h1>
+        {% if user.is_superuser %}
+          <h1 class="mt-4 text-dark">{{country}}</h1>
+        {% endif %}
         {% for customer in all_customers_in_country.actual_customers %}
           {% if customer.1 %} {# Don't display the customer if they have zero sites #}
               <div class="customer d-inline-block me-3 mt-4">
@@ -99,7 +101,9 @@
         {% endfor %}
 
         {% if all_customers_in_country.test_customers %}
-          <h2 class="mt-3">Test customers</h2>
+          {% if user.is_superuser %}
+            <h2 class="mt-3 text-dark">Test customers</h2>
+          {% endif %}
           {% for customer in all_customers_in_country.test_customers %}
             {% if customer.1 %} {# Don't display the customer if they have zero sites #}
                 <div class="customer d-inline-block me-3 mt-4">
