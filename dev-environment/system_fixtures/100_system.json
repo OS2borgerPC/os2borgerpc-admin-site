@@ -3547,7 +3547,7 @@
         "name": "Magenta",
         "country": 1,
         "paid_for_access_until": null,
-        "is_test_customer": false
+        "is_test": false
     }
 },
 {
@@ -3557,7 +3557,7 @@
         "name": "Kunde Sverige",
         "country": 2,
         "paid_for_access_until": null,
-        "is_test_customer": false
+        "is_test": false
     }
 },
 {
@@ -3567,7 +3567,7 @@
         "name": "Test Kunde Danmark",
         "country": 1,
         "paid_for_access_until": null,
-        "is_test_customer": true
+        "is_test": true
     }
 },
 {
@@ -3577,7 +3577,7 @@
         "name": "Øvrig kunde",
         "country": 1,
         "paid_for_access_until": null,
-        "is_test_customer": false
+        "is_test": false
     }
 },
 {
