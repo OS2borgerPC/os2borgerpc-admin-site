@@ -343,53 +343,25 @@ class SiteList(ListView, LoginRequiredMixin):
         context["total_online_pcs_count"] = online_pcs_count_filter(total_pcs)
         context["user"] = self.request.user
         context["site_membership"] = (
-            self.request.user.user_profile.sitemembership_set.first()
+            self.request.user.user_profile.sitemembership_set.order_by("site_user_type").last()
         )
         context["version"] = open("/code/VERSION", "r").read()
         user_sites = self.get_queryset()
         # The dictionary to generate the customer-site list has the following structure:
-        # {"Denmark": { "customers": [("Customer1", [Site1, Site2]), ("Customer2", [Site3, Site4])], "test_customers": ... }
+        # {"Denmark": [Customer1, Customer2], "Sweden": [Customer3, ...] ...}
         # Handling the logic for non-superusers differently because it can be done in a much less complex way
-        if not self.request.user.is_superuser:
-            customer_name = user_sites.first().customer.name
-            country_name = user_sites.first().customer.country.name
-            is_test = user_sites.first().customer.is_test_customer
-            if is_test:
-                actual_customers = []
-                test_customers = [(customer_name, user_sites)]
-            else:
-                actual_customers = [(customer_name, user_sites)]
-                test_customers = []
-
-            context["countries_dict"] = {
-                country_name: {
-                    "actual_customers": actual_customers,
-                    "test_customers": test_customers,
-                }
-            }
-        else:
+        if self.request.user.is_superuser:
             countries = Country.objects.all()
-            countries_dict = {}
-            for country in countries:
-                all_customers_dict = {}
-                actual_customer_list = []
-                test_customer_list = []
-                customers = Customer.objects.filter(
-                    country=country, is_test_customer=False
-                )
-                test_customers = Customer.objects.filter(
-                    country=country, is_test_customer=True
-                )
-                for customer in customers:
-                    actual_customer_list.append((customer.name, customer.sites.all()))
-                for test_customer in test_customers:
-                    test_customer_list.append(
-                        (test_customer.name, test_customer.sites.all())
-                    )
-                all_customers_dict["actual_customers"] = actual_customer_list
-                all_customers_dict["test_customers"] = test_customer_list
-                countries_dict[country.name] = all_customers_dict
-            context["countries_dict"] = countries_dict
+        else:
+            countries = Country.objects.filter(id__in=user_sites.values_list("customer__country", flat=True))
+
+        countries_dict = {}
+        for country in countries:
+            customers = Customer.objects.filter(
+                country=country, id__in=user_sites.values_list("customer", flat=True)
+            )
+            countries_dict[country.name] = customers
+        context["countries_dict"] = countries_dict
         context["form"] = SiteCreateForm()
         return context
 

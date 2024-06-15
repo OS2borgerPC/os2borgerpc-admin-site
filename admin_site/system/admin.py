@@ -216,7 +216,7 @@ class FeaturePermissionInlineForCustomerAdmin(admin.TabularInline):
 
 class CustomerInlineForCountryAdmin(admin.TabularInline):
     model = Customer
-    fields = ("name", "is_test_customer")
+    fields = ("name", "is_test")
     extra = 0
 
     def has_add_permission(self, request, obj):
@@ -248,7 +248,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_filter = ("country",)
     list_display = (
         "name",
-        "is_test_customer",
+        "is_test",
         "number_of_computers",
         "paid_for_access_until",
         "feature_permissions",
