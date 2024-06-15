@@ -64,7 +64,6 @@ class SiteForm(forms.ModelForm):
             "configuration",
             "paid_for_access_until",
             "country",
-            "is_testsite",
             "customer",
         ]
         widgets = {

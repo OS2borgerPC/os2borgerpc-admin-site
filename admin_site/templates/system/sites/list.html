@@ -76,45 +76,27 @@
 
   <div class="container">
     <div class="text-center mt-3">
-      <div>
-        {% include 'notification.html' %}
-      </div>
+      {% include 'notification.html' %}
       {% if site_membership.site_user_type == site_membership.CUSTOMER_ADMIN %}
-        <button type="button" class="btn btn-primary mt-3 mb-0" data-bs-toggle="modal" data-bs-target="#create_site_modal" id="create-site-button">
+        <button type="button" class="btn btn-primary d-block mx-auto mt-4 mb-0" data-bs-toggle="modal" data-bs-target="#create_site_modal" id="create-site-button">
           <span class='material-icons'>add</span>
-          {% translate "Create site" %}
+          {% translate "Add new site" %}
         </button>
       {% endif %}
       {% for country, all_customers_in_country in countries_dict.items %}
         {% if user.is_superuser %}
           <h1 class="mt-4 text-dark">{{country}}</h1>
         {% endif %}
-        {% for customer in all_customers_in_country.actual_customers %}
-          {% if customer.1 %} {# Don't display the customer if they have zero sites #}
-              <div class="customer d-inline-block me-3 mt-4">
-                <small class="d-block">{{customer.0}}</small>
-                {% for site in customer.1 %} 
-                    {% include "system/sites/display.html" %}
+        {% for customer in all_customers_in_country %}
+          {% if customer.sites %} {# Don't display the customer if they have zero sites #}
+              <div class="customer d-inline-block me-3 mt-4 {% if customer.is_test %}bg-info{% endif %}">
+                <small class="d-block">{{customer.name}}</small>
+                {% for site in customer.sites.all %}
+                  {% include "system/sites/display.html" %}
                 {% endfor %}
               </div>
           {% endif %}
         {% endfor %}
-
-        {% if all_customers_in_country.test_customers %}
-          {% if user.is_superuser %}
-            <h2 class="mt-3 text-dark">Test customers</h2>
-          {% endif %}
-          {% for customer in all_customers_in_country.test_customers %}
-            {% if customer.1 %} {# Don't display the customer if they have zero sites #}
-                <div class="customer d-inline-block me-3 mt-4">
-                  <small class="d-block">{{customer.0}}</small>
-                  {% for site in customer.1 %} 
-                      {% include "system/sites/display.html" %}
-                  {% endfor %}
-                </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
       {% endfor %}
     </div>
   </div>
