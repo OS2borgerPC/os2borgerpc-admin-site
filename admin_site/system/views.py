@@ -159,9 +159,7 @@ def site_uid_available_check(request):
     uid = Site.objects.filter(uid=uid)
     if uid:
         return HttpResponse(
-            "<span class='text-danger'>"
-            + _("The specified UID is unavailable. Please choose another.")
-            + "</span>"
+            _("The specified UID is unavailable. Please choose another.")
             + "<script>document.getElementById('create_site_save_button').disabled = true</script>"
         )
     else:
