@@ -343,7 +343,9 @@ class SiteList(ListView, LoginRequiredMixin):
         context["total_online_pcs_count"] = online_pcs_count_filter(total_pcs)
         context["user"] = self.request.user
         context["site_membership"] = (
-            self.request.user.user_profile.sitemembership_set.order_by("site_user_type").last()
+            self.request.user.user_profile.sitemembership_set.order_by(
+                "site_user_type"
+            ).last()
         )
         context["version"] = open("/code/VERSION", "r").read()
         user_sites = self.get_queryset()
