@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-08 16:56+0200\n"
+"POT-Creation-Date: 2024-06-17 11:08+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -131,6 +131,7 @@ msgstr "Kommentarer"
 
 #: changelog/templates/list.html system/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
+#: templates/documentation/sites_overview/index.html
 #: templates/system/site_list.html templates/system/site_status.html
 msgid "OS2borgerPC"
 msgstr "OS2borgerPC"
@@ -554,7 +555,7 @@ msgstr "ansvarspersoner"
 msgid "MAC"
 msgstr "MAC"
 
-#: system/models.py
+#: system/models.py templates/documentation/sites_overview/index.html
 msgid "activated"
 msgstr "aktiveret"
 
@@ -960,6 +961,10 @@ msgstr "Administrationssiden"
 msgid "About"
 msgstr "Om"
 
+#: system/views.py templates/documentation/sites_overview/index.html
+msgid "Sites overview"
+msgstr "Sites-oversigt"
+
 #: system/views.py templates/documentation/status/index.html
 #: templates/documentation/wake_plans/edit_settings.html
 #: templates/site_with_navigation.html templates/system/jobs/site_jobs.html
@@ -1046,8 +1051,8 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: system/views.py templates/system/site_list.html
-#: templates/system/site_status.html
+#: system/views.py templates/documentation/sites_overview/index.html
+#: templates/system/site_list.html templates/system/site_status.html
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
@@ -3570,6 +3575,166 @@ msgstr ""
 "disse ansvarspersoner modtage eventuelle email-advarsler relateret til den "
 "PC i stedet for de modtagere, som er valgt her."
 
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The sites overview shows all the sites that you have access to. A customer "
+"admin has access to all sites for that customer while other users only have "
+"access to the sites that they have been assigned to. Customer admins can "
+"also delete or create sites from the sites overview."
+msgstr ""
+"Sites-oversigten viser alle de sites, som du har adgang til. En kunde-admin "
+"har adgang til alle sites for den kunde, mens andre brugere kun har adgang "
+"til de sites, som de er blevet tilføjet til. Kunde-admins kan også slette "
+"eller oprette sites fra sites-oversigten."
+
+#: templates/documentation/sites_overview/index.html
+msgid "Information about your sites"
+msgstr "Information omkring dine sites"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"Some general information about the sites that you have access to is shown at "
+"the top of the overview."
+msgstr ""
+"I toppen af oversigten vises der noget generel information om de sites, som "
+"du har adgang til."
+
+#: templates/documentation/sites_overview/index.html
+#: templates/documentation/users/index.html templates/site_with_navigation.html
+#: templates/system/site_list.html
+msgid "Sites"
+msgstr "Sites"
+
+#: templates/documentation/sites_overview/index.html
+msgid "The total number of sites that you have access to"
+msgstr "Samlet antal sites, som du har adgang til"
+
+#: templates/documentation/sites_overview/index.html
+#: templates/system/site_list.html
+msgid "Computers total"
+msgstr "Computere i alt"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The total number of computers registered on the sites that you have access to"
+msgstr "Samlet antal computere registreret på de sites, som du har adgang til"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The total number of activated computers on the sites that you have access to"
+msgstr "Samlet antal aktiverede computere på de sites, som du har adgang til"
+
+#: templates/documentation/sites_overview/index.html
+#: templates/system/site_list.html templates/system/site_status.html
+msgid "Online"
+msgstr "Online"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The total number of online computers on the sites that you have access to"
+msgstr "Samlet antal online computere på de sites, som du har adgang til"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The total number of OS2borgerPC computers (not kiosk) on the sites that you "
+"have access to"
+msgstr ""
+"Samlet antal OS2borgerPC computere (ikke kiosk) på de sites, som du har "
+"adgang til"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The total number of OS2borgerPC kiosk computers on the sites that you have "
+"access to"
+msgstr ""
+"Samlet antal OS2borgerPC kiosk computere på de sites, som du har adgang til"
+
+#: templates/documentation/sites_overview/index.html
+msgid "20.04, 22.04, 24.04, ..."
+msgstr "20.04, 22.04, 24.04, ..."
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"The total number of computers with each Ubuntu version on the sites that you "
+"have access to"
+msgstr ""
+"Samlet antal computere med hver Ubuntu version på de sites, som du har "
+"adgang til"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Deleting a site"
+msgstr "Sletning af site"
+
+#: templates/documentation/sites_overview/index.html
+msgid "REMINDER: Only customer admins can delete a site!"
+msgstr "HUSK: Kun kunde-admins kan slette et site!"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"To start the process of deleting a site, click the dropdown symbol on the "
+"right side of the button for that site, and then on \"Delete Site\". Note "
+"that if 5 or more computers are registered with the site, the \"Delete Site"
+"\" button will be inactive and deletion will not be possible. You will then "
+"need to manually remove computers from the site for deletion to be possible. "
+"The computers can be removed via the computers overview for that site. After "
+"clicking on the \"Delete Site\" button, you will be redirected to a new page "
+"that will inform you of the consequences of deleting the site. You must "
+"check a checkbox indicating that you understand and accept the consequences "
+"of deleting the site before you can click \"Confirm deletion\" to finalize "
+"the deletion."
+msgstr ""
+"For at starte processen med at slette et site, skal du klikke på dropdown-"
+"symbolet i højre side af knappen for det site og derefter på \"Slet site\". "
+"Bemærk at hvis der er 5 eller flere computere registreret på sitet, vil "
+"\"Slet site\"-knappen være inaktiv, og sletning vil ikke være muligt. Du vil "
+"så være nødt til manuelt at fjerne computere fra sitet, før at sletning er "
+"muligt. Computerne kan fjernes via computer-oversigten for det site. Når du "
+"klikker på knappen \"Slet site\", vil du blive omdirigeret til en ny side, "
+"som vil informere dig om konsekvenserne ved at slette sitet. Du skal sætte "
+"hak i et afkrydsningsfelt, som indikerer, at du forstår og accepterer "
+"konsekvenserne ved at slette sitet, før at du kan klikke \"Bekræft sletning"
+"\" for at færdiggøre sletningen."
+
+#: templates/documentation/sites_overview/index.html
+msgid "Creating a new site"
+msgstr "Oprettelse af nyt site"
+
+#: templates/documentation/sites_overview/index.html
+msgid "REMINDER: Only customer admins can create new sites!"
+msgstr "HUSK: Kun kunde-admins kan oprette nye sites!"
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"If you wish to create a new site, you must click on the \"Add new site\" "
+"button, which is only visible to customer admins. This will open a modal "
+"where you must enter a name and a unique UID for the site. Note that the UID "
+"must be used when registering computers with the site. As such, we suggest "
+"choosing values like \"organization\" or \"organization-location\" (without "
+"quotes). The modal will indicate whether the chosen UID is unique. If the "
+"chosen UID is not unique, the \"Create site\" button in the modal will be "
+"inactive. When you click on \"Create site\", you will be returned to the "
+"sites overview where it will be possible to select the new site."
+msgstr ""
+"Hvis du ønsker at oprette et nyt site, skal du klikke på knappen \"Tilføj "
+"nyt site\", som kun er synlig for kunde-admins. Dette vil åbne en dialog, "
+"hvor du skal angive et navn og et unikt UID for sitet. Bemærk at UID'et skal "
+"bruges i forbindelse med registrering af computere på sitet. Vi foreslår "
+"derfor værdier som \"organisation\" eller \"organisation-placering\" (uden "
+"citationstegn). Dialogen vil indikere, hvorvidt det valgte UID er unikt. "
+"Hvis det valgte UID ikke er unikt, vil \"Opret site\"-knappen i bunden af "
+"dialogen være inaktiv. Når du klikker på \"Opret site\", vil du blive sendt "
+"tilbage til sites-oversgiten, hvor det vil være muligt at vælge det nye site."
+
+#: templates/documentation/sites_overview/index.html
+msgid ""
+"Once you have created a new site, you can create new users for the site or "
+"add existing users to the site via the \"Users\" section for that site. See "
+"the documentation regarding \"Users\" for more information."
+msgstr ""
+"Når du har oprettet et nyt site, kan du oprette nye brugere for sitet eller "
+"tilføje eksisterende brugere til sitet via sektionen \"Brugere\" for det "
+"site. Se dokumentationen omkring \"Brugere\" for mere information."
+
 #: templates/documentation/status/index.html
 msgid ""
 "When you log in to the admin-site, you will be presented with the status "
@@ -3687,8 +3852,8 @@ msgstr "Brugertyper"
 
 #: templates/documentation/users/index.html
 #, python-format
-msgid "Only Site Admins are allowed to edit %(ut)s."
-msgstr "Kun site-admins har mulighed for at redigere %(ut)s."
+msgid "Site Users are not allowed to edit %(ut)s."
+msgstr "Site-brugere har ikke mulighed for at redigere %(ut)s."
 
 #: templates/documentation/users/index.html
 #, python-format
@@ -3708,6 +3873,37 @@ msgstr ""
 "nederst på siden."
 
 #: templates/documentation/users/index.html
+msgid "Add existing users to this site"
+msgstr "Tilføj eksisterende brugere til dette site"
+
+#: templates/documentation/users/index.html
+msgid ""
+"If you are a customer admin, and you wish to add an existing user to the "
+"site, you must click on the button \"Add existing users to this site\" above "
+"the list of users. This will open a form where you can select the user(s) "
+"that you wish to add. It will only be possible to select users that do not "
+"already have access to the site. You must hold down Ctrl to select more than "
+"one user. When you have selected the desired user(s), you must choose the "
+"usertype that they should be added with. This can be either Site User or "
+"Site Admin. When you fill out the fields and then click \"Save changes\", "
+"the selected user(s) will be added to the site with the selected usertype, "
+"and you will be redirected to an empty form for adding more existing users "
+"to the site. Only \"Customer Admins\" can add existing users to a site."
+msgstr ""
+"Hvis du er kunde-admin og ønsker at tilføje en eksisterende bruger til "
+"sitet, skal du klikke på knappen \"Tilføj eksisterende brugere til dette site"
+"\" over listen med brugere. Dette vil åbne et interface, hvor du kan vælge "
+"de(n) bruger(e), som du ønsker at tilføje. Det vil kun være muligt at "
+"tilføje brugere, som ikke allerede har adgang til sitet. Du skal holde Ctrl "
+"nede for at vælge mere end en bruger. Når du har valgt de(n) ønskede "
+"bruger(e), skal du vælge den brugertype, som de skal tilføjes med. Dette kan "
+"være enten site-bruger eller site-admin. Ved klik på \"Gem ændringer\" vil "
+"de(n) valgte bruger(e) blive tilføjet til sitet med den valgte brugertype, "
+"og du vil blive omdirigeret til en tom udgave af interfacet til tilføjelse "
+"af eksisterende brugere til sitet. Kun \"Kunde-admins\" kan tilføje "
+"eksisterende brugere til et site."
+
+#: templates/documentation/users/index.html
 msgid "Creating a new user"
 msgstr "Oprettelse af ny bruger"
 
@@ -3717,15 +3913,16 @@ msgid ""
 "\" above the list of users. This will open the form for creating a new user, "
 "which has the same fields as the interface for editing a user. When you fill "
 "out the fields and click \"Save changes\", the user will be created and you "
-"will be redirected to the editing interface for the newly created user. Only "
-"\"Site Admins\" can create new users."
+"will be redirected to the editing interface for the newly created user. Both "
+"\"Site Admins\" and \"Customer Admins\" can create new users."
 msgstr ""
 "Hvis man vil oprette en ny bruger skal man klikke på knappen \"Tilføj ny "
 "bruger\" over listen med brugere. Dette vil åbne interfacet for oprettelse "
 "af nye brugere, hvor man kan udfylde de samme oplysninger som under "
 "redigering af brugere. Ved klik på \"Gem ændringer\" vil brugeren blive "
 "oprettet, og man vil blive viderestillet til redigeringssiden for den "
-"nyoprettede bruger."
+"nyoprettede bruger. Både \"Site-admins\" og \"Kunde-admins\" kan oprette nye "
+"brugere."
 
 #: templates/documentation/users/index.html
 msgid "Deleting a user"
@@ -3736,20 +3933,39 @@ msgid ""
 "If you wish to delete a user, you must select the user and then click on the "
 "X to the right of the selected user in the list of users. You will then be "
 "asked to confirm the deletion and if you do so, the user will be deleted. "
-"Note that only \"Site Admins\" can delete users."
+"Both \"Site Admins\" and \"Customer Admins\" can delete users."
 msgstr ""
 "Hvis man ønsker at slette en bruger, skal man vælge brugeren og derefter "
 "klikke på X'et til højre for den valgte bruger i listen over brugere. Man "
 "vil efterfølgende blive bedt om at bekræfte sletningen, og hvis man gør det, "
-"vil brugeren blive slettet. Bemærk at kun \"Site-admins\" kan slette brugere."
+"vil brugeren blive slettet. Både \"Site-admins\" og \"Kunde-admins\" kan "
+"slette brugere."
 
 #: templates/documentation/users/index.html
 msgid "Permissions for Usertypes"
 msgstr "Rettigheder for Brugertyper"
 
 #: templates/documentation/users/index.html
+msgid "Customer Admin"
+msgstr "Kunde-admin"
+
+#: templates/documentation/users/index.html
 msgid "All permissions"
 msgstr "Alle rettigheder"
+
+#: templates/documentation/users/index.html
+msgid ""
+"Can create, edit and delete users except Customer Admins. Cannot change a "
+"user's usertype to Customer Admin. Cannot add existing users to a site."
+msgstr ""
+"Kan oprette, redigere og slette brugere bortset fra kunde-admins. Kan ikke "
+"ændre en brugers brugertype til kunde-admin. Kan ikke tilføje eksisterende "
+"brugere til et site."
+
+#: templates/documentation/users/index.html
+msgid "Can edit site settings. Cannot create or delete sites."
+msgstr ""
+"Kan redigere site-indstilinger. Kan hverken oprette eller slette sites."
 
 #: templates/documentation/users/index.html
 msgid ""
@@ -4449,10 +4665,6 @@ msgstr "Du er nu logget ud"
 msgid "Click here to log in again"
 msgstr "Klik her for at logge ind igen"
 
-#: templates/site_with_navigation.html templates/system/site_list.html
-msgid "Sites"
-msgstr "Sites"
-
 #: templates/site_with_navigation.html
 msgid "Monitoring"
 msgstr "Overvågning"
@@ -5085,10 +5297,6 @@ msgid "Not activated"
 msgstr "Ikke aktiveret"
 
 #: templates/system/pcs/form.html
-msgid "See events for this computer"
-msgstr "Se hændelser for denne computer"
-
-#: templates/system/pcs/form.html
 msgid "Registered"
 msgstr "Registreret"
 
@@ -5366,20 +5574,12 @@ msgid "Total number of"
 msgstr "Totalt antal"
 
 #: templates/system/site_list.html
-msgid "Computers total"
-msgstr "Computere i alt"
-
-#: templates/system/site_list.html
 msgid "Administrate"
 msgstr "Administrér"
 
 #: templates/system/site_list.html templates/system/site_status.html
 msgid "Activated:"
 msgstr "Aktiverede:"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Online"
-msgstr "Online"
 
 #: templates/system/site_list.html
 msgid "Admin site version"

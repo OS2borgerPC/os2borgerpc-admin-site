@@ -55,7 +55,7 @@
         <br>
         {% translate "Usertypes"|italic as ut %}
         {% blocktranslate trimmed %}
-        Only Site Admins are allowed to edit {{ut}}.
+        Site Users are not allowed to edit {{ut}}.
         {% endblocktranslate %}
         <br/>
         {% blocktranslate trimmed %}
@@ -74,6 +74,23 @@
     "Save changes" at the bottom of the page.
     {% endblocktranslate %}
   </p>
+
+  <h2>{% translate "Add existing users to this site" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    If you are a customer admin, and you wish to add an existing user to the site, you must click on the
+    button "Add existing users to this site" above the list of users. This will open a
+    form where you can select the user(s) that you wish to add. It will only be possible to select users
+    that do not already have access to the site. You must hold down Ctrl to select more than one user.
+    When you have selected the desired user(s), you must choose the usertype that they should be added with.
+    This can be either Site User or Site Admin. When you fill out the fields and then click "Save changes",
+    the selected user(s) will be added to the site with the selected usertype, and you will be redirected
+    to an empty form for adding more existing users to the site.
+    Only "Customer Admins" can add existing users to a site.
+    {% endblocktranslate %}
+  </p>
+
+
   <h2>{% translate "Creating a new user" %}</h2>
   <p>
     {% blocktranslate trimmed %}
@@ -83,7 +100,7 @@
     editing a user. When you fill out the fields and click "Save changes",
     the user will be created and you will be redirected to the editing
     interface for the newly created user.
-    Only "Site Admins" can create new users.
+    Both "Site Admins" and "Customer Admins" can create new users.
     {% endblocktranslate %}
   </p>
   <h2>{% translate "Deleting a user" %}</h2>
@@ -92,11 +109,11 @@
     If you wish to delete a user, you must select the user and then click
     on the X to the right of the selected user in the list of users. You will
     then be asked to confirm the deletion and if you do so, the user will be
-    deleted. Note that only "Site Admins" can delete users.
+    deleted. Both "Site Admins" and "Customer Admins" can delete users.
     {% endblocktranslate %}
   </p>
   <h2>{% translate "Permissions for Usertypes" %}</h2>
-  <table class="table">
+  <table class="table w-100">
     <thead class="table-dark">
       <tr>
         <td>{% translate "Usertype" %}</td>
@@ -105,16 +122,30 @@
         <td>{% translate "Security Rules" %}</td>
         <td>{% translate "Groups" %}</td>
         <td>{% translate "Computers" %}</td>
+        <td>{% translate "Sites" %}</td>
       </tr>
     </thead>
     <tbody>
       <tr>
+        <td>{% translate "Customer Admin" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions" %}</td>
+      </tr>
+      <tr>
         <td>{% translate "Site Admin" %}</td>
+        <td>{% blocktranslate trimmed %}
+              Can create, edit and delete users except Customer Admins.
+              Cannot change a user's usertype to Customer Admin.
+              Cannot add existing users to a site.{% endblocktranslate %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
-        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "Can edit site settings. Cannot create or delete sites." %}</td>
       </tr>
       <tr>
         <td>{% translate "Site User" %}</td>
@@ -123,6 +154,7 @@
         <td>{% translate "Can create and edit security rules. Cannot delete security rules." %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
+        <td>{% translate "Can edit site settings. Cannot create or delete sites." %}</td>
       </tr>
     </tbody>
   </table>
