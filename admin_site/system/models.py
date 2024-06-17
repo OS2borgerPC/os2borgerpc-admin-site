@@ -165,9 +165,7 @@ class Customer(models.Model):
     paid_for_access_until = models.DateField(
         verbose_name=_("Paid for access until this date"), null=True, blank=True
     )
-    is_test = models.BooleanField(
-        verbose_name=_("Is a test customer"), default=False
-    )
+    is_test = models.BooleanField(verbose_name=_("Is a test customer"), default=False)
 
     def __str__(self):
         return self.name

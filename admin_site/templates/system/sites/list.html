@@ -40,7 +40,7 @@
       <form method="POST" action="{% url "site_create" %}">
         {% csrf_token %}
         <div class="modal-header">
-          <h5 class="modal-title" id="create_site_modal_label">{% translate "Create site" %}</h5>
+          <h5 class="modal-title" id="create_site_modal_label">{% translate "Add new site" %}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -60,7 +60,7 @@
 
               <small id="hint_id_uid" class="form-text text-muted">
                 {{ form.uid.help_text }}
-                {% translate "Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, and the length must be between 2-40 characters. We suggest names like 'organisation' or 'organisation-location' (without quotes)." %}
+                {% translate "Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, and the length must be between 2-40 characters. We suggest values like 'organisation' or 'organisation-location' (without quotes)." %}
               </small>
 
             </div>

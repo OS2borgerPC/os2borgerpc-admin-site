@@ -5844,18 +5844,22 @@ msgid "Admin site version"
 msgstr "Adminsida-version"
 
 #: templates/system/sites/list.html
-msgid "Create site"
-msgstr "Skapa site"
+msgid "Add new site"
+msgstr "Lägg till nyt site"
 
 #: templates/system/sites/list.html
 msgid ""
 "Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, "
-"and the length must be between 2-40 characters. We suggest names like "
+"and the length must be between 2-40 characters. We suggest values like "
 "'organisation' or 'organisation-location' (without quotes)."
 msgstr ""
 "Måste vara unik. Giltiga tecken är a-z (endast små bokstäver), 0-9 och "
-"bindestreck, och längden måste vara mellan 2-40 tecken. Vi föreslår namn som "
+"bindestreck, och längden måste vara mellan 2-40 tecken. Vi föreslår värden som "
 "'organisation' eller 'organisation-plats' (utan citattecken)"
+
+#: templates/system/sites/list.html
+msgid "Create site"
+msgstr "Skapa site"
 
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
