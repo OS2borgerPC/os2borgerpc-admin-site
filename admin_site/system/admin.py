@@ -266,7 +266,6 @@ class CustomerAdmin(admin.ModelAdmin):
         return computers_count
 
     def number_of_borgerpc_computers(self, obj):
-        breakpoint()
         borgerpc_computers_count = (
             PC.objects.filter(site__in=obj.sites.all())
             .filter(configuration__entries__value="os2borgerpc")
@@ -283,7 +282,6 @@ class CustomerAdmin(admin.ModelAdmin):
         )
 
         return kioskpc_computers_count
-
 
     def feature_permissions(self, obj):
         return list(obj.feature_permission.all())
@@ -344,18 +342,18 @@ class LoginLogAdmin(admin.ModelAdmin):
 
 
 class FeaturePermissionAdmin(admin.ModelAdmin):
-    def sites_with_access(self, obj):
-        return list(obj.sites.all())
+    def customers_with_access(self, obj):
+        return list(obj.customers.all())
 
     list_display = (
         "name",
         "uid",
-        "sites_with_access",
+        "customers_with_access",
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
 
-    sites_with_access.short_description = _("sites with access")
+    customers_with_access.short_description = _("customers with access")
 
 
 class PCAdmin(admin.ModelAdmin):

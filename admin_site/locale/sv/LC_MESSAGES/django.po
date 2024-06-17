@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-17 15:08+0200\n"
+"POT-Creation-Date: 2024-06-17 15:43+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -237,9 +237,9 @@ msgstr "Antal KioskPC-datorer"
 msgid "Number of BorgerPC computers"
 msgstr "Antal MedborgarPC-datorer"
 
-#: system/admin.py
-msgid "sites with access"
-msgstr "sites med tillträde"
+#: system/admin.py system/models.py
+msgid "customers with access"
+msgstr "kunder med tillträde"
 
 #: system/admin.py
 msgid "Site"
@@ -432,10 +432,6 @@ msgstr "Tid för inloggning"
 #: system/models.py
 msgid "Time of logout"
 msgstr "Tid för utloggning"
-
-#: system/models.py
-msgid "customers with access"
-msgstr "kunder med tillträde"
 
 #: system/models.py
 msgid "event_type:Altered Hours"
