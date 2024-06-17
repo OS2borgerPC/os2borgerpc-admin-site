@@ -353,7 +353,9 @@ class SiteList(ListView, LoginRequiredMixin):
         if self.request.user.is_superuser:
             countries = Country.objects.all()
         else:
-            countries = Country.objects.filter(id__in=user_sites.values_list("customer__country", flat=True))
+            countries = Country.objects.filter(
+                id__in=user_sites.values_list("customer__country", flat=True)
+            )
 
         countries_dict = {}
         for country in countries:
