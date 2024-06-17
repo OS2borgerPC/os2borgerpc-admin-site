@@ -250,6 +250,8 @@ class CustomerAdmin(admin.ModelAdmin):
         "name",
         "is_test",
         "number_of_computers",
+        "number_of_borgerpc_computers",
+        "number_of_kioskpc_computers",
         "paid_for_access_until",
         "feature_permissions",
     )
@@ -263,19 +265,41 @@ class CustomerAdmin(admin.ModelAdmin):
         computers_count = PC.objects.filter(site__customer=obj).count()
         return computers_count
 
+    def number_of_borgerpc_computers(self, obj):
+        breakpoint()
+        borgerpc_computers_count = (
+            PC.objects.filter(site__in=obj.sites.all())
+            .filter(configuration__entries__value="os2borgerpc")
+            .count()
+        )
+
+        return borgerpc_computers_count
+
+    def number_of_kioskpc_computers(self, obj):
+        kioskpc_computers_count = (
+            PC.objects.filter(site__in=obj.sites.all())
+            .filter(configuration__entries__value="os2borgerpc kiosk")
+            .count()
+        )
+
+        return kioskpc_computers_count
+
+
     def feature_permissions(self, obj):
         return list(obj.feature_permission.all())
 
     number_of_computers.short_description = _("Number of computers")
     feature_permissions.short_description = _("Feature permissions")
+    number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
+    number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
 
 
 class SiteAdmin(admin.ModelAdmin):
     list_filter = ("customer",)
     list_display = (
         "name",
-        "number_of_computers",
         "created",
+        "number_of_computers",
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",
     )
@@ -305,8 +329,6 @@ class SiteAdmin(admin.ModelAdmin):
         return obj.pcs.count()
 
     number_of_computers.short_description = _("Number of computers")
-    number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
-    number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
 
 
 class LoginLogAdmin(admin.ModelAdmin):
