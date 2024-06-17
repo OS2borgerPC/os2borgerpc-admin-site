@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-17 11:08+0200\n"
+"POT-Creation-Date: 2024-06-17 15:10+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -31,7 +31,7 @@ msgstr "Site-bruger"
 msgid "Site Admin"
 msgstr "Site-admin"
 
-#: account/models.py
+#: account/models.py templates/documentation/users/index.html
 msgid "Customer Admin"
 msgstr "Kunde-admin"
 
@@ -785,6 +785,15 @@ msgstr "Site %s oprettet"
 
 #: system/views.py
 #, python-format
+msgid ""
+"The Site could not be created because the chosen UID %s was invalid or not "
+"unique"
+msgstr ""
+"Sitet kunne ikke oprettes, fordi det valgte UID %s var ugyldigt eller ikke "
+"unikt"
+
+#: system/views.py
+#, python-format
 msgid "Site %s deleted"
 msgstr "Site %s slettet"
 
@@ -1105,9 +1114,8 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
-#: templates/documentation/sites_overview/index.html
-#: system/views.py templates/system/site_status.html
-#: templates/system/sites/list.html
+#: system/views.py templates/documentation/sites_overview/index.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
@@ -3657,7 +3665,7 @@ msgstr ""
 
 #: templates/documentation/sites_overview/index.html
 #: templates/documentation/users/index.html templates/site_with_navigation.html
-#: templates/system/site_list.html
+#: templates/system/sites/list.html
 msgid "Sites"
 msgstr "Sites"
 
@@ -3666,7 +3674,7 @@ msgid "The total number of sites that you have access to"
 msgstr "Samlet antal sites, som du har adgang til"
 
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html
+#: templates/system/sites/list.html
 msgid "Computers total"
 msgstr "Computere i alt"
 
@@ -3681,7 +3689,7 @@ msgid ""
 msgstr "Samlet antal aktiverede computere på de sites, som du har adgang til"
 
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "Online"
 msgstr "Online"
 
@@ -3928,7 +3936,8 @@ msgstr ""
 "Ændringer træder ikke i kraft, før man klikker på knappen \"Gem ændringer\" "
 "nederst på siden."
 
-#: templates/documentation/users/index.html
+#: templates/documentation/users/index.html templates/system/users/link.html
+#: templates/system/users/update.html
 msgid "Add existing users to this site"
 msgstr "Tilføj eksisterende brugere til dette site"
 
@@ -4000,10 +4009,6 @@ msgstr ""
 #: templates/documentation/users/index.html
 msgid "Permissions for Usertypes"
 msgstr "Rettigheder for Brugertyper"
-
-#: templates/documentation/users/index.html
-msgid "Customer Admin"
-msgstr "Kunde-admin"
 
 #: templates/documentation/users/index.html
 msgid "All permissions"
@@ -5682,10 +5687,6 @@ msgstr "Totalt antal Kiosk PC'er"
 msgid "Activated:"
 msgstr "Aktiverede:"
 
-#: templates/system/site_status.html templates/system/sites/list.html
-msgid "Online"
-msgstr "Online"
-
 #: templates/system/site_status.html
 msgid "Activated"
 msgstr "Aktiveret"
@@ -5837,10 +5838,6 @@ msgstr ""
 "slettes"
 
 #: templates/system/sites/list.html
-msgid "Computers total"
-msgstr "Computere i alt"
-
-#: templates/system/sites/list.html
 msgid "Administrate"
 msgstr "Administrér"
 
@@ -5894,10 +5891,6 @@ msgstr "Generér backupkoder"
 #: templates/system/users/form.html
 msgid "Deactivate two-factor authentication"
 msgstr "Deaktivér totrinsbekræftelse"
-
-#: templates/system/users/link.html templates/system/users/update.html
-msgid "Add existing users to this site"
-msgstr "Tilføj eksisterende brugere til dette site"
 
 #: templates/system/users/link.html templates/system/users/update.html
 msgid "Add new user"

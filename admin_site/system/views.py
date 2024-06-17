@@ -412,7 +412,13 @@ class SiteCreate(CreateView, LoginRequiredMixin):
             raise PermissionDenied
 
     def form_invalid(self, form):
-        return HttpResponseRedirect(reverse("sites"))
+
+        response = HttpResponseRedirect(reverse("sites"))
+
+        set_notification_cookie(response, _("The Site could not be created because the chosen UID "
+                                            "%s was invalid or not unique") % form.data["uid"], error=True)
+
+        return response
 
     def get_success_url(self):
         return reverse("sites")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-17 11:08+0200\n"
+"POT-Creation-Date: 2024-06-17 15:08+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -31,9 +31,9 @@ msgstr "Site användare"
 msgid "Site Admin"
 msgstr "Site-admin"
 
-#: account/models.py
+#: account/models.py templates/documentation/users/index.html
 msgid "Customer Admin"
-msgstr "Kund-admin"
+msgstr "Kunde-admin"
 
 #: changelog/models.py system/models.py
 msgid "name"
@@ -786,6 +786,15 @@ msgstr "Site %s skapad"
 
 #: system/views.py
 #, python-format
+msgid ""
+"The Site could not be created because the chosen UID %s was invalid or not "
+"unique"
+msgstr ""
+"Sitet kunde inte skapas eftersom det valda UID %s var ogiltigt eller inte "
+"unikt"
+
+#: system/views.py
+#, python-format
 msgid "Site %s deleted"
 msgstr "Site %s raderad"
 
@@ -1108,9 +1117,8 @@ msgstr "Installationsguide (PDF)"
 msgid "Old installation guide (PDF)"
 msgstr "Gammal installationsguide (PDF)"
 
-#: templates/documentation/sites_overview/index.html
-#: system/views.py templates/system/site_status.html
-#: templates/system/sites/list.html
+#: system/views.py templates/documentation/sites_overview/index.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "Sambruk MedborgarPC Kiosk"
 
@@ -3650,7 +3658,7 @@ msgstr ""
 
 #: templates/documentation/sites_overview/index.html
 #: templates/documentation/users/index.html templates/site_with_navigation.html
-#: templates/system/site_list.html
+#: templates/system/sites/list.html
 msgid "Sites"
 msgstr "Sites"
 
@@ -3659,7 +3667,7 @@ msgid "The total number of sites that you have access to"
 msgstr "Ditt totala antal sites som du har tillgång till"
 
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html
+#: templates/system/sites/list.html
 msgid "Computers total"
 msgstr "Datorer totalt"
 
@@ -3676,7 +3684,7 @@ msgstr ""
 "Det totala antalet aktiverade datorer på de sites som du har tillgång till"
 
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "Online"
 msgstr "Online"
 
@@ -3925,9 +3933,10 @@ msgstr ""
 "Ändringar träder inte i kraft förrän du har klickat på knappen \"Spara "
 "ändringar\" längst ner på sidan."
 
-#: templates/documentation/users/index.html
+#: templates/documentation/users/index.html templates/system/users/link.html
+#: templates/system/users/update.html
 msgid "Add existing users to this site"
-msgstr "Lägg till befintliga användare"
+msgstr "Lägg till befintliga användare på den här site"
 
 #: templates/documentation/users/index.html
 msgid ""
@@ -3997,10 +4006,6 @@ msgstr ""
 #: templates/documentation/users/index.html
 msgid "Permissions for Usertypes"
 msgstr "Rättigheter för användartyper"
-
-#: templates/documentation/users/index.html
-msgid "Customer Admin"
-msgstr "Kunde-admin"
 
 #: templates/documentation/users/index.html
 msgid "All permissions"
@@ -5676,10 +5681,6 @@ msgstr "Totalt antal Kiosk PC'er"
 msgid "Activated:"
 msgstr "Aktiverade:"
 
-#: templates/system/site_status.html templates/system/sites/list.html
-msgid "Online"
-msgstr "Online"
-
 #: templates/system/site_status.html
 msgid "Activated"
 msgstr "Aktiverad"
@@ -5832,10 +5833,6 @@ msgstr ""
 "Detta Site har 5 eller fler registrerade datorer och kan därfor inte raderas"
 
 #: templates/system/sites/list.html
-msgid "Computers total"
-msgstr "Datorer totalt"
-
-#: templates/system/sites/list.html
 msgid "Administrate"
 msgstr "Hantera"
 
@@ -5854,8 +5851,8 @@ msgid ""
 "'organisation' or 'organisation-location' (without quotes)."
 msgstr ""
 "Måste vara unik. Giltiga tecken är a-z (endast små bokstäver), 0-9 och "
-"bindestreck, och längden måste vara mellan 2-40 tecken. Vi föreslår värden som "
-"'organisation' eller 'organisation-plats' (utan citattecken)"
+"bindestreck, och längden måste vara mellan 2-40 tecken. Vi föreslår värden "
+"som 'organisation' eller 'organisation-plats' (utan citattecken)"
 
 #: templates/system/sites/list.html
 msgid "Create site"
@@ -5889,10 +5886,6 @@ msgstr "Generera reservkoder"
 #: templates/system/users/form.html
 msgid "Deactivate two-factor authentication"
 msgstr "Inaktivera tvåstegsverifiering"
-
-#: templates/system/users/link.html templates/system/users/update.html
-msgid "Add existing users to this site"
-msgstr "Lägg till befintliga användare på den här site"
 
 #: templates/system/users/link.html templates/system/users/update.html
 msgid "Add new user"
