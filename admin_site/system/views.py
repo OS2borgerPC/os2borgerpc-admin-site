@@ -3437,7 +3437,7 @@ class SecurityEventsUpdate(SiteMixin, SuperAdminOrThisSiteMixin, ListView):
 documentation_menu_items = [
     ("", _("The administration site")),
     ("om_os2borgerpc_admin", _("About")),
-    ("sites_overview", _("Sites overveiw")),
+    ("sites_overview", _("Sites overview")),
     ("status", _("Status")),
     ("computers", _("Computers")),
     ("groups", _("Groups")),
