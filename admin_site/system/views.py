@@ -3843,6 +3843,8 @@ class DocView(TemplateView, LoginRequiredMixin):
             + "admin_site/static/docs/OS2BorgerPC_security_rules",
             "audit_doc": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
             + "/static/docs/Audit_doc",
+            "customer_admin_guide": "https://github.com/OS2borgerPC/admin-site/raw/development/admin_site"
+            + "/static/docs/customer_admin_guide",
         }
         for key in pdf_href:
             pdf_href[key] += "_" + self.request.user.user_profile.language + ".pdf"
