@@ -415,8 +415,15 @@ class SiteCreate(CreateView, LoginRequiredMixin):
 
         response = HttpResponseRedirect(reverse("sites"))
 
-        set_notification_cookie(response, _("The Site could not be created because the chosen UID "
-                                            "%s was invalid or not unique") % form.data["uid"], error=True)
+        set_notification_cookie(
+            response,
+            _(
+                "The Site could not be created because the chosen UID "
+                "%s was invalid or not unique"
+            )
+            % form.data["uid"],
+            error=True,
+        )
 
         return response
 

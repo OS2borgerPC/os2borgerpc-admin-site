@@ -182,7 +182,7 @@ class Site(models.Model):
         verbose_name=_("UID"),
         max_length=40,
         unique=True,
-        # Essentially a slug_validator except that _ isn't allowed, for standardisation
+        # Essentially a slug_validator except uppercase and _ aren't allowed, for standardisation
         validators=[
             RegexValidator(
                 re.compile("^[-a-z0-9]+\\Z"),
