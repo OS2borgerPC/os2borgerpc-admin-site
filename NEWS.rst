@@ -1,3 +1,15 @@
+Version 6.0.0, June 18, 2024
+----------------------------
+
+- Customers can now create their own sites, via an added user type called called "customer admin"
+- Site overview: Add various stats, indicating the number of PCs that are BorgerPC's, Kiosk PC's, activated, online - as well as the number of PCs for each Ubuntu version
+- Status: Add various stats, indicating the number of BorgerPC's, Kiosk PC's as well as the number of PCs for each Ubuntu version
+- General documentation update
+- Improve the layout of the Images and Jobs pages to work better at lower resolutions
+- Make page notifications work consistently and change to using bootstrap's instead of something homemade
+- PC: Remove an invisible link from a PC to its Security Events
+- Jobs: Fix bug where arguments for newly restarted Jobs wasn't shown
+
 Version 5.28.0, April 18, 2024
 ------------------------------
 
