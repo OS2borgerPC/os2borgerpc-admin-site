@@ -57,7 +57,7 @@
                 <span class="text-danger" id="site_uid_available_check_response"></span>
               </p>
               {# Rendering the UID field itself manually to be able to set it up with some htmx logic #}
-              <input type="text" name="uid" pattern="[\-a-z0-9]{2,40}" maxlength="40" class="textinput form-control" required="" id="id_uid" hx-get="{% url 'site_uid_available_check' %}" hx-trigger="keyup changed delay:1s" hx-target="#site_uid_available_check_response">
+              <input type="text" name="uid" pattern="[\-a-z0-9]{2,40}" maxlength="40" class="textinput form-control" required="" id="id_uid" hx-get="{% url 'site_uid_available_check' %}" hx-trigger="keyup changed delay:0.7s" hx-target="#site_uid_available_check_response">
               <small id="hint_id_uid" class="form-text text-muted">
 
               <small id="hint_id_uid" class="form-text text-muted">
