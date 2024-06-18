@@ -347,6 +347,7 @@ class SiteList(ListView, LoginRequiredMixin):
         )
         context["version"] = open("/code/VERSION", "r").read()
         user_sites = self.get_queryset()
+        context["user_sites"] = user_sites
         # The dictionary to generate the customer-site list has the following structure:
         # {"Denmark": [Customer1, Customer2], "Sweden": [Customer3, ...] ...}
         # Handling the logic for non-superusers differently because it can be done in a much less complex way
@@ -373,6 +374,7 @@ class SiteCreate(CreateView, LoginRequiredMixin):
     form_class = SiteCreateForm
 
     def form_valid(self, form):
+        # Only allow customer admins to use this functionality
         if self.request.user.user_profile.sitemembership_set.filter(
             site_user_type=SiteMembership.CUSTOMER_ADMIN
         ):
@@ -412,7 +414,6 @@ class SiteCreate(CreateView, LoginRequiredMixin):
             raise PermissionDenied
 
     def form_invalid(self, form):
-
         response = HttpResponseRedirect(reverse("sites"))
 
         set_notification_cookie(
@@ -461,9 +462,10 @@ class SiteDelete(DeleteView, SuperAdminOrThisSiteMixin):
         # Only customer admins are allowed to access this view
         if (
             not self.request.user.is_superuser
-            and not self.request.user.user_profile.sitemembership_set.filter(
-                site_user_type=SiteMembership.CUSTOMER_ADMIN
-            )
+            and self.request.user.user_profile.sitemembership_set.get(
+                site=self.selected_site
+            ).site_user_type
+            != SiteMembership.CUSTOMER_ADMIN
         ):
             raise PermissionDenied
 
@@ -715,7 +717,7 @@ class AdminTwoFactorSetup(otp_views.SetupView, SuperAdminOrThisSiteMixin):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         context["site"] = site
         # url to redirect to when the user clicks cancel
-        context["cancel_url"] = "/site/%s/users/%s/" % (site.uid, user.username)
+        context["cancel_url"] = reverse("users", kwargs={"slug": site.uid})
         return context
 
     def get(self, request, *args, **kwargs):
@@ -827,10 +829,7 @@ class AdminTwoFactorBackupTokens(otp_views.BackupTokensView, SuperAdminOrThisSit
             device.token_set.create(token=StaticToken.random_token())
 
         # Stay on this page after generating new backup tokens
-        success_url = "/site/%s/admin-two-factor/%s/backup-tokens/" % (
-            self.kwargs["slug"],
-            self.kwargs["username"],
-        )
+        success_url = reverse("admin_otp_backup", kwargs=self.kwargs)
 
         return redirect(success_url)
 
@@ -1573,8 +1572,13 @@ class PCsView(SelectionMixin, SiteView):
     def render_to_response(self, context):
         if "selected_pc" in context:
             return HttpResponseRedirect(
-                "/site/%s/computers/%s/"
-                % (context["site"].uid, context["selected_pc"].uid)
+                reverse(
+                    "computer",
+                    kwargs={
+                        "slug": context["site"].uid,
+                        "pc_uid": context["selected_pc"].uid,
+                    },
+                )
             )
         else:
             return super(PCsView, self).render_to_response(context)
@@ -2687,6 +2691,25 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
     form_class = UserLinkForm
     template_name = "system/users/link.html"
 
+    def get(self, request, *args, **kwargs):
+        """
+        Overwrite the get method to ensure that non-customer
+        admins can't directly access the UserLink URL.
+        """
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+
+        if (
+            not self.request.user.is_superuser
+            and self.request.user.user_profile.sitemembership_set.get(
+                site=site
+            ).site_user_type
+            != SiteMembership.CUSTOMER_ADMIN
+        ):
+            raise PermissionDenied
+        response = super().get(request, *args, **kwargs)
+
+        return response
+
     def get_context_data(self, **kwargs):
         context = super(UserLink, self).get_context_data(**kwargs)
         self.add_membership_to_context(context)
@@ -2698,7 +2721,8 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         user_profiles_for_customer_pk = site.customer.sites.values_list(
             "user_profiles", flat=True
         )
-
+        # Limit the possible selections to users for this customer that
+        # do not already have access to this site
         users_for_customer_not_on_this_site = User.objects.filter(
             user_profile__pk__in=user_profiles_for_customer_pk
         ).exclude(user_profile__sites=site)
@@ -2707,18 +2731,21 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         # Ensure that only customer admins can use this functionality
         if (
             not self.request.user.is_superuser
-            and not self.request.user.user_profile.sitemembership_set.filter(
-                site_user_type=SiteMembership.CUSTOMER_ADMIN
-            )
+            and self.request.user.user_profile.sitemembership_set.get(
+                site=site
+            ).site_user_type
+            != SiteMembership.CUSTOMER_ADMIN
         ):
             raise PermissionDenied
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         selected_users = form.cleaned_data["linked_users"]
         selected_user_type = form.cleaned_data["usertype"]
         selected_users_names = []
+        # Add the selected users to the site with
+        # the selected user type
         for user in selected_users:
             selected_users_names.append(user.username)
             SiteMembership.objects.create(
@@ -2780,6 +2807,8 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
         ):
             self.object = form.save()
             user_profile = UserProfile.objects.create(user=self.object)
+            # If a customer admin user is being created, ensure that
+            # they have access to all sites for this customer
             if int(form.cleaned_data["usertype"]) == SiteMembership.CUSTOMER_ADMIN:
                 for customer_site in site.customer.sites.all():
                     SiteMembership.objects.create(
@@ -2787,6 +2816,8 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
                         site=customer_site,
                         site_user_type=form.cleaned_data["usertype"],
                     )
+            # If a non-customer admin user is being created,
+            # only give them access to this site
             else:
                 SiteMembership.objects.create(
                     user_profile=user_profile,
@@ -2795,7 +2826,7 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
                 )
             user_profile.language = form.cleaned_data["language"]
             user_profile.save()
-            if form.cleaned_data["usertype"] == str(site_membership.SITE_ADMIN):
+            if int(form.cleaned_data["usertype"]) >= site_membership.SITE_ADMIN:
                 self.object.user_permissions.set(
                     Permission.objects.filter(name="Can view login log")
                 )
@@ -2883,6 +2914,8 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
             site_membership = user_profile.sitemembership_set.get(
                 site=site, user_profile=user_profile
             )
+            # If a user was made a customer admin, ensure that they have access
+            # to all sites for this customer
             if (
                 site_membership.site_user_type != int(form.cleaned_data["usertype"])
                 and int(form.cleaned_data["usertype"]) == SiteMembership.CUSTOMER_ADMIN
@@ -2902,11 +2935,15 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
                             site=customer_site,
                             site_user_type=form.cleaned_data["usertype"],
                         )
+            # If a customer admin was changed to a less privileged user type,
+            # update all their site memberships to reflect this
             elif (
                 site_membership.site_user_type != int(form.cleaned_data["usertype"])
                 and site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
             ):
-                for customer_site_membership in user_profile.sitemembership_set.all():
+                for customer_site_membership in user_profile.sitemembership_set.filter(
+                    site__customer=site.customer
+                ):
                     customer_site_membership.site_user_type = form.cleaned_data[
                         "usertype"
                     ]

@@ -176,7 +176,7 @@ urlpatterns = [
     re_path(r"^$", AdminIndex.as_view(), name="index"),
     re_path(r"^sites/$", SiteList.as_view(), name="sites"),
     re_path(
-        r"^site/new/$",
+        r"^sites/new/$",
         SiteCreate.as_view(),
         name="site_create",
     ),
