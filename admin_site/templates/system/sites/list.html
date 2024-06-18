@@ -94,7 +94,9 @@
               <div class="customer d-inline-block me-3 mt-4 {% if customer.is_test %}bg-info{% endif %}">
                 <small class="d-block">{{customer.name}}</small>
                 {% for site in customer.sites.all %}
-                  {% include "system/sites/display.html" %}
+                  {% if site in user_sites %}
+                    {% include "system/sites/display.html" %}
+                  {% endif %}
                 {% endfor %}
               </div>
           {% endif %}
