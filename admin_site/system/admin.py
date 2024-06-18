@@ -296,6 +296,7 @@ class SiteAdmin(admin.ModelAdmin):
     list_filter = ("customer",)
     list_display = (
         "name",
+        "uid",
         "created",
         "number_of_computers",
         "number_of_borgerpc_computers",
