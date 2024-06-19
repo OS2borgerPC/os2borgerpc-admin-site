@@ -27,6 +27,7 @@ class MyUserAdmin(UserAdmin):
     list_display = (
         "username",
         "email",
+        "last_login",
         "sites",
         "is_staff",
         "is_active",
