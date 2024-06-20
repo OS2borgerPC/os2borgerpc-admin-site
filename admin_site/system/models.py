@@ -190,7 +190,7 @@ class Site(models.Model):
                 "invalid",
             )
         ],
-        help_text=_("This UID is used when registering a PC with the admin site"),
+        help_text=_("This UID is used when registering a PC with the admin site."),
     )
     configuration = models.ForeignKey(Configuration, on_delete=models.PROTECT)
     customer = models.ForeignKey(
