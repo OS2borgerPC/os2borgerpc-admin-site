@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             model_name="site",
             name="uid",
             field=models.CharField(
-                help_text="This UID is used when registering a PC with the admin site",
+                help_text="This UID is used when registering a PC with the admin site.",
                 max_length=40,
                 unique=True,
                 validators=[
