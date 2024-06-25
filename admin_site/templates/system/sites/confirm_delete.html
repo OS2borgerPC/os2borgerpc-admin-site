@@ -1,0 +1,52 @@
+{% extends "site_with_navigation.html" %}
+
+{% load i18n %}
+
+{% block specific_title %}
+  {% translate "Delete Site" %}
+{% endblock %}
+
+{% block specific_content %}
+  <div class="container-fluid main">
+    <div class="alert alert-danger">
+      <h3>{% translate "Note" %}</h3>
+      <ul>
+        <li>{% blocktranslate trimmed %}
+          All Computers, Groups, Jobs, Monitoring Rules, On/Off schedules,
+          schedule exceptions, associated scripts and local (security) Scripts
+          on the Site will also be deleted.{% endblocktranslate %}</li>
+        <li>{% blocktranslate trimmed %}
+          Any Users that only have access to this Site will also be deleted.
+          Users that also have access to other Sites will not be deleted.{% endblocktranslate %}</li>
+        <li>{% translate "It will NOT be possible to restore any of the deleted data later." %}</li>
+      </ul>
+    </div>
+    <p>
+      {% translate "Are you sure you want to delete the Site" %}
+      <strong style="font-size: 1.25em;">{{ selected_site.name }}</strong>?
+    </p>
+    <p>
+      <input type="checkbox" onclick="toggle_submit(this)" id="toggle-delete-site"/>
+      <label for="toggle-delete-site"><strong>{% translate "I understand and accept the consequences of deleting the Site" %}</strong></label>
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input class="btn btn-danger me-3" id="submit-button" disabled="" type="submit" value="{% translate 'Confirm deletion' %}">
+      <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1)">{% translate "Cancel" %}</button>
+    </form>
+  </div>
+
+  <!-- Function for enabling the submit button: -->
+  <script>
+      function toggle_submit(source) {
+        submit_button = document.getElementById('submit-button');
+        if (source.checked) {
+            submit_button.disabled = false
+        } else {
+            submit_button.disabled = true
+        }
+      }
+  </script>
+
+{% endblock %}

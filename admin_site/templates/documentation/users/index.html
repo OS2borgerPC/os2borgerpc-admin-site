@@ -19,9 +19,11 @@
     If you wish to edit a user, you must click on that user in the list of
     users. It will now be possible to change the user's username, password,
     email address, usertype and language. Note that only users with the
-    usertype "Site Admin" can change a user's usertype. Furthermore, if
-    your usertype is "Site User" and not "Site Admin", you will only be
-    able to edit your own user. The fields are explained below:
+    usertype "Site Admin" or "Customer Admin" can change a user's usertype.
+    Furthermore, if your usertype is "Site User", you will only be
+    able to edit your own user. Users with the usertype "Customer Admin"
+    can also only be seen and edited by other "Customer Admins". The fields
+    are explained below:
     {% endblocktranslate %}
   </p>
   <p>
@@ -98,7 +100,7 @@
     "Add new user" above the list of users. This will open the form for
     creating a new user, which has the same fields as the interface for
     editing a user. When you fill out the fields and click "Save changes",
-    the user will be created and you will be redirected to the editing
+    the user will be created, and you will be redirected to the editing
     interface for the newly created user.
     Both "Site Admins" and "Customer Admins" can create new users.
     {% endblocktranslate %}
@@ -110,9 +112,17 @@
     on the X to the right of the selected user in the list of users. You will
     then be asked to confirm the deletion and if you do so, the user will be
     deleted. Both "Site Admins" and "Customer Admins" can delete users.
+    However, users with the usertype "Customer Admin" cannot be deleted
+    without first changing them to a different usertype.
     {% endblocktranslate %}
   </p>
   <h2>{% translate "Permissions for Usertypes" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+    Note: Contact Magenta if a user on your site needs to be changed
+    to a usertype that none of your users have permission to choose.
+    {% endblocktranslate %}
+  </p>
   <table class="table w-100">
     <thead class="table-dark">
       <tr>
@@ -128,7 +138,7 @@
     <tbody>
       <tr>
         <td>{% translate "Customer Admin" %}</td>
-        <td>{% translate "All permissions" %}</td>
+        <td>{% translate "All permissions, except deleting Customer Admins" %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>
         <td>{% translate "All permissions" %}</td>

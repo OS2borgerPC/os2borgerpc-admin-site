@@ -1,0 +1,65 @@
+{% extends "site_with_navigation.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block specific_title %}
+{% translate "Users" %}
+{% endblock %}
+
+{% block subnav %}
+<div class="sublevelnav">
+  {% if site_membership.site_user_type >= site_membership.CUSTOMER_ADMIN or user.is_superuser %}
+    <div class="listutils">
+      <a class="btn btn-link" href="{% url 'link_users' site.uid %}">
+        <span class="material-icons">add</span>
+        {% translate "Add existing users to this site" %}
+      </a>
+    </div>
+  {% endif %}
+  {% if site_membership.site_user_type >= site_membership.SITE_ADMIN or user.is_superuser %}
+    <div class="listutils">
+      <a class="btn btn-link" href="{% url 'new_user' site.uid %}">
+        <span class="material-icons">add</span>
+        {% translate "Add new user" %}
+      </a>
+    </div>
+  {% endif %}
+
+  <ul class="item-list">
+    {% for listed_user in user_list %}
+      <li class="{% if listed_user == selected_user %}active{% endif %}">
+        <a class="item-list-link" href="/site/{{ site.url }}/users/{{ listed_user.username }}">
+          {{ listed_user.username }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}
+
+{% block specific_content %}
+  <div class="container-fluid main sublevelmain">
+    <h2 class="divideheader">{% translate "Add existing users from your other sites to the site " %}{{site.name}}</h2>
+    {% include 'notification.html' %}
+    <div>
+      <form
+       name="link_users_form"
+       id="link_users_form"
+       method="post"
+       class="gray-box">
+         {% csrf_token %}
+         {{ form.linked_users|as_crispy_field }}
+         {{ form.usertype|as_crispy_field }}
+
+         {% translate "Save changes" as submit_name %}
+
+          <fieldset class="mt-3">
+            <input type="submit" class="btn btn-primary me-3" value="{{ submit_name }}">
+            <button type="reset" class="btn btn-secondary">{% translate "Cancel" %}</button>
+          </fieldset>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

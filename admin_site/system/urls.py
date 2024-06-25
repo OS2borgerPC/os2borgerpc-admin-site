@@ -51,6 +51,9 @@ from system.views import (
     EventRuleServerUpdate,
     SiteDetailView,
     SiteList,
+    SiteCreate,
+    site_uid_available_check,
+    SiteDelete,
     SiteSettings,
     TwoFactor,
     AdminTwoFactorSetup,
@@ -59,6 +62,7 @@ from system.views import (
     AdminTwoFactorBackupTokens,
     UserCreate,
     UserDelete,
+    UserLink,
     UserRedirect,
     UserUpdate,
 )
@@ -171,6 +175,16 @@ urlpatterns = [
     # Sites
     re_path(r"^$", AdminIndex.as_view(), name="index"),
     re_path(r"^sites/$", SiteList.as_view(), name="sites"),
+    re_path(
+        r"^sites/new/$",
+        SiteCreate.as_view(),
+        name="site_create",
+    ),
+    re_path(
+        r"^site/(?P<slug>[^/]+)/delete/$",
+        SiteDelete.as_view(),
+        name="site_delete",
+    ),
     re_path(r"^site/(?P<slug>[^/]+)/$", SiteDetailView.as_view(), name="site"),
     # Site Settings
     re_path(
@@ -324,6 +338,9 @@ urlpatterns = [
         r"^site/(?P<slug>[^/]+)/users/new/$", UserCreate.as_view(), name="new_user"
     ),
     re_path(
+        r"^site/(?P<slug>[^/]+)/users/link/$", UserLink.as_view(), name="link_users"
+    ),
+    re_path(
         r"^site/(?P<slug>[^/]+)/users/(?P<username>[_\w\@\.\+\-]+)/$",
         UserUpdate.as_view(),
         name="user",
@@ -413,6 +430,11 @@ htmx_urlpatterns = [
         r"^site/(?P<slug>[^/]+)/api-key/(?P<pk>\d+)/delete/$",
         APIKeyDelete.as_view(),
         name="api_key_delete",
+    ),
+    re_path(
+        r"^sites/new-validate$",
+        site_uid_available_check,
+        name="site_uid_available_check",
     ),
 ]
 

@@ -7,7 +7,7 @@
 OS2BorgerPC - Admin Site
 ========================
 
-Introduktion
+Introduction
 ============
 This directory contains the OS2borgerPC Admin system, which is a remote
 administration system for Debian-based GNU/Linux-systems, especially

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-17 11:08+0200\n"
+"POT-Creation-Date: 2024-06-25 13:57+0200\n"
 "PO-Revision-Date: 2021-08-19 10:00+0200\n"
 "Last-Translator: Marcus Mogensen <mfm@magenta.dk>\n"
 "Language: da\n"
@@ -30,6 +30,10 @@ msgstr "Site-bruger"
 #: account/models.py templates/documentation/users/index.html
 msgid "Site Admin"
 msgstr "Site-admin"
+
+#: account/models.py templates/documentation/users/index.html
+msgid "Customer Admin"
+msgstr "Kunde-admin"
 
 #: changelog/models.py system/models.py
 msgid "name"
@@ -85,7 +89,8 @@ msgstr "Tilføj kommentar"
 #: templates/system/scripts/create.html templates/system/scripts/update.html
 #: templates/system/security_events/site_security_events.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/confirm_delete.html
+#: templates/system/sites/confirm_delete.html templates/system/sites/list.html
+#: templates/system/users/confirm_delete.html templates/system/users/link.html
 #: templates/system/users/update.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
@@ -132,7 +137,7 @@ msgstr "Kommentarer"
 #: changelog/templates/list.html system/views.py
 #: templates/documentation/om_os2borgerpc_admin.html
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "OS2borgerPC"
 msgstr "OS2borgerPC"
 
@@ -221,6 +226,10 @@ msgid "Number of computers"
 msgstr "Antal computere"
 
 #: system/admin.py
+msgid "Feature permissions"
+msgstr "Feature-adgange"
+
+#: system/admin.py
 msgid "Number of KioskPC computers"
 msgstr "Antal KioskPC computere"
 
@@ -228,13 +237,9 @@ msgstr "Antal KioskPC computere"
 msgid "Number of BorgerPC computers"
 msgstr "Antal BorgerPC computere"
 
-#: system/admin.py
-msgid "Feature permissions"
-msgstr "Feature-adgange"
-
 #: system/admin.py system/models.py
-msgid "sites with access"
-msgstr "sites med adgang"
+msgid "customers with access"
+msgstr "kunder med adgang"
 
 #: system/admin.py
 msgid "Site"
@@ -273,6 +278,18 @@ msgid ""
 msgstr ""
 "Nødvendigt for kunder der ønsker at autentificere login på BorgerPC gennem "
 "et API, der kræver en API-nøgle (f.eks. Quria)"
+
+#: system/forms.py
+msgid "Select users to be added to this site"
+msgstr "Vælg brugere som skal tilføjes til dette site"
+
+#: system/forms.py
+msgid "Hold down Ctrl to select multiple users"
+msgstr "Hold Ctrl nede for at vælge flere brugere"
+
+#: system/forms.py
+msgid "Select the usertype that the users should be added with"
+msgstr "Vælg den brugertype som brugerne skal tilføjes med"
 
 #: system/forms.py templates/documentation/users/index.html
 msgid "Usertype"
@@ -342,16 +359,24 @@ msgid "country name"
 msgstr "landenavn"
 
 #: system/models.py
-msgid "UID"
-msgstr "UID"
-
-#: system/models.py
-msgid "Is a testsite"
-msgstr "Er en test side"
+msgid "customer name"
+msgstr "kundenavn"
 
 #: system/models.py
 msgid "Paid for access until this date"
 msgstr "Betalt for adgang indtil denne dato"
+
+#: system/models.py
+msgid "Is a test customer"
+msgstr "Er en test kunde"
+
+#: system/models.py
+msgid "UID"
+msgstr "UID"
+
+#: system/models.py
+msgid "This UID is used when registering a PC with the admin site."
+msgstr "Dette UID bruges ifm. registrering på admin-portalen."
 
 #: system/models.py
 msgid "ISIL/NCIP"
@@ -571,7 +596,7 @@ msgstr "placering"
 msgid "executable code"
 msgstr "eksekverbar kode"
 
-#: system/models.py
+#: system/models.py templates/system/scripts/update.html
 msgid "security script"
 msgstr "sikkerhedsscript"
 
@@ -746,6 +771,29 @@ msgid "Changes have been saved %s"
 msgstr "Ændringerne er blevet gemt %s"
 
 #: system/views.py
+msgid "The specified UID is unavailable. Please choose another."
+msgstr "Det valgte UID er ikke tilgængeligt. Vælg venligst et andet."
+
+#: system/views.py
+#, python-format
+msgid "Site %s created"
+msgstr "Site %s oprettet"
+
+#: system/views.py
+#, python-format
+msgid ""
+"The Site could not be created because the chosen UID %s was invalid or not "
+"unique"
+msgstr ""
+"Sitet kunne ikke oprettes, fordi det valgte UID %s var ugyldigt eller ikke "
+"unikt"
+
+#: system/views.py
+#, python-format
+msgid "Site %s deleted"
+msgstr "Site %s slettet"
+
+#: system/views.py
 #, python-format
 msgid "Settings for %s updated"
 msgstr "Indstillinger for %s opdateret"
@@ -897,6 +945,11 @@ msgstr "Til-datoen kan ikke være før fra-datoen %s"
 
 #: system/views.py
 #, python-format
+msgid "The user(s) %s have been added to the site %s "
+msgstr "Bruger(ne) %s er blevet tilføjet til sitet %s "
+
+#: system/views.py
+#, python-format
 msgid "You have no user with the following ID: %s"
 msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 
@@ -904,6 +957,11 @@ msgstr "Du har ikke nogen Bruger med følgende ID: %s"
 #, python-format
 msgid "User %s updated"
 msgstr "Bruger %s opdateret"
+
+#: system/views.py
+#, python-format
+msgid "User %s removed from the site %s"
+msgstr "Bruger %s fjernet fra sitet %s"
 
 #: system/views.py
 #, python-format
@@ -978,7 +1036,7 @@ msgstr "Status"
 #: templates/documentation/users/index.html templates/site_with_navigation.html
 #: templates/system/jobs/site_jobs.html
 #: templates/system/pcgroups/confirm_delete.html templates/system/pcs/form.html
-#: templates/system/pcs/site_pcs.html templates/system/site_list.html
+#: templates/system/pcs/site_pcs.html templates/system/sites/list.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Computers"
@@ -1021,7 +1079,8 @@ msgid "Notifications and offline rules"
 msgstr "Notifikationer og offline-regler"
 
 #: system/views.py templates/documentation/users/index.html
-#: templates/site_with_navigation.html templates/system/users/update.html
+#: templates/site_with_navigation.html templates/system/users/link.html
+#: templates/system/users/update.html
 msgid "Users"
 msgstr "Brugere"
 
@@ -1052,7 +1111,7 @@ msgid "Old installation guide (PDF)"
 msgstr "Gammel installationsguide (PDF)"
 
 #: system/views.py templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "OS2borgerPC Kiosk"
 msgstr "OS2borgerPC Kiosk"
 
@@ -1671,6 +1730,7 @@ msgstr ""
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
 #: templates/system/site_two_factor_pc.html
+#: templates/system/sites/confirm_delete.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
 #: templates/system/wake_plan/wake_plan.html
@@ -2452,7 +2512,7 @@ msgstr "Bemærkninger"
 #: templates/system/pcgroups/site_groups.html templates/system/pcs/form.html
 #: templates/system/scripts/update.html
 #: templates/system/site_settings/site_settings.html
-#: templates/system/users/update.html
+#: templates/system/users/link.html templates/system/users/update.html
 #: templates/system/wake_plan/wake_change_events/wake_change_event.html
 #: templates/system/wake_plan/wake_plan.html
 msgid "Save changes"
@@ -3588,6 +3648,18 @@ msgstr ""
 "eller oprette sites fra sites-oversigten."
 
 #: templates/documentation/sites_overview/index.html
+msgid ""
+"If you want more detailed information about creating, deleting and handling "
+"multiple sites, we recommend reading our"
+msgstr ""
+"Hvis du ønsker mere detaljeret information omkring oprettelse, sletning og "
+"håndtering af flere sites, anbefaler vi, at du læser vores"
+
+#: templates/documentation/sites_overview/index.html
+msgid "Guide to creating and handling multiple sites"
+msgstr "Guide til oprettelse og håndtering af flere sites"
+
+#: templates/documentation/sites_overview/index.html
 msgid "Information about your sites"
 msgstr "Information omkring dine sites"
 
@@ -3601,7 +3673,7 @@ msgstr ""
 
 #: templates/documentation/sites_overview/index.html
 #: templates/documentation/users/index.html templates/site_with_navigation.html
-#: templates/system/site_list.html
+#: templates/system/sites/list.html
 msgid "Sites"
 msgstr "Sites"
 
@@ -3610,7 +3682,7 @@ msgid "The total number of sites that you have access to"
 msgstr "Samlet antal sites, som du har adgang til"
 
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html
+#: templates/system/sites/list.html
 msgid "Computers total"
 msgstr "Computere i alt"
 
@@ -3625,7 +3697,7 @@ msgid ""
 msgstr "Samlet antal aktiverede computere på de sites, som du har adgang til"
 
 #: templates/documentation/sites_overview/index.html
-#: templates/system/site_list.html templates/system/site_status.html
+#: templates/system/site_status.html templates/system/sites/list.html
 msgid "Online"
 msgstr "Online"
 
@@ -3792,16 +3864,20 @@ msgid ""
 "If you wish to edit a user, you must click on that user in the list of "
 "users. It will now be possible to change the user's username, password, "
 "email address, usertype and language. Note that only users with the usertype "
-"\"Site Admin\" can change a user's usertype. Furthermore, if your usertype "
-"is \"Site User\" and not \"Site Admin\", you will only be able to edit your "
-"own user. The fields are explained below:"
+"\"Site Admin\" or \"Customer Admin\" can change a user's usertype. "
+"Furthermore, if your usertype is \"Site User\", you will only be able to "
+"edit your own user. Users with the usertype \"Customer Admin\" can also only "
+"be seen and edited by other \"Customer Admins\". The fields are explained "
+"below:"
 msgstr ""
 "For at redigere en bruger skal du klikke på den pågældende bruger i listen "
 "over brugere. Du har nu mulighed for at ændre brugerens brugernavn, "
 "adgangskode, e-mail-adresse, brugertype og sprog. Bemærk at kun brugere med "
-"brugertypen \"Site-admin\" kan ændre en brugers brugertype. Hvis din "
-"brugertype er \"Site-bruger\" og ikke \"Site-admin\", vil du kun kunne "
-"redigere din egen bruger. Felterne er forklaret herunder:"
+"brugertypen \"Site-admin\" eller \"Kunde-admin\" kan ændre en brugers "
+"brugertype. Hvis din brugertype er \"Site-bruger\", vil du kun kunne "
+"redigere din egen bruger. Brugere med brugertypen \"Kunde-admin\" kan også "
+"kun ses og redigeres af andre \"Kunde-admins\". Felterne er forklaret "
+"herunder:"
 
 #: templates/documentation/users/index.html
 msgid "Username"
@@ -3872,7 +3948,8 @@ msgstr ""
 "Ændringer træder ikke i kraft, før man klikker på knappen \"Gem ændringer\" "
 "nederst på siden."
 
-#: templates/documentation/users/index.html
+#: templates/documentation/users/index.html templates/system/users/link.html
+#: templates/system/users/update.html
 msgid "Add existing users to this site"
 msgstr "Tilføj eksisterende brugere til dette site"
 
@@ -3912,7 +3989,7 @@ msgid ""
 "If you wish to create a new user, you must click on the button \"Add new user"
 "\" above the list of users. This will open the form for creating a new user, "
 "which has the same fields as the interface for editing a user. When you fill "
-"out the fields and click \"Save changes\", the user will be created and you "
+"out the fields and click \"Save changes\", the user will be created, and you "
 "will be redirected to the editing interface for the newly created user. Both "
 "\"Site Admins\" and \"Customer Admins\" can create new users."
 msgstr ""
@@ -3933,21 +4010,32 @@ msgid ""
 "If you wish to delete a user, you must select the user and then click on the "
 "X to the right of the selected user in the list of users. You will then be "
 "asked to confirm the deletion and if you do so, the user will be deleted. "
-"Both \"Site Admins\" and \"Customer Admins\" can delete users."
+"Both \"Site Admins\" and \"Customer Admins\" can delete users. However, "
+"users with the usertype \"Customer Admin\" cannot be deleted without first "
+"changing them to a different usertype."
 msgstr ""
 "Hvis man ønsker at slette en bruger, skal man vælge brugeren og derefter "
 "klikke på X'et til højre for den valgte bruger i listen over brugere. Man "
 "vil efterfølgende blive bedt om at bekræfte sletningen, og hvis man gør det, "
 "vil brugeren blive slettet. Både \"Site-admins\" og \"Kunde-admins\" kan "
-"slette brugere."
+"slette brugere. Brugere med brugertypen \"Kunde-admin\" kan dog ikke "
+"slettes, medmindre man først ændrer dem til en anden brugertype."
 
 #: templates/documentation/users/index.html
 msgid "Permissions for Usertypes"
 msgstr "Rettigheder for Brugertyper"
 
 #: templates/documentation/users/index.html
-msgid "Customer Admin"
-msgstr "Kunde-admin"
+msgid ""
+"Note: Contact Magenta if a user on your site needs to be changed to a "
+"usertype that none of your users have permission to choose."
+msgstr ""
+"Bemærk: Kontakt Magenta hvis en bruger på dit site skal ændres til en "
+"brugertype, som ingen af jeres brugere har rettigheder til at vælge."
+
+#: templates/documentation/users/index.html
+msgid "All permissions, except deleting Customer Admins"
+msgstr "Alle rettigheder, bortset fra at slette Kunde-admins"
 
 #: templates/documentation/users/index.html
 msgid "All permissions"
@@ -4844,6 +4932,7 @@ msgstr "Er du sikker på, at du ønsker at slette Offline-reglen"
 #: templates/system/pcgroups/confirm_delete.html
 #: templates/system/pcs/confirm_delete.html
 #: templates/system/scripts/confirm_delete.html
+#: templates/system/sites/confirm_delete.html
 #: templates/system/users/confirm_delete.html
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_change_events/confirm_delete.html
@@ -5477,6 +5566,10 @@ msgid "Add new"
 msgstr "Tilføj nyt"
 
 #: templates/system/scripts/update.html
+msgid "script"
+msgstr "script"
+
+#: templates/system/scripts/update.html
 msgid "Find ..."
 msgstr "Find ..."
 
@@ -5561,30 +5654,6 @@ msgstr "Tidligere versioner"
 msgid "Download"
 msgstr "Download"
 
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of BorgerPC's"
-msgstr "Totalt antal BorgerPC'er"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of Kiosk PC's"
-msgstr "Totalt antal Kiosk PC'er"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Total number of"
-msgstr "Totalt antal"
-
-#: templates/system/site_list.html
-msgid "Administrate"
-msgstr "Administrér"
-
-#: templates/system/site_list.html templates/system/site_status.html
-msgid "Activated:"
-msgstr "Aktiverede:"
-
-#: templates/system/site_list.html
-msgid "Admin site version"
-msgstr "Adminsite-version"
-
 #: templates/system/site_settings/api_keys/api_keys.html
 msgid "API Keys for"
 msgstr "API-nøgler for"
@@ -5628,6 +5697,22 @@ msgstr "Indstillinger for"
 #: templates/system/site_status.html
 msgid "computers"
 msgstr "computere"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of"
+msgstr "Totalt antal"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of BorgerPC's"
+msgstr "Totalt antal BorgerPC'er"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Total number of Kiosk PC's"
+msgstr "Totalt antal Kiosk PC'er"
+
+#: templates/system/site_status.html templates/system/sites/list.html
+msgid "Activated:"
+msgstr "Aktiverede:"
 
 #: templates/system/site_status.html
 msgid "Activated"
@@ -5733,10 +5818,86 @@ msgstr "Totrinsbekræftelse for superuser"
 msgid "to go to the script"
 msgstr "for at gå til scriptet"
 
+#: templates/system/sites/confirm_delete.html
+#: templates/system/sites/display.html
+msgid "Delete Site"
+msgstr "Slet Site"
+
+#: templates/system/sites/confirm_delete.html
+msgid ""
+"All Computers, Groups, Jobs, Monitoring Rules, On/Off schedules, schedule "
+"exceptions, associated scripts and local (security) Scripts on the Site will "
+"also be deleted."
+msgstr ""
+"Alle Computere, Grupper, Jobs, Overvågningsregler, Tænd/Sluk tidsplaner, "
+"undtagelser fra tidsplaner, tilknyttede scripts og lokale scripts eller "
+"sikkerhedsscripts på Sitet vil også blive slettet."
+
+#: templates/system/sites/confirm_delete.html
+msgid ""
+"Any Users that only have access to this Site will also be deleted. Users "
+"that also have access to other Sites will not be deleted."
+msgstr ""
+"Alle Brugere, som kun har adgang til dette Site, vil også blive slettet. "
+"Brugere, som også har adgang til andre Sites, vil ikke blive slettet."
+
+#: templates/system/sites/confirm_delete.html
+msgid "It will NOT be possible to restore any of the deleted data later."
+msgstr "Det vil IKKE være muligt at genskabe den slettede data senere."
+
+#: templates/system/sites/confirm_delete.html
+msgid "Are you sure you want to delete the Site"
+msgstr "Er du sikker på, at du vil slette Sitet"
+
+#: templates/system/sites/confirm_delete.html
+msgid "I understand and accept the consequences of deleting the Site"
+msgstr "Jeg forstår og accepterer konsekvenserne af at slette Sitet"
+
+#: templates/system/sites/display.html
+msgid "Delete site"
+msgstr "Slet site"
+
+#: templates/system/sites/display.html
+msgid ""
+"This Site has 5 or more registered Computers and therefore can't be deleted"
+msgstr ""
+"Dette Site har 5 eller flere registrerede Computere og kan derfor ikke "
+"slettes"
+
+#: templates/system/sites/list.html
+msgid "Administrate"
+msgstr "Administrér"
+
+#: templates/system/sites/list.html
+msgid "Admin site version"
+msgstr "Adminsite-version"
+
+#: templates/system/sites/list.html
+msgid "Add new site"
+msgstr "Tilføj nyt site"
+
+#: templates/system/sites/list.html
+msgid ""
+"Must be unique. Valid characters are a-z (lower-case only), 0-9 and dashes, "
+"and the length must be between 2-40 characters. We suggest values like "
+"'organisation' or 'organisation-location' (without quotes)."
+msgstr ""
+"Skal være unikt. Gyldige tegn er a-z (kun små bogstaver), 0-9 og "
+"bindestreger, og længden skal være mellem 2-40 tegn. Vi foreslår værdier som "
+"'organisation' eller 'organisation-lokation' (uden citationstegn)"
+
+#: templates/system/sites/list.html
+msgid "Create site"
+msgstr "Opret site"
+
 #: templates/system/users/confirm_delete.html
 #: templates/system/users/update.html
 msgid "Delete user"
 msgstr "Slet bruger"
+
+#: templates/system/users/confirm_delete.html
+msgid "Are you sure you want to remove this user from the site "
+msgstr "Er du sikker på, at du vil fjerne denne bruger fra sitet "
 
 #: templates/system/users/confirm_delete.html
 msgid "Are you sure you want to delete the user"
@@ -5758,9 +5919,13 @@ msgstr "Generér backupkoder"
 msgid "Deactivate two-factor authentication"
 msgstr "Deaktivér totrinsbekræftelse"
 
-#: templates/system/users/update.html
+#: templates/system/users/link.html templates/system/users/update.html
 msgid "Add new user"
 msgstr "Tilføj ny bruger"
+
+#: templates/system/users/link.html
+msgid "Add existing users from your other sites to the site "
+msgstr "Tilføj eksisterende brugere fra jeres andre sites til sitet "
 
 #: templates/system/users/update.html
 msgid "Profile:"

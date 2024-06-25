@@ -7,7 +7,7 @@ administration system for Debian-based GNU/Linux-systems, especially
 Ubuntu systems.
 
 The system was originally developed for public libraries in Denmark and
-is specifically designed to manage their OS2borgerPC audience audience
+is specifically designed to manage their OS2borgerPC audience
 desktop PCs.
 
 By design, its functionality aims to be similar to that of Canonical's
