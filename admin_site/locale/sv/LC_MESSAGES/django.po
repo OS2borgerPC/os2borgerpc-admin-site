@@ -5829,10 +5829,10 @@ msgstr ""
 "raderas."
 
 #: templates/system/sites/confirm_delete.html
-msgid "It will NOT be possible to restore any of the deleted objects later."
+msgid "It will NOT be possible to restore any of the deleted data later."
 msgstr ""
-"Det kommer INTE att vara möjligt att återställa något av de raderade "
-"objekten senare."
+"Det kommer INTE att vara möjligt att återställa något av de raderade data "
+"senare."
 
 #: templates/system/sites/confirm_delete.html
 msgid "Are you sure you want to delete the Site"

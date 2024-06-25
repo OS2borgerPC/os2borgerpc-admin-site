@@ -48,16 +48,16 @@
        id="link_users_form"
        method="post"
        class="gray-box">
-       {% csrf_token %}
+         {% csrf_token %}
          {{ form.linked_users|as_crispy_field }}
-        {{ form.usertype|as_crispy_field }}
+         {{ form.usertype|as_crispy_field }}
 
-        {% translate "Save changes" as submit_name %}
+         {% translate "Save changes" as submit_name %}
 
-              <fieldset class="mt-3">
-                <input type="submit" class="btn btn-primary me-3" value="{{ submit_name }}">
-                <button type="reset" class="btn btn-secondary">{% translate "Cancel" %}</button>
-              </fieldset>
+          <fieldset class="mt-3">
+            <input type="submit" class="btn btn-primary me-3" value="{{ submit_name }}">
+            <button type="reset" class="btn btn-secondary">{% translate "Cancel" %}</button>
+          </fieldset>
       </form>
     </div>
   </div>

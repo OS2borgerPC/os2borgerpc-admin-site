@@ -5834,8 +5834,8 @@ msgstr ""
 "Brugere, som også har adgang til andre Sites, vil ikke blive slettet."
 
 #: templates/system/sites/confirm_delete.html
-msgid "It will NOT be possible to restore any of the deleted objects later."
-msgstr "Det vil IKKE være muligt at genskabe de slettede objekter senere."
+msgid "It will NOT be possible to restore any of the deleted data later."
+msgstr "Det vil IKKE være muligt at genskabe den slettede data senere."
 
 #: templates/system/sites/confirm_delete.html
 msgid "Are you sure you want to delete the Site"
