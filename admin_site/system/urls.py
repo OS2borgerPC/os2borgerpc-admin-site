@@ -432,7 +432,7 @@ htmx_urlpatterns = [
         name="api_key_delete",
     ),
     re_path(
-        r"^site/new-validate$",
+        r"^sites/new-validate$",
         site_uid_available_check,
         name="site_uid_available_check",
     ),

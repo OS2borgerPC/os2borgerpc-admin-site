@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OS2borgerPC\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-24 14:45+0200\n"
+"POT-Creation-Date: 2024-06-25 13:57+0200\n"
 "PO-Revision-Date: 2023-04-14 10:00+0200\n"
 "Last-Translator: Andreas Poulsen <mfm@magenta.dk>\n"
 "Language: sv\n"
@@ -4022,6 +4022,14 @@ msgstr ""
 #: templates/documentation/users/index.html
 msgid "Permissions for Usertypes"
 msgstr "Rättigheter för användartyper"
+
+#: templates/documentation/users/index.html
+msgid ""
+"Note: Contact Magenta if a user on your site needs to be changed to a "
+"usertype that none of your users have permission to choose."
+msgstr ""
+"Obs: Kontakta Magenta om en användare på din site behöver ändras till "
+"en användartyp som ingen av dina användare har behörighet att välja."
 
 #: templates/documentation/users/index.html
 msgid "All permissions, except deleting Customer Admins"
