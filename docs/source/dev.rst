@@ -23,3 +23,12 @@ Models / Database visualized
    :width: 100%
 
 |
+
+Hosting
+-------
+
+Configuring the use of customer admins
+======================================
+
+See the related
+`Guide <https://github.com/OS2borgerPC/admin-site/raw/development/admin_site/static/docs/configuring_customer_admins.pdf>`_.
