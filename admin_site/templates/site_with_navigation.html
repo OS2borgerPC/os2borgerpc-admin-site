@@ -18,7 +18,7 @@ detailpage
 
   <nav id="left-menu" class="nav nav-pills utils-global">
 
-    {% if user.is_superuser or user.user_profile.sites.count > 1 %}
+    {% if user.is_superuser or user.user_profile.sites.count > 1 or user.user_profile.sitemembership_set.first.site_user_type == user.user_profile.sitemembership_set.first.CUSTOMER_ADMIN %}
       <a href="/sites/" class="nav-link link-light" style="display: flex; flex-flow: row nowrap; align-items: center;">
         <span class="material-icons">arrow_back</span>
           {% translate "Sites" %}

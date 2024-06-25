@@ -303,10 +303,12 @@ def send_password_sms(phone_number, message, site):
     if response.text[:2] != "0:":
         return True
     else:
-        # Unable to authenticate with system user - log this.
-        logger.error(
-            f"{site.name} was unable to authorize with SMSTeknik with configured user name and password: {response.text}"
-        )
+        if "no valid recipients" not in response.text.lower():
+            # Unable to authenticate with system user - log this.
+            logger.error(
+                f"{site.name} was unable to authorize with SMSTeknik "
+                f"with configured user name and password: {response.text}"
+            )
         return False
 
 
@@ -408,3 +410,9 @@ def notification_changes_saved(response, user_profile_language):
     translation.deactivate()
 
     return response
+
+
+def online_pcs_count_filter(pcs):
+    """Online PCs are PCs that have checked in recently, as defined by the model function
+    This function takes a list of PCs and returns the number of those that are online"""
+    return len([pc for pc in pcs if pc.online])

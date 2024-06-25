@@ -45,7 +45,12 @@ class UserProfile(models.Model):
 class SiteMembership(models.Model):
     SITE_USER = 1
     SITE_ADMIN = 2
-    type_choices = ((SITE_USER, _("Site User")), (SITE_ADMIN, _("Site Admin")))
+    CUSTOMER_ADMIN = 3
+    type_choices = (
+        (SITE_USER, _("Site User")),
+        (SITE_ADMIN, _("Site Admin")),
+        (CUSTOMER_ADMIN, _("Customer Admin")),
+    )
 
     site_user_type = models.IntegerField(choices=type_choices, default=SITE_USER)
 

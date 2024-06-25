@@ -1,4 +1,3 @@
-version: "3.4"
 services:
     frontend:
         build:
@@ -14,6 +13,12 @@ services:
             # volume comes after the above bind to work.
             - /code/nodejs/node_modules/
     os2borgerpc-admin:
+        # Defaults in case values aren't passed in via the environment, so 0 (root) isn't used. Justfile overrides them.
+        # NOTE: Keep in sync with the UID/GID in docker/Dockerfile
+        environment:
+            UID: 75030
+            GID: 75030
+        user: "${UID}:${GID}"
         build:
             context: .
             dockerfile: docker/Dockerfile

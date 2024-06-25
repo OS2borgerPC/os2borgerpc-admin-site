@@ -1,0 +1,118 @@
+{% extends 'documentation/index.html' %}
+{% load custom_tags %}
+{% load i18n %}
+
+
+
+{% block specific_content %}
+
+<h1>{% translate "Sites overview" %}</h1>
+    <p>
+        {% blocktranslate trimmed %}
+            The sites overview shows all the sites that you have access to. A customer admin has access to
+            all sites for that customer while other users only have access to the sites that they have been assigned to.
+            Customer admins can also delete or create sites from the sites overview.
+        {% endblocktranslate %}
+    </p>
+    <p>
+        {% blocktranslate trimmed %}
+            If you want more detailed information about creating, deleting and handling multiple sites,
+            we recommend reading our
+        {% endblocktranslate %}
+        <a href="{{ pdf_href|get_item:'customer_admin_guide' }}" target="_blank">{% translate "Guide to creating and handling multiple sites" %}</a>.
+    </p>
+    
+
+<h2>{% translate "Information about your sites" %}</h2>
+<p>
+    {% blocktranslate trimmed %}
+        Some general information about the sites that you have access to is shown at the top of the overview.
+    {% endblocktranslate %}
+</p>
+<p>
+    <ul>
+        <li>
+            <strong>{% translate "Sites" %}</strong>:
+            {% blocktranslate trimmed %}
+                The total number of sites that you have access to
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "Computers total" %}</strong>:
+            {% blocktranslate trimmed %}
+                The total number of computers registered on the sites that you have access to
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "activated" %}</strong>:
+            {% blocktranslate trimmed %}
+                The total number of activated computers on the sites that you have access to
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "Online" %}</strong>:
+            {% blocktranslate trimmed %}
+                The total number of online computers on the sites that you have access to
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "OS2borgerPC" %}</strong>:
+            {% blocktranslate trimmed %}
+                The total number of OS2borgerPC computers (not kiosk) on the sites that you have access to
+            {% endblocktranslate %}
+        </li>      
+        <li>
+            <strong>{% translate "OS2borgerPC Kiosk" %}</strong>:
+            {% blocktranslate trimmed %}
+                The total number of OS2borgerPC kiosk computers on the sites that you have access to
+            {% endblocktranslate %}
+        </li>
+        <li>
+            <strong>{% translate "20.04, 22.04, 24.04, ..." %}</strong>:
+            {% blocktranslate trimmed %}
+                The total number of computers with each Ubuntu version on the sites that you have access to
+            {% endblocktranslate %}
+        </li>
+    </ul>
+</p>
+
+<h2>{% translate "Deleting a site" %}</h2>
+<p>{% translate "REMINDER: Only customer admins can delete a site!" %}</p>
+<p>
+    {% blocktranslate trimmed %}
+        To start the process of deleting a site, click the dropdown symbol on the right side of the button
+        for that site, and then on "Delete Site".
+        Note that if 5 or more computers are registered with the site, the "Delete Site" button will be inactive
+        and deletion will not be possible.
+        You will then need to manually remove computers from the site for deletion to be possible. The computers
+        can be removed via the computers overview for that site.
+        After clicking on the "Delete Site" button, you will be redirected to a new page that will inform
+        you of the consequences of deleting the site. You must check a checkbox indicating that you understand and
+        accept the consequences of deleting the site before you can click "Confirm deletion" to finalize the deletion.
+    {% endblocktranslate %}
+</p>
+
+<h2>{% translate "Creating a new site" %}</h2>
+<p>{% translate "REMINDER: Only customer admins can create new sites!" %}</p>
+<p>
+    {% blocktranslate trimmed %}
+        If you wish to create a new site, you must click on the "Add new site" button, which is only visible
+        to customer admins.
+        This will open a modal where you must enter a name and a unique UID for the site.
+        Note that the UID must be used when registering computers with the site. As such, we suggest choosing values
+        like "organization" or "organization-location" (without quotes).
+        The modal will indicate whether the chosen UID is unique. If the chosen UID is not unique, the "Create site"
+        button in the modal will be inactive.
+        When you click on "Create site", you will be returned to the sites overview where it will be possible
+        to select the new site.
+    {% endblocktranslate %}
+</p>
+<p>
+    {% blocktranslate trimmed %}
+        Once you have created a new site, you can create new users for the site or add existing users
+        to the site via the "Users" section for that site. See the documentation regarding "Users"
+        for more information.
+    {% endblocktranslate %}
+</p>
+
+{% endblock %}

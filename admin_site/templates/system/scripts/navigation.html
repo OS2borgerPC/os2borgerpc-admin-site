@@ -33,7 +33,7 @@
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
-                {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
+                {% if script == selected_script and site_membership.site_user_type >= site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
                     <a class="item-list-deletable material-icons" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                       clear
@@ -57,7 +57,7 @@
                 <a class="item-list-link" href="{% url script_url site.uid script.pk %}">
                   {{ script.name }}
                 </a>
-                {% if script == selected_script and site_membership.site_user_type == site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
+                {% if script == selected_script and site_membership.site_user_type >= site_membership.SITE_ADMIN or script == selected_script and user.is_superuser %}
                   {% if script.is_security_script %}
                   <a class="item-list-deletable material-icons" href="{% url 'security_script_delete' site.uid script.pk %}" title="{% translate 'Delete script' %}">
                     clear

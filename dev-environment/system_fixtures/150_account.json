@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
         "user": 35,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -12,7 +13,8 @@
     "pk": 2,
     "fields": {
         "user": 36,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -20,7 +22,8 @@
     "pk": 3,
     "fields": {
         "user": 37,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -28,7 +31,8 @@
     "pk": 4,
     "fields": {
         "user": 38,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
@@ -36,14 +40,15 @@
     "pk": 5,
     "fields": {
         "user": 39,
-        "language": "da"
+        "language": "da",
+        "is_hidden": false
     }
 },
 {
     "model": "account.sitemembership",
     "pk": 1,
     "fields": {
-        "site_user_type": 2,
+        "site_user_type": 3,
         "site": 1,
         "user_profile": 1
     }
@@ -82,6 +87,24 @@
         "site_user_type": 2,
         "site": 9,
         "user_profile": 5
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 6,
+    "fields": {
+        "site_user_type": 2,
+        "site": 9,
+        "user_profile": 3
+    }
+},
+{
+    "model": "account.sitemembership",
+    "pk": 7,
+    "fields": {
+        "site_user_type": 2,
+        "site": 13,
+        "user_profile": 3
     }
 }
 ]

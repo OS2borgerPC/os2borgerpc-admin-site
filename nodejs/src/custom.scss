@@ -66,3 +66,27 @@ li .dropdown-item:active {
   display: inline;
   width: 100px;
 }
+
+/* Site list */
+.customer {
+  background: $gray-100;
+  border: 1px solid $gray-300;
+  padding: 10px;
+}
+
+.customer small {
+  position: relative;
+  top: -31px;
+}
+
+.sites .container {
+  max-width: 1700px;
+}
+
+.site-btns {
+  background: $gray-200;
+}
+
+.customer .btn-group:hover {
+  background: $gray-300
+}

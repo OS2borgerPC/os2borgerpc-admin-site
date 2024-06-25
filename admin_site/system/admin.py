@@ -16,6 +16,7 @@ from system.models import (
     Citizen,
     Configuration,
     ConfigurationEntry,
+    Customer,
     FeaturePermission,
     ImageVersion,
     Input,
@@ -208,12 +209,27 @@ class PCInlineForSiteAdmin(admin.TabularInline):
         return False
 
 
-class FeaturePermissionInlineForSiteAdmin(admin.TabularInline):
-    model = FeaturePermission.sites.through
+class FeaturePermissionInlineForCustomerAdmin(admin.TabularInline):
+    model = FeaturePermission.customers.through
     extra = 0
 
 
-class SiteInlineForCountryAdmin(admin.TabularInline):
+class CustomerInlineForCountryAdmin(admin.TabularInline):
+    model = Customer
+    fields = ("name", "is_test")
+    extra = 0
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj):
+        return False
+
+    def has_change_permission(self, request, obj):
+        return False
+
+
+class SiteInlineForCustomerAdmin(admin.TabularInline):
     model = Site
     fields = ("name", "uid")
     extra = 0
@@ -228,12 +244,12 @@ class SiteInlineForCountryAdmin(admin.TabularInline):
         return False
 
 
-class SiteAdmin(admin.ModelAdmin):
+class CustomerAdmin(admin.ModelAdmin):
     list_filter = ("country",)
     list_display = (
         "name",
+        "is_test",
         "number_of_computers",
-        "created",
         "number_of_borgerpc_computers",
         "number_of_kioskpc_computers",
         "paid_for_access_until",
@@ -241,9 +257,53 @@ class SiteAdmin(admin.ModelAdmin):
     )
     search_fields = ("name",)
     inlines = (
-        FeaturePermissionInlineForSiteAdmin,
-        PCInlineForSiteAdmin,
+        SiteInlineForCustomerAdmin,
+        FeaturePermissionInlineForCustomerAdmin,
     )
+
+    def number_of_computers(self, obj):
+        computers_count = PC.objects.filter(site__customer=obj).count()
+        return computers_count
+
+    def number_of_borgerpc_computers(self, obj):
+        borgerpc_computers_count = (
+            PC.objects.filter(site__in=obj.sites.all())
+            .filter(configuration__entries__value="os2borgerpc")
+            .count()
+        )
+
+        return borgerpc_computers_count
+
+    def number_of_kioskpc_computers(self, obj):
+        kioskpc_computers_count = (
+            PC.objects.filter(site__in=obj.sites.all())
+            .filter(configuration__entries__value="os2borgerpc kiosk")
+            .count()
+        )
+
+        return kioskpc_computers_count
+
+    def feature_permissions(self, obj):
+        return list(obj.feature_permission.all())
+
+    number_of_computers.short_description = _("Number of computers")
+    feature_permissions.short_description = _("Feature permissions")
+    number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
+    number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
+
+
+class SiteAdmin(admin.ModelAdmin):
+    list_filter = ("customer",)
+    list_display = (
+        "name",
+        "uid",
+        "created",
+        "number_of_computers",
+        "number_of_borgerpc_computers",
+        "number_of_kioskpc_computers",
+    )
+    search_fields = ("name",)
+    inlines = (PCInlineForSiteAdmin,)
     readonly_fields = ("created",)
 
     def number_of_borgerpc_computers(self, obj):
@@ -267,13 +327,7 @@ class SiteAdmin(admin.ModelAdmin):
     def number_of_computers(self, obj):
         return obj.pcs.count()
 
-    def feature_permissions(self, obj):
-        return list(obj.feature_permission.all())
-
     number_of_computers.short_description = _("Number of computers")
-    number_of_kioskpc_computers.short_description = _("Number of KioskPC computers")
-    number_of_borgerpc_computers.short_description = _("Number of BorgerPC computers")
-    feature_permissions.short_description = _("Feature permissions")
 
 
 class LoginLogAdmin(admin.ModelAdmin):
@@ -289,18 +343,18 @@ class LoginLogAdmin(admin.ModelAdmin):
 
 
 class FeaturePermissionAdmin(admin.ModelAdmin):
-    def sites_with_access(self, obj):
-        return list(obj.sites.all())
+    def customers_with_access(self, obj):
+        return list(obj.customers.all())
 
     list_display = (
         "name",
         "uid",
-        "sites_with_access",
+        "customers_with_access",
     )
     list_filter = ("name",)
     search_fields = ("name", "uid")
 
-    sites_with_access.short_description = _("sites with access")
+    customers_with_access.short_description = _("customers with access")
 
 
 class PCAdmin(admin.ModelAdmin):
@@ -365,7 +419,7 @@ class CountryAdmin(admin.ModelAdmin):
     )
     list_filter = ("name",)
     search_fields = ("name", "pk")
-    inlines = [SiteInlineForCountryAdmin]
+    inlines = [CustomerInlineForCountryAdmin]
 
 
 class ScriptTagAdmin(admin.ModelAdmin):
@@ -559,6 +613,7 @@ ar(ChangelogTag, ChangelogTagAdmin)
 ar(Citizen, CitizenAdmin)
 ar(Configuration, ConfigurationAdmin)
 ar(Country, CountryAdmin)
+ar(Customer, CustomerAdmin)
 ar(EventRuleServer, EventRuleServerAdmin)
 ar(FeaturePermission, FeaturePermissionAdmin)
 ar(ImageVersion, ImageVersionAdmin)
