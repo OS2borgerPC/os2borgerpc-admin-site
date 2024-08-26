@@ -24,7 +24,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./docker
+        context: ./
         file: ./docker/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_HUB_USER }}/os2borgerpc-admin-site:${{ github.ref_name }}
