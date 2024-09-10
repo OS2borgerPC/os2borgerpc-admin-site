@@ -96,6 +96,11 @@ COPY --from=frontend \
 # set of insecure setting here for only this purpose. We make sure to delete it
 # afterward. If `insecure-settings.ini` is found in any production image,
 # consider it a bug. See `insecure-settings.ini` for a detailed explanation.
+ENV DB_NAME="dummy" \
+    DB_USER="dummy" \
+    DB_PASSWORD="dummy" \
+    DB_HOST="dummy" \
+    DB_PORT="dummy"
 RUN set -ex \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py compilemessages \
