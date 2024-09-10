@@ -33,17 +33,17 @@ RUN set -ex \
   # automatic ranges of UID_MAX/GID_MAX used by useradd/groupadd. See
   # `/etc/login.defs`. Hopefully there will be no conflicts with users of the
   # host system or users of other docker containers.
-  && groupadd -g 75030 -r bpc\
-  && useradd -u 75030 --no-log-init -r -g bpc bpc \
+  # && groupadd -g 75030 -r bpc\
+  # && useradd -u 75030 --no-log-init -r -g bpc bpc \
   # Install system dependencies from file.
   && apt-get -y update \
   && apt-get -y install --no-install-recommends $(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt) \
   # clean up after apt-get and man-pages
   && apt-get clean \
   && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
- # create folders at easily mountable paths for output from django
- && install -o bpc -g bpc -d /log \
- && install -o bpc -g bpc -d /media
+#  # create folders at easily mountable paths for output from django
+#  && install -o bpc -g bpc -d /log \
+#  && install -o bpc -g bpc -d /media
 
 VOLUME /log
 VOLUME /media
@@ -102,7 +102,7 @@ RUN set -ex \
   && rm /code/docker/insecure-settings.ini
 
 # Run the server as the bpc user on port 9999
-USER bpc:bpc
+USER 1001
 EXPOSE 9999
 ENTRYPOINT ["/code/docker/docker-entrypoint.sh"]
 CMD ["gunicorn", \
