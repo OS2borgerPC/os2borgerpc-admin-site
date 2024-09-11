@@ -14,15 +14,7 @@ FROM python:3.8 AS os2borgerpc
 
 LABEL org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site"
 LABEL org.opencontainers.image.licenses="GPL"
-LABEL org.opencontainers.image.description="The OS2borgerPC Admin system \
-      A remote administration system for Debian-based GNU/Linux-systems, especially Ubuntu systems. \
-      \
-      The system was originally developed for public libraries in Denmark and is specifically designed to manage their OS2borgerPC audience desktop PCs. \
-      \
-      For more information about the OS2borgerPC project, please see the official home page: https://os2.eu/produkt/os2borgerpc \
-      \
-      and the offical Github project: https://github.com/OS2borgerPC/"
-
+LABEL org.opencontainers.image.description="OS2borgerPC: Admin-Site"
 
 ENV PYTHONUNBUFFERED=1 \
   BPC_USER_CONFIG_PATH=/user-settings.ini \
