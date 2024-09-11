@@ -13,22 +13,31 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: |
+          ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
+        tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Login to Docker Hub
+    - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKER_HUB_USER }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         context: ./
         file: ./docker/Dockerfile
         push: true
-        tags: kvalitetsit/os2borgerpc-admin-site:${{ github.ref_name }}
-
-    - name: Post build digest
-      run: echo "Docker image for release ${{ github.ref_name }} pushed to Docker Hub."
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
