@@ -12,9 +12,9 @@ CMD ["/bin/sh", "-c", "npm run watch-sass"]
 
 FROM python:3.8 AS os2borgerpc
 
-LABEL org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site" \
-      org.opencontainers.image.licenses="GPL" \
-      org.opencontainers.image.description="The OS2borgerPC Admin system \
+LABEL org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site"
+LABEL org.opencontainers.image.licenses="GPL"
+LABEL org.opencontainers.image.description="The OS2borgerPC Admin system \
       A remote administration system for Debian-based GNU/Linux-systems, especially Ubuntu systems. \
       \
       The system was originally developed for public libraries in Denmark and is specifically designed to manage their OS2borgerPC audience desktop PCs. \
