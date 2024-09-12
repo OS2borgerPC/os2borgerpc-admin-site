@@ -12,11 +12,9 @@ CMD ["/bin/sh", "-c", "npm run watch-sass"]
 
 FROM python:3.8 AS os2borgerpc
 
-LABEL org.opencontainers.image.title="OS2borgerPC" \
-      org.opencontainers.image.vendor="Magenta ApS" \
-      org.opencontainers.image.licenses="GPL" \
-      org.opencontainers.image.url="https://os2.eu/produkt/os2borgerpc"\
-      org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site"
+LABEL org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site"
+LABEL org.opencontainers.image.licenses="GPL"
+LABEL org.opencontainers.image.description="OS2borgerPC: Admin-Site"
 
 ENV PYTHONUNBUFFERED=1 \
   BPC_USER_CONFIG_PATH=/user-settings.ini \
