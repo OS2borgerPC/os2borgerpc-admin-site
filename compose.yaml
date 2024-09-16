@@ -23,6 +23,10 @@ services:
             DB_USER: bpc
             DB_PASSWORD: bpc
             DB_PORT: ""
+            # If fixtures are not mounted, the initial super user can be bootstrapped like this:
+            #ADMIN_USERNAME: admin
+            #ADMIN_PASSWORD: admin
+            #ADMIN_EMAIL: admin@test.dk
         user: "${UID}:${GID}"
         build:
             context: .
