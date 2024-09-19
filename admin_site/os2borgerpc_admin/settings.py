@@ -53,6 +53,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+header = os.environ['SECURE_PROXY_SSL_HEADER']
+headerValue = os.environ['SECURE_PROXY_SSL_HEADER_VALUE']
+if header:
+    SECURE_PROXY_SSL_HEADER = (header, headerValue)
 
 # Template settings
 TEMPLATES = [

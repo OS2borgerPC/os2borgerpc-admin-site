@@ -98,7 +98,9 @@ ENV DB_NAME="dummy" \
     DB_USER="dummy" \
     DB_PASSWORD="dummy" \
     DB_HOST="dummy" \
-    DB_PORT="dummy"
+    DB_PORT="dummy" \
+    SECURE_PROXY_SSL_HEADER="dummy" \
+    SECURE_PROXY_SSL_HEADER_VALUE="dummy"
 RUN set -ex \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py compilemessages \
