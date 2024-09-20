@@ -203,7 +203,8 @@ MIDDLEWARE = (
     "django_otp.middleware.OTPMiddleware",
     "os2borgerpc_admin.middlewares.user_locale_middleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-)
+) + (("os2borgerpc_admin.middlewares.HttpsOnlyMiddleware",) if os.getenv('HTTPS_GUARANTEED') == 'true' else ())
+
 
 # Email settings
 
