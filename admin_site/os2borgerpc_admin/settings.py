@@ -83,11 +83,11 @@ SOURCE_DIR = os.path.abspath(os.path.join(install_dir, ".."))
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": settings["DB_NAME"],
-        "USER": settings["DB_USER"],
-        "PASSWORD": settings["DB_PASSWORD"],
-        "HOST": settings["DB_HOST"],
-        "PORT": settings.get("DB_PORT", fallback=""),
+        "NAME": os.environ['DB_NAME'],
+        "USER": os.environ['DB_USER'],
+        "PASSWORD": os.environ['DB_PASSWORD'],
+        "HOST": os.environ['DB_HOST'],
+        "PORT": os.environ['DB_PORT'],
         "OPTIONS": {
             "connect_timeout": 2,  # Minimum in 2
         },
