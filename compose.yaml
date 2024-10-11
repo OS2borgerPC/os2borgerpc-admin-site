@@ -18,6 +18,11 @@ services:
         environment:
             UID: 75030
             GID: 75030
+            DB_HOST: db
+            DB_NAME: bpc
+            DB_USER: bpc
+            DB_PASSWORD: bpc
+            DB_PORT: ""
         user: "${UID}:${GID}"
         build:
             context: .
