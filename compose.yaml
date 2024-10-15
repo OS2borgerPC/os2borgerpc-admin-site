@@ -44,7 +44,8 @@ services:
                    --reload-extra-file /code/admin_site/locale/da/LC_MESSAGES/djangojs.mo
                    --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/django.mo
                    --reload-extra-file /code/admin_site/locale/sv/LC_MESSAGES/djangojs.mo
-                   --timeout 0 --config /code/docker/gunicorn-settings.py os2borgerpc_admin.wsgi"
+                   --timeout 0 --config /code/docker/gunicorn-settings.py os2borgerpc_admin.wsgi &
+                   gunicorn --bind 0.0.0.0:8080 os2borgerpc_admin.jobsWsgi"
         volumes:
             - .:/code/
             - ./dev-environment/dev-settings.ini:/user-settings.ini
@@ -54,6 +55,7 @@ services:
             - db
         ports:
             - 9999:9999
+            - 8080:8080
         stdin_open: true
         tty: true
         container_name: bpc_admin_site_django
