@@ -23,6 +23,27 @@ services:
             DB_USER: bpc
             DB_PASSWORD: bpc
             DB_PORT: ""
+            ALLOWED_HOSTS: "*"
+            DEBUG: True
+            SECRET_KEY: v3rys1kr3t
+            # Admin contact - fill in your own name and email as desired.
+            ADMIN_USERNAME: OS2borgerPC Admin
+            ADMIN_EMAIL: os2borgerpc_admin@os2borgerpc-vendor.example
+            ADMIN_PASSWORD: admin
+            # Timezone/Language
+            TIME_ZONE: Europe/Copenhagen
+            LANGUAGE_CODE: da-dk
+
+            INITIALIZE_DATABASE: True
+
+            LOG_LEVEL: INFO
+
+            # IF USING THE CICERO INTEGRATION
+            CICERO_URL: CICERO_SERVER_HERE
+            # This particular line makes it both skip the connection to the Cicero server AND the validation of the username/password
+            # For that reason, depending on what you're testing, you might want to comment out this line
+            CITIZEN_LOGIN_API_VALIDATOR: system.utils.always_validate_citizen
+
         user: "${UID}:${GID}"
         build:
             context: .
