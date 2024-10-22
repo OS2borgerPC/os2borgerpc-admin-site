@@ -1128,7 +1128,8 @@ class ScriptMixin(object):
         global_scripts = scripts.filter(site=None)
         context["global_scripts"] = global_scripts
 
-        context["supported_products"] = self.script.products.all()
+        if self.script:
+            context["supported_products"] = self.script.products.all()
 
         # Create a tag->scripts dict for tags that has local scripts.
         local_tag_scripts_dict = {
