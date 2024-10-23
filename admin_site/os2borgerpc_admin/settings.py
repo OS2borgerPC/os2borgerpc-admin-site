@@ -1,7 +1,6 @@
 # Django settings for OS2borgerPC admin project.
 
 import os
-import configparser
 import logging
 import django
 
