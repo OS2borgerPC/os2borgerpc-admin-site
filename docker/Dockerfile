@@ -28,25 +28,12 @@ COPY admin_site/sys-requirements.txt sys-requirements.txt
 
 # hadolint ignore=SC2046,DL3008
 RUN set -ex \
-  # Add a bpc group and user. Note: this is a system user/group, but have
-  # UID/GID above the normal SYS_UID_MAX/SYS_GID_MAX of 999, but also above the
-  # automatic ranges of UID_MAX/GID_MAX used by useradd/groupadd. See
-  # `/etc/login.defs`. Hopefully there will be no conflicts with users of the
-  # host system or users of other docker containers.
-  && groupadd -g 75030 -r bpc\
-  && useradd -u 75030 --no-log-init -r -g bpc bpc \
   # Install system dependencies from file.
   && apt-get -y update \
   && apt-get -y install --no-install-recommends $(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt) \
   # clean up after apt-get and man-pages
   && apt-get clean \
-  && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*" \
- # create folders at easily mountable paths for output from django
- && install -o bpc -g bpc -d /log \
- && install -o bpc -g bpc -d /media
-
-VOLUME /log
-VOLUME /media
+  && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*"
 
 WORKDIR /code/
 
@@ -106,8 +93,8 @@ RUN set -ex \
   && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py compilemessages \
   && rm /code/docker/insecure-settings.ini
 
-# Run the server as the bpc user on port 9999
-USER bpc:bpc
+# Run the server as non-root user on port 9999
+USER 1001
 EXPOSE 9999
 EXPOSE 8080
 ENTRYPOINT ["/code/docker/docker-entrypoint.sh"]
