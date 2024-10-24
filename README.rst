@@ -33,4 +33,3 @@ and the offical Github project:
 
 All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
---
