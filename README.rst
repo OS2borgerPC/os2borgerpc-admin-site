@@ -32,4 +32,4 @@ and the offical Github project:
     https://github.com/OS2borgerPC/
 
 All code is made available under Version 3 of the GNU General Public
-License - see the LICENSE file for details.
+License - see the LICENSE file for details.---
