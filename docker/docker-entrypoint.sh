@@ -12,6 +12,6 @@ then
   python ./manage.py migrate
 fi
 
-./manage.py create_superuser_if_none_exists --username $ADMIN_USERNAME --email $ADMIN_EMAIL --password $ADMIN_PASSWORD
+./manage.py create_superuser_if_none_exists --username "$ADMIN_USERNAME" --email "$ADMIN_EMAIL" --password "$ADMIN_PASSWORD"
 
 exec "$@"

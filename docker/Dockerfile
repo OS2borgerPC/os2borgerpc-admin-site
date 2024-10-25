@@ -19,7 +19,6 @@ LABEL org.opencontainers.image.title="OS2borgerPC" \
       org.opencontainers.image.source="https://github.com/OS2borgerPC/admin-site"
 
 ENV PYTHONUNBUFFERED=1 \
-  BPC_USER_CONFIG_PATH=/user-settings.ini \
   PYTHONPATH=/code/admin_site/:$PYTHONPATH\
   DJANGO_SETTINGS_MODULE=os2borgerpc_admin.settings
 
@@ -79,19 +78,31 @@ COPY --from=frontend \
   /code/nodejs/node_modules/bootstrap-table/dist/locale/bootstrap-table-da-DK.min.js \
   /frontend/js/
 
-# Unfortunately, `collectstatic` requires all settings to be set. We include a
-# set of insecure setting here for only this purpose. We make sure to delete it
-# afterward. If `insecure-settings.ini` is found in any production image,
-# consider it a bug. See `insecure-settings.ini` for a detailed explanation.
-ENV DB_NAME="dummy" \
-    DB_USER="dummy" \
-    DB_PASSWORD="dummy" \
-    DB_HOST="dummy" \
-    DB_PORT="dummy"
+
+
+
+# WARNING: The below config is not used for anything other than `collectstatic`.
+
+# It is unsafe to add insecure defaults anywhere inside the production-ready
+# docker image. They have a tendency to be used knowingly or unknowingly as
+# fallback values. Given a misconfiguration, like a typo, this could result in a
+# insecure production system. Normally all secrets and unsafe defaults should
+# be relegated to `docker compose` or similar.
+
+# Unfortunately, Django requires all settings to run `collectstatic`. We include a
+# set of insecure setting here for only this purpose. 
+# They are only set for the RUN statement, and do not persist in the image. 
 RUN set -ex \
-  && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py collectstatic --no-input --clear \
-  && BPC_USER_CONFIG_PATH=/code/docker/insecure-settings.ini python ./manage.py compilemessages \
-  && rm /code/docker/insecure-settings.ini
+  && export DB_NAME="insecure" \
+  DB_USER="insecure" \
+  DB_PASSWORD="insecure" \
+  DB_HOST="insecure" \
+  DB_PORT="insecure" \
+  SECRET_KEY="insecure" \
+  TIME_ZONE="Europe/Copenhagen" \
+  LANGUAGE_CODE="da-dk" \
+  && ./manage.py collectstatic --no-input --clear \
+  && ./manage.py compilemessages
 
 # Run the server as non-root user on port 9999
 USER 1001

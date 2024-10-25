@@ -1,7 +1,6 @@
 # Django settings for OS2borgerPC admin project.
 
 import os
-import configparser
 import logging
 import django
 
@@ -15,44 +14,17 @@ install_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Our customized user profile.
 AUTH_PROFILE_MODULE = "account.UserProfile"
 
-config = configparser.ConfigParser()
-config["settings"] = {}
-
-# We load settings from a file. The fallback values in this
-# `settings.py` is overwritten by the values defined in the file
-# the env var `BPC_USER_CONFIG_PATH` points to.
-
-# The `BPC_USER_CONFIG_PATH` file is for settings that should generally
-# be unique to an instance deployment.
-
-path = os.getenv("BPC_USER_CONFIG_PATH", None)
-if path:
-    try:
-        with open(path) as fp:
-            config.read_file(fp)
-        logger.info("Loaded settings file BPC_USER_CONFIG_PATH from %s" % (path))
-    except OSError as e:
-        logger.error(
-            "Loading settings file BPC_USER_CONFIG_PATH from %s failed with %s."
-            % (path, e)
-        )
-
-# use settings section as default
-settings = config["settings"]
-
-
-DEBUG = settings.getboolean("DEBUG", False)
+DEBUG = os.getenv("DEBUG", 'false').lower() == 'true'
 
 ADMINS = (
     [
-        (settings.get("ADMIN_NAME"), settings["ADMIN_EMAIL"]),
+        (os.environ.get("ADMIN_USERNAME"), os.environ["ADMIN_EMAIL"]),
     ]
-    if settings.get("ADMIN_EMAIL")
+    if os.environ.get("ADMIN_EMAIL")
     else None
 )
 
 MANAGERS = ADMINS
-
 
 # Template settings
 TEMPLATES = [
@@ -87,7 +59,7 @@ DATABASES = {
         "USER": os.environ['DB_USER'],
         "PASSWORD": os.environ['DB_PASSWORD'],
         "HOST": os.environ['DB_HOST'],
-        "PORT": os.environ['DB_PORT'],
+        "PORT": os.getenv("DB_PORT", ""),
         "OPTIONS": {
             "connect_timeout": 2,  # Minimum in 2
         },
@@ -96,16 +68,13 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts
-if settings.get("ALLOWED_HOSTS"):
-    ALLOWED_HOSTS = settings.get("ALLOWED_HOSTS").split(",")
-else:
-    ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 # Django > 4.0 introduced changes related to CSRF. Note that the protocol has to be specified too.
 # https://docs.djangoproject.com/en/4.2/releases/4.0/#csrf
 # https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
-if settings.get("CSRF_TRUSTED_ORIGINS"):
-    CSRF_TRUSTED_ORIGINS = settings.get("CSRF_TRUSTED_ORIGINS").split(",")
+if os.getenv("CSRF_TRUSTED_ORIGINS", ""):
+    CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
 else:
     CSRF_TRUSTED_ORIGINS = []
 
@@ -114,11 +83,11 @@ else:
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
 # Timezone/Language
-TIME_ZONE = settings["TIME_ZONE"]
+TIME_ZONE = os.environ["TIME_ZONE"]
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = settings["LANGUAGE_CODE"]
+LANGUAGE_CODE = os.environ["LANGUAGE_CODE"]
 
 LOCALE_PATHS = [os.path.join(install_dir, "locale")]
 
@@ -172,21 +141,21 @@ STATICFILES_FINDERS = (
 
 
 # Storage setup
-if settings.get("GS_BUCKET_NAME"):
+if os.environ.get("GS_BUCKET_NAME"):
     # The Google Cloud Storage bucket name. For `django-storages[google]`
     # https://django-storages.readthedocs.io/en/latest/backends/gcloud.html
     # If it is set, we save all files to Google Cloud.
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-    GS_BUCKET_NAME = settings.get("GS_BUCKET_NAME")
+    GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-        settings.get("GS_CREDENTIALS_FILE")
+        os.environ.get("GS_CREDENTIALS_FILE")
     )
     GS_QUERYSTRING_AUTH = False
     GS_FILE_OVERWRITE = False
-    GS_CUSTOM_ENDPOINT = settings.get("GS_CUSTOM_ENDPOINT", None)
+    GS_CUSTOM_ENDPOINT = os.environ.get("GS_CUSTOM_ENDPOINT", None)
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = settings["SECRET_KEY"]
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
@@ -203,14 +172,14 @@ MIDDLEWARE = (
 
 # Email settings
 
-DEFAULT_FROM_EMAIL = settings.get("DEFAULT_FROM_EMAIL")
-ADMIN_EMAIL = settings.get("ADMIN_EMAIL")
-EMAIL_HOST = settings.get("EMAIL_HOST")
-EMAIL_PORT = settings.get("EMAIL_PORT")
-SERVER_EMAIL = settings.get("SERVER_EMAIL")
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST_USER = settings.get("EMAIL_USER")
-EMAIL_HOST_PASSWORD = settings.get("EMAIL_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+SERVER_EMAIL = os.environ.get("SERVER_EMAIL")
+EMAIL_BACKEND = "os.environ.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
 ROOT_URLCONF = "os2borgerpc_admin.urls"
 
@@ -300,11 +269,11 @@ LOGGING = {
     },
     "root": {
         "handlers": ["console", "mail_admins"],
-        "level": settings.get("LOG_LEVEL", fallback="ERROR"),
+        "level": os.getenv("LOG_LEVEL", "ERROR"),
     },
 }
 
-INITIALIZE_DATABASE = settings.getboolean("INITIALIZE_DATABASE", False)
+INITIALIZE_DATABASE = os.getenv("INITIALIZE_DATABASE", 'false').lower() == 'true'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
@@ -313,12 +282,12 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Handler for citizen login.
-CITIZEN_LOGIN_API_VALIDATOR = settings.get(
+CITIZEN_LOGIN_API_VALIDATOR = os.environ.get(
     "CITIZEN_LOGIN_API_VALIDATOR", "system.utils.cicero_validate"
 )
 
 # Cicero specific stuff.
-CICERO_URL = settings.get("CICERO_URL")
+CICERO_URL = os.environ.get("CICERO_URL")
 
 # All Python Markdown's officially supported extensions can be added here without
 # any extra setup.
