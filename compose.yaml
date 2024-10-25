@@ -16,8 +16,6 @@ services:
         # Defaults in case values aren't passed in via the environment, so 0 (root) isn't used. Justfile overrides them.
         # NOTE: Keep in sync with the UID/GID in docker/Dockerfile
         environment:
-            UID: 75030
-            GID: 75030
             DB_HOST: db
             DB_NAME: bpc
             DB_USER: bpc
@@ -43,8 +41,7 @@ services:
             # This particular line makes it both skip the connection to the Cicero server AND the validation of the username/password
             # For that reason, depending on what you're testing, you might want to comment out this line
             CITIZEN_LOGIN_API_VALIDATOR: system.utils.always_validate_citizen
-
-        user: "${UID}:${GID}"
+            
         build:
             context: .
             dockerfile: docker/Dockerfile
