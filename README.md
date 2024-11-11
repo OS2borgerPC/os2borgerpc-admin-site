@@ -1,6 +1,4 @@
-=======================
-OS2borgerPC: Admin-Site
-=======================
+# OS2borgerPC: Admin-Site
 
 OS2BorgerPC is an open-source solution for computers made available in libraries, 
 citizen service centers, or other public-facing spaces within Danish municipalities.
@@ -45,6 +43,6 @@ and the offical Github project:
 
     https://github.com/OS2borgerPC/
 
+
 All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
---
