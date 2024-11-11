@@ -2,22 +2,36 @@
 OS2borgerPC: Admin-Site
 =======================
 
-This directory contains the OS2borgerPC Admin system, which is a remote
-administration system for Debian-based GNU/Linux-systems, especially
-Ubuntu systems.
+OS2BorgerPC is an open-source solution for computers made available in libraries, 
+citizen service centers, or other public-facing spaces within Danish municipalities.
 
-The system was originally developed for public libraries in Denmark and
-is specifically designed to manage their OS2borgerPC audience
-desktop PCs.
+The system is designed to allow citizens to perform essential digital tasks, 
+such as writing job applications, applying for benefits, paying bills, printing, 
+and communicating with public authorities. 
 
-By design, its functionality aims to be similar to that of Canonical's
-Landscape product, but less ambitious. A special feature is security
-alerts that may be triggered e.g. if a user changes a USB keyboard (some
-libraries have experienced problems with people trying to insert key
-loggers between keyboard and computer).
+OS2BorgerPC is a cost-effective and operationally stable alternative to licensed software 
+for publicly accessible workstations.
 
-Read the documentation for this project in docs/ or at
-`Read The Docs <https://os2borgerpc-admin.readthedocs.io/>`_.
+## Central Management of OS2BorgerPC Devices
+The web-based administration system provides a comprehensive overview 
+of the operational status and security alerts for all connected BorgerPCs. 
+
+Operational information is logged and can be accessed via API.
+
+The administration system is divided into sites, allowing the solution to meet 
+the municipality's needs for distributing responsibilities between institutions or departments.
+
+BorgerPCs can be assigned to groups that define script-policy packages. 
+When a PC is added to a group, the group’s scripts are executed on it, 
+ensuring that all BorgerPCs within the same sat of groups are in the same state.
+
+The administration system also offers access to a global script catalog, 
+with scripts for commonly needed adjustments to BorgerPCs. 
+
+For needs that go beyond the global scripts catalog, local scripts can be added through the GUI.
+
+Read the documentation for this project at 
+[os2borgerpc.github.io/os2borgerpc-docs/docs/admin-site/](https://os2borgerpc.github.io/os2borgerpc-docs/docs/scripts/).
 
 The system was developed by Magenta Aps (https://www.magenta.dk) and is part of the
 OS2borgerPC project.
@@ -25,7 +39,7 @@ OS2borgerPC project.
 For more information about the OS2borgerPC project, please see the
 official home page:
 
-    https://os2.eu/produkt/os2borgerpc
+    https://www.os2.eu/os2borgerpc
 
 and the offical Github project:
 
