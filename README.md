@@ -28,14 +28,13 @@ with scripts for commonly needed adjustments to BorgerPCs.
 
 For needs that go beyond the global scripts catalog, local scripts can be added through the GUI.
 
-Read the documentation for this project at 
+## Documentation
+
+Read the documentation for the admin-site at 
 [os2borgerpc.github.io/os2borgerpc-docs/docs/admin-site/](https://os2borgerpc.github.io/os2borgerpc-docs/docs/scripts/).
 
-The system was developed by Magenta Aps (https://www.magenta.dk) and is part of the
-OS2borgerPC project.
 
-For more information about the OS2borgerPC project, please see the
-official home page:
+For more information about the OS2borgerPC project, please see the official home page:
 
     https://www.os2.eu/os2borgerpc
 
@@ -43,6 +42,7 @@ and the offical Github project:
 
     https://github.com/OS2borgerPC/
 
+Main code contributor is Magenta Aps (https://www.magenta.dk).
 
 All code is made available under Version 3 of the GNU General Public
 License - see the LICENSE file for details.
