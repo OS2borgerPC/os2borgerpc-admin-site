@@ -1,0 +1,40 @@
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+<fieldset>
+  {{ form.name|as_crispy_field }}
+  {{ form.description|as_crispy_field }}
+
+    <input
+      type="hidden"
+      id="id_{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+      name="{% if form.prefix %}{{ form.prefix }}-{% endif %}site"
+      value="{{ site.id }}">
+    <input
+      id="id_is_security_script"
+      name="is_security_script"
+      value="{{ is_security }}"
+      type="hidden">
+    <input
+      id="id_is_hidden"
+      name="is_hidden"
+      value="{{ is_hidden }}"
+      type="hidden">
+    <input
+      id="id_uid"
+      name="uid"
+      value="{{ uid }}"
+      type="hidden">
+</fieldset>
+
+      <fieldset {% if disable_inputs == "yes" %}class="mt-3"{% endif %}>
+        {% if not global_script %}
+          {{ form.executable_code|as_crispy_field }}
+        {% endif %}
+        {% if show_code_preview %}
+          <p>{% translate "Code" %}:</p>
+          <pre class="mb-0"><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
+        {% endif %}
+
+      </fieldset>
+      <input type="hidden" name="script-number-of-inputs" class="script-number-of-inputs" value="0">
