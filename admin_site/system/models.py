@@ -858,7 +858,7 @@ class Script(AuditModelMixin):
     # script OR a single extractable .zip or .tar.gz file with all necessary
     # data.
     executable_code = models.FileField(
-        verbose_name=_("executable code"), upload_to="script_uploads"
+        verbose_name=_("executable code"), upload_to="script_uploads", max_length=255
     )
     is_security_script = models.BooleanField(
         verbose_name=_("security script"), default=False, null=False

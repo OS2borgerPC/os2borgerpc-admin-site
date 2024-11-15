@@ -1,5 +1,5 @@
 services:
-    frontend:
+    frontend: # Enables hot reload of code changes
         build:
             context: .
             dockerfile: docker/Dockerfile
@@ -22,6 +22,7 @@ services:
             DB_PASSWORD: bpc
             DB_PORT: ""
             ALLOWED_HOSTS: "*"
+            CORE_SCRIPT_COMMIT_HASH: 50228b24711d3c69c557dc1f5422e9094aaa430a
             DEBUG: True
             SECRET_KEY: v3rys1kr3t
             # Admin contact - fill in your own name and email as desired.
@@ -72,8 +73,8 @@ services:
         volumes:
             - .:/code/
             - ./dev-environment/dev-settings.ini:/user-settings.ini
-            - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
-            - ./dev-environment/changelog_fixtures:/code/admin_site/changelog/fixtures/
+            # - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
+            #- ./dev-environment/changelog_fixtures:/code/admin_site/changelog/fixtures/
         depends_on:
             - db
         ports:
