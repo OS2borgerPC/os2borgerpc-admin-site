@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load markdown_extras %}
 
 {% load i18n %}
 
@@ -24,8 +25,12 @@
 {% endif %}
 
       <fieldset>
-        {{ form.name|as_crispy_field }}
-        {{ form.description|as_crispy_field }}
+        {% if global_script %}
+          {{ form.description.value|markdown }}
+        {% else %}
+          {{ form.name|as_crispy_field }}
+          {{ form.description|as_crispy_field }}
+        {% endif %}
 
           <input
             type="hidden"
