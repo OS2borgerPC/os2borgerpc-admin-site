@@ -34,8 +34,6 @@ RUN set -ex \
   && apt-get clean \
   && rm -rf "/var/lib/apt/lists/*"  "/tmp/*"  "/var/tmp/*"  "/usr/share/man/??"  "/usr/share/man/??_*"
 
-WORKDIR /code/
-
 COPY VERSION /code/VERSION
 
 # Install requirements.
@@ -78,9 +76,6 @@ COPY --from=frontend \
   /code/nodejs/node_modules/bootstrap-table/dist/locale/bootstrap-table-da-DK.min.js \
   /frontend/js/
 
-
-
-
 # WARNING: The below config is not used for anything other than `collectstatic`.
 
 # It is unsafe to add insecure defaults anywhere inside the production-ready
@@ -103,6 +98,9 @@ RUN set -ex \
   LANGUAGE_CODE="da-dk" \
   && ./manage.py collectstatic --no-input --clear \
   && ./manage.py compilemessages
+
+RUN useradd -m -u 1000 appuser
+RUN mkdir -p downloaded_core_scripts && chown 1000:1000 downloaded_core_scripts
 
 # Run the server as non-root user on port 9999
 USER 1000

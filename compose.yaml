@@ -1,5 +1,5 @@
 services:
-    frontend:
+    frontend: # Enables hot reload of code changes
         build:
             context: .
             dockerfile: docker/Dockerfile
@@ -22,6 +22,8 @@ services:
             DB_PASSWORD: bpc
             DB_PORT: ""
             ALLOWED_HOSTS: "*"
+            CORE_SCRIPT_COMMIT_HASH: db319672efdcc0f7402c4a7370aa763be9960c38
+            CORE_SCRIPT_VERSION_TAG: v0.1.4
             DEBUG: True
             SECRET_KEY: v3rys1kr3t
             # Admin contact - fill in your own name and email as desired.
@@ -71,8 +73,11 @@ services:
                    gunicorn --bind 0.0.0.0:8080 os2borgerpc_admin.jobsWsgi"
         volumes:
             - .:/code/
-            - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
-            - ./dev-environment/changelog_fixtures:/code/admin_site/changelog/fixtures/
+            - scripts:/media
+            # Use below to add test data (PC's, scripts, etc) to the admin-site. If using this,
+            # disable creation of the admin/super user in the docker-entrypoint.sh file, otherwise an error at startup can occur.
+            # - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
+            # - ./dev-environment/changelog_fixtures:/code/admin_site/changelog/fixtures/
         depends_on:
             - db
         ports:
@@ -106,3 +111,4 @@ services:
         container_name: bpc_admin_site_db
 volumes:
     postgres-data:
+    scripts:
