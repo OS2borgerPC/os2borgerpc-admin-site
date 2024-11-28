@@ -1,12 +1,13 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from account.models import UserProfile
+from account.models import UserProfile, SiteMembership
+from system.models import Site, Configuration, Customer, Country
 
 class Command(BaseCommand):
 
     """
 
-    Create a superuser if none exist
+    Create a superuser if none exist. Also creates a default site, and assigns the superuser as a customer admin to this site.
 
     Example:
 
@@ -24,4 +25,27 @@ class Command(BaseCommand):
             return
         username = options["username"]
         admin = User.objects.create_superuser(username=username, password=options["password"], email=options["email"])
-        UserProfile.objects.create(user=admin)
+        user_profile = UserProfile.objects.create(user=admin)
+
+        # Create a default site for the superuser
+        configuration = Configuration.objects.create(name="default")
+
+        country = Country.objects.create(name="Default")
+        customer = Customer.objects.create(
+                name="Default",
+                country=country,
+                is_test=False
+            )
+
+        site = Site.objects.create(
+            name="Default",
+            uid="default",
+            configuration=configuration,
+            customer=customer
+        )
+
+        SiteMembership.objects.create(
+            site=site,
+            user_profile=user_profile,
+            site_user_type=SiteMembership.CUSTOMER_ADMIN
+        )
