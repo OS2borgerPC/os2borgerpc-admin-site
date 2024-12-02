@@ -15,7 +15,7 @@ class Command(BaseCommand):
     """
 
     def add_arguments(self, parser):
-        parser.add_argument("--versionTag", required=False)
+        parser.add_argument("--versionTag", required=False) # TODO-script change to required
         parser.add_argument("--commitHash", required=True)
 
     def handle(self, *args, **options):
@@ -31,7 +31,7 @@ class Command(BaseCommand):
                         description=script.description,
                         site=None, # None means global script
                         executable_code=django.core.files.File(file),
-                        is_security_script=False,
+                        is_security_script=False, # TODO-script security script should be set from the scripts returned by fetch_scripts
                         is_hidden=False,
                         maintained_by_magenta=False,
                         feature_permission=None
@@ -50,4 +50,3 @@ class Command(BaseCommand):
                           mandatory=parameter.mandatory
                       )
                       position += 1
-                # TODO-script product?
