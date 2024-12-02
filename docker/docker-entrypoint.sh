@@ -13,7 +13,7 @@ then
 fi
 
 ./manage.py create_superuser_if_none_exists --username "$ADMIN_USERNAME" --email "$ADMIN_EMAIL" --password "$ADMIN_PASSWORD"
-# Only specify --versionTag below, if env var is set
+# Only specify --versionTag below, if env var is set TODO-script always specify versionTag
 ./manage.py fetch_and_install_core_scripts --commitHash $CORE_SCRIPT_COMMIT_HASH ${CORE_SCRIPT_VERSION_TAG:+--versionTag $CORE_SCRIPT_VERSION_TAG}
 
 
