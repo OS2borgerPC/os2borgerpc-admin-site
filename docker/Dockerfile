@@ -101,6 +101,7 @@ RUN set -ex \
 
 RUN useradd -m -u 1000 appuser
 RUN mkdir -p downloaded_core_scripts && chown 1000:1000 downloaded_core_scripts
+RUN chown 1000:1000 -R /media
 
 # Run the server as non-root user on port 9999
 USER 1000
