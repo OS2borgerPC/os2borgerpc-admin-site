@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from account.models import UserProfile, SiteMembership
-from system.models import Site, Configuration, Customer, Country
+from system.models import Site, Configuration, Customer, Country, FeaturePermission
 
 class Command(BaseCommand):
 
@@ -49,3 +49,10 @@ class Command(BaseCommand):
             user_profile=user_profile,
             site_user_type=SiteMembership.CUSTOMER_ADMIN
         )
+
+        # Create and add permission to edit the wake/sleep time plan from the admin-site UI
+        featurePermission = FeaturePermission.objects.create(
+            name="Default",
+            uid="wake_plan"
+        )
+        featurePermission.customers.add(customer)
