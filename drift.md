@@ -1,90 +1,106 @@
-# Installation og drift
+# Installation og Drift
 
-OS2BorgerPC admin-site bygges som et docker image. Der er opsat en [bygge-pipeline i github](https://github.com/OS2borgerPC/os2borgerpc-admin-site/actions/workflows/docker-image.yml), som bygger docker image'et.
-Det publiceres til [GitHub Packages](https://github.com/orgs/OS2borgerPC/packages?repo_name=os2borgerpc-admin-site), hvor image-tags og URL kan ses.
+**OS2BorgerPC admin-site** bygges som et Docker-image. En [bygge-pipeline på GitHub](https://github.com/OS2borgerPC/os2borgerpc-admin-site/actions/workflows/docker-image.yml) bygger og publicerer Docker-image'et til [GitHub Packages](https://github.com/orgs/OS2borgerPC/packages?repo_name=os2borgerpc-admin-site). Her kan du finde image-tags og URL.
 
-Konfigurationen af admin site gøres via miljøvariabler, som er beskrevet nedenunder.\
-Udover konfigurationsparametre beskrives også andre krav til drift.
+Konfigurationen af admin-site sker via miljøvariabler, som er beskrevet nedenfor. Derudover beskrives også øvrige driftskrav.
 
-`compose.yaml` bruges til udvikling, men kan også bruges som et eksempel på en fuld konfiguration. Compose er dog ikke opdateret til at bruge de nye cron job endpoints beskrevet nedenunder, men laver istedet et seperat image, som kalder dem. Dette er fint til udvikling, men anbefales ikke til drift.
+En `compose.yaml`-fil er inkluderet til udviklingsbrug og kan bruges som reference for fuld konfiguration. Bemærk, at denne ikke er opdateret til de nye cron job-endpoints, men bruger i stedet et separat image til at udføre dem. Dette fungerer til udvikling, men anbefales ikke til produktion.
 
-## <a name="bootstrapping"></a> Bootstrapping
-For at kunne begynde at bruge admin-site samt tilgå Djangos administartionsside (`<base URL>/admin`) skal man have en admin bruger. Der er som default ikke nogen admin bruger, så for at kunne oprette nye brugere/første site, skal admin brugeren oprettes.\
-For at gøre dette nemt, oprettes en admin bruger ved første start, med følgende miljøvariabler:
-- ADMIN_USERNAME
-- ADMIN_PASSWORD
-- ADMIN_EMAIL
+---
 
-Admin email tilhører Django's indbyggede brugerhåndtering.
+## Bootstrapping
 
-Admin-brugeren kan også logge ind som en aldmindelig bruger, som kan administrere sites/klienter.
+For at komme i gang med admin-site og få adgang til Djangos administrationsside (`<base URL>/admin`), skal der oprettes en admin-bruger. Da der som standard ikke er nogen admin-bruger, skal denne oprettes ved første opstart med følgende miljøvariabler:
+
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD`
+- `ADMIN_EMAIL`
+
+*Bemærk:* `ADMIN_EMAIL` er en del af Djangos indbyggede brugerhåndtering. 
+
+Den oprettede admin-bruger kan også logge ind som almindelig bruger og administrere sites/klienter.
+
+---
 
 ## Database
-Miljøvariabler til konfiguration af forbindelse til databasen som bruges af Django:
-- DB_HOST
-- DB_PORT
-- DB_USER
-- DB_PASSWORD
-- DB_NAME
 
-Se `compose.yaml` for eksempel på opsætning af disse.
+Følgende miljøvariabler bruges til at konfigurere databaseforbindelsen:
+
+- `DB_HOST`
+- `DB_PORT`
+- `DB_USER`
+- `DB_PASSWORD`
+- `DB_NAME`
+
+Se `compose.yaml` for eksempler på opsætning.
+
+---
 
 ## Scripts
 
-Scripts gemmes i Django's media-mappe `/media`, og der skal derfor mountes en (persistent) volume ind på denne sti, for at scripts persisteres mellem genstart. Hvis dette ikke gøres, vil fejlbeskeden `<Kan ikke vise koden - upload venligst igen.>` ses, når man klikker ind på et givent scripts `Kode`-tab.
+Scripts gemmes i Djangos mediamappe (`/media`). For at sikre persistens mellem genstarter skal en *persistent volume* mountes på denne sti. Hvis dette ikke gøres, vil fejlbeskeden `<Kan ikke vise koden - upload venligst igen.>` (bl.a.) opstå, når man forsøger at åbne et scripts `Kode`-tab.
 
-### Globale
-Globale scripts hentes fra [OS2's core-script repository](https://github.com/OS2borgerPC/os2borgerpc-core-scripts) under opstart. Versionen der hentes konfigures via to miljøvariabler:
+### Globale Scripts
 
-```
-CORE_SCRIPT_COMMIT_HASH
-CORE_SCRIPT_VERSION_TAG
-```
+Globale scripts hentes automatisk fra [OS2's core-script repository](https://github.com/OS2borgerPC/os2borgerpc-core-scripts) under opstart. Følgende miljøvariabler bruges til at konfigurere versionen:
 
-`CORE_SCRIPT_VERSION_TAG` er den version af globale scripts man gerne vil bruge. Versionen vises i brugergrænsefladen i slutningen af navnet på hvert script. De mulige versioner kan ses det i linkede core-script repository.\
-`CORE_SCRIPT_COMMIT_HASH` er det commit hash som hører til `CORE_SCRIPT_VERSION_TAG`. Når man har valgt sin version, skal man således finde det tilhørende commit hash, og angive det her. Commit-hash kan ses på github under commit-historik (det skal være det fulde hash, og ikke den forkortede udgave). En anden nem måde at få commit-hash på, er ved kun at angive version og udelade commit-hash, så vil admin-site under opstart printe en fejl til loggen, hvor commit-hash også står i.
+- **`CORE_SCRIPT_VERSION_TAG`**  
+  Angiver den ønskede version af de globale scripts, som vises i brugergrænsefladen. Tilgængelige versioner kan ses i det linkede repository. Eksempel: `v1.2.0`.
 
-Brugen af commit-hash er en sikkerhedsforanstaltning der gør, at der ikke kan laves om i scripts, når først de har fået et versions-tag (f.eks. v1.2.0). Hvis det ændrer sig, vil admin site opdage det, og nægte at starte, før de to (commit-hash og version) stemmer overens.
+- **`CORE_SCRIPT_COMMIT_HASH`**  
+  Sikrer, at versionstagget matcher det tilsvarende commit. Dette er en sikkerhedsforanstaltning, der forhindrer utilsigtede ændringer i scripts med samme versionstag.  
 
-Et versions-tag bør aldrig ændre commit-hash. Det vil kun ske, hvis der laves om i et eksisterende release af scripts, hvor modificerede scripts udgives med et eksisterende versionsnummer, og derved overskriver det tidligere release.\
-Dette scenarie opdages ikke, hvis commit-hash ikke også angives, så admin-site kan melde fejl.
+#### Sådan Finder du Commit-Hash
+Når du har valgt en version (fx `v1.2.0`), skal du finde det tilsvarende commit-hash:  
+1. Gå til [repositoryets commit-historik](https://github.com/OS2borgerPC/os2borgerpc-core-scripts/commits/main).  
+2. Find det commit, der matcher versionstagget. Dette angives typisk i commit-beskederne eller release-noterne.  
+3. Kopiér commit-hash i fuld længde (fx `3a5c9d8f4e6e7fabc1234567890abcdef1234567`).  
 
-#### Installation af ny version af globale scripts
+Alternativt kan du undlade at angive `CORE_SCRIPT_COMMIT_HASH`. Ved opstart vil admin-site logge en fejl med det forventede commit-hash, som du derefter kan kopiere.
 
-Hvis man angiver en anden version af globale scripts og genstarter admin-site, installeres denne version af globale scripts ved siden af de eksisterende (scripts er navngivet med versionsnummer, så man kan stadig skelne mellem versionerne). De gamle scripts beholdes, for at der ikke fjernes scripts som bruges af en gruppe/computer.
+#### Installation af Ny Version af Globale Scripts
 
-Dette betyder at scripts vil akkumulere over tid, hver gang man angiver en nyere version af scripts.\
-Hvis man vil rydde op i (ældre releases af) scripts, skal man gøre det manuelt. Dette vil typisk gøres via SQL, ved at tilgå den kørende database-container. Det anbefales også at fjerne evt. scripts der ikke bruges, fra mappen `/media/script_uploads` i den kørende container. Denne mappe indeholder selve scriptet, mens databasen indeholder metadata om scriptet.\
-Oprydning kan også gøres gennem [Django's administrations-side](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/), som tilgås via URL-stien `/admin` fra en browser. Dette vil dog være en langsommelig, manuel proces, hvis der skal fjernes flere scripts.
+For at installere en ny version af globale scripts:  
+1. **Opdater miljøvariablerne**:  
+   - Sæt `CORE_SCRIPT_VERSION_TAG` til den ønskede version (fx `v1.3.0`).  
+   - Angiv det tilsvarende `CORE_SCRIPT_COMMIT_HASH`.  
+2. **Genstart admin-site**:  
+   Genstart containeren for at aktivere ændringerne. Dette downloader og installerer den nye version af scripts.
 
-Fjerner man alle scripts og genstarter, får man ryddet helt op, så kun den version man har angivet vil være installeret. Mappen `/media/script_uploads` (i docker-containeren) skal dog stadig ryddes op i manuelt.
+**Bemærk:**  
+- Eksisterende scripts fjernes ikke automatisk og forbliver tilgængelige. Dette sikrer, at ældre scripts stadig kan bruges af eksisterende grupper eller computere.  
+- Hvis du ønsker at rydde op i gamle scripts, skal dette gøres manuelt (se afsnittet [Rydning af Scripts](#cleanup-scripts)).  
 
-## Cron jobs
-Der findes to cron jobs, som benyttes til notifikationer, samt til løbende at rydde op i databasen.
+Når du har installeret en ny version, vil scripts være navngivet med deres versionsnummer. Dette gør det muligt at skelne mellem forskellige versioner og sikre kompatibilitet.  
 
-De ligger under path `/jobs/` på port `8080`, og kan køres med f.eks `curl`:
+#### <a name="cleanup-scripts"></a>  Rydning af Scripts
+
+For at rydde op:
+1. Slet scripts via SQL eller Djangos administrationsside (`/admin`).
+2. Fjern filer fra `/media/script_uploads`.
+
+---
+
+## Cron Jobs
+
+To cron jobs understøttes:
+
+- **`check_notifications`**: Sender notifikationer. *(Forslag til schedule: `*/10 * * * *`)*
+- **`clean_up_database`**: Rydder op i databasen. *(Forslag til schedule: `0 19 * * 6`)*
+
+**Sådan køres jobs via HTTP:**
 ```bash
 curl http://admin-site-url:8080/jobs/check_notifications -f
 curl http://admin-site-url:8080/jobs/clean_up_database -f
 ```
-Foreslag til cron schedule (crontab syntax):
 
-`check_notifications` - `*/10 * * * *`\
-`clean_up_database` - `0 19 * * 6`
-
-### Baggrundsviden
-Python scripts afvikles for at udføre cron jobs, og de ligger i admin-site image.
-De er implementeret som Django commands, og kaldes derfor med `manage.py <cmd-navn>`.
-
-Hvis man opretter forbindelse til en kørende admin-site container, kan jobbene udføres herfra med følgende kommandoer:
+**Baggrundsviden:** Cron jobs er implementeret som Django-commands og kaldes via `manage.py`. De kan også udføres manuelt fra en kørende container:
 ```bash
 /code/admin_site/manage.py check_notifications
 /code/admin_site/manage.py clean_up_database
 ```
-Det er også denne måde jobs køres på, når de køres via HTTP kald som beskrevet ovenover.
 
 ## Diverse
-- HTTPS_GUARANTEED true | false - default: false\
-Indsætter middleware i Django der slår sikkerhed fra, så alle requests stoles på (HTTP betragtes på samme måde som HTTPS).
-Dette er f.eks. brugbart hvis app'en driftes bag en proxy der terminerer TLS (som f.eks nginx), da Django ellers vil se login-requests som et forsøg på CSRF.\
-Det er valgfrit at sætte denne parameter. Hvis den ikke sættes, vil den automatisk have værdien false.
+- `HTTPS_GUARANTEED`: true | false (default: false)
+Hvis `true`, aktiveres middleware i Django, der slår sikkerhed fra og behandler HTTP som HTTPS. Brug denne parameter, hvis app'en kører bag en proxy, der terminerer TLS (f.eks. Nginx), for at undgå CSRF-fejl.
+Hvis parameteren ikke angives, er default-værdien `false`.
