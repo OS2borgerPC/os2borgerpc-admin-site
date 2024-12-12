@@ -13,8 +13,6 @@ services:
             # volume comes after the above bind to work.
             - /code/nodejs/node_modules/
     os2borgerpc-admin:
-        # Defaults in case values aren't passed in via the environment, so 0 (root) isn't used. Justfile overrides them.
-        # NOTE: Keep in sync with the UID/GID in docker/Dockerfile
         environment:
             DB_HOST: db
             DB_NAME: bpc
@@ -48,7 +46,6 @@ services:
             context: .
             dockerfile: docker/Dockerfile
             target: os2borgerpc
-        image: os2borgerpcadmin
         # NOTE: --workers 1 and --max-requests 1 makes gunicorn run with only
         # one worker + respawn it after each request to reload on changes
         # to templates/CSS + avoid issues where different workers have cached
@@ -88,7 +85,10 @@ services:
         container_name: bpc_admin_site_django
         privileged: true
     cron-service:
-        image: os2borgerpcadmin
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+            target: os2borgerpc
         volumes:
             - .:/code/
             - ./dev-environment/dev-settings.ini:/user-settings.ini
