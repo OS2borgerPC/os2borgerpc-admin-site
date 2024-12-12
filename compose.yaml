@@ -22,11 +22,12 @@ services:
             DB_PASSWORD: bpc
             DB_PORT: ""
             ALLOWED_HOSTS: "*"
-            CORE_SCRIPT_COMMIT_HASH: 50228b24711d3c69c557dc1f5422e9094aaa430a
+            CORE_SCRIPT_COMMIT_HASH: b3a791b52bc9937c6cb168c706ee003b0666fc93
+            CORE_SCRIPT_VERSION_TAG: v0.1.2
             DEBUG: True
             SECRET_KEY: v3rys1kr3t
             # Admin contact - fill in your own name and email as desired.
-            ADMIN_USERNAME: OS2borgerPC Admin
+            ADMIN_USERNAME: admin
             ADMIN_EMAIL: os2borgerpc_admin@os2borgerpc-vendor.example
             ADMIN_PASSWORD: admin
             # Timezone/Language

@@ -16,7 +16,7 @@ class Command(BaseCommand):
     other (ill-intended) code. Using the hash, this is prevented.
 
     Example:
-        manage.py fetch_and_install_core_scripts --versionTag v1.2.0 --commitHash 1c1c65e8f2de96f1f1dd8a3b574871477a13cc8fbd46b591e988206170735238
+        manage.py fetch_and_install_core_scripts --versionTag v0.1.2 --commitHash b3a791b52bc9937c6cb168c706ee003b0666fc93
     """
 
     def add_arguments(self, parser):
