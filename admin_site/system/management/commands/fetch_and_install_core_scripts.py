@@ -31,7 +31,7 @@ class Command(BaseCommand):
 
             if uid and Script.objects.filter(uid=uid).exists():
                 Script.objects.filter(uid=uid).delete()
-            
+
             if not Script.objects.filter(name=versionedName).exists():
                 with open(script.sourcePath, 'rb') as file:
                     # Get only the base file name
