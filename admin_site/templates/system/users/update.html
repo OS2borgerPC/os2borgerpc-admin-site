@@ -54,7 +54,7 @@
       {% include 'notification.html' %}
       <div>
         {% if site_membership.site_user_type < site_membership.SITE_ADMIN and not user.is_superuser and not user == selected_user %}
-            <p> {% translate "Site users are not authorized to edit other users. Ask a site admin or Magenta for help." %}</p>
+            <p> {% translate "Site users are not authorized to edit other users. Use the admin account instaed." %}</p>
         {% else %}
             <form
               name="update_user_form"

@@ -606,10 +606,6 @@ msgid "hidden script"
 msgstr "dolt skript"
 
 #: system/models.py
-msgid "maintained by Magenta"
-msgstr "underhålls av Magenta"
-
-#: system/models.py
 msgid "position"
 msgstr "position"
 
@@ -1658,14 +1654,6 @@ msgstr ""
 "När du lägger till en kommentar kommer ditt användarnamn att visas ovanför "
 "kommentaren."
 
-#: templates/documentation/changelogs/index.html
-msgid ""
-"Comments can also be answered by both Magenta's employees and other logged-"
-"in users."
-msgstr ""
-"Kommentarer kan också besvaras av både Magentas anställda och alla användare "
-"som är registrerade på en site."
-
 #: templates/documentation/computers/__submenu__.html
 #: templates/documentation/groups/__submenu__.html
 msgid "General editing"
@@ -2648,18 +2636,6 @@ msgstr ""
 "starta om jobbet (främst relevant om jobbet misslyckades)."
 
 #: templates/documentation/jobs/index.html
-msgid "Jobs run by Magenta"
-msgstr "Jobs drevet af Magenta"
-
-#: templates/documentation/jobs/index.html
-msgid ""
-"If the user for a job is listed as \"Magenta\", it means that the job was "
-"started by the OS2borgerPC team at Magenta."
-msgstr ""
-"Om användaren för ett jobb är listad som \"Magenta\" betyder det att jobbet "
-"startades av Sambruk MedborgarPC-teamet på Magenta."
-
-#: templates/documentation/jobs/index.html
 msgid "This is used for e.g."
 msgstr "Den används till exempel för"
 
@@ -3082,10 +3058,6 @@ msgid "Executing Scripts"
 msgstr "Exekvering av Skript"
 
 #: templates/documentation/scripts/edit.html
-msgid "Note that only Magenta can edit global scripts."
-msgstr "Observera att endast Magenta kan redigera globala skript."
-
-#: templates/documentation/scripts/edit.html
 msgid ""
 "If you wish to edit a Script, you must click on \"Scripts\" in the left-hand "
 "menu and then select the script in the list of scripts shown to the right of "
@@ -3185,11 +3157,6 @@ msgstr ""
 #: templates/documentation/scripts/parameters.html
 msgid "Editing Script arguments"
 msgstr "Redigering av Skript-indataparametrar"
-
-#: templates/documentation/scripts/parameters.html
-msgid "Note that only Magenta can edit the parameters of global scripts."
-msgstr ""
-"Observera att endast Magenta kan redigera parametrarna för globala skript."
 
 #: templates/documentation/scripts/parameters.html
 msgid ""
@@ -3362,10 +3329,6 @@ msgstr "Redigering av Säkerhetsskript"
 #: templates/documentation/users/index.html
 msgid "Security Rules"
 msgstr "Säkerhetsregler"
-
-#: templates/documentation/security_scripts/edit.html
-msgid "Note that only Magenta can edit global security scripts."
-msgstr "Observera att endast Magenta kan redigera globala säkerhetsskript."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
@@ -4024,14 +3987,6 @@ msgid "Permissions for Usertypes"
 msgstr "Rättigheter för användartyper"
 
 #: templates/documentation/users/index.html
-msgid ""
-"Note: Contact Magenta if a user on your site needs to be changed to a "
-"usertype that none of your users have permission to choose."
-msgstr ""
-"Obs: Kontakta Magenta om en användare på din site behöver ändras till "
-"en användartyp som ingen av dina användare har behörighet att välja."
-
-#: templates/documentation/users/index.html
 msgid "All permissions, except deleting Customer Admins"
 msgstr "Alle rättigheter, förutom att ta bort Kunde-admins"
 
@@ -4406,18 +4361,6 @@ msgstr ""
 #: templates/documentation/wake_plans/index.html
 msgid "Power saving functions"
 msgstr "Energisparfunktioner"
-
-#: templates/documentation/wake_plans/index.html
-msgid ""
-"The power saving functions consist of a suspend script and on/off schedules. "
-"These functions can only be accessed by the customers that pay for access. "
-"The customers that helped fund the functions automatically have access. "
-"Other customers can contact Magenta if they are interested."
-msgstr ""
-"De energisparande funktionerna består av ett skript för vila och på / av-"
-"scheman. Dessa funktioner kan endast användas av kunder som har köpt "
-"åtkomst. Alla kunder som hjälpte till att finansiera funktionerna har "
-"automatisk åtkomst. Andra kunder kan kontakta Magenta om de är intresserade."
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
@@ -5931,14 +5874,6 @@ msgstr "Profil:"
 msgid "Create new user"
 msgstr "Lägg till en ny användare"
 
-#: templates/system/users/update.html
-msgid ""
-"Site users are not authorized to edit other users. Ask a site admin or "
-"Magenta for help."
-msgstr ""
-"Site-användare har inte tillgång till att ändra andra användare. Fråga en "
-"Site-administratör eller Magenta för att få hjälp."
-
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan_base.html
 msgid "Delete on/off schedule"
@@ -6267,10 +6202,6 @@ msgstr ""
 msgid "Check updates for OS2borgerPC"
 msgstr "Se uppdateringar i Sambruk MedborgarPC"
 
-#: templates/two_factor/_base.html
-msgid "Send a message to Magenta"
-msgstr "Skicka ett meddelande till Magenta"
-
 #: templates/two_factor/core/backup_tokens.html
 #: templates/two_factor/core/setup.html
 #: templates/two_factor/core/setup_complete.html
@@ -6405,17 +6336,6 @@ msgstr ""
 #: templates/two_factor/core/setup.html
 msgid "We sent you a text message, please enter the tokens we sent."
 msgstr ""
-
-#: templates/two_factor/core/setup.html
-msgid ""
-"We've encountered an issue with the selected authentication method. Please "
-"go back and verify that you entered your information correctly, try again, "
-"or use a different authentication method instead. If the issue persists, "
-"contact Magenta."
-msgstr ""
-"Vi har stött på ett problem med den valda metoden. Vänligen gå tillbaka och "
-"verifiera att du har angett din information korrekt, försök igen eller "
-"använd en annan metod. Kontakta Magenta om problemet kvarstår."
 
 #: templates/two_factor/core/setup.html
 msgid ""

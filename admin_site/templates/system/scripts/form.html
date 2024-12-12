@@ -26,9 +26,6 @@
       <fieldset>
         {{ form.name|as_crispy_field }}
         {{ form.description|as_crispy_field }}
-        {% if not global_script %}
-          {{ form.maintained_by_magenta|as_crispy_field }}
-        {% endif %}
 
           <input
             type="hidden"

@@ -605,10 +605,6 @@ msgid "hidden script"
 msgstr "skjult script"
 
 #: system/models.py
-msgid "maintained by Magenta"
-msgstr "vedligeholdt af Magenta"
-
-#: system/models.py
 msgid "position"
 msgstr "position"
 
@@ -1656,11 +1652,9 @@ msgstr ""
 
 #: templates/documentation/changelogs/index.html
 msgid ""
-"Comments can also be answered by both Magenta's employees and other logged-"
-"in users."
+"Comments can also be answered by other logged-in users."
 msgstr ""
-"Kommentarer kan også blive besvaret både af Magentas ansatte samt alle "
-"brugere tilmeldt et site."
+"Kommentarer kan også blive besvaret af alle brugere tilmeldt et site."
 
 #: templates/documentation/computers/__submenu__.html
 #: templates/documentation/groups/__submenu__.html
@@ -2650,18 +2644,6 @@ msgstr ""
 "jobbet (dette er primært relevant hvis jobbet fejlede)."
 
 #: templates/documentation/jobs/index.html
-msgid "Jobs run by Magenta"
-msgstr "Jobs kørt af Magenta"
-
-#: templates/documentation/jobs/index.html
-msgid ""
-"If the user for a job is listed as \"Magenta\", it means that the job was "
-"started by the OS2borgerPC team at Magenta."
-msgstr ""
-"Hvis brugeren for et job er angivet som \"Magenta\", betyder det at jobbet "
-"blev startet af OS2borgerPC-teamet hos Magenta."
-
-#: templates/documentation/jobs/index.html
 msgid "This is used for e.g."
 msgstr "Det bruges eksempelvis til"
 
@@ -3082,8 +3064,8 @@ msgid "Executing Scripts"
 msgstr "Afvikling af Scripts"
 
 #: templates/documentation/scripts/edit.html
-msgid "Note that only Magenta can edit global scripts."
-msgstr "Bemærk at kun Magenta kan redigere globale scripts."
+msgid "Note that global scripts are immutable. A newer version of the scripts can be installed by updating the admin-site deployment. If you do not self-host, your hosting provider can the update the scripts for you."
+msgstr "Bemærk, at globale scripts ikke kan ændres. En nyere version af scripts kan installeres ved at opdatere admin-site-installationen. Hvis du ikke selv står for driften, kan din driftsudbyder opdatere scriptsene for dig."
 
 #: templates/documentation/scripts/edit.html
 msgid ""
@@ -3189,9 +3171,9 @@ msgid "Editing Script arguments"
 msgstr "Redigering af Script-inputparametre"
 
 #: templates/documentation/scripts/parameters.html
-msgid "Note that only Magenta can edit the parameters of global scripts."
+msgid "Note that the input parameters for global scripts cannot be edited."
 msgstr ""
-"Bemærk at kun Magenta kan redigere inputparametrene for globale scripts."
+"Bemærk at inputparametrene for globale scripts ikke kan redigeres."
 
 #: templates/documentation/scripts/parameters.html
 msgid ""
@@ -3368,8 +3350,8 @@ msgid "Security Rules"
 msgstr "Sikkerhedsregler"
 
 #: templates/documentation/security_scripts/edit.html
-msgid "Note that only Magenta can edit global security scripts."
-msgstr "Bemærk at kun Magenta kan redigere globale sikkerhedsscripts."
+msgid "Note that global security scripts are immutable."
+msgstr "Bemærk at globale sikkerhedsscripts ikke kan ændres."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
@@ -4026,14 +4008,6 @@ msgid "Permissions for Usertypes"
 msgstr "Rettigheder for Brugertyper"
 
 #: templates/documentation/users/index.html
-msgid ""
-"Note: Contact Magenta if a user on your site needs to be changed to a "
-"usertype that none of your users have permission to choose."
-msgstr ""
-"Bemærk: Kontakt Magenta hvis en bruger på dit site skal ændres til en "
-"brugertype, som ingen af jeres brugere har rettigheder til at vælge."
-
-#: templates/documentation/users/index.html
 msgid "All permissions, except deleting Customer Admins"
 msgstr "Alle rettigheder, bortset fra at slette Kunde-admins"
 
@@ -4413,15 +4387,9 @@ msgstr "Strømbesparende funktioner"
 
 #: templates/documentation/wake_plans/index.html
 msgid ""
-"The power saving functions consist of a suspend script and on/off schedules. "
-"These functions can only be accessed by the customers that pay for access. "
-"The customers that helped fund the functions automatically have access. "
-"Other customers can contact Magenta if they are interested."
+"The power saving functions consist of a suspend script and on/off schedules."
 msgstr ""
-"De strømbesparende funktioner består af et dvale-script og tænd/sluk-"
-"tidsplaner. Disse funktioner kan kun anvendes af de kunder, som har tilkøbt "
-"sig adgang. Alle kunder, som var med til at finansiere funktionerne, har "
-"automatisk adgang. Andre kunder kan kontakte Magenta, hvis de er "
+"De strømbesparende funktioner består af et dvale-script og tænd/sluk-tidsplaner."
 "interesserede."
 
 #: templates/documentation/wake_plans/index.html
@@ -5937,11 +5905,9 @@ msgstr "Tilføj ny bruger"
 
 #: templates/system/users/update.html
 msgid ""
-"Site users are not authorized to edit other users. Ask a site admin or "
-"Magenta for help."
+"Site users are not authorized to edit other users. Use the admin account instaed."
 msgstr ""
-"Site-brugere har ikke adgang til at ændre andre brugere. Bed en site-admin "
-"eller Magenta om hjælp."
+"Site-brugere har ikke adgang til at ændre andre brugere. Brug admin-brugeren i stedet."
 
 #: templates/system/wake_plan/confirm_delete.html
 #: templates/system/wake_plan/wake_plan_base.html
@@ -6273,10 +6239,6 @@ msgstr ""
 msgid "Check updates for OS2borgerPC"
 msgstr "Se opdateringer i OS2borgerPC"
 
-#: templates/two_factor/_base.html
-msgid "Send a message to Magenta"
-msgstr "Send en besked til Magenta"
-
 #: templates/two_factor/core/backup_tokens.html
 #: templates/two_factor/core/setup.html
 #: templates/two_factor/core/setup_complete.html
@@ -6417,11 +6379,11 @@ msgid ""
 "We've encountered an issue with the selected authentication method. Please "
 "go back and verify that you entered your information correctly, try again, "
 "or use a different authentication method instead. If the issue persists, "
-"contact Magenta."
+"contact the OS2BorgerPC project."
 msgstr ""
 "Vi er stødt ind i et problem med den valgte metode. Gå venligst tilbage og "
 "verificer at du indtastede din information korrekt, prøv igen, eller brug en "
-"anden metode. Hvis problemet fortsætter så kontakt Magenta."
+"anden metode. Hvis problemet fortsætter så kontakt OS2BorgerPC projektet."
 
 #: templates/two_factor/core/setup.html
 msgid ""

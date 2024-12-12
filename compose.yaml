@@ -25,7 +25,7 @@ services:
             DEBUG: True
             SECRET_KEY: v3rys1kr3t
             # Admin contact - fill in your own name and email as desired.
-            ADMIN_USERNAME: OS2borgerPC Admin
+            ADMIN_USERNAME: admin
             ADMIN_EMAIL: os2borgerpc_admin@os2borgerpc-vendor.example
             ADMIN_PASSWORD: admin
             # Timezone/Language
@@ -71,7 +71,6 @@ services:
                    gunicorn --bind 0.0.0.0:8080 os2borgerpc_admin.jobsWsgi"
         volumes:
             - .:/code/
-            - ./dev-environment/dev-settings.ini:/user-settings.ini
             - ./dev-environment/system_fixtures:/code/admin_site/system/fixtures/
             - ./dev-environment/changelog_fixtures:/code/admin_site/changelog/fixtures/
         depends_on:
