@@ -3,6 +3,11 @@ from django.core.management.base import BaseCommand
 from system.models import Script, ScriptTag, Input
 from system.script_fetcher import fetch_scripts
 
+CORE_REPOS = [
+    ("https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git", "Core Scripts"),
+    #("https://github.com/OS2borgerPC/os2borgerpc-system-scripts.git", "System Scripts"),
+]
+
 class Command(BaseCommand):
 
     """
@@ -15,14 +20,27 @@ class Command(BaseCommand):
     """
 
     def add_arguments(self, parser):
-        parser.add_argument("--versionTag", required=False) # TODO-script change to required
+        parser.add_argument("--versionTag", required=True)
         parser.add_argument("--commitHash", required=True)
 
     def handle(self, *args, **options):
-        #Script.objects.all().delete() # TODO-script remove
-        #Input.objects.all().delete() # TODO-script remove
-        for script in fetch_scripts(options['versionTag'], options['commitHash']):
-            versionedName = script.title + " " + "v0.0.0" # options['versionTag'] # TODO-script
+        all_scripts = []
+        for repo_url, repo_name in CORE_REPOS:
+            self.stdout.write(f"Fetching scripts from {repo_name} repository...")
+            scripts = fetch_scripts(repo_url, options['versionTag'], options['commitHash'])
+            all_scripts.extend(scripts)
+        
+        for script in all_scripts:
+            versionedName = script.title + " " + options['versionTag']
+            uid = script.metadata.get("uid", None)
+            is_security_script = script.metadata.get("security", False)
+            is_hidden = script.metadata.get("hidden", False)
+
+            if uid and Script.objects.filter(uid=uid).exists():
+                # update existing
+                #self.update_script(uid, versionedName, script.description, is_security_script, is_hidden, script.tag, script.parameters, script.sourcePath)
+                Script.objects.filter(uid=uid).delete()
+            
             if not Script.objects.filter(name=versionedName).exists():
                 with open(script.sourcePath, 'rb') as file:
                     # Get only the base file name
@@ -31,22 +49,84 @@ class Command(BaseCommand):
                         description=script.description,
                         site=None, # None means global script
                         executable_code=django.core.files.File(file),
-                        is_security_script=False, # TODO-script security script should be set from the scripts returned by fetch_scripts
-                        is_hidden=False,
+                        is_security_script=is_security_script, #False, # TODO-script security script should be set from the scripts returned by fetch_scripts
+                        is_hidden=is_hidden, #False,
                         maintained_by_magenta=False,
-                        feature_permission=None
+                        feature_permission=None,
+                        uid=uid
                     )
                     tag, created = ScriptTag.objects.get_or_create(name=script.tag)
                     db_script.tags.add(tag)
 
                     position = 1
                     for parameter in script.parameters:
-                      Input.objects.create(
-                          script=db_script,
-                          name=parameter.name,
-                          value_type=parameter.type,
-                          default_value=parameter.default,
-                          position=position,
-                          mandatory=parameter.mandatory
-                      )
-                      position += 1
+                        Input.objects.create(
+                            script=db_script,
+                            name=parameter.name,
+                            value_type=parameter.type,
+                            default_value=parameter.default,
+                            position=position,
+                            mandatory=parameter.mandatory
+                        )
+                        position += 1
+                
+
+
+#    def update_script(self, uid, name, description, is_security_script, is_hidden, tag_name, parameters, sourcePath):
+#        existing_script = Script.objects.filter(uid=uid).first()
+#        if existing_script:
+#            with open(sourcePath, 'rb') as file:
+#                existing_script.name = name
+#                existing_script.description = description
+#                executable_code=django.core.files.File(file),
+#                existing_script.is_security_script = is_security_script
+#                existing_script.is_hidden = is_hidden
+#                existing_script.save()
+#
+#                # Update ScriptTag
+#                tag, created = ScriptTag.objects.get_or_create(name=tag_name)
+#                existing_script.tags.set([tag])
+#
+#                # Update inputs, by first deleting existing and then create based on new information
+#                existing_script.inputs.all().delete()
+#                # Create new inputs
+#                position = 1
+#                for parameter in parameters:
+#                    Input.objects.create(
+#                        script=existing_script,
+#                        name=parameter.name,
+#                        value_type=parameter.type,
+#                        default_value=parameter.default,
+#                        position=position,
+#                        mandatory=parameter.mandatory
+#                    )
+#                    position += 1
+    
+#    def create_script(self, uid, name, description, is_security_script, is_hidden, tag_name, parameters, sourcePath):
+#        with open(sourcePath, 'rb') as file:
+#            # Get only the base file name
+#            db_script = Script.objects.create(
+#                name=name,
+#                description=description,
+#                site=None, # None means global script
+#                executable_code=django.core.files.File(file),
+#                is_security_script=is_security_script, #False, # TODO-script security script should be set from the scripts returned by fetch_scripts
+#                is_hidden=is_hidden, #False,
+#                maintained_by_magenta=False,
+#                feature_permission=None,
+#                uid=uid
+#            )
+#            tag, created = ScriptTag.objects.get_or_create(name=tag_name)
+#            db_script.tags.add(tag)
+#
+#            position = 1
+#            for parameter in parameters:
+#                Input.objects.create(
+#                    script=db_script,
+#                    name=parameter.name,
+#                    value_type=parameter.type,
+#                    default_value=parameter.default,
+#                    position=position,
+#                    mandatory=parameter.mandatory
+#                )
+#                position += 1

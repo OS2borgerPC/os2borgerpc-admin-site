@@ -9,8 +9,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def fetch_scripts(versionTag, commitHash): # TODO-script use args
-    repo_url = "https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git"
+def fetch_scripts(repoUrl, versionTag, commitHash):
+    repo_url = repoUrl
     clone_path = Path("downloaded_core_scripts") / get_repo_name(repo_url) / commitHash
 
     # Perform a shallow clone if the repository isn't already cloned
@@ -59,12 +59,18 @@ def fetch_scripts(versionTag, commitHash): # TODO-script use args
                     logger.warning(file_content)
                     logger.warning(f"Exception: {e}")
                     continue
-                if not Path(script.sourcePath).exists():
+                if not Path(script.sourcePath).exists() and not Path(script.sourcePath).is_file():
                     logger.warning("Skipping " + str(md_file.relative_to(md_dir_path)) + " because the 'source' attribute does not point to a valid file.")
                     continue
                 scripts.append(script)
 
     return scripts
+
+@dataclass
+class Metadata:
+    uid: Optional[str]
+    security: Optional[bool]
+    hidden: Optional[bool]
 
 @dataclass
 class Parameter:
@@ -84,6 +90,7 @@ class Script:
     tag: str
     partners: Optional[str]
     parameters: List[Parameter] = field(default_factory=list)
+    metadata: Optional[Metadata] = None
 
 def parse_md_to_script(content: str, clone_path: Path) -> Script:
     # Split YAML and Markdown content
@@ -94,6 +101,10 @@ def parse_md_to_script(content: str, clone_path: Path) -> Script:
     # Parse the YAML content
     yaml_content = yaml.safe_load(yaml_string)
 
+    # Parse metadata
+    metadata_content = yaml_content.get('metadata', {})
+
+    # Parse parameters
     params = yaml_content.get('parameters', [])
     params = params if params is not None else []
 
@@ -117,7 +128,8 @@ def parse_md_to_script(content: str, clone_path: Path) -> Script:
         description=markdown_string,
         tag=yaml_content.get('parent'),
         partners=yaml_content.get('partners'),
-        parameters=parameters
+        parameters=parameters,
+        metadata=metadata_content
     )
 
 def get_repo_name(repo_url):
