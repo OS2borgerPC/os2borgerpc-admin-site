@@ -3082,10 +3082,6 @@ msgid "Executing Scripts"
 msgstr "Exekvering av Skript"
 
 #: templates/documentation/scripts/edit.html
-msgid "Note that only Magenta can edit global scripts."
-msgstr "Observera att endast Magenta kan redigera globala skript."
-
-#: templates/documentation/scripts/edit.html
 msgid ""
 "If you wish to edit a Script, you must click on \"Scripts\" in the left-hand "
 "menu and then select the script in the list of scripts shown to the right of "

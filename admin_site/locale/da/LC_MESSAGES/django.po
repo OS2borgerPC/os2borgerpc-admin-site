@@ -3082,8 +3082,8 @@ msgid "Executing Scripts"
 msgstr "Afvikling af Scripts"
 
 #: templates/documentation/scripts/edit.html
-msgid "Note that only Magenta can edit global scripts."
-msgstr "Bemærk at kun Magenta kan redigere globale scripts."
+msgid "Note that global scripts are immutable. A newer version of the scripts can be installed by updating the admin-site deployment. If you do not self-host, your hosting provider can the update the scripts for you."
+msgstr "Bemærk, at globale scripts ikke kan ændres. En nyere version af scripts kan installeres ved at opdatere admin-site-installationen. Hvis du ikke selv står for driften, kan din driftsudbyder opdatere scriptsene for dig."
 
 #: templates/documentation/scripts/edit.html
 msgid ""
@@ -3189,9 +3189,9 @@ msgid "Editing Script arguments"
 msgstr "Redigering af Script-inputparametre"
 
 #: templates/documentation/scripts/parameters.html
-msgid "Note that only Magenta can edit the parameters of global scripts."
+msgid "Note that the input parameters for global scripts cannot be edited."
 msgstr ""
-"Bemærk at kun Magenta kan redigere inputparametrene for globale scripts."
+"Bemærk at inputparametrene for globale scripts ikke kan redigeres."
 
 #: templates/documentation/scripts/parameters.html
 msgid ""
@@ -3368,8 +3368,8 @@ msgid "Security Rules"
 msgstr "Sikkerhedsregler"
 
 #: templates/documentation/security_scripts/edit.html
-msgid "Note that only Magenta can edit global security scripts."
-msgstr "Bemærk at kun Magenta kan redigere globale sikkerhedsscripts."
+msgid "Note that global security scripts are immutable."
+msgstr "Bemærk at globale sikkerhedsscripts ikke kan ændres."
 
 #: templates/documentation/security_scripts/edit.html
 msgid ""
