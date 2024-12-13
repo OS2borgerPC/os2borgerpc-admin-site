@@ -105,7 +105,7 @@ RUN set -ex \
   && ./manage.py compilemessages
 
 # Run the server as non-root user on port 9999
-USER 1001
+USER 1000
 EXPOSE 9999
 EXPOSE 8080
 ENTRYPOINT ["/code/docker/docker-entrypoint.sh"]
