@@ -81,6 +81,7 @@ from system.forms import (
     PCGroupForm,
     ParameterForm,
     ScriptForm,
+    NewScriptForm,
     SecurityEventForm,
     SiteForm,
     SiteCreateForm,
@@ -935,7 +936,7 @@ class JobSearch(SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSite
     def get_username(self, user):
         if user:
             if user and user.is_superuser:
-                return "Admin"
+                return "Magenta"
             else:
                 return user.username
         else:
@@ -1330,6 +1331,20 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
     template_name = "system/scripts/update.html"
     form_class = ScriptForm
 
+    # This get_form method is overriden to pass global_script to the form_class (ScripForm) instance
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+
+        script_instance = self.get_object()
+        global_script = script_instance.is_global if script_instance else False
+
+        # Ensure the original arguments are passed to the form, along with global_script
+        form_kwargs = self.get_form_kwargs()
+        form_kwargs["global_script"] = global_script
+
+        return form_class(**form_kwargs)
+
     def get_context_data(self, **kwargs):
         # Get context from super class
         context = super(ScriptUpdate, self).get_context_data(**kwargs)
@@ -1342,7 +1357,7 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
                 display_code = "<Kan ikke vise koden - upload venligst igen.>"
             context["script_preview"] = display_code
         context["type_choices"] = Input.VALUE_CHOICES
-        self.create_form = ScriptForm()
+        self.create_form = NewScriptForm()
         self.create_form.prefix = "create"
         context["create_form"] = self.create_form
         context["is_hidden"] = self.script.is_hidden

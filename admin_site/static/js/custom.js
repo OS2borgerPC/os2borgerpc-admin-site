@@ -88,7 +88,7 @@ var BibOS
       // The functionality can be used to make tab forms redirect to whatever the current tab is, after pressing "Save" on
       // the form.
       // Example: This URL should go directly to site configs:
-      // http://localhost:9999/site/magenta/settings/#configs-tab
+      // http://localhost:9999/site/default/settings/#configs-tab
       // In other words you trigger it based off the ID of the button activating it, rather than the ID of the tab
       // itself.
       if (window.location.hash) {

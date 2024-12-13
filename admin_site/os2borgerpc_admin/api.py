@@ -12,7 +12,7 @@ from system.api import router as system_router
 # "key" must then be passed as part of a HTTP header
 # The header format is: "Authorizization: Bearer <SOME_API_KEY_HERE>"
 # Example curl call:
-# curl --header 'Authorization: Bearer <SOME_API_KEY_HERE>' http://os2borgerpc-admin.magenta.dk/api/system/pcs
+# curl --header 'Authorization: Bearer <SOME_API_KEY_HERE>' http://localhost:9999/api/system/pcs
 class GlobalAuth(HttpBearer):
     def authenticate(self, request, key):
         valid_key_check = APIKey.objects.filter(key=key).first()
