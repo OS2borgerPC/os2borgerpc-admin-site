@@ -21,3 +21,5 @@ psycopg==3.1.18                  # Used in the example docker-compose.yml
 python-dateutil==2.8.2           # Required by django-xmlrpc
 requests==2.31.0
 whitenoise==6.6.0                # If you don't have a web server in front to serve static files
+PyYAML==6.0.2
+markdown==3.7

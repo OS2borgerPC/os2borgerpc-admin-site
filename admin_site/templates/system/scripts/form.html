@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load markdown_extras %}
 
 {% load i18n %}
 
@@ -24,8 +25,12 @@
 {% endif %}
 
       <fieldset>
-        {{ form.name|as_crispy_field }}
-        {{ form.description|as_crispy_field }}
+        {% if global_script %}
+          {{ form.description.value|markdown }}
+        {% else %}
+          {{ form.name|as_crispy_field }}
+          {{ form.description|as_crispy_field }}
+        {% endif %}
 
           <input
             type="hidden"
@@ -55,8 +60,9 @@
 {% endif %}
 
       <fieldset {% if disable_inputs == "yes" %}class="mt-3"{% endif %}>
-        {{ form.executable_code|as_crispy_field }}
-
+        {% if not global_script %}
+          {{ form.executable_code|as_crispy_field }}
+        {% endif %}
         {% if show_code_preview %}
           <p>{% translate "Code" %}:</p>
           <pre class="mb-0"><code id="script-code" class="bash">{{script_preview |escape}}</code></pre>
@@ -82,18 +88,22 @@
                   <th>{% translate "Type" %}</th>
                   <th>{% translate "Default value" %}</th>
                   <th>{% translate "Required" %}</th>
-                  <th>{% translate "Delete" %}</th>
+                  {% if not global_script %}
+                    <th>{% translate "Delete" %}</th>
+                  {% endif %}
                 </tr>
               </thead>
               <tbody id="script-input-container">
                 <tr class="script-input-add">
                   <td colspan="5">
-                    <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="{% translate "Add arguments" %}">
-                      <span class="d-flex align-items-center">
-                        <span class="material-icons me-1">add</span>
-                        {% translate "Add arguments" %}
-                      </span>
-                    </a>
+                    {% if not global_script %}
+                      <a class="btn table-config-add" href="javascript:void(0)" onclick="BibOS.ScriptEdit.addInput('#script-inputs', {})" title="{% translate "Add arguments" %}">
+                        <span class="d-flex align-items-center">
+                          <span class="material-icons me-1">add</span>
+                          {% translate "Add arguments" %}
+                        </span>
+                      </a>
+                    {% endif %}
                   </td>
                 </tr>
               </tbody>

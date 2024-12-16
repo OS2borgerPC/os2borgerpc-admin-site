@@ -6,28 +6,30 @@
       <tr class="script-input">
         <td>
           <input type="hidden" name="script-input-pk" value="#PK#" class="pk-input">
-          <input type="text" name="script-input-name" value="#NAME#" class="name-input form-control">
+          <input type="text" name="script-input-name" value="#NAME#" class="name-input form-control" {% if is_global_script %} disabled {% endif %}>
           <p class="error text-danger d-inline">#NAME_ERROR#</p>
         </td>
         <td>
-          <select name="script-input-type" class="type-input form-select">
+          <select name="script-input-type" class="type-input form-select" {% if is_global_script %} disabled {% endif %}>
             {% for value, name in type_choices %}
               <option value="{{value}}">{{name}}</option>
             {% endfor %}
           </select>
         </td>
         <td>
-          <input type="text" name="script-input-default" value="#DEFAULT_VALUE#" class="default-input form-control">
+          <input type="text" name="script-input-default" value="#DEFAULT_VALUE#" class="default-input form-control" {% if is_global_script %} disabled {% endif %}>
         </td>
         <td>
-          <input type="checkbox" name="script-input-mandatory" value="#MANDATORY#" class="mandatory-input form-check-input">
+          <input type="checkbox" name="script-input-mandatory" value="#MANDATORY#" class="mandatory-input form-check-input" {% if is_global_script %} disabled {% endif %}>
         </td>
+        {% if not is_global_script %}
         <td style="vertical-align: middle;">
           <a class="btn btn-sm p-0" href="javascript:void(0)" onclick="BibOS.ScriptEdit.removeInput($(this).parent().parent())">
             <span class="material-icons">delete</span>
             {% translate "Delete" %}
           </a>
         </td>
+        {% endif %}
       </tr>
     </tbody>
   </table>

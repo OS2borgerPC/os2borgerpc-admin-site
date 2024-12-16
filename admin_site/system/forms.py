@@ -120,15 +120,32 @@ class PCGroupForm(forms.ModelForm):
         model = PCGroup
         exclude = ["site", "configuration", "wake_week_plan"]
 
+class NewScriptForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(NewScriptForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, "instance", None)
+        if instance and instance.pk:
+            self.fields["site"].disabled = True
+
+        self.fields["tags"].disabled = True
+
+    class Meta:
+        model = Script
+        exclude = ["feature_permission", "product"]
 
 class ScriptForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, global_script = False, **kwargs):
         super(ScriptForm, self).__init__(*args, **kwargs)
         instance = getattr(self, "instance", None)
         if instance and instance.pk:
             self.fields["site"].disabled = True
 
         self.fields["tags"].disabled = True
+        self.fields['name'].widget.attrs['disabled'] = global_script
+        self.fields['name'].required = not global_script
+        self.fields['description'].widget.attrs['disabled'] = global_script
+        self.fields['description'].required = not global_script
+
 
     class Meta:
         model = Script

@@ -13,5 +13,7 @@ then
 fi
 
 ./manage.py create_superuser_if_none_exists --username "$ADMIN_USERNAME" --email "$ADMIN_EMAIL" --password "$ADMIN_PASSWORD"
+./manage.py fetch_and_install_core_scripts --commitHash $CORE_SCRIPT_COMMIT_HASH --versionTag $CORE_SCRIPT_VERSION_TAG
+
 
 exec "$@"

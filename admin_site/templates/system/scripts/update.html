@@ -41,11 +41,13 @@
 
 {% block specific_content %}
 
-  {% include 'system/scripts/templates.html' %}
+  {% include 'system/scripts/templates.html' with is_global_script=selected_script.is_global %}
 
   <div class="container-fluid main sublevelmain">
     <h2 class="divideheader">
-      {% translate "Edit" %}
+      {% if selected_script.is_global is False %}
+        {% translate "Edit" %}
+      {% endif %}
       {% if is_security %}
       {% translate "Security Script" %}
       {% else %}
@@ -78,6 +80,7 @@
         </div>
       {% endif %}
 
+      {% if selected_script.is_global is False %}
       <div class="d-flex justify-content-end">
         {% if form.instance.created %}
           <p class="mb-3 mt-3">
@@ -97,17 +100,18 @@
           </p>
         {% endif %}
       </div>
+      {% endif %}
 
       <div class="clearfix"></div>
 
       {% include 'system/scripts/form.html' with show_code_preview=1 global_script=script.is_global %}
 
       <fieldset class="gray-box mt-0 pt-0" style="border-radius: 0 0 .33rem .33rem;">
-        {% comment %}If it's a global script only allow saving if the user is of sufficiently high rank {% endcomment %}
-        {% if selected_script.is_global is False or user.is_superuser %}
+        {% comment %}If it's a global script don't allow saving {% endcomment %}
+        {% if selected_script.is_global is False %}
           <input type="submit" class="btn btn-primary me-3" value="{% translate 'Save changes' %}">
+          <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">{% translate "Cancel" %}</button>
         {% endif %}
-        <button type="button" onclick="script_refresh({{script_inputs_json}})" class="btn btn-secondary">{% translate "Cancel" %}</button>
       </fieldset>
 
     </form>
@@ -132,7 +136,6 @@
   </div>
 
   <!-- MODAL WINDOW FOR NEW SCRIPT REGISTRATION: -->
-
   <div id="addNewScript" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -150,7 +153,7 @@
             <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            {% include 'system/scripts/form.html' with form=create_form disable_inputs="yes" %}
+            {% include 'system/scripts/NewScriptForm.html' with form=create_form %}
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-primary" value="{% translate 'Create' %} {% if is_security %}{% translate 'Security Script' %}{% else %}{% translate 'Script' %}{% endif %}">
@@ -160,5 +163,4 @@
       </div>
     </div>
   </div>
-
 {% endblock %}
