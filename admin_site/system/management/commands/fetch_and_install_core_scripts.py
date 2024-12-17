@@ -49,7 +49,7 @@ class Command(BaseCommand):
                     tag, created = ScriptTag.objects.get_or_create(name=script.tag)
                     db_script.tags.add(tag)
 
-                    position = 1
+                    position = 0
                     for parameter in script.parameters:
                         Input.objects.create(
                             script=db_script,
