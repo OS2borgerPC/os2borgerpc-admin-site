@@ -21,15 +21,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         repo_url = "https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git"
         self.stdout.write(f"Fetching scripts from {repo_url} repository...")
-        scripts = fetch_scripts("https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git", options['versionTag'], options['commitHash'])
+        scripts = fetch_scripts(repo_url, options['versionTag'], options['commitHash'])
 
         for script in scripts:
-            versionedName = script.title + " " + options['versionTag']
-            uid = script.metadata.get("uid", None)
-            is_security_script = script.metadata.get("security", False)
-            is_hidden = script.metadata.get("hidden", False)
+            versionedName = f'{script.title} (version: {script.version})'
 
-            if uid and Script.objects.filter(uid=uid).exists():
+            if script.uid and Script.objects.filter(uid=script.uid).exists():
                 Script.objects.filter(uid=uid).delete()
 
             if not Script.objects.filter(name=versionedName).exists():
@@ -40,11 +37,11 @@ class Command(BaseCommand):
                         description=script.description,
                         site=None, # None means global script
                         executable_code=django.core.files.File(file),
-                        is_security_script=is_security_script,
-                        is_hidden=is_hidden,
+                        is_security_script=script.security,
+                        is_hidden=script.hidden,
                         maintained_by_magenta=False,
                         feature_permission=None,
-                        uid=uid
+                        uid=script.uid
                     )
                     tag, created = ScriptTag.objects.get_or_create(name=script.tag)
                     db_script.tags.add(tag)
