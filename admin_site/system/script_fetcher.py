@@ -66,11 +66,6 @@ def fetch_scripts(repoUrl, versionTag, commitHash):
 
     return scripts
 
-@dataclass
-class Metadata:
-    uid: Optional[str]
-    security: Optional[bool]
-    hidden: Optional[bool]
 
 @dataclass
 class Parameter:
@@ -82,6 +77,7 @@ class Parameter:
 @dataclass
 class Script:
     title: str
+    version: str
     parent: str
     sourcePath: str
     compatible_versions: Optional[str]
@@ -89,8 +85,10 @@ class Script:
     description: str
     tag: str
     partners: Optional[str]
+    hidden: Optional[bool]
+    security: Optional[bool]
+    uid: Optional[str]
     parameters: List[Parameter] = field(default_factory=list)
-    metadata: Optional[Metadata] = None
 
 def parse_md_to_script(content: str, clone_path: Path) -> Script:
     # Split YAML and Markdown content
@@ -100,9 +98,6 @@ def parse_md_to_script(content: str, clone_path: Path) -> Script:
 
     # Parse the YAML content
     yaml_content = yaml.safe_load(yaml_string)
-
-    # Parse metadata
-    metadata_content = yaml_content.get('metadata', {})
 
     # Parse parameters
     params = yaml_content.get('parameters', [])
@@ -121,6 +116,7 @@ def parse_md_to_script(content: str, clone_path: Path) -> Script:
 
     return Script(
         title=yaml_content.get('title'),
+        version=yaml_content.get('version'),
         parent=yaml_content.get('parent'),
         sourcePath=str(clone_path / yaml_content.get('source')),
         compatible_versions=yaml_content.get('compatible_versions'),
@@ -129,7 +125,9 @@ def parse_md_to_script(content: str, clone_path: Path) -> Script:
         tag=yaml_content.get('parent'),
         partners=yaml_content.get('partners'),
         parameters=parameters,
-        metadata=metadata_content
+        hidden=yaml_content.get('hidden', False),
+        security=yaml_content.get('security', False),
+        uid=yaml_content.get('uid', None),
     )
 
 def get_repo_name(repo_url):
