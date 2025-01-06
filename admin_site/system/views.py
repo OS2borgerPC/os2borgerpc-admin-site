@@ -3934,7 +3934,6 @@ class DocView(TemplateView, LoginRequiredMixin):
 
         return context
 
-
 class ImageVersionRedirect(RedirectView):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
