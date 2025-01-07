@@ -24,6 +24,9 @@ ADMINS = (
     else None
 )
 
+PC_IMAGE_RELEASES_URL = os.environ.get("PC_IMAGE_RELEASES_URL")
+KIOSK_IMAGE_RELEASES_URL = os.environ.get("KIOSK_IMAGE_RELEASES_URL")
+
 MANAGERS = ADMINS
 
 # Template settings
@@ -41,6 +44,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'os2borgerpc_admin.context_processors.iso_urls',
             ],
             "builtins": [
                 "system.templatetags.custom_tags",

@@ -22,6 +22,8 @@ services:
             ALLOWED_HOSTS: "*"
             CORE_SCRIPT_COMMIT_HASH: db319672efdcc0f7402c4a7370aa763be9960c38
             CORE_SCRIPT_VERSION_TAG: v0.1.4
+            PC_IMAGE_RELEASES_URL: https://github.com/OS2borgerPC/os2borgerpc-image/releases
+            KIOSK_IMAGE_RELEASES_URL: https://github.com/OS2borgerPC/os2borgerpc-kiosk-image/releases
             DEBUG: True
             SECRET_KEY: v3rys1kr3t
             # Admin contact - fill in your own name and email as desired.

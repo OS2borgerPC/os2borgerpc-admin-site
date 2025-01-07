@@ -117,9 +117,31 @@ detailpage
     </a>
 
     {% set_css_class_active request.resolver_match.url_name "images" as current_url_images %}
-    <a class="nav-link link-light {{ current_url_images }}" href="{% url 'images' slug=site.url %}">
-      <span class="material-icons"> cloud_download </span> {% translate "Images" %}
-    </a>
+    <div class="nav-item dropdown">
+      <a 
+          class="nav-link link-light dropdown-toggle" 
+          href="#" 
+          id="imageDropdown" 
+          role="button" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false"
+      >
+          <span class="material-icons"> cloud_download </span> {% translate "Images" %}
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="imageDropdown">
+          <li>
+              <a class="dropdown-item" href="{{ pc_image_releases_url }}" target="_blank" rel="noopener noreferrer">
+                  PC Image releases
+              </a>
+          </li>
+          <li>
+              <a class="dropdown-item" href="{{ kiosk_image_releases_url }}" target="_blank" rel="noopener noreferrer">
+                  Kiosk Image releases
+              </a>
+          </li>
+      </ul>
+    </div>
+  
     <hr>
 
     <h2 class="text-light">{% translate "Documentation" %}</h2>
