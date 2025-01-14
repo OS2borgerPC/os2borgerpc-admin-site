@@ -101,6 +101,10 @@ curl http://admin-site-url:8080/jobs/clean_up_database -f
 ```
 
 ## Diverse
-- `HTTPS_GUARANTEED`: true | false (default: false)
+- **`HTTPS_GUARANTEED`**: true | false (default: false)
 Hvis `true`, aktiveres middleware i Django, der slår sikkerhed fra og behandler HTTP som HTTPS. Brug denne parameter, hvis app'en kører bag en proxy, der terminerer TLS (f.eks. Nginx), for at undgå CSRF-fejl.
 Hvis parameteren ikke angives, er default-værdien `false`.
+
+- **`PC_IMAGE_RELEASES_URL`** og\
+  **`KIOSK_IMAGE_RELEASES_URL`**:\
+URL til de sider brugeren kan downloade BorgerPC ISO images. Bruges af `Images`-knappen i brugergrænsefladen.
