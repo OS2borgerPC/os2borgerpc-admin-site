@@ -27,7 +27,7 @@ class Command(BaseCommand):
             versionedName = f'{script.title} (version: {script.version})'
 
             if script.uid and Script.objects.filter(uid=script.uid).exists():
-                Script.objects.filter(uid=uid).delete()
+                Script.objects.filter(uid=script.uid).delete()
 
             if not Script.objects.filter(name=versionedName).exists():
                 with open(script.sourcePath, 'rb') as file:
