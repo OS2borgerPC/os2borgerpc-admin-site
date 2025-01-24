@@ -5,7 +5,7 @@
 
 Konfiguration sker via miljøvariabler (beskrevet nedenfor) og omfatter desuden specifikationer for driftskrav. En `compose.yaml`-fil leveres som reference til udvikling og konfiguration.
 
-**Bemærk:** `compose.yaml` er ikke opdateret til at understøtte nye cron job-endpoints. Til produktion anbefales en alternativ opsætning.
+**Bemærk:** `compose.yaml` er ikke opdateret til at understøtte de nye cron job-endpoints. Til produktion anbefales brug af de nye cron job endpoints.
 
 ---
 
@@ -13,19 +13,19 @@ Konfiguration sker via miljøvariabler (beskrevet nedenfor) og omfatter desuden 
 
 | Variabel                     | Forklaring                                                                 | Standardværdi   | Påkrævet |
 |------------------------------|----------------------------------------------------------------------------|-----------------|----------|
-| `ADMIN_USERNAME`             | Brugernavn for admin-bruger                                               | Ingen           | Ja       |
-| `ADMIN_PASSWORD`             | Adgangskode for admin-bruger                                              | Ingen           | Ja       |
-| `ADMIN_EMAIL`                | Email for admin-bruger                                                    | Ingen           | Ja       |
-| `DB_HOST`                    | Databasevært                                                              | Ingen           | Ja       |
-| `DB_PORT`                    | Databaseport                                                              | Ingen           | Ja       |
-| `DB_USER`                    | Brugernavn til databasen                                                  | Ingen           | Ja       |
-| `DB_PASSWORD`                | Adgangskode til databasen                                                 | Ingen           | Ja       |
-| `DB_NAME`                    | Navn på databasen                                                         | Ingen           | Ja       |
-| `CORE_SCRIPT_VERSION_TAG`    | Version af de globale scripts                                             | Ingen           | Ja       |
-| `CORE_SCRIPT_COMMIT_HASH`    | Matchende commit-hash for scripts                                         | Ingen           | Nej      |
-| `HTTPS_GUARANTEED`           | Aktiverer behandling af HTTP som HTTPS bag proxy                         | false           | Nej      |
-| `PC_IMAGE_RELEASES_URL`      | URL til download af BorgerPC ISO images                                   | Ingen           | Nej      |
-| `KIOSK_IMAGE_RELEASES_URL`   | URL til download af Kiosk ISO images                                      | Ingen           | Nej      |
+| `ADMIN_USERNAME`             | Brugernavn for admin-bruger                                                | Ingen           | Ja       |
+| `ADMIN_PASSWORD`             | Adgangskode for admin-bruger                                               | Ingen           | Ja       |
+| `ADMIN_EMAIL`                | Email for admin-bruger                                                     | Ingen           | Ja       |
+| `DB_HOST`                    | Databasevært                                                               | Ingen           | Ja       |
+| `DB_PORT`                    | Databaseport                                                               | Ingen           | Ja       |
+| `DB_USER`                    | Brugernavn til databasen                                                   | Ingen           | Ja       |
+| `DB_PASSWORD`                | Adgangskode til databasen                                                  | Ingen           | Ja       |
+| `DB_NAME`                    | Navn på databasen                                                          | Ingen           | Ja       |
+| `CORE_SCRIPT_VERSION_TAG`    | Version af de globale scripts                                              | Ingen           | Ja       |
+| `CORE_SCRIPT_COMMIT_HASH`    | Matchende commit-hash for scripts                                          | Ingen           | Ja       |
+| `HTTPS_GUARANTEED`           | Aktiverer behandling af HTTP som HTTPS bag proxy                           | false           | Nej      |
+| `PC_IMAGE_RELEASES_URL`      | URL til download af BorgerPC ISO images                                    | Ingen           | Nej      |
+| `KIOSK_IMAGE_RELEASES_URL`   | URL til download af Kiosk ISO images                                       | Ingen           | Nej      |
 
 ---
 
@@ -108,8 +108,8 @@ Scripts gemmes i Djangos mediamappe (`/media`). For at sikre persistens mellem g
 ### Globale Scripts
 Globale scripts downloades fra [OS2's core-script repository](https://github.com/OS2borgerPC/os2borgerpc-core-scripts) under opstart. Konfiguration sker med:
 
-- `CORE_SCRIPT_VERSION_TAG`: Version af de globale scripts (fx `v1.2.0`).
-- `CORE_SCRIPT_COMMIT_HASH`: Matchende commit-hash for versionen (valgfrit, men anbefalet).
+- `CORE_SCRIPT_VERSION_TAG`: Version af de globale scripts (f.eks. `v0.1.5`).
+- `CORE_SCRIPT_COMMIT_HASH`: Matchende commit-hash for versionen (f.eks. `5340bdc128e2de8c01def5dc50e8680399631f53`).
 
 #### Sådan Finder du Commit-Hash
 1. Gå til [commit-historik](https://github.com/OS2borgerPC/os2borgerpc-core-scripts/commits/main).
