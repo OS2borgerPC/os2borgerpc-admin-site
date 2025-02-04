@@ -1,6 +1,6 @@
 # Monitoring OS2BorgerPC admin-site
 
-There are various ways of monitoring the application, som are:
+There are various ways of monitoring the application, some are:
 1) health check
 2) viewing logs
 3) viewing resource usage
