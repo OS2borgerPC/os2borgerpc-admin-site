@@ -85,6 +85,7 @@ else:
 # Proxy setup
 if os.environ.get("USE_X_FORWARDED_HOST"):
     USE_X_FORWARDED_HOST = True
+if os.environ.get("SECURE_PROXY_SSL_HEADER"):
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")  
 
 # Local time zone for this installation. Choices can be found here:
