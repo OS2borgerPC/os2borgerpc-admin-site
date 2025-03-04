@@ -313,6 +313,3 @@ MARKDOWNX_IMAGE_MAX_SIZE = {"size": (800, 800), "quality": 90}
 MARKDOWNX_MEDIA_PATH = datetime.now().strftime("changelog-images/%Y/%m/%d")
 
 FORM_RENDERER = "django.forms.renderers.DjangoDivFormRenderer"
-
-USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
