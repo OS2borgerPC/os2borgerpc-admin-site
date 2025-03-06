@@ -82,6 +82,12 @@ if os.getenv("CSRF_TRUSTED_ORIGINS", ""):
 else:
     CSRF_TRUSTED_ORIGINS = []
 
+# Proxy setup
+if os.environ.get("USE_X_FORWARDED_HOST"):
+    USE_X_FORWARDED_HOST = True
+if os.environ.get("SECURE_PROXY_SSL_HEADER"):
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")  
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
