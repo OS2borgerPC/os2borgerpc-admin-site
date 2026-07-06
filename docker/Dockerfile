@@ -10,7 +10,7 @@ RUN npm ci \
  && npm run build
 CMD ["/bin/sh", "-c", "npm run watch-sass"]
 
-FROM python:3.8 AS os2borgerpc
+FROM python:3.8-slim AS os2borgerpc
 
 LABEL org.opencontainers.image.title="OS2borgerPC" \
       org.opencontainers.image.vendor="Magenta ApS" \
@@ -29,6 +29,7 @@ COPY admin_site/sys-requirements.txt sys-requirements.txt
 RUN set -ex \
   # Install system dependencies from file.
   && apt-get -y update \
+  && apt-get -y upgrade \
   && apt-get -y install --no-install-recommends $(grep -o '^[^#][[:alnum:].-]*' sys-requirements.txt) \
   # clean up after apt-get and man-pages
   && apt-get clean \
@@ -38,12 +39,13 @@ COPY VERSION /code/VERSION
 
 # Install requirements.
 COPY admin_site/requirements.txt /code/admin_site/requirements.txt
-RUN pip3 install --no-cache-dir -r  admin_site/requirements.txt
+RUN pip3 install --no-cache-dir --upgrade pip setuptools wheel \
+ && pip3 install --no-cache-dir -r  admin_site/requirements.txt
 
 # Install supercronic
-ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.25/supercronic-linux-amd64 \
-    SUPERCRONIC=supercronic-linux-amd64 \
-    SUPERCRONIC_SHA1SUM=642f4f5a2b67f3400b5ea71ff24f18c0a7d77d49
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.46/supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=5bcefed628e32adc08e32634db2d10e9230dbca0 \
+    SUPERCRONIC=supercronic-linux-amd64
 
 # hadolint ignore=DL4006
 RUN curl -fsSLO "$SUPERCRONIC_URL" \
