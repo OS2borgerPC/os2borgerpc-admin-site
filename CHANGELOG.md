@@ -1,3 +1,28 @@
+Version 7.0.3, August 14, 2026
+-----------------------------
+
+- Prevent clients from setting specific protected configuration keys via the client API.
+
+Version 7.0.2, July 10, 2025
+----------------------------
+
+- Updated Django and related dependencies to reduce CVE exposure.
+- Added missing `git` dependency.
+
+Version 7.0.1, March 6, 2025
+----------------------------
+
+- Added proxy configuration support, enabling OS2borgerPC Admin to run behind a proxy server where SSL can be handled externally.
+
+Version 7.0.0, February 4, 2025
+------------------------------
+
+- Global scripts are now versioned and fetched from os2borgerpc-core-scripts.
+- Added operations documentation (drift) and related configuration changes to simplify running admin-site.
+- Updated links to official OS2 PC and Kiosk ISO image downloads.
+- Removed previously locked functionality, including wake plan features.
+- Admin-site Docker image is now built and published officially by OS2.
+
 Version 6.0.0, June 18, 2024
 ----------------------------
 
