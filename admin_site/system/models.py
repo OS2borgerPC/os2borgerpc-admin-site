@@ -734,6 +734,7 @@ class PC(models.Model):
     uid = models.CharField(
         verbose_name=_("UID"), max_length=255, db_index=True, unique=True
     )
+    client_key_hash = models.CharField(max_length=64, blank=True, null=True)
     description = models.CharField(
         verbose_name=_("description"), max_length=1024, blank=True
     )
