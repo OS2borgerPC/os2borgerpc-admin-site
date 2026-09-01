@@ -8,8 +8,6 @@ from system.views import (
     APIKeyCreate,
     APIKeyDelete,
     APIKeyUpdate,
-    ConfigurationEntryCreate,
-    ConfigurationEntryUpdate,
     DocView,
     ImageVersionRedirect,
     ImageVersionView,
@@ -189,16 +187,6 @@ urlpatterns = [
     # Site Settings
     re_path(
         r"^site/(?P<slug>[^/]+)/settings/$", SiteSettings.as_view(), name="settings"
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/configuration/new/$",
-        ConfigurationEntryCreate.as_view(),
-        name="new_configuration",
-    ),
-    re_path(
-        r"^site/(?P<slug>[^/]+)/configuration/edit/(?P<pk>\d+)/$",
-        ConfigurationEntryUpdate.as_view(),
-        name="edit_configuration",
     ),
     # Computers
     re_path(r"^site/(?P<slug>[^/]+)/computers/$", PCsView.as_view(), name="computers"),

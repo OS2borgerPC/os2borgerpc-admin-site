@@ -23,6 +23,26 @@ from system.utils import (
 logger = logging.getLogger(__name__)
 
 
+# Governing/trust config keys marked read_only in the admin portal UI at
+# registration, so they cannot be edited or deleted through the portal (see
+# Configuration.update_from_request). Wiping admin_url via a config delete makes
+# a machine unreachable, so protecting these prevents that "bricking".
+#
+# This is the same canonical control-plane set the client-push protection uses
+# (push_config_keys); keep the two in sync. It deliberately does NOT include the
+# inventory/telemetry keys that Magenta also marks read_only - those
+# are not security-critical and marking them would only take away the admin's
+# ability to edit them in the UI. Add them here if UI parity is wanted.
+READ_ONLY_IN_UI_CONFIG_KEYS = frozenset(
+    {
+        "admin_url",
+        "xml_rpc_url",
+        "os2borgerpc_client_package",
+        "os2borgerpc_client_version",
+    }
+)
+
+
 def register_new_computer_v2(mac, name, site, configuration):
     """Register a new computer with the admin system - after registration, the
     computer will be submitted for approval."""
@@ -85,7 +105,12 @@ def register_new_computer_v2(mac, name, site, configuration):
         pass
 
     for k, v in list(configuration.items()):
-        entry = ConfigurationEntry(key=k, value=v, owner_configuration=my_config)
+        entry = ConfigurationEntry(
+            key=k,
+            value=v,
+            read_only=k in READ_ONLY_IN_UI_CONFIG_KEYS,
+            owner_configuration=my_config,
+        )
         entry.save()
     # Set and save PmC
     new_pc.configuration = my_config

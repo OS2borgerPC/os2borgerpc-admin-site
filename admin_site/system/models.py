@@ -84,17 +84,29 @@ class Configuration(models.Model):
                     cnf = ConfigurationEntry(key=k, value=v, owner_configuration=self)
                     cnf.save()
             else:
-                # Update submitted entry
-                cnf = ConfigurationEntry.objects.get(pk=pk)
-                cnf.key = key[0]
-                cnf.value = value[0]
+                # Update submitted entry. Resolve the pk only within THIS
+                # configuration's own entries, so a crafted POST cannot edit an
+                # entry belonging to another configuration (another site's or
+                # computer's). A read_only entry is kept but never modified.
+                try:
+                    cnf = self.entries.get(pk=pk)
+                except ConfigurationEntry.DoesNotExist:
+                    continue
                 seen_set.add(cnf.pk)
-                cnf.save()
+                if not cnf.read_only:
+                    cnf.key = key[0]
+                    cnf.value = value[0]
+                    cnf.save()
 
-        # Delete entries that were not in the submitted data
+        # Delete entries that were not in the submitted data - but never delete
+        # a read_only entry. Otherwise a POST that simply omits the config
+        # fields would wipe governing keys such as admin_url, after which the
+        # client removes its own admin_url on next check-in and the machine
+        # becomes unreachable from the portal.
         for pk in existing_set - seen_set:
-            cnf = ConfigurationEntry.objects.get(pk=pk)
-            cnf.delete()
+            cnf = self.entries.get(pk=pk)
+            if not cnf.read_only:
+                cnf.delete()
 
     def remove_entry(self, key):
         return self.entries.filter(key=key).delete()
@@ -133,6 +145,12 @@ class ConfigurationEntry(models.Model):
 
     key = models.CharField(max_length=32)
     value = models.CharField(max_length=4096)
+    # Whether this entry is protected in the admin portal UI: it cannot be
+    # edited or deleted through the portal forms (see
+    # Configuration.update_from_request). This is a UI/portal protection ONLY -
+    # it is not what stops a client from pushing a key via the client-api; that
+    # is enforced separately in system/rpc.py (push_config_keys).
+    read_only = models.BooleanField(default=False)
     owner_configuration = models.ForeignKey(
         Configuration,
         related_name="entries",
@@ -635,6 +653,11 @@ class PCGroup(models.Model):
 
             script_pk = int(req_params.get(script_param, None))
             script = Script.objects.get(pk=script_pk)
+            # Only a global script or a script belonging to this group's own
+            # site may be associated - never another site's local script. The
+            # pk comes straight from POST, so it must be validated here.
+            if script.site and script.site != self.site:
+                continue
             asc = AssociatedScript(group=self, script=script, position=i)
             if not pk.startswith("new_"):
                 asc.pk = pk
