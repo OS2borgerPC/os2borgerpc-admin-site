@@ -24,8 +24,6 @@ from system.utils import (
 logger = logging.getLogger(__name__)
 
 CLIENT_KEY_EXPECTED_LEN = 64
-CLIENT_KEY_ALLOWED_MODES = {"off", "migration", "on"}
-
 # Governing/trust config keys marked read_only in the admin portal UI at
 # registration, so they cannot be edited or deleted through the portal (see
 # Configuration.update_from_request). Wiping admin_url via a config delete makes
@@ -44,19 +42,6 @@ READ_ONLY_IN_UI_CONFIG_KEYS = frozenset(
         "os2borgerpc_client_version",
     }
 )
-
-def _client_key_mode():
-    mode = getattr(settings, "CLIENT_KEY_AUTH_MODE", None)
-    if mode is None:
-        mode = "on" if getattr(settings, "REQUIRE_CLIENT_KEY", False) else "off"
-    mode = str(mode).strip().lower()
-    if mode not in CLIENT_KEY_ALLOWED_MODES:
-        logger.warning(
-            "Invalid CLIENT_KEY_AUTH_MODE '%s'. Falling back to 'off'.",
-            mode,
-        )
-        return "off"
-    return mode
 
 
 def _normalize_client_key(client_key):
@@ -101,7 +86,7 @@ def _log_client_key_auth(
     )
 
 
-def _store_or_rotate_pc_client_key(pc, normalized_client_key, method_name):
+def _bootstrap_pc_client_key_if_missing(pc, normalized_client_key, method_name):
     if normalized_client_key is None:
         _log_client_key_auth(
             method_name,
@@ -124,71 +109,14 @@ def _store_or_rotate_pc_client_key(pc, normalized_client_key, method_name):
             rejection_reason=None,
         )
         return True
-
-    if hmac.compare_digest(pc.client_key_hash, incoming_hash):
-        _log_client_key_auth(
-            method_name,
-            key_present=True,
-            key_match=True,
-            machine_identifier=pc.uid,
-            rejection_reason=None,
-        )
-        return False
-
-    # Transitional policy: allow and rotate key with audit log.
-    old_hash = pc.client_key_hash
-    pc.client_key_hash = incoming_hash
-    pc.save(update_fields=["client_key_hash"])
-    logger.warning(
-        "client_key_auth_transitional_rotate method=%s machine=%s old_hash_prefix=%s new_hash_prefix=%s",
-        method_name,
-        pc.uid,
-        old_hash[:12],
-        incoming_hash[:12],
-    )
-    _log_client_key_auth(
-        method_name,
-        key_present=True,
-        key_match=False,
-        machine_identifier=pc.uid,
-        rejection_reason="rotated_transitional",
-    )
-    return True
+    return False
 
 
 def _enforce_client_key_for_pc(method_name, pc, client_key):
-    mode = _client_key_mode()
     normalized_client_key = _normalize_client_key(client_key)
     incoming_hash = _hash_client_key(normalized_client_key)
     stored_hash = pc.client_key_hash
     key_present = normalized_client_key is not None
-
-    if mode == "off":
-        if stored_hash and incoming_hash:
-            key_match = hmac.compare_digest(stored_hash, incoming_hash)
-        else:
-            key_match = None
-        _log_client_key_auth(
-            method_name,
-            key_present=key_present,
-            key_match=key_match,
-            machine_identifier=pc.uid,
-            rejection_reason=None,
-        )
-        if not stored_hash and normalized_client_key:
-            pc.client_key_hash = incoming_hash
-            pc.save(update_fields=["client_key_hash"])
-        return
-
-    if mode == "on" and not key_present:
-        _log_client_key_auth(
-            method_name,
-            key_present=False,
-            key_match=False,
-            machine_identifier=pc.uid,
-            rejection_reason="missing_client_key",
-        )
-        raise Exception("Client key authentication failed: missing client_key.")
 
     if not stored_hash:
         if key_present:
@@ -202,27 +130,14 @@ def _enforce_client_key_for_pc(method_name, pc, client_key):
                 rejection_reason="stored_new_key",
             )
             return
-
-        if mode == "migration":
-            _log_client_key_auth(
-                method_name,
-                key_present=False,
-                key_match=None,
-                machine_identifier=pc.uid,
-                rejection_reason="legacy_machine_without_key",
-            )
-            return
-
         _log_client_key_auth(
             method_name,
             key_present=False,
-            key_match=False,
+            key_match=None,
             machine_identifier=pc.uid,
-            rejection_reason="no_stored_key_and_missing_client_key",
+            rejection_reason="legacy_machine_without_key",
         )
-        raise Exception(
-            "Client key authentication failed: machine has no registered key and request did not provide one."
-        )
+        return
 
     if not key_present:
         _log_client_key_auth(
@@ -276,7 +191,7 @@ def register_new_computer_v2(mac, name, site, configuration, client_key=None):
 
     if PC.objects.filter(uid=uid).count():
         existing_pc = PC.objects.get(uid=uid)
-        _store_or_rotate_pc_client_key(
+        _bootstrap_pc_client_key_if_missing(
             existing_pc,
             normalized_client_key,
             method_name="register_new_computer_v2",

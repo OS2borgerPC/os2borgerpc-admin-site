@@ -251,24 +251,6 @@ XMLRPC_METHODS = (
     ("system.rpc.general_citizen_logout", "general_citizen_logout"),
 )
 
-# XML-RPC client key rollout mode.
-# Allowed values:
-# - off: accept calls with or without key and do not reject for missing/mismatch
-# - migration: enforce for machines that already have a stored key
-# - on: require a valid key for machine-scoped calls
-CLIENT_KEY_AUTH_MODE = os.environ.get("CLIENT_KEY_AUTH_MODE", "off").lower()
-
-# Backwards-compatible boolean flag. If explicitly enabled and no mode is set,
-# enforcement mode becomes "on".
-if os.environ.get("REQUIRE_CLIENT_KEY") is not None and os.environ.get(
-    "CLIENT_KEY_AUTH_MODE"
-) is None:
-    REQUIRE_CLIENT_KEY = os.environ.get("REQUIRE_CLIENT_KEY", "false").lower() == "true"
-    if REQUIRE_CLIENT_KEY:
-        CLIENT_KEY_AUTH_MODE = "on"
-else:
-    REQUIRE_CLIENT_KEY = CLIENT_KEY_AUTH_MODE == "on"
-
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
