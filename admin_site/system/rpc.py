@@ -221,6 +221,36 @@ def get_instructions(pc_uid):
     return instructions
 
 
+# Configuration keys the client-facing API must never allow a client to set.
+# These are "control-plane" values: they decide which server the client trusts
+# (admin_url, xml_rpc_url), what code it installs and runs as root
+# (os2borgerpc_client_package, os2borgerpc_client_version), or the client's own
+# identity (uid, mac, site). All of them are either server-authoritative or
+# set once at install time; a genuine client never needs to push them upwards.
+#
+# get_instructions() hands whatever is stored here straight back to the client
+# via get_full_config(), which then writes it to its local config. Because the
+# client-api is unauthenticated (identity is only md5(MAC), which is public),
+# letting a caller set these turns push_config_keys into remote re-homing and
+# remote code execution as root.
+#
+# NOTE: this is a denylist of the *closed* set of control-plane keys, on
+# purpose - ordinary telemetry and script-defined keys are meant to be pushed
+# freely. If a future config key ever gains trust or code-execution semantics,
+# it MUST be added here.
+CLIENT_IMMUTABLE_CONFIG_KEYS = frozenset(
+    {
+        "admin_url",
+        "xml_rpc_url",
+        "os2borgerpc_client_package",
+        "os2borgerpc_client_version",
+        "uid",
+        "mac",
+        "site",
+    }
+)
+
+
 def push_config_keys(pc_uid, config_dict):
     try:
         pc = PC.objects.get(uid=pc_uid)
@@ -230,6 +260,23 @@ def push_config_keys(pc_uid, config_dict):
         )
     if not pc.is_activated:
         return 0
+
+    # Drop any attempt to set a protected control-plane key, and log it. We
+    # drop the individual keys rather than reject the whole call, so a batch
+    # that legitimately mixes ordinary keys with a protected one still applies
+    # the ordinary ones. A logged line here is also a detection signal.
+    protected = CLIENT_IMMUTABLE_CONFIG_KEYS.intersection(config_dict)
+    if protected:
+        logger.warning(
+            "push_config_keys: refused attempt to set protected key(s) %s "
+            "on PC '%s' (uid %s)",
+            sorted(protected),
+            pc.name,
+            pc_uid,
+        )
+        config_dict = {
+            k: v for k, v in config_dict.items() if k not in protected
+        }
 
     # We need two config dicts: one from the PC itself and one from groups
     # and global configuration
