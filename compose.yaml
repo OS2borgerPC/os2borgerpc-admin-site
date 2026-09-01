@@ -86,6 +86,13 @@ services:
         tty: true
         container_name: bpc_admin_site_django
         privileged: true
+        restart: always
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:9999"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 5s
     cron-service:
         build:
             context: .
