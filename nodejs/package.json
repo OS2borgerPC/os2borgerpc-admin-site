@@ -16,7 +16,7 @@
   "license": "MPL-2.0",
   "dependencies": {
     "bootstrap": "~5.0.2",
-    "bootstrap-table": "^1.19.1",
+    "bootstrap-table": "^1.20.2",
     "jquery": "^3.5.1",
     "qrcodejs": "1.0.0",
     "sass": "^1.35.1"
