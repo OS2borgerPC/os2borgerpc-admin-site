@@ -152,12 +152,6 @@ class ScriptForm(forms.ModelForm):
         exclude = ["feature_permission", "product"]
 
 
-class ConfigurationEntryForm(forms.ModelForm):
-    class Meta:
-        model = ConfigurationEntry
-        exclude = ["owner_configuration"]
-
-
 class UserLinkForm(forms.Form):
     linked_users = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),

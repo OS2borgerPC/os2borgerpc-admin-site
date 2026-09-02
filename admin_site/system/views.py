@@ -75,7 +75,6 @@ from system.models import (
 )
 
 from system.forms import (
-    ConfigurationEntryForm,
     EventRuleServerForm,
     PCForm,
     PCGroupForm,
@@ -660,7 +659,11 @@ class APIKeyDelete(TemplateView, DeletionMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def delete(self, request, *args, **kwargs):
-        APIKey.objects.get(id=kwargs["pk"]).delete()
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # Only delete an API key that belongs to this site; the pk comes from
+        # the URL, so scope it - otherwise another customer's key could be
+        # deleted.
+        APIKey.objects.filter(id=kwargs["pk"], site=site).delete()
 
         return render(
             request,
@@ -1301,6 +1304,12 @@ class ScriptCreate(ScriptMixin, CreateView, SuperAdminOrThisSiteMixin):
         return form
 
     def form_valid(self, form):
+        # "site" is a form field and is NOT disabled when creating (only when
+        # editing). A crafted POST could therefore set site=None (a global
+        # script, runs as root on every site) or another customer's site. Force
+        # non-superuser-created scripts to belong to the current site.
+        if not self.request.user.is_superuser:
+            form.instance.site = self.site
         if self.validate_script_inputs():
             # save the username for the AuditModelMixin.
             form.instance.user_created = self.request.user.username
@@ -1383,6 +1392,13 @@ class ScriptUpdate(ScriptMixin, UpdateView, SuperAdminOrThisSiteMixin):
         return self.script
 
     def form_valid(self, form):
+        # Global scripts (site is None) are shared across every site and run as
+        # root on all their machines. Only superusers may modify one; a site
+        # user must not be able to change its code/description or - via the
+        # input formset (e.g. script-number-of-inputs=0) - delete its
+        # parameters. Local scripts remain editable by their own site.
+        if self.script.site is None and not self.request.user.is_superuser:
+            raise PermissionDenied
         if self.validate_script_inputs():
             # save the username for the AuditModelMixin.
             form.instance.user_modified = self.request.user.username
@@ -1444,10 +1460,22 @@ class ScriptRun(SiteView):
         return super(ScriptRun, self).get(request, *args, **kwargs)
 
     def fetch_pcs_from_request(self):
-        # Transfer chosen groups and PCs as PC pks
-        pcs = [int(pk) for pk in self.request.POST.getlist("pcs", [])]
+        # Transfer chosen groups and PCs as PC pks. The pks come straight from
+        # POST, so every one must be validated against THIS site here - a pk
+        # cannot be trusted just because it was in the rendered form. Without
+        # this, a script could be run on another customer's computers.
+        site_pc_pks = set(self.object.pcs.values_list("pk", flat=True))
+        pcs = [
+            int(pk)
+            for pk in self.request.POST.getlist("pcs", [])
+            if int(pk) in site_pc_pks
+        ]
         for group_pk in self.request.POST.getlist("groups", []):
-            group = PCGroup.objects.get(pk=group_pk)
+            # Only groups belonging to this site, which in turn only contain
+            # this site's PCs.
+            group = self.object.groups.filter(pk=group_pk).first()
+            if group is None:
+                continue
             for pc in group.pcs.all():
                 pcs.append(int(pc.pk))
         # Uniquify
@@ -1676,6 +1704,12 @@ class PCUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         pc = self.object
+        # Only groups belonging to this PC's own site may be attached. The form
+        # field's queryset is not site-scoped, so a crafted POST could otherwise
+        # reference another customer's group; filter to the site here.
+        form.cleaned_data["pc_groups"] = form.cleaned_data["pc_groups"].filter(
+            site=pc.site
+        )
         groups_pre = pc.pc_groups.all()
 
         selected_groups = form.cleaned_data["pc_groups"]
@@ -1878,11 +1912,19 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         return context
 
     def verify_and_add_groups_and_exceptions(self, form):
+        # Only groups and wake change events belonging to THIS site may be
+        # attached to the plan. The pks come from POST, so they must be scoped
+        # to the site here - otherwise another customer's group could be bound
+        # to this plan (controlling when their machines wake/sleep), or another
+        # site's exception added.
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         # Adding wake change events
         # The string currently set to "wake_change_events" must match the submit name
         # chosen for the pick list used to add wake change events
         exceptions_pk = form["wake_change_events"].value()
-        exceptions_selected = WakeChangeEvent.objects.filter(pk__in=exceptions_pk)
+        exceptions_selected = WakeChangeEvent.objects.filter(
+            pk__in=exceptions_pk, site=site
+        )
         # Get the related wake change events before the update
         exceptions_pre = self.object.wake_change_events.all()
         # Verify the pre-existing events that are still selected
@@ -1924,7 +1966,7 @@ class WakePlanExtendedMixin(WakePlanBaseMixin):
         # The string currently set to "groups" must match the submit name
         # chosen for the pick list used to add groups
         groups_pk = form["groups"].value()
-        groups = PCGroup.objects.filter(pk__in=groups_pk)
+        groups = PCGroup.objects.filter(pk__in=groups_pk, site=site)
         # groups_with_other_plans_names = []
         # groups_without_other_plans_pk = []
         # for group in groups:
@@ -2367,7 +2409,13 @@ class WakePlanDuplicate(RedirectView, SiteMixin, SuperAdminOrThisSiteMixin):
     model = WakeWeekPlan
 
     def get_redirect_url(self, **kwargs):
-        object_to_copy = WakeWeekPlan.objects.get(id=kwargs["wake_week_plan_id"])
+        site = get_object_or_404(Site, uid=kwargs["slug"])
+        # Only a plan belonging to THIS site may be duplicated; the id comes
+        # from the URL and must be scoped to the site, otherwise another
+        # customer's plan (and its events) could be copied.
+        object_to_copy = get_object_or_404(
+            WakeWeekPlan, id=kwargs["wake_week_plan_id"], site=site
+        )
         if not object_to_copy.site.customer.feature_permission.filter(uid="wake_plan"):
             raise PermissionDenied
 
@@ -2702,6 +2750,26 @@ class UsersMixin(object):
         context["site_membership"] = site_membership
         return context
 
+    def max_grantable_usertype(self, site):
+        """The highest SiteMembership type the requesting user may grant on
+        this site. A non-superuser can never grant a usertype higher than
+        their own membership on the site."""
+        if self.request.user.is_superuser:
+            return SiteMembership.CUSTOMER_ADMIN
+        membership = self.request.user.user_profile.sitemembership_set.filter(
+            site=site
+        ).first()
+        # No membership on this site => may grant nothing.
+        return membership.site_user_type if membership else -1
+
+    def deny_if_usertype_elevated(self, site, requested_usertype):
+        """Raise PermissionDenied if the requested usertype is higher than the
+        requesting user may grant. Enforced server-side in form_valid, because
+        the form's choice-narrowing only runs while rendering (GET/
+        get_context_data) and Django does not re-run it on a successful POST."""
+        if int(requested_usertype) > self.max_grantable_usertype(site):
+            raise PermissionDenied
+
 
 class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
     form_class = UserLinkForm
@@ -2746,6 +2814,21 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
 
         return context
 
+    def get_form(self, form_class=None):
+        # Narrow the selectable users to this customer's users who are not
+        # already on this site, in get_form (not only get_context_data) so the
+        # queryset is authoritative during POST validation. Otherwise a POST
+        # could reference any user in the installation, across customers.
+        form = super().get_form(form_class)
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        user_profiles_for_customer_pk = site.customer.sites.values_list(
+            "user_profiles", flat=True
+        )
+        form.fields["linked_users"].queryset = User.objects.filter(
+            user_profile__pk__in=user_profiles_for_customer_pk
+        ).exclude(user_profile__sites=site)
+        return form
+
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
         # Ensure that only customer admins can use this functionality
@@ -2757,6 +2840,8 @@ class UserLink(FormView, UsersMixin, SuperAdminOrThisSiteMixin):
             != SiteMembership.CUSTOMER_ADMIN
         ):
             raise PermissionDenied
+        # Never allow granting a usertype higher than the requester's own.
+        self.deny_if_usertype_elevated(site, form.cleaned_data["usertype"])
         selected_users = form.cleaned_data["linked_users"]
         selected_user_type = form.cleaned_data["usertype"]
         selected_users_names = []
@@ -2810,6 +2895,9 @@ class UserCreate(CreateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # Never allow creating a user with a usertype higher than the
+        # requester's own, regardless of what the form's choices offered.
+        self.deny_if_usertype_elevated(site, form.cleaned_data["usertype"])
         site_membership = self.request.user.user_profile.sitemembership_set.filter(
             site=site
         ).first()
@@ -2915,6 +3003,10 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # Never allow raising a user's usertype above the requester's own,
+        # including when a user edits their own profile (self-service must not
+        # be an escalation path).
+        self.deny_if_usertype_elevated(site, form.cleaned_data["usertype"])
         site_membership_req_user = (
             self.request.user.user_profile.sitemembership_set.filter(site=site).first()
         )
@@ -3059,29 +3151,12 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
         return response
 
 
-class ConfigurationEntryCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-    form_class = ConfigurationEntryForm
-
-    def form_valid(self, form):
-        site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        self.object = form.save(commit=False)
-        self.object.owner_configuration = site.configuration
-
-        return super(ConfigurationEntryCreate, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
-
-
-class ConfigurationEntryUpdate(SiteMixin, UpdateView, SuperAdminOrThisSiteMixin):
-    model = ConfigurationEntry
-    form_class = ConfigurationEntryForm
-
-    def get_success_url(self):
-        return reverse("settings", kwargs={"slug": self.kwargs["slug"]})
-
-
+# NOTE: ConfigurationEntryCreate and ConfigurationEntryUpdate were removed.
+# They were obsolete (no UI links to them) and ConfigurationEntryUpdate fetched
+# the entry by pk from the URL with no ownership check, so a site admin could
+# edit another site's configuration entry (including a computer's admin_url) by
+# pairing their own site slug with a foreign entry's pk. Configuration is
+# edited through the computer/group/site forms instead.
 class PCGroupRedirect(RedirectView, SuperAdminOrThisSiteMixin):
     def get_redirect_url(self, **kwargs):
         site = get_object_or_404(Site, uid=kwargs["slug"])
@@ -3119,6 +3194,11 @@ class PCGroupCreate(SiteMixin, CreateView, SuperAdminOrThisSiteMixin):
 
     def form_valid(self, form):
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        # pcs/supervisors are not part of the create UI (they are added via the
+        # update view); reject a POST that tries to set them, which could
+        # otherwise attach another site's computers or users to the new group.
+        if form.cleaned_data.get("pcs") or form.cleaned_data.get("supervisors"):
+            raise PermissionDenied
         self.object = form.save(commit=False)
         self.object.site = site
 
@@ -3144,6 +3224,21 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
                 )
                 % self.kwargs["group_id"]
             )
+
+    def get_form(self, form_class=None):
+        # Make the pcs/supervisors querysets site-scoped in get_form (not only
+        # get_context_data) so POST validation rejects PCs or users from other
+        # sites. Otherwise a crafted POST could add another customer's computers
+        # or users to this group.
+        form = super().get_form(form_class)
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        if "pcs" in form.fields:
+            form.fields["pcs"].queryset = site.pcs.filter(is_activated=True)
+        if "supervisors" in form.fields:
+            form.fields["supervisors"].queryset = User.objects.filter(
+                user_profile__sites=site
+            )
+        return form
 
     def get_context_data(self, **kwargs):
         context = super(PCGroupUpdate, self).get_context_data(**kwargs)
@@ -3463,6 +3558,26 @@ class EventRuleRedirect(RedirectView, SuperAdminOrThisSiteMixin):
 
 
 class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
+    def get_form(self, form_class=None):
+        # Scope alert_groups/alert_users (and the security_script) to this site
+        # in get_form, so POST validation rejects groups, users or scripts from
+        # other sites. get_context_data only narrows the display lists, which
+        # does not run on a successful POST.
+        form = super().get_form(form_class)
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        if "alert_groups" in form.fields:
+            form.fields["alert_groups"].queryset = site.groups.all()
+        if "alert_users" in form.fields:
+            form.fields["alert_users"].queryset = User.objects.filter(
+                user_profile__sites=site
+            )
+        if "security_script" in form.fields:
+            form.fields["security_script"].queryset = Script.objects.filter(
+                Q(site__isnull=True) | Q(site=site),
+                is_security_script=True,
+            )
+        return form
+
     def get_context_data(self, **kwargs):
         context = super(EventRuleBaseMixin, self).get_context_data(**kwargs)
 
@@ -3658,7 +3773,9 @@ class SecurityEventsView(SiteView):
         return context
 
 
-class SecurityEventSearch(SiteMixin, JSONResponseMixin, BaseListView):
+class SecurityEventSearch(
+    SiteMixin, JSONResponseMixin, BaseListView, SuperAdminOrThisSiteMixin
+):
     paginate_by = 20
     http_method_names = ["get"]
     VALID_ORDER_BY = []
