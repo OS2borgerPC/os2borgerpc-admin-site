@@ -11,7 +11,7 @@ Thank you for contributing to OS2BorgerPC, licensed under GPL-3.0.
 | Carsten Agger | Magenta ApS |
 | cheikendorf | GitHub user (noreply) |
 | Danni Als | Magenta ApS |
-| debjazkb297 | GitHub user (noreply) |
+| Dennis Borup Jakobsen | Aarhus Kommune |
 | Emil Madsen | Personal email (organization unknown) |
 | Emil Nordahn Andersen | Magenta ApS |
 | Emil Thorenfeldt | Magenta ApS |
