@@ -6,9 +6,9 @@ If you want to contribute to OS2BorgerPC, we ask you to follow these guidelines.
 If you have encountered a bug in OS2BorgerPC, please check if an issue already exists in the list of existing [issues](https://os2borgerpc.os2.eu/docs/issue-tracker.html), if such an issue does not exist, you can create one [here](https://os2borgerpc.os2.eu/docs/issue-tracker.html). When writing the bug report, try to add a clear example that shows how to reproduce said bug.
 
 ## Adding new features
-Before making making changes to the code, we advise you to first check the list of existing [issues](https://os2borgerpc.os2.eu/docs/issue-tracker.html) for OS2BorgerPC to see if an issue for the suggested changes already exists. If such an issue does not exist, you can create one [here](https://os2borgerpc.os2.eu/docs/issue-tracker.html). 
+Before making changes to the code, we advise you to first check the list of existing [issues](https://os2borgerpc.os2.eu/docs/issue-tracker.html) for OS2BorgerPC to see if an issue for the suggested changes already exists. If such an issue does not exist, you can create one [here](https://os2borgerpc.os2.eu/docs/issue-tracker.html). 
 
- If you are in the early idea phase, or if your feature requires larger changes, you can discuss it with the projects coordination group or by contactiing os2borgerpc@os2.eu(mailto://os2borgerpc@os2.eu) to make sure you are heading in the right direction.
+ If you are in the early idea phase, or if your feature requires larger changes, you can discuss it with the projects coordination group or by contacting [os2borgerpc@os2.eu](mailto:os2borgerpc@os2.eu) to make sure you are heading in the right direction.
 
 ### Forking the repository
 In order to implement changes to os2borgerpc-admin-site when you do not have rights for the required repository, you must first fork the repository. Once the repository is forked, you can clone it to your local machine.
