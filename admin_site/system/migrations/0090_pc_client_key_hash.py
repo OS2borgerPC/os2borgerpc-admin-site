@@ -4,7 +4,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("system", "0087_alter_script_executable_code"),
+        ("system", "0089_backfill_read_only_config_keys"),
     ]
 
     operations = [
