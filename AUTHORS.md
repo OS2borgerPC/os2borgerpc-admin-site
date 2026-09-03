@@ -1,30 +1,34 @@
 # Authors
 
-Thank you for contributing to the OS2-governed product OS2BorgerPC, which is licensed under GPL-3.0.
+Thank you for contributing to OS2BorgerPC, licensed under GPL-3.0.
 
-- Marcus Funch - 1237 commits
-- Carsten Agger - 1076 commits
-- Andreas Poulsen - 694 commits
-- Soren Howe Gersager - 391 commits
-- Frank Thomsen - 174 commits
-- Danni Als - 168 commits
-- Alexander Faithfull - 122 commits
-- Jorgen Ulrik B. Krag - 95 commits
-- Andreas Natanael Nielsen - 60 commits
-- Emil Nordahn Andersen - 52 commits
-- Heini Leander Ovason - 42 commits
-- Henrik Eidnes - 40 commits
-- Troels Juel Larsen - 36 commits
-- Sebastian Heiberg - 35 commits
-- Sune Koch Hansen - 24 commits
-- Mathias Dannesbo - 21 commits
-- Agnete Moos - 18 commits
-- william-magenta - 16 commits
-- Exu do BBX - 4 commits
-- Toke - 4 commits
-- Emil Madsen - 3 commits
-- Marcus Miyalys - 2 commits
-- cheikendorf - 2 commits
-- Emil Thorenfeldt - 1 commit
-- debjazkb297 - 1 commit
+| Contributor | Organization (best guess) |
+| --- | --- |
+| Alexander Faithfull | Magenta ApS |
+| Agnete Moos | Sonderborg Kommune |
+| Andreas Natanael Nielsen | Magenta ApS |
+| Andreas Poulsen | Magenta ApS |
+| Carsten Agger | Magenta ApS |
+| cheikendorf | GitHub user (noreply) |
+| Danni Als | Magenta ApS |
+| debjazkb297 | GitHub user (noreply) |
+| Emil Madsen | Personal email (organization unknown) |
+| Emil Nordahn Andersen | Magenta ApS |
+| Emil Thorenfeldt | Magenta ApS |
+| Exu do BBX | Organization unknown |
+| Frank Thomsen | Magenta ApS |
+| Heini Ovason | Magenta ApS |
+| Henrik Eidnes | KvalitetsIT |
+| Jorgen Ulrik B. Krag | Magenta ApS |
+| Marcus Funch Mogensen | Magenta ApS |
+| Marcus Miyalys | Organization unknown |
+| Mathias Dannesbo | Magenta ApS |
+| Sebastian Heiberg | Magenta ApS |
+| Soren Howe Gersager | Magenta ApS |
+| Sune Koch Hansen | KvalitetsIT |
+| Toke | Local machine identity |
+| Troels Juel Larsen | Magenta ApS |
+| william-magenta | Magenta ApS |
+
+*Contributors identified from git commit author history, with normalized names and a best-guess organization based on email domain.*
 
