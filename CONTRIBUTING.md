@@ -3,7 +3,7 @@
 If you want to contribute to OS2BorgerPC, we ask you to follow these guidelines.
 
 ## Reporting bugs
-If you have encountered a bug in OS2BorgerPC, please check if an issue already exists in the list of existing [issues](https://os2web.atlassian.net/), if such an issue does not exist, you can create one [here](https://os2web.atlassian.net/). When writing the bug report, try to add a clear example that shows how to reproduce said bug.
+If you have encountered a bug in OS2BorgerPC, please check if an issue already exists in the list of existing [issues](https://os2borgerpc.os2.eu/docs/issue-tracker.html), if such an issue does not exist, you can create one [here](https://os2borgerpc.os2.eu/docs/issue-tracker.html). When writing the bug report, try to add a clear example that shows how to reproduce said bug.
 
 ## Adding new features
 Before making making changes to the code, we advise you to first check the list of existing [issues](https://os2borgerpc.os2.eu/docs/issue-tracker.html) for OS2BorgerPC to see if an issue for the suggested changes already exists. If such an issue does not exist, you can create one [here](https://os2borgerpc.os2.eu/docs/issue-tracker.html). 
