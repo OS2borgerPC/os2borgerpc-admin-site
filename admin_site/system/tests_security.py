@@ -20,21 +20,28 @@ from django.urls import reverse, NoReverseMatch
 from account.models import UserProfile, SiteMembership
 from system.models import (
     APIKey,
+    AssociatedScript,
+    Batch,
     Configuration,
     ConfigurationEntry,
     Country,
     Customer,
+    Input,
+    Job,
     PC,
     PCGroup,
     Script,
+    SecurityProblem,
     Site,
     WakeWeekPlan,
 )
 from system.views import (
     EventRuleServerCreate,
+    JobRestarter,
     PCGroupUpdate,
     ScriptRun,
     ScriptUpdate,
+    SecurityProblemCreate,
     UserUpdate,
     WakePlanDuplicate,
     WakePlanUpdate,
@@ -104,10 +111,20 @@ class _FakeForm:
         return self._fields[key]
 
 
-def make_script(name, site):
+def make_script(name, site, is_security=False, is_hidden=False):
     return Script.objects.create(
-        name=name, description="d", site=site, is_security_script=False
+        name=name,
+        description="d",
+        site=site,
+        is_security_script=is_security,
+        is_hidden=is_hidden,
     )
+
+
+def make_job(site, pc):
+    script = make_script("job-script-" + site.uid, site)
+    batch = Batch.objects.create(name="b-" + site.uid, script=script, site=site)
+    return Job.objects.create(batch=batch, pc=pc, status=Job.DONE)
 
 
 class ConfigProtectionTests(TestCase):
@@ -357,3 +374,231 @@ class APIKeyDeleteScopingTests(TestCase):
         self.client.delete(reverse("api_key_delete", args=[site_a.uid, key_a.id]))
 
         self.assertFalse(APIKey.objects.filter(id=key_a.id).exists())
+
+
+class APIKeyViewTests(TestCase):
+    def test_delete_on_apikeyupdate_cannot_delete_a_site(self):
+        site_a = make_site("apa")
+        site_b = make_site("apb")
+        admin_a = make_user("apa_admin", site_a, SiteMembership.CUSTOMER_ADMIN)
+
+        self.client.force_login(admin_a)
+        # The <pk> is site_b's id; before the fix this DELETE deleted that Site.
+        self.client.delete(
+            reverse("api_key_update", args=[site_a.uid, site_b.id])
+        )
+        self.assertTrue(Site.objects.filter(id=site_b.id).exists())
+
+    def test_description_update_scoped_to_site(self):
+        site_a = make_site("apc")
+        site_b = make_site("apd")
+        admin_a = make_user("apc_admin", site_a, SiteMembership.CUSTOMER_ADMIN)
+        key_b = APIKey.objects.create(key="kb", site=site_b, description="orig")
+
+        self.client.force_login(admin_a)
+        self.client.post(
+            reverse("api_key_update", args=[site_a.uid, key_b.id]),
+            {"description": "hijacked"},
+        )
+        key_b.refresh_from_db()
+        self.assertEqual(key_b.description, "orig")
+
+    def test_create_cannot_target_another_site(self):
+        site_a = make_site("ape")
+        site_b = make_site("apf")
+        admin_a = make_user("ape_admin", site_a, SiteMembership.CUSTOMER_ADMIN)
+
+        self.client.force_login(admin_a)
+        self.client.post(
+            reverse("api_key_new", args=[site_a.uid]),
+            {"site": site_b.id, "key": "attacker-chosen", "description": "x"},
+        )
+        # No key on site_b, and the attacker-chosen key value was not honored.
+        self.assertFalse(APIKey.objects.filter(site=site_b).exists())
+        self.assertFalse(APIKey.objects.filter(key="attacker-chosen").exists())
+
+
+class SecurityProblemSiteSpoofTests(TestCase):
+    def test_site_is_forced_to_slug_site(self):
+        site_a = make_site("spa")
+        site_b = make_site("spb")
+        admin_a = make_user("spa_admin", site_a, SiteMembership.SITE_ADMIN)
+        script = make_script("secscript", None, is_security=True)  # global
+
+        view = SecurityProblemCreate()
+        view.kwargs = {"slug": site_a.uid}
+        req = RequestFactory().post("/")
+        req.user = admin_a
+        view.request = req
+        view.object = None
+
+        form_class = view.get_form_class()
+        form = form_class(
+            data={
+                "name": "rule",
+                "level": "High",
+                "site": site_b.id,  # spoofed target
+                "security_script": script.id,
+            }
+        )
+        self.assertTrue(form.is_valid(), form.errors)
+        view.form_valid(form)
+
+        created = SecurityProblem.objects.get(name="rule")
+        self.assertEqual(created.site_id, site_a.id)  # forced back to own site
+
+
+class UserDeleteAuthTests(TestCase):
+    def test_delete_denied_for_site_user(self):
+        site = make_site("uda")
+        low = make_user("uda_low", site, SiteMembership.SITE_USER)
+        victim = make_user("uda_victim", site, SiteMembership.SITE_USER)
+
+        self.client.force_login(low)
+        self.client.delete(reverse("user_delete", args=[site.uid, victim.username]))
+        self.assertTrue(User.objects.filter(username=victim.username).exists())
+
+    def test_delete_of_superuser_denied_for_site_admin(self):
+        site = make_site("udb")
+        admin = make_user("udb_admin", site, SiteMembership.SITE_ADMIN)
+        su = make_user("udb_su", site, SiteMembership.SITE_USER, is_superuser=True)
+
+        self.client.force_login(admin)
+        self.client.delete(reverse("user_delete", args=[site.uid, su.username]))
+        self.assertTrue(User.objects.filter(username=su.username).exists())
+
+
+class UserUpdateSuperuserTargetTests(TestCase):
+    def _get_object_as(self, requester, target, site):
+        view = UserUpdate()
+        view.kwargs = {"slug": site.uid, "username": target.username}
+        req = RequestFactory().post("/")
+        req.user = requester
+        view.request = req
+        return view.get_object()
+
+    def test_site_admin_cannot_load_superuser_target(self):
+        site = make_site("sua")
+        admin = make_user("sua_admin", site, SiteMembership.SITE_ADMIN)
+        su = make_user("sua_su", site, SiteMembership.SITE_USER, is_superuser=True)
+        with self.assertRaises(PermissionDenied):
+            self._get_object_as(admin, su, site)
+
+    def test_site_admin_can_load_ordinary_target(self):
+        site = make_site("sub")
+        admin = make_user("sub_admin", site, SiteMembership.SITE_ADMIN)
+        ordinary = make_user("sub_user", site, SiteMembership.SITE_USER)
+        # Should not raise.
+        self.assertEqual(self._get_object_as(admin, ordinary, site), ordinary)
+
+    def test_user_can_load_self(self):
+        site = make_site("suc")
+        low = make_user("suc_low", site, SiteMembership.SITE_USER)
+        self.assertEqual(self._get_object_as(low, low, site), low)
+
+
+class SaveScriptInputsTests(TestCase):
+    def test_foreign_input_pk_not_hijacked(self):
+        site = make_site("ssi")
+        su = make_user("ssi_su", site, SiteMembership.SITE_USER, is_superuser=True)
+        my_script = make_script("mine", site)
+        global_script = make_script("glob", None)
+        victim_input = Input.objects.create(
+            name="victim", script=global_script, position=0, value_type=Input.STRING
+        )
+
+        view = ScriptUpdate()
+        view.script = my_script
+        req = RequestFactory().post("/")
+        req.user = su
+        view.request = req
+        # Submit the GLOBAL script's Input pk while editing my own script.
+        view.script_inputs = [
+            {
+                "pk": str(victim_input.pk),
+                "name": "stolen",
+                "value_type": Input.STRING,
+                "position": 0,
+                "default_value": "",
+                "mandatory": False,
+            }
+        ]
+        view.save_script_inputs()
+
+        victim_input.refresh_from_db()
+        # The victim Input still belongs to the global script, untouched.
+        self.assertEqual(victim_input.script_id, global_script.id)
+        self.assertEqual(victim_input.name, "victim")
+
+
+class PolicyAscPkTests(TestCase):
+    def test_foreign_associated_script_pk_not_moved(self):
+        site = make_site("pap")
+        my_cfg = Configuration.objects.create(name="mg")
+        other_cfg = Configuration.objects.create(name="og")
+        my_group = PCGroup.objects.create(
+            name="mine", description="", site=site, configuration=my_cfg
+        )
+        other_group = PCGroup.objects.create(
+            name="other", description="", site=site, configuration=other_cfg
+        )
+        script = make_script("s", site)
+        # An AssociatedScript owned by another group.
+        foreign_asc = AssociatedScript.objects.create(
+            group=other_group, script=script, position=0
+        )
+
+        # Craft a POST for my_group reusing the foreign asc pk.
+        post = QueryDict(mutable=True)
+        post.setlist("group_policies", [str(foreign_asc.pk)])
+        post["group_policies_%s" % foreign_asc.pk] = str(script.pk)
+
+        class _Req:
+            POST = post
+            FILES = {}
+
+        my_group.update_policy_from_request(_Req(), "group_policies")
+
+        foreign_asc.refresh_from_db()
+        # Still owned by the other group - not moved into mine.
+        self.assertEqual(foreign_asc.group_id, other_group.id)
+
+
+class JobRestarterScopeTests(TestCase):
+    def test_foreign_job_not_found(self):
+        site_a = make_site("jra")
+        site_b = make_site("jrb")
+        pc_b = make_pc("jrbpc", site_b)
+        job_b = make_job(site_b, pc_b)
+
+        view = JobRestarter()
+        view.kwargs = {"slug": site_a.uid, "pk": job_b.pk}
+        view.request = RequestFactory().get("/")
+        with self.assertRaises(Http404):
+            view.get_object()
+
+
+class ScriptRunFetchScopeTests(TestCase):
+    def _fetch_script_pk(self, view, slug, script_pk):
+        view.kwargs = {"slug": slug, "script_pk": script_pk}
+        req = RequestFactory().post("/", {"action": "choose_pcs_and_groups"})
+        view.request = req
+        view.object = Site.objects.get(uid=slug)
+        return view.get_context_data()
+
+    def test_foreign_site_script_not_fetchable(self):
+        site_a = make_site("sra")
+        site_b = make_site("srb")
+        foreign = make_script("secret", site_b, is_hidden=True)
+
+        view = ScriptRun()
+        with self.assertRaises(Http404):
+            self._fetch_script_pk(view, site_a.uid, foreign.pk)
+
+    def test_global_script_is_fetchable(self):
+        site_a = make_site("src")
+        glob = make_script("glob", None)
+
+        view = ScriptRun()
+        ctx = self._fetch_script_pk(view, site_a.uid, glob.pk)
+        self.assertEqual(ctx["script"].id, glob.id)
