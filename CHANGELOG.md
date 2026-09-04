@@ -1,3 +1,11 @@
+Version 7.0.4, September 2, 2026
+----------------------------
+
+- Fixed several access-control gaps where site-scoped data (API keys, scripts, PC groups, wake plans, user accounts) could be viewed or modified across site/customer boundaries.
+- Added protection so governing configuration keys (e.g. `admin_url`) cannot be edited or deleted through the admin portal UI, matching the existing client-API protection from 7.0.3.
+- Fixed a stored XSS vulnerability in script descriptions rendered via Markdown.
+- Prevented users from granting account roles higher than their own.
+
 Version 7.0.3, August 14, 2026
 -----------------------------
 
