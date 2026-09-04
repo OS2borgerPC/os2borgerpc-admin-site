@@ -11,7 +11,7 @@ Version 7.0.3, August 14, 2026
 
 - Prevent clients from setting specific protected configuration keys via the client API.
 
-Version 7.0.2, July 10, 2025
+Version 7.0.2, July 10, 2026
 ----------------------------
 
 - Updated Django and related dependencies to reduce CVE exposure.
