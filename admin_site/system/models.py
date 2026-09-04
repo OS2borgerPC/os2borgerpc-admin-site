@@ -659,8 +659,17 @@ class PCGroup(models.Model):
             if script.site and script.site != self.site:
                 continue
             asc = AssociatedScript(group=self, script=script, position=i)
+            # Only reuse a pk that was one of THIS group's own associations
+            # (existing_set, deleted just above). A pk from POST that isn't ours
+            # must not be set as asc.pk, or asc.save() would UPDATE another
+            # group's AssociatedScript row and move it into this group. Anything
+            # else is treated as a new association.
             if not pk.startswith("new_"):
-                asc.pk = pk
+                try:
+                    if int(pk) in existing_set:
+                        asc.pk = pk
+                except (TypeError, ValueError):
+                    pass
             asc.save()
 
             for old_param in old_params:
