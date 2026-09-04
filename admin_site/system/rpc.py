@@ -3,6 +3,7 @@
 
 import system.utils
 import hashlib
+import hmac
 import logging
 from datetime import datetime, timedelta
 
@@ -22,7 +23,7 @@ from system.utils import (
 
 logger = logging.getLogger(__name__)
 
-
+CLIENT_KEY_EXPECTED_LEN = 64
 # Governing/trust config keys marked read_only in the admin portal UI at
 # registration, so they cannot be edited or deleted through the portal (see
 # Configuration.update_from_request). Wiping admin_url via a config delete makes
@@ -43,15 +44,159 @@ READ_ONLY_IN_UI_CONFIG_KEYS = frozenset(
 )
 
 
-def register_new_computer_v2(mac, name, site, configuration):
+def _normalize_client_key(client_key):
+    if client_key is None:
+        return None
+    if not isinstance(client_key, str):
+        raise Exception("Client key authentication failed: malformed client_key value.")
+    value = client_key.strip().lower()
+    if not value:
+        return None
+    if len(value) != CLIENT_KEY_EXPECTED_LEN:
+        raise Exception("Client key authentication failed: malformed client_key length.")
+    if any(c not in "0123456789abcdef" for c in value):
+        raise Exception("Client key authentication failed: malformed client_key format.")
+    return value
+
+
+def _hash_client_key(normalized_client_key):
+    if not normalized_client_key:
+        return None
+    return hashlib.sha256(normalized_client_key.encode("ascii")).hexdigest()
+
+
+def _client_key_present(client_key):
+    return client_key is not None and bool(str(client_key).strip())
+
+
+def _log_client_key_auth(
+    method_name,
+    key_present,
+    key_match,
+    machine_identifier=None,
+    rejection_reason=None,
+):
+    logger.info(
+        "client_key_auth method=%s machine=%s key_present=%s key_match=%s rejection_reason=%s",
+        method_name,
+        machine_identifier,
+        bool(key_present),
+        key_match,
+        rejection_reason,
+    )
+
+
+def _bootstrap_pc_client_key_if_missing(pc, normalized_client_key, method_name):
+    if normalized_client_key is None:
+        _log_client_key_auth(
+            method_name,
+            key_present=False,
+            key_match=None,
+            machine_identifier=pc.uid,
+            rejection_reason=None,
+        )
+        return False
+
+    incoming_hash = _hash_client_key(normalized_client_key)
+    if not pc.client_key_hash:
+        pc.client_key_hash = incoming_hash
+        pc.save(update_fields=["client_key_hash"])
+        _log_client_key_auth(
+            method_name,
+            key_present=True,
+            key_match=True,
+            machine_identifier=pc.uid,
+            rejection_reason=None,
+        )
+        return True
+    return False
+
+
+def _enforce_client_key_for_pc(method_name, pc, client_key):
+    normalized_client_key = _normalize_client_key(client_key)
+    incoming_hash = _hash_client_key(normalized_client_key)
+    stored_hash = pc.client_key_hash
+    key_present = normalized_client_key is not None
+
+    if not stored_hash:
+        if key_present:
+            pc.client_key_hash = incoming_hash
+            pc.save(update_fields=["client_key_hash"])
+            _log_client_key_auth(
+                method_name,
+                key_present=True,
+                key_match=True,
+                machine_identifier=pc.uid,
+                rejection_reason="stored_new_key",
+            )
+            return
+        _log_client_key_auth(
+            method_name,
+            key_present=False,
+            key_match=None,
+            machine_identifier=pc.uid,
+            rejection_reason="legacy_machine_without_key",
+        )
+        return
+
+    if not key_present:
+        _log_client_key_auth(
+            method_name,
+            key_present=False,
+            key_match=False,
+            machine_identifier=pc.uid,
+            rejection_reason="missing_client_key",
+        )
+        raise Exception("Client key authentication failed: missing client_key.")
+
+    if not hmac.compare_digest(stored_hash, incoming_hash):
+        _log_client_key_auth(
+            method_name,
+            key_present=True,
+            key_match=False,
+            machine_identifier=pc.uid,
+            rejection_reason="mismatched_client_key",
+        )
+        raise Exception("Client key authentication failed: mismatched client_key.")
+
+    _log_client_key_auth(
+        method_name,
+        key_present=True,
+        key_match=True,
+        machine_identifier=pc.uid,
+        rejection_reason=None,
+    )
+
+
+def _log_missing_machine_mapping_for_client_key(method_name, client_key):
+    _normalize_client_key(client_key)
+    key_present = _client_key_present(client_key)
+    _log_client_key_auth(
+        method_name,
+        key_present=key_present,
+        key_match=None,
+        machine_identifier=None,
+        rejection_reason="machine_mapping_unavailable_fallback_allowed",
+    )
+
+
+def register_new_computer_v2(mac, name, site, configuration, client_key=None):
     """Register a new computer with the admin system - after registration, the
     computer will be submitted for approval."""
 
     # Hash our uid
     uid = hashlib.md5(mac.encode("utf-8")).hexdigest()
 
+    normalized_client_key = _normalize_client_key(client_key)
+
     if PC.objects.filter(uid=uid).count():
-        name = PC.objects.get(uid=uid).name
+        existing_pc = PC.objects.get(uid=uid)
+        _bootstrap_pc_client_key_if_missing(
+            existing_pc,
+            normalized_client_key,
+            method_name="register_new_computer_v2",
+        )
+        name = existing_pc.name
         raise Exception(
             "A computer with the same MAC address as this computer is already "
             f"registered with the chosen admin portal under the name {name}. "
@@ -70,6 +215,8 @@ def register_new_computer_v2(mac, name, site, configuration):
 
     new_pc.is_activated = False
     new_pc.mac = mac
+    if normalized_client_key:
+        new_pc.client_key_hash = _hash_client_key(normalized_client_key)
     # Create new configuration, populate with data from computer's config.
     # If a configuration with the same ID is hanging, reuse.
     config_name = "_".join([site, name, uid])
@@ -119,17 +266,20 @@ def register_new_computer_v2(mac, name, site, configuration):
 
 
 # TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
-def register_new_computer(mac, name, distribution, site, configuration):
-    return register_new_computer_v2(mac, name, site, configuration)
+def register_new_computer(
+    mac, name, distribution, site, configuration, client_key=None
+):
+    return register_new_computer_v2(mac, name, site, configuration, client_key)
 
 
-def send_status_info_v2(pc_uid, job_data):
+def send_status_info_v2(pc_uid, job_data, client_key=None):
     """Update the status of outstanding jobs.
     If no updates, these will be None. In that
     case, this function really works as an "I'm alive" signal."""
 
     # 1. Lookup PC, update "last_seen" field
     pc = PC.objects.get(uid=pc_uid)
+    _enforce_client_key_for_pc("send_status_info_v2", pc, client_key)
 
     if not pc.is_activated:
         # Fail silently
@@ -159,11 +309,13 @@ def send_status_info_v2(pc_uid, job_data):
 
 
 # TODO: Backwards compatible function. Delete once there are no longer active clients calling it.
-def send_status_info(pc_uid, package_data, job_data, update_required):
-    return send_status_info_v2(pc_uid, job_data)
+def send_status_info(
+    pc_uid, package_data, job_data, update_required=None, client_key=None
+):
+    return send_status_info_v2(pc_uid, job_data, client_key)
 
 
-def get_instructions(pc_uid):
+def get_instructions(pc_uid, client_key=None):
     """This function will ask for new instructions in the form of a list of
     jobs, which will be scheduled for execution and executed upon receipt.
     These jobs will generally take the form of bash scripts."""
@@ -174,6 +326,8 @@ def get_instructions(pc_uid):
         raise Exception(
             "This Computer does not appear to be registered with the configured admin portal."
         )
+
+    _enforce_client_key_for_pc("get_instructions", pc, client_key)
 
     pc.last_seen = datetime.now()
     pc.save()
@@ -251,13 +405,14 @@ CLIENT_IMMUTABLE_CONFIG_KEYS = frozenset(
 )
 
 
-def push_config_keys(pc_uid, config_dict):
+def push_config_keys(pc_uid, config_dict, client_key=None):
     try:
         pc = PC.objects.get(uid=pc_uid)
     except PC.DoesNotExist:
         raise Exception(
             "This Computer does not appear to be registered with the configured admin portal."
         )
+    _enforce_client_key_for_pc("push_config_keys", pc, client_key)
     if not pc.is_activated:
         return 0
 
@@ -309,8 +464,9 @@ def push_config_keys(pc_uid, config_dict):
 # + events where the site's computer and rule's computer don't match
 # TODO: If we update all clients and stop using complete_log just
 # stop handling it here completely as it's null=True
-def push_security_events(pc_uid, events_csv):
+def push_security_events(pc_uid, events_csv, client_key=None):
     pc = PC.objects.get(uid=pc_uid)
+    _enforce_client_key_for_pc("push_security_events", pc, client_key)
 
     for event in events_csv:
         event_split = event.split(",")
@@ -377,7 +533,7 @@ def push_security_events(pc_uid, events_csv):
     return 0
 
 
-def general_citizen_login(pc_uid, integration, value_dict):
+def general_citizen_login(pc_uid, integration, value_dict, client_key=None):
     """Check if the user is allowed to log in by validating
     their login via the indicated login integration.
 
@@ -420,6 +576,7 @@ def general_citizen_login(pc_uid, integration, value_dict):
     is_sms_booking = False
     try:
         pc = PC.objects.get(uid=pc_uid)
+        _enforce_client_key_for_pc("general_citizen_login", pc, client_key)
         if not pc.is_activated:
             # Fail silently
             return int(time_allowed), citizen_hash, log_id
@@ -585,10 +742,13 @@ def general_citizen_login(pc_uid, integration, value_dict):
     return int(time_allowed), citizen_hash, log_id
 
 
-def general_citizen_logout(citizen_hash, log_id):
+def general_citizen_logout(citizen_hash, log_id, client_key=None):
     """Update the logout time of the relevant LoginLog object if
     required and/or log out the relevant Citizen object if
     booking is not required."""
+
+    # There is no reliable machine mapping on this endpoint today.
+    _log_missing_machine_mapping_for_client_key("general_citizen_logout", client_key)
 
     if log_id:
         try:
@@ -619,6 +779,7 @@ def sms_login(
     login_duration=None,
     quarantine_duration=None,
     unlimited_access=False,
+    client_key=None,
 ):
     """Check if the user is allowed to log in and if so, send a sms with
     the required password to the entered phone number.
@@ -662,6 +823,7 @@ def sms_login(
     citizen_hash = ""
     try:
         pc = PC.objects.get(uid=pc_uid)
+        _enforce_client_key_for_pc("sms_login", pc, client_key)
         if not pc.is_activated:
             # Fail silently
             return int(0), citizen_hash
@@ -675,6 +837,7 @@ def sms_login(
         except Site.DoesNotExist:
             logger.error(f"Site {site_uid} does not exist - unable to proceed.")
             return int(0), citizen_hash
+        _log_missing_machine_mapping_for_client_key("sms_login", client_key)
 
     if login_duration:
         login_duration = timedelta(minutes=login_duration)
@@ -795,6 +958,7 @@ def sms_login_finalize(
     allow_idle_login=False,
     login_duration=None,
     quarantine_duration=None,
+    client_key=None,
 ):
     """Finalize the sms_login-process by creating a LoginLog object if
     required and/or updating the relevant Citizen object if booking
@@ -810,6 +974,7 @@ def sms_login_finalize(
                       the logout time later."""
     try:
         pc = PC.objects.get(uid=pc_uid)
+        _enforce_client_key_for_pc("sms_login_finalize", pc, client_key)
         if not pc.is_activated:
             # Fail silently
             return 0
@@ -823,6 +988,7 @@ def sms_login_finalize(
         except Site.DoesNotExist:
             logger.error(f"Site {site_uid} does not exist - unable to proceed.")
             return 0
+        _log_missing_machine_mapping_for_client_key("sms_login_finalize", client_key)
     # If booking is not required, we use the standard quarantine system
     # time_allowed has already been checked by sms_login, so we only need
     # to update last_successful_login and/or logged_in
@@ -876,16 +1042,18 @@ def sms_login_finalize(
     return log_id
 
 
-def sms_logout(citizen_hash, log_id):
+def sms_logout(citizen_hash, log_id, client_key=None):
     """Update the logout time of the relevant LoginLog object if
     required and/or log out the relevant Citizen object if
     booking is not required."""
 
-    val = general_citizen_logout(citizen_hash, log_id)
+    val = general_citizen_logout(citizen_hash, log_id, client_key)
     return val
 
 
-def citizen_login(username, password, pc_uid, prevent_dual_login=False):
+def citizen_login(
+    username, password, pc_uid, prevent_dual_login=False, client_key=None
+):
     """Check if user is allowed to log in and give the go-ahead if so.
 
     Return values:
@@ -897,6 +1065,7 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
     time_allowed = 0
     try:
         pc = PC.objects.get(uid=pc_uid)
+        _enforce_client_key_for_pc("citizen_login", pc, client_key)
         if not pc.is_activated:
             # Fail silently
             return time_allowed
@@ -910,6 +1079,7 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
         except Site.DoesNotExist:
             logger.error(f"Site {site_uid} does not exist - unable to proceed.")
             return time_allowed
+        _log_missing_machine_mapping_for_client_key("citizen_login", client_key)
     login_validator = get_citizen_login_api_validator()
     citizen_id = login_validator(username, password, site)
     citizen_hash = ""
@@ -963,6 +1133,6 @@ def citizen_login(username, password, pc_uid, prevent_dual_login=False):
         return int(time_allowed)
 
 
-def citizen_logout(citizen_hash):
-    val = general_citizen_logout(citizen_hash, "")
+def citizen_logout(citizen_hash, client_key=None):
+    val = general_citizen_logout(citizen_hash, "", client_key)
     return val
