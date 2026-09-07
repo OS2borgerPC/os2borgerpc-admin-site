@@ -98,7 +98,7 @@ def _bootstrap_pc_client_key_if_missing(pc, normalized_client_key, method_name):
         return False
 
     incoming_hash = _hash_client_key(normalized_client_key)
-    if not pc.client_key_hash:
+    if not pc.client_key_hash and pc.is_activated:
         pc.client_key_hash = incoming_hash
         pc.save(update_fields=["client_key_hash"])
         _log_client_key_auth(
