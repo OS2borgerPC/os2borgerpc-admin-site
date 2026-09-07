@@ -585,10 +585,20 @@ class TwoFactor(SiteView, SiteMixin):
     template_name = "system/site_two_factor_pc.html"
 
 
-class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
-    # form_class = ?
+class APIKeyUpdate(UpdateView, SiteView):
+    # NOTE: DeletionMixin was removed from the bases. With model=Site (from
+    # SiteView) and no get_object override, SingleObjectMixin prefers the URL
+    # <pk> over the <slug>, so an HTTP DELETE resolved to - and deleted - an
+    # arbitrary Site whose id was passed as the "api key pk". This view only
+    # updates an API key's description; it must not expose a delete handler.
     template_name = "system/site_settings/api_keys/api_keys.html"
     fields = "__all__"
+
+    def get_object(self, queryset=None):
+        # Always the caller's own site (dispatch verified membership of the
+        # slug's site). Never resolve by the URL <pk>, which would let the
+        # caller point at another Site.
+        return get_object_or_404(Site, uid=self.kwargs["slug"])
 
     def get_context_data(self, **kwargs):
         # First, get basic context from superclass
@@ -600,16 +610,23 @@ class APIKeyUpdate(UpdateView, SiteView, DeletionMixin):
 
     # def form_valid(self, form):
     def post(self, request, *args, **kwargs):
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
         new_description = request.POST["description"]
 
-        APIKey.objects.filter(id=kwargs["pk"]).update(description=new_description)
+        # Scope the update to this site's own keys; the pk comes from the URL.
+        APIKey.objects.filter(id=kwargs["pk"], site=site).update(
+            description=new_description
+        )
 
         return HttpResponse("OK")
 
 
 class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
     model = APIKey
-    fields = "__all__"
+    # Only "description" is user-supplied. The key is generated server-side and
+    # the site is forced to the caller's own site (see post). Exposing the full
+    # model (fields="__all__") let a POST set APIKey.site to another site.
+    fields = ["description"]
     template_name = "system/site_settings/api_keys/partials/list.html"
 
     # TODO: Consider making a common class they inherit from, to not duplicate get_context_data (and maybe other view functions)
@@ -628,8 +645,10 @@ class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
         # kwargs["updated"] = True
         response = self.get(request, *args, **kwargs)
 
-        # Handle saving of data
-        super(APIKeyCreate, self).post(request, *args, **kwargs)
+        # NOTE: we deliberately do NOT call super().post() here. That ran the
+        # ModelForm's save() on the raw POST, which - with the site field
+        # exposed - persisted an APIKey with an attacker-chosen site and key.
+        # The key is generated here and the site is forced to the caller's own.
 
         # Generate an API Key
         KEY_LENGTH = 75
@@ -638,7 +657,9 @@ class APIKeyCreate(CreateView, SuperAdminOrThisSiteMixin):
             key = secrets.token_urlsafe(KEY_LENGTH)
 
         site = get_object_or_404(Site, uid=self.kwargs["slug"])
-        APIKey.objects.create(key=key, site=site)
+        APIKey.objects.create(
+            key=key, site=site, description=request.POST.get("description", "")
+        )
 
         return response
 
@@ -1023,6 +1044,15 @@ class JobRestarter(DetailView, SuperAdminOrThisSiteMixin):
     template_name = "system/jobs/restart.html"
     model = Job
 
+    def get_object(self, queryset=None):
+        # Scope the job to the slug's site (a job belongs to a site via its
+        # batch). Without this, the default DetailView lookup fetches the Job by
+        # URL pk alone, letting a member of one site restart another site's job
+        # on another site's machine. JobInfo enforces the same ownership.
+        return get_object_or_404(
+            Job, pk=self.kwargs["pk"], batch__site__uid=self.kwargs["slug"]
+        )
+
     def status_fail_response(self):
         response = HttpResponseRedirect(self.get_success_url())
         set_notification_cookie(
@@ -1233,6 +1263,21 @@ class ScriptMixin(object):
         return success
 
     def save_script_inputs(self):
+        # The input pks come from POST. Only accept a pk that belongs to THIS
+        # script's own inputs - otherwise update_or_create(pk=...) would UPDATE
+        # another script's Input row and reassign it to this script, letting a
+        # local-script edit hijack/wipe e.g. a global script's parameters. A pk
+        # that isn't ours is treated as a new input.
+        own_pks = set(self.script.inputs.values_list("pk", flat=True))
+        for script_input in self.script_inputs:
+            pk = script_input.get("pk")
+            try:
+                is_own = pk is not None and pk != "" and int(pk) in own_pks
+            except (TypeError, ValueError):
+                is_own = False
+            if not is_own:
+                script_input["pk"] = None
+
         # First delete the existing inputs not found in the new inputs.
         pks = [
             script_input.get("pk")
@@ -1545,7 +1590,15 @@ class ScriptRun(SiteView):
 
     def get_context_data(self, **kwargs):
         context = super(ScriptRun, self).get_context_data(**kwargs)
-        context["script"] = get_object_or_404(Script, pk=self.kwargs["script_pk"])
+        # Only a global script or one belonging to this site may be fetched -
+        # never another site's (possibly hidden) script by pk alone, which would
+        # disclose its source and let it be run. Mirrors ScriptMixin's rule.
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        context["script"] = get_object_or_404(
+            Script,
+            Q(site=site) | Q(site__isnull=True),
+            pk=self.kwargs["script_pk"],
+        )
 
         action = self.request.POST.get("action", "choose_pcs_and_groups")
         if action == ScriptRun.STEP1:
@@ -2706,6 +2759,46 @@ class UsersMixin(object):
         context["site"] = self.site
         return context
 
+    def deny_if_cannot_manage_user(
+        self, site, selected_user, target_membership, allow_self=False
+    ):
+        """Object-level authorization for acting on `selected_user` on `site`.
+
+        Called from get_object() so it runs on EVERY HTTP method - including
+        DELETE, which bypasses form_valid() entirely (DeletionMixin.delete()
+        calls get_object() + delete(), never form_valid()). Placing the check
+        only in form_valid left UserDelete open to an HTTP DELETE.
+
+        Rules for a non-superuser requester:
+          - must be SITE_ADMIN or higher on this site (unless editing self and
+            allow_self is set);
+          - may never manage a superuser account ("a low membership means
+            stricter, not weaker" - a superuser holding a mere site membership
+            must not be editable/deletable by a site admin);
+          - may only manage a CUSTOMER_ADMIN target if they are themselves a
+            CUSTOMER_ADMIN somewhere.
+        """
+        req = self.request.user
+        if req.is_superuser:
+            return
+        if allow_self and req == selected_user:
+            return
+        req_membership = req.user_profile.sitemembership_set.filter(site=site).first()
+        if (
+            req_membership is None
+            or req_membership.site_user_type < SiteMembership.SITE_ADMIN
+        ):
+            raise PermissionDenied
+        if selected_user.is_superuser:
+            raise PermissionDenied
+        if (
+            target_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
+            and not req.user_profile.sitemembership_set.filter(
+                site_user_type=SiteMembership.CUSTOMER_ADMIN
+            ).exists()
+        ):
+            raise PermissionDenied
+
     def add_userlist_to_context(self, context):
         if "site" not in context:
             self.add_site_to_context(context)
@@ -2958,22 +3051,21 @@ class UserUpdate(UpdateView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
+            site = get_object_or_404(Site, uid=self.kwargs["slug"])
             site_membership = self.selected_user.user_profile.sitemembership_set.get(
-                site__uid=self.kwargs["slug"]
+                site=site
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
                 _("You have no user with the following ID: %s")
                 % self.kwargs["username"]
             )
-        if (
-            site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
-            and not self.request.user.is_superuser
-            and not self.request.user.user_profile.sitemembership_set.filter(
-                site_user_type=SiteMembership.CUSTOMER_ADMIN
-            )
-        ):
-            raise PermissionDenied
+        # Object-level authorization, enforced here so it applies on every HTTP
+        # method. allow_self: a user may edit their own profile (usertype
+        # elevation is still blocked separately in form_valid).
+        self.deny_if_cannot_manage_user(
+            site, self.selected_user, site_membership, allow_self=True
+        )
 
         return self.selected_user
 
@@ -3099,19 +3191,19 @@ class UserDelete(DeleteView, UsersMixin, SuperAdminOrThisSiteMixin):
     def get_object(self, queryset=None):
         try:
             self.selected_user = User.objects.get(username=self.kwargs["username"])
+            site = get_object_or_404(Site, uid=self.kwargs["slug"])
             site_membership = self.selected_user.user_profile.sitemembership_set.get(
-                site__uid=self.kwargs["slug"]
+                site=site
             )
         except (User.DoesNotExist, SiteMembership.DoesNotExist):
             raise Http404(
                 _("You have no user with the following ID: %s")
                 % self.kwargs["username"]
             )
-        if (
-            site_membership.site_user_type == SiteMembership.CUSTOMER_ADMIN
-            and not self.request.user.is_superuser
-        ):
-            raise PermissionDenied
+        # Object-level authorization, enforced here so it also applies to an
+        # HTTP DELETE (which bypasses form_valid). No allow_self: deleting an
+        # account requires SITE_ADMIN or higher.
+        self.deny_if_cannot_manage_user(site, self.selected_user, site_membership)
         return self.selected_user
 
     def get_context_data(self, **kwargs):
@@ -3631,6 +3723,13 @@ class EventRuleBaseMixin(SiteMixin, SuperAdminOrThisSiteMixin):
         return context
 
     def form_valid(self, form):
+        # Force the rule's site to the slug's site. The form uses
+        # fields="__all__", so `site` is a (hidden) form field the client can
+        # set; without this a member of site A could POST site=<victim B> and
+        # create/point a rule (with their own security_script) at site B, whose
+        # get_instructions then runs that script as root on B's machines.
+        site = get_object_or_404(Site, uid=self.kwargs["slug"])
+        form.instance.site = site
         response = super(__class__, self).form_valid(form)
 
         notification_changes_saved(response, self.request.user.user_profile.language)
