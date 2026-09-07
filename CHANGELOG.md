@@ -1,3 +1,10 @@
+Version 7.0.5, September 7, 2026
+----------------------------
+
+- Fixed further access-control gaps allowing cross-site actions on API keys, script parameters, associated scripts, job restarts, and event rules.
+- Fixed an issue where an API key update request could be used to delete an unrelated site.
+- Fixed authorization checks on user account management so they also apply to HTTP DELETE requests, not only form submissions.
+
 Version 7.0.4, September 2, 2026
 ----------------------------
 
