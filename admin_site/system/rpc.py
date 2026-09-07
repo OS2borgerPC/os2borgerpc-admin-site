@@ -119,7 +119,7 @@ def _enforce_client_key_for_pc(method_name, pc, client_key):
     key_present = normalized_client_key is not None
 
     if not stored_hash:
-        if key_present:
+        if key_present and pc.is_activated:
             pc.client_key_hash = incoming_hash
             pc.save(update_fields=["client_key_hash"])
             _log_client_key_auth(
