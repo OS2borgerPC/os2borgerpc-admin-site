@@ -1,3 +1,8 @@
+Version 7.1.0, September 15, 2026
+----------------------------
+
+- Added client key authentication for the XML-RPC API, so PCs authenticate with a per-client key instead of relying solely on their UID.
+
 Version 7.0.5, September 7, 2026
 ----------------------------
 
