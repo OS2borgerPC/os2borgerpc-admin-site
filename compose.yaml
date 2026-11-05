@@ -100,7 +100,7 @@ services:
         depends_on:
             - os2borgerpc-admin
     db:
-        image: postgres:latest
+        image: postgres:17
         restart: always
         environment:
             # NOTE: These values are only used in the local development
