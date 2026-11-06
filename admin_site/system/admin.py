@@ -1,11 +1,13 @@
 from hashlib import md5
 
+from django import forms
 from django.contrib import admin
 from django.db.models import Count
+from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.utils.html import format_html_join, escape, mark_safe
 from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
+from django.urls import path, reverse
 
 from system.models import (
     APIKey,
@@ -16,6 +18,7 @@ from system.models import (
     Citizen,
     Configuration,
     ConfigurationEntry,
+    CoreScriptLibrary,
     Customer,
     FeaturePermission,
     ImageVersion,
@@ -41,6 +44,8 @@ from changelog.models import (
     ChangelogComment,
     ChangelogTag,
 )
+
+from system.core_script_sync import sync_core_script_releases
 
 
 class ConfigurationEntryInline(admin.TabularInline):
@@ -598,6 +603,139 @@ class ImageVersionInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ImageVersionInline]
+
+
+class CoreScriptLibraryAdminForm(forms.ModelForm):
+    class Meta:
+        model = CoreScriptLibrary
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.instance.pk and not self.initial.get("repo_url"):
+            self.fields["repo_url"].initial = (
+                "https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git"
+            )
+
+
+@admin.register(CoreScriptLibrary)
+class CoreScriptLibraryAdmin(admin.ModelAdmin):
+    form = CoreScriptLibraryAdminForm
+    list_display = (
+        "tag",
+        "release_date",
+        "github_release_link",
+        "commit_hash_display",
+        "fetched_at",
+        "active_status",
+    )
+    list_display_links = ("tag",)
+
+    @admin.display(description="Commit hash")
+    def commit_hash_display(self, obj):
+        return obj.commit_hash
+    list_filter = ("is_active",)
+    search_fields = ("tag", "commit_hash")
+    ordering = ("-release_date", "-tag")
+    change_list_template = "admin/system/corescriptlibrary/change_list.html"
+    actions = [
+        "activate_selected",
+        "deactivate_selected",
+        "toggle_library_state",
+    ]
+    @admin.display(description="GitHub release")
+    def github_release_link(self, obj):
+        if not obj.tag:
+            return "—"
+
+        release_url = f"https://github.com/OS2borgerPC/os2borgerpc-core-scripts/releases/tag/{obj.tag}"
+        return mark_safe(
+            f'<a href="{release_url}" target="_blank" rel="noopener noreferrer" '
+            f'style="color:#1f3b8f; text-decoration:underline;">{escape(obj.tag)}</a>'
+        )
+    @admin.display(description=_("Active"))
+    def active_status(self, obj):
+        if obj.is_active:
+            return mark_safe(
+                '<span style="display:inline-block;padding:2px 8px;border-radius:999px;'
+                'background:#d9f7d9;color:#1f7a1f;font-weight:600;">'
+                + _("Active")
+                + "</span>"
+            )
+        return mark_safe(
+            '<span style="display:inline-block;padding:2px 8px;border-radius:999px;'
+            'background:#f8d7da;color:#8a1f2a;font-weight:600;">'
+            + _("Inactive")
+            + "</span>"
+        )
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "sync-github-releases/",
+                self.admin_site.admin_view(self.sync_github_releases_view),
+                name="system_corescriptlibrary_sync_github_releases",
+            ),
+        ]
+        return custom_urls + urls
+
+    def sync_github_releases_view(self, request):
+        try:
+            result = sync_core_script_releases()
+            self.message_user(
+                request,
+                _("Synced %(count)s core script libraries from GitHub.")
+                % {"count": len(result)},
+            )
+        except Exception as exc:  # pragma: no cover - admin feedback path
+            self.message_user(
+                request,
+                _("Failed to sync GitHub releases: %(error)s") % {"error": exc},
+                level="ERROR",
+            )
+        return HttpResponseRedirect("../")
+
+    def save_model(self, request, obj, form, change):
+        if obj.is_active:
+            CoreScriptLibrary.objects.exclude(pk=obj.pk).update(is_active=False)
+        super().save_model(request, obj, form, change)
+
+    @admin.action(description="Aktiver valgte libraries")
+    def activate_selected(self, request, queryset):
+        queryset.update(is_active=False)
+        selected = queryset.order_by("-release_date", "-tag").first()
+        if selected:
+            selected.is_active = True
+            selected.save()
+            CoreScriptLibrary.objects.exclude(pk=selected.pk).update(is_active=False)
+
+    @admin.action(description="Deaktiver valgte libraries")
+    def deactivate_selected(self, request, queryset):
+        queryset.update(is_active=False)
+
+    @admin.action(description="Skift tilstand for valgte libraries")
+    def toggle_library_state(self, request, queryset):
+        selected = list(queryset.order_by("-release_date", "-tag"))
+        if not selected:
+            self.message_user(
+                request,
+                "Vælg mindst én library for at skifte tilstand.",
+                level="ERROR",
+            )
+            return
+
+        for library in selected:
+            library.is_active = not library.is_active
+            library.save(update_fields=["is_active"])
+
+        active_libraries = ", ".join(
+            library.tag for library in selected if library.is_active
+        ) or "ingen"
+        self.message_user(
+            request,
+            f"Skiftede tilstand for {len(selected)} valgte libraries. Aktive nu: {active_libraries}.",
+        )
 
 
 ar = admin.site.register

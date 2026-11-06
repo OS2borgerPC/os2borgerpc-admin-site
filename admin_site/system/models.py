@@ -875,13 +875,35 @@ class Product(models.Model):
         return self.name
 
 
+class CoreScriptLibrary(models.Model):
+    """A fetched GitHub release of the shared core script repository."""
+
+    repo_url = models.URLField(
+        default="https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git"
+    )
+    tag = models.CharField(max_length=128, blank=True, null=True)
+    commit_hash = models.CharField(max_length=80, unique=True)
+    release_date = models.DateTimeField(blank=True, null=True)
+    release_notes = models.TextField(blank=True, null=True)
+    fetched_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-release_date", "-tag"]
+
+    def __str__(self):
+        return self.tag or self.commit_hash[:12]
+
+
 class Script(AuditModelMixin):
     """A script to be performed on a registered client computer."""
 
     name = models.CharField(verbose_name=_("name"), max_length=255)
-    # To have a consistent, unique reference to a script locally and across servers
+    # To have a consistent reference to a script locally and across servers. Scripts
+    # from different fetched GitHub releases may legitimately share the same UID,
+    # so it is intentionally not globally unique.
     uid = models.CharField(
-        verbose_name=_("UID"), max_length=255, unique=True, blank=True, null=True
+        verbose_name=_("UID"), max_length=255, blank=True, null=True
     )
     description = models.TextField(verbose_name=_("description"), max_length=4096)
     site = models.ForeignKey(
@@ -916,6 +938,16 @@ class Script(AuditModelMixin):
     )
     products = models.ManyToManyField(
         Product, related_name="scripts_for_product", blank=True
+    )
+    core_script_library = models.ForeignKey(
+        CoreScriptLibrary,
+        related_name="scripts",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    core_script_version = models.CharField(
+        verbose_name=_("core script version"), max_length=128, blank=True, null=True
     )
 
     @property

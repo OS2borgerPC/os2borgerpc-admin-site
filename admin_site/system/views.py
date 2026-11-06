@@ -60,6 +60,7 @@ from system.models import (
     Job,
     MandatoryParameterMissingError,
     Product,
+    CoreScriptLibrary,
     PC,
     PCGroup,
     WakeWeekPlan,
@@ -1124,10 +1125,17 @@ class ScriptMixin(object):
     def setup_script_editing(self, **kwargs):
         # Get site
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
-        # Add the global and local script lists
+        active_library = CoreScriptLibrary.objects.filter(is_active=True).first()
+        # Add the global and local script lists. If no core-script library is
+        # selected, do not show any global fetched-library scripts; otherwise the
+        # UI would fall back to every stored Script row.
         self.scripts = Script.objects.filter(
             Q(site=self.site) | Q(site=None), is_security_script=self.is_security
         )
+        if active_library:
+            self.scripts = self.scripts.filter(core_script_library=active_library)
+        else:
+            self.scripts = self.scripts.none()
 
         if "script_pk" in kwargs:
             self.script = get_object_or_404(Script, pk=kwargs["script_pk"])
@@ -1475,11 +1483,17 @@ class GlobalScriptRedirect(RedirectView, LoginRequiredMixin):
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
+        active_library = CoreScriptLibrary.objects.filter(is_active=True).first()
+        script_qs = Script.objects.all()
+        if active_library:
+            script_qs = script_qs.filter(core_script_library=active_library)
+        else:
+            script_qs = script_qs.none()
 
         if "script_pk" in kwargs:
-            script = get_object_or_404(Script, id=kwargs["script_pk"])
+            script = get_object_or_404(script_qs, id=kwargs["script_pk"])
         else:
-            script = get_object_or_404(Script, uid=kwargs["script_uid"])
+            script = get_object_or_404(script_qs, uid=kwargs["script_uid"])
 
         # No need to support this for local scripts
         if script.site:
