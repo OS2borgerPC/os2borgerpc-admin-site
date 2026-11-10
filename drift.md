@@ -21,7 +21,6 @@ Konfiguration sker via miljøvariabler (beskrevet nedenfor) og omfatter desuden 
 | `DB_USER`                    | Brugernavn til databasen                                                   | Ingen           | Ja       |
 | `DB_PASSWORD`                | Adgangskode til databasen                                                  | Ingen           | Ja       |
 | `DB_NAME`                    | Navn på databasen                                                          | Ingen           | Ja       |
-| `CORE_SCRIPT_VERSION_TAG`    | Version af de globale scripts                                              | Ingen           | Ja       |
 | `CORE_SCRIPT_COMMIT_HASH`    | Matchende commit-hash for scripts                                          | Ingen           | Ja       |
 | `HTTPS_GUARANTEED`           | Aktiverer behandling af HTTP som HTTPS bag proxy                           | false           | Nej      |
 | `PC_IMAGE_RELEASES_URL`      | URL til download af BorgerPC ISO images                                    | Ingen           | Nej      |
@@ -108,7 +107,6 @@ Scripts gemmes i Djangos mediamappe (`/media`). For at sikre persistens mellem g
 ### Globale Scripts
 Globale scripts downloades fra [OS2's core-script repository](https://github.com/OS2borgerPC/os2borgerpc-core-scripts) under opstart. Konfiguration sker med:
 
-- `CORE_SCRIPT_VERSION_TAG`: Version af de globale scripts (f.eks. `v0.1.5`).
 - `CORE_SCRIPT_COMMIT_HASH`: Matchende commit-hash for versionen (f.eks. `5340bdc128e2de8c01def5dc50e8680399631f53`).
 
 #### Sådan Finder du Commit-Hash
@@ -117,7 +115,7 @@ Globale scripts downloades fra [OS2's core-script repository](https://github.com
 3. Kopiér commit-hash.
 
 #### Opdatering af Globale Scripts
-1. Opdater `CORE_SCRIPT_VERSION_TAG` og `CORE_SCRIPT_COMMIT_HASH`.
+1. Opdater `CORE_SCRIPT_COMMIT_HASH`.
 2. Genstart containeren.
 
 **Bemærk:** Eksisterende scripts fjernes ikke automatisk og skal ryddes manuelt via SQL eller `/admin`.

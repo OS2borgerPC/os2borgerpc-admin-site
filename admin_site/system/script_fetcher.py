@@ -9,39 +9,20 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def fetch_scripts(repoUrl, versionTag, commitHash):
+def fetch_scripts(repoUrl, commitHash):
     repo_url = repoUrl
     clone_path = Path("downloaded_core_scripts") / get_repo_name(repo_url) / commitHash
 
-    # Perform a shallow clone if the repository isn't already cloned
-    if not (clone_path).exists():
-        if versionTag:
-            # Check that the commitHash matches the versionTag
-            subprocess.run(
-                ["git", "clone", "--depth", "1", "--branch", versionTag, repo_url, str(clone_path)], 
-                check=True
-            )
-
-            versionTagCommitHash = subprocess.run(
-                ["git", "-C", str(clone_path), "rev-parse", versionTag], 
-                check=True, 
-                capture_output=True,
-                text=True
-            ).stdout.strip()
-
-            if versionTagCommitHash != commitHash:
-                logger.warning(f"The commit hash for tag '{versionTag}' is '{versionTagCommitHash}', which does not match the provided commit hash '{commitHash}'.")
-                return []
-        else:
-            # Clone the repository and then check out the specific commit hash
-            subprocess.run(
-                ["git", "clone", "--filter=blob:none", repo_url, str(clone_path)], 
-                check=True
-            )
-            subprocess.run(
-                ["git", "-C", str(clone_path), "checkout", commitHash],
-                check=True
-            )
+    # Clone the repository and check out the specific commit hash
+    if not clone_path.exists():
+        subprocess.run(
+            ["git", "clone", "--filter=blob:none", repo_url, str(clone_path)],
+            check=True
+        )
+        subprocess.run(
+            ["git", "-C", str(clone_path), "checkout", commitHash],
+            check=True
+        )
 
     # Retrieve content of all markdown (.md) files, and convert them to Scripts
     scripts = []

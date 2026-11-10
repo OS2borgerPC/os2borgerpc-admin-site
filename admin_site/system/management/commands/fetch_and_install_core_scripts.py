@@ -11,17 +11,16 @@ class Command(BaseCommand):
     other (ill-intended) code. Using the hash, this is prevented.
 
     Example:
-        manage.py fetch_and_install_core_scripts --versionTag v0.1.2 --commitHash b3a791b52bc9937c6cb168c706ee003b0666fc93
+        manage.py fetch_and_install_core_scripts --commitHash b3a791b52bc9937c6cb168c706ee003b0666fc93
     """
 
     def add_arguments(self, parser):
-        parser.add_argument("--versionTag", required=True)
         parser.add_argument("--commitHash", required=True)
 
     def handle(self, *args, **options):
         repo_url = "https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git"
         self.stdout.write(f"Fetching scripts from {repo_url} repository...")
-        scripts = fetch_scripts(repo_url, options['versionTag'], options['commitHash'])
+        scripts = fetch_scripts(repo_url, options['commitHash'])
 
         for script in scripts:
             versionedName = f'{script.title} (version: {script.version})'
