@@ -26,8 +26,6 @@ from system.models import (
     Product,
     PC,
     PCGroup,
-    Script,
-    ScriptTag,
     SecurityEvent,
     SecurityProblem,
     Site,
@@ -622,8 +620,6 @@ ar(LoginLog, LoginLogAdmin)
 ar(PC, PCAdmin)
 ar(PCGroup, PCGroupAdmin)
 ar(Product, ProductAdmin)
-ar(Script, ScriptAdmin)
-ar(ScriptTag, ScriptTagAdmin)
 ar(SecurityEvent, SecurityEventAdmin)
 ar(SecurityProblem, SecurityProblemAdmin)
 ar(Site, SiteAdmin)
