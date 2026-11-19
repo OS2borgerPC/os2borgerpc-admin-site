@@ -21,11 +21,13 @@ class Command(BaseCommand):
         commit_hash = options['commitHash']
         self.stdout.write(f"Fetching scripts from {repo_url} repository...")
         self.stdout.write(f"Commit hash: {commit_hash}")
+        
         scripts = fetch_scripts(repo_url, commit_hash)
 
         for script in scripts:
             versionedName = f'{script.title} (version: {script.version})'
 
+            # Check if script already exists with this commit hash
             if not Script.objects.filter(name=versionedName, core_script_commit_hash=commit_hash).exists():
                 with open(script.sourcePath, 'rb') as file:
                     # Get only the base file name
