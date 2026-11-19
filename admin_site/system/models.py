@@ -901,6 +901,14 @@ class Script(AuditModelMixin):
         verbose_name=_("hidden script"), default=False, null=False
     )
 
+    core_script_commit_hash = models.CharField(
+        verbose_name=_("Core Script Commit Hash"),
+        max_length=40,
+        null=True,
+        blank=True,
+        db_index=True,
+    )
+
     maintained_by_magenta = models.BooleanField(
         verbose_name=_("maintained by Magenta"),
         default=False,

@@ -99,6 +99,25 @@ def run_wake_plan_script(site, pcs, args, user, type="remove"):
     script.run_on(site, pcs, *args, user=user)
 
 
+def get_visible_scripts_for_site(site, is_security=False):
+    """
+    Get visible scripts for a site, filtering by current core script commit hash.
+    
+    Args:
+        site: Site object
+        is_security: Boolean, whether to get security scripts (default: False)
+    
+    Returns:
+        QuerySet of Script objects matching the current commit hash and visibility settings.
+    """
+    return Script.objects.filter(
+        Q(site=site) | Q(site=None),
+        core_script_commit_hash=settings.CORE_SCRIPT_COMMIT_HASH,
+        is_hidden=False,
+        is_security_script=is_security,
+    ).order_by("-site", "name")
+
+
 def otp_check(
     view=None, redirect_field_name="next", login_url=None, if_configured=False
 ):
@@ -1124,9 +1143,11 @@ class ScriptMixin(object):
     def setup_script_editing(self, **kwargs):
         # Get site
         self.site = get_object_or_404(Site, uid=kwargs["slug"])
-        # Add the global and local script lists
+        # Add the global and local script lists, filtered by current commit hash
         self.scripts = Script.objects.filter(
-            Q(site=self.site) | Q(site=None), is_security_script=self.is_security
+            Q(site=self.site) | Q(site=None),
+            is_security_script=self.is_security,
+            core_script_commit_hash=settings.CORE_SCRIPT_COMMIT_HASH,
         )
 
         if "script_pk" in kwargs:
@@ -1316,10 +1337,7 @@ class ScriptRedirect(RedirectView, SuperAdminOrThisSiteMixin):
             True if resolve(self.request.path).url_name == "security_scripts" else False
         )
 
-        # Scripts are sorted with "-site" to ensure global scripts are ordered first in the queryset.
-        scripts = Script.objects.filter(
-            Q(site=site) | Q(site=None), is_security_script=is_security, is_hidden=False
-        ).order_by("-site", "name")
+        scripts = get_visible_scripts_for_site(site, is_security=is_security)
 
         if scripts.exists():
             script = scripts.first()
@@ -3388,6 +3406,7 @@ class PCGroupUpdate(SiteMixin, SuperAdminOrThisSiteMixin, UpdateView):
             Q(is_hidden=False)
             | Q(feature_permission__in=site.customer.feature_permission.all()),
             is_security_script=False,
+            core_script_commit_hash=settings.CORE_SCRIPT_COMMIT_HASH,
         )
 
         return context

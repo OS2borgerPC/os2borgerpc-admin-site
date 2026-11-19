@@ -7,8 +7,7 @@ class Command(BaseCommand):
 
     """
     Get core scripts from a (correctly formatted) git repo, and insert them in the database, so they can be accessed by site users.
-    For security and consistency reasons, the matching commit hash (SHA-256) for the tag must also be specified, as the tag can easily be updated to point to 
-    other (ill-intended) code. Using the hash, this is prevented.
+    The commit hash is stored with each script to enable version tracking and display filtering.
 
     Example:
         manage.py fetch_and_install_core_scripts --commitHash b3a791b52bc9937c6cb168c706ee003b0666fc93
@@ -19,16 +18,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         repo_url = "https://github.com/OS2borgerPC/os2borgerpc-core-scripts.git"
+        commit_hash = options['commitHash']
         self.stdout.write(f"Fetching scripts from {repo_url} repository...")
-        scripts = fetch_scripts(repo_url, options['commitHash'])
+        self.stdout.write(f"Commit hash: {commit_hash}")
+        scripts = fetch_scripts(repo_url, commit_hash)
 
         for script in scripts:
             versionedName = f'{script.title} (version: {script.version})'
 
-            if script.uid and Script.objects.filter(uid=script.uid).exists():
-                Script.objects.filter(uid=script.uid).delete()
-
-            if not Script.objects.filter(name=versionedName).exists():
+            if not Script.objects.filter(name=versionedName, core_script_commit_hash=commit_hash).exists():
                 with open(script.sourcePath, 'rb') as file:
                     # Get only the base file name
                     db_script = Script.objects.create(
@@ -40,7 +38,8 @@ class Command(BaseCommand):
                         is_hidden=script.hidden,
                         maintained_by_magenta=False,
                         feature_permission=None,
-                        uid=script.uid
+                        uid=script.uid,
+                        core_script_commit_hash=commit_hash,
                     )
                     tag, created = ScriptTag.objects.get_or_create(name=script.tag)
                     db_script.tags.add(tag)

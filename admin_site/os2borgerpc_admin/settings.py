@@ -123,6 +123,9 @@ MEDIA_ROOT = "/media"
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = "/media/"
 
+# Core script commit hash - used to filter which scripts are displayed
+CORE_SCRIPT_COMMIT_HASH = os.environ.get("CORE_SCRIPT_COMMIT_HASH")
+
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
